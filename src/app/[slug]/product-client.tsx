@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { Product, Region } from "@/lib/products";
 import { formatPrice } from "@/lib/products";
 import { productJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { useCart } from "@/lib/cart-context";
-import { products, getProduct } from "@/lib/products";
+import { getProduct } from "@/lib/products";
+import { RoomVisualizationModal } from "@/components/room-visualization-modal";
 
 interface Props {
   product: Product;
@@ -22,6 +23,12 @@ export function ProductPageClient({ product }: Props) {
   );
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [showRoomViz, setShowRoomViz] = useState(false);
+  const purchaseRef = useRef<HTMLElement>(null);
+
+  const scrollToPurchase = () => {
+    purchaseRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const handleAddToCart = () => {
     addItem({
@@ -144,6 +151,67 @@ export function ProductPageClient({ product }: Props) {
         </div>
       </section>
 
+      {/* TRY IN YOUR ROOM */}
+      <section className="border-t border-[#222] bg-gradient-to-b from-[#0A0A0A] to-[#0E0E0E]">
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <button
+            onClick={() => setShowRoomViz(true)}
+            className="group w-full flex flex-col sm:flex-row items-center justify-between gap-6 py-6 px-8 border border-[#333] hover:border-[#E8B4B8]/50 transition-all duration-300 rounded-[4px]"
+          >
+            <div className="flex items-center gap-5">
+              <div className="w-14 h-14 rounded-full border border-[#333] group-hover:border-[#E8B4B8]/50 flex items-center justify-center transition-colors duration-300">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  className="text-[#E8B4B8]/60 group-hover:text-[#E8B4B8] transition-colors duration-300"
+                >
+                  <path
+                    d="M3 10C3 8.89543 3.89543 8 5 8H7.586C7.85122 8 7.89443 7.89464 8.29289 7.70711L9.70711 6.29289C9.89443 6.10536 10.1488 6 10.414 6H17.586C17.8512 6 18.1056 6.10536 18.2929 6.29289L19.7071 7.70711C19.8944 7.89464 20.1488 8 20.414 8H23C24.1046 8 25 8.89543 25 10V20C25 21.1046 24.1046 22 23 22H5C3.89543 22 3 21.1046 3 20V10Z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <circle
+                    cx="14"
+                    cy="14.5"
+                    r="4"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                </svg>
+              </div>
+              <div className="text-center sm:text-left">
+                <h3 className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
+                  Try in Your Room
+                </h3>
+                <p className="text-xs text-[#6B6B6B] mt-1">
+                  Upload a photo and see the {product.name} in your space with AI
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 group-hover:text-[#E8B4B8] transition-colors duration-300">
+              <span>Get Started</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                className="group-hover:translate-x-1 transition-transform duration-300"
+              >
+                <path
+                  d="M3 8H13M13 8L9 4M13 8L9 12"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </section>
+
       {/* MATERIALS */}
       <section className="border-t border-[#222]">
         <div className="max-w-7xl mx-auto px-6 py-20">
@@ -160,7 +228,7 @@ export function ProductPageClient({ product }: Props) {
       </section>
 
       {/* PURCHASE SECTION */}
-      <section className="border-t border-[#222] bg-[#0E0E0E]">
+      <section ref={purchaseRef} className="border-t border-[#222] bg-[#0E0E0E]">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
@@ -365,6 +433,14 @@ export function ProductPageClient({ product }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Room Visualization Modal */}
+      <RoomVisualizationModal
+        product={product}
+        isOpen={showRoomViz}
+        onClose={() => setShowRoomViz(false)}
+        onBuyThisPiece={scrollToPurchase}
+      />
     </>
   );
 }
