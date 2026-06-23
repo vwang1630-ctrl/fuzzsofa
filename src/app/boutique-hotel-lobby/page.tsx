@@ -37,6 +37,7 @@ export default function BoutiqueHotelLobbyPage() {
               <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
                 Boutique Hotel Lobbies
               </h1>
+              <p className="mt-3 text-sm text-[#F5F0EB]/50 max-w-xl">How sculptural furniture defines the first and last impression of a property.</p>
             </div>
           </div>
         </div>
@@ -44,6 +45,7 @@ export default function BoutiqueHotelLobbyPage() {
 
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="max-w-3xl">
+          <h2 className="font-serif text-2xl font-light text-[#F5F0EB] mb-6">Why This Space</h2>
           <p className="text-lg text-[#F5F0EB]/70 leading-relaxed">
             The boutique hotel lobby is the first and last impression a guest receives. In an era where guests choose properties for their distinctive character, the lobby furniture must communicate the property&apos;s design vision before the guest reaches the front desk. Sculptural furniture achieves this instantly.
           </p>
@@ -56,10 +58,11 @@ export default function BoutiqueHotelLobbyPage() {
         </div>
       </section>
 
+      {/* Recommended Pieces */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
-            Pieces for Hotel Spaces
+            Recommended Pieces
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {hotelProducts.map((product) => (
@@ -86,9 +89,35 @@ export default function BoutiqueHotelLobbyPage() {
         </div>
       </section>
 
+      {/* Design Principles */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Explore More</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Design Principles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Photo-Worthy Moments</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Hotel furniture should create moments guests photograph and share. A sculptural piece generates organic visibility no advertising budget can buy.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Contract-Grade Durability</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Hospitality furniture must withstand daily commercial use. Specify leather options and contract-grade treatments for longevity in high-traffic environments.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Cultural Resonance</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Choose animal motifs that align with the property&apos;s location. The Lion Sofa resonates in GCC markets; the Bear Sofa suits European mountain properties.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Layered Lighting</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Use accent lighting at floor level to sculpt the form after dark. The three-dimensional quality of each piece emerges under directional, low-angle illumination.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Related Scenes */}
+      <section className="border-t border-[#1A1A1A]">
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Related Scenes</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               { href: "/luxury-villa-interior", title: "Luxury Villa Interior", desc: "Sculptural furniture for grand private residences" },

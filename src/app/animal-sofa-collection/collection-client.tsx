@@ -99,6 +99,22 @@ export function CollectionClient() {
           </div>
         </div>
       </section>
+
+      {/* GEO Content: What is an Animal Sofa? */}
+      <section className="border-t border-[#1A1A1A] py-20">
+        <div className="max-w-3xl mx-auto px-6">
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-6">What Is an Animal Sofa?</h2>
+          <p className="text-[#F5F0EB]/60 leading-relaxed mb-4">
+            An animal sofa is a sculptural furniture piece that draws formal and tactile inspiration from a specific animal. Rather than literal representation, it translates the animal&apos;s essential qualities — the Bear&apos;s mass, the Lion&apos;s authority, the Tiger&apos;s kinetic energy — into functional seating.
+          </p>
+          <p className="text-[#F5F0EB]/60 leading-relaxed mb-4">
+            Fuzz Sofa pieces are not novelty furniture. Each is designed as a serious design object, suitable for luxury villas, boutique hotels, and considered residential interiors. The animal inspiration is present in the silhouette, the posture, and the tactile experience — never in cartoonish detail.
+          </p>
+          <p className="text-[#F5F0EB]/60 leading-relaxed">
+            The collection includes five pieces: Bear Sofa, Lion Sofa, Tiger Sofa, Gorilla Sofa, and Owl Chair. Each is made to order in Shanghai, with production taking 8–12 weeks. Prices range from $2,500 for the Owl Chair to $9,800 for the Gorilla Sofa in full-grain leather.
+          </p>
+        </div>
+      </section>
     </>
   );
 }

@@ -37,6 +37,7 @@ export default function StatementFurniturePage() {
               <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
                 What Is Statement Furniture?
               </h1>
+              <p className="mt-3 text-sm text-[#F5F0EB]/50 max-w-xl">A single piece that defines the character of an entire room.</p>
             </div>
           </div>
         </div>
@@ -44,6 +45,7 @@ export default function StatementFurniturePage() {
 
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="max-w-3xl">
+          <h2 className="font-serif text-2xl font-light text-[#F5F0EB] mb-6">Why This Space</h2>
           <p className="text-lg text-[#F5F0EB]/70 leading-relaxed">
             Statement furniture is a single piece that defines the character of an entire room. Unlike accent furniture that complements existing decor, statement furniture leads — it is the first thing you notice and the last thing you forget.
           </p>
@@ -70,9 +72,10 @@ export default function StatementFurniturePage() {
         </div>
       </section>
 
+      {/* Recommended Pieces */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Statement Pieces from Fuzz Sofa</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Recommended Pieces</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {statementProducts.map((product) => (
               <Link
@@ -96,9 +99,35 @@ export default function StatementFurniturePage() {
         </div>
       </section>
 
+      {/* Design Principles */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Related Reading</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Design Principles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">One Piece, One Room</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Limit statement furniture to one or two pieces per room. Multiple competing statement pieces cancel each other&apos;s impact.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Let It Breathe</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Surround statement furniture with negative space. Neutral walls and minimal decor amplify the piece&apos;s sculptural presence.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Read from Every Angle</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">True statement furniture is sculptural — it should look intentional from every viewing angle, not just the front.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Form Follows Feeling</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Choose statement furniture by the emotion it evokes, not by trend. A piece you connect with instinctively will outlast any style cycle.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Related Scenes */}
+      <section className="border-t border-[#1A1A1A]">
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Related Scenes</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               { href: "/journal/statement-chair-vs-accent-chair", title: "Statement Chair vs Accent Chair", desc: "The key difference in form, placement, and purpose" },

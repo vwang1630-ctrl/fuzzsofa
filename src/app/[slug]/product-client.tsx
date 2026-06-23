@@ -24,6 +24,7 @@ export function ProductPageClient({ product }: Props) {
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
   const [showRoomViz, setShowRoomViz] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
   const purchaseRef = useRef<HTMLElement>(null);
 
   const scrollToPurchase = () => {
@@ -57,6 +58,13 @@ export function ProductPageClient({ product }: Props) {
     { value: "se_asia", label: "SE Asia (USD)" },
   ];
 
+  const galleryImages = [
+    { label: `${product.name} — Full View`, id: 0 },
+    { label: `${product.name} — Detail`, id: 1 },
+    { label: `${product.name} — In Context`, id: 2 },
+    { label: `${product.name} — Side Profile`, id: 3 },
+  ];
+
   return (
     <>
       <script
@@ -79,7 +87,7 @@ export function ProductPageClient({ product }: Props) {
         }}
       />
 
-      {/* HERO */}
+      {/* 1) CONCEPT SECTION */}
       <section className="relative">
         <div className="aspect-[21/9] md:aspect-[21/7] bg-gradient-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden">
           <div
@@ -103,40 +111,76 @@ export function ProductPageClient({ product }: Props) {
             </div>
           </div>
         </div>
+        <div className="max-w-[700px] mx-auto px-6 py-16">
+          <p className="text-[#F5F0EB]/70 leading-[1.7] text-base">{product.concept}</p>
+        </div>
       </section>
 
-      {/* CONCEPT */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div>
-            <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-6">
-              The Concept
-            </h2>
-            <p className="text-[#F5F0EB]/70 leading-relaxed text-base">{product.concept}</p>
-          </div>
-          <div>
-            <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-6">
-              Where It Belongs
-            </h2>
-            <p className="text-[#F5F0EB]/70 leading-relaxed text-base">{product.interiorContext}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {product.relatedInteriors.map((interior) => (
-                <Link
-                  key={interior}
-                  href={`/${interior}`}
-                  className="text-xs tracking-[0.1em] uppercase border border-[#333] px-4 py-2 text-[#F5F0EB]/50 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
-                >
-                  {interior.replace(/-/g, " ")}
-                </Link>
-              ))}
+      {/* 2) IMAGE GALLERY */}
+      <section className="border-t border-[#1A1A1A]">
+        <div className="max-w-[1100px] mx-auto px-6 py-16">
+          <figure>
+            <div className="aspect-square bg-gradient-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden">
+              <div
+                className="absolute inset-0 opacity-[0.04]"
+                style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-serif text-[15rem] md:text-[25rem] text-[#F5F0EB]/[0.04] select-none">
+                  {product.animal.charAt(0)}
+                </span>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-transparent h-1/3" />
             </div>
+            <figcaption className="sr-only">
+              {galleryImages[activeImage].label} — {product.name} by Fuzz Sofa, sculptural {product.animal}-inspired furniture piece.
+            </figcaption>
+          </figure>
+          <div className="mt-4 flex gap-3">
+            {galleryImages.map((img) => (
+              <button
+                key={img.id}
+                onClick={() => setActiveImage(img.id)}
+                className={`w-[60px] h-[60px] border transition-all duration-300 bg-gradient-to-b from-[#111111] to-[#0A0A0A] flex items-center justify-center ${
+                  activeImage === img.id
+                    ? "border-[#E8B4B8]"
+                    : "border-[#1A1A1A] hover:border-[#E8B4B8]"
+                }`}
+                aria-label={img.label}
+              >
+                <span className="font-serif text-xl text-[#F5F0EB]/20">
+                  {product.animal.charAt(0)}
+                </span>
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* SPECIFICATIONS */}
+      {/* 3) INTERIOR CONTEXT SECTION */}
       <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="max-w-[1100px] mx-auto px-6 py-16">
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-6">In Your Space</h2>
+          <p className="text-[#F5F0EB]/70 leading-[1.7] text-base max-w-[700px] mb-8">
+            {product.interiorContext}
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {product.relatedInteriors.map((interior) => (
+              <Link
+                key={interior}
+                href={`/${interior}`}
+                className="text-xs tracking-[0.1em] uppercase border border-[#333] px-4 py-2 text-[#F5F0EB]/50 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
+              >
+                {interior.replace(/-/g, " ")}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4) SPECIFICATIONS */}
+      <section className="border-t border-[#1A1A1A]">
+        <div className="max-w-[1100px] mx-auto px-6 py-16">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Specifications</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             {Object.entries(product.specifications).map(([key, value]) => (
@@ -147,74 +191,17 @@ export function ProductPageClient({ product }: Props) {
                 <p className="text-sm text-[#F5F0EB]/80">{value}</p>
               </div>
             ))}
+            <div>
+              <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-1">Delivery</p>
+              <p className="text-sm text-[#F5F0EB]/80">Free White-Glove Delivery</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* TRY IN YOUR ROOM */}
-      <section className="border-t border-[#1A1A1A] bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
-        <div className="max-w-7xl mx-auto px-6 py-16">
-          <button
-            onClick={() => setShowRoomViz(true)}
-            className="group w-full flex flex-col sm:flex-row items-center justify-between gap-6 py-6 px-8 border border-[#333] hover:border-[#E8B4B8]/50 transition-all duration-300 rounded-[4px]"
-          >
-            <div className="flex items-center gap-5">
-              <div className="w-14 h-14 rounded-full border border-[#333] group-hover:border-[#E8B4B8]/50 flex items-center justify-center transition-colors duration-300">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 28 28"
-                  fill="none"
-                  className="text-[#E8B4B8]/60 group-hover:text-[#E8B4B8] transition-colors duration-300"
-                >
-                  <path
-                    d="M3 10C3 8.89543 3.89543 8 5 8H7.586C7.85122 8 7.89443 7.89464 8.29289 7.70711L9.70711 6.29289C9.89443 6.10536 10.1488 6 10.414 6H17.586C17.8512 6 18.1056 6.10536 18.2929 6.29289L19.7071 7.70711C19.8944 7.89464 20.1488 8 20.414 8H23C24.1046 8 25 8.89543 25 10V20C25 21.1046 24.1046 22 23 22H5C3.89543 22 3 21.1046 3 20V10Z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                  <circle
-                    cx="14"
-                    cy="14.5"
-                    r="4"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                </svg>
-              </div>
-              <div className="text-center sm:text-left">
-                <h3 className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  Try in Your Room
-                </h3>
-                <p className="text-xs text-[#8A8580] mt-1">
-                  Upload a photo and see the {product.name} in your space with AI
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 group-hover:text-[#E8B4B8] transition-colors duration-300">
-              <span>Get Started</span>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                className="group-hover:translate-x-1 transition-transform duration-300"
-              >
-                <path
-                  d="M3 8H13M13 8L9 4M13 8L9 12"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-          </button>
-        </div>
-      </section>
-
-      {/* MATERIALS */}
+      {/* 5) MATERIALS SECTION */}
       <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="max-w-[1100px] mx-auto px-6 py-16">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-4">Materials</h2>
           <p className="text-sm text-[#8A8580] mb-10">Every Fuzz Sofa piece is made to order. Choose the material that fits your space.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -233,7 +220,7 @@ export function ProductPageClient({ product }: Props) {
               >
                 <h3 className="font-serif text-xl font-light text-[#F5F0EB] mb-1">{mat.type}</h3>
                 <p className="text-xs text-[#8A8580] mb-4">
-                  {mat.type === "Cloud Touch" && "Ultra-soft bouclé. Cloud-like comfort with a subtle texture."}
+                  {mat.type === "Cloud Touch" && "Ultra-soft boucle. Cloud-like comfort with a subtle texture."}
                   {mat.type === "Wild Touch" && "Natural linen blend. Breathable with organic grain."}
                   {mat.type === "Leather Touch" && "Full-grain leather. Rich patina develops over time."}
                 </p>
@@ -266,10 +253,53 @@ export function ProductPageClient({ product }: Props) {
         </div>
       </section>
 
-      {/* PURCHASE SECTION */}
+      {/* 6) AI TRY IN YOUR ROOM */}
+      <section className="border-t border-[#1A1A1A]">
+        <div className="max-w-[1100px] mx-auto px-6 py-16">
+          <button
+            onClick={() => setShowRoomViz(true)}
+            className="group w-full flex flex-col sm:flex-row items-center justify-between gap-6 py-6 px-8 border border-[#333] hover:border-[#E8B4B8]/50 transition-all duration-300 rounded-[4px]"
+          >
+            <div className="flex items-center gap-5">
+              <div className="w-14 h-14 rounded-full border border-[#333] group-hover:border-[#E8B4B8]/50 flex items-center justify-center transition-colors duration-300">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  className="text-[#E8B4B8]/60 group-hover:text-[#E8B4B8] transition-colors duration-300"
+                >
+                  <path
+                    d="M3 10C3 8.89543 3.89543 8 5 8H7.586C7.85122 8 7.89443 7.89464 8.29289 7.70711L9.70711 6.29289C9.89443 6.10536 10.1488 6 10.414 6H17.586C17.8512 6 18.1056 6.10536 18.2929 6.29289L19.7071 7.70711C19.8944 7.89464 20.1488 8 20.414 8H23C24.1046 8 25 8.89543 25 10V20C25 21.1046 24.1046 22 23 22H5C3.89543 22 3 21.1046 3 20V10Z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <circle cx="14" cy="14.5" r="4" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+              </div>
+              <div className="text-center sm:text-left">
+                <h3 className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
+                  Try in Your Room
+                </h3>
+                <p className="text-xs text-[#8A8580] mt-1">
+                  Upload a photo and see the {product.name} in your space with AI
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 group-hover:text-[#E8B4B8] transition-colors duration-300">
+              <span>Get Started</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-1 transition-transform duration-300">
+                <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      {/* 7) PURCHASE SECTION */}
       <section ref={purchaseRef} className="border-t border-[#1A1A1A] bg-[#0A0A0A]">
-        <div className="max-w-7xl mx-auto px-6 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="max-w-[1100px] mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-8">Configure Your Piece</h2>
 
@@ -382,29 +412,29 @@ export function ProductPageClient({ product }: Props) {
                   Price varies by material selection and configuration
                 </p>
 
-                {/* Add to cart */}
+                {/* Add to cart — primary CTA */}
                 <button
                   onClick={handleAddToCart}
-                  className="mt-6 w-full py-4 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
+                  className="mt-6 w-full py-4 border border-[#F5F0EB] text-[#F5F0EB] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
                 >
                   {addedToCart ? "Added to Cart ✓" : "Add to Cart"}
                 </button>
 
-                {/* Secondary actions */}
-                <div className="mt-4 flex flex-col gap-2">
-                  <Link
-                    href="/contact"
-                    className="text-center py-3 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 hover:text-[#E8B4B8] transition-colors border border-[#1A1A1A] hover:border-[#E8B4B8]/30"
-                  >
-                    Request Pricing (Trade / Bulk)
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="text-center py-3 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 hover:text-[#E8B4B8] transition-colors"
-                  >
-                    Talk to a Designer
-                  </Link>
-                </div>
+                {/* Request Pricing — secondary CTA */}
+                <Link
+                  href="/contact"
+                  className="mt-4 block text-center py-3 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/50 hover:text-[#E8B4B8] transition-colors border border-[#1A1A1A] hover:border-[#E8B4B8]/30"
+                >
+                  Request Pricing (Trade / Bulk)
+                </Link>
+
+                {/* Talk to Designer — tertiary CTA */}
+                <Link
+                  href="/contact"
+                  className="mt-3 block text-center text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 hover:text-[#E8B4B8] transition-colors"
+                >
+                  Talk to a Designer
+                </Link>
 
                 {/* Trust signals */}
                 <div className="mt-6 pt-6 border-t border-[#1A1A1A] space-y-2">
@@ -427,18 +457,35 @@ export function ProductPageClient({ product }: Props) {
         </div>
       </section>
 
+      {/* 8) FAQ SECTION */}
+      <section className="border-t border-[#1A1A1A]">
+        <div className="max-w-[700px] mx-auto px-6 py-16">
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-6">
+            {product.faq.map((item, i) => (
+              <div key={i} className="border-b border-[#1A1A1A] pb-6">
+                <h3 className="font-serif text-lg text-[#F5F0EB] mb-3">{item.question}</h3>
+                <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">{item.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* RELATED PRODUCTS */}
       <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="max-w-[1200px] mx-auto px-6 py-16">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Related Pieces</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {relatedProducts.map((rp) => (
               <Link
                 key={rp.slug}
                 href={`/${rp.slug}`}
                 className="group bg-[#111111] border border-[#1A1A1A] p-6 hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="aspect-[4/3] mb-4 bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
+                <div className="aspect-square mb-4 bg-gradient-to-b from-[#1A1A1A] to-[#0A0A0A] flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"
                     style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
                   />
@@ -451,23 +498,6 @@ export function ProductPageClient({ product }: Props) {
                 </h3>
                 <p className="text-xs text-[#8A8580] mt-1">{rp.tagline}</p>
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-6 max-w-3xl">
-            {product.faq.map((item, i) => (
-              <div key={i} className="border-b border-[#1A1A1A] pb-6">
-                <h3 className="font-serif text-lg text-[#F5F0EB] mb-3">{item.question}</h3>
-                <p className="text-sm text-[#F5F0EB]/60 leading-relaxed">{item.answer}</p>
-              </div>
             ))}
           </div>
         </div>

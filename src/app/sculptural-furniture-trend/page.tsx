@@ -37,6 +37,7 @@ export default function SculpturalFurnitureTrendPage() {
               <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
                 Sculptural Furniture Trend 2026
               </h1>
+              <p className="mt-3 text-sm text-[#F5F0EB]/50 max-w-xl">Furniture-as-art is the defining direction of high-end interiors.</p>
             </div>
           </div>
         </div>
@@ -44,6 +45,7 @@ export default function SculpturalFurnitureTrendPage() {
 
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="max-w-3xl">
+          <h2 className="font-serif text-2xl font-light text-[#F5F0EB] mb-6">Why This Space</h2>
           <p className="text-lg text-[#F5F0EB]/70 leading-relaxed">
             The sculptural furniture trend for 2026 moves beyond organic curves into full biomorphic abstraction. Furniture that reads as art is no longer a niche — it is the defining direction of high-end interiors.
           </p>
@@ -65,9 +67,10 @@ export default function SculpturalFurnitureTrendPage() {
         </div>
       </section>
 
+      {/* Recommended Pieces */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Pieces Defining the Trend</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Recommended Pieces</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {trendProducts.map((product) => (
               <Link
@@ -91,9 +94,35 @@ export default function SculpturalFurnitureTrendPage() {
         </div>
       </section>
 
+      {/* Design Principles */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Read More</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Design Principles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Design for 360 Degrees</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Sculptural furniture must read as intentional from every angle. Avoid pieces that only work from the front — the back and sides are equally visible.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Biomorphic Abstraction</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">The trend moves beyond literal animal shapes toward abstracted forms that suggest rather than depict. A silhouette should evoke, not illustrate.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Compact Statements</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Urban living drives demand for smaller statement pieces. A sculptural chair in a 40sqm apartment creates the same emotional impact as a sofa in a villa.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Mixed Material Complexity</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Combining fabric and leather within a single piece creates textural richness that flat material cannot achieve. The contrast defines the form.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Related Scenes */}
+      <section className="border-t border-[#1A1A1A]">
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Related Scenes</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               { href: "/journal/sculptural-furniture-trend-2026", title: "Sculptural Furniture Trend 2026", desc: "Full analysis of the trend reshaping high-end interiors" },

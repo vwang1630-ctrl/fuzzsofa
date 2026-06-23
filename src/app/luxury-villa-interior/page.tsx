@@ -38,13 +38,18 @@ export default function LuxuryVillaInteriorPage() {
               <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
                 Luxury Villa Interiors
               </h1>
+              <p className="mt-3 text-sm text-[#F5F0EB]/50 max-w-xl">Sculptural furniture that anchors grand private residences with quiet authority.</p>
+              <p className="mt-3 text-lg text-[#F5F0EB]/50 font-light max-w-2xl">
+                Sculptural furniture that anchors grand residential spaces with commanding presence.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Content */}
+      {/* Why This Space */}
       <section className="max-w-7xl mx-auto px-6 py-20">
+        <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-8">Why This Space</h2>
         <div className="max-w-3xl">
           <p className="text-lg text-[#F5F0EB]/70 leading-relaxed">
             Luxury villas demand furniture with the scale and presence to match their architecture. In grand living rooms with high ceilings and open floor plans, conventional furniture reads as insufficient — it fills space without commanding it. Sculptural furniture, by contrast, anchors these spaces with the same authority as the architecture itself.
@@ -58,11 +63,11 @@ export default function LuxuryVillaInteriorPage() {
         </div>
       </section>
 
-      {/* Products for this interior */}
+      {/* Recommended Pieces */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
-            Pieces for Villa Interiors
+            Recommended Pieces
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {villaProducts.map((product) => (
@@ -89,10 +94,35 @@ export default function LuxuryVillaInteriorPage() {
         </div>
       </section>
 
-      {/* Related interiors */}
+      {/* Design Principles */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Explore More Interiors</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Design Principles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Scale Over Quantity</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">One sculptural piece in a grand room creates more impact than five conventional ones. Let the statement piece breathe.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Anchor the Focal Point</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Place the largest piece facing the primary entry point. This establishes a gravitational center the eye naturally returns to.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Contrast with Architecture</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Organic sculptural forms against clean architectural lines create tension that makes both the building and the furniture more powerful.</p>
+            </div>
+            <div>
+              <h3 className="font-serif text-lg text-[#E8B4B8] mb-2">Light from One Direction</h3>
+              <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">Single-source lighting reveals the three-dimensional form of sculptural furniture. Avoid flat overhead lighting that washes out texture.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Related Scenes */}
+      <section className="border-t border-[#1A1A1A]">
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Related Scenes</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               { href: "/boutique-hotel-lobby", title: "Boutique Hotel Lobby", desc: "Hospitality spaces that make a lasting first impression" },
