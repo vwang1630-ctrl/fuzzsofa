@@ -3,6 +3,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { CartProvider } from "@/lib/cart-context";
+import { LanguageProvider } from "@/lib/language-context";
 import { FontPreload } from "@/components/font-preload";
 
 export const metadata: Metadata = {
@@ -55,12 +56,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased bg-[#0A0A0A] text-[#F5F0EB]">
+        <LanguageProvider>
         <CartProvider>
           <FontPreload />
           <Header />
           <main className="min-h-screen pt-[60px]">{children}</main>
           <Footer />
         </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

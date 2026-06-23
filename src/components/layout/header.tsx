@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
+import { useLanguage } from "@/lib/language-context";
 import { useState, useRef, useEffect } from "react";
 import { locales, localeNames, type Locale } from "@/lib/i18n";
 
@@ -23,11 +24,10 @@ const regionIcons: Record<string, string> = {
 
 export function Header() {
   const { totalItems } = useCart();
+  const { locale, setLocale, region, setRegion, t, isRtl } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [regionOpen, setRegionOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState<Locale>("en");
-  const [currentRegion, setCurrentRegion] = useState<Region>("americas");
   const langRef = useRef<HTMLDivElement>(null);
   const regionRef = useRef<HTMLDivElement>(null);
 
@@ -39,8 +39,6 @@ export function Header() {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
-
-  const isRtl = currentLang === "ar" || currentLang === "fa";
 
   return (
     <header
@@ -56,16 +54,16 @@ export function Header() {
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-6 text-xs font-light tracking-[0.1em] uppercase">
           <Link href="/animal-sofa-collection" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300">
-            Collection
+            {t("collection")}
           </Link>
           <Link href="/luxury-villa-interior" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300">
-            Interior Worlds
+            {t("interiorWorlds")}
           </Link>
           <Link href="/about" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300">
-            About
+            {t("about")}
           </Link>
           <Link href="/contact" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300">
-            Contact
+            {t("contact")}
           </Link>
         </nav>
 
@@ -78,16 +76,16 @@ export function Header() {
               className="flex items-center gap-1 text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 text-xs tracking-[0.05em] uppercase"
               aria-label="Select language"
             >
-              🌐 {localeNames[currentLang]}
+              🌐 {localeNames[locale]}
             </button>
             {langOpen && (
               <div className="absolute top-full mt-2 right-0 bg-[#111111] border border-[#1A1A1A] rounded-[4px] py-1 min-w-[160px] max-h-[300px] overflow-y-auto z-50">
-                {locales.map((loc) => (
+                {locales.map((loc: Locale) => (
                   <button
                     key={loc}
-                    onClick={() => { setCurrentLang(loc); setLangOpen(false); }}
+                    onClick={() => { setLocale(loc); setLangOpen(false); }}
                     className={`w-full text-left px-4 py-2 text-xs tracking-[0.05em] hover:bg-[#1A1A1A] transition-colors ${
-                      loc === currentLang ? "text-[#E8B4B8]" : "text-[#8A8580]"
+                      loc === locale ? "text-[#E8B4B8]" : "text-[#8A8580]"
                     }`}
                   >
                     {localeNames[loc]}
@@ -104,16 +102,16 @@ export function Header() {
               className="flex items-center gap-1 text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 text-xs tracking-[0.05em]"
               aria-label="Select region"
             >
-              📍 {regionLabels[currentRegion]}
+              📍 {regionLabels[region]}
             </button>
             {regionOpen && (
               <div className="absolute top-full mt-2 right-0 bg-[#111111] border border-[#1A1A1A] rounded-[4px] py-1 min-w-[180px] z-50">
                 {(Object.entries(regionLabels) as [Region, string][]).map(([key, label]) => (
                   <button
                     key={key}
-                    onClick={() => { setCurrentRegion(key); setRegionOpen(false); }}
+                    onClick={() => { setRegion(key); setRegionOpen(false); }}
                     className={`w-full text-left px-4 py-2 text-xs tracking-[0.05em] hover:bg-[#1A1A1A] transition-colors flex items-center gap-2 ${
-                      key === currentRegion ? "text-[#E8B4B8]" : "text-[#8A8580]"
+                      key === region ? "text-[#E8B4B8]" : "text-[#8A8580]"
                     }`}
                   >
                     <span>{regionIcons[key]}</span> {label}
@@ -172,13 +170,13 @@ export function Header() {
       {/* Mobile nav */}
       {mobileOpen && (
         <nav className="lg:hidden bg-[#0A0A0A] border-t border-[#1A1A1A] px-6 py-4 flex flex-col gap-4 text-xs font-light tracking-[0.1em] uppercase">
-          <Link href="/animal-sofa-collection" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Collection</Link>
-          <Link href="/luxury-villa-interior" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Interior Worlds</Link>
-          <Link href="/about" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">About</Link>
-          <Link href="/contact" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Contact</Link>
+          <Link href="/animal-sofa-collection" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("collection")}</Link>
+          <Link href="/luxury-villa-interior" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("interiorWorlds")}</Link>
+          <Link href="/about" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("about")}</Link>
+          <Link href="/contact" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link>
           <div className="flex gap-3 pt-2 border-t border-[#1A1A1A]">
-            <span className="text-[#8A8580]">🌐 EN</span>
-            <span className="text-[#8A8580]">📍 Americas</span>
+            <span className="text-[#8A8580]">🌐 {localeNames[locale]}</span>
+            <span className="text-[#8A8580]">📍 {regionLabels[region]}</span>
           </div>
         </nav>
       )}
