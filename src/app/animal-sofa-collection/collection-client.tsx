@@ -24,7 +24,7 @@ export function CollectionClient() {
 
       {/* Hero */}
       <section className="relative">
-        <div className="py-20 md:py-32 text-center bg-gradient-to-b from-[#0E0E0E] to-[#0A0A0A]">
+        <div className="py-20 md:py-32 text-center bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
           <div className="max-w-4xl mx-auto px-6">
             <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-4">
               The Complete Collection
@@ -46,7 +46,7 @@ export function CollectionClient() {
             <Link
               key={product.slug}
               href={`/${product.slug}`}
-              className="group bg-[#141414] border border-[#222] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
+              className="group bg-[#111111] border border-[#1A1A1A] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
             >
               <div className="aspect-[4/3] bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"
@@ -63,13 +63,13 @@ export function CollectionClient() {
                 <h2 className="font-serif text-2xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors">
                   {product.name}
                 </h2>
-                <p className="mt-2 text-sm text-[#6B6B6B]">{product.tagline}</p>
+                <p className="mt-2 text-sm text-[#8A8580]">{product.tagline}</p>
                 <p className="mt-3 text-[#F5F0EB]/70">
                   From {formatPrice(product.priceRange[region][0], region)}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {product.materialOptions?.map((opt) => (
-                    <span key={opt.type} className="text-xs border border-[#333] px-3 py-1 text-[#6B6B6B]">
+                    <span key={opt.type} className="text-xs border border-[#333] px-3 py-1 text-[#8A8580]">
                       {opt.type}
                     </span>
                   ))}
@@ -81,20 +81,20 @@ export function CollectionClient() {
       </section>
 
       {/* Trust section */}
-      <section className="border-t border-[#222] py-16">
+      <section className="border-t border-[#1A1A1A] py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
               <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">Made to Order</h3>
-              <p className="text-sm text-[#6B6B6B]">Each piece is crafted to your specifications at our Shanghai workshop, 8–12 weeks production</p>
+              <p className="text-sm text-[#8A8580]">Each piece is crafted to your specifications at our Shanghai workshop, 8–12 weeks production</p>
             </div>
             <div>
               <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">White-Glove Delivery</h3>
-              <p className="text-sm text-[#6B6B6B]">Free worldwide delivery with professional installation and packaging removal</p>
+              <p className="text-sm text-[#8A8580]">Free worldwide delivery with professional installation and packaging removal</p>
             </div>
             <div>
               <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">Quality Guarantee</h3>
-              <p className="text-sm text-[#6B6B6B]">14-day quality guarantee with full shipping documentation and video evidence</p>
+              <p className="text-sm text-[#8A8580]">14-day quality guarantee with full shipping documentation and video evidence</p>
             </div>
           </div>
         </div>

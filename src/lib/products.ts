@@ -1,3 +1,5 @@
+export type Region = "americas" | "europe" | "middle_east" | "se_asia";
+
 export interface Product {
   slug: string;
   name: string;
@@ -9,13 +11,13 @@ export interface Product {
   priceRange: {
     americas: [number, number];
     europe: [number, number];
-    middleEast: [number, number];
-    southeastAsia: [number, number];
+    middle_east: [number, number];
+    se_asia: [number, number];
   };
   specifications: {
     width: string;
-    depth: string;
     height: string;
+    depth: string;
     seatHeight: string;
     weight: string;
     capacity: string;
@@ -24,11 +26,14 @@ export interface Product {
   materialOptions?: {
     type: string;
     options: string[];
+    colors: string[];
   }[];
   faq: { question: string; answer: string }[];
   relatedProducts: string[];
   relatedInteriors: string[];
   metaDescription: string;
+  /** Hide this product in specific regions */
+  hiddenInRegions?: Region[];
 }
 
 export const products: Product[] = [
@@ -36,7 +41,7 @@ export const products: Product[] = [
     slug: "bear-sofa",
     name: "Bear Sofa",
     animal: "Bear",
-    tagline: "Commanding Presence. Grand Scale.",
+    tagline: "Commanding Presence, Grand Scale",
     description:
       "The Bear Sofa embodies the commanding presence of a grizzly bear in repose. Its broad, embracing silhouette creates a sanctuary of comfort that anchors any grand living space. Designed for those who seek furniture with primal authority and sculptural beauty.",
     concept:
@@ -44,77 +49,95 @@ export const products: Product[] = [
     interiorContext:
       "The Bear Sofa belongs in spaces that demand gravitas: grand foyers of luxury villas, the principal lounge of boutique hotels, or the living room of a collector's penthouse. Its commanding scale requires generous ceiling height and visual breathing room, where it becomes the gravitational center of the interior.",
     priceRange: {
-      americas: [6200, 9800],
-      europe: [5800, 9200],
-      middleEast: [6400, 10100],
-      southeastAsia: [5200, 8200],
+      americas: [8200, 9800],
+      europe: [8200, 9800],
+      middle_east: [7800, 9200],
+      se_asia: [7200, 8600],
     },
     specifications: {
-      width: '280 cm / 110"',
-      depth: '120 cm / 47"',
-      height: '95 cm / 37"',
-      seatHeight: '42 cm / 16.5"',
-      weight: "85 kg / 187 lbs",
-      capacity: "3-seater, up to 340 kg / 750 lbs",
+      width: "W200 cm",
+      height: "H152 cm",
+      depth: "D160 cm",
+      seatHeight: "42 cm",
+      weight: "90 kg",
+      capacity: "3-seater, up to 340 kg",
     },
     materials: [
       "Solid hardwood frame (FSC-certified oak)",
       "High-density foam with down feather wrap",
-      "Premium fabric or top-grain leather",
+      "Cloud Touch or Wild Touch fabric, or Leather Touch",
       "Solid brass feet with matte black finish",
     ],
     materialOptions: [
       {
-        type: "Fabric",
+        type: "Cloud Touch",
         options: [
           "Arctic White Bouclé",
-          "Charcoal Wool",
           "Sand Linen Blend",
+          "Charcoal Wool",
           "Forest Green Velvet",
         ],
+        colors: ["#F5F0EB", "#C2B8A3", "#4A4A4A", "#3A5A40"],
       },
       {
-        type: "Leather",
+        type: "Wild Touch",
+        options: [
+          "Midnight Bouclé",
+          "Stone Grey Wool",
+          "Saddle Tan Linen",
+          "Charcoal Velvet",
+        ],
+        colors: ["#2A2A3A", "#7A7A7A", "#A08060", "#3A3A3A"],
+      },
+      {
+        type: "Leather Touch",
         options: [
           "Cognac Aniline",
           "Midnight Black",
           "Burgundy Heritage",
           "Natural Vegetable-tanned",
         ],
+        colors: ["#8B5A2B", "#1A1A1A", "#6B2A3A", "#C4A67A"],
       },
     ],
     faq: [
       {
         question: "How long does it take to receive a Bear Sofa?",
         answer:
-          "Each Bear Sofa is made to order at our Shanghai workshop. Production takes 8–12 weeks, followed by white-glove delivery to your door. You will receive photo and video documentation of your piece throughout the process.",
+          "Each Bear Sofa is made to order at our Shanghai workshop. Production takes 8–12 weeks, followed by free white-glove delivery to your door. You will receive photo and video documentation of your piece throughout the process.",
       },
       {
         question: "What is the weight capacity of the Bear Sofa?",
         answer:
-          "The Bear Sofa supports up to 340 kg (750 lbs) across its three-seat configuration. The solid hardwood frame and reinforced joinery ensure lasting structural integrity.",
+          "The Bear Sofa supports up to 340 kg across its three-seat configuration. The solid hardwood frame and reinforced joinery ensure lasting structural integrity.",
       },
       {
         question: "Can I customize the fabric or leather?",
         answer:
-          "Yes. The Bear Sofa is available in four fabric options and four leather options. For bespoke material requests, our design team can source specific textiles — contact us to discuss your vision.",
+          "Yes. The Bear Sofa is available in Cloud Touch fabric, Wild Touch fabric, and Leather Touch options with multiple colors each. For bespoke material requests, our design team can source specific textiles — contact us to discuss your vision.",
       },
       {
         question: "Is the Bear Sofa suitable for commercial spaces?",
         answer:
-          "The Bear Sofa is engineered for both residential and commercial use. For hospitality projects, we offer contract-grade specifications with enhanced durability treatments and bulk pricing.",
+          "The Bear Sofa is engineered for both residential and commercial use. For hospitality projects, we offer contract-grade specifications with enhanced durability treatments and bulk pricing through our trade program.",
+      },
+      {
+        question: "What is the return policy?",
+        answer:
+          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
       },
     ],
     relatedProducts: ["lion-sofa", "gorilla-sofa", "owl-sofa"],
     relatedInteriors: ["luxury-villa-interior", "boutique-hotel-lobby"],
     metaDescription:
       "Bear Sofa by Fuzz Sofa — a sculptural three-seater inspired by the grizzly bear. Made to order in Shanghai with premium fabric or leather. Free white-glove delivery worldwide.",
+    hiddenInRegions: ["middle_east"],
   },
   {
     slug: "lion-sofa",
     name: "Lion Sofa",
     animal: "Lion",
-    tagline: "Regal Authority. Timeless Elegance.",
+    tagline: "Regal Authority, for GCC Markets",
     description:
       "The Lion Sofa channels the regal authority of the king of beasts into a piece that commands any interior. Its proud, upright backrest and generous proportions make it the focal point of rooms designed for dialogue and ceremony. Particularly sought after for GCC market residences and diplomatic spaces.",
     concept:
@@ -122,55 +145,67 @@ export const products: Product[] = [
     interiorContext:
       "The Lion Sofa thrives in spaces of ceremony and reception: the majlis of a Gulf residence, the diplomatic lounge of an embassy, or the principal salon of a heritage hotel. Its upright posture suits formal conversation, while its generous depth invites relaxed repose. In GCC markets, the Lion Sofa has become a signature piece for residences that blend traditional hospitality with contemporary design.",
     priceRange: {
-      americas: [5500, 8200],
-      europe: [5100, 7600],
-      middleEast: [5700, 8500],
-      southeastAsia: [4600, 6900],
+      americas: [7500, 8200],
+      europe: [7500, 8200],
+      middle_east: [7100, 7800],
+      se_asia: [6500, 7100],
     },
     specifications: {
-      width: '260 cm / 102"',
-      depth: '115 cm / 45"',
-      height: '92 cm / 36"',
-      seatHeight: '44 cm / 17"',
-      weight: "78 kg / 172 lbs",
-      capacity: "3-seater, up to 320 kg / 705 lbs",
+      width: "W200 cm",
+      height: "H148 cm",
+      depth: "D155 cm",
+      seatHeight: "44 cm",
+      weight: "85 kg",
+      capacity: "3-seater, up to 320 kg",
     },
     materials: [
       "Solid hardwood frame (FSC-certified walnut)",
       "High-density foam with down feather wrap",
-      "Premium fabric or top-grain leather",
+      "Cloud Touch or Wild Touch fabric, or Leather Touch",
       "Solid brass feet with brushed gold finish",
     ],
     materialOptions: [
       {
-        type: "Fabric",
+        type: "Cloud Touch",
         options: [
-          "Royal Navy Velvet",
           "Desert Sand Bouclé",
           "Ivory Linen",
+          "Royal Navy Velvet",
           "Deep Burgundy Wool",
         ],
+        colors: ["#C2B8A3", "#F0EBE0", "#1A2A5A", "#5A2A3A"],
       },
       {
-        type: "Leather",
+        type: "Wild Touch",
+        options: [
+          "Midnight Bouclé",
+          "Stone Grey Wool",
+          "Saddle Tan Linen",
+          "Charcoal Velvet",
+        ],
+        colors: ["#2A2A3A", "#7A7A7A", "#A08060", "#3A3A3A"],
+      },
+      {
+        type: "Leather Touch",
         options: [
           "Desert Tan Aniline",
           "Midnight Black",
           "Oxblood Heritage",
           "Camel Full-grain",
         ],
+        colors: ["#A08060", "#1A1A1A", "#6B2A2A", "#C4A67A"],
       },
     ],
     faq: [
       {
         question: "Why is the Lion Sofa popular in GCC markets?",
         answer:
-          "The Lion Sofa's upright, commanding posture aligns with majlis seating traditions, while its contemporary design language appeals to modern GCC residences. Its generous proportions suit the scale of Gulf architecture, and the leather options are particularly popular for their durability in warm climates.",
+          "The Lion Sofa's upright, commanding posture aligns with majlis seating traditions, while its contemporary design language appeals to modern GCC residences. Its generous proportions suit the scale of Gulf architecture, and the Leather Touch options are particularly popular for their durability in warm climates.",
       },
       {
         question: "What is the delivery timeframe for the Lion Sofa?",
         answer:
-          "Made to order at our Shanghai workshop. Production takes 8–12 weeks, with white-glove delivery worldwide. GCC deliveries typically arrive within 14–16 weeks total. Full shipping documentation and photo evidence are provided.",
+          "Made to order at our Shanghai workshop. Production takes 8–12 weeks, with free white-glove delivery worldwide. GCC deliveries typically arrive within 14–16 weeks total. Full shipping documentation and photo evidence are provided.",
       },
       {
         question: "Can the Lion Sofa be configured as a sectional?",
@@ -182,6 +217,11 @@ export const products: Product[] = [
         answer:
           "All Fuzz Sofa pieces come with a 14-day quality guarantee from delivery. Structural warranty extends to 5 years for the frame and 2 years for upholstery under normal residential use.",
       },
+      {
+        question: "What is the return policy?",
+        answer:
+          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
+      },
     ],
     relatedProducts: ["bear-sofa", "tiger-sofa", "gorilla-sofa"],
     relatedInteriors: ["luxury-villa-interior", "boutique-hotel-lobby"],
@@ -192,7 +232,7 @@ export const products: Product[] = [
     slug: "tiger-sofa",
     name: "Tiger Sofa",
     animal: "Tiger",
-    tagline: "Bold Energy. Definitive Statement.",
+    tagline: "Bold Energy, Statement Piece",
     description:
       "The Tiger Sofa captures the bold, kinetic energy of a tiger mid-stride. Its dynamic, asymmetric profile and striking lines create an unmistakable statement piece that energizes any interior. For collectors and design enthusiasts who want furniture that provokes conversation.",
     concept:
@@ -200,43 +240,55 @@ export const products: Product[] = [
     interiorContext:
       "The Tiger Sofa is a natural centerpiece for contemporary art galleries, modernist apartments, and the living spaces of collectors who curate their interiors with the same intention as their art. Its dynamic profile pairs beautifully with brutalist architecture and minimalist interiors where its energy can resonate without competition.",
     priceRange: {
-      americas: [5200, 8500],
-      europe: [4800, 7900],
-      middleEast: [5400, 8800],
-      southeastAsia: [4300, 7100],
+      americas: [7200, 8500],
+      europe: [7200, 8500],
+      middle_east: [6800, 8000],
+      se_asia: [6200, 7300],
     },
     specifications: {
-      width: '250 cm / 98"',
-      depth: '110 cm / 43"',
-      height: '88 cm / 35"',
-      seatHeight: '43 cm / 17"',
-      weight: "72 kg / 159 lbs",
-      capacity: "3-seater, up to 300 kg / 660 lbs",
+      width: "W195 cm",
+      height: "H150 cm",
+      depth: "D158 cm",
+      seatHeight: "43 cm",
+      weight: "88 kg",
+      capacity: "3-seater, up to 300 kg",
     },
     materials: [
       "Solid hardwood frame (FSC-certified ash)",
       "High-density foam with down feather wrap",
-      "Premium fabric or top-grain leather",
+      "Cloud Touch or Wild Touch fabric, or Leather Touch",
       "Powder-coated steel legs with matte finish",
     ],
     materialOptions: [
       {
-        type: "Fabric",
+        type: "Cloud Touch",
         options: [
-          "Burnt Orange Velvet",
-          "Graphite Wool",
           "Amber Bouclé",
           "Storm Grey Linen",
+          "Burnt Orange Velvet",
+          "Graphite Wool",
         ],
+        colors: ["#B08040", "#7A7A80", "#C06020", "#4A4A4A"],
       },
       {
-        type: "Leather",
+        type: "Wild Touch",
+        options: [
+          "Midnight Bouclé",
+          "Stone Grey Wool",
+          "Saddle Tan Linen",
+          "Charcoal Velvet",
+        ],
+        colors: ["#2A2A3A", "#7A7A7A", "#A08060", "#3A3A3A"],
+      },
+      {
+        type: "Leather Touch",
         options: [
           "Russet Aniline",
           "Obsidian Black",
           "Saddle Brown",
           "Olive Vegetable-tanned",
         ],
+        colors: ["#8B4513", "#1A1A1A", "#8B6914", "#6B7A3A"],
       },
     ],
     faq: [
@@ -260,6 +312,11 @@ export const products: Product[] = [
         answer:
           "We operate by appointment from our Shanghai workshop. For other regions, we offer virtual showroom consultations with detailed video walkthroughs. Contact us to arrange a session with our design team.",
       },
+      {
+        question: "What is the return policy?",
+        answer:
+          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
+      },
     ],
     relatedProducts: ["lion-sofa", "bear-sofa", "owl-sofa"],
     relatedInteriors: ["statement-furniture", "sculptural-furniture-trend"],
@@ -270,7 +327,7 @@ export const products: Product[] = [
     slug: "gorilla-sofa",
     name: "Gorilla Sofa",
     animal: "Gorilla",
-    tagline: "Raw Power. Grounded Strength.",
+    tagline: "Raw Power, Fabric or Leather",
     description:
       "The Gorilla Sofa embodies raw, grounded power. Its massive, low-slung profile and broad armrests create an unmistakable impression of strength and stability. Available in both fabric and leather options, this is the definitive statement piece for interiors that celebrate bold, primal energy.",
     concept:
@@ -278,43 +335,55 @@ export const products: Product[] = [
     interiorContext:
       "The Gorilla Sofa demands generous floor space and suits interiors that celebrate materiality and bold gestures. It excels in loft apartments with exposed concrete, contemporary villas with double-height spaces, and hotel lobbies where it serves as a gathering anchor. Its low profile makes it ideal for rooms with dramatic views, where it won't compete with the landscape.",
     priceRange: {
-      americas: [6200, 9800],
-      europe: [5800, 9200],
-      middleEast: [6400, 10100],
-      southeastAsia: [5200, 8200],
+      americas: [7200, 9800],
+      europe: [7200, 9800],
+      middle_east: [6800, 9200],
+      se_asia: [6200, 8500],
     },
     specifications: {
-      width: '300 cm / 118"',
-      depth: '130 cm / 51"',
-      height: '78 cm / 31"',
-      seatHeight: '38 cm / 15"',
-      weight: "95 kg / 209 lbs",
-      capacity: "4-seater, up to 400 kg / 880 lbs",
+      width: "W200 cm",
+      height: "H152 cm",
+      depth: "D160 cm",
+      seatHeight: "38 cm",
+      weight: "90 kg",
+      capacity: "4-seater, up to 400 kg",
     },
     materials: [
       "Solid hardwood frame (FSC-certified oak)",
       "High-density foam with down feather wrap",
-      "Premium fabric or top-grain leather",
+      "Cloud Touch or Wild Touch fabric, or Leather Touch",
       "Solid steel base with black powder coat",
     ],
     materialOptions: [
       {
-        type: "Fabric",
+        type: "Cloud Touch",
+        options: [
+          "Arctic White Bouclé",
+          "Sand Linen Blend",
+          "Charcoal Wool",
+          "Forest Green Velvet",
+        ],
+        colors: ["#F5F0EB", "#C2B8A3", "#4A4A4A", "#3A5A40"],
+      },
+      {
+        type: "Wild Touch",
         options: [
           "Midnight Bouclé",
           "Stone Grey Wool",
           "Saddle Tan Linen",
           "Charcoal Velvet",
         ],
+        colors: ["#2A2A3A", "#7A7A7A", "#A08060", "#3A3A3A"],
       },
       {
-        type: "Leather",
+        type: "Leather Touch",
         options: [
           "Black Full-grain",
           "Cognac Aniline",
           "Espresso Heritage",
           "Natural Vegetable-tanned",
         ],
+        colors: ["#1A1A1A", "#8B5A2B", "#3A2A1A", "#C4A67A"],
       },
     ],
     faq: [
@@ -324,19 +393,24 @@ export const products: Product[] = [
           "The low profile is intentional — it mirrors the gorilla's grounded, relaxed posture. This lower stance creates a more intimate seating experience and allows the piece to sit comfortably in rooms with dramatic views or art installations above eye level.",
       },
       {
-        question: "Is the Gorilla Sofa the largest piece in the collection?",
-        answer:
-          "Yes, the Gorilla Sofa is the widest and heaviest piece in the Fuzz Sofa collection at 300 cm wide and 95 kg. Its four-seat capacity and generous depth make it the most substantial single piece we produce.",
-      },
-      {
         question: "What is the difference between fabric and leather options?",
         answer:
-          "Both options use the same solid hardwood frame and cushioning system. Fabric options offer warmer textures and are ideal for residential settings. Leather options develop a rich patina over time and are recommended for both residential and commercial use. Price varies by material selection.",
+          "Both options use the same solid hardwood frame and cushioning system. Cloud Touch and Wild Touch fabrics offer warmer textures ideal for residential settings. Leather Touch develops a rich patina over time and is recommended for both residential and commercial use. Price varies by material selection.",
       },
       {
         question: "How is the Gorilla Sofa delivered?",
         answer:
-          "All Fuzz Sofa pieces are delivered via our white-glove service. The Gorilla Sofa's size requires our team to assess access points before delivery. We coordinate doorways, elevators, and staircases to ensure smooth installation. Full shipping video documentation is provided.",
+          "All Fuzz Sofa pieces are delivered via our free white-glove service. The Gorilla Sofa's size requires our team to assess access points before delivery. We coordinate doorways, elevators, and staircases to ensure smooth installation. Full shipping video documentation is provided.",
+      },
+      {
+        question: "Is the Gorilla Sofa suitable for commercial spaces?",
+        answer:
+          "The Gorilla Sofa is engineered for both residential and commercial use. For hospitality projects, we offer contract-grade specifications with enhanced durability treatments. Contact trade@fuzzsofa.com for bulk pricing.",
+      },
+      {
+        question: "What is the return policy?",
+        answer:
+          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
       },
     ],
     relatedProducts: ["bear-sofa", "lion-sofa", "tiger-sofa"],
@@ -348,7 +422,7 @@ export const products: Product[] = [
     slug: "owl-sofa",
     name: "Owl Chair",
     animal: "Owl",
-    tagline: "Wisdom and Watchfulness. Compact Statement.",
+    tagline: "Wisdom and Watchfulness",
     description:
       "The Owl Chair captures the alert, watchful essence of an owl at rest. Its compact scale and distinctive rounded backrest make it the most versatile piece in the Fuzz Sofa collection — a statement chair that transforms any corner into a place of contemplation and style.",
     concept:
@@ -356,41 +430,42 @@ export const products: Product[] = [
     interiorContext:
       "The Owl Chair's compact footprint makes it the most versatile piece in the collection. It excels in home libraries and reading nooks, bedroom seating areas, hotel room corners, and as accent seating in living rooms alongside larger Fuzz Sofa pieces. Its verticality makes it ideal for spaces where floor area is limited but vertical presence is welcome.",
     priceRange: {
-      americas: [1500, 2800],
-      europe: [1400, 2600],
-      middleEast: [1600, 2900],
-      southeastAsia: [1200, 2300],
+      americas: [2500, 2800],
+      europe: [2500, 2800],
+      middle_east: [2650, 2800],
+      se_asia: [2500, 2800],
     },
     specifications: {
-      width: '85 cm / 33"',
-      depth: '80 cm / 31"',
-      height: '98 cm / 39"',
-      seatHeight: '44 cm / 17"',
-      weight: "28 kg / 62 lbs",
-      capacity: "1-seater, up to 150 kg / 330 lbs",
+      width: "W86 cm",
+      height: "H76 cm",
+      depth: "D82 cm",
+      seatHeight: "44 cm",
+      weight: "60 kg",
+      capacity: "1-seater, up to 150 kg",
     },
     materials: [
       "Solid hardwood frame (FSC-certified walnut)",
       "High-density foam with down feather wrap",
-      "Premium fabric upholstery",
+      "Cloud Touch fabric upholstery",
       "Solid brass feet with brushed finish",
     ],
     materialOptions: [
       {
-        type: "Fabric",
+        type: "Cloud Touch",
         options: [
           "Ivory Bouclé",
           "Sage Green Velvet",
           "Dusty Rose Wool",
           "Navy Linen Blend",
         ],
+        colors: ["#F0EBE0", "#7A9A7A", "#C4A0A0", "#2A3A5A"],
       },
     ],
     faq: [
       {
         question: "Is the Owl Chair available in leather?",
         answer:
-          "Currently, the Owl Chair is offered exclusively in fabric upholstery. The curved backrest and wing-like proportions are best expressed in fabric, which drapes naturally over the organic form. Leather options may be available for bespoke orders — contact our design team to discuss.",
+          "Currently, the Owl Chair is offered exclusively in Cloud Touch fabric upholstery. The curved backrest and wing-like proportions are best expressed in fabric, which drapes naturally over the organic form. Leather options may be available for bespoke orders — contact our design team to discuss.",
       },
       {
         question: "Can the Owl Chair be used as a dining chair?",
@@ -398,20 +473,26 @@ export const products: Product[] = [
           "While the Owl Chair's seat height is compatible with standard dining tables, its deep, embracing design is optimized for relaxed seating rather than upright dining. For dining applications, we recommend considering custom seat depth modifications.",
       },
       {
-        question: "How does the Owl Chair compare to other statement chairs?",
+        question: "Where does the Owl Chair work best?",
         answer:
-          "Unlike conventional accent chairs, the Owl Chair is a sculptural statement piece with a complete 360-degree design presence. Its rounded backrest means it works beautifully in the center of a room, not just against a wall. It occupies the space between furniture and art.",
+          "The Owl Chair's compact footprint makes it the most versatile piece in the collection. It excels in home libraries, reading nooks, bedroom seating areas, and as accent seating alongside larger Fuzz Sofa pieces. Its vertical presence is ideal for spaces where floor area is limited.",
       },
       {
-        question: "What is the lead time for the Owl Chair?",
+        question: "How is the Owl Chair shipped?",
         answer:
-          "The Owl Chair requires 6–10 weeks for production at our Shanghai workshop, followed by white-glove delivery. As our most compact piece, it ships more quickly and is often in stock for immediate delivery in select fabric options.",
+          "All Fuzz Sofa pieces include free white-glove delivery worldwide. The Owl Chair's compact size allows for simpler logistics than our larger pieces. Full shipping documentation with photo and video evidence is provided for every delivery.",
+      },
+      {
+        question: "What is the return policy?",
+        answer:
+          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
       },
     ],
     relatedProducts: ["bear-sofa", "tiger-sofa", "gorilla-sofa"],
     relatedInteriors: ["statement-furniture", "sculptural-furniture-trend"],
     metaDescription:
-      "Owl Chair by Fuzz Sofa — a compact sculptural statement chair inspired by the owl. Made to order in Shanghai. Free white-glove delivery worldwide.",
+      "Owl Chair by Fuzz Sofa — a compact sculptural statement chair inspired by the owl. Made to order in Shanghai with premium fabric. Free white-glove delivery worldwide.",
+    hiddenInRegions: ["middle_east"],
   },
 ];
 
@@ -419,15 +500,26 @@ export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }
 
-export type Region = "americas" | "europe" | "middleEast" | "southeastAsia";
+export function getVisibleProducts(region: Region): Product[] {
+  return products.filter((p) => !p.hiddenInRegions?.includes(region));
+}
 
-export function formatPrice(price: number, region: Region): string {
-  const currencyMap: Record<Region, { code: string; symbol: string; locale: string }> = {
-    americas: { code: "USD", symbol: "$", locale: "en-US" },
-    europe: { code: "EUR", symbol: "€", locale: "de-DE" },
-    middleEast: { code: "USD", symbol: "$", locale: "en-US" },
-    southeastAsia: { code: "USD", symbol: "$", locale: "en-US" },
+export function getPrice(product: Product, region: Region): number {
+  const mapping: Record<string, Record<Region, number>> = {
+    "bear-sofa": { americas: 8200, europe: 8200, middle_east: 7800, se_asia: 7200 },
+    "lion-sofa": { americas: 7500, europe: 7500, middle_east: 7100, se_asia: 6500 },
+    "tiger-sofa": { americas: 7200, europe: 7200, middle_east: 6800, se_asia: 6200 },
+    "gorilla-sofa": { americas: 7200, europe: 7200, middle_east: 6800, se_asia: 6200 },
+    "gorilla-leather": { americas: 9800, europe: 9800, middle_east: 9200, se_asia: 8500 },
+    "owl-sofa": { americas: 2800, europe: 2800, middle_east: 2650, se_asia: 2500 },
   };
-  const { code, locale } = currencyMap[region];
-  return new Intl.NumberFormat(locale, { style: "currency", currency: code, maximumFractionDigits: 0 }).format(price);
+  const key = product.slug === "gorilla-sofa" ? "gorilla-sofa" : product.slug;
+  return mapping[key]?.[region] ?? product.priceRange.americas[0];
+}
+
+export function formatPrice(price: number, region?: Region): string {
+  if (region === "europe") {
+    return `€${price.toLocaleString()}`;
+  }
+  return `$${price.toLocaleString()}`;
 }

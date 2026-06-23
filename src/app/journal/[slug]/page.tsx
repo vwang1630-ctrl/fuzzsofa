@@ -58,14 +58,14 @@ export default async function JournalArticlePage({ params }: PageProps) {
 
       <article className="max-w-3xl mx-auto px-6 py-20 md:py-32">
         <header className="mb-12">
-          <Link href="/journal" className="text-xs text-[#6B6B6B] hover:text-[#E8B4B8] transition-colors tracking-[0.1em] uppercase">
+          <Link href="/journal" className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors tracking-[0.1em] uppercase">
             &larr; Journal
           </Link>
           <p className="mt-6 text-xs text-[#E8B4B8]/50 tracking-[0.1em] uppercase">{article.category}</p>
           <h1 className="mt-3 font-serif text-4xl md:text-5xl font-light text-[#F5F0EB] leading-[1.1]">
             {article.title}
           </h1>
-          <div className="mt-6 flex items-center gap-4 text-xs text-[#6B6B6B]">
+          <div className="mt-6 flex items-center gap-4 text-xs text-[#8A8580]">
             <time dateTime={article.datePublished}>
               {new Date(article.datePublished).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -105,11 +105,11 @@ export default async function JournalArticlePage({ params }: PageProps) {
           })}
         </div>
 
-        <footer className="mt-16 pt-8 border-t border-[#222]">
+        <footer className="mt-16 pt-8 border-t border-[#1A1A1A]">
           <div className="flex items-center justify-between">
             <Link
               href="/journal"
-              className="text-sm text-[#6B6B6B] hover:text-[#E8B4B8] transition-colors"
+              className="text-sm text-[#8A8580] hover:text-[#E8B4B8] transition-colors"
             >
               &larr; All Articles
             </Link>

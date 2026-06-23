@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function MaterialsPage() {
   return (
     <section className="relative">
-      <div className="py-20 md:py-32 bg-gradient-to-b from-[#0E0E0E] to-[#0A0A0A]">
+      <div className="py-20 md:py-32 bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-4">Materials</p>
           <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
@@ -49,10 +49,10 @@ export default function MaterialsPage() {
                 use: "Bear Sofa, Tiger Sofa, Owl Chair",
               },
             ].map((fabric) => (
-              <div key={fabric.name} className="border-b border-[#222] pb-8">
+              <div key={fabric.name} className="border-b border-[#1A1A1A] pb-8">
                 <h3 className="font-serif text-xl text-[#F5F0EB] mb-3">{fabric.name}</h3>
                 <p className="text-sm text-[#F5F0EB]/60 leading-relaxed">{fabric.desc}</p>
-                <p className="mt-3 text-xs text-[#6B6B6B]">Used in: {fabric.use}</p>
+                <p className="mt-3 text-xs text-[#8A8580]">Used in: {fabric.use}</p>
               </div>
             ))}
           </div>
@@ -84,10 +84,10 @@ export default function MaterialsPage() {
                 use: "Tiger Sofa, Bear Sofa, Gorilla Sofa",
               },
             ].map((leather) => (
-              <div key={leather.name} className="border-b border-[#222] pb-8">
+              <div key={leather.name} className="border-b border-[#1A1A1A] pb-8">
                 <h3 className="font-serif text-xl text-[#F5F0EB] mb-3">{leather.name}</h3>
                 <p className="text-sm text-[#F5F0EB]/60 leading-relaxed">{leather.desc}</p>
-                <p className="mt-3 text-xs text-[#6B6B6B]">Used in: {leather.use}</p>
+                <p className="mt-3 text-xs text-[#8A8580]">Used in: {leather.use}</p>
               </div>
             ))}
           </div>
@@ -102,7 +102,7 @@ export default function MaterialsPage() {
               { wood: "Walnut", desc: "Used in Lion Sofa and Owl Chair. Rich, dark tones with a fine, flowing grain that complements formal and residential settings." },
               { wood: "Ash", desc: "Used in Tiger Sofa. Light, strong, and flexible — ash's pale color and bold grain suit the Tiger's dynamic, energetic character." },
             ].map((item) => (
-              <div key={item.wood} className="border-b border-[#222] pb-6">
+              <div key={item.wood} className="border-b border-[#1A1A1A] pb-6">
                 <h3 className="font-serif text-lg text-[#F5F0EB] mb-2">FSC-Certified {item.wood}</h3>
                 <p className="text-sm text-[#F5F0EB]/60">{item.desc}</p>
               </div>
@@ -110,7 +110,7 @@ export default function MaterialsPage() {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-[#222] pt-12">
+        <div className="mt-16 border-t border-[#1A1A1A] pt-12">
           <Link
             href="/animal-sofa-collection"
             className="inline-flex items-center px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"

@@ -2,6 +2,8 @@ export type Locale = "en" | "zh" | "ja" | "fr" | "de" | "es" | "it" | "pt" | "pt
 
 export const rtlLocales: Locale[] = ["ar", "fa"];
 
+export const locales: Locale[] = ["en", "zh", "ja", "fr", "de", "es", "it", "pt", "pt-BR", "ar", "fa", "hi", "ko"];
+
 export const localeNames: Record<Locale, string> = {
   en: "English",
   zh: "中文",
@@ -81,7 +83,7 @@ type TranslationKeys = {
   dropRoomPhoto: string;
   placingInRoom: string;
   downloadImage: string;
-  pinPinterest: string;
+  shareXiaohongshu: string;
   share: string;
   tryAnother: string;
   buyThisPiece: string;
@@ -156,7 +158,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "Placing",
     orTapToUpload: "or tap to upload",
     downloadImage: "Download Image",
-    pinPinterest: "Pin to Pinterest",
+    shareXiaohongshu: "Share to Xiaohongshu",
     share: "Share",
     tryAnother: "Try Another Room",
     buyThisPiece: "Buy This Piece",
@@ -227,7 +229,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "正在放置",
     orTapToUpload: "或点击上传",
     downloadImage: "下载图片",
-    pinPinterest: "分享到Pinterest",
+    shareXiaohongshu: "分享到小红书",
     share: "分享",
     tryAnother: "换一个房间试试",
     buyThisPiece: "购买此作品",
@@ -298,7 +300,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "配置中",
     orTapToUpload: "またはタップしてアップロード",
     downloadImage: "画像をダウンロード",
-    pinPinterest: "Pinterestにピン",
+    shareXiaohongshu: "小紅書にシェア",
     share: "シェア",
     tryAnother: "別の部屋で試す",
     buyThisPiece: "この作品を購入",
@@ -369,7 +371,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "Placement de",
     orTapToUpload: "ou appuyez pour télécharger",
     downloadImage: "Télécharger l'Image",
-    pinPinterest: "Épingler sur Pinterest",
+    shareXiaohongshu: "Partager sur Xiaohongshu",
     share: "Partager",
     tryAnother: "Essayer une Autre Pièce",
     buyThisPiece: "Acheter Cette Pièce",
@@ -440,7 +442,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "Platzierung von",
     orTapToUpload: "oder tippen zum Hochladen",
     downloadImage: "Bild Herunterladen",
-    pinPinterest: "Auf Pinterest Pinnen",
+    shareXiaohongshu: "Auf Xiaohongshu teilen",
     share: "Teilen",
     tryAnother: "Anderen Raum Probieren",
     buyThisPiece: "Dieses Stück Kaufen",
@@ -511,7 +513,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "Colocando",
     orTapToUpload: "o toca para subir",
     downloadImage: "Descargar Imagen",
-    pinPinterest: "Fijar en Pinterest",
+    shareXiaohongshu: "Compartir en Xiaohongshu",
     share: "Compartir",
     tryAnother: "Probar Otro Espacio",
     buyThisPiece: "Comprar Esta Pieza",
@@ -582,7 +584,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "Posizionamento di",
     orTapToUpload: "o tocca per caricare",
     downloadImage: "Scarica Immagine",
-    pinPinterest: "Aggiungi a Pinterest",
+    shareXiaohongshu: "Condividi su Xiaohongshu",
     share: "Condividi",
     tryAnother: "Prova un'Altra Stanza",
     buyThisPiece: "Acquista Questo Pezzo",
@@ -653,7 +655,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "A colocar",
     orTapToUpload: "ou toque para carregar",
     downloadImage: "Descarregar Imagem",
-    pinPinterest: "Fixar no Pinterest",
+    shareXiaohongshu: "Compartilhar no Xiaohongshu",
     share: "Partilhar",
     tryAnother: "Experimentar Outro Espaço",
     buyThisPiece: "Comprar Esta Peça",
@@ -724,7 +726,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "Posicionando",
     orTapToUpload: "ou toque para carregar",
     downloadImage: "Baixar Imagem",
-    pinPinterest: "Fixar no Pinterest",
+    shareXiaohongshu: "Compartilhar no Xiaohongshu",
     share: "Compartilhar",
     tryAnother: "Experimentar Outro Ambiente",
     buyThisPiece: "Comprar Esta Peça",
@@ -795,7 +797,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "جاري وضع",
     orTapToUpload: "أو اضغط للرفع",
     downloadImage: "تحميل الصورة",
-    pinPinterest: "تثبيت على بنترست",
+    shareXiaohongshu: "مشاركة على شياوهونغشو",
     share: "مشاركة",
     tryAnother: "جرّب غرفة أخرى",
     buyThisPiece: "اشترِ هذه القطعة",
@@ -866,7 +868,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "در حال قرار دادن",
     orTapToUpload: "یا برای آپلود ضربه بزنید",
     downloadImage: "دانلود تصویر",
-    pinPinterest: "پین در پینترست",
+    shareXiaohongshu: "اشتراک‌گذاری در شیائوهونگشو",
     share: "اشتراک‌گذاری",
     tryAnother: "اتاق دیگری امتحان کنید",
     buyThisPiece: "خرید این قطعه",
@@ -937,7 +939,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "रख रहे हैं",
     orTapToUpload: "या अपलोड करने के लिए टैप करें",
     downloadImage: "चित्र डाउनलोड करें",
-    pinPinterest: "Pinterest पर पिन करें",
+    shareXiaohongshu: "शियाओहोंगशू पर शेयर करें",
     share: "साझा करें",
     tryAnother: "दूसरा कमरा आज़माएं",
     buyThisPiece: "यह टुकड़ा खरीदें",
@@ -1008,7 +1010,7 @@ const translations: Record<Locale, TranslationKeys> = {
     placingProduct: "배치 중",
     orTapToUpload: "또는 탭하여 업로드",
     downloadImage: "이미지 다운로드",
-    pinPinterest: "Pinterest에 핀",
+    shareXiaohongshu: "샤오홍슈에 공유",
     share: "공유",
     tryAnother: "다른 방 체험하기",
     buyThisPiece: "이 작품 구매",

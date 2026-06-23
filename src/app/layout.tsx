@@ -7,7 +7,7 @@ import { FontPreload } from "@/components/font-preload";
 
 export const metadata: Metadata = {
   title: {
-    default: "Fuzz Sofa — Sculptural Furniture Inspired by Nature",
+    default: "Fuzz Sofa | Sculptural Furniture Inspired by Nature",
     template: "%s | Fuzz Sofa",
   },
   description:
@@ -58,7 +58,7 @@ export default function RootLayout({
         <CartProvider>
           <FontPreload />
           <Header />
-          <main className="min-h-screen pt-16">{children}</main>
+          <main className="min-h-screen pt-[60px]">{children}</main>
           <Footer />
         </CartProvider>
       </body>

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <section className="relative">
-      <div className="py-20 md:py-32 bg-gradient-to-b from-[#0E0E0E] to-[#0A0A0A]">
+      <div className="py-20 md:py-32 bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
             About Fuzz Sofa
           </h1>
-          <p className="mt-6 text-lg text-[#F5F0EB]/50 font-light max-w-2xl mx-auto">
-            Sculptural furniture inspired by nature. Made to order in Shanghai, shipped worldwide.
+          <p className="mt-6 text-lg text-[#E8B4B8]/60 font-light tracking-[0.1em] uppercase text-sm">
+            From Shanghai to the World
           </p>
         </div>
       </div>
@@ -40,7 +40,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-[#222] pt-12">
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-[#1A1A1A] pt-12">
           {[
             { label: "Origin", value: "Shanghai" },
             { label: "Founded", value: "2022" },
@@ -48,13 +48,13 @@ export default function AboutPage() {
             { label: "Markets", value: "40+ Countries" },
           ].map((stat) => (
             <div key={stat.label}>
-              <p className="text-xs text-[#6B6B6B] tracking-[0.1em] uppercase mb-1">{stat.label}</p>
+              <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-1">{stat.label}</p>
               <p className="font-serif text-2xl text-[#F5F0EB]">{stat.value}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-16 border-t border-[#222] pt-12 flex flex-wrap gap-4">
+        <div className="mt-16 border-t border-[#1A1A1A] pt-12 flex flex-wrap gap-4">
           <Link
             href="/animal-sofa-collection"
             className="inline-flex items-center px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"

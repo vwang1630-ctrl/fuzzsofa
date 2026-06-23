@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function ProcessPage() {
   return (
     <section className="relative">
-      <div className="py-20 md:py-32 bg-gradient-to-b from-[#0E0E0E] to-[#0A0A0A]">
+      <div className="py-20 md:py-32 bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-4">The Process</p>
           <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
@@ -78,7 +78,7 @@ export default function ProcessPage() {
           </p>
         </div>
 
-        <div className="border-t border-[#222] pt-12">
+        <div className="border-t border-[#1A1A1A] pt-12">
           <Link
             href="/animal-sofa-collection"
             className="inline-flex items-center px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"

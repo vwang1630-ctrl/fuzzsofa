@@ -46,7 +46,6 @@ export function RoomVisualizationModal({
     setStep("processing");
     setProcessingProgress(0);
 
-    // Simulate progress animation
     const progressInterval = setInterval(() => {
       setProcessingProgress((prev) => {
         if (prev >= 90) {
@@ -64,7 +63,6 @@ export function RoomVisualizationModal({
       clearInterval(progressInterval);
       setProcessingProgress(100);
 
-      // Small delay for the 100% to show
       await new Promise((r) => setTimeout(r, 300));
 
       setResultImage(placeholder);
@@ -121,48 +119,25 @@ export function RoomVisualizationModal({
       link.click();
       window.URL.revokeObjectURL(blobUrl);
     } catch {
-      // Fallback: open in new tab
       window.open(resultImage, "_blank");
     }
   }, [resultImage, product.slug]);
 
-  const handlePinPinterest = useCallback(() => {
-    const url = encodeURIComponent("https://fuzzsofa.com");
-    const media = encodeURIComponent(resultImage || "");
-    const description = encodeURIComponent(
+  const handleShareXiaohongshu = useCallback(() => {
+    // Xiaohongshu sharing - opens the app/web with pre-filled content
+    // On mobile, this will attempt to open the Xiaohongshu app
+    const shareText = encodeURIComponent(
       `${product.name} — Sculptural Furniture Inspired by Nature | Fuzz Sofa`
     );
+    const shareUrl = encodeURIComponent(`https://fuzzsofa.com/${product.slug}`);
     window.open(
-      `https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${description}`,
-      "_blank",
-      "width=600,height=400"
+      `https://www.xiaohongshu.com/discovery/item?title=${shareText}&url=${shareUrl}`,
+      "_blank"
     );
-  }, [resultImage, product]);
-
-  const handleShare = useCallback(async () => {
-    const shareData = {
-      title: `${product.name} — Fuzz Sofa`,
-      text: `See the ${product.name} in my room! Sculptural furniture inspired by nature.`,
-      url: `https://fuzzsofa.com/${product.slug}`,
-    };
-
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch {
-        // User cancelled or error
-      }
-    } else {
-      // Fallback: copy link
-      try {
-        await navigator.clipboard.writeText(
-          `https://fuzzsofa.com/${product.slug}`
-        );
-      } catch {
-        // Silent fail
-      }
-    }
   }, [product]);
+
+  // Share feature is deferred — will be implemented when all content is ready
+  // const handleShare = useCallback(async () => { ... }, [product]);
 
   if (!isOpen) return null;
 
@@ -192,16 +167,16 @@ export function RoomVisualizationModal({
       </button>
 
       {/* Modal content */}
-      <div className="relative z-10 w-full max-w-[800px] mx-4 max-h-[90vh] overflow-y-auto bg-[#141414] border border-[#222] rounded-[4px]">
+      <div className="relative z-10 w-full max-w-[800px] mx-4 max-h-[90vh] overflow-y-auto bg-[#111111] border border-[#1A1A1A] rounded-[4px]">
         {/* Product thumbnail badge */}
-        <div className="sticky top-0 z-20 bg-[#141414] border-b border-[#222] px-6 py-3 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-[#0A0A0A] border border-[#333] flex items-center justify-center">
+        <div className="sticky top-0 z-20 bg-[#111111] border-b border-[#1A1A1A] px-6 py-3 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-[#0A0A0A] border border-[#1A1A1A] flex items-center justify-center">
             <span className="font-serif text-sm text-[#E8B4B8]">
               {product.animal.charAt(0)}
             </span>
           </div>
-          <span className="text-xs tracking-[0.08em] text-[#F5F0EB]/50">
-            Placing: <span className="text-[#E8B4B8]">{product.name}</span>
+          <span className="text-xs tracking-[0.08em] text-[#8A8580] uppercase">
+            Placing: <span className="text-[#E8B4B8] normal-case">{product.name}</span>
           </span>
         </div>
 
@@ -209,10 +184,10 @@ export function RoomVisualizationModal({
           {/* STEP 1: Upload */}
           {step === "upload" && (
             <div className="space-y-6">
-              <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB]">
+              <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] tracking-[0.05em]">
                 Try in Your Room
               </h2>
-              <p className="text-sm text-[#F5F0EB]/50 leading-relaxed max-w-md">
+              <p className="text-sm text-[#8A8580] leading-relaxed max-w-md font-light">
                 Upload a photo of your room and see how the {product.name}{" "}
                 transforms your space. Our AI will place it with realistic
                 lighting and perspective.
@@ -235,8 +210,8 @@ export function RoomVisualizationModal({
                   }
                 `}
               >
-                {/* Room / Camera icon */}
-                <div className="w-16 h-16 rounded-full border border-[#333] flex items-center justify-center">
+                {/* Camera icon */}
+                <div className="w-16 h-16 rounded-full border border-[#1A1A1A] flex items-center justify-center">
                   <svg
                     width="28"
                     height="28"
@@ -260,13 +235,13 @@ export function RoomVisualizationModal({
                 </div>
 
                 <div className="text-center space-y-1">
-                  <p className="text-sm text-[#F5F0EB]/70">
+                  <p className="text-sm text-[#F5F0EB]/70 font-light">
                     Drop your room photo here
                   </p>
-                  <p className="text-xs text-[#6B6B6B]">or tap to upload</p>
+                  <p className="text-xs text-[#8A8580]">or tap to upload</p>
                 </div>
 
-                <p className="text-[10px] text-[#6B6B6B]/60">
+                <p className="text-[10px] text-[#8A8580]/60">
                   JPG, PNG up to 10MB
                 </p>
 
@@ -285,11 +260,11 @@ export function RoomVisualizationModal({
           {/* STEP 2: Processing */}
           {step === "processing" && roomImage && (
             <div className="space-y-8 flex flex-col items-center text-center">
-              <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB]">
+              <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] tracking-[0.05em]">
                 Placing {product.name} in your room...
               </h2>
 
-              {/* Room preview with animation overlay */}
+              {/* Room preview with shimmer overlay */}
               <div className="relative w-full max-w-md mx-auto">
                 <div className="aspect-[4/3] overflow-hidden rounded-[4px] relative">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -315,13 +290,13 @@ export function RoomVisualizationModal({
 
               {/* Progress indicator */}
               <div className="w-full max-w-xs space-y-3">
-                <div className="h-[1px] bg-[#222] w-full overflow-hidden">
+                <div className="h-[1px] bg-[#1A1A1A] w-full overflow-hidden">
                   <div
                     className="h-full bg-[#E8B4B8] transition-all duration-500 ease-out"
                     style={{ width: `${Math.min(processingProgress, 100)}%` }}
                   />
                 </div>
-                <p className="text-xs text-[#6B6B6B]">
+                <p className="text-xs text-[#8A8580] font-light">
                   {processingProgress < 30
                     ? "Analyzing room layout..."
                     : processingProgress < 60
@@ -334,12 +309,12 @@ export function RoomVisualizationModal({
 
               {/* Product thumbnail */}
               <div className="flex items-center gap-2 pt-2">
-                <div className="w-6 h-6 rounded-full bg-[#0A0A0A] border border-[#333] flex items-center justify-center">
+                <div className="w-6 h-6 rounded-full bg-[#0A0A0A] border border-[#1A1A1A] flex items-center justify-center">
                   <span className="font-serif text-[10px] text-[#E8B4B8]">
                     {product.animal.charAt(0)}
                   </span>
                 </div>
-                <span className="text-xs text-[#F5F0EB]/40">
+                <span className="text-xs text-[#8A8580]">
                   {product.name}
                 </span>
               </div>
@@ -349,7 +324,7 @@ export function RoomVisualizationModal({
           {/* STEP 3: Result */}
           {step === "result" && roomImage && resultImage && (
             <div className="space-y-6">
-              <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] text-center">
+              <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] tracking-[0.05em] text-center">
                 {product.name} in Your Room
               </h2>
 
@@ -365,7 +340,7 @@ export function RoomVisualizationModal({
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button
                   onClick={handleDownload}
-                  className="flex-1 max-w-[200px] mx-auto sm:mx-0 py-3 border border-[#333] text-[#F5F0EB]/70 text-xs tracking-[0.08em] uppercase hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300 flex items-center justify-center gap-2"
+                  className="btn-outline flex-1 max-w-[200px] mx-auto sm:mx-0 py-3 text-xs tracking-[0.1em] uppercase font-light flex items-center justify-center gap-2"
                 >
                   <svg
                     width="14"
@@ -391,44 +366,29 @@ export function RoomVisualizationModal({
                 </button>
 
                 <button
-                  onClick={handlePinPinterest}
-                  className="flex-1 max-w-[200px] mx-auto sm:mx-0 py-3 border border-[#333] text-[#F5F0EB]/70 text-xs tracking-[0.08em] uppercase hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300 flex items-center justify-center gap-2"
+                  onClick={handleShareXiaohongshu}
+                  className="btn-outline flex-1 max-w-[200px] mx-auto sm:mx-0 py-3 text-xs tracking-[0.1em] uppercase font-light flex items-center justify-center gap-2"
                 >
                   <svg
                     width="14"
                     height="14"
                     viewBox="0 0 14 14"
                     fill="currentColor"
+                    className="text-[#E8B4B8]"
                   >
                     <path d="M7 0C3.13 0 0 3.13 0 7c0 2.84 1.69 5.29 4.13 6.43-.06-.53-.11-1.35.02-1.93.12-.53.81-3.43.81-3.43s-.21-.41-.21-1.02c0-.96.56-1.67 1.25-1.67.59 0 .87.44.87.92 0 .56-.36 1.4-.54 2.17-.15.65.33 1.18.97 1.18 1.16 0 2.05-1.22 2.05-2.99 0-1.56-1.12-2.66-2.73-2.66-1.86 0-2.95 1.39-2.95 2.83 0 .56.22 1.16.49 1.49.05.06.06.12.04.18l-.18.74c-.03.12-.1.15-.22.09-.84-.39-1.36-1.61-1.36-2.59 0-2.11 1.53-4.05 4.42-4.05 2.32 0 4.12 1.65 4.12 3.86 0 2.3-1.45 4.15-3.47 4.15-.68 0-1.31-.35-1.53-.77l-.42 1.58c-.15.58-.56 1.31-.83 1.75C5.57 13.89 6.27 14 7 14c3.87 0 7-3.13 7-7s-3.13-7-7-7z" />
                   </svg>
-                  Pin to Pinterest
+                  Xiaohongshu
                 </button>
 
+                {/* Share button — deferred, will be implemented when all content is ready */}
                 <button
-                  onClick={handleShare}
-                  className="flex-1 max-w-[200px] mx-auto sm:mx-0 py-3 border border-[#333] text-[#F5F0EB]/70 text-xs tracking-[0.08em] uppercase hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300 flex items-center justify-center gap-2"
+                  disabled
+                  className="border border-[#1A1A1A] text-[#8A8580]/40 px-4 py-2.5 text-xs tracking-[0.05em] uppercase font-light cursor-not-allowed"
+                  title="Coming soon"
                 >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                  >
-                    <path
-                      d="M4 7L7 4L10 7M7 4V10"
-                      stroke="currentColor"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <circle
-                      cx="7"
-                      cy="7"
-                      r="6"
-                      stroke="currentColor"
-                      strokeWidth="1.2"
-                    />
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline mr-1.5 -mt-0.5">
+                    <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                   Share
                 </button>
@@ -438,7 +398,7 @@ export function RoomVisualizationModal({
               <div className="flex flex-col items-center gap-3 pt-2">
                 <button
                   onClick={handleReset}
-                  className="text-xs text-[#F5F0EB]/40 hover:text-[#E8B4B8] transition-colors duration-300 underline underline-offset-4 decoration-[#333]"
+                  className="btn-text text-xs"
                 >
                   Try Another Room
                 </button>
@@ -448,7 +408,7 @@ export function RoomVisualizationModal({
                     onClose();
                     onBuyThisPiece();
                   }}
-                  className="py-3 px-8 bg-[#E8B4B8] text-[#0A0A0A] text-xs tracking-[0.1em] uppercase font-medium hover:bg-[#D4A0A4] transition-colors duration-300 rounded-[4px]"
+                  className="btn-accent py-3 px-8 text-xs tracking-[0.1em] uppercase font-light rounded-[4px]"
                 >
                   Buy This Piece
                 </button>

@@ -59,7 +59,7 @@ export default function LuxuryVillaInteriorPage() {
       </section>
 
       {/* Products for this interior */}
-      <section className="border-t border-[#222]">
+      <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
             Pieces for Villa Interiors
@@ -69,7 +69,7 @@ export default function LuxuryVillaInteriorPage() {
               <Link
                 key={product.slug}
                 href={`/${product.slug}`}
-                className="group bg-[#141414] border border-[#222] p-6 hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
+                className="group bg-[#111111] border border-[#1A1A1A] p-6 hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="aspect-[4/3] mb-4 bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"
@@ -82,7 +82,7 @@ export default function LuxuryVillaInteriorPage() {
                 <h3 className="font-serif text-lg text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors">
                   {product.name}
                 </h3>
-                <p className="text-xs text-[#6B6B6B] mt-1">{product.tagline}</p>
+                <p className="text-xs text-[#8A8580] mt-1">{product.tagline}</p>
               </Link>
             ))}
           </div>
@@ -90,7 +90,7 @@ export default function LuxuryVillaInteriorPage() {
       </section>
 
       {/* Related interiors */}
-      <section className="border-t border-[#222]">
+      <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Explore More Interiors</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -101,12 +101,12 @@ export default function LuxuryVillaInteriorPage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group border border-[#222] p-8 hover:border-[#E8B4B8]/40 transition-all duration-300"
+                className="group border border-[#1A1A1A] p-8 hover:border-[#E8B4B8]/40 transition-all duration-300"
               >
                 <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors">
                   {link.title}
                 </h3>
-                <p className="mt-2 text-sm text-[#6B6B6B]">{link.desc}</p>
+                <p className="mt-2 text-sm text-[#8A8580]">{link.desc}</p>
               </Link>
             ))}
           </div>

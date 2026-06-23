@@ -53,8 +53,8 @@ export function ProductPageClient({ product }: Props) {
   const regions: { value: Region; label: string }[] = [
     { value: "americas", label: "Americas (USD)" },
     { value: "europe", label: "Europe (EUR)" },
-    { value: "middleEast", label: "Middle East (USD)" },
-    { value: "southeastAsia", label: "SE Asia (USD)" },
+    { value: "middle_east", label: "Middle East (USD)" },
+    { value: "se_asia", label: "SE Asia (USD)" },
   ];
 
   return (
@@ -81,7 +81,7 @@ export function ProductPageClient({ product }: Props) {
 
       {/* HERO */}
       <section className="relative">
-        <div className="aspect-[21/9] md:aspect-[21/7] bg-gradient-to-b from-[#141414] to-[#0A0A0A] relative overflow-hidden">
+        <div className="aspect-[21/9] md:aspect-[21/7] bg-gradient-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden">
           <div
             className="absolute inset-0 opacity-10"
             style={{ background: "radial-gradient(ellipse at 50% 80%, #E8B4B8, transparent 60%)" }}
@@ -135,13 +135,13 @@ export function ProductPageClient({ product }: Props) {
       </section>
 
       {/* SPECIFICATIONS */}
-      <section className="border-t border-[#222]">
+      <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Specifications</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             {Object.entries(product.specifications).map(([key, value]) => (
               <div key={key}>
-                <p className="text-xs text-[#6B6B6B] tracking-[0.1em] uppercase mb-1">
+                <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-1">
                   {key.replace(/([A-Z])/g, " $1").trim()}
                 </p>
                 <p className="text-sm text-[#F5F0EB]/80">{value}</p>
@@ -152,7 +152,7 @@ export function ProductPageClient({ product }: Props) {
       </section>
 
       {/* TRY IN YOUR ROOM */}
-      <section className="border-t border-[#222] bg-gradient-to-b from-[#0A0A0A] to-[#0E0E0E]">
+      <section className="border-t border-[#1A1A1A] bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
         <div className="max-w-7xl mx-auto px-6 py-16">
           <button
             onClick={() => setShowRoomViz(true)}
@@ -185,7 +185,7 @@ export function ProductPageClient({ product }: Props) {
                 <h3 className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                   Try in Your Room
                 </h3>
-                <p className="text-xs text-[#6B6B6B] mt-1">
+                <p className="text-xs text-[#8A8580] mt-1">
                   Upload a photo and see the {product.name} in your space with AI
                 </p>
               </div>
@@ -213,22 +213,61 @@ export function ProductPageClient({ product }: Props) {
       </section>
 
       {/* MATERIALS */}
-      <section className="border-t border-[#222]">
+      <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Materials</h2>
-          <ul className="space-y-3">
-            {product.materials.map((mat, i) => (
-              <li key={i} className="text-sm text-[#F5F0EB]/70 flex items-start gap-3">
-                <span className="text-[#E8B4B8] mt-0.5">&#8226;</span>
-                {mat}
-              </li>
-            ))}
-          </ul>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-4">Materials</h2>
+          <p className="text-sm text-[#8A8580] mb-10">Every Fuzz Sofa piece is made to order. Choose the material that fits your space.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {product.materialOptions?.map((mat) => (
+              <div
+                key={mat.type}
+                onClick={() => {
+                  setMaterialType(mat.type);
+                  setMaterialOption(mat.options[0]);
+                }}
+                className={`cursor-pointer border p-6 transition-all duration-300 ${
+                  materialType === mat.type
+                    ? "border-[#E8B4B8] bg-[#111111]"
+                    : "border-[#1A1A1A] hover:border-[#333]"
+                }`}
+              >
+                <h3 className="font-serif text-xl font-light text-[#F5F0EB] mb-1">{mat.type}</h3>
+                <p className="text-xs text-[#8A8580] mb-4">
+                  {mat.type === "Cloud Touch" && "Ultra-soft bouclé. Cloud-like comfort with a subtle texture."}
+                  {mat.type === "Wild Touch" && "Natural linen blend. Breathable with organic grain."}
+                  {mat.type === "Leather Touch" && "Full-grain leather. Rich patina develops over time."}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {mat.options.map((opt) => (
+                    <button
+                      key={opt}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setMaterialType(mat.type);
+                        setMaterialOption(opt);
+                      }}
+                      className={`text-xs px-3 py-1.5 border transition-all duration-300 ${
+                        materialType === mat.type && materialOption === opt
+                          ? "border-[#E8B4B8] text-[#E8B4B8]"
+                          : "border-[#333] text-[#F5F0EB]/40 hover:border-[#E8B4B8] hover:text-[#E8B4B8]"
+                      }`}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )) || (
+              <div className="border border-[#1A1A1A] p-6">
+                <p className="text-sm text-[#F5F0EB]/70">{product.materials.join(", ")}</p>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
       {/* PURCHASE SECTION */}
-      <section ref={purchaseRef} className="border-t border-[#222] bg-[#0E0E0E]">
+      <section ref={purchaseRef} className="border-t border-[#1A1A1A] bg-[#0A0A0A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
@@ -236,7 +275,7 @@ export function ProductPageClient({ product }: Props) {
 
               {/* Region selector */}
               <div className="mb-8">
-                <label className="text-xs text-[#6B6B6B] tracking-[0.1em] uppercase block mb-3">
+                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
                   Region
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -259,7 +298,7 @@ export function ProductPageClient({ product }: Props) {
               {/* Material type */}
               {product.materialOptions && product.materialOptions.length > 1 && (
                 <div className="mb-8">
-                  <label className="text-xs text-[#6B6B6B] tracking-[0.1em] uppercase block mb-3">
+                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
                     Material Type
                   </label>
                   <div className="flex gap-2">
@@ -286,7 +325,7 @@ export function ProductPageClient({ product }: Props) {
               {/* Material option */}
               {currentMaterialOptions && (
                 <div className="mb-8">
-                  <label className="text-xs text-[#6B6B6B] tracking-[0.1em] uppercase block mb-3">
+                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
                     Color / Finish
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -309,7 +348,7 @@ export function ProductPageClient({ product }: Props) {
 
               {/* Quantity */}
               <div className="mb-8">
-                <label className="text-xs text-[#6B6B6B] tracking-[0.1em] uppercase block mb-3">
+                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
                   Quantity
                 </label>
                 <div className="flex items-center gap-4">
@@ -332,14 +371,14 @@ export function ProductPageClient({ product }: Props) {
 
             <div>
               {/* Price */}
-              <div className="bg-[#141414] border border-[#222] p-8">
-                <p className="text-xs text-[#6B6B6B] tracking-[0.1em] uppercase mb-2">Price</p>
+              <div className="bg-[#111111] border border-[#1A1A1A] p-8">
+                <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-2">Price</p>
                 <p className="font-serif text-3xl text-[#F5F0EB]">
                   {formatPrice(product.priceRange[region][0], region)}
-                  <span className="text-lg text-[#6B6B6B]"> – </span>
+                  <span className="text-lg text-[#8A8580]"> – </span>
                   {formatPrice(product.priceRange[region][1], region)}
                 </p>
-                <p className="text-xs text-[#6B6B6B] mt-1">
+                <p className="text-xs text-[#8A8580] mt-1">
                   Price varies by material selection and configuration
                 </p>
 
@@ -355,7 +394,7 @@ export function ProductPageClient({ product }: Props) {
                 <div className="mt-4 flex flex-col gap-2">
                   <Link
                     href="/contact"
-                    className="text-center py-3 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 hover:text-[#E8B4B8] transition-colors border border-[#222] hover:border-[#E8B4B8]/30"
+                    className="text-center py-3 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 hover:text-[#E8B4B8] transition-colors border border-[#1A1A1A] hover:border-[#E8B4B8]/30"
                   >
                     Request Pricing (Trade / Bulk)
                   </Link>
@@ -368,17 +407,17 @@ export function ProductPageClient({ product }: Props) {
                 </div>
 
                 {/* Trust signals */}
-                <div className="mt-6 pt-6 border-t border-[#222] space-y-2">
-                  <p className="text-xs text-[#6B6B6B]">
+                <div className="mt-6 pt-6 border-t border-[#1A1A1A] space-y-2">
+                  <p className="text-xs text-[#8A8580]">
                     <span className="text-[#E8B4B8]">&#10003;</span> Free White-Glove Delivery Worldwide
                   </p>
-                  <p className="text-xs text-[#6B6B6B]">
+                  <p className="text-xs text-[#8A8580]">
                     <span className="text-[#E8B4B8]">&#10003;</span> 14-Day Quality Guarantee
                   </p>
-                  <p className="text-xs text-[#6B6B6B]">
+                  <p className="text-xs text-[#8A8580]">
                     <span className="text-[#E8B4B8]">&#10003;</span> Made to Order, 8–12 Weeks
                   </p>
-                  <p className="text-xs text-[#6B6B6B]">
+                  <p className="text-xs text-[#8A8580]">
                     <span className="text-[#E8B4B8]">&#10003;</span> Photo & Video Documentation
                   </p>
                 </div>
@@ -389,7 +428,7 @@ export function ProductPageClient({ product }: Props) {
       </section>
 
       {/* RELATED PRODUCTS */}
-      <section className="border-t border-[#222]">
+      <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Related Pieces</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -397,7 +436,7 @@ export function ProductPageClient({ product }: Props) {
               <Link
                 key={rp.slug}
                 href={`/${rp.slug}`}
-                className="group bg-[#141414] border border-[#222] p-6 hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
+                className="group bg-[#111111] border border-[#1A1A1A] p-6 hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="aspect-[4/3] mb-4 bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"
@@ -410,7 +449,7 @@ export function ProductPageClient({ product }: Props) {
                 <h3 className="font-serif text-lg text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors">
                   {rp.name}
                 </h3>
-                <p className="text-xs text-[#6B6B6B] mt-1">{rp.tagline}</p>
+                <p className="text-xs text-[#8A8580] mt-1">{rp.tagline}</p>
               </Link>
             ))}
           </div>
@@ -418,14 +457,14 @@ export function ProductPageClient({ product }: Props) {
       </section>
 
       {/* FAQ */}
-      <section className="border-t border-[#222]">
+      <section className="border-t border-[#1A1A1A]">
         <div className="max-w-7xl mx-auto px-6 py-20">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
             Frequently Asked Questions
           </h2>
           <div className="space-y-6 max-w-3xl">
             {product.faq.map((item, i) => (
-              <div key={i} className="border-b border-[#222] pb-6">
+              <div key={i} className="border-b border-[#1A1A1A] pb-6">
                 <h3 className="font-serif text-lg text-[#F5F0EB] mb-3">{item.question}</h3>
                 <p className="text-sm text-[#F5F0EB]/60 leading-relaxed">{item.answer}</p>
               </div>

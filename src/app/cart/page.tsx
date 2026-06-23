@@ -11,7 +11,7 @@ export default function CartPage() {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-6">
         <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-4">Your Cart</h1>
-        <p className="text-[#6B6B6B] mb-8">Your cart is empty</p>
+        <p className="text-[#8A8580] mb-8">Your cart is empty</p>
         <Link
           href="/animal-sofa-collection"
           className="inline-flex items-center px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
@@ -39,7 +39,7 @@ export default function CartPage() {
             return (
               <div
                 key={`${item.product.slug}-${item.materialOption}`}
-                className="bg-[#141414] border border-[#222] p-6 flex gap-6"
+                className="bg-[#111111] border border-[#1A1A1A] p-6 flex gap-6"
               >
                 <div className="w-24 h-24 bg-[#1A1A1A] flex items-center justify-center shrink-0">
                   <span className="font-serif text-3xl text-[#F5F0EB]/[0.08]">
@@ -50,13 +50,13 @@ export default function CartPage() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <h3 className="font-serif text-lg text-[#F5F0EB]">{item.product.name}</h3>
-                      <p className="text-xs text-[#6B6B6B] mt-1">
+                      <p className="text-xs text-[#8A8580] mt-1">
                         {item.materialType} &middot; {item.materialOption}
                       </p>
                     </div>
                     <button
                       onClick={() => removeItem(item.product.slug)}
-                      className="text-xs text-[#6B6B6B] hover:text-[#E8B4B8] transition-colors shrink-0"
+                      className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors shrink-0"
                     >
                       Remove
                     </button>
@@ -87,24 +87,24 @@ export default function CartPage() {
 
         {/* Summary */}
         <div>
-          <div className="bg-[#141414] border border-[#222] p-6">
+          <div className="bg-[#111111] border border-[#1A1A1A] p-6">
             <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">Order Summary</h2>
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-[#6B6B6B]">Subtotal</span>
+                <span className="text-[#8A8580]">Subtotal</span>
                 <span className="text-[#F5F0EB]">{formatPrice(subtotal, region)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-[#6B6B6B]">Shipping</span>
+                <span className="text-[#8A8580]">Shipping</span>
                 <span className="text-[#E8B4B8]">Free</span>
               </div>
-              <div className="border-t border-[#222] pt-3 flex justify-between">
+              <div className="border-t border-[#1A1A1A] pt-3 flex justify-between">
                 <span className="text-[#F5F0EB]">Total</span>
                 <span className="text-[#F5F0EB] font-medium">{formatPrice(subtotal, region)}</span>
               </div>
             </div>
 
-            <p className="mt-4 text-xs text-[#6B6B6B]">
+            <p className="mt-4 text-xs text-[#8A8580]">
               White-glove delivery included. 14-day quality guarantee.
             </p>
 
@@ -117,7 +117,7 @@ export default function CartPage() {
 
             <Link
               href="/animal-sofa-collection"
-              className="mt-3 block text-center text-xs text-[#6B6B6B] hover:text-[#E8B4B8] transition-colors"
+              className="mt-3 block text-center text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors"
             >
               Continue Shopping
             </Link>

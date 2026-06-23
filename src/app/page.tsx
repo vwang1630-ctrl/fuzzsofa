@@ -24,11 +24,11 @@ export default function HomePage() {
           backgroundImage: `radial-gradient(circle at 20% 50%, #E8B4B8 0%, transparent 50%), radial-gradient(circle at 80% 50%, #E8B4B8 0%, transparent 50%)`,
         }} />
         <div className="relative z-10 text-center max-w-4xl mx-auto">
-          <h1 className="font-serif text-5xl md:text-7xl font-light tracking-[0.02em] leading-[1.1] text-[#F5F0EB]">
+          <h1 className="font-serif text-5xl md:text-7xl font-light tracking-[0.05em] md:tracking-[0.2em] leading-[1.1] text-[#F5F0EB]">
             Sculptural Furniture<br />Inspired by Nature
           </h1>
           <p className="mt-6 text-lg md:text-xl font-light text-[#F5F0EB]/60 max-w-2xl mx-auto leading-relaxed">
-            Animal-inspired statement pieces that define the rooms they inhabit. Made to order in Shanghai, delivered worldwide with white-glove care.
+            Hand-sculpted animal furniture from Shanghai. Art you can sit on.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -54,7 +54,7 @@ export default function HomePage() {
           <div className="flex items-baseline justify-between mb-12">
             <div>
               <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">Animal Collection</h2>
-              <p className="mt-2 text-sm text-[#6B6B6B]">Five sculptural pieces, each inspired by a distinct animal presence</p>
+              <p className="mt-2 text-sm text-[#8A8580]">Each piece tells a story</p>
             </div>
             <Link href="/animal-sofa-collection" className="hidden md:block text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">
               View All &rarr;
@@ -65,7 +65,7 @@ export default function HomePage() {
               <Link
                 key={product.slug}
                 href={`/${product.slug}`}
-                className="group relative bg-[#141414] border border-[#222] p-6 hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
+                className="group relative bg-[#111111] border border-[#1A1A1A] p-6 hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="aspect-[3/4] mb-4 flex items-center justify-center">
                   <div className="w-full h-full bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
@@ -82,9 +82,12 @@ export default function HomePage() {
                 <h3 className="font-serif text-lg text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                   {product.name}
                 </h3>
-                <p className="mt-1 text-xs text-[#6B6B6B]">{product.tagline}</p>
+                <p className="mt-1 text-xs text-[#8A8580]">{product.tagline}</p>
                 <p className="mt-2 text-sm text-[#F5F0EB]/50">
                   From ${product.priceRange.americas[0].toLocaleString()}
+                </p>
+                <p className="mt-1 text-[10px] text-[#8A8580] tracking-[0.05em] uppercase">
+                  Free White-Glove Delivery
                 </p>
               </Link>
             ))}
@@ -96,10 +99,10 @@ export default function HomePage() {
           <div className="flex items-baseline justify-between mb-12">
             <div>
               <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">Interior Worlds</h2>
-              <p className="mt-2 text-sm text-[#6B6B6B]">Where sculptural furniture finds its natural context</p>
+              <p className="mt-2 text-sm text-[#8A8580]">See how sculptural furniture transforms a space</p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
                 href: "/luxury-villa-interior",
@@ -115,15 +118,21 @@ export default function HomePage() {
               },
               {
                 href: "/statement-furniture",
-                title: "Modern Apartments",
-                desc: "Compact statement pieces for design-forward urban living",
+                title: "Contemporary Homes",
+                desc: "Statement furniture that defines modern residential interiors",
                 accent: "from-[#151015] to-[#0A0A0A]",
+              },
+              {
+                href: "/sculptural-furniture-trend",
+                title: "The Sculptural Trend",
+                desc: "How biomorphic form is reshaping high-end interior design",
+                accent: "from-[#101218] to-[#0A0A0A]",
               },
             ].map((interior) => (
               <Link
                 key={interior.href}
                 href={interior.href}
-                className="group relative bg-[#141414] border border-[#222] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
+                className="group relative bg-[#111111] border border-[#1A1A1A] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className={`h-48 bg-gradient-to-b ${interior.accent} relative`}>
                   <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500"
@@ -134,7 +143,7 @@ export default function HomePage() {
                   <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                     {interior.title}
                   </h3>
-                  <p className="mt-2 text-sm text-[#6B6B6B]">{interior.desc}</p>
+                  <p className="mt-2 text-sm text-[#8A8580]">{interior.desc}</p>
                 </div>
               </Link>
             ))}
@@ -146,36 +155,36 @@ export default function HomePage() {
           <div className="flex items-baseline justify-between mb-12">
             <div>
               <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">Furniture Concepts</h2>
-              <p className="mt-2 text-sm text-[#6B6B6B]">Understanding the ideas behind sculptural furniture</p>
+              <p className="mt-2 text-sm text-[#8A8580]">Understand the thinking behind each piece</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                href: "/statement-furniture",
-                title: "What Is Statement Furniture?",
-                desc: "The difference between furniture that fills a room and furniture that defines it.",
+                href: "/process",
+                title: "Our Process",
+                desc: "From design sketch to white-glove delivery. How each piece comes to life.",
               },
               {
-                href: "/sculptural-furniture-trend",
-                title: "Why Sculptural Furniture?",
-                desc: "How biomorphic form is reshaping high-end interior design in 2026.",
+                href: "/materials",
+                title: "Materials Guide",
+                desc: "Cloud Touch, Wild Touch, Leather Touch — choosing the right material.",
               },
               {
-                href: "/sculptural-furniture-trend",
-                title: "2026 Trends",
-                desc: "The defining direction for furniture that reads as art.",
+                href: "/animal-sofa-collection",
+                title: "Full Collection",
+                desc: "All five sculptural pieces in one view. Compare, explore, find yours.",
               },
             ].map((concept, i) => (
               <Link
                 key={i}
                 href={concept.href}
-                className="group border-l-2 border-[#222] pl-6 py-2 hover:border-[#E8B4B8] transition-colors duration-300"
+                className="group border-l-2 border-[#1A1A1A] pl-6 py-2 hover:border-[#E8B4B8] transition-colors duration-300"
               >
                 <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                   {concept.title}
                 </h3>
-                <p className="mt-2 text-sm text-[#6B6B6B]">{concept.desc}</p>
+                <p className="mt-2 text-sm text-[#8A8580]">{concept.desc}</p>
               </Link>
             ))}
           </div>
@@ -189,7 +198,7 @@ export default function HomePage() {
               <Link
                 key={product.slug}
                 href={`/${product.slug}`}
-                className="group relative bg-[#141414] border border-[#222] overflow-hidden hover:border-[#E8B4B8]/40 transition-all duration-300"
+                className="group relative bg-[#111111] border border-[#1A1A1A] overflow-hidden hover:border-[#E8B4B8]/40 transition-all duration-300"
               >
                 <div className="aspect-[16/10] bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] relative">
                   <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"
@@ -203,7 +212,7 @@ export default function HomePage() {
                   <h3 className="font-serif text-2xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                     {product.name}
                   </h3>
-                  <p className="mt-2 text-sm text-[#6B6B6B]">{product.tagline}</p>
+                  <p className="mt-2 text-sm text-[#8A8580]">{product.tagline}</p>
                   <p className="mt-3 text-[#F5F0EB]/70">From ${product.priceRange.americas[0].toLocaleString()}</p>
                 </div>
               </Link>
@@ -214,7 +223,8 @@ export default function HomePage() {
         {/* Journal Preview */}
         <div>
           <div className="flex items-baseline justify-between mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">From the Journal</h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">Journal</h2>
+            <p className="text-sm text-[#8A8580]">Stories from the workshop</p>
             <Link href="/journal" className="text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">
               All Articles &rarr;
             </Link>
@@ -224,13 +234,13 @@ export default function HomePage() {
               <Link
                 key={article.slug}
                 href={`/journal/${article.slug}`}
-                className="group border-t border-[#222] pt-6 hover:border-[#E8B4B8] transition-colors duration-300"
+                className="group border-t border-[#1A1A1A] pt-6 hover:border-[#E8B4B8] transition-colors duration-300"
               >
-                <p className="text-xs text-[#6B6B6B] tracking-[0.1em] uppercase">{article.category}</p>
+                <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase">{article.category}</p>
                 <h3 className="mt-3 font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">
                   {article.title}
                 </h3>
-                <p className="mt-2 text-sm text-[#6B6B6B] line-clamp-2">{article.excerpt}</p>
+                <p className="mt-2 text-sm text-[#8A8580] line-clamp-2">{article.excerpt}</p>
               </Link>
             ))}
           </div>
@@ -238,7 +248,7 @@ export default function HomePage() {
       </section>
 
       {/* Delivery Banner */}
-      <section className="border-t border-b border-[#222] py-8">
+      <section className="border-t border-b border-[#1A1A1A] py-8">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-center">
           <p className="text-sm text-[#F5F0EB]/60">
             <span className="text-[#E8B4B8]">&#10003;</span> Free White-Glove Delivery Worldwide
