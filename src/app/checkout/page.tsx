@@ -4,7 +4,16 @@ import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
+import type { TranslationKeys } from "@/lib/i18n";
 import { formatPrice } from "@/lib/products";
+
+const slugToPrefix: Record<string, string> = {
+  "bear-sofa": "bearSofa",
+  "lion-sofa": "lionSofa",
+  "tiger-sofa": "tigerSofa",
+  "gorilla-sofa": "gorillaSofa",
+  "owl-chair": "owlChair",
+};
 
 export default function CheckoutPage() {
   const { items, region, clearCart } = useCart();
@@ -183,7 +192,7 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <div key={item.product.slug} className="flex justify-between text-sm">
                     <div>
-                      <p className="text-[#F5F0EB]">{item.product.name}</p>
+                      <p className="text-[#F5F0EB]">{slugToPrefix[item.product.slug] ? t(`${slugToPrefix[item.product.slug]}Name` as TranslationKeys) : item.product.name}</p>
                       <p className="text-xs text-[#8A8580]">{item.materialType} / {item.materialOption} x{item.quantity}</p>
                     </div>
                     <p className="text-[#F5F0EB]">{formatPrice(item.product.priceRange[region][0] * item.quantity, region)}</p>

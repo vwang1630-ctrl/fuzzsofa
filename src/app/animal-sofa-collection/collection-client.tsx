@@ -4,7 +4,16 @@ import Link from "next/link";
 import { products, formatPrice, type Region } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
+import type { TranslationKeys } from "@/lib/i18n";
 import { breadcrumbJsonLd } from "@/lib/seo";
+
+const slugToPrefix: Record<string, string> = {
+  "bear-sofa": "bearSofa",
+  "lion-sofa": "lionSofa",
+  "tiger-sofa": "tigerSofa",
+  "gorilla-sofa": "gorillaSofa",
+  "owl-chair": "owlChair",
+};
 
 export function CollectionClient() {
   const { region } = useCart();
@@ -60,12 +69,12 @@ export function CollectionClient() {
               </div>
               <div className="p-6">
                 <p className="text-xs text-[#E8B4B8]/50 tracking-[0.1em] uppercase mb-1">
-                  {product.animal}-Inspired
+                  {slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Name` as TranslationKeys) : product.name}
                 </p>
                 <h2 className="font-serif text-2xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors">
-                  {product.name}
+                  {slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Name` as TranslationKeys) : product.name}
                 </h2>
-                <p className="mt-2 text-sm text-[#8A8580]">{product.tagline}</p>
+                <p className="mt-2 text-sm text-[#8A8580]">{slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Tagline` as TranslationKeys) : product.tagline}</p>
                 <p className="mt-3 text-[#F5F0EB]/70">
                   {t("from")} {formatPrice(product.priceRange[region][0], region)}
                 </p>

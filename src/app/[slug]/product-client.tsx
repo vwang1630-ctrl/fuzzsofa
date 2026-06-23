@@ -18,6 +18,29 @@ interface Props {
 export function ProductPageClient({ product }: Props) {
   const { addItem, region, setRegion } = useCart();
   const { t } = useLanguage();
+  // Map product slug to i18n key prefix
+  const slugToPrefix: Record<string, string> = {
+    "bear-sofa": "bearSofa",
+    "lion-sofa": "lionSofa",
+    "tiger-sofa": "tigerSofa",
+    "gorilla-sofa": "gorillaSofa",
+    "owl-chair": "owlChair",
+  };
+  const prefix = slugToPrefix[product.slug] || "";
+
+  // Translated product name/tagline/concept
+  const productName = prefix ? t(`${prefix}Name` as TranslationKeys) : product.name;
+  const productTagline = prefix ? t(`${prefix}Tagline` as TranslationKeys) : product.tagline;
+  const productConcept = prefix ? t(`${prefix}Concept` as TranslationKeys) : product.concept;
+
+  // Translated FAQ
+  const faqKeys = ["faqDelivery", "faqCustomization", "faqLeadTime", "faqReturnPolicy"] as TranslationKeys[];
+  const faqAnswerKeys = ["faqDeliveryAnswer", "faqCustomizationAnswer", "faqLeadTimeAnswer", "faqReturnPolicyAnswer"] as TranslationKeys[];
+  const translatedFaq = faqKeys.map((qk, i) => ({
+    question: t(qk),
+    answer: t(faqAnswerKeys[i]),
+  }));
+
   const [materialType, setMaterialType] = useState<string>(
     product.materialOptions?.[0]?.type || "Fabric"
   );
@@ -108,14 +131,14 @@ export function ProductPageClient({ product }: Props) {
                 {product.animal}-Inspired Sculptural Furniture
               </p>
               <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
-                {product.name}
+                {productName}
               </h1>
-              <p className="mt-3 text-lg text-[#F5F0EB]/50 font-light">{product.tagline}</p>
+              <p className="mt-3 text-lg text-[#F5F0EB]/50 font-light">{productTagline}</p>
             </div>
           </div>
         </div>
         <div className="max-w-[700px] mx-auto px-6 py-16">
-          <p className="text-[#F5F0EB]/70 leading-[1.7] text-base">{product.concept}</p>
+          <p className="text-[#F5F0EB]/70 leading-[1.7] text-base">{productConcept}</p>
         </div>
       </section>
 
@@ -441,7 +464,7 @@ export function ProductPageClient({ product }: Props) {
             {t("faqTitle")}
           </h2>
           <div className="space-y-6">
-            {product.faq.map((item, i) => (
+            {translatedFaq.map((item, i) => (
               <div key={i} className="border-b border-[#1A1A1A] pb-6">
                 <h3 className="font-serif text-lg text-[#F5F0EB] mb-3">{item.question}</h3>
                 <p className="text-sm text-[#F5F0EB]/60 leading-[1.7]">{item.answer}</p>
@@ -471,9 +494,9 @@ export function ProductPageClient({ product }: Props) {
                   </span>
                 </div>
                 <h3 className="font-serif text-lg text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors">
-                  {rp.name}
+                  {slugToPrefix[rp.slug] ? t(`${slugToPrefix[rp.slug]}Name` as TranslationKeys) : rp.name}
                 </h3>
-                <p className="text-xs text-[#8A8580] mt-1">{rp.tagline}</p>
+                <p className="text-xs text-[#8A8580] mt-1">{slugToPrefix[rp.slug] ? t(`${slugToPrefix[rp.slug]}Tagline` as TranslationKeys) : rp.tagline}</p>
               </Link>
             ))}
           </div>

@@ -4,7 +4,16 @@ import Link from "next/link";
 import { products } from "@/lib/products";
 import { journalArticles } from "@/lib/journal";
 import { useLanguage } from "@/lib/language-context";
+import type { TranslationKeys } from "@/lib/i18n";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
+
+const slugToPrefix: Record<string, string> = {
+  "bear-sofa": "bearSofa",
+  "lion-sofa": "lionSofa",
+  "tiger-sofa": "tigerSofa",
+  "gorilla-sofa": "gorillaSofa",
+  "owl-chair": "owlChair",
+};
 
 export default function HomePage() {
   const { t } = useLanguage();
@@ -84,9 +93,9 @@ export default function HomePage() {
                   </div>
                 </div>
                 <h3 className="font-serif text-lg text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {product.name}
+                  {slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Name` as TranslationKeys) : product.name}
                 </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{product.tagline}</p>
+                <p className="mt-1 text-xs text-[#8A8580]">{slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Tagline` as TranslationKeys) : product.tagline}</p>
                 <p className="mt-2 text-sm text-[#F5F0EB]/50">
                   ${product.priceRange.americas[0].toLocaleString()}
                 </p>
@@ -204,14 +213,14 @@ export default function HomePage() {
                     style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#0A0A0A] to-transparent">
-                    <p className="text-xs text-[#E8B4B8]/60 tracking-[0.1em] uppercase">{product.animal}-Inspired</p>
+                    <p className="text-xs text-[#E8B4B8]/60 tracking-[0.1em] uppercase">{slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Name` as TranslationKeys) : product.name}</p>
                   </div>
                 </div>
                 <div className="p-6">
                   <h3 className="font-serif text-2xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                    {product.name}
+                    {slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Name` as TranslationKeys) : product.name}
                   </h3>
-                  <p className="mt-2 text-sm text-[#8A8580]">{product.tagline}</p>
+                  <p className="mt-2 text-sm text-[#8A8580]">{slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Tagline` as TranslationKeys) : product.tagline}</p>
                   <p className="mt-3 text-[#F5F0EB]/70">${product.priceRange.americas[0].toLocaleString()}</p>
                 </div>
               </Link>

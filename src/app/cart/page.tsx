@@ -3,7 +3,16 @@
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
+import type { TranslationKeys } from "@/lib/i18n";
 import { formatPrice } from "@/lib/products";
+
+const slugToPrefix: Record<string, string> = {
+  "bear-sofa": "bearSofa",
+  "lion-sofa": "lionSofa",
+  "tiger-sofa": "tigerSofa",
+  "gorilla-sofa": "gorillaSofa",
+  "owl-chair": "owlChair",
+};
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, region } = useCart();
@@ -51,7 +60,7 @@ export default function CartPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="font-serif text-lg text-[#F5F0EB]">{item.product.name}</h3>
+                      <h3 className="font-serif text-lg text-[#F5F0EB]">{slugToPrefix[item.product.slug] ? t(`${slugToPrefix[item.product.slug]}Name` as TranslationKeys) : item.product.name}</h3>
                       <p className="text-xs text-[#8A8580] mt-1">
                         {item.materialType} &middot; {item.materialOption}
                       </p>

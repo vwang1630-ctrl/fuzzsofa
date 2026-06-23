@@ -3,6 +3,15 @@
 import Link from "next/link";
 import type { Product } from "@/lib/products";
 import { useLanguage } from "@/lib/language-context";
+import type { TranslationKeys } from "@/lib/i18n";
+
+const slugToPrefix: Record<string, string> = {
+  "bear-sofa": "bearSofa",
+  "lion-sofa": "lionSofa",
+  "tiger-sofa": "tigerSofa",
+  "gorilla-sofa": "gorillaSofa",
+  "owl-chair": "owlChair",
+};
 
 interface ScenePageContentProps {
   heroLabel: string;
@@ -77,9 +86,9 @@ export function ScenePageContent({
                   </span>
                 </div>
                 <h3 className="font-serif text-lg text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors">
-                  {product.name}
+                  {slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Name` as TranslationKeys) : product.name}
                 </h3>
-                <p className="text-xs text-[#8A8580] mt-1">{product.tagline}</p>
+                <p className="text-xs text-[#8A8580] mt-1">{slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Tagline` as TranslationKeys) : product.tagline}</p>
               </Link>
             ))}
           </div>
