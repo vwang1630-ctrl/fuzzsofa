@@ -9,7 +9,7 @@ interface LanguageContextType {
   setLocale: (locale: Locale) => void;
   region: Region;
   setRegion: (region: Region) => void;
-  t: (key: string) => string;
+  t: (key: TranslationKeys) => string;
   isRtl: boolean;
 }
 
@@ -32,11 +32,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const t = useCallback(
-    (key: string): string => {
-      const translation = translations[locale]?.[key as keyof TranslationKeys];
+    (key: TranslationKeys): string => {
+      const translation = translations[locale]?.[key];
       if (translation) return translation;
       // Fallback to English
-      const fallback = translations.en[key as keyof TranslationKeys];
+      const fallback = translations.en[key];
       if (fallback) return fallback;
       return key;
     },

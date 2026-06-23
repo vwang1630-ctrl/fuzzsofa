@@ -6,6 +6,8 @@ import type { Product, Region } from "@/lib/products";
 import { formatPrice } from "@/lib/products";
 import { productJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { useCart } from "@/lib/cart-context";
+import { useLanguage } from "@/lib/language-context";
+import type { TranslationKeys } from "@/lib/i18n";
 import { getProduct } from "@/lib/products";
 import { RoomVisualizationModal } from "@/components/room-visualization-modal";
 
@@ -15,6 +17,7 @@ interface Props {
 
 export function ProductPageClient({ product }: Props) {
   const { addItem, region, setRegion } = useCart();
+  const { t } = useLanguage();
   const [materialType, setMaterialType] = useState<string>(
     product.materialOptions?.[0]?.type || "Fabric"
   );
@@ -133,7 +136,7 @@ export function ProductPageClient({ product }: Props) {
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-transparent h-1/3" />
             </div>
             <figcaption className="sr-only">
-              {galleryImages[activeImage].label} — {product.name} by Fuzz Sofa, sculptural {product.animal}-inspired furniture piece.
+              {galleryImages[activeImage].label} — {product.name} by Fuzz Sofa
             </figcaption>
           </figure>
           <div className="mt-4 flex gap-3">
@@ -160,7 +163,7 @@ export function ProductPageClient({ product }: Props) {
       {/* 3) INTERIOR CONTEXT SECTION */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-[1100px] mx-auto px-6 py-16">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-6">In Your Space</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-6">{t("inYourSpace")}</h2>
           <p className="text-[#F5F0EB]/70 leading-[1.7] text-base max-w-[700px] mb-8">
             {product.interiorContext}
           </p>
@@ -181,19 +184,19 @@ export function ProductPageClient({ product }: Props) {
       {/* 4) SPECIFICATIONS */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-[1100px] mx-auto px-6 py-16">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Specifications</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">{t("specificationsTitle")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             {Object.entries(product.specifications).map(([key, value]) => (
               <div key={key}>
                 <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-1">
-                  {key.replace(/([A-Z])/g, " $1").trim()}
+                  {t(key as TranslationKeys) || key.replace(/([A-Z])/g, " $1").trim()}
                 </p>
                 <p className="text-sm text-[#F5F0EB]/80">{value}</p>
               </div>
             ))}
             <div>
-              <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-1">Delivery</p>
-              <p className="text-sm text-[#F5F0EB]/80">Free White-Glove Delivery</p>
+              <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-1">{t("delivery")}</p>
+              <p className="text-sm text-[#F5F0EB]/80">{t("freeDelivery")}</p>
             </div>
           </div>
         </div>
@@ -202,8 +205,8 @@ export function ProductPageClient({ product }: Props) {
       {/* 5) MATERIALS SECTION */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-[1100px] mx-auto px-6 py-16">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-4">Materials</h2>
-          <p className="text-sm text-[#8A8580] mb-10">Every Fuzz Sofa piece is made to order. Choose the material that fits your space.</p>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-4">{t("materialsTitle")}</h2>
+          <p className="text-sm text-[#8A8580] mb-10">{t("materialOptions")}</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {product.materialOptions?.map((mat) => (
               <div
@@ -218,7 +221,11 @@ export function ProductPageClient({ product }: Props) {
                     : "border-[#1A1A1A] hover:border-[#333]"
                 }`}
               >
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] mb-1">{mat.type}</h3>
+                <h3 className="font-serif text-xl font-light text-[#F5F0EB] mb-1">
+                  {mat.type === "Cloud Touch" ? t("cloudTouch") :
+                   mat.type === "Wild Touch" ? t("wildTouch") :
+                   mat.type === "Leather Touch" ? t("leatherTouch") : mat.type}
+                </h3>
                 <p className="text-xs text-[#8A8580] mb-4">
                   {mat.type === "Cloud Touch" && "Ultra-soft boucle. Cloud-like comfort with a subtle texture."}
                   {mat.type === "Wild Touch" && "Natural linen blend. Breathable with organic grain."}
@@ -279,15 +286,15 @@ export function ProductPageClient({ product }: Props) {
               </div>
               <div className="text-center sm:text-left">
                 <h3 className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  Try in Your Room
+                  {t("tryInRoom")}
                 </h3>
                 <p className="text-xs text-[#8A8580] mt-1">
-                  Upload a photo and see the {product.name} in your space with AI
+                  {t("uploadRoomPhoto")}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 group-hover:text-[#E8B4B8] transition-colors duration-300">
-              <span>Get Started</span>
+              <span>{t("getStarted")}</span>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="group-hover:translate-x-1 transition-transform duration-300">
                 <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -301,12 +308,12 @@ export function ProductPageClient({ product }: Props) {
         <div className="max-w-[1100px] mx-auto px-6 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
-              <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-8">Configure Your Piece</h2>
+              <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-8">{t("purchaseTitle")}</h2>
 
               {/* Region selector */}
               <div className="mb-8">
                 <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
-                  Region
+                  {t("country")}
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {regions.map((r) => (
@@ -329,7 +336,7 @@ export function ProductPageClient({ product }: Props) {
               {product.materialOptions && product.materialOptions.length > 1 && (
                 <div className="mb-8">
                   <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
-                    Material Type
+                    {t("materialsTitle")}
                   </label>
                   <div className="flex gap-2">
                     {product.materialOptions.map((opt) => (
@@ -352,34 +359,10 @@ export function ProductPageClient({ product }: Props) {
                 </div>
               )}
 
-              {/* Material option */}
-              {currentMaterialOptions && (
-                <div className="mb-8">
-                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
-                    Color / Finish
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {currentMaterialOptions.options.map((opt) => (
-                      <button
-                        key={opt}
-                        onClick={() => setMaterialOption(opt)}
-                        className={`text-xs px-4 py-2 border transition-all duration-300 ${
-                          materialOption === opt
-                            ? "border-[#E8B4B8] text-[#E8B4B8]"
-                            : "border-[#333] text-[#F5F0EB]/50 hover:border-[#E8B4B8] hover:text-[#E8B4B8]"
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* Quantity */}
               <div className="mb-8">
                 <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
-                  Quantity
+                  {t("quantity")}
                 </label>
                 <div className="flex items-center gap-4">
                   <button
@@ -402,14 +385,11 @@ export function ProductPageClient({ product }: Props) {
             <div>
               {/* Price */}
               <div className="bg-[#111111] border border-[#1A1A1A] p-8">
-                <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-2">Price</p>
+                <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-2">{t("price")}</p>
                 <p className="font-serif text-3xl text-[#F5F0EB]">
                   {formatPrice(product.priceRange[region][0], region)}
                   <span className="text-lg text-[#8A8580]"> – </span>
                   {formatPrice(product.priceRange[region][1], region)}
-                </p>
-                <p className="text-xs text-[#8A8580] mt-1">
-                  Price varies by material selection and configuration
                 </p>
 
                 {/* Add to cart — primary CTA */}
@@ -417,7 +397,7 @@ export function ProductPageClient({ product }: Props) {
                   onClick={handleAddToCart}
                   className="mt-6 w-full py-4 border border-[#F5F0EB] text-[#F5F0EB] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
                 >
-                  {addedToCart ? "Added to Cart ✓" : "Add to Cart"}
+                  {addedToCart ? `${t("addToCart")} ✓` : t("addToCart")}
                 </button>
 
                 {/* Request Pricing — secondary CTA */}
@@ -425,7 +405,7 @@ export function ProductPageClient({ product }: Props) {
                   href="/contact"
                   className="mt-4 block text-center py-3 text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/50 hover:text-[#E8B4B8] transition-colors border border-[#1A1A1A] hover:border-[#E8B4B8]/30"
                 >
-                  Request Pricing (Trade / Bulk)
+                  {t("requestPricing")}
                 </Link>
 
                 {/* Talk to Designer — tertiary CTA */}
@@ -433,22 +413,19 @@ export function ProductPageClient({ product }: Props) {
                   href="/contact"
                   className="mt-3 block text-center text-xs tracking-[0.1em] uppercase text-[#F5F0EB]/40 hover:text-[#E8B4B8] transition-colors"
                 >
-                  Talk to a Designer
+                  {t("talkToDesigner")}
                 </Link>
 
                 {/* Trust signals */}
                 <div className="mt-6 pt-6 border-t border-[#1A1A1A] space-y-2">
                   <p className="text-xs text-[#8A8580]">
-                    <span className="text-[#E8B4B8]">&#10003;</span> Free White-Glove Delivery Worldwide
+                    <span className="text-[#E8B4B8]">&#10003;</span> {t("freeDelivery")}
                   </p>
                   <p className="text-xs text-[#8A8580]">
-                    <span className="text-[#E8B4B8]">&#10003;</span> 14-Day Quality Guarantee
+                    <span className="text-[#E8B4B8]">&#10003;</span> {t("qualityGuarantee")}
                   </p>
                   <p className="text-xs text-[#8A8580]">
-                    <span className="text-[#E8B4B8]">&#10003;</span> Made to Order, 8–12 Weeks
-                  </p>
-                  <p className="text-xs text-[#8A8580]">
-                    <span className="text-[#E8B4B8]">&#10003;</span> Photo & Video Documentation
+                    <span className="text-[#E8B4B8]">&#10003;</span> {t("madeToOrder")}
                   </p>
                 </div>
               </div>
@@ -461,7 +438,7 @@ export function ProductPageClient({ product }: Props) {
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-[700px] mx-auto px-6 py-16">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
-            Frequently Asked Questions
+            {t("faqTitle")}
           </h2>
           <div className="space-y-6">
             {product.faq.map((item, i) => (
@@ -477,7 +454,7 @@ export function ProductPageClient({ product }: Props) {
       {/* RELATED PRODUCTS */}
       <section className="border-t border-[#1A1A1A]">
         <div className="max-w-[1200px] mx-auto px-6 py-16">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">Related Pieces</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">{t("relatedProducts")}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {relatedProducts.map((rp) => (
               <Link

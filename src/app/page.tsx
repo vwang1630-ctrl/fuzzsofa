@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { products } from "@/lib/products";
 import { journalArticles } from "@/lib/journal";
+import { useLanguage } from "@/lib/language-context";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 
 export default function HomePage() {
+  const { t } = useLanguage();
   const latestArticles = journalArticles.slice(0, 3);
 
   return (
@@ -25,23 +29,23 @@ export default function HomePage() {
         }} />
         <div className="relative z-10 text-center max-w-4xl mx-auto">
           <h1 className="font-serif text-5xl md:text-7xl font-light tracking-[0.05em] md:tracking-[0.2em] leading-[1.1] text-[#F5F0EB]">
-            Sculptural Furniture<br />Inspired by Nature
+            {t("siteTitle")}
           </h1>
           <p className="mt-6 text-lg md:text-xl font-light text-[#F5F0EB]/60 max-w-2xl mx-auto leading-relaxed">
-            Hand-sculpted animal furniture from Shanghai. Art you can sit on.
+            {t("heroSubtitle")}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/animal-sofa-collection"
               className="inline-flex items-center px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
             >
-              Explore Collection
+              {t("exploreCollection")}
             </Link>
             <Link
               href="/luxury-villa-interior"
               className="inline-flex items-center px-8 py-3 border border-[#333] text-[#F5F0EB]/50 text-sm tracking-[0.1em] uppercase hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
             >
-              View Interiors
+              {t("viewInteriors")}
             </Link>
           </div>
         </div>
@@ -53,11 +57,11 @@ export default function HomePage() {
         <div className="mb-24">
           <div className="flex items-baseline justify-between mb-12">
             <div>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">Animal Collection</h2>
-              <p className="mt-2 text-sm text-[#8A8580]">Each piece tells a story</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">{t("animalCollectionTitle")}</h2>
+              <p className="mt-2 text-sm text-[#8A8580]">{t("animalCollectionSubtitle")}</p>
             </div>
             <Link href="/animal-sofa-collection" className="hidden md:block text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">
-              View All &rarr;
+              {t("viewAll")} &rarr;
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
@@ -84,10 +88,10 @@ export default function HomePage() {
                 </h3>
                 <p className="mt-1 text-xs text-[#8A8580]">{product.tagline}</p>
                 <p className="mt-2 text-sm text-[#F5F0EB]/50">
-                  From ${product.priceRange.americas[0].toLocaleString()}
+                  ${product.priceRange.americas[0].toLocaleString()}
                 </p>
                 <p className="mt-1 text-[10px] text-[#8A8580] tracking-[0.05em] uppercase">
-                  Free White-Glove Delivery
+                  {t("freeDelivery")}
                 </p>
               </Link>
             ))}
@@ -98,34 +102,30 @@ export default function HomePage() {
         <div className="mb-24">
           <div className="flex items-baseline justify-between mb-12">
             <div>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">Interior Worlds</h2>
-              <p className="mt-2 text-sm text-[#8A8580]">See how sculptural furniture transforms a space</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">{t("interiorWorldsTitle")}</h2>
+              <p className="mt-2 text-sm text-[#8A8580]">{t("interiorWorldsSubtitle")}</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
                 href: "/luxury-villa-interior",
-                title: "Luxury Villas",
-                desc: "Grand scale interiors where commanding pieces anchor the space",
+                title: t("luxuryVillas"),
                 accent: "from-[#1A1510] to-[#0A0A0A]",
               },
               {
                 href: "/boutique-hotel-lobby",
-                title: "Boutique Hotels",
-                desc: "Hospitality spaces that make a lasting first impression",
+                title: t("boutiqueHotels"),
                 accent: "from-[#101518] to-[#0A0A0A]",
               },
               {
                 href: "/statement-furniture",
-                title: "Contemporary Homes",
-                desc: "Statement furniture that defines modern residential interiors",
+                title: t("contemporaryHomes"),
                 accent: "from-[#151015] to-[#0A0A0A]",
               },
               {
                 href: "/sculptural-furniture-trend",
-                title: "The Sculptural Trend",
-                desc: "How biomorphic form is reshaping high-end interior design",
+                title: t("sculpturalTrend"),
                 accent: "from-[#101218] to-[#0A0A0A]",
               },
             ].map((interior) => (
@@ -143,7 +143,6 @@ export default function HomePage() {
                   <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                     {interior.title}
                   </h3>
-                  <p className="mt-2 text-sm text-[#8A8580]">{interior.desc}</p>
                 </div>
               </Link>
             ))}
@@ -154,26 +153,26 @@ export default function HomePage() {
         <div className="mb-24">
           <div className="flex items-baseline justify-between mb-12">
             <div>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">Furniture Concepts</h2>
-              <p className="mt-2 text-sm text-[#8A8580]">Understand the thinking behind each piece</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">{t("furnitureConceptsTitle")}</h2>
+              <p className="mt-2 text-sm text-[#8A8580]">{t("furnitureConceptsSubtitle")}</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 href: "/process",
-                title: "Our Process",
-                desc: "From design sketch to white-glove delivery. How each piece comes to life.",
+                title: t("ourProcess"),
+                desc: t("ourProcessDesc"),
               },
               {
                 href: "/materials",
-                title: "Materials Guide",
-                desc: "Cloud Touch, Wild Touch, Leather Touch — choosing the right material.",
+                title: t("materialsGuide"),
+                desc: t("materialsGuideDesc"),
               },
               {
                 href: "/animal-sofa-collection",
-                title: "Full Collection",
-                desc: "All five sculptural pieces in one view. Compare, explore, find yours.",
+                title: t("fullCollection"),
+                desc: t("fullCollectionDesc"),
               },
             ].map((concept, i) => (
               <Link
@@ -192,7 +191,7 @@ export default function HomePage() {
 
         {/* Featured Pieces */}
         <div className="mb-24">
-          <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] mb-12">Featured Pieces</h2>
+          <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] mb-12">{t("featuredPieces")}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {products.slice(0, 2).map((product) => (
               <Link
@@ -213,7 +212,7 @@ export default function HomePage() {
                     {product.name}
                   </h3>
                   <p className="mt-2 text-sm text-[#8A8580]">{product.tagline}</p>
-                  <p className="mt-3 text-[#F5F0EB]/70">From ${product.priceRange.americas[0].toLocaleString()}</p>
+                  <p className="mt-3 text-[#F5F0EB]/70">${product.priceRange.americas[0].toLocaleString()}</p>
                 </div>
               </Link>
             ))}
@@ -223,10 +222,10 @@ export default function HomePage() {
         {/* Journal Preview */}
         <div>
           <div className="flex items-baseline justify-between mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">Journal</h2>
-            <p className="text-sm text-[#8A8580]">Stories from the workshop</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">{t("journalTitle")}</h2>
+            <p className="text-sm text-[#8A8580]">{t("journalSubtitle")}</p>
             <Link href="/journal" className="text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">
-              All Articles &rarr;
+              {t("articles")} &rarr;
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -251,13 +250,13 @@ export default function HomePage() {
       <section className="border-t border-b border-[#1A1A1A] py-8">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-center">
           <p className="text-sm text-[#F5F0EB]/60">
-            <span className="text-[#E8B4B8]">&#10003;</span> Free White-Glove Delivery Worldwide
+            <span className="text-[#E8B4B8]">&#10003;</span> {t("freeDelivery")}
           </p>
           <p className="text-sm text-[#F5F0EB]/60">
-            <span className="text-[#E8B4B8]">&#10003;</span> 14-Day Quality Guarantee
+            <span className="text-[#E8B4B8]">&#10003;</span> {t("qualityGuarantee")}
           </p>
           <p className="text-sm text-[#F5F0EB]/60">
-            <span className="text-[#E8B4B8]">&#10003;</span> Made to Order in Shanghai
+            <span className="text-[#E8B4B8]">&#10003;</span> {t("madeToOrder")}
           </p>
         </div>
       </section>

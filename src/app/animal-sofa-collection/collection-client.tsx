@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { products, formatPrice, type Region } from "@/lib/products";
 import { useCart } from "@/lib/cart-context";
+import { useLanguage } from "@/lib/language-context";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export function CollectionClient() {
   const { region } = useCart();
+  const { t } = useLanguage();
 
   return (
     <>
@@ -16,7 +18,7 @@ export function CollectionClient() {
           __html: JSON.stringify(
             breadcrumbJsonLd([
               { name: "Home", url: "https://fuzzsofa.com" },
-              { name: "Animal Sofa Collection", url: "https://fuzzsofa.com/animal-sofa-collection" },
+              { name: t("animalCollectionTitle"), url: "https://fuzzsofa.com/animal-sofa-collection" },
             ])
           ),
         }}
@@ -27,13 +29,13 @@ export function CollectionClient() {
         <div className="py-20 md:py-32 text-center bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
           <div className="max-w-4xl mx-auto px-6">
             <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-4">
-              The Complete Collection
+              {t("fullCollection")}
             </p>
             <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
-              Animal Sofa Collection
+              {t("animalCollectionTitle")}
             </h1>
             <p className="mt-6 text-lg text-[#F5F0EB]/50 font-light max-w-2xl mx-auto">
-              Five sculptural pieces, each translating the essential qualities of a distinct animal into functional furniture form. Made to order in Shanghai, delivered worldwide.
+              {t("fullCollectionDesc")}
             </p>
           </div>
         </div>
@@ -65,7 +67,7 @@ export function CollectionClient() {
                 </h2>
                 <p className="mt-2 text-sm text-[#8A8580]">{product.tagline}</p>
                 <p className="mt-3 text-[#F5F0EB]/70">
-                  From {formatPrice(product.priceRange[region][0], region)}
+                  {t("from")} {formatPrice(product.priceRange[region][0], region)}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {product.materialOptions?.map((opt) => (
@@ -85,16 +87,16 @@ export function CollectionClient() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
-              <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">Made to Order</h3>
-              <p className="text-sm text-[#8A8580]">Each piece is crafted to your specifications at our Shanghai workshop, 8–12 weeks production</p>
+              <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">{t("madeToOrder")}</h3>
+              <p className="text-sm text-[#8A8580]">{t("madeToOrderDesc")}</p>
             </div>
             <div>
-              <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">White-Glove Delivery</h3>
-              <p className="text-sm text-[#8A8580]">Free worldwide delivery with professional installation and packaging removal</p>
+              <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">{t("whiteGloveDelivery")}</h3>
+              <p className="text-sm text-[#8A8580]">{t("whiteGloveDeliveryDesc")}</p>
             </div>
             <div>
-              <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">Quality Guarantee</h3>
-              <p className="text-sm text-[#8A8580]">14-day quality guarantee with full shipping documentation and video evidence</p>
+              <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">{t("qualityGuarantee")}</h3>
+              <p className="text-sm text-[#8A8580]">{t("qualityGuaranteeDesc")}</p>
             </div>
           </div>
         </div>
@@ -103,15 +105,15 @@ export function CollectionClient() {
       {/* GEO Content: What is an Animal Sofa? */}
       <section className="border-t border-[#1A1A1A] py-20">
         <div className="max-w-3xl mx-auto px-6">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-6">What Is an Animal Sofa?</h2>
+          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-6">{t("whatIsAnimalSofa")}</h2>
           <p className="text-[#F5F0EB]/60 leading-relaxed mb-4">
-            An animal sofa is a sculptural furniture piece that draws formal and tactile inspiration from a specific animal. Rather than literal representation, it translates the animal&apos;s essential qualities — the Bear&apos;s mass, the Lion&apos;s authority, the Tiger&apos;s kinetic energy — into functional seating.
+            {t("whatIsAnimalSofaDesc1")}
           </p>
           <p className="text-[#F5F0EB]/60 leading-relaxed mb-4">
-            Fuzz Sofa pieces are not novelty furniture. Each is designed as a serious design object, suitable for luxury villas, boutique hotels, and considered residential interiors. The animal inspiration is present in the silhouette, the posture, and the tactile experience — never in cartoonish detail.
+            {t("whatIsAnimalSofaDesc2")}
           </p>
           <p className="text-[#F5F0EB]/60 leading-relaxed">
-            The collection includes five pieces: Bear Sofa, Lion Sofa, Tiger Sofa, Gorilla Sofa, and Owl Chair. Each is made to order in Shanghai, with production taking 8–12 weeks. Prices range from $2,500 for the Owl Chair to $9,800 for the Gorilla Sofa in full-grain leather.
+            {t("whatIsAnimalSofaDesc3")}
           </p>
         </div>
       </section>

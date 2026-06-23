@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
+import { useLanguage } from "@/lib/language-context";
 import { formatPrice } from "@/lib/products";
 
 export default function CheckoutPage() {
   const { items, region, clearCart } = useCart();
+  const { t } = useLanguage();
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [form, setForm] = useState({
     firstName: "",
@@ -34,15 +36,15 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-6">
         <div className="text-center">
-          <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-4">Order Received</h1>
+          <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-4">{t("orderReceived")}</h1>
           <p className="text-[#F5F0EB]/60 max-w-md mx-auto">
-            Thank you for your order. Our team will confirm your specifications and begin production at our Shanghai workshop. You will receive photo and video documentation throughout the process.
+            {t("orderReceivedDesc")}
           </p>
           <Link
             href="/"
             className="mt-8 inline-flex items-center px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
           >
-            Back to Home
+            {t("backToHome")}
           </Link>
         </div>
       </div>
@@ -52,13 +54,13 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-6">
-        <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-4">Checkout</h1>
-        <p className="text-[#8A8580] mb-8">Your cart is empty</p>
+        <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-4">{t("checkout")}</h1>
+        <p className="text-[#8A8580] mb-8">{t("cartEmpty")}</p>
         <Link
           href="/animal-sofa-collection"
           className="inline-flex items-center px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
         >
-          Browse Collection
+          {t("browseCollection")}
         </Link>
       </div>
     );
@@ -66,17 +68,17 @@ export default function CheckoutPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-20">
-      <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-12">Checkout</h1>
+      <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-12">{t("checkout")}</h1>
 
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Shipping form */}
           <div className="lg:col-span-2 space-y-6">
-            <h2 className="font-serif text-2xl font-light text-[#F5F0EB]">Shipping Address</h2>
+            <h2 className="font-serif text-2xl font-light text-[#F5F0EB]">{t("shippingAddress")}</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">First Name</label>
+                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">{t("firstName")}</label>
                 <input
                   type="text"
                   required
@@ -86,7 +88,7 @@ export default function CheckoutPage() {
                 />
               </div>
               <div>
-                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">Last Name</label>
+                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">{t("lastName")}</label>
                 <input
                   type="text"
                   required
@@ -98,7 +100,7 @@ export default function CheckoutPage() {
             </div>
 
             <div>
-              <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">Email</label>
+              <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">{t("email")}</label>
               <input
                 type="email"
                 required
@@ -109,7 +111,7 @@ export default function CheckoutPage() {
             </div>
 
             <div>
-              <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">Phone</label>
+              <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">{t("phone")}</label>
               <input
                 type="tel"
                 value={form.phone}
@@ -119,7 +121,7 @@ export default function CheckoutPage() {
             </div>
 
             <div>
-              <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">Address</label>
+              <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">{t("address")}</label>
               <input
                 type="text"
                 required
@@ -131,7 +133,7 @@ export default function CheckoutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">City</label>
+                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">{t("city")}</label>
                 <input
                   type="text"
                   required
@@ -141,7 +143,7 @@ export default function CheckoutPage() {
                 />
               </div>
               <div>
-                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">Country</label>
+                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">{t("country")}</label>
                 <input
                   type="text"
                   required
@@ -151,7 +153,7 @@ export default function CheckoutPage() {
                 />
               </div>
               <div>
-                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">Postal Code</label>
+                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">{t("postalCode")}</label>
                 <input
                   type="text"
                   value={form.postalCode}
@@ -162,13 +164,12 @@ export default function CheckoutPage() {
             </div>
 
             <div>
-              <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">Order Notes</label>
+              <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">{t("orderNotes")}</label>
               <textarea
                 rows={3}
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
                 className="w-full bg-[#111111] border border-[#1A1A1A] px-4 py-3 text-[#F5F0EB] text-sm focus:border-[#E8B4B8] focus:outline-none transition-colors resize-none"
-                placeholder="Special delivery instructions, design preferences..."
               />
             </div>
           </div>
@@ -176,7 +177,7 @@ export default function CheckoutPage() {
           {/* Order summary */}
           <div>
             <div className="bg-[#111111] border border-[#1A1A1A] p-6">
-              <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">Order Summary</h2>
+              <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">{t("orderSummary")}</h2>
 
               <div className="space-y-4 mb-6">
                 {items.map((item) => (
@@ -192,15 +193,15 @@ export default function CheckoutPage() {
 
               <div className="border-t border-[#1A1A1A] pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-[#8A8580]">Subtotal</span>
+                  <span className="text-[#8A8580]">{t("subtotal")}</span>
                   <span className="text-[#F5F0EB]">{formatPrice(subtotal, region)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-[#8A8580]">Shipping</span>
-                  <span className="text-[#E8B4B8]">Free White-Glove</span>
+                  <span className="text-[#8A8580]">{t("shipping")}</span>
+                  <span className="text-[#E8B4B8]">{t("freeWhiteGlove")}</span>
                 </div>
                 <div className="border-t border-[#1A1A1A] pt-2 flex justify-between">
-                  <span className="text-[#F5F0EB]">Total</span>
+                  <span className="text-[#F5F0EB]">{t("total")}</span>
                   <span className="text-[#F5F0EB] text-lg">{formatPrice(subtotal, region)}</span>
                 </div>
               </div>
@@ -209,13 +210,13 @@ export default function CheckoutPage() {
                 type="submit"
                 className="mt-6 w-full py-4 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
               >
-                Place Order
+                {t("placeOrder")}
               </button>
 
               <div className="mt-4 space-y-1">
-                <p className="text-xs text-[#8A8580]"><span className="text-[#E8B4B8]">&#10003;</span> Free White-Glove Delivery</p>
-                <p className="text-xs text-[#8A8580]"><span className="text-[#E8B4B8]">&#10003;</span> 14-Day Quality Guarantee</p>
-                <p className="text-xs text-[#8A8580]"><span className="text-[#E8B4B8]">&#10003;</span> Photo & Video Documentation</p>
+                <p className="text-xs text-[#8A8580]"><span className="text-[#E8B4B8]">&#10003;</span> {t("freeDelivery")}</p>
+                <p className="text-xs text-[#8A8580]"><span className="text-[#E8B4B8]">&#10003;</span> {t("qualityGuarantee")}</p>
+                <p className="text-xs text-[#8A8580]"><span className="text-[#E8B4B8]">&#10003;</span> {t("photoVideoDoc")}</p>
               </div>
             </div>
           </div>

@@ -2,21 +2,23 @@
 
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
+import { useLanguage } from "@/lib/language-context";
 import { formatPrice } from "@/lib/products";
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, region } = useCart();
+  const { t } = useLanguage();
 
   if (items.length === 0) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-6">
-        <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-4">Your Cart</h1>
-        <p className="text-[#8A8580] mb-8">Your cart is empty</p>
+        <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-4">{t("yourCart")}</h1>
+        <p className="text-[#8A8580] mb-8">{t("cartEmpty")}</p>
         <Link
           href="/animal-sofa-collection"
           className="inline-flex items-center px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
         >
-          Continue Shopping
+          {t("continueShopping")}
         </Link>
       </div>
     );
@@ -29,7 +31,7 @@ export default function CartPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-20">
-      <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-12">Your Cart</h1>
+      <h1 className="font-serif text-4xl font-light text-[#F5F0EB] mb-12">{t("yourCart")}</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Cart items */}
@@ -58,7 +60,7 @@ export default function CartPage() {
                       onClick={() => removeItem(item.product.slug)}
                       className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors shrink-0"
                     >
-                      Remove
+                      {t("remove")}
                     </button>
                   </div>
                   <div className="mt-4 flex items-center justify-between">
@@ -88,38 +90,38 @@ export default function CartPage() {
         {/* Summary */}
         <div>
           <div className="bg-[#111111] border border-[#1A1A1A] p-6">
-            <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">Order Summary</h2>
+            <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">{t("orderSummary")}</h2>
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-[#8A8580]">Subtotal</span>
+                <span className="text-[#8A8580]">{t("subtotal")}</span>
                 <span className="text-[#F5F0EB]">{formatPrice(subtotal, region)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-[#8A8580]">Shipping</span>
-                <span className="text-[#E8B4B8]">Free</span>
+                <span className="text-[#8A8580]">{t("shipping")}</span>
+                <span className="text-[#E8B4B8]">{t("free")}</span>
               </div>
               <div className="border-t border-[#1A1A1A] pt-3 flex justify-between">
-                <span className="text-[#F5F0EB]">Total</span>
+                <span className="text-[#F5F0EB]">{t("total")}</span>
                 <span className="text-[#F5F0EB] font-medium">{formatPrice(subtotal, region)}</span>
               </div>
             </div>
 
             <p className="mt-4 text-xs text-[#8A8580]">
-              White-glove delivery included. 14-day quality guarantee.
+              {t("whiteGloveGuarantee")}
             </p>
 
             <Link
               href="/checkout"
               className="mt-6 block w-full py-4 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase text-center hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
             >
-              Checkout
+              {t("checkout")}
             </Link>
 
             <Link
               href="/animal-sofa-collection"
               className="mt-3 block text-center text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors"
             >
-              Continue Shopping
+              {t("continueShopping")}
             </Link>
           </div>
         </div>
