@@ -18,19 +18,37 @@ const slugToPrefix: Record<string, string> = {
 };
 
 const heroScenes = [
-  { src: "/hero-scene-1.jpg", alt: "Gorilla sofa in cinematic billionaire library interior" },
+  {
+    src: "/hero-scene-1.jpg",
+    alt: "Gorilla sofa in cinematic billionaire library interior",
+    keys: {
+      subtitle: "heroSubtitle" as const,
+      title: "heroTitle" as const,
+      description: "heroDescription" as const,
+      cta: "exploreCollection" as const,
+      href: "/gorilla-sofa",
+    },
+    overlay: "from-[#0A0A0A]/70 via-[#0A0A0A]/25 to-transparent",
+    accentColor: "#E8B4B8",
+    textColor: "#F5F0EB",
+  },
+  {
+    src: "/hero-scene-2.jpg",
+    alt: "Pink owl chair in dark punk concrete interior with neon lighting",
+    keys: {
+      subtitle: "hero2Subtitle" as const,
+      title: "hero2Title" as const,
+      description: "hero2Description" as const,
+      cta: "hero2Cta" as const,
+      href: "/owl-sofa",
+    },
+    overlay: "from-[#0A0A0A]/85 via-[#0A0A0A]/40 to-transparent",
+    accentColor: "#FF69B4",
+    textColor: "#F5F0EB",
+  },
 ];
 
-function HeroSlideshow() {
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % heroScenes.length);
-    }, 8000);
-    return () => clearInterval(timer);
-  }, []);
-
+function HeroSlideshow({ current }: { current: number }) {
   return (
     <div className="absolute inset-0">
       {heroScenes.map((scene, idx) => (
@@ -50,6 +68,16 @@ function HeroSlideshow() {
 export default function HomePage() {
   const { t } = useLanguage();
   const latestArticles = journalArticles.slice(0, 3);
+  const [heroScene, setHeroScene] = useState(0);
+  const sceneConfig = heroScenes[heroScene];
+
+  // Auto-advance hero scenes
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroScene((prev) => (prev + 1) % heroScenes.length);
+    }, 8000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <>
@@ -64,53 +92,69 @@ export default function HomePage() {
 
       {/* HERO: Immersive Scene Banner */}
       <section className="relative w-full flex items-end overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
-        {/* Background: cinematic luxury interior scene */}
-        <HeroSlideshow />
+        {/* Background: cinematic interior scenes */}
+        <HeroSlideshow current={heroScene} />
 
         {/* Left-side vignette for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/70 via-[#0A0A0A]/25 to-transparent" />
+        <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
         {/* Hero content — editorial gallery layout */}
         <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[12%] flex flex-col justify-end md:justify-center">
 
-          {/* Category label — accent pink, uppercase, wide tracking */}
+          {/* Category label — accent, uppercase, wide tracking */}
           <p
-            className="text-[10px] md:text-[11px] text-[#E8B4B8] tracking-[0.35em] uppercase mb-5 md:mb-7 animate-fade-in"
-            style={{ fontFamily: 'var(--font-serif)' }}
+            className="text-[10px] md:text-[11px] tracking-[0.35em] uppercase mb-5 md:mb-7 animate-fade-in"
+            style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}
           >
-            {t("heroSubtitle")}
+            {t(sceneConfig.keys.subtitle)}
           </p>
 
           {/* Display title — large serif, the visual anchor */}
           <h1
-            className="text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em] mb-6 md:mb-8 animate-fade-in-delay-1"
-            style={{ fontFamily: 'var(--font-serif)' }}
+            className="text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem] font-light leading-[1.05] tracking-[0.02em] mb-6 md:mb-8 animate-fade-in-delay-1"
+            style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}
           >
-            {t("heroTitle")}
+            {t(sceneConfig.keys.title)}
           </h1>
 
           {/* Thin decorative line */}
-          <div className="w-16 h-px bg-[#E8B4B8]/40 mb-5 md:mb-7 animate-fade-in-delay-2" />
+          <div className="w-16 h-px mb-5 md:mb-7 animate-fade-in-delay-2" style={{ backgroundColor: sceneConfig.accentColor + '66' }} />
 
           {/* Description — quiet, airy */}
-          <p className="text-sm md:text-[15px] lg:text-base font-light text-[#F5F0EB]/50 max-w-[420px] leading-[1.8] animate-fade-in-delay-2">
-            {t("heroDescription")}
+          <p className="text-sm md:text-[15px] lg:text-base font-light max-w-[420px] leading-[1.8] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
+            {t(sceneConfig.keys.description)}
           </p>
 
-          {/* CTA button — editorial style: border, long tracking, arrow */}
+          {/* CTA button — editorial style, hover fills with accent */}
           <div className="mt-7 md:mt-9 animate-fade-in-delay-3">
             <Link
-              href="/gorilla-sofa"
+              href={sceneConfig.keys.href}
               className="group inline-flex items-center gap-4"
             >
-              {/* Button frame */}
-              <span className="inline-flex items-center gap-3 px-6 py-2.5 border border-[#F5F0EB]/50 text-[#F5F0EB]/80 text-[11px] tracking-[0.2em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300">
-                {t("exploreCollection")}
+              <span
+                className="inline-flex items-center gap-3 px-6 py-2.5 border text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:border-transparent"
+                style={{
+                  borderColor: sceneConfig.textColor + '80',
+                  color: sceneConfig.textColor + 'CC',
+                  '--hover-bg': sceneConfig.accentColor,
+                  '--hover-color': '#0A0A0A',
+                } as React.CSSProperties}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = sceneConfig.accentColor;
+                  e.currentTarget.style.borderColor = sceneConfig.accentColor;
+                  e.currentTarget.style.color = '#0A0A0A';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.borderColor = sceneConfig.textColor + '80';
+                  e.currentTarget.style.color = sceneConfig.textColor + 'CC';
+                }}
+              >
+                {t(sceneConfig.keys.cta)}
               </span>
-              {/* Arrow — extends on hover */}
-              <span className="flex items-center text-[#F5F0EB]/40 group-hover:text-[#E8B4B8] transition-all duration-300">
-                <svg width="20" height="12" viewBox="0 0 20 12" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
+              <span className="flex items-center transition-all duration-300 group-hover:translate-x-1" style={{ color: sceneConfig.textColor + '66' }}>
+                <svg width="20" height="12" viewBox="0 0 20 12" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M0 6h18M13 1l5 5-5 5" />
                 </svg>
               </span>
@@ -118,10 +162,22 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Scroll hint */}
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 opacity-30 animate-fade-in-delay-3">
-          <div className="w-px h-8 bg-gradient-to-b from-transparent to-[#F5F0EB]/60" />
-        </div>
+        {/* Scene indicators */}
+        {heroScenes.length > 1 && (
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3">
+            {heroScenes.map((scene, idx) => (
+              <button
+                key={scene.src}
+                onClick={() => setHeroScene(idx)}
+                className="w-8 h-px transition-all duration-500"
+                style={{
+                  backgroundColor: idx === heroScene ? sceneConfig.accentColor : sceneConfig.textColor + '30',
+                }}
+                aria-label={`Scene ${idx + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* SCENE-BASED PRODUCT SHOWCASE */}
