@@ -67,39 +67,60 @@ export default function HomePage() {
         {/* Background: cinematic luxury interior scene */}
         <HeroSlideshow />
 
-        {/* Subtle left-side vignette for text readability — preserves the scene atmosphere */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/65 via-[#0A0A0A]/20 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/40 via-transparent to-[#0A0A0A]/20" />
+        {/* Left-side vignette for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/70 via-[#0A0A0A]/25 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
-        {/* Hero content — left-aligned, vertically centered in the dark bookshelf area */}
-        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[8%] pt-[15%] flex flex-col justify-center">
-          {/* Tag line */}
-          <p className="text-[10px] md:text-xs text-[#E8B4B8] tracking-[0.3em] uppercase mb-4 md:mb-6 animate-fade-in" style={{ fontFamily: 'var(--font-serif)' }}>
+        {/* Hero content — editorial gallery layout */}
+        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[12%] flex flex-col justify-end md:justify-center">
+
+          {/* Category label — accent pink, uppercase, wide tracking */}
+          <p
+            className="text-[10px] md:text-[11px] text-[#E8B4B8] tracking-[0.35em] uppercase mb-5 md:mb-7 animate-fade-in"
+            style={{ fontFamily: 'var(--font-serif)' }}
+          >
             {t("heroSubtitle")}
           </p>
 
-          {/* Description */}
-          <p className="text-sm md:text-base lg:text-lg font-light text-[#F5F0EB]/60 max-w-[440px] leading-[1.75] animate-fade-in-delay-2">
+          {/* Display title — large serif, the visual anchor */}
+          <h1
+            className="text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em] mb-6 md:mb-8 animate-fade-in-delay-1"
+            style={{ fontFamily: 'var(--font-serif)' }}
+          >
+            {t("heroTitle")}
+          </h1>
+
+          {/* Thin decorative line */}
+          <div className="w-16 h-px bg-[#E8B4B8]/40 mb-5 md:mb-7 animate-fade-in-delay-2" />
+
+          {/* Description — quiet, airy */}
+          <p className="text-sm md:text-[15px] lg:text-base font-light text-[#F5F0EB]/50 max-w-[420px] leading-[1.8] animate-fade-in-delay-2">
             {t("heroDescription")}
           </p>
 
-          {/* Single CTA — gallery-style: one clear action */}
-          <div className="mt-6 md:mt-8 animate-fade-in-delay-3">
+          {/* CTA button — editorial style: border, long tracking, arrow */}
+          <div className="mt-7 md:mt-9 animate-fade-in-delay-3">
             <Link
-              href="/animal-sofa-collection"
-              className="inline-flex items-center gap-3 px-7 py-3 border border-[#F5F0EB]/80 text-[#F5F0EB] text-xs tracking-[0.18em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 group"
+              href="/gorilla-sofa"
+              className="group inline-flex items-center gap-4"
             >
-              {t("exploreCollection")}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              {/* Button frame */}
+              <span className="inline-flex items-center gap-3 px-6 py-2.5 border border-[#F5F0EB]/50 text-[#F5F0EB]/80 text-[11px] tracking-[0.2em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300">
+                {t("exploreCollection")}
+              </span>
+              {/* Arrow — extends on hover */}
+              <span className="flex items-center text-[#F5F0EB]/40 group-hover:text-[#E8B4B8] transition-all duration-300">
+                <svg width="20" height="12" viewBox="0 0 20 12" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
+                  <path d="M0 6h18M13 1l5 5-5 5" />
+                </svg>
+              </span>
             </Link>
           </div>
         </div>
 
         {/* Scroll hint */}
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 opacity-40 animate-fade-in-delay-3">
-          <div className="w-px h-6 bg-gradient-to-b from-transparent to-[#F5F0EB]" />
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 opacity-30 animate-fade-in-delay-3">
+          <div className="w-px h-8 bg-gradient-to-b from-transparent to-[#F5F0EB]/60" />
         </div>
       </section>
 
