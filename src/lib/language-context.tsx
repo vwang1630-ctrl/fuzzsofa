@@ -8,7 +8,6 @@ interface LanguageContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
   region: Region;
-  setRegion: (region: Region) => void;
   t: (key: TranslationKeys) => string;
   isRtl: boolean;
 }
@@ -20,19 +19,37 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [region, setRegionState] = useState<Region>("americas");
   const [mounted, setMounted] = useState(false);
 
-  // Restore from localStorage on mount
+  // Restore locale from localStorage + auto-detect region on mount
   useEffect(() => {
+    // Restore saved locale
     const savedLocale = localStorage.getItem("fuzzsofa-locale") as Locale | null;
-    const savedRegion = localStorage.getItem("fuzzsofa-region") as Region | null;
     if (savedLocale && (locales as readonly string[]).includes(savedLocale)) {
       setLocaleState(savedLocale);
       const isRtl = savedLocale === "ar" || savedLocale === "fa";
       document.documentElement.dir = isRtl ? "rtl" : "ltr";
       document.documentElement.lang = savedLocale;
     }
+
+    // Auto-detect region from IP (only if not already saved)
+    const savedRegion = localStorage.getItem("fuzzsofa-region") as Region | null;
     if (savedRegion) {
       setRegionState(savedRegion);
+    } else {
+      // Detect region from IP
+      fetch("/api/detect-region")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.region) {
+            setRegionState(data.region as Region);
+            localStorage.setItem("fuzzsofa-region", data.region);
+          }
+        })
+        .catch(() => {
+          // Fallback to Americas
+          setRegionState("americas");
+        });
     }
+
     setMounted(true);
   }, []);
 
@@ -43,11 +60,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const isRtl = newLocale === "ar" || newLocale === "fa";
     document.documentElement.dir = isRtl ? "rtl" : "ltr";
     document.documentElement.lang = newLocale;
-  }, []);
-
-  const setRegion = useCallback((newRegion: Region) => {
-    setRegionState(newRegion);
-    localStorage.setItem("fuzzsofa-region", newRegion);
   }, []);
 
   const t = useCallback(
@@ -66,7 +78,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return (
     <LanguageContext.Provider
-      value={{ locale, setLocale, region, setRegion, t, isRtl }}
+      value={{ locale, setLocale, region, t, isRtl }}
     >
       {children}
     </LanguageContext.Provider>

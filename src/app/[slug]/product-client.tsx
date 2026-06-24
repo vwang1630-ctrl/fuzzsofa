@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function ProductPageClient({ product }: Props) {
-  const { addItem, region, setRegion } = useCart();
+  const { addItem, region } = useCart();
   const { t } = useLanguage();
   // Map product slug to i18n key prefix
   const slugToPrefix: Record<string, string> = {
@@ -76,13 +76,6 @@ export function ProductPageClient({ product }: Props) {
   const relatedProducts = product.relatedProducts
     .map((slug) => getProduct(slug))
     .filter(Boolean) as Product[];
-
-  const regions: { value: Region; label: string }[] = [
-    { value: "americas", label: "Americas (USD)" },
-    { value: "europe", label: "Europe (EUR)" },
-    { value: "middle_east", label: "Middle East (USD)" },
-    { value: "se_asia", label: "SE Asia (USD)" },
-  ];
 
   const productImages: Record<string, string[]> = {
     "owl-sofa": [
@@ -360,28 +353,6 @@ export function ProductPageClient({ product }: Props) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-8">{t("purchaseTitle")}</h2>
-
-              {/* Region selector */}
-              <div className="mb-8">
-                <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
-                  {t("country")}
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {regions.map((r) => (
-                    <button
-                      key={r.value}
-                      onClick={() => setRegion(r.value)}
-                      className={`text-xs px-4 py-2 border transition-all duration-300 ${
-                        region === r.value
-                          ? "border-[#E8B4B8] text-[#E8B4B8]"
-                          : "border-[#333] text-[#F5F0EB]/50 hover:border-[#E8B4B8] hover:text-[#E8B4B8]"
-                      }`}
-                    >
-                      {r.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
 
               {/* Material type */}
               {product.materialOptions && product.materialOptions.length > 1 && (

@@ -4,37 +4,19 @@ import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import { useState, useRef, useEffect } from "react";
-import { locales, localeNames, type Locale, type TranslationKeys } from "@/lib/i18n";
-
-type Region = "americas" | "europe" | "middle_east" | "se_asia";
-
-const regionKeyMap: Record<Region, TranslationKeys> = {
-  americas: "americasLabel",
-  europe: "europeLabel",
-  middle_east: "middleEastLabel",
-  se_asia: "seAsiaLabel",
-};
-
-const regionIcons: Record<string, string> = {
-  americas: "🌎",
-  europe: "🌍",
-  middle_east: "🌍",
-  se_asia: "🌏",
-};
+import { locales, localeNames, type Locale } from "@/lib/i18n";
+import type { Region } from "@/lib/products";
 
 export function Header() {
   const { totalItems } = useCart();
-  const { locale, setLocale, region, setRegion, t, isRtl } = useLanguage();
+  const { locale, setLocale, region, t, isRtl } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const [regionOpen, setRegionOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
-  const regionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
-      if (regionRef.current && !regionRef.current.contains(e.target as Node)) setRegionOpen(false);
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
@@ -69,10 +51,15 @@ export function Header() {
 
         {/* Right side controls */}
         <div className="flex items-center gap-3">
+          {/* Region indicator - auto detected, not selectable */}
+          <span className="hidden md:flex items-center gap-1 text-[#555] text-xs tracking-[0.05em]">
+            📍 {region === "europe" ? "EUR" : "USD"} / {region === "americas" ? "Americas" : region === "europe" ? "Europe" : region === "middle_east" ? "Middle East" : "SE Asia"}
+          </span>
+
           {/* Language selector */}
           <div ref={langRef} className="relative hidden md:block">
             <button
-              onClick={() => { setLangOpen(!langOpen); setRegionOpen(false); }}
+              onClick={() => setLangOpen(!langOpen)}
               className="flex items-center gap-1 text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 text-xs tracking-[0.05em] uppercase"
               aria-label="Select language"
             >
@@ -94,40 +81,6 @@ export function Header() {
               </div>
             )}
           </div>
-
-          {/* Region selector */}
-          <div ref={regionRef} className="relative hidden md:block">
-            <button
-              onClick={() => { setRegionOpen(!regionOpen); setLangOpen(false); }}
-              className="flex items-center gap-1 text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 text-xs tracking-[0.05em]"
-              aria-label="Select region"
-            >
-              📍 {t(regionKeyMap[region])}
-            </button>
-            {regionOpen && (
-              <div className="absolute top-full mt-2 right-0 bg-[#111111] border border-[#1A1A1A] rounded-[4px] py-1 min-w-[180px] z-50">
-                {(Object.keys(regionKeyMap) as Region[]).map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => { setRegion(key); setRegionOpen(false); }}
-                    className={`w-full text-left px-4 py-2 text-xs tracking-[0.05em] hover:bg-[#1A1A1A] transition-colors flex items-center gap-2 ${
-                      key === region ? "text-[#E8B4B8]" : "text-[#8A8580]"
-                    }`}
-                  >
-                    <span>{regionIcons[key]}</span> {t(regionKeyMap[key])}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Account icon */}
-          <button className="hidden md:flex text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300" aria-label="Account">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-          </button>
 
           {/* Cart */}
           <Link
@@ -176,7 +129,7 @@ export function Header() {
           <Link href="/contact" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link>
           <div className="flex gap-3 pt-2 border-t border-[#1A1A1A]">
             <span className="text-[#8A8580]">🌐 {localeNames[locale]}</span>
-            <span className="text-[#8A8580]">📍 {t(regionKeyMap[region] as TranslationKeys)}</span>
+            <span className="text-[#555]">📍 {region === "europe" ? "EUR" : "USD"}</span>
           </div>
         </nav>
       )}

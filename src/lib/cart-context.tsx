@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 import type { Product, Region } from "./products";
+import { useLanguage } from "./language-context";
 
 export interface CartItem {
   product: Product;
@@ -19,14 +20,13 @@ interface CartContextType {
   clearCart: () => void;
   totalItems: number;
   region: Region;
-  setRegion: (region: Region) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
-  const [region, setRegion] = useState<Region>("americas");
+  const { region } = useLanguage();
 
   const addItem = useCallback((item: CartItem) => {
     setItems((prev) => {
@@ -64,7 +64,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, totalItems, region, setRegion }}
+      value={{ items, addItem, removeItem, updateQuantity, clearCart, totalItems, region }}
     >
       {children}
     </CartContext.Provider>
