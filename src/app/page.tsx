@@ -64,35 +64,34 @@ export default function HomePage() {
       />
 
       {/* HERO: Immersive Scene Banner */}
-      <section className="relative w-full flex items-center justify-center overflow-hidden" style={{ aspectRatio: '21/9', maxHeight: '80vh' }}>
+      <section className="relative w-full flex items-start justify-center overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
         {/* Background: AI-generated luxury interior scene */}
         <HeroSlideshow />
 
-        {/* Dark overlays for text readability */}
-        <div className="absolute inset-0 bg-[#0A0A0A]/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />
+        {/* Dark overlay — only top portion for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/15 to-[#0A0A0A]/70" />
 
-        {/* Centered hero content */}
-        <div className="relative z-10 text-center px-6 max-w-4xl">
-          <p className="text-xs text-[#E8B4B8] tracking-[0.25em] uppercase mb-6 animate-fade-in">
+        {/* Hero content — top area, leaving product visible below */}
+        <div className="relative z-10 text-center px-6 pt-[8%] max-w-4xl">
+          <p className="text-xs text-[#E8B4B8] tracking-[0.25em] uppercase mb-5 animate-fade-in">
             {t("heroSubtitle")}
           </p>
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-[5.5rem] font-light tracking-[0.08em] leading-[1.05] text-[#F5F0EB] animate-fade-in-delay-1">
+          <h1 className="font-serif text-4xl md:text-6xl lg:text-[5rem] font-light tracking-[0.08em] leading-[1.05] text-[#F5F0EB] animate-fade-in-delay-1">
             {t("siteTitle")}
           </h1>
-          <p className="mt-8 text-base md:text-lg font-light text-[#F5F0EB]/60 max-w-2xl mx-auto leading-[1.7] animate-fade-in-delay-2">
+          <p className="mt-5 text-sm md:text-base font-light text-[#F5F0EB]/50 max-w-xl mx-auto leading-[1.7] animate-fade-in-delay-2">
             {t("heroDescription")}
           </p>
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-delay-3">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-delay-3">
             <Link
               href="/animal-sofa-collection"
-              className="inline-flex items-center px-10 py-4 border border-[#F5F0EB] text-[#F5F0EB] text-sm tracking-[0.15em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
+              className="inline-flex items-center px-8 py-3 border border-[#F5F0EB] text-[#F5F0EB] text-xs tracking-[0.15em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
             >
               {t("exploreCollection")}
             </Link>
             <Link
               href="/luxury-villa-interior"
-              className="inline-flex items-center px-10 py-4 border border-[#333] text-[#F5F0EB]/50 text-sm tracking-[0.15em] uppercase hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
+              className="inline-flex items-center px-8 py-3 border border-[#333] text-[#F5F0EB]/50 text-xs tracking-[0.15em] uppercase hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
             >
               {t("viewInteriors")}
             </Link>
