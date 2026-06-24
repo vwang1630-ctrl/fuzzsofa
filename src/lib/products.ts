@@ -450,9 +450,10 @@ export function getPrice(product: Product, region: Region): number {
   return mapping[key]?.[region] ?? product.priceRange.americas[0];
 }
 
-export function formatPrice(price: number, region?: Region): string {
+export function formatPrice(price: number | undefined | null, region?: Region): string {
+  const safePrice = price ?? 0;
   if (region === "europe") {
-    return `€${price.toLocaleString()}`;
+    return `€${safePrice.toLocaleString()}`;
   }
-  return `$${price.toLocaleString()}`;
+  return `$${safePrice.toLocaleString()}`;
 }

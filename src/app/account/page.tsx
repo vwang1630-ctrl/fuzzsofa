@@ -1021,13 +1021,9 @@ export default function AccountPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {favorites.map(fav => {
-                const prod = getProduct(fav.product_slug);
-                if (!prod) return null;
+              {favorites.filter(fav => getProduct(fav.product_slug)).map(fav => {
+                const prod = getProduct(fav.product_slug)!;
                 const slugToPrefix: Record<string, string> = {
-                  "bear-sofa": "bearSofa",
-                  "lion-sofa": "lionSofa",
-                  "tiger-sofa": "tigerSofa",
                   "gorilla-sofa": "gorillaSofa",
                   "silverback-sofa": "silverbackSofa",
                   "owl-sofa": "owlChair",
@@ -1045,10 +1041,7 @@ export default function AccountPage() {
                   "muscle-gorilla-sofa": ["/products/muscle-gorilla-sofa/main.jpg"],
                 };
                 const img = productImages[fav.product_slug]?.[0];
-                const price = formatPrice(
-                  prod.priceRange ? prod.priceRange[region as keyof typeof prod.priceRange]?.[0] ?? prod.priceRange.americas[0] : 0,
-                  region
-                );
+                const priceValue = prod.priceRange ? (prod.priceRange[region as keyof typeof prod.priceRange]?.[0] ?? prod.priceRange.americas?.[0] ?? 0) : 0;
                 return (
                   <div
                     key={fav.id}
@@ -1078,7 +1071,7 @@ export default function AccountPage() {
                             <h3 className="font-serif text-lg font-light text-[#F5F0EB] hover:text-[#E8B4B8] transition-colors">{productName}</h3>
                           </Link>
                           <p className="text-xs text-[#8A8580] mt-1">{productTagline}</p>
-                          <p className="text-sm text-[#F5F0EB]/60 mt-2">{price}</p>
+                          <p className="text-sm text-[#F5F0EB]/60 mt-2">{formatPrice(priceValue, region)}</p>
                         </div>
                         <button
                           onClick={() => handleRemoveFavorite(fav.product_slug)}
