@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
-import { formatPrice } from "@/lib/products";
+import { formatPrice, getProduct, type Product } from "@/lib/products";
+import { useCart } from "@/lib/cart-context";
 import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
 
 /* ------------------------------------------------------------------ */
@@ -144,11 +145,12 @@ const formatEDD = (d: string | null) => {
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
-type Tab = "orders" | "addresses" | "payment";
+type Tab = "orders" | "addresses" | "payment" | "favorites";
 
 export default function AccountPage() {
   const router = useRouter();
   const { t } = useLanguage();
+  const { region } = useCart();
 
   const [tab, setTab] = useState<Tab>("orders");
   const [orders, setOrders] = useState<Order[]>([]);
@@ -177,6 +179,11 @@ export default function AccountPage() {
   // Addresses
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [loadingAddr, setLoadingAddr] = useState(false);
+
+  // Favorites
+  const [favorites, setFavorites] = useState<{ id: string; product_slug: string; created_at: string }[]>([]);
+  const [loadingFavorites, setLoadingFavorites] = useState(false);
+  const [removingFavorite, setRemovingFavorite] = useState<string | null>(null);
 
   // Auth
   const [sessionToken, setSessionToken] = useState<string | null>(null);
@@ -228,6 +235,35 @@ export default function AccountPage() {
     }
     fetchAddresses();
   }, [sessionToken, tab, authHeaders]);
+
+  // Fetch favorites
+  useEffect(() => {
+    async function fetchFavorites() {
+      if (!sessionToken || tab !== "favorites") return;
+      setLoadingFavorites(true);
+      try {
+        const res = await fetch("/api/favorites", { headers: authHeaders() });
+        if (res.ok) { const data = await res.json(); setFavorites(data.favorites || []); }
+      } catch (err) { console.error("Failed to fetch favorites:", err); }
+      finally { setLoadingFavorites(false); }
+    }
+    fetchFavorites();
+  }, [sessionToken, tab, authHeaders]);
+
+  // Remove favorite
+  const handleRemoveFavorite = async (productSlug: string) => {
+    setRemovingFavorite(productSlug);
+    try {
+      const res = await fetch(
+        `/api/favorites?productSlug=${encodeURIComponent(productSlug)}`,
+        { method: "DELETE", headers: authHeaders() }
+      );
+      if (res.ok) {
+        setFavorites(prev => prev.filter(f => f.product_slug !== productSlug));
+      }
+    } catch (err) { console.error("Remove favorite failed:", err); }
+    finally { setRemovingFavorite(null); }
+  };
 
   // Delete order
   const handleDeleteOrder = async (orderId: string) => {
@@ -339,7 +375,7 @@ export default function AccountPage() {
 
       {/* Tabs */}
       <div className="flex gap-8 border-b border-[#1A1A1A] mb-10">
-        {(["orders", "addresses", "payment"] as Tab[]).map(tabKey => (
+        {(["orders", "addresses", "payment", "favorites"] as Tab[]).map(tabKey => (
           <button
             key={tabKey}
             onClick={() => setTab(tabKey)}
@@ -349,7 +385,7 @@ export default function AccountPage() {
                 : "text-[#8A8580] hover:text-[#F5F0EB]"
             }`}
           >
-            {tabKey === "orders" ? t("accountMyOrders") : tabKey === "addresses" ? t("accountMyAddresses") : t("accountPaymentSettings")}
+            {tabKey === "orders" ? t("accountMyOrders") : tabKey === "addresses" ? t("accountMyAddresses") : tabKey === "payment" ? t("accountPaymentSettings") : t("myFavorites")}
           </button>
         ))}
       </div>
@@ -606,6 +642,121 @@ export default function AccountPage() {
               {t("accountPaymentDesc")}
             </p>
           </div>
+        </div>
+      )}
+
+      {/* ==================== FAVORITES TAB ==================== */}
+      {tab === "favorites" && (
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-serif text-xl text-[#F5F0EB]">{t("myFavorites")}</h2>
+            {favorites.length > 0 && (
+              <span className="text-xs text-[#8A8580] tracking-[0.1em] uppercase">
+                {t("favoritesCount").replace("{n}", String(favorites.length))}
+              </span>
+            )}
+          </div>
+
+          {loadingFavorites ? (
+            <div className="flex justify-center py-12">
+              <div className="w-6 h-6 border-2 border-[#E8B4B8]/30 border-t-[#E8B4B8] rounded-full animate-spin" />
+            </div>
+          ) : favorites.length === 0 ? (
+            <div className="text-center py-16">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8A8580" strokeWidth="1" className="mx-auto mb-4 opacity-40">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+              <p className="text-[#8A8580] text-sm mb-2">{t("noFavorites")}</p>
+              <p className="text-[#8A8580]/60 text-xs mb-6">{t("noFavoritesDesc")}</p>
+              <Link
+                href="/#collection"
+                className="inline-block px-6 py-2 border border-[#F5F0EB] text-[#F5F0EB] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] hover:border-[#E8B4B8] transition-all duration-300"
+              >
+                {t("animalCollection")}
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {favorites.map(fav => {
+                const prod = getProduct(fav.product_slug);
+                if (!prod) return null;
+                const slugToPrefix: Record<string, string> = {
+                  "bear-sofa": "bearSofa",
+                  "lion-sofa": "lionSofa",
+                  "tiger-sofa": "tigerSofa",
+                  "gorilla-sofa": "gorillaSofa",
+                  "silverback-sofa": "silverbackSofa",
+                  "owl-sofa": "owlChair",
+                  "meteorite-ring-sofa": "meteoriteRingSofa",
+                  "muscle-gorilla-sofa": "muscleGorillaSofa",
+                };
+                const prefix = slugToPrefix[fav.product_slug] || "";
+                const productName = prefix ? t(`${prefix}Name` as TranslationKeys) : prod.name;
+                const productTagline = prefix ? t(`${prefix}Tagline` as TranslationKeys) : prod.tagline;
+                const productImages: Record<string, string[]> = {
+                  "owl-sofa": ["/products/owl/snowy-white.png"],
+                  "gorilla-sofa": ["/products/gorilla-sofa/gray.jpg"],
+                  "silverback-sofa": ["/products/silverback-sofa/gray.jpg"],
+                  "meteorite-ring-sofa": ["/products/meteorite-ring-sofa/main.jpg"],
+                  "muscle-gorilla-sofa": ["/products/muscle-gorilla-sofa/main.jpg"],
+                };
+                const img = productImages[fav.product_slug]?.[0];
+                const price = formatPrice(
+                  prod.priceRange ? prod.priceRange[region as keyof typeof prod.priceRange]?.[0] ?? prod.priceRange.americas[0] : 0,
+                  region
+                );
+                return (
+                  <div
+                    key={fav.id}
+                    className="group border border-[#1A1A1A] hover:border-[#E8B4B8]/30 transition-all duration-300 relative"
+                  >
+                    <Link href={`/${fav.product_slug}`}>
+                      <div className="aspect-square bg-gradient-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden">
+                        {img ? (
+                          <img
+                            src={img}
+                            alt={productName}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
+                              {prod.animal.charAt(0)}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                    <div className="p-4">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <Link href={`/${fav.product_slug}`}>
+                            <h3 className="font-serif text-lg font-light text-[#F5F0EB] hover:text-[#E8B4B8] transition-colors">{productName}</h3>
+                          </Link>
+                          <p className="text-xs text-[#8A8580] mt-1">{productTagline}</p>
+                          <p className="text-sm text-[#F5F0EB]/60 mt-2">{price}</p>
+                        </div>
+                        <button
+                          onClick={() => handleRemoveFavorite(fav.product_slug)}
+                          disabled={removingFavorite === fav.product_slug}
+                          className="flex-shrink-0 text-[#E8B4B8] hover:text-[#F5F0EB] transition-colors p-1"
+                          title={t("removeFavorite")}
+                        >
+                          {removingFavorite === fav.product_slug ? (
+                            <div className="w-4 h-4 border-2 border-[#E8B4B8]/30 border-t-[#E8B4B8] rounded-full animate-spin" />
+                          ) : (
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
     </div>

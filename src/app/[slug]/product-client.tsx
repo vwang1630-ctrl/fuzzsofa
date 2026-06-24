@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { Product } from "@/lib/products";
 import { getProduct, getPrice, formatPrice } from "@/lib/products";
 import { productJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/seo";
@@ -9,6 +9,7 @@ import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
 import { RoomVisualizationModal } from "@/components/room-visualization-modal";
+import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
 
 interface Props {
   product: Product;
@@ -53,6 +54,91 @@ export function ProductPageClient({ product }: Props) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [showRoomViz, setShowRoomViz] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
+  const [sessionToken, setSessionToken] = useState<string | null>(null);
+
+  // Get session for favorites
+  useEffect(() => {
+    async function getSession() {
+      try {
+        const supabase = await getSupabaseBrowserClientWithRetry();
+        const { data: { session } } = await supabase.auth.getSession();
+        setSessionToken(session?.access_token ?? null);
+      } catch { /* not logged in */ }
+    }
+    getSession();
+  }, []);
+
+  // Check if product is favorited
+  useEffect(() => {
+    async function checkFavorite() {
+      if (!sessionToken) return;
+      try {
+        const res = await fetch("/api/favorites", {
+          headers: { "x-session": sessionToken },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const found = (data.favorites || []).some(
+            (f: { product_slug: string }) => f.product_slug === product.slug
+          );
+          setIsFavorited(found);
+        }
+      } catch { /* ignore */ }
+    }
+    checkFavorite();
+  }, [sessionToken, product.slug]);
+
+  const authHeaders = useCallback(() => {
+    const h: Record<string, string> = { "Content-Type": "application/json" };
+    if (sessionToken) h["x-session"] = sessionToken;
+    return h;
+  }, [sessionToken]);
+
+  const toggleFavorite = async () => {
+    if (!sessionToken) return;
+    setFavoriteLoading(true);
+    try {
+      if (isFavorited) {
+        const res = await fetch(
+          `/api/favorites?productSlug=${encodeURIComponent(product.slug)}`,
+          { method: "DELETE", headers: authHeaders() }
+        );
+        if (res.ok) {
+          setIsFavorited(false);
+        }
+      } else {
+        const res = await fetch("/api/favorites", {
+          method: "POST",
+          headers: authHeaders(),
+          body: JSON.stringify({ productSlug: product.slug }),
+        });
+        if (res.ok || res.status === 409) {
+          setIsFavorited(true);
+        }
+      }
+    } catch { /* ignore */ }
+    finally { setFavoriteLoading(false); }
+  };
+
+  const handleShare = async () => {
+    const url = `${window.location.origin}/${product.slug}`;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      // Fallback
+      const input = document.createElement("input");
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
+    }
+    setShareCopied(true);
+    setTimeout(() => setShareCopied(false), 2000);
+  };
 
   const handleAddToCart = () => {
     addItem({
@@ -313,6 +399,60 @@ export function ProductPageClient({ product }: Props) {
                 >
                   {t("requestPricing")}
                 </Link>
+              </div>
+
+              {/* Favorite + Share Row */}
+              <div className="flex items-center gap-4 mt-4">
+                <button
+                  onClick={toggleFavorite}
+                  disabled={favoriteLoading || !sessionToken}
+                  className={`flex items-center gap-2 text-xs tracking-[0.1em] uppercase transition-all duration-300 ${
+                    !sessionToken
+                      ? "text-[#8A8580]/40 cursor-not-allowed"
+                      : isFavorited
+                        ? "text-[#E8B4B8]"
+                        : "text-[#8A8580] hover:text-[#E8B4B8]"
+                  }`}
+                  title={!sessionToken ? t("signIn") : isFavorited ? t("removeFavorite") : t("addFavorite")}
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill={isFavorited ? "currentColor" : "none"}
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <path
+                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  {isFavorited ? t("removeFavorite") : t("addFavorite")}
+                </button>
+                <button
+                  onClick={handleShare}
+                  className="flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-all duration-300"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                  </svg>
+                  {shareCopied ? t("shareLinkCopied") : t("shareProduct")}
+                </button>
               </div>
 
               {/* Key specs summary */}
