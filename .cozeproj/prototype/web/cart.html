@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #E8B4B8;
+      --color-primary-container:    #E8B4B8;
+      --color-on-primary:           #0A0A0A;
+      /* === 背景 / 表面 === */
+      --color-background:                 #0A0A0A;
+      --color-surface-container-lowest:   #0E0E0E;
+      --color-surface:                    #111111;
+      --color-surface-container:          #161616;
+      --color-surface-container-high:     #1A1A1A;
+      --color-surface-container-highest:  #222222;
+      /* === 文字 === */
+      --color-on-surface:           #F5F0EB;
+      --color-on-surface-variant:   #8A8580;
+      /* === 功能色 === */
+      --color-success:  #22c55e;
+      --color-error:    #ef4444;
+      --color-warning:  #f59e0b;
+      /* === 边框 === */
+      --color-outline:          #1A1A1A;
+      --color-outline-variant:  #333333;
+      /* === 圆角 === */
+      --radius-sm:   0.125rem;
+      --radius-md:   0.25rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.75rem;
+      --radius-2xl:  1rem;
+      --radius-full: 9999px;
+      /* === 阴影 === */
+      --shadow-card:   0 2px 8px rgba(0,0,0,0.4);
+      --shadow-float:  0 10px 25px rgba(0,0,0,0.5);
+      --shadow-dialog: 0 25px 50px rgba(0,0,0,0.6);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+      --font-display: "Cormorant Garamond", serif;
+    }
+    .font-display { font-family: var(--font-display); }
+    .text-display { font-family: var(--font-display); letter-spacing: 0.05em; }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23111111"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%238A8580" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+</head>
+
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- @nav:start 导航组件 -->
+  <header class="fixed top-0 left-0 right-0 h-[60px] z-50 backdrop-blur-[8px] bg-background/80 border-b border-outline-variant/20">
+    <div class="max-w-[1200px] mx-auto h-full flex items-center justify-between px-6">
+      <a href="home.html" class="text-display text-xl tracking-[0.1em] text-on-surface no-underline">FUZZSOFA</a>
+      <nav class="flex items-center gap-8">
+        <a href="home.html" class="text-sm tracking-[0.1em] uppercase text-on-surface-variant hover:text-on-surface transition-colors">Home</a>
+        <a href="cart.html" class="relative text-on-surface" aria-current="page">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span id="nav-cart-badge" class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center">3</span>
+        </a>
+        <a href="account.html" class="text-on-surface-variant hover:text-on-surface transition-colors">
+          <i data-lucide="user" class="w-5 h-5"></i>
+        </a>
+      </nav>
+    </div>
+  </header>
+  <!-- @nav:end 导航组件 -->
+
+  <main class="max-w-[1100px] mx-auto pt-[76px] pb-32 px-6">
+    <!-- @main-content:start -->
+
+    <!-- 页面标题区 -->
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-2xl font-bold text-on-surface">Shopping Cart</h1>
+      <span id="cart-item-count" class="text-sm text-on-surface-variant">3 items</span>
+    </div>
+
+    <!-- 全选控制栏 -->
+    <div id="select-all-bar" class="flex items-center gap-3 mb-6 py-3 px-4 bg-surface rounded-lg">
+      <button id="btn-select-all" class="flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors" data-selected="true">
+        <span id="select-all-icon" class="w-5 h-5 rounded-full border-2 border-primary bg-primary/15 flex items-center justify-center">
+          <i data-lucide="check" class="w-3 h-3 text-primary"></i>
+        </span>
+        <span id="select-all-label">Deselect All</span>
+      </button>
+    </div>
+
+    <!-- 商品列表区域 -->
+    <div id="cart-list" class="space-y-4">
+
+      <!-- 列表-商品1: Muscle Gorilla Sofa -->
+      <div id="cart-item-1" class="cart-item relative flex items-stretch bg-surface rounded-lg shadow-card overflow-hidden cursor-pointer transition-all border-l-[3px] border-l-primary" data-id="1" data-price="9800" data-qty="1" data-selected="true">
+        <!-- 选中指示图标 -->
+        <div class="item-check-indicator absolute top-3 left-3 z-10">
+          <span class="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+            <i data-lucide="check" class="w-3 h-3 text-primary"></i>
+          </span>
+        </div>
+        <!-- 商品缩略图 -->
+        <div class="shrink-0 w-[100px] flex items-center justify-center bg-surface-container p-3">
+          <img src="https://images.unsplash.com/photo-1555041469-a58638e36abc?w=120&h=120&fit=crop" alt="Muscle Gorilla Sofa 黑色沙发" data-category="家具" class="w-[60px] h-[60px] object-cover rounded-md">
+        </div>
+        <!-- 商品信息 -->
+        <div class="flex-1 min-w-0 py-4 pr-3 pl-2 flex flex-col justify-center">
+          <h3 class="text-base font-semibold text-on-surface truncate">Muscle Gorilla Sofa</h3>
+          <p class="text-xs text-on-surface-variant mt-1">Color: Black</p>
+          <p class="text-sm font-medium text-primary mt-2">¥9,800</p>
+        </div>
+        <!-- 数量选择器 + 小计 -->
+        <div class="shrink-0 flex flex-col items-center justify-center gap-2 px-4 py-4 border-l border-outline-variant/10">
+          <div class="flex items-center gap-2">
+            <button id="btn-qty-dec-1" class="w-7 h-7 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+              <i data-lucide="minus" class="w-3.5 h-3.5"></i>
+            </button>
+            <span id="qty-value-1" class="w-8 text-center text-sm font-medium text-on-surface">1</span>
+            <button id="btn-qty-inc-1" class="w-7 h-7 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+          <span id="subtotal-1" class="text-xs text-on-surface-variant">Subtotal: ¥9,800</span>
+        </div>
+        <!-- 删除按钮 -->
+        <button id="btn-delete-1" class="shrink-0 flex items-center justify-center w-10 hover:bg-error/10 transition-colors border-l border-outline-variant/10">
+          <i data-lucide="trash-2" class="w-4 h-4 text-on-surface-variant hover:text-error"></i>
+        </button>
+      </div>
+
+      <!-- 列表-商品2: Meteorite Ring Sofa -->
+      <div id="cart-item-2" class="cart-item relative flex items-stretch bg-surface rounded-lg shadow-card overflow-hidden cursor-pointer transition-all border-l-[3px] border-l-primary" data-id="2" data-price="3500" data-qty="1" data-selected="true">
+        <!-- 选中指示图标 -->
+        <div class="item-check-indicator absolute top-3 left-3 z-10">
+          <span class="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+            <i data-lucide="check" class="w-3 h-3 text-primary"></i>
+          </span>
+        </div>
+        <!-- 商品缩略图 -->
+        <div class="shrink-0 w-[100px] flex items-center justify-center bg-surface-container p-3">
+          <img src="https://images.unsplash.com/photo-1493663283089-2e0a29e0e7a2?w=120&h=120&fit=crop" alt="Meteorite Ring Sofa 灰色环形沙发" data-category="家具" class="w-[60px] h-[60px] object-cover rounded-md">
+        </div>
+        <!-- 商品信息 -->
+        <div class="flex-1 min-w-0 py-4 pr-3 pl-2 flex flex-col justify-center">
+          <h3 class="text-base font-semibold text-on-surface truncate">Meteorite Ring Sofa</h3>
+          <p class="text-xs text-on-surface-variant mt-1">Color: Stone Grey</p>
+          <p class="text-sm font-medium text-primary mt-2">¥3,500</p>
+        </div>
+        <!-- 数量选择器 + 小计 -->
+        <div class="shrink-0 flex flex-col items-center justify-center gap-2 px-4 py-4 border-l border-outline-variant/10">
+          <div class="flex items-center gap-2">
+            <button id="btn-qty-dec-2" class="w-7 h-7 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+              <i data-lucide="minus" class="w-3.5 h-3.5"></i>
+            </button>
+            <span id="qty-value-2" class="w-8 text-center text-sm font-medium text-on-surface">1</span>
+            <button id="btn-qty-inc-2" class="w-7 h-7 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+          <span id="subtotal-2" class="text-xs text-on-surface-variant">Subtotal: ¥3,500</span>
+        </div>
+        <!-- 删除按钮 -->
+        <button id="btn-delete-2" class="shrink-0 flex items-center justify-center w-10 hover:bg-error/10 transition-colors border-l border-outline-variant/10">
+          <i data-lucide="trash-2" class="w-4 h-4 text-on-surface-variant hover:text-error"></i>
+        </button>
+      </div>
+
+      <!-- 列表-商品3: Owl Chair -->
+      <div id="cart-item-3" class="cart-item relative flex items-stretch bg-surface rounded-lg shadow-card overflow-hidden cursor-pointer transition-all border-l-[3px] border-l-transparent" data-id="3" data-price="4200" data-qty="2" data-selected="false">
+        <!-- 选中指示图标(未选中状态隐藏) -->
+        <div class="item-check-indicator absolute top-3 left-3 z-10 hidden">
+          <span class="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+            <i data-lucide="check" class="w-3 h-3 text-primary"></i>
+          </span>
+        </div>
+        <!-- 商品缩略图 -->
+        <div class="shrink-0 w-[100px] flex items-center justify-center bg-surface-container p-3">
+          <img src="https://images.unsplash.com/photo-1506439553634-0b0926a4d7b2?w=120&h=120&fit=crop" alt="Owl Chair 粉色单人椅" data-category="家具" class="w-[60px] h-[60px] object-cover rounded-md">
+        </div>
+        <!-- 商品信息 -->
+        <div class="flex-1 min-w-0 py-4 pr-3 pl-2 flex flex-col justify-center">
+          <h3 class="text-base font-semibold text-on-surface truncate">Owl Chair</h3>
+          <p class="text-xs text-on-surface-variant mt-1">Color: Blush Pink</p>
+          <p class="text-sm font-medium text-primary mt-2">¥4,200</p>
+        </div>
+        <!-- 数量选择器 + 小计 -->
+        <div class="shrink-0 flex flex-col items-center justify-center gap-2 px-4 py-4 border-l border-outline-variant/10">
+          <div class="flex items-center gap-2">
+            <button id="btn-qty-dec-3" class="w-7 h-7 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+              <i data-lucide="minus" class="w-3.5 h-3.5"></i>
+            </button>
+            <span id="qty-value-3" class="w-8 text-center text-sm font-medium text-on-surface">2</span>
+            <button id="btn-qty-inc-3" class="w-7 h-7 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+          <span id="subtotal-3" class="text-xs text-on-surface-variant">Subtotal: ¥8,400</span>
+        </div>
+        <!-- 删除按钮 -->
+        <button id="btn-delete-3" class="shrink-0 flex items-center justify-center w-10 hover:bg-error/10 transition-colors border-l border-outline-variant/10">
+          <i data-lucide="trash-2" class="w-4 h-4 text-on-surface-variant hover:text-error"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- 空购物车状态(默认隐藏) -->
+    <div id="cart-empty" class="hidden flex flex-col items-center justify-center py-24">
+      <div class="w-32 h-32 rounded-full bg-surface-container flex items-center justify-center mb-6">
+        <i data-lucide="shopping-bag" class="w-14 h-14 text-on-surface-variant/40"></i>
+      </div>
+      <h2 class="text-xl font-semibold text-on-surface mb-2">Your cart is empty</h2>
+      <p class="text-sm text-on-surface-variant mb-8">Looks like you haven't added anything yet.</p>
+      <a href="home.html" class="bg-primary text-on-primary px-6 py-2.5 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center gap-2">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        Continue Shopping
+      </a>
+    </div>
+
+    <!-- @main-content:end -->
+  </main>
+
+  <!-- 底部固定价格汇总栏 -->
+  <div id="cart-summary-bar" class="fixed bottom-0 left-0 right-0 z-40 bg-surface border-t border-outline-variant/20 shadow-float">
+    <div class="max-w-[1100px] mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-on-surface-variant">Selected:</span>
+          <span id="summary-selected-count" class="text-sm font-semibold text-on-surface">2 items</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-on-surface-variant">Shipping:</span>
+          <span id="summary-shipping" class="text-sm font-medium text-on-surface">¥300</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-on-surface-variant">Total:</span>
+          <span id="summary-total-price" class="text-lg font-bold text-primary">¥13,600</span>
+        </div>
+        <a href="checkout.html" id="btn-checkout" class="bg-primary text-on-primary px-6 py-2.5 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center gap-2">
+          Checkout
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 删除确认弹窗 -->
+  <div id="delete-confirm-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-surface rounded-xl shadow-dialog max-w-sm w-full p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-full bg-error/15 flex items-center justify-center">
+          <i data-lucide="trash-2" class="w-5 h-5 text-error"></i>
+        </div>
+        <h3 class="text-base font-semibold text-on-surface">Remove Item</h3>
+      </div>
+      <p id="delete-confirm-text" class="text-sm text-on-surface-variant mb-6">Are you sure you want to remove this item from your cart?</p>
+      <div class="flex items-center justify-end gap-3">
+        <button id="btn-delete-cancel" class="bg-surface-container text-on-surface border-none px-4 py-2 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all">Cancel</button>
+        <button id="btn-delete-confirm" class="bg-error text-white px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  $(function() {
+
+    // === 状态变量 ===
+    let pendingDeleteId = null;
+
+    // === 工具函数 ===
+    function formatPrice(num) {
+      return '¥' + num.toLocaleString();
+    }
+
+    // === 选中/取消选中商品 ===
+    $('#cart-list').on('click', '.cart-item', function(e) {
+      // 防止点击删除按钮和数量按钮时触发选中切换
+      if ($(e.target).closest('button').length) return;
+
+      var $item = $(this);
+      var isSelected = $item.attr('data-selected') === 'true';
+
+      if (isSelected) {
+        // 取消选中
+        $item.attr('data-selected', 'false');
+        $item.removeClass('border-l-primary').addClass('border-l-transparent');
+        $item.find('.item-check-indicator').addClass('hidden');
+      } else {
+        // 选中
+        $item.attr('data-selected', 'true');
+        $item.removeClass('border-l-transparent').addClass('border-l-primary');
+        $item.find('.item-check-indicator').removeClass('hidden');
+      }
+
+      updateSummary();
+    });
+
+    // === 全选/取消全选 ===
+    $('#btn-select-all').on('click', function() {
+      var allSelected = $(this).attr('data-selected') === 'true';
+
+      if (allSelected) {
+        // 取消全选
+        $('.cart-item').attr('data-selected', 'false');
+        $('.cart-item').removeClass('border-l-primary').addClass('border-l-transparent');
+        $('.cart-item .item-check-indicator').addClass('hidden');
+        $(this).attr('data-selected', 'false');
+        $('#select-all-icon').removeClass('border-primary bg-primary/15').addClass('border-outline-variant bg-transparent');
+        $('#select-all-icon').find('i').addClass('hidden');
+        $('#select-all-label').text('Select All');
+      } else {
+        // 全选
+        $('.cart-item').attr('data-selected', 'true');
+        $('.cart-item').removeClass('border-l-transparent').addClass('border-l-primary');
+        $('.cart-item .item-check-indicator').removeClass('hidden');
+        $(this).attr('data-selected', 'true');
+        $('#select-all-icon').removeClass('border-outline-variant bg-transparent').addClass('border-primary bg-primary/15');
+        $('#select-all-icon').find('i').removeClass('hidden');
+        $('#select-all-label').text('Deselect All');
+      }
+
+      updateSummary();
+    });
+
+    // === 数量增减 ===
+    // 商品1 减少数量
+    $('#btn-qty-dec-1').on('click', function(e) {
+      e.stopPropagation();
+      var $item = $('#cart-item-1');
+      var qty = parseInt($item.attr('data-qty'));
+      if (qty > 1) {
+        qty--;
+        $item.attr('data-qty', qty);
+        $('#qty-value-1').text(qty);
+        $('#subtotal-1').text('Subtotal: ' + formatPrice(9800 * qty));
+        updateSummary();
+      }
+    });
+
+    // 商品1 增加数量
+    $('#btn-qty-inc-1').on('click', function(e) {
+      e.stopPropagation();
+      var $item = $('#cart-item-1');
+      var qty = parseInt($item.attr('data-qty'));
+      qty++;
+      $item.attr('data-qty', qty);
+      $('#qty-value-1').text(qty);
+      $('#subtotal-1').text('Subtotal: ' + formatPrice(9800 * qty));
+      updateSummary();
+    });
+
+    // 商品2 减少数量
+    $('#btn-qty-dec-2').on('click', function(e) {
+      e.stopPropagation();
+      var $item = $('#cart-item-2');
+      var qty = parseInt($item.attr('data-qty'));
+      if (qty > 1) {
+        qty--;
+        $item.attr('data-qty', qty);
+        $('#qty-value-2').text(qty);
+        $('#subtotal-2').text('Subtotal: ' + formatPrice(3500 * qty));
+        updateSummary();
+      }
+    });
+
+    // 商品2 增加数量
+    $('#btn-qty-inc-2').on('click', function(e) {
+      e.stopPropagation();
+      var $item = $('#cart-item-2');
+      var qty = parseInt($item.attr('data-qty'));
+      qty++;
+      $item.attr('data-qty', qty);
+      $('#qty-value-2').text(qty);
+      $('#subtotal-2').text('Subtotal: ' + formatPrice(3500 * qty));
+      updateSummary();
+    });
+
+    // 商品3 减少数量
+    $('#btn-qty-dec-3').on('click', function(e) {
+      e.stopPropagation();
+      var $item = $('#cart-item-3');
+      var qty = parseInt($item.attr('data-qty'));
+      if (qty > 1) {
+        qty--;
+        $item.attr('data-qty', qty);
+        $('#qty-value-3').text(qty);
+        $('#subtotal-3').text('Subtotal: ' + formatPrice(4200 * qty));
+        updateSummary();
+      }
+    });
+
+    // 商品3 增加数量
+    $('#btn-qty-inc-3').on('click', function(e) {
+      e.stopPropagation();
+      var $item = $('#cart-item-3');
+      var qty = parseInt($item.attr('data-qty'));
+      qty++;
+      $item.attr('data-qty', qty);
+      $('#qty-value-3').text(qty);
+      $('#subtotal-3').text('Subtotal: ' + formatPrice(4200 * qty));
+      updateSummary();
+    });
+
+    // === 删除商品 ===
+    $('#btn-delete-1').on('click', function(e) {
+      e.stopPropagation();
+      pendingDeleteId = '1';
+      $('#delete-confirm-text').text('Are you sure you want to remove "Muscle Gorilla Sofa" from your cart?');
+      $('#delete-confirm-modal').removeClass('hidden');
+    });
+
+    $('#btn-delete-2').on('click', function(e) {
+      e.stopPropagation();
+      pendingDeleteId = '2';
+      $('#delete-confirm-text').text('Are you sure you want to remove "Meteorite Ring Sofa" from your cart?');
+      $('#delete-confirm-modal').removeClass('hidden');
+    });
+
+    $('#btn-delete-3').on('click', function(e) {
+      e.stopPropagation();
+      pendingDeleteId = '3';
+      $('#delete-confirm-text').text('Are you sure you want to remove "Owl Chair" from your cart?');
+      $('#delete-confirm-modal').removeClass('hidden');
+    });
+
+    // 取消删除
+    $('#btn-delete-cancel').on('click', function() {
+      pendingDeleteId = null;
+      $('#delete-confirm-modal').addClass('hidden');
+    });
+
+    // 确认删除
+    $('#btn-delete-confirm').on('click', function() {
+      if (pendingDeleteId) {
+        $('#cart-item-' + pendingDeleteId).fadeOut(300, function() {
+          $(this).remove();
+          pendingDeleteId = null;
+          updateSummary();
+          checkEmpty();
+        });
+      }
+      $('#delete-confirm-modal').addClass('hidden');
+    });
+
+    // 点击遮罩关闭弹窗
+    $('#delete-confirm-modal').on('click', function(e) {
+      if ($(e.target).is('#delete-confirm-modal')) {
+        pendingDeleteId = null;
+        $(this).addClass('hidden');
+      }
+    });
+
+    // === 汇总更新 ===
+    function updateSummary() {
+      var totalQty = 0;
+      var selectedQty = 0;
+      var selectedTotal = 0;
+      var allSelected = true;
+
+      $('.cart-item').each(function() {
+        var $item = $(this);
+        var qty = parseInt($item.attr('data-qty'));
+        var price = parseInt($item.attr('data-price'));
+        var isSelected = $item.attr('data-selected') === 'true';
+
+        totalQty += qty;
+        if (isSelected) {
+          selectedQty += qty;
+          selectedTotal += price * qty;
+        } else {
+          allSelected = false;
+        }
+      });
+
+      var shipping = selectedTotal > 0 ? 300 : 0;
+      var grandTotal = selectedTotal + shipping;
+
+      $('#summary-selected-count').text(selectedQty + ' item' + (selectedQty !== 1 ? 's' : ''));
+      $('#summary-shipping').text(shipping > 0 ? formatPrice(shipping) : 'Free');
+      $('#summary-total-price').text(formatPrice(grandTotal));
+      $('#cart-item-count').text(totalQty + ' item' + (totalQty !== 1 ? 's' : ''));
+
+      // 更新导航栏购物车角标
+      var totalItems = 0;
+      $('.cart-item').each(function() {
+        totalItems += parseInt($(this).attr('data-qty'));
+      });
+      $('#nav-cart-badge').text(totalItems);
+
+      // 更新全选按钮状态
+      if ($('.cart-item').length === 0) {
+        allSelected = false;
+      }
+      if (allSelected) {
+        $('#btn-select-all').attr('data-selected', 'true');
+        $('#select-all-icon').removeClass('border-outline-variant bg-transparent').addClass('border-primary bg-primary/15');
+        $('#select-all-icon').find('i').removeClass('hidden');
+        $('#select-all-label').text('Deselect All');
+      } else {
+        $('#btn-select-all').attr('data-selected', 'false');
+        $('#select-all-icon').removeClass('border-primary bg-primary/15').addClass('border-outline-variant bg-transparent');
+        $('#select-all-icon').find('i').addClass('hidden');
+        $('#select-all-label').text('Select All');
+      }
+    }
+
+    // === 检查空购物车 ===
+    function checkEmpty() {
+      if ($('.cart-item').length === 0) {
+        $('#cart-list').addClass('hidden');
+        $('#select-all-bar').addClass('hidden');
+        $('#cart-empty').removeClass('hidden');
+        $('#cart-summary-bar').addClass('hidden');
+      }
+    }
+
+    // 初始汇总
+    updateSummary();
+
+  });
+  </script>
+
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>

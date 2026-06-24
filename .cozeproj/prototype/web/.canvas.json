@@ -1,0 +1,44 @@
+{
+  "elements": [
+    {
+      "type": "html",
+      "options": {
+        "path": ".cozeproj/prototype/web/cart.html"
+      },
+      "title": "Shopping Cart",
+      "size": "web"
+    },
+    {
+      "type": "html",
+      "options": {
+        "path": ".cozeproj/prototype/web/checkout.html"
+      },
+      "title": "Checkout",
+      "size": "web"
+    },
+    {
+      "type": "html",
+      "options": {
+        "path": ".cozeproj/prototype/web/order-confirmed.html"
+      },
+      "title": "Order Confirmed",
+      "size": "web"
+    },
+    {
+      "type": "html",
+      "options": {
+        "path": ".cozeproj/prototype/web/account.html"
+      },
+      "title": "My Account",
+      "size": "web"
+    },
+    {
+      "type": "html",
+      "options": {
+        "path": ".cozeproj/prototype/web/order-detail.html"
+      },
+      "title": "Order Detail",
+      "size": "web"
+    }
+  ]
+}

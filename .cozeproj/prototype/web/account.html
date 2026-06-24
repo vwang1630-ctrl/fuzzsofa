@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #E8B4B8;
+      --color-primary-container:    #E8B4B8;
+      --color-on-primary:           #0A0A0A;
+      /* === 背景 / 表面 === */
+      --color-background:                 #0A0A0A;
+      --color-surface-container-lowest:   #0E0E0E;
+      --color-surface:                    #111111;
+      --color-surface-container:          #161616;
+      --color-surface-container-high:     #1A1A1A;
+      --color-surface-container-highest:  #222222;
+      /* === 文字 === */
+      --color-on-surface:           #F5F0EB;
+      --color-on-surface-variant:   #8A8580;
+      /* === 功能色 === */
+      --color-success:  #22c55e;
+      --color-error:    #ef4444;
+      --color-warning:  #f59e0b;
+      /* === 边框 === */
+      --color-outline:          #1A1A1A;
+      --color-outline-variant:  #333333;
+      /* === 圆角 === */
+      --radius-sm:   0.125rem;
+      --radius-md:   0.25rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.75rem;
+      --radius-2xl:  1rem;
+      --radius-full: 9999px;
+      /* === 阴影 === */
+      --shadow-card:   0 2px 8px rgba(0,0,0,0.4);
+      --shadow-float:  0 10px 25px rgba(0,0,0,0.5);
+      --shadow-dialog: 0 25px 50px rgba(0,0,0,0.6);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+      --font-display: "Cormorant Garamond", serif;
+    }
+    .font-display { font-family: var(--font-display); }
+    .text-display { font-family: var(--font-display); letter-spacing: 0.05em; }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23111111"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%238A8580" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+</head>
+
+<body class="bg-background text-on-surface font-sans min-h-screen">
+
+  <!-- @nav:start 导航组件 -->
+  <header class="fixed top-0 left-0 right-0 h-[60px] z-50 backdrop-blur-[8px] bg-background/80 border-b border-outline-variant/20">
+    <div class="max-w-[1200px] mx-auto h-full flex items-center justify-between px-6">
+      <a href="home.html" class="text-display text-xl tracking-[0.1em] text-on-surface no-underline">FUZZSOFA</a>
+      <nav class="flex items-center gap-8">
+        <a href="home.html" class="text-sm tracking-[0.1em] uppercase text-on-surface-variant hover:text-on-surface transition-colors">Home</a>
+        <a href="cart.html" class="relative text-on-surface-variant hover:text-on-surface transition-colors">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center">2</span>
+        </a>
+        <a href="account.html" class="text-on-surface hover:text-on-surface transition-colors" aria-current="page">
+          <i data-lucide="user" class="w-5 h-5"></i>
+        </a>
+      </nav>
+    </div>
+  </header>
+  <!-- @nav:end 导航组件 -->
+
+  <!-- 页面主体：左侧导航 + 右侧内容 -->
+  <div class="flex pt-[60px] min-h-screen">
+
+    <!-- 左侧垂直导航 -->
+    <aside id="account-sidebar" class="w-[200px] shrink-0 bg-surface border-r border-outline-variant/15 fixed top-[60px] bottom-0 overflow-y-auto">
+      <div class="p-5">
+        <!-- 用户头像 + 信息 -->
+        <div class="flex flex-col items-center mb-6 pb-5 border-b border-outline-variant/15">
+          <div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface text-lg font-medium mb-2.5">初</div>
+          <span class="text-sm font-medium text-on-surface">小初</span>
+          <span class="text-xs text-on-surface-variant mt-0.5">xiaochu@fuzzsofa.com</span>
+        </div>
+        <!-- 导航菜单 -->
+        <nav class="space-y-0.5">
+          <a href="#" id="nav-my-orders" class="flex items-center gap-2.5 px-3 py-2 rounded-md bg-primary/10 text-primary font-medium text-sm" aria-current="page">
+            <i data-lucide="package" class="w-4 h-4"></i>My Orders
+          </a>
+          <a href="#" id="nav-shipping-address" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+            <i data-lucide="map-pin" class="w-4 h-4"></i>Shipping Address
+          </a>
+          <a href="#" id="nav-account-settings" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+            <i data-lucide="settings" class="w-4 h-4"></i>Account Settings
+          </a>
+          <div class="h-px bg-outline-variant/15 my-2"></div>
+          <a href="#" id="nav-logout" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-on-surface-variant hover:bg-error/10 hover:text-error font-medium text-sm transition-colors">
+            <i data-lucide="log-out" class="w-4 h-4"></i>Logout
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- @main-content:start -->
+    <main class="flex-1 min-w-0 ml-[200px] p-8">
+      <div class="max-w-[900px]">
+
+        <!-- 页面标题 -->
+        <h1 class="text-2xl font-bold text-on-surface mb-6">My Orders</h1>
+
+        <!-- 筛选标签 -->
+        <div id="order-filters" class="flex items-center gap-2 mb-6">
+          <button id="filter-all" class="px-3.5 py-1.5 rounded-md text-sm font-medium bg-primary text-on-primary transition-colors">All</button>
+          <button id="filter-pending" class="px-3.5 py-1.5 rounded-md text-sm font-medium bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors">Pending</button>
+          <button id="filter-processing" class="px-3.5 py-1.5 rounded-md text-sm font-medium bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors">Processing</button>
+          <button id="filter-shipped" class="px-3.5 py-1.5 rounded-md text-sm font-medium bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors">Shipped</button>
+          <button id="filter-delivered" class="px-3.5 py-1.5 rounded-md text-sm font-medium bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors">Delivered</button>
+        </div>
+
+        <!-- 订单列表 -->
+        <div id="order-list" class="space-y-4">
+
+          <!-- 列表-订单1: #FUZZ-001 已发货 2件商品 ¥17,600 -->
+          <div class="order-card bg-surface rounded-lg shadow-card p-5" data-status="shipped">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-semibold text-on-surface">Order #FUZZ-001</span>
+                <span class="text-xs text-on-surface-variant">Jan 15, 2025</span>
+              </div>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-primary/15 text-primary">Shipped</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://images.unsplash.com/photo-1555041469-a27630159373?w=80&h=80&fit=crop" alt="模块沙发" data-category="服饰时尚" class="w-14 h-14 rounded-md object-cover">
+              <img src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=80&h=80&fit=crop" alt="休闲扶手椅" data-category="服饰时尚" class="w-14 h-14 rounded-md object-cover">
+              <span class="text-xs text-on-surface-variant ml-1">2 items</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-base font-semibold text-on-surface">¥17,600</span>
+              <a href="order-detail.html?id=FUZZ-001" id="view-detail-001" class="text-sm font-medium text-primary hover:underline transition-colors">View Detail</a>
+            </div>
+          </div>
+
+          <!-- 列表-订单2: #FUZZ-002 处理中 1件商品 ¥3,500 -->
+          <div class="order-card bg-surface rounded-lg shadow-card p-5" data-status="processing">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-semibold text-on-surface">Order #FUZZ-002</span>
+                <span class="text-xs text-on-surface-variant">Jan 18, 2025</span>
+              </div>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning">Processing</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://images.unsplash.com/photo-1538688525198-9a94b298f727?w=80&h=80&fit=crop" alt="北欧落地灯" data-category="商业科技" class="w-14 h-14 rounded-md object-cover">
+              <span class="text-xs text-on-surface-variant ml-1">1 item</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-base font-semibold text-on-surface">¥3,500</span>
+              <a href="order-detail.html?id=FUZZ-002" id="view-detail-002" class="text-sm font-medium text-primary hover:underline transition-colors">View Detail</a>
+            </div>
+          </div>
+
+          <!-- 列表-订单3: #FUZZ-003 已完成 1件商品 ¥4,200 -->
+          <div class="order-card bg-surface rounded-lg shadow-card p-5" data-status="delivered">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-semibold text-on-surface">Order #FUZZ-003</span>
+                <span class="text-xs text-on-surface-variant">Jan 10, 2025</span>
+              </div>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">Delivered</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=80&h=80&fit=crop" alt="实木餐桌" data-category="其他" class="w-14 h-14 rounded-md object-cover">
+              <span class="text-xs text-on-surface-variant ml-1">1 item</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-base font-semibold text-on-surface">¥4,200</span>
+              <a href="order-detail.html?id=FUZZ-003" id="view-detail-003" class="text-sm font-medium text-primary hover:underline transition-colors">View Detail</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 空订单状态（筛选无结果时显示，默认隐藏） -->
+        <div id="empty-orders" class="hidden py-16 flex flex-col items-center justify-center text-center">
+          <i data-lucide="inbox" class="w-12 h-12 text-on-surface-variant/40 mb-4"></i>
+          <p class="text-sm text-on-surface-variant">No orders found for this filter.</p>
+        </div>
+
+      </div>
+    </main>
+    <!-- @main-content:end -->
+
+  </div>
+
+  <script>
+    $(function () {
+
+      // === 筛选标签交互 ===
+      var $filterBtns = $('#order-filters button');
+      var $orderCards = $('.order-card');
+
+      $filterBtns.on('click', function () {
+        var $btn = $(this);
+        var filter = $btn.attr('id').replace('filter-', '');
+
+        // 更新按钮激活态
+        $filterBtns.removeClass('bg-primary text-on-primary').addClass('bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high');
+        $btn.removeClass('bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high').addClass('bg-primary text-on-primary');
+
+        // 筛选订单卡片
+        if (filter === 'all') {
+          $orderCards.show();
+        } else {
+          $orderCards.each(function () {
+            var status = $(this).data('status');
+            if (status === filter) {
+              $(this).show();
+            } else {
+              $(this).hide();
+            }
+          });
+        }
+
+        // 空状态显示
+        var visibleCount = $orderCards.filter(':visible').length;
+        if (visibleCount === 0) {
+          $('#empty-orders').removeClass('hidden');
+        } else {
+          $('#empty-orders').addClass('hidden');
+        }
+      });
+
+      // === 侧边栏导航交互 ===
+      // 点击 Shipping Address / Account Settings - 注释描述后续应实现的完整行为
+      $('#nav-shipping-address').on('click', function (e) {
+        e.preventDefault();
+        // 后续应实现：
+        // 1. 在右侧内容区切换为地址管理面板
+        // 2. 展示用户已保存的收货地址列表
+        // 3. 每个地址卡片包含：收件人、手机号、详细地址、默认标签
+        // 4. 提供"新增地址"按钮，点击弹出地址表单模态框
+        // 5. 更新侧边栏激活态到 Shipping Address
+        console.log('Navigate to Shipping Address');
+      });
+
+      $('#nav-account-settings').on('click', function (e) {
+        e.preventDefault();
+        // 后续应实现：
+        // 1. 在右侧内容区切换为账户设置面板
+        // 2. 展示用户基本信息编辑表单：用户名、邮箱、手机号
+        // 3. 提供修改密码区域：旧密码、新密码、确认密码
+        // 4. 提供"保存修改"按钮
+        // 5. 更新侧边栏激活态到 Account Settings
+        console.log('Navigate to Account Settings');
+      });
+
+      // Logout - 点击后应实现：
+      // 1. 弹出确认对话框"确定要退出登录吗？"
+      // 2. 确认后清除本地登录状态
+      // 3. 跳转到首页 home.html
+      $('#nav-logout').on('click', function (e) {
+        e.preventDefault();
+        console.log('Logout action');
+      });
+
+    });
+  </script>
+
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>

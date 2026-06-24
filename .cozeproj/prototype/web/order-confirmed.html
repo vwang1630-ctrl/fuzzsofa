@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #E8B4B8;
+      --color-primary-container:    #E8B4B8;
+      --color-on-primary:           #0A0A0A;
+      /* === 背景 / 表面 === */
+      --color-background:                 #0A0A0A;
+      --color-surface-container-lowest:   #0E0E0E;
+      --color-surface:                    #111111;
+      --color-surface-container:          #161616;
+      --color-surface-container-high:     #1A1A1A;
+      --color-surface-container-highest:  #222222;
+      /* === 文字 === */
+      --color-on-surface:           #F5F0EB;
+      --color-on-surface-variant:   #8A8580;
+      /* === 功能色 === */
+      --color-success:  #22c55e;
+      --color-error:    #ef4444;
+      --color-warning:  #f59e0b;
+      /* === 边框 === */
+      --color-outline:          #1A1A1A;
+      --color-outline-variant:  #333333;
+      /* === 圆角 === */
+      --radius-sm:   0.125rem;
+      --radius-md:   0.25rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.75rem;
+      --radius-2xl:  1rem;
+      --radius-full: 9999px;
+      /* === 阴影 === */
+      --shadow-card:   0 2px 8px rgba(0,0,0,0.4);
+      --shadow-float:  0 10px 25px rgba(0,0,0,0.5);
+      --shadow-dialog: 0 25px 50px rgba(0,0,0,0.6);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+      --font-display: "Cormorant Garamond", serif;
+    }
+    .font-display { font-family: var(--font-display); }
+    .text-display { font-family: var(--font-display); letter-spacing: 0.05em; }
+
+    /* 成功图标 fade-in 动画 */
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0.5); }
+      60% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-in-scale {
+      animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    /* 延迟出现的动画 */
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(16px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23111111"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%238A8580" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+</head>
+
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- @nav:start 导航组件 -->
+  <header class="fixed top-0 left-0 right-0 h-[60px] z-50 backdrop-blur-[8px] bg-background/80 border-b border-outline-variant/20">
+    <div class="max-w-[1200px] mx-auto h-full flex items-center justify-between px-6">
+      <a href="home.html" class="text-display text-xl tracking-[0.1em] text-on-surface no-underline">FUZZSOFA</a>
+      <nav class="flex items-center gap-8">
+        <a href="home.html" class="text-sm tracking-[0.1em] uppercase text-on-surface-variant hover:text-on-surface transition-colors">Home</a>
+        <a href="cart.html" class="relative text-on-surface-variant hover:text-on-surface transition-colors">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center">2</span>
+        </a>
+        <a href="account.html" class="text-on-surface-variant hover:text-on-surface transition-colors">
+          <i data-lucide="user" class="w-5 h-5"></i>
+        </a>
+      </nav>
+    </div>
+  </header>
+  <!-- @nav:end 导航组件 -->
+
+  <main class="max-w-[1100px] mx-auto pt-[76px] pb-16 px-6">
+    <!-- @main-content:start -->
+    <div class="flex flex-col items-center justify-center min-h-[calc(100vh-140px)] text-center">
+
+      <!-- 成功图标：大号勾选圆圈，accent色，fade-in动画 -->
+      <div id="success-icon" class="animate-fade-in-scale mb-10">
+        <div class="w-24 h-24 rounded-full border-[3px] border-primary flex items-center justify-center">
+          <i data-lucide="check" class="w-10 h-10 text-primary" stroke-width="2.5"></i>
+        </div>
+      </div>
+
+      <!-- 页面大标题 -->
+      <h1 id="page-title" class="animate-fade-in-up text-display text-3xl md:text-4xl tracking-[0.08em] text-on-surface mb-3" style="animation-delay: 0.3s">
+        Order Confirmed
+      </h1>
+
+      <!-- 确认信息 -->
+      <p id="confirm-message" class="animate-fade-in-up text-sm text-on-surface-variant leading-relaxed max-w-md" style="animation-delay: 0.5s">
+        Your payment has been processed successfully.<br/>
+        Your order has been confirmed and is being prepared.
+      </p>
+
+      <!-- 分隔线 -->
+      <div id="divider" class="animate-fade-in-up w-12 h-px bg-outline-variant/30 my-8" style="animation-delay: 0.6s"></div>
+
+      <!-- 订单号 -->
+      <div id="order-number" class="animate-fade-in-up mb-2" style="animation-delay: 0.7s">
+        <span class="text-xs font-medium tracking-[0.15em] uppercase text-on-surface-variant">Order Number</span>
+      </div>
+      <div id="order-number-value" class="animate-fade-in-up text-display text-xl tracking-[0.1em] text-primary" style="animation-delay: 0.8s">
+        #FUZZ-20260624001
+      </div>
+
+      <!-- 预计配送时间 -->
+      <div id="delivery-info" class="animate-fade-in-up mt-8 flex flex-col items-center gap-2" style="animation-delay: 0.9s">
+        <div class="flex items-center gap-2 text-on-surface-variant">
+          <i data-lucide="truck" class="w-4 h-4"></i>
+          <span class="text-xs font-medium tracking-[0.12em] uppercase">Estimated Delivery</span>
+        </div>
+        <span id="delivery-date" class="text-display text-lg tracking-[0.05em] text-on-surface">June 27 – June 29, 2026</span>
+      </div>
+
+      <!-- 操作按钮 -->
+      <div id="action-buttons" class="animate-fade-in-up flex flex-col sm:flex-row items-center gap-4 mt-12" style="animation-delay: 1.1s">
+        <a id="btn-view-order" href="order-detail.html" class="bg-primary text-on-primary px-8 py-3 rounded-md text-sm font-medium tracking-[0.08em] uppercase hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center gap-2 no-underline">
+          <i data-lucide="file-text" class="w-4 h-4"></i>
+          View Order
+        </a>
+        <a id="btn-continue-shopping" href="home.html" class="bg-surface-container text-on-surface border-none px-8 py-3 rounded-md text-sm font-medium tracking-[0.08em] uppercase hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-2 no-underline">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          Continue Shopping
+        </a>
+      </div>
+
+    </div>
+    <!-- @main-content:end -->
+  </main>
+
+  <script>lucide.createIcons();</script>
+
+  <script>
+    $(function () {
+      // View Order 按钮 - 跳转到订单详情页，携带订单号参数
+      $('#btn-view-order').on('click', function (e) {
+        e.preventDefault();
+        const orderId = 'FUZZ-20260624001';
+        window.location.href = 'order-detail.html?order_id=' + orderId;
+      });
+
+      // Continue Shopping 按钮 - 跳转首页
+      $('#btn-continue-shopping').on('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'home.html';
+      });
+    });
+  </script>
+</body>
+
+</html>
