@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { products } from "@/lib/products";
 import { journalArticles } from "@/lib/journal";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
+import { AiRoomCompositeModal } from "@/components/ai-room-composite-modal";
 
 const slugToPrefix: Record<string, string> = {
   "bear-sofa": "bearSofa",
@@ -26,11 +27,13 @@ const heroScenes = [
       title: "heroTitle" as const,
       description: "heroDescription" as const,
       cta: "exploreCollection" as const,
+      aiCta: "hero2AiCta" as const,
       href: "/gorilla-sofa",
     },
     overlay: "from-[#0A0A0A]/70 via-[#0A0A0A]/25 to-transparent",
     accentColor: "#E8B4B8",
     textColor: "#F5F0EB",
+    compact: false,
   },
   {
     src: "/hero-scene-2.jpg",
@@ -40,11 +43,13 @@ const heroScenes = [
       title: "hero2Title" as const,
       description: "hero2Description" as const,
       cta: "hero2Cta" as const,
+      aiCta: "hero2AiCta" as const,
       href: "/owl-sofa",
     },
     overlay: "from-[#0A0A0A]/85 via-[#0A0A0A]/40 to-transparent",
     accentColor: "#FF69B4",
     textColor: "#F5F0EB",
+    compact: true,
   },
 ];
 
@@ -70,6 +75,8 @@ export default function HomePage() {
   const latestArticles = journalArticles.slice(0, 3);
   const [heroScene, setHeroScene] = useState(0);
   const sceneConfig = heroScenes[heroScene];
+  const [aiRoomOpen, setAiRoomOpen] = useState(false);
+  const [aiRoomProduct, setAiRoomProduct] = useState("");
 
   // Auto-advance hero scenes
   useEffect(() => {
@@ -78,6 +85,18 @@ export default function HomePage() {
     }, 8000);
     return () => clearInterval(timer);
   }, []);
+
+  // Listen for AI room composite events
+  const handleOpenAiRoom = useCallback((e: Event) => {
+    const detail = (e as CustomEvent).detail;
+    setAiRoomProduct(detail?.productSlug || "");
+    setAiRoomOpen(true);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("open-ai-room", handleOpenAiRoom);
+    return () => window.removeEventListener("open-ai-room", handleOpenAiRoom);
+  }, [handleOpenAiRoom]);
 
   return (
     <>
@@ -90,6 +109,13 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
       />
 
+      {/* AI Room Composite Modal */}
+      <AiRoomCompositeModal
+        isOpen={aiRoomOpen}
+        onClose={() => setAiRoomOpen(false)}
+        productSlug={aiRoomProduct}
+      />
+
       {/* HERO: Immersive Scene Banner */}
       <section className="relative w-full flex items-end overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
         {/* Background: cinematic interior scenes */}
@@ -100,11 +126,11 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
         {/* Hero content — editorial gallery layout */}
-        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[12%] flex flex-col justify-end md:justify-center">
+        <div className={`relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[12%] flex flex-col justify-end md:justify-center ${sceneConfig.compact ? 'max-w-[560px]' : ''}`}>
 
           {/* Category label — accent, uppercase, wide tracking */}
           <p
-            className="text-[10px] md:text-[11px] tracking-[0.35em] uppercase mb-5 md:mb-7 animate-fade-in"
+            className={`tracking-[0.35em] uppercase mb-4 md:mb-5 animate-fade-in ${sceneConfig.compact ? 'text-[9px] md:text-[10px]' : 'text-[10px] md:text-[11px]'}`}
             style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}
           >
             {t(sceneConfig.keys.subtitle)}
@@ -112,34 +138,33 @@ export default function HomePage() {
 
           {/* Display title — large serif, the visual anchor */}
           <h1
-            className="text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem] font-light leading-[1.05] tracking-[0.02em] mb-6 md:mb-8 animate-fade-in-delay-1"
+            className={`font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 ${sceneConfig.compact ? 'text-[2.2rem] md:text-[2.8rem] lg:text-[3.2rem]' : 'text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem]'}`}
             style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}
           >
             {t(sceneConfig.keys.title)}
           </h1>
 
           {/* Thin decorative line */}
-          <div className="w-16 h-px mb-5 md:mb-7 animate-fade-in-delay-2" style={{ backgroundColor: sceneConfig.accentColor + '66' }} />
+          <div className={`w-12 h-px mb-4 md:mb-5 animate-fade-in-delay-2 ${sceneConfig.compact ? '' : 'md:w-16'}`} style={{ backgroundColor: sceneConfig.accentColor + '66' }} />
 
           {/* Description — quiet, airy */}
-          <p className="text-sm md:text-[15px] lg:text-base font-light max-w-[420px] leading-[1.8] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
+          <p className={`font-light max-w-[380px] leading-[1.75] animate-fade-in-delay-2 ${sceneConfig.compact ? 'text-xs md:text-sm' : 'text-sm md:text-[15px] lg:text-base'}`} style={{ color: sceneConfig.textColor + '80' }}>
             {t(sceneConfig.keys.description)}
           </p>
 
-          {/* CTA button — editorial style, hover fills with accent */}
-          <div className="mt-7 md:mt-9 animate-fade-in-delay-3">
+          {/* CTA buttons */}
+          <div className="mt-6 md:mt-7 animate-fade-in-delay-3 flex flex-wrap items-center gap-4">
+            {/* Primary CTA — editorial style, hover fills with accent */}
             <Link
               href={sceneConfig.keys.href}
-              className="group inline-flex items-center gap-4"
+              className="group inline-flex items-center gap-3"
             >
               <span
                 className="inline-flex items-center gap-3 px-6 py-2.5 border text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:border-transparent"
                 style={{
                   borderColor: sceneConfig.textColor + '80',
                   color: sceneConfig.textColor + 'CC',
-                  '--hover-bg': sceneConfig.accentColor,
-                  '--hover-color': '#0A0A0A',
-                } as React.CSSProperties}
+                }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = sceneConfig.accentColor;
                   e.currentTarget.style.borderColor = sceneConfig.accentColor;
@@ -159,6 +184,39 @@ export default function HomePage() {
                 </svg>
               </span>
             </Link>
+
+            {/* AI Room Composite CTA — neon icon style */}
+            {sceneConfig.keys.aiCta && (
+              <button
+                onClick={() => {
+                  const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
+                  window.dispatchEvent(event);
+                }}
+                className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[11px] tracking-[0.2em] uppercase transition-all duration-300"
+                style={{
+                  borderColor: sceneConfig.accentColor + '50',
+                  color: sceneConfig.accentColor + 'CC',
+                  backgroundColor: sceneConfig.accentColor + '0A',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18';
+                  e.currentTarget.style.borderColor = sceneConfig.accentColor + '80';
+                  e.currentTarget.style.color = sceneConfig.accentColor;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A';
+                  e.currentTarget.style.borderColor = sceneConfig.accentColor + '50';
+                  e.currentTarget.style.color = sceneConfig.accentColor + 'CC';
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                  <path d="M2 17l10 5 10-5" />
+                  <path d="M2 12l10 5 10-5" />
+                </svg>
+                {t(sceneConfig.keys.aiCta as TranslationKeys)}
+              </button>
+            )}
           </div>
         </div>
 
