@@ -18,7 +18,7 @@ const slugToPrefix: Record<string, string> = {
 };
 
 const heroScenes = [
-  { src: "/hero-scene-1.jpg", alt: "Gorilla sofa in Dubai luxury penthouse interior" },
+  { src: "/hero-scene-1.jpg", alt: "Gorilla sofa in cinematic billionaire library interior" },
   { src: "/hero-scene-2.jpg", alt: "Pink owl chair in dark contemporary interior" },
 ];
 
