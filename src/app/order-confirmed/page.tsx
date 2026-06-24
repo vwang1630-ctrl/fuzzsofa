@@ -15,46 +15,99 @@ export default function OrderConfirmedPage() {
   }, []);
 
   const orderNumber = searchParams.get("order") || "—";
+  const paymentMethod = searchParams.get("payment") || "paid";
+  const isBankTransfer = paymentMethod === "banktransfer";
 
   if (!mounted) return null;
 
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center px-6">
-      {/* Checkmark Animation */}
+      {/* Checkmark / Clock Animation */}
       <div
-        className={`w-20 h-20 rounded-full border-2 border-[#E8B4B8] flex items-center justify-center mb-8 transition-all duration-700 ${
+        className={`w-20 h-20 rounded-full border-2 ${isBankTransfer ? "border-[#8A8580]" : "border-[#E8B4B8]"} flex items-center justify-center mb-8 transition-all duration-700 ${
           mounted ? "scale-100 opacity-100" : "scale-50 opacity-0"
         }`}
       >
-        <svg
-          width="36"
-          height="36"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#E8B4B8"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={mounted ? "animate-draw-check" : ""}
-        >
-          <polyline points="20 6 9 17 4 12" />
-        </svg>
+        {isBankTransfer ? (
+          /* Clock icon for bank transfer */
+          <svg
+            width="36"
+            height="36"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#8A8580"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+        ) : (
+          /* Check icon for paid orders */
+          <svg
+            width="36"
+            height="36"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#E8B4B8"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={mounted ? "animate-draw-check" : ""}
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        )}
       </div>
 
       <h1 className="font-serif text-3xl font-light text-[#F5F0EB] mb-3 tracking-wide text-center">
-        {t("orderConfirmedTitle")}
+        {isBankTransfer ? t("orderBankTransferTitle") : t("orderConfirmedTitle")}
       </h1>
 
-      <p className="text-[#8A8580] text-sm mb-2 text-center">
-        {t("orderConfirmedPaymentSuccess")}
+      <p className="text-[#8A8580] text-sm mb-2 text-center max-w-md">
+        {isBankTransfer
+          ? t("orderBankTransferSubtitle")
+          : t("orderConfirmedPaymentSuccess")}
       </p>
 
-      <div className="bg-[#111111] border border-[#1A1A1A] px-6 py-3 mt-4 mb-8">
+      {/* Order Number */}
+      <div className="bg-[#111111] border border-[#1A1A1A] px-6 py-3 mt-4 mb-4">
         <span className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block">
           {t("accountOrderNumber")}
         </span>
         <span className="text-[#F5F0EB] font-mono text-lg tracking-wider">{orderNumber}</span>
       </div>
+
+      {/* Bank Transfer Details - only for bank transfer orders */}
+      {isBankTransfer && (
+        <div className="bg-[#111111] border border-[#1A1A1A] p-6 mb-6 max-w-md w-full">
+          <h3 className="text-[#F5F0EB] text-sm font-light tracking-[0.05em] mb-4">
+            {t("paymentBankTransferInfo")}
+          </h3>
+          <div className="space-y-3 text-sm">
+            <div className="flex justify-between">
+              <span className="text-[#8A8580]">Bank</span>
+              <span className="text-[#F5F0EB]">HSBC International</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[#8A8580]">SWIFT</span>
+              <span className="text-[#F5F0EB]">HSBCUS33</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[#8A8580]">Account</span>
+              <span className="text-[#F5F0EB]">FUZZ-2024-8891</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[#8A8580]">Reference</span>
+              <span className="text-[#F5F0EB]">{orderNumber}</span>
+            </div>
+          </div>
+          <p className="text-xs text-[#8A8580] pt-4 mt-4 border-t border-[#1A1A1A]">
+            {t("paymentBankTransferNote")}
+          </p>
+        </div>
+      )}
 
       <div className="flex items-center gap-2 text-sm text-[#8A8580] mb-10">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">

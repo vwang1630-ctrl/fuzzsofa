@@ -58,6 +58,8 @@ export default function PaymentPage() {
   const [sessionToken, setSessionToken] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("creditcard");
   const [submitting, setSubmitting] = useState(false);
+  const [processingPayment, setProcessingPayment] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
   const [cardForm, setCardForm] = useState<CardForm>({
     cardNumber: "",
     expiryDate: "",
@@ -144,9 +146,11 @@ export default function PaymentPage() {
 
   const handlePayNow = async () => {
     if (!checkoutData) return;
-    if (!validateCard()) return;
+    if (paymentMethod === "creditcard" && !validateCard()) return;
 
     setSubmitting(true);
+    setPaymentError(null);
+
     try {
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
@@ -167,6 +171,21 @@ export default function PaymentPage() {
         }).catch(() => {});
       }
 
+      // For credit card, PayPal, Apple Pay — simulate payment gateway processing
+      // For bank transfer — no processing needed, order is created with pending_payment
+      const isImmediatePayment = paymentMethod !== "banktransfer";
+
+      if (isImmediatePayment) {
+        // Show payment processing overlay
+        setProcessingPayment(true);
+
+        // Simulate payment gateway processing (1.5-3 seconds)
+        await new Promise((resolve) => setTimeout(resolve, 1500 + Math.random() * 1500));
+
+        setProcessingPayment(false);
+      }
+
+      // Create order via API
       const res = await fetch("/api/orders", {
         method: "POST",
         headers,
@@ -174,6 +193,7 @@ export default function PaymentPage() {
           shippingMethod: checkoutData.shippingMethod,
           shippingFee: checkoutData.shippingFee,
           paymentMethod,
+          paymentStatus: isImmediatePayment ? "paid" : "pending_payment",
           address: checkoutData.address,
           items: checkoutData.items.map((item) => ({
             productSlug: item.productSlug,
@@ -191,7 +211,7 @@ export default function PaymentPage() {
       });
 
       if (res.status === 401) {
-        alert(t("checkoutLoginRequired"));
+        setPaymentError(t("checkoutLoginRequired"));
         router.push("/login?redirect=/payment");
         return;
       }
@@ -204,10 +224,11 @@ export default function PaymentPage() {
       const data = await res.json();
       sessionStorage.removeItem("checkoutData");
       clearCart();
-      router.push(`/order-confirmed?order=${data.order.orderNumber}`);
+      router.push(`/order-confirmed?order=${data.order.orderNumber}&payment=${isImmediatePayment ? "paid" : "banktransfer"}`);
     } catch (err) {
       console.error("Payment failed:", err);
-      alert(t("checkoutOrderFailed"));
+      setProcessingPayment(false);
+      setPaymentError(err instanceof Error ? err.message : t("checkoutOrderFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -227,9 +248,34 @@ export default function PaymentPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-20">
+      {/* Payment Processing Overlay */}
+      {processingPayment && (
+        <div className="fixed inset-0 z-50 bg-[#0A0A0A]/90 flex flex-col items-center justify-center">
+          <div className="relative w-16 h-16 mb-6">
+            <div className="absolute inset-0 rounded-full border-2 border-[#1A1A1A]" />
+            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#E8B4B8] animate-spin" />
+          </div>
+          <p className="text-[#F5F0EB] text-sm tracking-[0.1em] uppercase mb-2">
+            {paymentMethod === "paypal"
+              ? t("paymentPayPalRedirect")
+              : paymentMethod === "applepay"
+                ? t("paymentApplePayConfirm")
+                : t("paymentProcessing")}
+          </p>
+          <p className="text-[#8A8580] text-xs">{t("paymentDoNotClose")}</p>
+        </div>
+      )}
+
       <h1 className="font-serif text-3xl font-light text-[#F5F0EB] mb-12 tracking-wide">
         {t("paymentTitle")}
       </h1>
+
+      {/* Payment Error */}
+      {paymentError && (
+        <div className="mb-8 bg-red-900/20 border border-red-500/30 px-5 py-4 text-red-400 text-sm">
+          {paymentError}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12">
         {/* Left Column - Payment */}
@@ -481,7 +527,11 @@ export default function PaymentPage() {
               disabled={submitting}
               className="w-full mt-6 border border-[#F5F0EB] text-[#F5F0EB] py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {submitting ? "..." : t("paymentPayNow")}
+              {submitting
+                ? "..."
+                : paymentMethod === "banktransfer"
+                  ? t("paymentConfirmOrder")
+                  : t("paymentPayNow")}
             </button>
 
             <Link

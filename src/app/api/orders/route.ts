@@ -98,6 +98,7 @@ export async function POST(request: NextRequest) {
       subtotal,
       total,
       paymentMethod,
+      paymentStatus,
       address,
     } = body;
 
@@ -123,14 +124,14 @@ export async function POST(request: NextRequest) {
       .insert({
         user_id: user.id,
         order_number: orderNumber,
-        status: 'pending',
+        status: paymentStatus === 'paid' ? 'confirmed' : 'pending',
         shipping_method: shippingMethod || 'standard',
         shipping_fee: shippingFee || 0,
         subtotal: subtotal || 0,
         total: total || 0,
         currency: 'USD',
         payment_method: paymentMethod || null,
-        payment_status: 'paid',
+        payment_status: paymentStatus || (paymentMethod === 'banktransfer' ? 'pending_payment' : 'paid'),
         first_name: address.firstName,
         last_name: address.lastName,
         recipient_name: `${address.firstName} ${address.lastName}`,
@@ -184,7 +185,9 @@ export async function POST(request: NextRequest) {
     await supabase.from('shipping_events').insert({
       order_id: order.id,
       status: 'confirmed',
-      description: 'Order confirmed and payment received',
+      description: paymentStatus === 'paid'
+          ? 'Order confirmed and payment received'
+          : 'Order placed, awaiting payment',
       happened_at: new Date().toISOString(),
     });
 
