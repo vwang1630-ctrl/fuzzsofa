@@ -64,7 +64,7 @@ export function ProductPageClient({ product }: Props) {
       selected: true,
     });
     setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
+    setTimeout(() => setAddedToCart(false), 3000);
   };
 
   const currentMaterialOptions = product.materialOptions?.find(
@@ -508,6 +508,28 @@ export function ProductPageClient({ product }: Props) {
         onClose={() => setShowRoomViz(false)}
         onBuyThisPiece={handleAddToCart}
       />
+
+      {/* Added to Cart Toast */}
+      {addedToCart && (
+        <div className="fixed bottom-6 right-6 z-50 animate-[slideUp_0.3s_ease-out]">
+          <div className="bg-[#111] border border-[#333] rounded-lg px-6 py-4 shadow-2xl flex items-center gap-4 max-w-sm">
+            <div className="w-8 h-8 rounded-full bg-[#E8B4B8]/20 flex items-center justify-center flex-shrink-0">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8L6.5 11.5L13 4.5" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[#F5F0EB] text-sm font-light">{t("addedToCart")}</p>
+            </div>
+            <Link
+              href="/cart"
+              className="text-[#E8B4B8] text-xs tracking-[0.1em] uppercase hover:text-[#F5F0EB] transition-colors flex-shrink-0"
+            >
+              {t("viewCart")}
+            </Link>
+          </div>
+        </div>
+      )}
     </>
   );
 }

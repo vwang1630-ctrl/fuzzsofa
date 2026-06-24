@@ -36,49 +36,136 @@ type ShippingMethod = "standard" | "express";
 type PaymentMethod = "creditcard" | "paypal" | "applepay" | "banktransfer";
 
 interface AddressForm {
-  recipientName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
   phone: string;
-  province: string;
+  addressLine1: string;
+  addressLine2: string;
   city: string;
-  district: string;
-  addressLine: string;
+  state: string;
   zipCode: string;
+  country: string;
 }
+
+const defaultForm: AddressForm = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  addressLine1: "",
+  addressLine2: "",
+  city: "",
+  state: "",
+  zipCode: "",
+  country: "US",
+};
+
+const COUNTRIES = [
+  { code: "US", name: "United States" },
+  { code: "GB", name: "United Kingdom" },
+  { code: "CA", name: "Canada" },
+  { code: "DE", name: "Germany" },
+  { code: "FR", name: "France" },
+  { code: "IT", name: "Italy" },
+  { code: "ES", name: "Spain" },
+  { code: "NL", name: "Netherlands" },
+  { code: "BE", name: "Belgium" },
+  { code: "AT", name: "Austria" },
+  { code: "CH", name: "Switzerland" },
+  { code: "SE", name: "Sweden" },
+  { code: "NO", name: "Norway" },
+  { code: "DK", name: "Denmark" },
+  { code: "AU", name: "Australia" },
+  { code: "AE", name: "United Arab Emirates" },
+  { code: "SA", name: "Saudi Arabia" },
+  { code: "QA", name: "Qatar" },
+  { code: "KW", name: "Kuwait" },
+  { code: "BH", name: "Bahrain" },
+  { code: "SG", name: "Singapore" },
+  { code: "JP", name: "Japan" },
+  { code: "KR", name: "South Korea" },
+  { code: "CN", name: "China" },
+];
+
+const US_STATES = [
+  "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA",
+  "HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
+  "MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+  "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC",
+  "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","DC",
+];
 
 export default function CheckoutPage() {
   const { selectedItems, selectedTotal, region, clearCart } = useCart();
   const { t } = useLanguage();
   const router = useRouter();
   const [sessionToken, setSessionToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function loadSession() {
-      try {
-        const supabase = await getSupabaseBrowserClientWithRetry();
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.access_token) {
-          setSessionToken(session.access_token);
-        }
-      } catch {
-        // User not logged in — order creation will fail with 401
-      }
-    }
-    loadSession();
-  }, []);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("standard");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("creditcard");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState<AddressForm>({
-    recipientName: "",
-    phone: "",
-    province: "",
-    city: "",
-    district: "",
-    addressLine: "",
-    zipCode: "",
-  });
+  const [form, setForm] = useState<AddressForm>(defaultForm);
+  const [addressLoaded, setAddressLoaded] = useState(false);
+
+  // Load session and saved address on mount
+  useEffect(() => {
+    async function init() {
+      try {
+        const supabase = await getSupabaseBrowserClientWithRetry();
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) {
+          setSessionToken(session.access_token);
+          setUserId(session.user.id);
+
+          // Load saved default address + preferences in parallel
+          const [addrRes, prefRes] = await Promise.all([
+            fetch("/api/addresses", { headers: { "x-session": session.access_token } }),
+            fetch("/api/preferences", { headers: { "x-session": session.access_token } }),
+          ]);
+
+          if (addrRes.ok) {
+            const data = await addrRes.json();
+            const defaultAddr = (data.addresses || [])[0]; // first is default
+            if (defaultAddr) {
+              setForm({
+                firstName: defaultAddr.first_name || "",
+                lastName: defaultAddr.last_name || "",
+                email: defaultAddr.email || session.user.email || "",
+                phone: defaultAddr.phone || "",
+                addressLine1: defaultAddr.address_line1 || "",
+                addressLine2: defaultAddr.address_line2 || "",
+                city: defaultAddr.city || "",
+                state: defaultAddr.state || "",
+                zipCode: defaultAddr.zip_code || "",
+                country: defaultAddr.country || "US",
+              });
+            } else if (session.user.email) {
+              setForm((prev) => ({ ...prev, email: session.user!.email! }));
+            }
+          }
+
+          if (prefRes.ok) {
+            const prefData = await prefRes.json();
+            if (prefData.preferences) {
+              if (prefData.preferences.default_payment_method) {
+                setPaymentMethod(prefData.preferences.default_payment_method as PaymentMethod);
+              }
+              if (prefData.preferences.preferred_shipping_method) {
+                setShippingMethod(prefData.preferences.preferred_shipping_method as ShippingMethod);
+              }
+            }
+          }
+        }
+      } catch {
+        // User not logged in — order creation will fail with 401
+      }
+      setAddressLoaded(true);
+    }
+    init();
+  }, []);
 
   const shippingFee = shippingMethod === "express" ? 200 : (selectedTotal >= 10000 ? 0 : 300);
   const total = selectedTotal + shippingFee;
@@ -107,11 +194,14 @@ export default function CheckoutPage() {
 
   const validate = (): boolean => {
     const newErrors: Record<string, boolean> = {};
-    if (!form.recipientName.trim()) newErrors.recipientName = true;
+    if (!form.firstName.trim()) newErrors.firstName = true;
+    if (!form.lastName.trim()) newErrors.lastName = true;
+    if (!form.email.trim()) newErrors.email = true;
     if (!form.phone.trim()) newErrors.phone = true;
-    if (!form.province.trim()) newErrors.province = true;
+    if (!form.addressLine1.trim()) newErrors.addressLine1 = true;
     if (!form.city.trim()) newErrors.city = true;
-    if (!form.addressLine.trim()) newErrors.addressLine = true;
+    if (!form.state.trim()) newErrors.state = true;
+    if (!form.zipCode.trim()) newErrors.zipCode = true;
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -144,6 +234,38 @@ export default function CheckoutPage() {
         headers["x-session"] = sessionToken;
       }
 
+      // Save address for future use (fire and forget)
+      if (sessionToken) {
+        fetch("/api/addresses", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            label: "Home",
+            firstName: form.firstName,
+            lastName: form.lastName,
+            email: form.email,
+            phone: form.phone,
+            addressLine1: form.addressLine1,
+            addressLine2: form.addressLine2,
+            city: form.city,
+            state: form.state,
+            zipCode: form.zipCode,
+            country: form.country,
+            isDefault: true,
+          }),
+        }).catch(() => {});
+
+        // Save payment & shipping preferences (fire and forget)
+        fetch("/api/preferences", {
+          method: "PUT",
+          headers,
+          body: JSON.stringify({
+            defaultPaymentMethod: paymentMethod,
+            preferredShippingMethod: shippingMethod,
+          }),
+        }).catch(() => {});
+      }
+
       const res = await fetch("/api/orders", {
         method: "POST",
         headers,
@@ -151,7 +273,18 @@ export default function CheckoutPage() {
           shippingMethod,
           shippingFee,
           paymentMethod,
-          address: form,
+          address: {
+            firstName: form.firstName,
+            lastName: form.lastName,
+            email: form.email,
+            phone: form.phone,
+            addressLine1: form.addressLine1,
+            addressLine2: form.addressLine2,
+            city: form.city,
+            state: form.state,
+            zipCode: form.zipCode,
+            country: form.country,
+          },
           items: orderItems,
           subtotal: selectedTotal,
           total,
@@ -197,17 +330,46 @@ export default function CheckoutPage() {
                 {t("checkoutShippingInfo")}
               </h2>
               <div className="space-y-4">
+                {/* Name row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
-                      {t("checkoutName")} *
+                      {t("checkoutFirstName")} *
                     </label>
                     <input
                       type="text"
                       required
-                      value={form.recipientName}
-                      onChange={(e) => updateForm("recipientName", e.target.value)}
-                      className={inputClass("recipientName")}
+                      value={form.firstName}
+                      onChange={(e) => updateForm("firstName", e.target.value)}
+                      className={inputClass("firstName")}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
+                      {t("checkoutLastName")} *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.lastName}
+                      onChange={(e) => updateForm("lastName", e.target.value)}
+                      className={inputClass("lastName")}
+                    />
+                  </div>
+                </div>
+
+                {/* Email + Phone row */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
+                      {t("checkoutEmail")} *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={(e) => updateForm("email", e.target.value)}
+                      className={inputClass("email")}
                     />
                   </div>
                   <div>
@@ -224,19 +386,55 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
-                      {t("checkoutProvince")} *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={form.province}
-                      onChange={(e) => updateForm("province", e.target.value)}
-                      className={inputClass("province")}
-                    />
-                  </div>
+                {/* Country */}
+                <div>
+                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
+                    {t("checkoutCountry")} *
+                  </label>
+                  <select
+                    value={form.country}
+                    onChange={(e) => updateForm("country", e.target.value)}
+                    className={inputClass("country") + " appearance-none cursor-pointer"}
+                  >
+                    {COUNTRIES.map((c) => (
+                      <option key={c.code} value={c.code} className="bg-[#111111] text-[#F5F0EB]">
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Address Line 1 */}
+                <div>
+                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
+                    {t("checkoutAddressLine1")} *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Street address, P.O. box"
+                    value={form.addressLine1}
+                    onChange={(e) => updateForm("addressLine1", e.target.value)}
+                    className={inputClass("addressLine1")}
+                  />
+                </div>
+
+                {/* Address Line 2 */}
+                <div>
+                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
+                    {t("checkoutAddressLine2")}
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Apartment, suite, unit, building, floor, etc."
+                    value={form.addressLine2}
+                    onChange={(e) => updateForm("addressLine2", e.target.value)}
+                    className={inputClass("addressLine2")}
+                  />
+                </div>
+
+                {/* City + State + ZIP row */}
+                <div className="grid grid-cols-2 md:grid-cols-[2fr_1fr_1fr] gap-4">
                   <div>
                     <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
                       {t("checkoutCity")} *
@@ -251,40 +449,42 @@ export default function CheckoutPage() {
                   </div>
                   <div>
                     <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
-                      {t("checkoutDistrict")}
+                      {t("checkoutState")} *
+                    </label>
+                    {form.country === "US" ? (
+                      <select
+                        value={form.state}
+                        onChange={(e) => updateForm("state", e.target.value)}
+                        className={inputClass("state") + " appearance-none cursor-pointer"}
+                      >
+                        <option value="" className="bg-[#111111]">Select</option>
+                        {US_STATES.map((s) => (
+                          <option key={s} value={s} className="bg-[#111111]">{s}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type="text"
+                        required
+                        placeholder="State / Province / Region"
+                        value={form.state}
+                        onChange={(e) => updateForm("state", e.target.value)}
+                        className={inputClass("state")}
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
+                      {t("checkoutZipCode")} *
                     </label>
                     <input
                       type="text"
-                      value={form.district}
-                      onChange={(e) => updateForm("district", e.target.value)}
-                      className={inputClass("district")}
+                      required
+                      value={form.zipCode}
+                      onChange={(e) => updateForm("zipCode", e.target.value)}
+                      className={inputClass("zipCode")}
                     />
                   </div>
-                </div>
-
-                <div>
-                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
-                    {t("checkoutAddress")} *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={form.addressLine}
-                    onChange={(e) => updateForm("addressLine", e.target.value)}
-                    className={inputClass("addressLine")}
-                  />
-                </div>
-
-                <div className="w-1/3">
-                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
-                    {t("checkoutZipCode")}
-                  </label>
-                  <input
-                    type="text"
-                    value={form.zipCode}
-                    onChange={(e) => updateForm("zipCode", e.target.value)}
-                    className={inputClass("zipCode")}
-                  />
                 </div>
               </div>
             </section>
@@ -333,11 +533,11 @@ export default function CheckoutPage() {
               <h2 className="font-serif text-xl font-light text-[#F5F0EB] mb-6 tracking-wide">
                 {t("checkoutPaymentMethod")}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {([
                   { key: "creditcard" as PaymentMethod, label: t("checkoutCreditCard"), icon: "💳" },
                   { key: "paypal" as PaymentMethod, label: t("checkoutPayPal"), icon: "P" },
-                  { key: "applepay" as PaymentMethod, label: t("checkoutApplePay"), icon: "Apple" },
+                  { key: "applepay" as PaymentMethod, label: t("checkoutApplePay"), icon: "" },
                   { key: "banktransfer" as PaymentMethod, label: t("checkoutBankTransfer"), icon: "↔" },
                 ]).map((pm) => (
                   <button
@@ -353,7 +553,7 @@ export default function CheckoutPage() {
                     <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-[#1A1A1A] flex items-center justify-center text-xs text-[#8A8580]">
                       {pm.icon}
                     </div>
-                    <span className="text-[#F5F0EB] text-sm">{pm.label}</span>
+                    <span className="text-[#F5F0EB] text-xs">{pm.label}</span>
                   </button>
                 ))}
               </div>
@@ -401,22 +601,22 @@ export default function CheckoutPage() {
                   </span>
                 </div>
                 <div className="border-t border-[#1A1A1A] pt-3 flex justify-between">
-                  <span className="text-[#F5F0EB]">{t("cartTotal")}</span>
-                  <span className="text-[#F5F0EB] text-lg font-light">{formatPrice(total, region)}</span>
+                  <span className="text-[#F5F0EB] font-light">{t("cartTotal")}</span>
+                  <span className="text-[#F5F0EB] text-lg">{formatPrice(total, region)}</span>
                 </div>
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="mt-6 w-full py-4 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full mt-6 border border-[#F5F0EB] text-[#F5F0EB] py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? "..." : t("checkoutPlaceOrder")}
               </button>
 
               <Link
                 href="/cart"
-                className="mt-3 block text-center text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors"
+                className="block text-center mt-4 text-[#8A8580] text-xs tracking-[0.1em] uppercase hover:text-[#F5F0EB] transition-colors"
               >
                 {t("checkoutBackToCart")}
               </Link>

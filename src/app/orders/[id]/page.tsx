@@ -42,12 +42,15 @@ interface OrderDetail {
   currency: string;
   payment_method: string | null;
   payment_status: string;
-  recipient_name: string;
+  first_name: string;
+  last_name: string;
+  email: string;
   phone: string;
-  province: string;
-  city: string;
-  district: string | null;
+  country: string;
   address_line: string;
+  address_line2: string | null;
+  city: string;
+  state: string | null;
   zip_code: string | null;
   carrier: string | null;
   tracking_number: string | null;
@@ -289,10 +292,11 @@ export default function OrderDetailPage() {
             <h3 className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-3">
               {t("orderDetailShippingAddress")}
             </h3>
-            <p className="text-[#F5F0EB] text-sm">{order.recipient_name}</p>
-            <p className="text-[#F5F0EB] text-sm">{order.phone}</p>
+            <p className="text-[#F5F0EB] text-sm">{order.first_name} {order.last_name}</p>
+            <p className="text-[#F5F0EB] text-sm">{order.email}</p>
+            <p className="text-[#8A8580] text-sm">{order.phone}</p>
             <p className="text-[#8A8580] text-sm">
-              {order.province} {order.city} {order.district || ""} {order.address_line}
+              {order.address_line}{order.address_line2 ? `, ${order.address_line2}` : ''}, {order.city}, {order.state || ''} {order.zip_code || ''}, {order.country}
             </p>
             {order.zip_code && <p className="text-[#8A8580] text-sm">{order.zip_code}</p>}
           </div>

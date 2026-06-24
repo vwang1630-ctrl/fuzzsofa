@@ -47,12 +47,15 @@ export async function GET(request: NextRequest) {
       total: o.total,
       currency: o.currency,
       paymentMethod: o.payment_method,
-      recipientName: o.recipient_name,
+      firstName: o.first_name,
+      lastName: o.last_name,
+      email: o.email,
       phone: o.phone,
-      province: o.province,
+      country: o.country,
+      addressLine1: o.address_line,
+      addressLine2: o.address_line2,
       city: o.city,
-      district: o.district,
-      addressLine: o.address_line,
+      state: o.state,
       zipCode: o.zip_code,
       carrier: o.carrier,
       trackingNumber: o.tracking_number,
@@ -102,7 +105,7 @@ export async function POST(request: NextRequest) {
     if (!items || items.length === 0) {
       return NextResponse.json({ error: 'No items in order' }, { status: 400 });
     }
-    if (!address?.recipientName || !address?.phone || !address?.province || !address?.city || !address?.addressLine) {
+    if (!address?.firstName || !address?.lastName || !address?.email || !address?.addressLine1 || !address?.city || !address?.country) {
       return NextResponse.json({ error: 'Missing required address fields' }, { status: 400 });
     }
 
@@ -128,12 +131,16 @@ export async function POST(request: NextRequest) {
         currency: 'USD',
         payment_method: paymentMethod || null,
         payment_status: 'paid',
-        recipient_name: address.recipientName,
-        phone: address.phone,
-        province: address.province,
+        first_name: address.firstName,
+        last_name: address.lastName,
+        recipient_name: `${address.firstName} ${address.lastName}`,
+        email: address.email,
+        phone: address.phone || null,
+        country: address.country,
+        address_line: address.addressLine1,
+        address_line2: address.addressLine2 || null,
         city: address.city,
-        district: address.district || null,
-        address_line: address.addressLine,
+        state: address.state || null,
         zip_code: address.zipCode || null,
       })
       .select()
