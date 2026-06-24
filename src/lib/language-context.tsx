@@ -1,7 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
-import { type Locale, type TranslationKeys, translations } from "@/lib/i18n";
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
+import { type Locale, type TranslationKeys, translations, locales } from "@/lib/i18n";
 import type { Region } from "@/lib/products";
 
 interface LanguageContextType {
@@ -18,9 +18,27 @@ const LanguageContext = createContext<LanguageContextType | null>(null);
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("en");
   const [region, setRegionState] = useState<Region>("americas");
+  const [mounted, setMounted] = useState(false);
+
+  // Restore from localStorage on mount
+  useEffect(() => {
+    const savedLocale = localStorage.getItem("fuzzsofa-locale") as Locale | null;
+    const savedRegion = localStorage.getItem("fuzzsofa-region") as Region | null;
+    if (savedLocale && (locales as readonly string[]).includes(savedLocale)) {
+      setLocaleState(savedLocale);
+      const isRtl = savedLocale === "ar" || savedLocale === "fa";
+      document.documentElement.dir = isRtl ? "rtl" : "ltr";
+      document.documentElement.lang = savedLocale;
+    }
+    if (savedRegion) {
+      setRegionState(savedRegion);
+    }
+    setMounted(true);
+  }, []);
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
+    localStorage.setItem("fuzzsofa-locale", newLocale);
     // Apply RTL direction to document
     const isRtl = newLocale === "ar" || newLocale === "fa";
     document.documentElement.dir = isRtl ? "rtl" : "ltr";
@@ -29,6 +47,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setRegion = useCallback((newRegion: Region) => {
     setRegionState(newRegion);
+    localStorage.setItem("fuzzsofa-region", newRegion);
   }, []);
 
   const t = useCallback(

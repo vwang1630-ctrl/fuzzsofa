@@ -4,6 +4,7 @@ import { useState, useCallback, useRef } from "react";
 import type { Product } from "@/lib/products";
 import { generateRoomVisualization, createPlaceholderResult } from "@/lib/room-visualization";
 import { BeforeAfterSlider } from "@/components/before-after-slider";
+import { useLanguage } from "@/lib/language-context";
 
 interface RoomVisualizationModalProps {
   product: Product;
@@ -20,6 +21,17 @@ export function RoomVisualizationModal({
   onClose,
   onBuyThisPiece,
 }: RoomVisualizationModalProps) {
+  const { t } = useLanguage();
+  const slugToPrefix: Record<string, string> = {
+    "bear-sofa": "bearSofa",
+    "lion-sofa": "lionSofa",
+    "tiger-sofa": "tigerSofa",
+    "gorilla-sofa": "gorillaSofa",
+    "owl-sofa": "owlChair",
+  };
+  const prefix = slugToPrefix[product.slug];
+  const productName = prefix ? t(`${prefix}Name` as Parameters<typeof t>[0]) : product.name;
+
   const [step, setStep] = useState<ModalStep>("upload");
   const [roomImage, setRoomImage] = useState<string | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
@@ -127,7 +139,7 @@ export function RoomVisualizationModal({
     // Xiaohongshu sharing - opens the app/web with pre-filled content
     // On mobile, this will attempt to open the Xiaohongshu app
     const shareText = encodeURIComponent(
-      `${product.name} — Sculptural Furniture Inspired by Nature | Fuzz Sofa`
+      `$productName — Sculptural Furniture Inspired by Nature | Fuzz Sofa`
     );
     const shareUrl = encodeURIComponent(`https://fuzzsofa.com/${product.slug}`);
     window.open(
@@ -176,7 +188,7 @@ export function RoomVisualizationModal({
             </span>
           </div>
           <span className="text-xs tracking-[0.08em] text-[#8A8580] uppercase">
-            Placing: <span className="text-[#E8B4B8] normal-case">{product.name}</span>
+            Placing: <span className="text-[#E8B4B8] normal-case">productName</span>
           </span>
         </div>
 
@@ -188,7 +200,7 @@ export function RoomVisualizationModal({
                 Try in Your Room
               </h2>
               <p className="text-sm text-[#8A8580] leading-relaxed max-w-md font-light">
-                Upload a photo of your room and see how the {product.name}{" "}
+                Upload a photo of your room and see how the productName{" "}
                 transforms your space. Our AI will place it with realistic
                 lighting and perspective.
               </p>
@@ -261,7 +273,7 @@ export function RoomVisualizationModal({
           {step === "processing" && roomImage && (
             <div className="space-y-8 flex flex-col items-center text-center">
               <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] tracking-[0.05em]">
-                Placing {product.name} in your room...
+                Placing productName in your room...
               </h2>
 
               {/* Room preview with shimmer overlay */}
@@ -315,7 +327,7 @@ export function RoomVisualizationModal({
                   </span>
                 </div>
                 <span className="text-xs text-[#8A8580]">
-                  {product.name}
+                  productName
                 </span>
               </div>
             </div>
@@ -325,15 +337,15 @@ export function RoomVisualizationModal({
           {step === "result" && roomImage && resultImage && (
             <div className="space-y-6">
               <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] tracking-[0.05em] text-center">
-                {product.name} in Your Room
+                productName in Your Room
               </h2>
 
               {/* Before / After Slider */}
               <BeforeAfterSlider
                 beforeSrc={roomImage}
                 afterSrc={resultImage}
-                beforeAlt={`Your room without ${product.name}`}
-                afterAlt={`Your room with ${product.name} placed by AI`}
+                beforeAlt={`Your room without $productName`}
+                afterAlt={`Your room with $productName placed by AI`}
               />
 
               {/* Action buttons */}

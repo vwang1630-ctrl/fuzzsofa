@@ -24,7 +24,7 @@ export function ProductPageClient({ product }: Props) {
     "lion-sofa": "lionSofa",
     "tiger-sofa": "tigerSofa",
     "gorilla-sofa": "gorillaSofa",
-    "owl-chair": "owlChair",
+    "owl-sofa": "owlChair",
   };
   const prefix = slugToPrefix[product.slug] || "";
 
@@ -97,12 +97,12 @@ export function ProductPageClient({ product }: Props) {
   const images = productImages[product.slug] || [];
 
   const galleryImages = images.length > 0
-    ? images.map((src, i) => ({ label: `${product.name} — View ${i + 1}`, id: i, src }))
+    ? images.map((src, i) => ({ label: `${productName} — View ${i + 1}`, id: i, src }))
     : [
-        { label: `${product.name} — Full View`, id: 0, src: "" },
-        { label: `${product.name} — Detail`, id: 1, src: "" },
-        { label: `${product.name} — In Context`, id: 2, src: "" },
-        { label: `${product.name} — Side Profile`, id: 3, src: "" },
+        { label: `${productName} — Full View`, id: 0, src: "" },
+        { label: `${productName} — Detail`, id: 1, src: "" },
+        { label: `${productName} — In Context`, id: 2, src: "" },
+        { label: `${productName} — Side Profile`, id: 3, src: "" },
       ];
 
   return (
@@ -183,7 +183,7 @@ export function ProductPageClient({ product }: Props) {
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-transparent h-1/3" />
             </div>
             <figcaption className="sr-only">
-              {galleryImages[activeImage].label} — {product.name} by Fuzz Sofa
+              {galleryImages[activeImage].label} — {productName} by Fuzz Sofa
             </figcaption>
           </figure>
           <div className="mt-4 flex gap-3">
@@ -278,9 +278,9 @@ export function ProductPageClient({ product }: Props) {
                    mat.type === "Leather Touch" ? t("leatherTouch") : mat.type}
                 </h3>
                 <p className="text-xs text-[#8A8580] mb-4">
-                  {mat.type === "Cloud Touch" && "Ultra-soft boucle. Cloud-like comfort with a subtle texture."}
-                  {mat.type === "Wild Touch" && "Natural linen blend. Breathable with organic grain."}
-                  {mat.type === "Leather Touch" && "Full-grain leather. Rich patina develops over time."}
+                  {mat.type === "Cloud Touch" && t("cloudTouchDesc")}
+                  {mat.type === "Wild Touch" && t("wildTouchDesc")}
+                  {mat.type === "Leather Touch" && t("leatherTouchDesc")}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {mat.options.map((opt) => (

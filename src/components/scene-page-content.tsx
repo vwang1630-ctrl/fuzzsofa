@@ -10,7 +10,7 @@ const slugToPrefix: Record<string, string> = {
   "lion-sofa": "lionSofa",
   "tiger-sofa": "tigerSofa",
   "gorilla-sofa": "gorillaSofa",
-  "owl-chair": "owlChair",
+  "owl-sofa": "owlChair",
 };
 
 interface ScenePageContentProps {

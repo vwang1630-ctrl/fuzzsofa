@@ -4,15 +4,15 @@ import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import { useState, useRef, useEffect } from "react";
-import { locales, localeNames, type Locale } from "@/lib/i18n";
+import { locales, localeNames, type Locale, type TranslationKeys } from "@/lib/i18n";
 
 type Region = "americas" | "europe" | "middle_east" | "se_asia";
 
-const regionLabels: Record<Region, string> = {
-  americas: "Americas",
-  europe: "Europe",
-  middle_east: "Middle East",
-  se_asia: "SE Asia",
+const regionKeyMap: Record<Region, TranslationKeys> = {
+  americas: "americasLabel",
+  europe: "europeLabel",
+  middle_east: "middleEastLabel",
+  se_asia: "seAsiaLabel",
 };
 
 const regionIcons: Record<string, string> = {
@@ -102,11 +102,11 @@ export function Header() {
               className="flex items-center gap-1 text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 text-xs tracking-[0.05em]"
               aria-label="Select region"
             >
-              📍 {regionLabels[region]}
+              📍 {t(regionKeyMap[region])}
             </button>
             {regionOpen && (
               <div className="absolute top-full mt-2 right-0 bg-[#111111] border border-[#1A1A1A] rounded-[4px] py-1 min-w-[180px] z-50">
-                {(Object.entries(regionLabels) as [Region, string][]).map(([key, label]) => (
+                {(Object.keys(regionKeyMap) as Region[]).map((key) => (
                   <button
                     key={key}
                     onClick={() => { setRegion(key); setRegionOpen(false); }}
@@ -114,7 +114,7 @@ export function Header() {
                       key === region ? "text-[#E8B4B8]" : "text-[#8A8580]"
                     }`}
                   >
-                    <span>{regionIcons[key]}</span> {label}
+                    <span>{regionIcons[key]}</span> {t(regionKeyMap[key])}
                   </button>
                 ))}
               </div>
@@ -176,7 +176,7 @@ export function Header() {
           <Link href="/contact" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link>
           <div className="flex gap-3 pt-2 border-t border-[#1A1A1A]">
             <span className="text-[#8A8580]">🌐 {localeNames[locale]}</span>
-            <span className="text-[#8A8580]">📍 {regionLabels[region]}</span>
+            <span className="text-[#8A8580]">📍 {t(regionKeyMap[region] as TranslationKeys)}</span>
           </div>
         </nav>
       )}

@@ -21,76 +21,6 @@ export const localeNames: Record<Locale, string> = {
 };
 
 export type TranslationKeys =
-  | "from"
-  | "madeToOrderDesc"
-  | "whiteGloveDeliveryDesc"
-  | "qualityGuaranteeDesc"
-  | "whatIsAnimalSofaDesc1"
-  | "whatIsAnimalSofaDesc2"
-  | "whatIsAnimalSofaDesc3"
-  | "cartEmpty"
-  | "free"
-  | "whiteGloveGuarantee"
-  | "orderReceived"
-  | "orderReceivedDesc"
-  | "browseCollection"
-  | "freeWhiteGlove"
-  | "photoVideoDoc"
-  | "contactSubtitle"
-  | "messageReceived"
-  | "messageReceivedDesc"
-  | "name"
-  | "subject"
-  | "orderStatus"
-  | "tradeBulkPricing"
-  | "customMaterialRequest"
-  | "message"
-  | "getInTouch"
-  | "generalInquiries"
-  | "bulkHospitalityPricing"
-  | "other"
-  | "workshop"
-  | "byAppointmentOnly"
-  | "responseTime"
-  | "within24Hours"
-  | "followUs"
-  | "forTradeHospitality"
-  | "forTradeHospitalityDesc"
-  | "ourMaterials"
-  | "cloudTouchDesc"
-  | "usedIn"
-  | "wildTouchDesc"
-  | "leatherTouchDesc"
-  | "howFuzzSofaIsMade"
-  | "frameConstruction"
-  | "frameConstructionDesc"
-  | "cushionEngineering"
-  | "cushionEngineeringDesc"
-  | "upholsteryDesc"
-  | "finishingQC"
-  | "finillingQCDesc"
-  | "documentationDelivery"
-  | "documentationDeliveryDesc"
-  | "bestFor"
-  | "category"
-  | "durability"
-  | "high"
-  | "mediumHigh"
-  | "veryHigh"
-  | "residentialLowTraffic"
-  | "residentialStatement"
-  | "contractHighTraffic"
-  | "fabricCare"
-  | "fabricCareDesc"
-  | "leatherCare"
-  | "leatherCareDesc"
-  | "frameMaintenance"
-  | "frameMaintenanceDesc"
-  | "cloudMaintenance"
-  | "wildMaintenance"
-  | "leatherMaintenance"
-  | "maintenance"
-  | "frameStructure"
   | "siteTitle"
   | "siteTagline"
   | "exploreCollection"
@@ -244,6 +174,75 @@ export type TranslationKeys =
   | "europe"
   | "middleEast"
   | "southeastAsia"
+  | "from"
+  | "madeToOrderDesc"
+  | "whiteGloveDeliveryDesc"
+  | "qualityGuaranteeDesc"
+  | "whatIsAnimalSofaDesc1"
+  | "whatIsAnimalSofaDesc2"
+  | "whatIsAnimalSofaDesc3"
+  | "cartEmpty"
+  | "free"
+  | "whiteGloveGuarantee"
+  | "orderReceived"
+  | "orderReceivedDesc"
+  | "browseCollection"
+  | "freeWhiteGlove"
+  | "photoVideoDoc"
+  | "contactSubtitle"
+  | "messageReceived"
+  | "messageReceivedDesc"
+  | "name"
+  | "subject"
+  | "orderStatus"
+  | "tradeBulkPricing"
+  | "customMaterialRequest"
+  | "message"
+  | "getInTouch"
+  | "generalInquiries"
+  | "bulkHospitalityPricing"
+  | "other"
+  | "workshop"
+  | "byAppointmentOnly"
+  | "responseTime"
+  | "within24Hours"
+  | "followUs"
+  | "forTradeHospitality"
+  | "forTradeHospitalityDesc"
+  | "ourMaterials"
+  | "cloudTouchDesc"
+  | "usedIn"
+  | "wildTouchDesc"
+  | "leatherTouchDesc"
+  | "howFuzzSofaIsMade"
+  | "frameConstruction"
+  | "frameConstructionDesc"
+  | "cushionEngineering"
+  | "cushionEngineeringDesc"
+  | "upholsteryDesc"
+  | "finishingQC"
+  | "finillingQCDesc"
+  | "documentationDelivery"
+  | "documentationDeliveryDesc"
+  | "bestFor"
+  | "category"
+  | "durability"
+  | "high"
+  | "mediumHigh"
+  | "veryHigh"
+  | "residentialLowTraffic"
+  | "residentialStatement"
+  | "contractHighTraffic"
+  | "fabricCare"
+  | "fabricCareDesc"
+  | "leatherCare"
+  | "leatherCareDesc"
+  | "frameMaintenance"
+  | "frameMaintenanceDesc"
+  | "cloudMaintenance"
+  | "wildMaintenance"
+  | "leatherMaintenance"
+  | "maintenance"
   | "bearSofaName"
   | "lionSofaName"
   | "tigerSofaName"
@@ -291,7 +290,12 @@ export type TranslationKeys =
   | "lionSofaDims"
   | "tigerSofaDims"
   | "gorillaSofaDims"
-  | "owlChairDims";
+  | "owlChairDims"
+  | "frameStructure"
+  | "americasLabel"
+  | "europeLabel"
+  | "middleEastLabel"
+  | "seAsiaLabel";
 
 export const translations: Record<Locale, Record<TranslationKeys, string>> = {
   en: {
@@ -566,6 +570,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "W200 × D100 × H88 cm",
     owlChairDims: "W86 × D80 × H95 cm",
     frameStructure: "Frame Structure",
+    americasLabel: "Americas (USD)",
+    europeLabel: "Europe (EUR)",
+    middleEastLabel: "Middle East (USD)",
+    seAsiaLabel: "Southeast Asia (USD)",
 },
   zh: {
     siteTitle: "Fuzz Sofa",
@@ -839,6 +847,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "W200 × D100 × H88 cm",
     owlChairDims: "W86 × D80 × H95 cm",
     frameStructure: "框架结构",
+    americasLabel: "美洲 (美元)",
+    europeLabel: "欧洲 (欧元)",
+    middleEastLabel: "中东 (美元)",
+    seAsiaLabel: "东南亚 (美元)",
 },
   ja: {
     siteTitle: "Fuzz Sofa",
@@ -1112,6 +1124,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "W200 × D100 × H88 cm",
     owlChairDims: "W86 × D80 × H95 cm",
     frameStructure: "フレーム構造",
+    americasLabel: "アメリカ大陸 (USD)",
+    europeLabel: "ヨーロッパ (EUR)",
+    middleEastLabel: "中東 (USD)",
+    seAsiaLabel: "東南アジア (USD)",
 },
   fr: {
     siteTitle: "Fuzz Sofa",
@@ -1385,6 +1401,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "L200 × P100 × H88 cm",
     owlChairDims: "L86 × P80 × H95 cm",
     frameStructure: "Structure du cadre",
+    americasLabel: "Amériques (USD)",
+    europeLabel: "Europe (EUR)",
+    middleEastLabel: "Moyen-Orient (USD)",
+    seAsiaLabel: "Asie du Sud-Est (USD)",
 },
   de: {
     siteTitle: "Fuzz Sofa",
@@ -1658,6 +1678,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "B200 × T100 × H88 cm",
     owlChairDims: "B86 × T80 × H95 cm",
     frameStructure: "Rahmenstruktur",
+    americasLabel: "Amerika (USD)",
+    europeLabel: "Europa (EUR)",
+    middleEastLabel: "Naher Osten (USD)",
+    seAsiaLabel: "Südostasien (USD)",
 },
   es: {
     siteTitle: "Fuzz Sofa",
@@ -1931,6 +1955,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "W200 × P100 × A88 cm",
     owlChairDims: "W86 × P80 × A95 cm",
     frameStructure: "Estructura del marco",
+    americasLabel: "Américas (USD)",
+    europeLabel: "Europa (EUR)",
+    middleEastLabel: "Oriente Medio (USD)",
+    seAsiaLabel: "Sudeste Asiático (USD)",
 },
   it: {
     siteTitle: "Fuzz Sofa",
@@ -2204,6 +2232,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "L200 × P100 × A88 cm",
     owlChairDims: "L86 × P80 × A95 cm",
     frameStructure: "Struttura del telaio",
+    americasLabel: "Americhe (USD)",
+    europeLabel: "Europa (EUR)",
+    middleEastLabel: "Medio Oriente (USD)",
+    seAsiaLabel: "Sudest asiatico (USD)",
 },
   pt: {
     siteTitle: "Fuzz Sofa",
@@ -2477,6 +2509,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "L200 × P100 × A88 cm",
     owlChairDims: "L86 × P80 × A95 cm",
     frameStructure: "Estrutura da armação",
+    americasLabel: "Américas (USD)",
+    europeLabel: "Europa (EUR)",
+    middleEastLabel: "Oriente Médio (USD)",
+    seAsiaLabel: "Sudeste Asiático (USD)",
 },
   "pt-BR": {
     siteTitle: "Fuzz Sofa",
@@ -2750,6 +2786,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "L200 × P100 × A88 cm",
     owlChairDims: "L86 × P80 × A95 cm",
     frameStructure: "Estrutura da armação",
+    americasLabel: "Américas (USD)",
+    europeLabel: "Europa (EUR)",
+    middleEastLabel: "Oriente Médio (USD)",
+    seAsiaLabel: "Sudeste Asiático (USD)",
 },
   ar: {
     siteTitle: "Fuzz Sofa",
@@ -3023,6 +3063,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "200×100×88 سم",
     owlChairDims: "86×80×95 سم",
     frameStructure: "هيكل الإطار",
+    americasLabel: "الأمريكتان (دولار)",
+    europeLabel: "أوروبا (يورو)",
+    middleEastLabel: "الشرق الأوسط (دولار)",
+    seAsiaLabel: "جنوب شرق آسيا (دولار)",
 },
   fa: {
     siteTitle: "Fuzz Sofa",
@@ -3296,6 +3340,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "200×100×88 سانتی‌متر",
     owlChairDims: "86×80×95 سانتی‌متر",
     frameStructure: "ساختار قاب",
+    americasLabel: "قاره‌های آمریکا (USD)",
+    europeLabel: "اروپا (EUR)",
+    middleEastLabel: "خاورمیانه (USD)",
+    seAsiaLabel: "جنوب شرق آسیا (USD)",
 },
   hi: {
     siteTitle: "Fuzz Sofa",
@@ -3569,6 +3617,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "W200 × D100 × H88 सेमी",
     owlChairDims: "W86 × D80 × H95 सेमी",
     frameStructure: "फ्रेम संरचना",
+    americasLabel: "अमेरिका (USD)",
+    europeLabel: "यूरोप (EUR)",
+    middleEastLabel: "मध्य पूर्व (USD)",
+    seAsiaLabel: "दक्षिण पूर्व एशिया (USD)",
 },
   ko: {
     siteTitle: "Fuzz Sofa",
@@ -3842,7 +3894,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     gorillaSofaDims: "W200 × D100 × H88 cm",
     owlChairDims: "W86 × D80 × H95 cm",
     frameStructure: "프레임 구조",
-},
+    americasLabel: "아메리카 (USD)",
+    europeLabel: "유럽 (EUR)",
+    middleEastLabel: "중동 (USD)",
+    seAsiaLabel: "동남아시아 (USD)",
+  },
 };
 
 export function t(locale: Locale, key: TranslationKeys): string {
