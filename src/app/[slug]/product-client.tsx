@@ -79,6 +79,12 @@ export function ProductPageClient({ product }: Props) {
       "/products/owl/warm-gray.png",
       "/products/owl/interior-context.png",
     ],
+    "gorilla-sofa": [
+      "/products/gorilla-sofa/gray.jpg",
+      "/products/gorilla-sofa/cream.jpg",
+      "/products/gorilla-sofa/brown.jpg",
+      "/products/gorilla-sofa/black.jpg",
+    ],
   };
 
   const images = productImages[product.slug] || [];

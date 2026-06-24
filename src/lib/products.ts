@@ -28,6 +28,7 @@ export interface Product {
     options: string[];
     colors: string[];
   }[];
+  images?: string[];
   faq: { question: string; answer: string }[];
   relatedProducts: string[];
   relatedInteriors: string[];
@@ -335,56 +336,42 @@ export const products: Product[] = [
     interiorContext:
       "The Gorilla Sofa demands generous floor space and suits interiors that celebrate materiality and bold gestures. It excels in loft apartments with exposed concrete, contemporary villas with double-height spaces, and hotel lobbies where it serves as a gathering anchor. Its low profile makes it ideal for rooms with dramatic views, where it won't compete with the landscape.",
     priceRange: {
-      americas: [7200, 9800],
-      europe: [7200, 9800],
-      middle_east: [6800, 9200],
-      se_asia: [6200, 8500],
+      americas: [7800, 7800],
+      europe: [7800, 7800],
+      middle_east: [7800, 7800],
+      se_asia: [7800, 7800],
     },
     specifications: {
       width: "W200 cm",
       height: "H152 cm",
       depth: "D160 cm",
       seatHeight: "38 cm",
-      weight: "90 kg",
+      weight: "90 kg (80 kg + frame 10 kg)",
       capacity: "4-seater, up to 400 kg",
     },
     materials: [
       "Solid hardwood frame (FSC-certified oak)",
       "High-density foam with down feather wrap",
-      "Cloud Touch or Wild Touch fabric, or Leather Touch",
-      "Solid steel base with black powder coat",
+      "Plush long-pile fur fabric",
+      "Sculpted matte black details (muzzle, paws)",
     ],
     materialOptions: [
       {
-        type: "Cloud Touch",
+        type: "Plush Fur",
         options: [
-          "Arctic White Bouclé",
-          "Sand Linen Blend",
-          "Charcoal Wool",
-          "Forest Green Velvet",
+          "Gray Fur",
+          "Cream Fur",
+          "Brown Fur",
+          "Black Fur",
         ],
-        colors: ["#F5F0EB", "#C2B8A3", "#4A4A4A", "#3A5A40"],
+        colors: ["#6B6B6B", "#E8DFD0", "#5C3A1E", "#1A1A1A"],
       },
-      {
-        type: "Wild Touch",
-        options: [
-          "Midnight Bouclé",
-          "Stone Grey Wool",
-          "Saddle Tan Linen",
-          "Charcoal Velvet",
-        ],
-        colors: ["#2A2A3A", "#7A7A7A", "#A08060", "#3A3A3A"],
-      },
-      {
-        type: "Leather Touch",
-        options: [
-          "Black Full-grain",
-          "Cognac Aniline",
-          "Espresso Heritage",
-          "Natural Vegetable-tanned",
-        ],
-        colors: ["#1A1A1A", "#8B5A2B", "#3A2A1A", "#C4A67A"],
-      },
+    ],
+    images: [
+      "/products/gorilla-sofa/gray.jpg",
+      "/products/gorilla-sofa/cream.jpg",
+      "/products/gorilla-sofa/brown.jpg",
+      "/products/gorilla-sofa/black.jpg",
     ],
     faq: [
       {
