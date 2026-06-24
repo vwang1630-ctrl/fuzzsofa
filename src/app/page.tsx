@@ -407,7 +407,7 @@ export default function HomePage() {
                 label: t("statementFurnitureScene"),
               },
               {
-                href: "/sculptural-trend",
+                href: "/meteorite-ring-sofa",
                 title: t("sculpturalTrend"),
                 accent: "from-[#0A0A1A] to-[#0A0A0A]",
                 label: t("sculpturalTrendScene"),
