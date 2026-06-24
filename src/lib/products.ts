@@ -39,294 +39,8 @@ export interface Product {
   trendingGeo?: string[];
 }
 
+
 export const products: Product[] = [
-  {
-    slug: "bear-sofa",
-    name: "Bear Sofa",
-    animal: "Bear",
-    tagline: "Commanding Presence, Grand Scale",
-    description:
-      "The Bear Sofa embodies the commanding presence of a grizzly bear in repose. Its broad, embracing silhouette creates a sanctuary of comfort that anchors any grand living space. Designed for those who seek furniture with primal authority and sculptural beauty.",
-    concept:
-      "Inspired by the resting grizzly — powerful yet at peace — the Bear Sofa translates the animal's broad shoulders and protective embrace into furniture form. The high, curved backrest evokes a bear's hunched silhouette, while the deep seat cradles you like a forest den. This is not merely seating; it is a statement of presence that transforms the room it occupies.",
-    interiorContext:
-      "The Bear Sofa belongs in spaces that demand gravitas: grand foyers of luxury villas, the principal lounge of boutique hotels, or the living room of a collector's penthouse. Its commanding scale requires generous ceiling height and visual breathing room, where it becomes the gravitational center of the interior.",
-    priceRange: {
-      americas: [8200, 9800],
-      europe: [8200, 9800],
-      middle_east: [7800, 9200],
-      se_asia: [7200, 8600],
-    },
-    specifications: {
-      width: "W200 cm",
-      height: "H152 cm",
-      depth: "D160 cm",
-      seatHeight: "42 cm",
-      weight: "90 kg",
-      capacity: "3-seater, up to 340 kg",
-    },
-    materials: [
-      "Solid hardwood frame (FSC-certified oak)",
-      "High-density foam with down feather wrap",
-      "Cloud Touch or Wild Touch fabric, or Leather Touch",
-      "Solid brass feet with matte black finish",
-    ],
-    materialOptions: [
-      {
-        type: "Cloud Touch",
-        options: [
-          "Arctic White Bouclé",
-          "Sand Linen Blend",
-          "Charcoal Wool",
-          "Forest Green Velvet",
-        ],
-        colors: ["#F5F0EB", "#C2B8A3", "#4A4A4A", "#3A5A40"],
-      },
-      {
-        type: "Wild Touch",
-        options: [
-          "Midnight Bouclé",
-          "Stone Grey Wool",
-          "Saddle Tan Linen",
-          "Charcoal Velvet",
-        ],
-        colors: ["#2A2A3A", "#7A7A7A", "#A08060", "#3A3A3A"],
-      },
-      {
-        type: "Leather Touch",
-        options: [
-          "Cognac Aniline",
-          "Midnight Black",
-          "Burgundy Heritage",
-          "Natural Vegetable-tanned",
-        ],
-        colors: ["#8B5A2B", "#1A1A1A", "#6B2A3A", "#C4A67A"],
-      },
-    ],
-    faq: [
-      {
-        question: "How long does it take to receive a Bear Sofa?",
-        answer:
-          "Each Bear Sofa is made to order at our Shanghai workshop. Production takes 8–12 weeks, followed by free white-glove delivery to your door. You will receive photo and video documentation of your piece throughout the process.",
-      },
-      {
-        question: "What is the weight capacity of the Bear Sofa?",
-        answer:
-          "The Bear Sofa supports up to 340 kg across its three-seat configuration. The solid hardwood frame and reinforced joinery ensure lasting structural integrity.",
-      },
-      {
-        question: "Can I customize the fabric or leather?",
-        answer:
-          "Yes. The Bear Sofa is available in Cloud Touch fabric, Wild Touch fabric, and Leather Touch options with multiple colors each. For bespoke material requests, our design team can source specific textiles — contact us to discuss your vision.",
-      },
-      {
-        question: "Is the Bear Sofa suitable for commercial spaces?",
-        answer:
-          "The Bear Sofa is engineered for both residential and commercial use. For hospitality projects, we offer contract-grade specifications with enhanced durability treatments and bulk pricing through our trade program.",
-      },
-      {
-        question: "What is the return policy?",
-        answer:
-          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
-      },
-    ],
-    relatedProducts: ["lion-sofa", "gorilla-sofa", "owl-sofa"],
-    relatedInteriors: ["luxury-villa-interior", "boutique-hotel-lobby"],
-    metaDescription:
-      "Bear Sofa by Fuzz Sofa — a sculptural three-seater inspired by the grizzly bear. Made to order in Shanghai with premium fabric or leather. Free white-glove delivery worldwide.",
-    hiddenInRegions: ["middle_east"],
-    trendingGeo: ["US", "EU", "JP", "KR", "SG", "AU"],
-  },
-  {
-    slug: "lion-sofa",
-    name: "Lion Sofa",
-    animal: "Lion",
-    tagline: "Regal Authority, for GCC Markets",
-    description:
-      "The Lion Sofa channels the regal authority of the king of beasts into a piece that commands any interior. Its proud, upright backrest and generous proportions make it the focal point of rooms designed for dialogue and ceremony. Particularly sought after for GCC market residences and diplomatic spaces.",
-    concept:
-      "The lion sits at the center of the pride — watchful, regal, commanding respect. The Lion Sofa captures this energy in its upright, proud backrest that rises like a mane, and its wide, generous seat that invites gathering. The armrests curve with leonine grace, strong yet fluid. In GCC palaces and diplomatic residences, this piece speaks a language of authority and hospitality that transcends cultural boundaries.",
-    interiorContext:
-      "The Lion Sofa thrives in spaces of ceremony and reception: the majlis of a Gulf residence, the diplomatic lounge of an embassy, or the principal salon of a heritage hotel. Its upright posture suits formal conversation, while its generous depth invites relaxed repose. In GCC markets, the Lion Sofa has become a signature piece for residences that blend traditional hospitality with contemporary design.",
-    priceRange: {
-      americas: [7500, 8200],
-      europe: [7500, 8200],
-      middle_east: [7100, 7800],
-      se_asia: [6500, 7100],
-    },
-    specifications: {
-      width: "W200 cm",
-      height: "H148 cm",
-      depth: "D155 cm",
-      seatHeight: "44 cm",
-      weight: "85 kg",
-      capacity: "3-seater, up to 320 kg",
-    },
-    materials: [
-      "Solid hardwood frame (FSC-certified walnut)",
-      "High-density foam with down feather wrap",
-      "Cloud Touch or Wild Touch fabric, or Leather Touch",
-      "Solid brass feet with brushed gold finish",
-    ],
-    materialOptions: [
-      {
-        type: "Cloud Touch",
-        options: [
-          "Desert Sand Bouclé",
-          "Ivory Linen",
-          "Royal Navy Velvet",
-          "Deep Burgundy Wool",
-        ],
-        colors: ["#C2B8A3", "#F0EBE0", "#1A2A5A", "#5A2A3A"],
-      },
-      {
-        type: "Wild Touch",
-        options: [
-          "Midnight Bouclé",
-          "Stone Grey Wool",
-          "Saddle Tan Linen",
-          "Charcoal Velvet",
-        ],
-        colors: ["#2A2A3A", "#7A7A7A", "#A08060", "#3A3A3A"],
-      },
-      {
-        type: "Leather Touch",
-        options: [
-          "Desert Tan Aniline",
-          "Midnight Black",
-          "Oxblood Heritage",
-          "Camel Full-grain",
-        ],
-        colors: ["#A08060", "#1A1A1A", "#6B2A2A", "#C4A67A"],
-      },
-    ],
-    faq: [
-      {
-        question: "Why is the Lion Sofa popular in GCC markets?",
-        answer:
-          "The Lion Sofa's upright, commanding posture aligns with majlis seating traditions, while its contemporary design language appeals to modern GCC residences. Its generous proportions suit the scale of Gulf architecture, and the Leather Touch options are particularly popular for their durability in warm climates.",
-      },
-      {
-        question: "What is the delivery timeframe for the Lion Sofa?",
-        answer:
-          "Made to order at our Shanghai workshop. Production takes 8–12 weeks, with free white-glove delivery worldwide. GCC deliveries typically arrive within 14–16 weeks total. Full shipping documentation and photo evidence are provided.",
-      },
-      {
-        question: "Can the Lion Sofa be configured as a sectional?",
-        answer:
-          "The Lion Sofa is available as a three-seater, two-seater, and sectional configuration. For custom layouts, our design team works directly with your interior architect to ensure precise spatial integration.",
-      },
-      {
-        question: "What warranty does the Lion Sofa carry?",
-        answer:
-          "All Fuzz Sofa pieces come with a 14-day quality guarantee from delivery. Structural warranty extends to 5 years for the frame and 2 years for upholstery under normal residential use.",
-      },
-      {
-        question: "What is the return policy?",
-        answer:
-          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
-      },
-    ],
-    relatedProducts: ["bear-sofa", "tiger-sofa", "gorilla-sofa"],
-    relatedInteriors: ["luxury-villa-interior", "boutique-hotel-lobby"],
-    metaDescription:
-      "Lion Sofa by Fuzz Sofa — a regal sculptural sofa inspired by the king of beasts. Made to order in Shanghai. Popular in GCC markets. Free white-glove delivery worldwide.",
-  },
-  {
-    slug: "tiger-sofa",
-    name: "Tiger Sofa",
-    animal: "Tiger",
-    tagline: "Bold Energy, Statement Piece",
-    description:
-      "The Tiger Sofa captures the bold, kinetic energy of a tiger mid-stride. Its dynamic, asymmetric profile and striking lines create an unmistakable statement piece that energizes any interior. For collectors and design enthusiasts who want furniture that provokes conversation.",
-    concept:
-      "A tiger in motion is all coiled energy and fluid power — every line in its body suggests imminent action. The Tiger Sofa translates this kinetic energy into furniture form. The asymmetric backrest rises and falls like a shoulder blade in motion. The seat flows from narrow to wide, suggesting forward momentum. This is furniture that refuses to be static, that makes the space around it feel alive with possibility.",
-    interiorContext:
-      "The Tiger Sofa is a natural centerpiece for contemporary art galleries, modernist apartments, and the living spaces of collectors who curate their interiors with the same intention as their art. Its dynamic profile pairs beautifully with brutalist architecture and minimalist interiors where its energy can resonate without competition.",
-    priceRange: {
-      americas: [7200, 8500],
-      europe: [7200, 8500],
-      middle_east: [6800, 8000],
-      se_asia: [6200, 7300],
-    },
-    specifications: {
-      width: "W195 cm",
-      height: "H150 cm",
-      depth: "D158 cm",
-      seatHeight: "43 cm",
-      weight: "88 kg",
-      capacity: "3-seater, up to 300 kg",
-    },
-    materials: [
-      "Solid hardwood frame (FSC-certified ash)",
-      "High-density foam with down feather wrap",
-      "Cloud Touch or Wild Touch fabric, or Leather Touch",
-      "Powder-coated steel legs with matte finish",
-    ],
-    materialOptions: [
-      {
-        type: "Cloud Touch",
-        options: [
-          "Amber Bouclé",
-          "Storm Grey Linen",
-          "Burnt Orange Velvet",
-          "Graphite Wool",
-        ],
-        colors: ["#B08040", "#7A7A80", "#C06020", "#4A4A4A"],
-      },
-      {
-        type: "Wild Touch",
-        options: [
-          "Midnight Bouclé",
-          "Stone Grey Wool",
-          "Saddle Tan Linen",
-          "Charcoal Velvet",
-        ],
-        colors: ["#2A2A3A", "#7A7A7A", "#A08060", "#3A3A3A"],
-      },
-      {
-        type: "Leather Touch",
-        options: [
-          "Russet Aniline",
-          "Obsidian Black",
-          "Saddle Brown",
-          "Olive Vegetable-tanned",
-        ],
-        colors: ["#8B4513", "#1A1A1A", "#8B6914", "#6B7A3A"],
-      },
-    ],
-    faq: [
-      {
-        question: "What makes the Tiger Sofa different from other animal-inspired sofas?",
-        answer:
-          "The Tiger Sofa is the only piece in the Fuzz Sofa collection with an asymmetric profile. Its dynamic, forward-leaning silhouette captures movement rather than repose, making it uniquely suited for interiors that prioritize energy and conversation over conventional comfort arrangements.",
-      },
-      {
-        question: "Is the asymmetric design comfortable for everyday seating?",
-        answer:
-          "Despite its unconventional silhouette, the Tiger Sofa's seat depth and cushioning are engineered for extended comfort. The varying back heights allow different seating positions — upright for conversation and reclined for relaxation.",
-      },
-      {
-        question: "How do I maintain the fabric upholstery?",
-        answer:
-          "All Fuzz Sofa fabrics are treated with stain-resistant finishes. Regular vacuuming with a soft brush attachment and prompt attention to spills will maintain appearance. We provide a care guide with every delivery and can arrange professional cleaning services.",
-      },
-      {
-        question: "Can I visit a showroom to see the Tiger Sofa in person?",
-        answer:
-          "We operate by appointment from our Shanghai workshop. For other regions, we offer virtual showroom consultations with detailed video walkthroughs. Contact us to arrange a session with our design team.",
-      },
-      {
-        question: "What is the return policy?",
-        answer:
-          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
-      },
-    ],
-    relatedProducts: ["lion-sofa", "bear-sofa", "owl-sofa"],
-    relatedInteriors: ["statement-furniture", "sculptural-furniture-trend"],
-    metaDescription:
-      "Tiger Sofa by Fuzz Sofa — a dynamic asymmetric sculptural sofa inspired by the tiger. Made to order in Shanghai with premium materials. Free white-glove delivery worldwide.",
-  },
   {
     slug: "gorilla-sofa",
     name: "Gorilla Sofa",
@@ -403,7 +117,7 @@ export const products: Product[] = [
           "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
       },
     ],
-    relatedProducts: ["bear-sofa", "lion-sofa", "tiger-sofa"],
+    relatedProducts: ["owl-sofa", "silverback-sofa", "muscle-gorilla-sofa"],
     relatedInteriors: ["luxury-villa-interior", "statement-furniture"],
     metaDescription:
       "Gorilla Sofa by Fuzz Sofa — a massive low-slung sculptural sofa inspired by the gorilla. Available in fabric or leather. Made to order in Shanghai. Free white-glove delivery worldwide.",
@@ -485,8 +199,14 @@ export const products: Product[] = [
           "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost. Full video documentation of shipping and delivery is provided for every order.",
       },
     ],
-    relatedProducts: ["bear-sofa", "tiger-sofa", "gorilla-sofa"],
+    relatedProducts: ["gorilla-sofa", "silverback-sofa", "meteorite-ring-sofa"],
     relatedInteriors: ["statement-furniture", "sculptural-furniture-trend"],
+    images: [
+      "/products/owl/snowy-white.png",
+      "/products/owl/warm-gray.png",
+      "/products/owl/rose-pink.png",
+      "/products/owl/forest-green.png",
+    ],
     metaDescription:
       "Owl Chair by Fuzz Sofa — a compact sculptural statement chair inspired by the owl. Made to order in Shanghai with premium fabric. Free white-glove delivery worldwide.",
     hiddenInRegions: ["middle_east"],
@@ -546,10 +266,15 @@ export const products: Product[] = [
           "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost.",
       },
     ],
-    relatedProducts: ["gorilla-sofa", "bear-sofa", "lion-sofa"],
+    relatedProducts: ["gorilla-sofa", "owl-sofa", "meteorite-ring-sofa"],
     relatedInteriors: ["luxury-villa-interior", "statement-furniture"],
-    metaDescription:
-      "Silverback Sofa by Fuzz Sofa — a sculptural upholstered gorilla sofa in premium fabric and velvet. Available in 4 colors. Made to order. Free white-glove delivery worldwide.",
+    images: [
+      "/products/silverback-sofa/gray.jpg",
+      "/products/silverback-sofa/beige.jpg",
+      "/products/silverback-sofa/navy.jpg",
+      "/products/silverback-sofa/charcoal.jpg",
+    ],
+    metaDescription: "The Silverback Gorilla Sofa — a sculptural upholstered gorilla sofa in premium fabric and velvet. Available in 4 colors. Made to order. Free white-glove delivery worldwide.",
   },
   {
     slug: "meteorite-ring-sofa",
@@ -594,7 +319,7 @@ export const products: Product[] = [
     images: [
       "/products/meteorite-ring-sofa/main.jpg",
       "/products/meteorite-ring-sofa/scene-2.jpg",
-      "/products/meteorite-ring-sofa/scene-3.jpg",
+      "/products/meteorite-ring-sofa/extracted.png",
     ],
     faq: [
       {
@@ -618,7 +343,7 @@ export const products: Product[] = [
           "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost.",
       },
     ],
-    relatedProducts: ["gorilla-sofa", "owl-sofa", "bear-sofa"],
+    relatedProducts: ["gorilla-sofa", "owl-sofa", "silverback-sofa"],
     relatedInteriors: ["creative-studio", "urban-apartment"],
     metaDescription:
       "Meteorite Ring Sofa by Fuzz Sofa — a cosmic ring-shaped sculptural sofa with crater-textured surface. Compact 110x80x80cm. Made to order. Free white-glove delivery worldwide.",
@@ -696,7 +421,7 @@ export const products: Product[] = [
           "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost.",
       },
     ],
-    relatedProducts: ["gorilla-sofa", "bear-sofa", "silverback-sofa"],
+    relatedProducts: ["gorilla-sofa", "silverback-sofa", "meteorite-ring-sofa"],
     relatedInteriors: ["luxury-villa-interior", "statement-furniture"],
     metaDescription:
       "Muscle Gorilla Sofa by Fuzz Sofa — a hyper-realistic sculpted gorilla sofa in premium leather. Available in 4 colors. W200xH152xD160cm. Made to order. Free white-glove delivery worldwide.",
@@ -714,12 +439,10 @@ export function getVisibleProducts(region: Region): Product[] {
 
 export function getPrice(product: Product, region: Region): number {
   const mapping: Record<string, Record<Region, number>> = {
-    "bear-sofa": { americas: 8200, europe: 8200, middle_east: 7800, se_asia: 7200 },
-    "lion-sofa": { americas: 7500, europe: 7500, middle_east: 7100, se_asia: 6500 },
-    "tiger-sofa": { americas: 7200, europe: 7200, middle_east: 6800, se_asia: 6200 },
     "gorilla-sofa": { americas: 7200, europe: 7200, middle_east: 6800, se_asia: 6200 },
     "gorilla-leather": { americas: 9800, europe: 9800, middle_east: 9200, se_asia: 8500 },
     "owl-sofa": { americas: 2800, europe: 2800, middle_east: 2650, se_asia: 2500 },
+    "silverback-sofa": { americas: 7800, europe: 7800, middle_east: 7400, se_asia: 6800 },
     "meteorite-ring-sofa": { americas: 3500, europe: 3500, middle_east: 3500, se_asia: 3500 },
     "muscle-gorilla-sofa": { americas: 9800, europe: 9800, middle_east: 9200, se_asia: 8500 },
   };

@@ -8,18 +8,19 @@ import type { TranslationKeys } from "@/lib/i18n";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 const slugToPrefix: Record<string, string> = {
-  "bear-sofa": "bearSofa",
-  "lion-sofa": "lionSofa",
-  "tiger-sofa": "tigerSofa",
   "gorilla-sofa": "gorillaSofa",
   "silverback-sofa": "silverbackSofa",
   "owl-sofa": "owlChair",
+  "meteorite-ring-sofa": "meteoriteRingSofa",
+  "muscle-gorilla-sofa": "muscleGorillaSofa",
 };
 
 const productCardImages: Record<string, string> = {
   "gorilla-sofa": "/products/gorilla-sofa/gray.jpg",
   "silverback-sofa": "/products/silverback-sofa/gray.jpg",
   "owl-sofa": "/products/owl/snowy-white.png",
+  "meteorite-ring-sofa": "/products/meteorite-ring-sofa/main.jpg",
+  "muscle-gorilla-sofa": "/products/muscle-gorilla-sofa/main.jpg",
 };
 
 export function CollectionClient() {
@@ -60,15 +61,15 @@ export function CollectionClient() {
       {/* Products Grid */}
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => (
+          {products.filter((p) => p.images && p.images.length > 0).map((product) => (
             <Link
               key={product.slug}
               href={`/${product.slug}`}
               className="group bg-[#111111] border border-[#1A1A1A] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
             >
               <div className="aspect-square bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
-                {productCardImages[product.slug] ? (
-                  <img src={productCardImages[product.slug]} alt={product.name} className="w-full h-full object-cover" />
+                {product.images && product.images.length > 0 ? (
+                  <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
                 ) : (
                   <>
                     <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"

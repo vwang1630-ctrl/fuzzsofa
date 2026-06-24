@@ -10,12 +10,11 @@ import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { AiRoomCompositeModal } from "@/components/ai-room-composite-modal";
 
 const slugToPrefix: Record<string, string> = {
-  "bear-sofa": "bearSofa",
-  "lion-sofa": "lionSofa",
-  "tiger-sofa": "tigerSofa",
   "gorilla-sofa": "gorillaSofa",
   "owl-sofa": "owlChair",
   "silverback-sofa": "silverbackSofa",
+  "meteorite-ring-sofa": "meteoriteRingSofa",
+  "muscle-gorilla-sofa": "muscleGorillaSofa",
 };
 
 const heroScenes = [
@@ -256,69 +255,7 @@ export default function HomePage() {
 
           {/* Scene cards: each product in its ideal interior setting */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {/* Bear Sofa — Luxury Villa scene */}
-            <Link
-              href="/bear-sofa"
-              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
-            >
-              <div className="aspect-square bg-gradient-to-b from-[#1A1510] via-[#12100C] to-[#0A0A0A] relative">
-                <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-700"
-                  style={{ background: "radial-gradient(ellipse at 50% 40%, #E8B4B8, transparent 60%)" }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif text-[12rem] text-[#F5F0EB]/[0.04] group-hover:text-[#E8B4B8]/[0.08] transition-all duration-700 select-none">
-                    B
-                  </span>
-                </div>
-                {/* Scene label */}
-                <div className="absolute top-5 left-5">
-                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    {t("luxuryVillas")}
-                  </span>
-                </div>
-                {/* Bottom overlay */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-transparent h-1/3" />
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("bearSofaName")}
-                </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{t("bearSofaTagline")}</p>
-                <p className="mt-3 text-sm text-[#F5F0EB]/60">$8,200</p>
-              </div>
-            </Link>
-
-            {/* Lion Sofa — Boutique Hotel scene */}
-            <Link
-              href="/lion-sofa"
-              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
-            >
-              <div className="aspect-square bg-gradient-to-b from-[#101518] via-[#0C1012] to-[#0A0A0A] relative">
-                <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-700"
-                  style={{ background: "radial-gradient(ellipse at 50% 40%, #E8B4B8, transparent 60%)" }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif text-[12rem] text-[#F5F0EB]/[0.04] group-hover:text-[#E8B4B8]/[0.08] transition-all duration-700 select-none">
-                    L
-                  </span>
-                </div>
-                <div className="absolute top-5 left-5">
-                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    {t("boutiqueHotels")}
-                  </span>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-transparent h-1/3" />
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("lionSofaName")}
-                </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{t("lionSofaTagline")}</p>
-                <p className="mt-3 text-sm text-[#F5F0EB]/60">$7,500</p>
-              </div>
-            </Link>
-
-            {/* Owl Chair — Contemporary Home scene (with real image) */}
+            {/* Gorilla Sofa — Sculptural Trend scene */}
             <Link
               href="/owl-sofa"
               className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
@@ -342,36 +279,6 @@ export default function HomePage() {
                 </h3>
                 <p className="mt-1 text-xs text-[#8A8580]">{t("owlChairTagline")}</p>
                 <p className="mt-3 text-sm text-[#F5F0EB]/60">$3,500</p>
-              </div>
-            </Link>
-
-            {/* Tiger Sofa — Statement Furniture scene */}
-            <Link
-              href="/tiger-sofa"
-              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
-            >
-              <div className="aspect-square bg-gradient-to-b from-[#151015] via-[#100C10] to-[#0A0A0A] relative">
-                <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-700"
-                  style={{ background: "radial-gradient(ellipse at 50% 40%, #E8B4B8, transparent 60%)" }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif text-[12rem] text-[#F5F0EB]/[0.04] group-hover:text-[#E8B4B8]/[0.08] transition-all duration-700 select-none">
-                    T
-                  </span>
-                </div>
-                <div className="absolute top-5 left-5">
-                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    {t("statementFurnitureScene")}
-                  </span>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-transparent h-1/3" />
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("tigerSofaName")}
-                </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{t("tigerSofaTagline")}</p>
-                <p className="mt-3 text-sm text-[#F5F0EB]/60">$7,200</p>
               </div>
             </Link>
 
@@ -443,7 +350,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
                 <div className="absolute top-5 left-5">
                   <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    Punk Concrete
+                    {t("meteoriteRingSofaTagline")}
                   </span>
                 </div>
               </div>
@@ -470,7 +377,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
                 <div className="absolute top-5 left-5">
                   <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    Primal Power
+                    {t("muscleGorillaSofaTagline")}
                   </span>
                 </div>
               </div>
