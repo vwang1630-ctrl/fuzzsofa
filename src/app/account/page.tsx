@@ -81,14 +81,14 @@ const statusLabel = (s: string, t: (key: TranslationKeys) => string): string => 
 
 const statusColor = (s: string) => {
   const m: Record<string, string> = {
-    pending: "text-[#8A8580]",
-    confirmed: "text-[#E8B4B8]",
-    processing: "text-[#E8B4B8]",
-    shipped: "text-blue-400",
-    delivered: "text-green-400",
-    cancelled: "text-red-400",
+    pending: "text-[#8A8580] border-[#8A8580]/30 bg-[#8A8580]/10",
+    confirmed: "text-[#E8B4B8] border-[#E8B4B8]/30 bg-[#E8B4B8]/10",
+    processing: "text-[#E8B4B8] border-[#E8B4B8]/30 bg-[#E8B4B8]/10",
+    shipped: "text-blue-400 border-blue-400/30 bg-blue-400/10",
+    delivered: "text-green-400 border-green-400/30 bg-green-400/10",
+    cancelled: "text-red-400 border-red-400/30 bg-red-400/10",
   };
-  return m[s] || "text-[#8A8580]";
+  return m[s] || "text-[#8A8580] border-[#8A8580]/30 bg-[#8A8580]/10";
 };
 
 const paymentStatusLabel = (s: string, t: (key: TranslationKeys) => string): string => {
@@ -445,7 +445,7 @@ export default function AccountPage() {
                           const paymentFailedTab = order.payment_status === 'failed' ? 'cancelled' as OrderTab : null;
                           setOrderTab(paymentFailedTab || statusToTab[order.status] || 'all');
                         }}
-                        className={`text-xs tracking-wider uppercase hover:opacity-80 transition-opacity ${statusColor(order.status)}`}
+                        className={`text-[11px] tracking-widest uppercase px-2.5 py-1 rounded hover:opacity-70 transition-opacity cursor-pointer border ${statusColor(order.status)}`}
                       >
                         {statusLabel(order.status, t)}
                       </button>
