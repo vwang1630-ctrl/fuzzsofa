@@ -83,7 +83,7 @@ const statusColor = (s: string) => {
   const m: Record<string, string> = {
     pending: "text-[#8A8580]",
     confirmed: "text-[#E8B4B8]",
-    processing: "text-yellow-400",
+    processing: "text-[#E8B4B8]",
     shipped: "text-blue-400",
     delivered: "text-green-400",
     cancelled: "text-red-400",
@@ -106,27 +106,27 @@ const paymentStatusLabel = (s: string, t: (key: TranslationKeys) => string): str
 const logisticsBadge = (event: string | null, t: (key: TranslationKeys) => string) => {
   if (!event) return null;
   const map: Record<string, { color: string; key: TranslationKeys }> = {
-    pre_shipping:        { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgePreShipping" },
-    packed:              { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgePreShipping" },
-    picked_up:           { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
-    warehouse_received:  { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
-    warehouse_dispatched:{ color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
-    export_declared:     { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
-    export_cleared:      { color: "bg-[#2563eb]/20 text-blue-400", key: "shippingStatusBadgeInternational" },
-    in_transit_intl:     { color: "bg-[#2563eb]/20 text-blue-400", key: "shippingStatusBadgeInternational" },
-    transit_hub:         { color: "bg-[#2563eb]/20 text-blue-400", key: "shippingStatusBadgeInternational" },
-    arrived_dest:        { color: "bg-orange-500/20 text-orange-400", key: "shippingStatusBadgeCustoms" },
-    import_declared:     { color: "bg-orange-500/20 text-orange-400", key: "shippingStatusBadgeCustoms" },
-    tax_paid:            { color: "bg-orange-500/20 text-orange-400", key: "shippingStatusBadgeCustoms" },
-    import_cleared:      { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
-    local_sorting:       { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
-    local_dispatched:    { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
-    out_for_delivery:    { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
-    delivered:           { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeDelivered" },
-    customs_hold:        { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
-    delay:               { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
-    delivery_failed:     { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
-    return_to_origin:    { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
+    shippingPreShipping:       { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgePreShipping" },
+    shippingPacked:            { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgePreShipping" },
+    shippingPickedUp:          { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
+    shippingWarehouseReceived: { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
+    shippingWarehouseDispatched:{ color: "bg-[#333] text-[#8A8580]",  key: "shippingStatusBadgeDomestic" },
+    shippingExportDeclared:    { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
+    shippingExportCleared:     { color: "bg-[#2563eb]/20 text-blue-400", key: "shippingStatusBadgeInternational" },
+    shippingInTransitIntl:     { color: "bg-[#2563eb]/20 text-blue-400", key: "shippingStatusBadgeInternational" },
+    shippingTransitHub:        { color: "bg-[#2563eb]/20 text-blue-400", key: "shippingStatusBadgeInternational" },
+    shippingArrivedDest:       { color: "bg-orange-500/20 text-orange-400", key: "shippingStatusBadgeCustoms" },
+    shippingImportDeclared:    { color: "bg-orange-500/20 text-orange-400", key: "shippingStatusBadgeCustoms" },
+    shippingTaxPaid:           { color: "bg-orange-500/20 text-orange-400", key: "shippingStatusBadgeCustoms" },
+    shippingImportCleared:     { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
+    shippingLocalSorting:      { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
+    shippingLocalDispatched:   { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
+    shippingOutForDelivery:    { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
+    shippingDelivered:         { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeDelivered" },
+    shippingCustomsHold:       { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
+    shippingDelay:             { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
+    shippingDeliveryFailed:    { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
+    shippingReturnToOrigin:    { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
   };
   const badge = map[event];
   if (!badge) return null;
@@ -154,7 +154,21 @@ export default function AccountPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [selectedOrders, setSelectedOrders] = useState<Set<string>>(new Set());
-  const [statusFilter, setStatusFilter] = useState<string>("all");
+  /* ---- Tab-based order grouping ---- */
+  type OrderTab = "pending" | "production" | "shipped" | "cancelled";
+  const [orderTab, setOrderTab] = useState<OrderTab>("pending");
+
+  const orderTabs: { key: OrderTab; labelKey: TranslationKeys; statuses: string[] }[] = [
+    { key: "pending", labelKey: "orderTabPending", statuses: ["pending"] },
+    { key: "production", labelKey: "orderTabProduction", statuses: ["confirmed", "processing"] },
+    { key: "shipped", labelKey: "orderTabShipped", statuses: ["shipped", "delivered"] },
+    { key: "cancelled", labelKey: "orderTabCancelled", statuses: ["cancelled"] },
+  ];
+
+  const tabOrders = orders.filter(o => {
+    const tab = orderTabs.find(t => t.key === orderTab);
+    return tab ? tab.statuses.includes(o.status) : false;
+  });
   const [deleting, setDeleting] = useState<string | null>(null);
 
   // Addresses
@@ -288,10 +302,16 @@ export default function AccountPage() {
     });
   };
 
-  // Filter orders
-  const filteredOrders = statusFilter === "all"
-    ? orders
-    : orders.filter(o => o.status === statusFilter);
+  // Tab-filtered orders
+  const tabFilteredOrders = orderTab === "pending"
+    ? orders.filter(o => o.status === "pending")
+    : orderTab === "production"
+    ? orders.filter(o => o.status === "confirmed" || o.status === "processing")
+    : orderTab === "shipped"
+    ? orders.filter(o => o.status === "shipped" || o.status === "delivered")
+    : orderTab === "cancelled"
+    ? orders.filter(o => o.status === "cancelled" || o.payment_status === "failed")
+    : orders;
 
   const hasSelectedPending = orders.filter(o => selectedOrders.has(o.id) && o.payment_status === "pending").length > 0;
 
@@ -334,43 +354,57 @@ export default function AccountPage() {
       {/* ==================== ORDERS TAB ==================== */}
       {tab === "orders" && (
         <div>
-          {/* Filters + Batch Actions */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex gap-3">
-              {["all", "pending", "confirmed", "processing", "shipped", "delivered", "cancelled"].map(s => (
-                <button
-                  key={s}
-                  onClick={() => setStatusFilter(s)}
-                  className={`px-3 py-1 text-xs tracking-wider uppercase border transition-all ${
-                    statusFilter === s
-                      ? "border-[#E8B4B8] text-[#E8B4B8]"
-                      : "border-[#1A1A1A] text-[#8A8580] hover:border-[#333]"
-                  }`}
-                >
-                  {s === "all" ? t("accountAll") : statusLabel(s, t)}
-                </button>
-              ))}
-            </div>
-            {hasSelectedPending && (
+          {/* Order Sub-tabs */}
+          <div className="flex gap-6 border-b border-[#1A1A1A] mb-6">
+            {([
+              { key: "pending", label: t("orderTabPending"), count: orders.filter(o => o.status === "pending").length },
+              { key: "production", label: t("orderTabProduction"), count: orders.filter(o => o.status === "confirmed" || o.status === "processing").length },
+              { key: "shipped", label: t("orderTabShipped"), count: orders.filter(o => o.status === "shipped" || o.status === "delivered").length },
+              { key: "cancelled", label: t("orderTabCancelled"), count: orders.filter(o => o.status === "cancelled" || o.payment_status === "failed").length },
+            ] as { key: OrderTab; label: string; count: number }[]).map(tab => (
+              <button
+                key={tab.key}
+                onClick={() => setOrderTab(tab.key)}
+                className={`pb-3 text-sm tracking-[0.1em] uppercase transition-colors flex items-center gap-2 ${
+                  orderTab === tab.key
+                    ? "text-[#F5F0EB] border-b-2 border-[#E8B4B8]"
+                    : "text-[#8A8580] hover:text-[#F5F0EB]"
+                }`}
+              >
+                {tab.label}
+                {tab.count > 0 && (
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                    orderTab === tab.key ? "bg-[#E8B4B8] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#8A8580]"
+                  }`}>
+                    {tab.count}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Batch Pay for pending */}
+          {orderTab === "pending" && hasSelectedPending && (
+            <div className="flex justify-end mb-4">
               <button
                 onClick={handleBatchPay}
                 className="px-4 py-2 text-xs tracking-wider uppercase border border-[#E8B4B8] text-[#E8B4B8] hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all"
               >
                 {t("accountPaySelected")} ({orders.filter(o => selectedOrders.has(o.id) && o.payment_status === "pending").length})
               </button>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Orders List */}
           {loadingOrders ? (
             <div className="flex justify-center py-20">
               <div className="w-6 h-6 border-2 border-[#333] border-t-[#E8B4B8] rounded-full animate-spin" />
             </div>
-          ) : filteredOrders.length === 0 ? (
+          ) : tabFilteredOrders.length === 0 ? (
             <div className="text-center py-20 text-[#8A8580]">{t("accountNoOrders")}</div>
           ) : (
             <div className="space-y-4">
-              {filteredOrders.map(order => (
+              {tabFilteredOrders.map(order => (
                 <div
                   key={order.id}
                   className="bg-[#111111] border border-[#1A1A1A] hover:border-[#333] transition-all"
@@ -397,11 +431,6 @@ export default function AccountPage() {
                       <span className={`text-xs tracking-wider uppercase ${statusColor(order.status)}`}>
                         {statusLabel(order.status, t)}
                       </span>
-                      {order.payment_status === "pending" && order.status !== "cancelled" && (
-                        <span className="text-xs text-yellow-500">
-                          {paymentStatusLabel(order.payment_status, t)}
-                        </span>
-                      )}
                       {/* Logistics badge */}
                       {(() => {
                         const badge = logisticsBadge(order.latest_shipping_event, t);
@@ -455,7 +484,7 @@ export default function AccountPage() {
                   </div>
 
                   {/* Actions for pending orders */}
-                  {order.payment_status === "pending" && order.status !== "cancelled" && (
+                  {order.status === "pending" && (
                     <div className="flex items-center gap-3 px-5 py-3 border-t border-[#1A1A1A]">
                       <button
                         onClick={() => handlePayOrder(order)}
@@ -473,8 +502,8 @@ export default function AccountPage() {
                     </div>
                   )}
 
-                  {/* Status info for production orders */}
-                  {order.status === "confirmed" && (
+                  {/* Status info for production orders (confirmed + processing merged) */}
+                  {(order.status === "confirmed" || order.status === "processing") && (
                     <div className="px-5 py-3 border-t border-[#1A1A1A]">
                       <p className="text-xs text-[#E8B4B8]">
                         {t("accountInProductionDesc")}
@@ -482,8 +511,8 @@ export default function AccountPage() {
                     </div>
                   )}
 
-                  {/* Status info for shipped orders */}
-                  {order.status === "shipped" && (
+                  {/* Status info for shipped/delivered orders */}
+                  {(order.status === "shipped" || order.status === "delivered") && (
                     <div className="px-5 py-3 border-t border-[#1A1A1A]">
                       <Link href={`/orders/${order.id}`} className="text-xs text-[#E8B4B8] hover:underline">
                         {t("accountViewTrackingInfo")}

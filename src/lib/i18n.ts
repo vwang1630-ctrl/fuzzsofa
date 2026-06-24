@@ -684,6 +684,11 @@ export type TranslationKeys =
   | "paymentBankName"
   | "paymentAccountNo"
   | "paymentBeneficiary"
+  | "orderTabPending"
+  | "orderTabProduction"
+  | "orderTabShipped"
+  | "orderTabCancelled"
+  | "orderPendingPayOrDelete"
   | "moreItems"
   | "shippingPreShipping"
   | "shippingPacked"
@@ -1499,6 +1504,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   zh: {
     siteTitle: "Fuzz Sofa",
@@ -2237,6 +2247,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP双清包税服务',
     shippingServiceTimeline: '预计运输时效：5-10个工作日',
     shippingServiceLostClaim: '丢件赔付保障',
+    orderTabPending: '待付款',
+    orderTabProduction: '制作中',
+    orderTabShipped: '已发货',
+    orderTabCancelled: '已取消',
+    orderPendingPayOrDelete: '支付或删除此订单',
 },
   ja: {
     siteTitle: "Fuzz Sofa",
@@ -2975,6 +2990,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   fr: {
     siteTitle: "Fuzz Sofa",
@@ -3713,6 +3733,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   de: {
     siteTitle: "Fuzz Sofa",
@@ -4451,6 +4476,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   es: {
     siteTitle: "Fuzz Sofa",
@@ -5189,6 +5219,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   it: {
     siteTitle: "Fuzz Sofa",
@@ -5927,6 +5962,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   pt: {
     siteTitle: "Fuzz Sofa",
@@ -6665,6 +6705,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   "pt-BR": {
     siteTitle: "Fuzz Sofa",
@@ -7403,6 +7448,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   ar: {
     siteTitle: "Fuzz Sofa",
@@ -8141,6 +8191,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   fa: {
     siteTitle: "Fuzz Sofa",
@@ -8879,6 +8934,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   hi: {
     siteTitle: "Fuzz Sofa",
@@ -9617,6 +9677,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
   ko: {
     siteTitle: "Fuzz Sofa",
@@ -10355,6 +10420,11 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     shippingServiceDDP: 'DDP Service — Duties & taxes included',
     shippingServiceTimeline: 'Estimated transit: 5-10 business days',
     shippingServiceLostClaim: 'Lost package compensation available',
+    orderTabPending: 'Pending Payment',
+    orderTabProduction: 'In Production',
+    orderTabShipped: 'Shipped',
+    orderTabCancelled: 'Cancelled',
+    orderPendingPayOrDelete: 'Pay or cancel this order',
 },
 };
 

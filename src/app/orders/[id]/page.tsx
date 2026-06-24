@@ -289,6 +289,7 @@ export default function OrderDetailPage() {
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [seeding, setSeeding] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const orderId = params.id as string;
 
@@ -357,6 +358,34 @@ export default function OrderDetailPage() {
     };
     sessionStorage.setItem("payExistingOrders", JSON.stringify(payData));
     router.push("/payment");
+  };
+
+  const handleDeleteOrder = async () => {
+    if (!order || !confirm(t("accountDeleteConfirm"))) return;
+    setDeleting(true);
+    try {
+      let sessionToken: string | null = null;
+      try {
+        const supabase = await getSupabaseBrowserClientWithRetry();
+        const { data: { session } } = await supabase.auth.getSession();
+        sessionToken = session?.access_token ?? null;
+      } catch { /* ignore */ }
+
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (sessionToken) headers["x-session"] = sessionToken;
+
+      const res = await fetch("/api/orders", {
+        method: "DELETE",
+        headers,
+        body: JSON.stringify({ orderIds: [order.id] }),
+      });
+      if (!res.ok) throw new Error("Failed to delete order");
+      router.push("/account");
+    } catch (err) {
+      console.error("Delete order error:", err);
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const handleSeedDemo = async () => {
@@ -521,6 +550,12 @@ export default function OrderDetailPage() {
                   className="px-5 py-2 text-xs tracking-wider uppercase border border-[#E8B4B8] text-[#E8B4B8] hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all"
                 >
                   {t("accountPayNow")}
+                </button>
+                <button
+                  onClick={handleDeleteOrder}
+                  className="px-5 py-2 text-xs tracking-wider uppercase border border-[#333] text-[#8A8580] hover:text-red-400 hover:border-red-400/50 transition-all"
+                >
+                  {t("accountDelete")}
                 </button>
                 <Link
                   href="/account"
@@ -724,12 +759,11 @@ function SimpleTimeline({ status, t }: { status: string; t: (key: TranslationKey
   const steps = [
     { key: "pending", labelKey: "timelineOrderPlaced" as TranslationKeys, descKey: "timelineDescWaitingPayment" as TranslationKeys },
     { key: "confirmed", labelKey: "timelineInProduction" as TranslationKeys, descKey: "timelineDescCrafting" as TranslationKeys },
-    { key: "processing", labelKey: "timelinePacking" as TranslationKeys, descKey: "timelineDescPacking" as TranslationKeys },
     { key: "shipped", labelKey: "timelineShipped" as TranslationKeys, descKey: "timelineDescShipped" as TranslationKeys },
     { key: "delivered", labelKey: "timelineDelivered" as TranslationKeys, descKey: "timelineDescDelivered" as TranslationKeys },
   ];
 
-  const currentIdx = steps.findIndex(s => s.key === status);
+  const currentIdx = steps.findIndex(s => s.key === status || (s.key === "confirmed" && status === "processing"));
   const isCancelled = status === "cancelled";
 
   return (
