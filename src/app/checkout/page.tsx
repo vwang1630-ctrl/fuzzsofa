@@ -32,7 +32,7 @@ const slugToImage: Record<string, string> = {
 };
 
 type ShippingMethod = "standard" | "express";
-type PaymentMethod = "alipay" | "wechat" | "bankcard";
+type PaymentMethod = "creditcard" | "paypal" | "applepay" | "banktransfer";
 
 interface AddressForm {
   recipientName: string;
@@ -50,7 +50,7 @@ export default function CheckoutPage() {
   const router = useRouter();
 
   const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("standard");
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("alipay");
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("creditcard");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<AddressForm>({
@@ -304,11 +304,12 @@ export default function CheckoutPage() {
               <h2 className="font-serif text-xl font-light text-[#F5F0EB] mb-6 tracking-wide">
                 {t("checkoutPaymentMethod")}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {([
-                  { key: "alipay" as PaymentMethod, label: t("checkoutAlipay"), icon: "A" },
-                  { key: "wechat" as PaymentMethod, label: t("checkoutWechatPay"), icon: "W" },
-                  { key: "bankcard" as PaymentMethod, label: t("checkoutBankCard"), icon: "B" },
+                  { key: "creditcard" as PaymentMethod, label: t("checkoutCreditCard"), icon: "💳" },
+                  { key: "paypal" as PaymentMethod, label: t("checkoutPayPal"), icon: "P" },
+                  { key: "applepay" as PaymentMethod, label: t("checkoutApplePay"), icon: "Apple" },
+                  { key: "banktransfer" as PaymentMethod, label: t("checkoutBankTransfer"), icon: "↔" },
                 ]).map((pm) => (
                   <button
                     key={pm.key}
