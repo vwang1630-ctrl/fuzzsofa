@@ -18,18 +18,8 @@ const slugToPrefix: Record<string, string> = {
 };
 
 const heroScenes = [
-  {
-    bg: "/hero-scene-1.jpg",
-    product: "/hero-gorilla-cutout.png",
-    alt: "Gorilla sofa in luxury penthouse interior",
-    productClass: "bottom-[5%] left-1/2 -translate-x-1/2 w-[55%] md:w-[45%] lg:w-[38%]",
-  },
-  {
-    bg: "/hero-scene-2.jpg",
-    product: "/hero-owl-cutout.png",
-    alt: "Owl chair in elegant night interior",
-    productClass: "bottom-[5%] left-1/2 -translate-x-1/2 w-[45%] md:w-[35%] lg:w-[30%]",
-  },
+  { src: "/hero-scene-1.jpg", alt: "Gorilla sofa in luxury penthouse interior" },
+  { src: "/hero-scene-2.jpg", alt: "Owl chair in elegant night interior" },
 ];
 
 function HeroSlideshow() {
@@ -38,33 +28,21 @@ function HeroSlideshow() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % heroScenes.length);
-    }, 6000);
+    }, 8000);
     return () => clearInterval(timer);
   }, []);
 
   return (
     <div className="absolute inset-0">
       {heroScenes.map((scene, idx) => (
-        <div
-          key={scene.bg}
-          className={`absolute inset-0 transition-opacity duration-[2000ms] ${
+        <img
+          key={scene.src}
+          src={scene.src}
+          alt={scene.alt}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${
             idx === current ? "opacity-100" : "opacity-0"
           }`}
-        >
-          {/* Scene background — never changes */}
-          <img
-            src={scene.bg}
-            alt={scene.alt}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          {/* Real product overlay — CSS composited */}
-          <img
-            src={scene.product}
-            alt={scene.alt}
-            className={`absolute ${scene.productClass} object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.5)]`}
-            style={{ mixBlendMode: "lighten" }}
-          />
-        </div>
+        />
       ))}
     </div>
   );
