@@ -78,12 +78,18 @@ export function ScenePageContent({
                 className="group bg-[#111111] border border-[#1A1A1A] p-6 hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="aspect-[4/3] mb-4 bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"
-                    style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
-                  />
-                  <span className="font-serif text-6xl text-[#F5F0EB]/[0.06] group-hover:text-[#E8B4B8]/15 transition-colors duration-500">
-                    {product.animal.charAt(0)}
-                  </span>
+                  {product.slug === "owl-sofa" ? (
+                    <img src="/products/owl/snowy-white.png" alt={product.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"
+                        style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
+                      />
+                      <span className="font-serif text-6xl text-[#F5F0EB]/[0.06] group-hover:text-[#E8B4B8]/15 transition-colors duration-500">
+                        {product.animal.charAt(0)}
+                      </span>
+                    </>
+                  )}
                 </div>
                 <h3 className="font-serif text-lg text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors">
                   {slugToPrefix[product.slug] ? t(`${slugToPrefix[product.slug]}Name` as TranslationKeys) : product.name}

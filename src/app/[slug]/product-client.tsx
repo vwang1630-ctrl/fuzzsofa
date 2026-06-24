@@ -84,12 +84,26 @@ export function ProductPageClient({ product }: Props) {
     { value: "se_asia", label: "SE Asia (USD)" },
   ];
 
-  const galleryImages = [
-    { label: `${product.name} — Full View`, id: 0 },
-    { label: `${product.name} — Detail`, id: 1 },
-    { label: `${product.name} — In Context`, id: 2 },
-    { label: `${product.name} — Side Profile`, id: 3 },
-  ];
+  const productImages: Record<string, string[]> = {
+    "owl-sofa": [
+      "/products/owl/snowy-white.png",
+      "/products/owl/rose-pink.png",
+      "/products/owl/forest-green.png",
+      "/products/owl/warm-gray.png",
+      "/products/owl/interior-context.png",
+    ],
+  };
+
+  const images = productImages[product.slug] || [];
+
+  const galleryImages = images.length > 0
+    ? images.map((src, i) => ({ label: `${product.name} — View ${i + 1}`, id: i, src }))
+    : [
+        { label: `${product.name} — Full View`, id: 0, src: "" },
+        { label: `${product.name} — Detail`, id: 1, src: "" },
+        { label: `${product.name} — In Context`, id: 2, src: "" },
+        { label: `${product.name} — Side Profile`, id: 3, src: "" },
+      ];
 
   return (
     <>
@@ -147,15 +161,25 @@ export function ProductPageClient({ product }: Props) {
         <div className="max-w-[1100px] mx-auto px-6 py-16">
           <figure>
             <div className="aspect-square bg-gradient-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden">
-              <div
-                className="absolute inset-0 opacity-[0.04]"
-                style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-serif text-[15rem] md:text-[25rem] text-[#F5F0EB]/[0.04] select-none">
-                  {product.animal.charAt(0)}
-                </span>
-              </div>
+              {galleryImages[activeImage]?.src ? (
+                <img
+                  src={galleryImages[activeImage].src}
+                  alt={galleryImages[activeImage].label}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <>
+                  <div
+                    className="absolute inset-0 opacity-[0.04]"
+                    style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="font-serif text-[15rem] md:text-[25rem] text-[#F5F0EB]/[0.04] select-none">
+                      {product.animal.charAt(0)}
+                    </span>
+                  </div>
+                </>
+              )}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-transparent h-1/3" />
             </div>
             <figcaption className="sr-only">
@@ -167,16 +191,20 @@ export function ProductPageClient({ product }: Props) {
               <button
                 key={img.id}
                 onClick={() => setActiveImage(img.id)}
-                className={`w-[60px] h-[60px] border transition-all duration-300 bg-gradient-to-b from-[#111111] to-[#0A0A0A] flex items-center justify-center ${
+                className={`w-[60px] h-[60px] border transition-all duration-300 bg-gradient-to-b from-[#111111] to-[#0A0A0A] flex items-center justify-center overflow-hidden ${
                   activeImage === img.id
                     ? "border-[#E8B4B8]"
                     : "border-[#1A1A1A] hover:border-[#E8B4B8]"
                 }`}
                 aria-label={img.label}
               >
-                <span className="font-serif text-xl text-[#F5F0EB]/20">
-                  {product.animal.charAt(0)}
-                </span>
+                {img.src ? (
+                  <img src={img.src} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="font-serif text-xl text-[#F5F0EB]/20">
+                    {product.animal.charAt(0)}
+                  </span>
+                )}
               </button>
             ))}
           </div>

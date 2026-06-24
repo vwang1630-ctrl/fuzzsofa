@@ -82,14 +82,20 @@ export default function HomePage() {
               >
                 <div className="aspect-[3/4] mb-4 flex items-center justify-center">
                   <div className="w-full h-full bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500"
-                      style={{
-                        background: `radial-gradient(ellipse at center, #E8B4B8 0%, transparent 70%)`,
-                      }}
-                    />
-                    <span className="font-serif text-5xl md:text-4xl lg:text-3xl text-[#F5F0EB]/10 group-hover:text-[#E8B4B8]/20 transition-colors duration-500">
-                      {product.animal.charAt(0)}
-                    </span>
+                    {product.slug === "owl-sofa" ? (
+                      <img src="/products/owl/snowy-white.png" alt={product.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+                          style={{
+                            background: `radial-gradient(ellipse at center, #E8B4B8 0%, transparent 70%)`,
+                          }}
+                        />
+                        <span className="font-serif text-5xl md:text-4xl lg:text-3xl text-[#F5F0EB]/10 group-hover:text-[#E8B4B8]/20 transition-colors duration-500">
+                          {product.animal.charAt(0)}
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
                 <h3 className="font-serif text-lg text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">

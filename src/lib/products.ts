@@ -430,42 +430,48 @@ export const products: Product[] = [
     interiorContext:
       "The Owl Chair's compact footprint makes it the most versatile piece in the collection. It excels in home libraries and reading nooks, bedroom seating areas, hotel room corners, and as accent seating in living rooms alongside larger Fuzz Sofa pieces. Its verticality makes it ideal for spaces where floor area is limited but vertical presence is welcome.",
     priceRange: {
-      americas: [2500, 2800],
-      europe: [2500, 2800],
-      middle_east: [2650, 2800],
-      se_asia: [2500, 2800],
+      americas: [3500, 3500],
+      europe: [3500, 3500],
+      middle_east: [3500, 3500],
+      se_asia: [3500, 3500],
     },
     specifications: {
       width: "W86 cm",
       height: "H76 cm",
       depth: "D82 cm",
       seatHeight: "44 cm",
-      weight: "60 kg",
+      weight: "60 kg (50 kg + frame 10 kg)",
       capacity: "1-seater, up to 150 kg",
     },
     materials: [
       "Solid hardwood frame (FSC-certified walnut)",
       "High-density foam with down feather wrap",
-      "Cloud Touch fabric upholstery",
+      "Cloud Touch & Wild Touch fabric upholstery",
       "Solid brass feet with brushed finish",
     ],
     materialOptions: [
       {
         type: "Cloud Touch",
         options: [
-          "Ivory Bouclé",
-          "Sage Green Velvet",
-          "Dusty Rose Wool",
-          "Navy Linen Blend",
+          "Snowy White Bouclé",
+          "Rose Pink Velvet",
         ],
-        colors: ["#F0EBE0", "#7A9A7A", "#C4A0A0", "#2A3A5A"],
+        colors: ["#F0EBE0", "#E8B4B8"],
+      },
+      {
+        type: "Wild Touch",
+        options: [
+          "Forest Green Velvet",
+          "Warm Gray Linen",
+        ],
+        colors: ["#5A7A5A", "#8A8580"],
       },
     ],
     faq: [
       {
         question: "Is the Owl Chair available in leather?",
         answer:
-          "Currently, the Owl Chair is offered exclusively in Cloud Touch fabric upholstery. The curved backrest and wing-like proportions are best expressed in fabric, which drapes naturally over the organic form. Leather options may be available for bespoke orders — contact our design team to discuss.",
+          "The Owl Chair is available in two fabric lines: Cloud Touch (Snowy White Bouclé, Rose Pink Velvet) and Wild Touch (Forest Green Velvet, Warm Gray Linen) — four colors in total. The curved backrest and wing-like proportions are best expressed in fabric, which drapes naturally over the organic form. Leather options may be available for bespoke orders — contact our design team to discuss.",
       },
       {
         question: "Can the Owl Chair be used as a dining chair?",

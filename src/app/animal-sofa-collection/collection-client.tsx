@@ -60,12 +60,18 @@ export function CollectionClient() {
               className="group bg-[#111111] border border-[#1A1A1A] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
             >
               <div className="aspect-[4/3] bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"
-                  style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
-                />
-                <span className="font-serif text-8xl text-[#F5F0EB]/[0.06] group-hover:text-[#E8B4B8]/15 transition-colors duration-500">
-                  {product.animal.charAt(0)}
-                </span>
+                {product.slug === "owl-sofa" ? (
+                  <img src="/products/owl/snowy-white.png" alt={product.name} className="w-full h-full object-cover" />
+                ) : (
+                  <>
+                    <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"
+                      style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
+                    />
+                    <span className="font-serif text-8xl text-[#F5F0EB]/[0.06] group-hover:text-[#E8B4B8]/15 transition-colors duration-500">
+                      {product.animal.charAt(0)}
+                    </span>
+                  </>
+                )}
               </div>
               <div className="p-6">
                 <p className="text-xs text-[#E8B4B8]/50 tracking-[0.1em] uppercase mb-1">
