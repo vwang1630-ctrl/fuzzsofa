@@ -290,6 +290,8 @@ export default function OrderDetailPage() {
   const [seeding, setSeeding] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
+  const [authChecked, setAuthChecked] = useState(false);
+
   const orderId = params.id as string;
 
   const fetchOrder = useCallback(async () => {
@@ -299,7 +301,8 @@ export default function OrderDetailPage() {
         const supabase = await getSupabaseBrowserClientWithRetry();
         const { data: { session } } = await supabase.auth.getSession();
         sessionToken = session?.access_token ?? null;
-      } catch { /* not logged in */ }
+        setAuthChecked(true);
+      } catch { setAuthChecked(true); /* not logged in */ }
 
       const headers: Record<string, string> = {};
       if (sessionToken) headers["x-session"] = sessionToken;
@@ -462,8 +465,22 @@ export default function OrderDetailPage() {
   if (!order) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
-        <p className="text-[#8A8580]">{t("orderNotFound")}</p>
-        <Link href="/account" className="text-[#E8B4B8] hover:underline text-sm">{t("backToMyOrders")}</Link>
+        {!authChecked ? (
+          <>
+            <p className="text-[#8A8580]">{t("orderLoading")}</p>
+            <div className="w-5 h-5 border-2 border-[#333] border-t-[#E8B4B8] rounded-full animate-spin" />
+          </>
+        ) : (
+          <>
+            <p className="text-[#8A8580]">{t("orderNotFound")}</p>
+            <div className="flex gap-4">
+              <Link href="/login" className="px-6 py-2 border border-[#F5F0EB] text-[#F5F0EB] text-sm uppercase tracking-wider hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300">
+                {t("login")}
+              </Link>
+              <Link href="/account" className="text-[#E8B4B8] hover:underline text-sm">{t("backToMyOrders")}</Link>
+            </div>
+          </>
+        )}
       </div>
     );
   }
