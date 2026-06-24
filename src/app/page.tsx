@@ -63,35 +63,43 @@ export default function HomePage() {
       />
 
       {/* HERO: Immersive Scene Banner */}
-      <section className="relative w-full flex items-start justify-center overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
-        {/* Background: AI-generated luxury interior scene */}
+      <section className="relative w-full flex items-end overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
+        {/* Background: cinematic luxury interior scene */}
         <HeroSlideshow />
 
-        {/* Dark overlay — only top portion for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/15 to-[#0A0A0A]/70" />
+        {/* Subtle left-side vignette for text readability — preserves the scene atmosphere */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/65 via-[#0A0A0A]/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/40 via-transparent to-[#0A0A0A]/20" />
 
-        {/* Hero content — top area, leaving product visible below */}
-        <div className="relative z-10 text-center px-6 pt-[8%] max-w-4xl">
-          <p className="text-xs text-[#E8B4B8] tracking-[0.25em] uppercase mb-6 animate-fade-in">
+        {/* Hero content — left-aligned, vertically centered in the dark bookshelf area */}
+        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[8%] pt-[15%] flex flex-col justify-center">
+          {/* Tag line */}
+          <p className="text-[10px] md:text-xs text-[#E8B4B8] tracking-[0.3em] uppercase mb-4 md:mb-6 animate-fade-in" style={{ fontFamily: 'var(--font-serif)' }}>
             {t("heroSubtitle")}
           </p>
-          <p className="mt-5 text-sm md:text-base font-light text-[#F5F0EB]/50 max-w-xl mx-auto leading-[1.7] animate-fade-in-delay-2">
+
+          {/* Description */}
+          <p className="text-sm md:text-base lg:text-lg font-light text-[#F5F0EB]/60 max-w-[440px] leading-[1.75] animate-fade-in-delay-2">
             {t("heroDescription")}
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-delay-3">
+
+          {/* Single CTA — gallery-style: one clear action */}
+          <div className="mt-6 md:mt-8 animate-fade-in-delay-3">
             <Link
               href="/animal-sofa-collection"
-              className="inline-flex items-center px-8 py-3 border border-[#F5F0EB] text-[#F5F0EB] text-xs tracking-[0.15em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
+              className="inline-flex items-center gap-3 px-7 py-3 border border-[#F5F0EB]/80 text-[#F5F0EB] text-xs tracking-[0.18em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 group"
             >
               {t("exploreCollection")}
-            </Link>
-            <Link
-              href="/luxury-villa-interior"
-              className="inline-flex items-center px-8 py-3 border border-[#333] text-[#F5F0EB]/50 text-xs tracking-[0.15em] uppercase hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
-            >
-              {t("viewInteriors")}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </Link>
           </div>
+        </div>
+
+        {/* Scroll hint */}
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 opacity-40 animate-fade-in-delay-3">
+          <div className="w-px h-6 bg-gradient-to-b from-transparent to-[#F5F0EB]" />
         </div>
       </section>
 
