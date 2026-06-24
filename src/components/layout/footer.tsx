@@ -67,12 +67,12 @@ export function Footer() {
         <div>
           <h4 className="text-xs font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("support")}</h4>
           <ul className="space-y-3">
-            <li><a href="mailto:hello@fuzzsofa.com" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</a></li>
-            <li><a href="mailto:support@fuzzsofa.com" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("shipping")}</a></li>
-            <li><a href="mailto:warranty@fuzzsofa.com" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("returns")}</a></li>
-            <li><a href="mailto:trade@fuzzsofa.com" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("trade")}</a></li>
-            <li><a href="mailto:privacy@fuzzsofa.com" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("privacy")}</a></li>
-            <li><a href="mailto:warranty@fuzzsofa.com" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("warranty")}</a></li>
+            <li><Link href="/contact" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link></li>
+            <li><Link href="/shipping" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("shipping")}</Link></li>
+            <li><Link href="/returns" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("returns")}</Link></li>
+            <li><Link href="/trade" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("trade")}</Link></li>
+            <li><Link href="/privacy" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("privacy")}</Link></li>
+            <li><Link href="/warranty" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("warranty")}</Link></li>
           </ul>
         </div>
       </div>
