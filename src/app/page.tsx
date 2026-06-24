@@ -27,7 +27,7 @@ const heroScenes = [
       title: "heroTitle" as const,
       description: "heroDescription" as const,
       cta: "exploreCollection" as const,
-      aiCta: "hero2AiCta" as const,
+      aiCta: "aiRoomTitle" as const,
       href: "/gorilla-sofa",
     },
     overlay: "from-[#0A0A0A]/70 via-[#0A0A0A]/25 to-transparent",
@@ -43,7 +43,7 @@ const heroScenes = [
       title: "hero2Title" as const,
       description: "hero2Description" as const,
       cta: "hero2Cta" as const,
-      aiCta: "hero2AiCta" as const,
+      aiCta: "aiRoomTitle" as const,
       href: "/owl-sofa",
     },
     overlay: "from-[#0A0A0A]/85 via-[#0A0A0A]/40 to-transparent",
@@ -126,7 +126,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
         {/* Hero content — editorial gallery layout */}
-        <div className={`relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[12%] flex flex-col justify-end md:justify-center ${sceneConfig.compact ? 'max-w-[560px]' : ''}`}>
+        <div className={`relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[8%] flex flex-col justify-end md:justify-start ${sceneConfig.compact ? 'max-w-[560px]' : ''}`}>
 
           {/* Category label — accent, uppercase, wide tracking */}
           <p
@@ -152,8 +152,8 @@ export default function HomePage() {
             {t(sceneConfig.keys.description)}
           </p>
 
-          {/* CTA buttons */}
-          <div className="mt-6 md:mt-7 animate-fade-in-delay-3 flex flex-wrap items-center gap-4">
+          {/* CTA buttons — stacked vertically */}
+          <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
             {/* Primary CTA — editorial style, hover fills with accent */}
             <Link
               href={sceneConfig.keys.href}
@@ -185,38 +185,36 @@ export default function HomePage() {
               </span>
             </Link>
 
-            {/* AI Room Composite CTA — neon icon style */}
-            {sceneConfig.keys.aiCta && (
-              <button
-                onClick={() => {
-                  const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
-                  window.dispatchEvent(event);
-                }}
-                className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[11px] tracking-[0.2em] uppercase transition-all duration-300"
-                style={{
-                  borderColor: sceneConfig.accentColor + '50',
-                  color: sceneConfig.accentColor + 'CC',
-                  backgroundColor: sceneConfig.accentColor + '0A',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18';
-                  e.currentTarget.style.borderColor = sceneConfig.accentColor + '80';
-                  e.currentTarget.style.color = sceneConfig.accentColor;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A';
-                  e.currentTarget.style.borderColor = sceneConfig.accentColor + '50';
-                  e.currentTarget.style.color = sceneConfig.accentColor + 'CC';
-                }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
-                {t(sceneConfig.keys.aiCta as TranslationKeys)}
-              </button>
-            )}
+            {/* AI Room Composite CTA — below primary CTA */}
+            <button
+              onClick={() => {
+                const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
+                window.dispatchEvent(event);
+              }}
+              className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[11px] tracking-[0.2em] uppercase transition-all duration-300"
+              style={{
+                borderColor: sceneConfig.accentColor + '50',
+                color: sceneConfig.accentColor + 'CC',
+                backgroundColor: sceneConfig.accentColor + '0A',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18';
+                e.currentTarget.style.borderColor = sceneConfig.accentColor + '80';
+                e.currentTarget.style.color = sceneConfig.accentColor;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A';
+                e.currentTarget.style.borderColor = sceneConfig.accentColor + '50';
+                e.currentTarget.style.color = sceneConfig.accentColor + 'CC';
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+              {t(sceneConfig.keys.aiCta as TranslationKeys)}
+            </button>
           </div>
         </div>
 
