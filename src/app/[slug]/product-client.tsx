@@ -209,18 +209,25 @@ export function ProductPageClient({ product }: Props) {
         <div className="max-w-[1100px] mx-auto px-6 py-16">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-6">{t("inYourSpace")}</h2>
           <p className="text-[#F5F0EB]/70 leading-[1.7] text-base max-w-[700px] mb-8">
-            {product.interiorContext}
+            {t(`${prefix}Interior` as TranslationKeys)}
           </p>
           <div className="flex flex-wrap gap-3">
-            {product.relatedInteriors.map((interior) => (
+            {product.relatedInteriors.map((interior) => {
+              const sceneKeyMap: Record<string, TranslationKeys> = {
+                "luxury-villa-interior": "luxuryVillaScene",
+                "boutique-hotel-lobby": "boutiqueHotelScene",
+                "statement-furniture": "statementFurnitureScene",
+                "sculptural-furniture-trend": "sculpturalTrendScene",
+              };
+              return (
               <Link
                 key={interior}
                 href={`/${interior}`}
                 className="text-xs tracking-[0.1em] uppercase border border-[#333] px-4 py-2 text-[#F5F0EB]/50 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
               >
-                {interior.replace(/-/g, " ")}
+                {sceneKeyMap[interior] ? t(sceneKeyMap[interior]) : interior.replace(/-/g, " ")}
               </Link>
-            ))}
+            );})}
           </div>
         </div>
       </section>

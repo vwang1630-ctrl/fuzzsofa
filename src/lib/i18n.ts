@@ -295,7 +295,16 @@ export type TranslationKeys =
   | "americasLabel"
   | "europeLabel"
   | "middleEastLabel"
-  | "seAsiaLabel";
+  | "seAsiaLabel"
+  | "bearSofaInterior"
+  | "lionSofaInterior"
+  | "tigerSofaInterior"
+  | "gorillaSofaInterior"
+  | "owlChairInterior"
+  | "luxuryVillaScene"
+  | "boutiqueHotelScene"
+  | "statementFurnitureScene"
+  | "sculpturalTrendScene";
 
 export const translations: Record<Locale, Record<TranslationKeys, string>> = {
   en: {
@@ -574,6 +583,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "Europe (EUR)",
     middleEastLabel: "Middle East (USD)",
     seAsiaLabel: "Southeast Asia (USD)",
+    bearSofaInterior: "The Bear Sofa belongs in spaces that demand gravitas: grand foyers of luxury villas, the principal lounge of boutique hotels, or the living room of a collector's penthouse. Its commanding scale requires generous ceiling height and visual breathing room, where it becomes the gravitational center of the interior.",
+    lionSofaInterior: "The Lion Sofa thrives in spaces of ceremony and reception: the majlis of a Gulf residence, the diplomatic lounge of an embassy, or the principal salon of a heritage hotel. Its upright posture suits formal conversation, while its generous depth invites relaxed repose. In GCC markets, the Lion Sofa has become a signature piece for residences that blend traditional hospitality with contemporary design.",
+    tigerSofaInterior: "The Tiger Sofa is a natural centerpiece for contemporary art galleries, modernist apartments, and the living spaces of collectors who curate their interiors with the same intention as their art. Its dynamic profile pairs beautifully with brutalist architecture and minimalist interiors where its energy can resonate without competition.",
+    gorillaSofaInterior: "The Gorilla Sofa demands generous floor space and suits interiors that celebrate materiality and bold gestures. It excels in loft apartments with exposed concrete, contemporary villas with double-height spaces, and hotel lobbies where it serves as a gathering anchor. Its low profile makes it ideal for rooms with dramatic views, where it won't compete with the landscape.",
+    owlChairInterior: "The Owl Chair's compact footprint makes it the most versatile piece in the collection. It excels in home libraries and reading nooks, bedroom seating areas, hotel room corners, and as accent seating in living rooms alongside larger Fuzz Sofa pieces. Its verticality makes it ideal for spaces where floor area is limited but vertical presence is welcome.",
+    luxuryVillaScene: "Luxury Villa Interior",
+    boutiqueHotelScene: "Boutique Hotel Lobby",
+    statementFurnitureScene: "Statement Furniture",
+    sculpturalTrendScene: "Sculptural Furniture Trend",
 },
   zh: {
     siteTitle: "Fuzz Sofa",
@@ -851,6 +869,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "欧洲 (欧元)",
     middleEastLabel: "中东 (美元)",
     seAsiaLabel: "东南亚 (美元)",
+    bearSofaInterior: "熊沙发属于需要庄重感的空间：豪华别墅的大厅、精品酒店的主休息室，或收藏家的顶层公寓客厅。其宏伟的尺度需要充足的层高和视觉呼吸空间，在那里它成为室内的引力中心。",
+    lionSofaInterior: "狮沙发在仪式和接待空间中如鱼得水：海湾住宅的议事厅、大使馆的外交休息室、或传统酒店的主沙龙。其挺拔的姿态适合正式交谈，而宽大的深度则让人放松倚靠。在海湾市场，狮沙发已成为融合传统好客与现代设计的住宅标志性家具。",
+    tigerSofaInterior: "虎沙发是当代艺术画廊、现代主义公寓和以策展艺术同样方式策展室内的收藏家起居空间的天然中心。其动态轮廓与粗野主义建筑和极简室内设计绝配，在那里它的能量可以无竞争地共鸣。",
+    gorillaSofaInterior: "猩猩沙发需要宽敞的地面空间，适合赞美材质和大胆表达的室内设计。它在裸露混凝土的阁楼公寓、双层空间的当代别墅和作为聚集锚点的酒店大堂中表现出色。低矮轮廓使其在视野壮观的房间中表现理想，不会与景色争锋。",
+    owlChairInterior: "猫头鹰椅紧凑的占地使其成为系列中最百搭的单品。它在家中书库和阅读角、卧室座椅区、酒店房间角落以及作为客厅中大型Fuzz Sofa旁的点缀座椅中表现出色。其垂直特征使它成为地面有限但欢迎垂直存在的空间理想选择。",
+    luxuryVillaScene: "豪华别墅室内",
+    boutiqueHotelScene: "精品酒店大堂",
+    statementFurnitureScene: "标志性家具",
+    sculpturalTrendScene: "雕塑家具潮流",
 },
   ja: {
     siteTitle: "Fuzz Sofa",
@@ -1128,6 +1155,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "ヨーロッパ (EUR)",
     middleEastLabel: "中東 (USD)",
     seAsiaLabel: "東南アジア (USD)",
+    bearSofaInterior: "ベアソファは重厚感を求める空間に属します：ラグジュアリーヴィラのグランドフォイヤー、ブティックホテルのメインラウンジ、コレクターのペントハウスのリビング。その威圧的なスケールには十分な天井の高さと視覚的な余白が必要で、インテリアの引力の中心となります。",
+    lionSofaInterior: "ライオンソファは儀礼と接客の空間で生き生きとします：湾岸住宅のマジュリス、大使館の外交ラウンジ、ヘリテージホテルのメインサロン。直立した姿勢はフォーマルな会話に適し、厚みのある座面はリラックスした休息を誘います。GCC市場では、伝統的なおもてなしと現代デザインを融合させる住居の象徴的なピースとなっています。",
+    tigerSofaInterior: "タイガーソファは現代アートギャラリー、モダニストアパート、アートと同じ意図でインテリアをキュレーションするコレクターのリビングに自然なセンター的存在です。そのダイナミックなシルエットはブルータリズム建築やミニマルインテリアと美しく調和し、そのエネルギーが競合なく響き渡ります。",
+    gorillaSofaInterior: "ゴリラソファは十分な床面積を必要とし、素材性と大胆なジェスチャーを讃えるインテリアに適しています。むき出しコンクリートのロフトアパート、ダブルハイトの現代ヴィラ、集いのアンカーとなるホテルロビーで卓越します。低いプロファイルはドラマチックな眺望のある部屋に理想的で、景色と競合しません。",
+    owlChairInterior: "アウルチェアのコンパクトなフットプリントはコレクションで最も多用途なピースにしています。ホームライブラリや読書スペース、ベッドルームのシーティングエリア、ホテルルームのコーナー、大きめのFuzz Sofaに添うアクセントシーティングとして優れています。その垂直性は床面積が限られているが垂直の存在感が歓迎される空間に理想的です。",
+    luxuryVillaScene: "ラグジュアリーヴィラインテリア",
+    boutiqueHotelScene: "ブティックホテルロビー",
+    statementFurnitureScene: "ステートメントファニチャー",
+    sculpturalTrendScene: "スカルプチュラルファニチャートレンド",
 },
   fr: {
     siteTitle: "Fuzz Sofa",
@@ -1405,6 +1441,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "Europe (EUR)",
     middleEastLabel: "Moyen-Orient (USD)",
     seAsiaLabel: "Asie du Sud-Est (USD)",
+    bearSofaInterior: "Le Bear Sofa trouve sa place dans les espaces qui exigent de la gravité : les grands foyers des villas de luxe, le salon principal des hôtels boutique, ou le séjour d'un penthouse de collectionneur. Son échelle imposante nécessite une hauteur sous plafond généreuse et de l'espace visuel, où il devient le centre gravitationnel de l'intérieur.",
+    lionSofaInterior: "Le Lion Sofa s'épanouit dans les espaces de cérémonie et de réception : le majlis d'une résidence du Golfe, le salon diplomatique d'une ambassade, ou le salon principal d'un hôtel de patrimoine. Sa posture droite convient aux conversations formelles, tandis que sa profondeur généreuse invite au repos détendu. Sur les marchés du CCG, le Lion Sofa est devenu une pièce signature pour les résidences alliant hospitalité traditionnelle et design contemporain.",
+    tigerSofaInterior: "Le Tiger Sofa est une pièce centrale naturelle pour les galeries d'art contemporain, les appartements modernistes et les espaces de vie des collectionneurs qui organisent leurs intérieurs avec la même intention que leur art. Son profil dynamique s'associe magnifiquement avec l'architecture brutaliste et les intérieurs minimalistes où son énergie peut résonner sans concurrence.",
+    gorillaSofaInterior: "Le Gorilla Sofa exige un espace au sol généreux et convient aux intérieurs qui célèbrent la matérialité et les gestes audacieux. Il excelle dans les appartements loft en béton apparent, les villas contemporaines à double hauteur et les halls d'hôtel où il sert de point d'ancrage. Son profil bas le rend idéal pour les pièces avec vue dramatique, sans concurrencer le paysage.",
+    owlChairInterior: "L'empreinte compacte de l'Owl Chair en fait la pièce la plus polyvalente de la collection. Elle excelle dans les bibliothèques de maison et les coins lecture, les zones assises de chambre, les coins de chambre d'hôtel, et comme siège d'appoint dans les salons aux côtés des pièces Fuzz Sofa plus grandes. Sa verticalité la rend idéale pour les espaces où la surface au sol est limitée mais une présence verticale est bienvenue.",
+    luxuryVillaScene: "Intérieur de Villa de Luxe",
+    boutiqueHotelScene: "Lobby d'Hôtel Boutique",
+    statementFurnitureScene: "Mobilier d'Exception",
+    sculpturalTrendScene: "Tendance du Mobilier Sculptural",
 },
   de: {
     siteTitle: "Fuzz Sofa",
@@ -1682,6 +1727,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "Europa (EUR)",
     middleEastLabel: "Naher Osten (USD)",
     seAsiaLabel: "Südostasien (USD)",
+    bearSofaInterior: "Das Bear Sofa gehört in Räume, die Gravität verlangen: die großen Foyers von Luxusvillen, die Hauptsalon von Boutique-Hotels oder das Wohnzimmer eines Sammler-Penthouses. Sein beeindruckender Maßstab erfordert großzügige Deckenhöhe und visuellen Freiraum, wo es zum gravitativen Zentrum des Interieurs wird.",
+    lionSofaInterior: "Das Lion Sofa gedeiht in Zeremonien- und Empfangsräumen: dem Majlis einer Golf-Residenz, der diplomatischen Lounge einer Botschaft oder dem Hauptsalon eines Heritage-Hotels. Seine aufrechte Haltung eignet sich für formelle Gespräche, während seine großzügige Tiefe zum entspannten Ruhen einlädt. Auf den GCC-Märkten ist das Lion Sofa zu einem Markenzeichen für Residenzen geworden, die traditionelle Gastfreundschaft mit zeitgenössischem Design verbinden.",
+    tigerSofaInterior: "Das Tiger Sofa ist ein natürlicher Mittelpunkt für zeitgenössische Kunstgalerien, modernistische Wohnungen und die Lebensräume von Sammlern, die ihre Interieurs mit derselben Intention kuratieren wie ihre Kunst. Seine dynamische Silhouette paart sich wunderbar mit brutaler Architektur und minimalistischen Interieurs, wo seine Energie ohne Konkurrenz resonieren kann.",
+    gorillaSofaInterior: "Das Gorilla Sofa erfordert großzügige Bodenfläche und passt zu Interieurs, die Materialität und kühne Gesten feiern. Es glänzt in Loft-Wohnungen mit Sichtbeton, zeitgenössischen Villen mit doppelten Raumhöhen und Hotel-Lobbies, wo es als Ankerpunkt dient. Sein niedriges Profil macht es ideal für Räume mit dramatischem Ausblick, wo es nicht mit der Landschaft konkurriert.",
+    owlChairInterior: "Der kompakte Footprint des Owl Chair macht es zum vielseitigsten Stück der Kollektion. Es glänzt in Hausbibliotheken und Leseecken, Sitzbereichen im Schlafzimmer, Hotelzimmer-Ecken und als Akzent-Sitz im Wohnzimmer neben größeren Fuzz Sofa-Stücken. Seine Vertikalität macht es ideal für Räume, in denen die Bodenfläche begrenzt, aber vertikale Präsenz willkommen ist.",
+    luxuryVillaScene: "Luxusvilla-Interieur",
+    boutiqueHotelScene: "Boutique-Hotel-Lobby",
+    statementFurnitureScene: "Statement-Möbel",
+    sculpturalTrendScene: "Skulpturale Möbeltrend",
 },
   es: {
     siteTitle: "Fuzz Sofa",
@@ -1959,6 +2013,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "Europa (EUR)",
     middleEastLabel: "Oriente Medio (USD)",
     seAsiaLabel: "Sudeste Asiático (USD)",
+    bearSofaInterior: "El Bear Sofa pertenece a espacios que exigen gravedad: los grandes vestíbulos de villas de lujo, el salón principal de hoteles boutique o el salón del ático de un coleccionista. Su escala imponente requiere generosa altura de techo y espacio visual, donde se convierte en el centro gravitacional del interior.",
+    lionSofaInterior: "El Lion Sofa prospera en espacios de ceremonia y recepción: el majlis de una residencia del Golfo, el salón diplomático de una embajada, o el salón principal de un hotel patrimonial. Su postura erguida favorece la conversación formal, mientras que su generosa profundidad invita al reposo relajado. En los mercados del CCG, el Lion Sofa se ha convertido en una pieza distintiva para residencias que fusionan la hospitalidad tradicional con el diseño contemporáneo.",
+    tigerSofaInterior: "El Tiger Sofa es una pieza central natural para galerías de arte contemporáneo, apartamentos modernistas y los espacios de vida de coleccionistas que curan sus interiores con la misma intención que su arte. Su perfil dinámico se combina hermosamente con la arquitectura brutalista y los interiores minimalistas donde su energía puede resonar sin competencia.",
+    gorillaSofaInterior: "El Gorilla Sofa exige un espacio de suelo generoso y se adapta a interiores que celebran la materialidad y los gestos audaces. Destaca en apartamentos tipo loft con hormigón visto, villas contemporáneas de doble altura y vestíbulos de hotel donde sirve como ancla de reunión. Su perfil bajo lo hace ideal para habitaciones con vistas dramáticas, donde no competirá con el paisaje.",
+    owlChairInterior: "La huella compacta del Owl Chair lo convierte en la pieza más versátil de la colección. Destaca en bibliotecas del hogar y rincones de lectura, zonas de asiento en dormitorios, esquinas de habitaciones de hotel, y como asiento acento en salas junto a piezas más grandes de Fuzz Sofa. Su verticalidad lo hace ideal para espacios donde la superficie es limitada pero la presencia vertical es bienvenida.",
+    luxuryVillaScene: "Interior de Villa de Lujo",
+    boutiqueHotelScene: "Lobby de Hotel Boutique",
+    statementFurnitureScene: "Muebles de Declaración",
+    sculpturalTrendScene: "Tendencia de Muebles Escultóricos",
 },
   it: {
     siteTitle: "Fuzz Sofa",
@@ -2236,6 +2299,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "Europa (EUR)",
     middleEastLabel: "Medio Oriente (USD)",
     seAsiaLabel: "Sudest asiatico (USD)",
+    bearSofaInterior: "Il Bear Sofa appartiene a spazi che esigono gravità: i grandi anditi di ville di lusso, il salotto principale di hotel boutique, o il soggiorno di un attico da collezionista. La sua scala imponente richiede generosa altezza del soffitto e spazio visivo, dove diventa il centro gravitazionale dell'interno.",
+    lionSofaInterior: "Il Lion Sofa prospera in spazi di cerimonia e ricevimento: il majlis di una residenza del Golfo, il salotto diplomatico di un'ambasciata, o il salone principale di un hotel di pregio. La sua postura eretta si adatta alla conversazione formale, mentre la sua generosa profondità invita al riposo rilassato. Nei mercati GCC, il Lion Sofa è diventato un pezzo distintivo per residenze che fondono ospitalità tradizionale e design contemporaneo.",
+    tigerSofaInterior: "Il Tiger Sofa è un punto focale naturale per gallerie d'arte contemporanea, appartamenti modernisti e gli spazi abitativi di collezionisti che curano i loro interni con la stessa intenzione della loro arte. Il suo profilo dinamico si abbina magnificamente con l'architettura brutalista e gli interni minimalisti dove la sua energia può risonare senza competizione.",
+    gorillaSofaInterior: "Il Gorilla Sofa richiede generoso spazio a terra e si adatta a interni che celebrano la materialità e i gesti audaci. Eccelle in loft con cemento a vista, ville contemporanee con spazi a doppia altezza e hall di hotel dove funge da punto di raccolta. Il suo profilo basso lo rende ideale per stanze con viste drammatiche, dove non compete con il paesaggio.",
+    owlChairInterior: "L'impronta compatta dell'Owl Chair lo rende il pezzo più versatile della collezione. Eccelle in biblioteche domestiche e angoli lettura, aree seduta in camera da letto, angoli di camere d'albergo, e come seduta d'accento nei soggiorni accanto a pezzi Fuzz Sofa più grandi. La sua verticalità lo rende ideale per spazi dove la superficie a terra è limitata ma la presenza verticale è gradita.",
+    luxuryVillaScene: "Interno di Villa di Lusso",
+    boutiqueHotelScene: "Lobby di Hotel Boutique",
+    statementFurnitureScene: "Mobiliario di Dichiarazione",
+    sculpturalTrendScene: "Tendenza del Mobilio Scultoreo",
 },
   pt: {
     siteTitle: "Fuzz Sofa",
@@ -2513,6 +2585,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "Europa (EUR)",
     middleEastLabel: "Oriente Médio (USD)",
     seAsiaLabel: "Sudeste Asiático (USD)",
+    bearSofaInterior: "O Bear Sofa pertence a espaços que exigem gravidade: os grandes halls de villas de luxo, o salão principal de hotéis boutique, ou a sala de estar de um ático de colecionador. Sua escala imponente requer generosa altura do teto e espaço visual, onde se torna o centro gravitacional do interior.",
+    lionSofaInterior: "O Lion Sofa prospera em espaços de cerimónia e receção: o majlis de uma residência do Golfo, o salão diplomático de uma embaixada, ou o salão principal de um hotel patrimonial. Sua postura ereta favorece a conversa formal, enquanto sua generosa profundidade convida ao repouso relaxado. Nos mercados do CCG, o Lion Sofa tornou-se uma peça marcante para residências que fundem hospitalidade tradicional com design contemporâneo.",
+    tigerSofaInterior: "O Tiger Sofa é uma peça central natural para galerias de arte contemporânea, apartamentos modernistas e os espaços de vida de colecionadores que curam seus interiores com a mesma intenção que sua arte. Seu perfil dinâmico combina lindamente com a arquitetura brutalista e interiores minimalistas onde sua energia pode ressoar sem competição.",
+    gorillaSofaInterior: "O Gorilla Sofa exige espaço de chão generoso e adequa-se a interiores que celebram a materialidade e gestos ousados. Destaca-se em apartamentos loft com betão aparente, vilas contemporâneas de duplo teto e halls de hotel onde serve como âncora de reunião. Seu perfil baixo torna-o ideal para quartos com vistas dramáticas, onde não competirá com a paisagem.",
+    owlChairInterior: "A pegada compacta do Owl Chair torna-o a peça mais versátil da coleção. Destaca-se em bibliotecas domésticas e cantos de leitura, áreas de assento em quartos, cantos de quartos de hotel, e como assento de destaque em salas ao lado de peças maiores da Fuzz Sofa. Sua verticalidade torna-o ideal para espaços onde a área do chão é limitada mas a presença vertical é bem-vinda.",
+    luxuryVillaScene: "Interior de Villa de Luxo",
+    boutiqueHotelScene: "Lobby de Hotel Boutique",
+    statementFurnitureScene: "Mobiliário de Declaração",
+    sculpturalTrendScene: "Tendência de Mobiliário Escultórico",
 },
   "pt-BR": {
     siteTitle: "Fuzz Sofa",
@@ -2790,6 +2871,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "Europa (EUR)",
     middleEastLabel: "Oriente Médio (USD)",
     seAsiaLabel: "Sudeste Asiático (USD)",
+    bearSofaInterior: "O Bear Sofa pertence a espaços que exigem gravidade: os grandes halls de villas de luxo, o salão principal de hotéis boutique, ou a sala de estar de um ático de colecionador.",
+    lionSofaInterior: "O Lion Sofa prospera em espaços de cerimónia e receção: o majlis de uma residência do Golfo, o salão diplomático de uma embaixada, ou o salão principal de um hotel patrimonial.",
+    tigerSofaInterior: "O Tiger Sofa é uma peça central natural para galerias de arte contemporânea, apartamentos modernistas e os espaços de vida de colecionadores.",
+    gorillaSofaInterior: "O Gorilla Sofa exige espaço de chão generoso e adequa-se a interiores que celebram a materialidade e gestos ousados.",
+    owlChairInterior: "A pegada compacta do Owl Chair torna-o a peça mais versátil da coleção.",
+    luxuryVillaScene: "Interior de Villa de Luxo",
+    boutiqueHotelScene: "Lobby de Hotel Boutique",
+    statementFurnitureScene: "Mobiliário de Declaração",
+    sculpturalTrendScene: "Tendência de Mobiliário Escultórico",
 },
   ar: {
     siteTitle: "Fuzz Sofa",
@@ -3067,6 +3157,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "أوروبا (يورو)",
     middleEastLabel: "الشرق الأوسط (دولار)",
     seAsiaLabel: "جنوب شرق آسيا (دولار)",
+    bearSofaInterior: "ينتمي أريكة الدب إلى المساحات التي تتطلب الهيبة: بهوات الفيلات الفاخرة، وصالة الفندق البوتيك الرئيسية، أو غرفة المعيشة في بنتهاوس جامع. مقياسه المهول يتطلب سقفًا مرتفعًا ومساحة بصرية، حيث يصبح المركز الجاذبي للداخل.",
+    lionSofaInterior: "يزدهر أريكة الأسد في مساحات الاحتفالات والاستقبال: المجلس في سكن خليجي، صالة الضيوف الدبلوماسية في سفارة، أو الصالون الرئيسي لفندق تراثي. وضعيته المستقيمة تناسب المحادثات الرسمية، وعمقه الواسع يدعو للاسترخاء. في أسواق الخليج، أصبح أريكة الأسد قطعة مميزة للمساكن التي تمزج بين الضيافة التقليدية والتصميم المعاصر.",
+    tigerSofaInterior: "أريكة النمر هي قطعة محورية طبيعية لمعارض الفن المعاصر والشقق الحداثية ومساحات المعيشة للجامعين الذين ينتقون ديكوراتهم بنفس الطريقة التي ينتقون بها أعمالهم الفنية. ملامحه الديناميكية تتزاوج بجمال مع العمارة الوحشية والتصاميم الداخلية البسيطة.",
+    gorillaSofaInterior: "يتطلب أريكة الغوريلا مساحة أرضية واسعة ويناسب الديكورات التي تحتفل بالمادية والإيماءات الجريئة. تتميز في شقق اللوفت ذات الخرسانة المكشوفة والفيلات المعاصرة ذات المساحات المزدوجة الارتفاع وبهوات الفنادق. ملفها المنخفض يجعلها مثالية للغرف ذات الإطلالات الدرامية.",
+    owlChairInterior: "البصمة المدمجة لأريكة البوم تجعلها القطعة الأكثر تنوعًا في المجموعة. تتميز في مكتبات المنزل وزوايا القراءة ومناطق الجلوس في غرف النوم وأركان غرف الفنادق. ميزتها العمودية تجعلها مثالية للمساحات المحدودة التي ترحب بالحضور الرأسي.",
+    luxuryVillaScene: "داخلية الفيلا الفاخرة",
+    boutiqueHotelScene: "بهوة الفندق البوتيك",
+    statementFurnitureScene: "أثاث مميز",
+    sculpturalTrendScene: "اتجاه الأثاث المنحوت",
 },
   fa: {
     siteTitle: "Fuzz Sofa",
@@ -3344,6 +3443,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "اروپا (EUR)",
     middleEastLabel: "خاورمیانه (USD)",
     seAsiaLabel: "جنوب شرق آسیا (USD)",
+    bearSofaInterior: "مبل خرس متعلق به فضاهایی است که نیازمند وقار هستند: لابی‌های بزرگ ویلاهای لوکس، سالن اصلی هتل‌های بوتیک، یا اتاق نشیمن پنت‌هاوس یک کلکسیونر. مقیاس فرمانده آن نیازمند سقف بلند و فضای بصری است، جایی که به مرکز جاذبه داخلی تبدیل می‌شود.",
+    lionSofaInterior: "مبل شیر در فضاهای تشریفاتی و پذیرایی شکوفا می‌شود: مجلیس اقامتگاه خلیج، لانژ دیپلماتیک سفارت، یا سالون اصلی هتل میراث. وضعیت صاف آن مناسب گفتگوی رسمی است، در حالی که عمق فراوان آن به استراحت آرام دعوت می‌کند. در بازارهای خلیج، مبل شیر به قطعه امضایی اقامتگاه‌هایی شده که مهمان‌نوازی سنتی را با طراحی معاصر ترکیب می‌کنند.",
+    tigerSofaInterior: "مبل ببر یک نقطه کانونی طبیعی برای گالری‌های هنر معاصر، آپارتمان‌های مدرنیست و فضاهای زندگی کلکسیونرهایی است که دکوراسیون خود را با همان نیت هنرشان انتخاب می‌کنند. پروفایل پویای آن زیبا با معماری بروتالیست و فضاهای مینیمال جفت می‌شود.",
+    gorillaSofaInterior: "مبل گوریلا نیازمند فضای کفی فراوان است و مناسب فضاهای داخلی است که مادی بودن و ژست‌های جسورانه را جشن می‌گیرند. در آپارتمان‌های لوفتی با بتن نمایان، ویلاهای معاصر با فضاهای دو ارتفاعی و لابی هتل‌ها که به عنوان لنگرگاه تجمع عمل می‌کند عالی عمل می‌کند. پروفایل پایین آن برای اتاق‌هایی با چشم‌انداز دراماتیک ایده‌آل است.",
+    owlChairInterior: "ردپای فشرده مبل جغد آن را به همه‌کاره‌ترین قطعه مجموعه تبدیل می‌کند. در کتابخانه‌های خانگی و فضاهای مطالعه، مناطق نشیمن اتاق خواب، گوشه‌های اتاق هتل و به عنوان صندلی تأکیدی در کنار قطعات بزرگتر فاز سفا درخشان است. عمودی بودن آن برای فضاهایی که مساحت کفی محدود ولی حضور عمودی خوشامد است ایده‌آل است.",
+    luxuryVillaScene: "داخلی ویلا لوکس",
+    boutiqueHotelScene: "لابی هتل بوتیک",
+    statementFurnitureScene: "مبل بیانیه",
+    sculpturalTrendScene: "ترند مبل مجسمه‌ای",
 },
   hi: {
     siteTitle: "Fuzz Sofa",
@@ -3621,6 +3729,15 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "यूरोप (EUR)",
     middleEastLabel: "मध्य पूर्व (USD)",
     seAsiaLabel: "दक्षिण पूर्व एशिया (USD)",
+    bearSofaInterior: "बियर सोफा उन स्थानों में संबंधित है जो गंभीरता मांगते हैं: लक्जरी विलाओं के ग्रैंड फ़ॉयर, बुटीक होटलों के मुख्य लाउंज, या कलेक्टर के पेंटहाउस का लिविंग रूम। इसकी प्रभावशाली स्केल को पर्याप्त छत की ऊंचाई और दृश्य स्थान की आवश्यकता होती है।",
+    lionSofaInterior: "लायन सोफा समारोह और अतिथि स्थानों में फलता-फूलता है: गल्फ निवास का मजलिस, दूतावास का राजनयिक लाउंज, या विरासत होटल का मुख्य सैलून। इसकी सीधी मुद्रा औपचारिक बातचीत के लिए उपयुक्त है, जबकि इसकी विशाल गहराई आराम से आराम का निमंत्रण देती है।",
+    tigerSofaInterior: "टाइगर सोफा समकालीन कला गैलरी, मॉडरनिस्ट अपार्टमेंट और कलेक्टर के लिविंग स्पेस के लिए प्राकृतिक केंद्र बिंदु है जो अपनी कला की तरह अपने इंटीरियर को क्यूरेट करते हैं। इसका गतिशील प्रोफ़ाइल ब्रूटलिस्ट आर्किटेक्चर और मिनिमलिस्ट इंटीरियर के साथ सुंदर रूप से जुड़ता है।",
+    gorillaSofaInterior: "गोरिला सोफा पर्याप्त फ्लोर स्पेस की मांग करता है और उन इंटीरियर के लिए उपयुक्त है जो सामग्री और बोल्ड संकेतों का जश्न मनाते हैं। यह एक्सपोज्ड कंक्रीट वाले लॉफ्ट अपार्टमेंट, डबल-हाइट स्पेस वाले समकालीन विला और होटल लॉबी में उत्कृष्ट है।",
+    owlChairInterior: "आउल चेयर का कॉम्पैक्ट फुटप्रिंट इसे कलेक्शन का सबसे बहुमुखी टुकड़ा बनाता है। यह होम लाइब्रेरी, रीडिंग नुक, बेडरूम सीटिंग एरिया, होटल रूम कोने और लिविंग रूम में एक्सेंट सीटिंग के रूप में उत्कृष्ट है।",
+    luxuryVillaScene: "लक्जरी विला इंटीरियर",
+    boutiqueHotelScene: "बुटीक होटल लॉबी",
+    statementFurnitureScene: "स्टेटमेंट फर्नीचर",
+    sculpturalTrendScene: "स्कल्प्चरल फर्नीचर ट्रेंड",
 },
   ko: {
     siteTitle: "Fuzz Sofa",
@@ -3898,7 +4015,16 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     europeLabel: "유럽 (EUR)",
     middleEastLabel: "중동 (USD)",
     seAsiaLabel: "동남아시아 (USD)",
-  },
+      bearSofaInterior: "베어 소파은 중량감을 요구하는 공간에 어울립니다: 럭셔리 빌라의 그랜드 포이어, 부티크 호텔의 메인 라운지, 수집가의 펜트하우스 거실. 압도적인 스케일은 충분한 천장 높이와 시각적 여백이 필요하며, 인테리어의 중심이 됩니다.",
+    lionSofaInterior: "라이온 소파은 의례와 접대 공간에서 빛납니다: 걸프 저택의 마즐리스, 대사관의 외교 라운지, 헤리티지 호텔의 메인 살롱. 곧은 자세는 격식 있는 대화에 적합하고, 넉넉한 깊이는 편안한 휴식을 유도합니다. GCC 시장에서 전통적 환대와 현대적 디자인을 결합하는 주택의 시그니처 피스입니다.",
+    tigerSofaInterior: "타이거 소파은 현대 미술 갤러리, 모더니스트 아파트, 예술처럼 인테리어를 큐레이팅하는 수집가의 거실에 자연스러운 중심입니다. 역동적인 실루엣은 브루탈리스트 건축과 미니멀 인테리어와 아름답게 어울립니다.",
+    gorillaSofaInterior: "고릴라 소파은 넉넉한 바닥 면적이 필요하며 소재와 대담한 제스처를 기리는 인테리어에 적합합니다. 노출 콘크리트 로프트 아파트, 이중 높이의 현대 빌라, 모임의 중심이 되는 호텔 로비에서 빛납니다.",
+    owlChairInterior: "올 체어의 콤팩트한 풋프린트는 컬렉션에서 가장 다재다능한 피스입니다. 홈 라이브러리와 독서 공간, 침실 시트 구역, 호텔 객실 코너, 큰 퍼즈 소파 옆 액센트 시트로 뛰어납니다.",
+    luxuryVillaScene: "럭셔리 빌라 인테리어",
+    boutiqueHotelScene: "부티크 호텔 로비",
+    statementFurnitureScene: "스테이트먼트 퍼니처",
+    sculpturalTrendScene: "스컬프처럴 퍼니처 트렌드",
+},
 };
 
 export function t(locale: Locale, key: TranslationKeys): string {
