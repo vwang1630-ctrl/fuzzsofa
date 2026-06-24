@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
 import { formatPrice } from "@/lib/products";
+import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -107,7 +108,19 @@ export default function AccountPage() {
 
   const fetchOrders = useCallback(async () => {
     try {
-      const res = await fetch("/api/orders");
+      let sessionToken: string | null = null;
+      try {
+        const supabase = await getSupabaseBrowserClientWithRetry();
+        const { data: { session } } = await supabase.auth.getSession();
+        sessionToken = session?.access_token ?? null;
+      } catch {
+        // Not logged in
+      }
+
+      const headers: Record<string, string> = {};
+      if (sessionToken) headers["x-session"] = sessionToken;
+
+      const res = await fetch("/api/orders", { headers });
       if (res.ok) {
         const data = await res.json();
         setOrders(data.orders || []);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,7 @@ import { useCart, getUnitPrice } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
 import { formatPrice } from "@/lib/products";
+import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
 
 const slugToPrefix: Record<string, string> = {
   "bear-sofa": "bearSofa",
@@ -48,6 +49,22 @@ export default function CheckoutPage() {
   const { selectedItems, selectedTotal, region, clearCart } = useCart();
   const { t } = useLanguage();
   const router = useRouter();
+  const [sessionToken, setSessionToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadSession() {
+      try {
+        const supabase = await getSupabaseBrowserClientWithRetry();
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) {
+          setSessionToken(session.access_token);
+        }
+      } catch {
+        // User not logged in — order creation will fail with 401
+      }
+    }
+    loadSession();
+  }, []);
 
   const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("standard");
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("creditcard");
@@ -120,9 +137,16 @@ export default function CheckoutPage() {
         };
       });
 
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (sessionToken) {
+        headers["x-session"] = sessionToken;
+      }
+
       const res = await fetch("/api/orders", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({
           shippingMethod,
           shippingFee,
@@ -134,6 +158,11 @@ export default function CheckoutPage() {
           currency: "USD",
         }),
       });
+
+      if (res.status === 401) {
+        router.push("/login?redirect=/checkout");
+        return;
+      }
 
       if (!res.ok) {
         const data = await res.json();
