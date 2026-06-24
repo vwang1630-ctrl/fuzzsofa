@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
       .from('shipping_events')
       .select('*')
       .eq('order_id', order.id)
-      .order('event_time', { ascending: true });
+      .order('happened_at', { ascending: true });
 
     if (eventsError) {
       console.error('Error fetching shipping events:', eventsError);

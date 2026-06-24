@@ -10,7 +10,7 @@ interface ShippingEvent {
   event_title: string;
   event_description: string | null;
   location: string | null;
-  event_time: string;
+  happened_at: string;
   is_current: boolean;
   is_exception: boolean;
   flight_vessel: string | null;
@@ -256,9 +256,9 @@ export default function TrackingPage() {
                     {event?.location && (
                       <p className="text-xs text-[#8A8580] mt-0.5">{event.location}</p>
                     )}
-                    {event?.event_time && (
+                    {event?.happened_at && (
                       <p className="text-[10px] text-[#8A8580]/60 mt-0.5">
-                        {new Date(event.event_time).toLocaleString()}
+                        {new Date(event.happened_at).toLocaleString()}
                       </p>
                     )}
                     {event?.flight_vessel && (
@@ -289,7 +289,7 @@ export default function TrackingPage() {
                     <p className="text-xs text-[#8A8580] mt-0.5">{event.location}</p>
                   )}
                   <p className="text-[10px] text-[#8A8580]/60 mt-0.5">
-                    {new Date(event.event_time).toLocaleString()}
+                    {new Date(event.happened_at).toLocaleString()}
                   </p>
                 </div>
               </div>

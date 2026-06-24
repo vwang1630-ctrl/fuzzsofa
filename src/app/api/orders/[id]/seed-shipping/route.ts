@@ -170,7 +170,6 @@ export async function POST(
         carrier,
         tracking_number: trackingNumber,
         flight_vessel: (evt as { flight_vessel?: string }).flight_vessel || null,
-        event_time: eventTime.toISOString(),
         happened_at: eventTime.toISOString(),
         status: evt.event_type,
         description: evt.event_description,

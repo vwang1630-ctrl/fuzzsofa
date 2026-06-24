@@ -36,7 +36,7 @@ export async function GET(
       .from('shipping_events')
       .select('*')
       .eq('order_id', id)
-      .order('event_time', { ascending: true });
+      .order('happened_at', { ascending: true });
 
     if (eventsError) {
       console.error('Error fetching shipping events:', eventsError);
@@ -126,7 +126,6 @@ export async function POST(
         tracking_number: order.tracking_number,
         flight_vessel: flightVessel || null,
         estimated_arrival: estimatedArrival || null,
-        event_time: new Date().toISOString(),
         happened_at: new Date().toISOString(),
         status: eventType,
         description: eventDescription || eventTitle || eventType,

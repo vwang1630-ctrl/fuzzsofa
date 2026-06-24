@@ -30,7 +30,6 @@ interface ShippingEvent {
   event_title: string | null;
   event_description: string | null;
   location: string | null;
-  event_time: string;
   happened_at: string;
   is_current: boolean;
   is_exception: boolean;
@@ -229,7 +228,7 @@ function TimelineNode({
           </p>
         )}
         <p className={`text-xs mt-0.5 ${isCurrent || isCompleted ? "text-[#8A8580]" : "text-[#333]"}`}>
-          {formatDateTime(event.event_time || event.happened_at)}
+          {formatDateTime(event.happened_at)}
         </p>
         {event.flight_vessel && (
           <p className="text-xs text-[#8A8580] mt-0.5">
@@ -342,7 +341,7 @@ export default function OrderDetailPage() {
     if (!order) return;
     const payData = {
       orderIds: [order.id],
-      items: order.items.map(it => ({
+      items: (order.items || []).map(it => ({
         productSlug: it.product_slug,
         productName: it.product_name,
         colorName: it.color_name,
@@ -655,7 +654,7 @@ export default function OrderDetailPage() {
           <section>
             <h2 className="font-serif text-lg text-[#F5F0EB] mb-4">{t("orderItems")}</h2>
             <div className="space-y-3">
-              {order.items.map((item) => (
+              {(order.items || []).map((item) => (
                 <div key={item.id} className="flex items-center gap-4 bg-[#111111] border border-[#1A1A1A] p-4">
                   <div className="w-14 h-14 flex-shrink-0 bg-[#1A1A1A] overflow-hidden">
                     {item.image_url ? (
