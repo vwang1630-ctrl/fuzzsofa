@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { CartProvider } from "@/lib/cart-context";
 import { LanguageProvider } from "@/lib/language-context";
 import { FontPreload } from "@/components/font-preload";
+import { SupabaseConfigProvider } from "@/lib/supabase-config-inject";
 
 export const metadata: Metadata = {
   title: {
@@ -56,6 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased bg-[#0A0A0A] text-[#F5F0EB]">
+        <SupabaseConfigProvider>
         <LanguageProvider>
         <CartProvider>
           <FontPreload />
@@ -64,6 +66,7 @@ export default function RootLayout({
           <Footer />
         </CartProvider>
         </LanguageProvider>
+        </SupabaseConfigProvider>
       </body>
     </html>
   );

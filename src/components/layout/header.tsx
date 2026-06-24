@@ -5,18 +5,51 @@ import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import { useState, useRef, useEffect } from "react";
 import { locales, localeNames, type Locale } from "@/lib/i18n";
-import type { Region } from "@/lib/products";
+import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
+import { useSupabaseConfig } from "@/lib/supabase-config-inject";
+import type { User } from "@supabase/supabase-js";
+import type { TranslationKeys } from "@/lib/i18n";
 
 export function Header() {
   const { totalItems } = useCart();
   const { locale, setLocale, region, t, isRtl } = useLanguage();
+  const { isLoading: configLoading } = useSupabaseConfig();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
+  // Load user session
+  useEffect(() => {
+    async function loadSession() {
+      if (configLoading) return;
+      try {
+        const supabase = await getSupabaseBrowserClientWithRetry();
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          setUser(session.user);
+        }
+
+        // Listen for auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+          setUser(session?.user ?? null);
+        });
+
+        return () => subscription.unsubscribe();
+      } catch {
+        // Supabase not configured or not ready
+      }
+    }
+    loadSession();
+  }, [configLoading]);
+
+  // Close dropdowns on outside click
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) setUserMenuOpen(false);
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
@@ -51,9 +84,9 @@ export function Header() {
 
         {/* Right side controls */}
         <div className="flex items-center gap-3">
-          {/* Region indicator - auto detected, not selectable */}
+          {/* Region indicator - auto detected */}
           <span className="hidden md:flex items-center gap-1 text-[#555] text-xs tracking-[0.05em]">
-            📍 {region === "europe" ? "EUR" : "USD"} / {region === "americas" ? "Americas" : region === "europe" ? "Europe" : region === "middle_east" ? "Middle East" : "SE Asia"}
+            {region === "europe" ? "EUR" : "USD"} / {region === "americas" ? "Americas" : region === "europe" ? "Europe" : region === "middle_east" ? "Middle East" : "SE Asia"}
           </span>
 
           {/* Language selector */}
@@ -78,6 +111,58 @@ export function Header() {
                     {localeNames[loc]}
                   </button>
                 ))}
+              </div>
+            )}
+          </div>
+
+          {/* User / Account */}
+          <div ref={userMenuRef} className="relative hidden md:block">
+            {user ? (
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-1 text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300"
+                aria-label="Account"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300"
+                aria-label="Login"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </Link>
+            )}
+            {userMenuOpen && user && (
+              <div className="absolute top-full mt-2 right-0 bg-[#111111] border border-[#1A1A1A] rounded-[4px] py-1 min-w-[180px] z-50">
+                <div className="px-4 py-3 border-b border-[#1A1A1A]">
+                  <p className="text-sm text-[#F5F0EB] truncate">{user.user_metadata?.full_name || user.email}</p>
+                  <p className="text-xs text-[#8A8580] truncate mt-0.5">{user.email}</p>
+                </div>
+                <Link
+                  href="/account"
+                  onClick={() => setUserMenuOpen(false)}
+                  className="block px-4 py-2 text-xs text-[#8A8580] hover:bg-[#1A1A1A] hover:text-[#F5F0EB] transition-colors"
+                >
+                  {t("myAccount" as TranslationKeys)}
+                </Link>
+                <button
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    // Navigate to account page for logout with confirm
+                    window.location.href = "/account";
+                  }}
+                  className="w-full text-left px-4 py-2 text-xs text-red-400/70 hover:bg-[#1A1A1A] hover:text-red-400 transition-colors"
+                >
+                  {t("signOut" as TranslationKeys)}
+                </button>
               </div>
             )}
           </div>
@@ -127,9 +212,14 @@ export function Header() {
           <Link href="/luxury-villa-interior" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("interiorWorlds")}</Link>
           <Link href="/about" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("about")}</Link>
           <Link href="/contact" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link>
+          {user ? (
+            <Link href="/account" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("myAccount" as TranslationKeys)}</Link>
+          ) : (
+            <Link href="/login" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("signIn" as TranslationKeys)}</Link>
+          )}
           <div className="flex gap-3 pt-2 border-t border-[#1A1A1A]">
             <span className="text-[#8A8580]">🌐 {localeNames[locale]}</span>
-            <span className="text-[#555]">📍 {region === "europe" ? "EUR" : "USD"}</span>
+            <span className="text-[#555]">{region === "europe" ? "EUR" : "USD"}</span>
           </div>
         </nav>
       )}
