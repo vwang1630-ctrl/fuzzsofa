@@ -9,6 +9,8 @@ const productDescriptions: Record<string, string> = {
     "a large gorilla-shaped sofa with plush fur, broad shoulders, and commanding presence, gray-brown luxury fabric, sculptural animal furniture",
   "muscle-gorilla-sofa":
     "a hyper-realistic sculpted gorilla sofa with defined musculature, broad chest, clenched fists, and detailed leather upholstery, imposing sculptural animal furniture",
+  "meteorite-ring-sofa":
+    "a sculptural ring-shaped sofa inspired by meteorite formations, with a circular donut-like seat in stone grey textured fabric, organic crater-like surface details, and a central opening, contemporary art furniture piece",
 };
 
 export async function POST(request: NextRequest) {
