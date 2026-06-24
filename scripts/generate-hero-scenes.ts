@@ -54,10 +54,10 @@ async function main() {
   const config = new Config();
   const client = new ImageGenerationClient(config);
 
-  // Scene 1: Gorilla sofa in luxury living room
+  // Scene 1: Gorilla sofa in luxury living room - same cinematic quality as before
   console.log('\nGenerating gorilla hero scene...');
   const gorillaResponse = await client.generate({
-    prompt: 'Place this exact gorilla-shaped plush sofa into a luxury modern penthouse living room. The room has dark walls, polished dark marble floor, large floor-to-ceiling windows with a city night skyline, warm golden ambient lighting from a designer arc floor lamp, a low marble coffee table, and a tall potted plant. The gorilla sofa is the centerpiece, positioned facing the camera in the center of the room. Interior design magazine quality, cinematic, professional architecture photography, warm tones',
+    prompt: 'Ultra-luxury modern living room interior photography. This exact gorilla-shaped plush sofa from the reference image sits as the centerpiece of a grand penthouse living room, facing the camera directly. The room has floor-to-ceiling windows showing a breathtaking city skyline at golden hour dusk, warm ambient lighting throughout, dark polished marble floor reflecting light, a minimal marble coffee table, a tall leafy potted plant, and a designer arc floor lamp casting warm glow. The atmosphere is sophisticated and gallery-like, the sofa appears as a sculptural art piece in a collector home. Cinematic lighting, warm golden hour tones, shot with Hasselblad H6D-100c, interior design magazine cover quality, 8K resolution, photorealistic',
     image: gorillaUrl,
     size: '2K',
   });
@@ -72,10 +72,10 @@ async function main() {
     console.error('Gorilla scene failed:', gorillaHelper.errorMessages);
   }
 
-  // Scene 2: Owl chair in elegant reading room
+  // Scene 2: Owl chair in luxury penthouse at night
   console.log('\nGenerating owl hero scene...');
   const owlResponse = await client.generate({
-    prompt: 'Place this exact owl-shaped plush chair into an elegant luxury reading nook. The room has dark walls with built-in bookshelves filled with art books, a warm Persian rug on the dark wooden floor, a brass floor lamp casting golden light beside the chair, a marble side table with a coffee cup and books. The owl chair is positioned prominently near a tall window with sheer curtains and soft natural light coming through. Interior design magazine quality, cinematic, professional photography, warm golden tones',
+    prompt: 'Luxury penthouse living space at night, this exact owl-shaped plush chair from the reference image is positioned prominently by a floor-to-ceiling window overlooking a glittering city skyline. Soft warm lighting from a designer brass floor lamp, dark moody walls with contemporary art, a plush wool rug on polished concrete floor, a side table with art books and a ceramic vase. The owl chair faces slightly toward the window, as if gazing at the city lights. Intimate gallery atmosphere, interior photography, warm golden tones, shot with Phase One IQ4, magazine cover quality, photorealistic, 8K',
     image: owlUrl,
     size: '2K',
   });
