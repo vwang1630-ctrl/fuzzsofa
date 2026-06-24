@@ -97,7 +97,6 @@ export function ProductPageClient({ product }: Props) {
     "meteorite-ring-sofa": [
       "/products/meteorite-ring-sofa/main.jpg",
       "/products/meteorite-ring-sofa/scene-2.jpg",
-      "/products/meteorite-ring-sofa/scene-3.jpg",
     ],
     "muscle-gorilla-sofa": [
       "/products/muscle-gorilla-sofa/main.jpg",
