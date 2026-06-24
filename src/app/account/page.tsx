@@ -403,10 +403,11 @@ export default function AccountPage() {
                         </span>
                       )}
                       {/* Logistics badge */}
-                      {logisticsBadge(order.latest_shipping_event, t) && (() => {
-                        const badge = logisticsBadge(order.latest_shipping_event, t)!;
+                      {(() => {
+                        const badge = logisticsBadge(order.latest_shipping_event, t);
+                        if (!badge) return null;
                         return (
-                          <span className={`text-[10px] tracking-wider uppercase px-2 py-0.5 rounded ${badge.color}`}>
+                          <span key="logistics-badge" className={`text-[10px] tracking-wider uppercase px-2 py-0.5 rounded ${badge.color}`}>
                             {badge.label}
                           </span>
                         );
