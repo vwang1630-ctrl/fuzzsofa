@@ -33,7 +33,6 @@ const slugToImage: Record<string, string> = {
 };
 
 type ShippingMethod = "standard" | "express";
-type PaymentMethod = "creditcard" | "paypal" | "applepay" | "banktransfer";
 
 interface AddressForm {
   firstName: string;
@@ -97,14 +96,13 @@ const US_STATES = [
 ];
 
 export default function CheckoutPage() {
-  const { selectedItems, selectedTotal, region, clearCart } = useCart();
+  const { selectedItems, selectedTotal, region } = useCart();
   const { t } = useLanguage();
   const router = useRouter();
   const [sessionToken, setSessionToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
 
   const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("standard");
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("creditcard");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<AddressForm>(defaultForm);
@@ -150,9 +148,6 @@ export default function CheckoutPage() {
           if (prefRes.ok) {
             const prefData = await prefRes.json();
             if (prefData.preferences) {
-              if (prefData.preferences.default_payment_method) {
-                setPaymentMethod(prefData.preferences.default_payment_method as PaymentMethod);
-              }
               if (prefData.preferences.preferred_shipping_method) {
                 setShippingMethod(prefData.preferences.preferred_shipping_method as ShippingMethod);
               }
@@ -206,13 +201,19 @@ export default function CheckoutPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleContinueToPayment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
-    setSubmitting(true);
-    try {
-      const orderItems = selectedItems.map((item) => {
+    // Store checkout data in sessionStorage for the payment page
+    const checkoutData = {
+      address: form,
+      shippingMethod,
+      shippingFee,
+      selectedTotal,
+      total,
+      currency: "USD",
+      items: selectedItems.map((item) => {
         const price = getUnitPrice(item.product, item.region);
         return {
           productSlug: item.product.slug,
@@ -224,94 +225,48 @@ export default function CheckoutPage() {
           quantity: item.quantity,
           unitPrice: price,
           subtotal: price * item.quantity,
+          imageUrl: slugToImage[item.product.slug] || item.product.images?.[0] || "",
         };
-      });
+      }),
+    };
+    sessionStorage.setItem("checkoutData", JSON.stringify(checkoutData));
 
+    // Save address for future use (fire and forget)
+    if (sessionToken) {
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
+        "x-session": sessionToken,
       };
-      if (sessionToken) {
-        headers["x-session"] = sessionToken;
-      }
-
-      // Save address for future use (fire and forget)
-      if (sessionToken) {
-        fetch("/api/addresses", {
-          method: "POST",
-          headers,
-          body: JSON.stringify({
-            label: "Home",
-            firstName: form.firstName,
-            lastName: form.lastName,
-            email: form.email,
-            phone: form.phone,
-            addressLine1: form.addressLine1,
-            addressLine2: form.addressLine2,
-            city: form.city,
-            state: form.state,
-            zipCode: form.zipCode,
-            country: form.country,
-            isDefault: true,
-          }),
-        }).catch(() => {});
-
-        // Save payment & shipping preferences (fire and forget)
-        fetch("/api/preferences", {
-          method: "PUT",
-          headers,
-          body: JSON.stringify({
-            defaultPaymentMethod: paymentMethod,
-            preferredShippingMethod: shippingMethod,
-          }),
-        }).catch(() => {});
-      }
-
-      const res = await fetch("/api/orders", {
+      fetch("/api/addresses", {
         method: "POST",
         headers,
         body: JSON.stringify({
-          shippingMethod,
-          shippingFee,
-          paymentMethod,
-          address: {
-            firstName: form.firstName,
-            lastName: form.lastName,
-            email: form.email,
-            phone: form.phone,
-            addressLine1: form.addressLine1,
-            addressLine2: form.addressLine2,
-            city: form.city,
-            state: form.state,
-            zipCode: form.zipCode,
-            country: form.country,
-          },
-          items: orderItems,
-          subtotal: selectedTotal,
-          total,
-          currency: "USD",
+          label: "Home",
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: form.phone,
+          addressLine1: form.addressLine1,
+          addressLine2: form.addressLine2,
+          city: form.city,
+          state: form.state,
+          zipCode: form.zipCode,
+          country: form.country,
+          isDefault: true,
         }),
-      });
+      }).catch(() => {});
 
-      if (res.status === 401) {
-        alert(t("checkoutLoginRequired"));
-        router.push("/login?redirect=/checkout");
-        return;
-      }
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || t("checkoutOrderFailed"));
-      }
-
-      const data = await res.json();
-      clearCart();
-      router.push(`/order-confirmed?order=${data.order.orderNumber}`);
-    } catch (err) {
-      console.error("Order failed:", err);
-      alert(t("checkoutOrderFailed"));
-    } finally {
-      setSubmitting(false);
+      // Save shipping preference (fire and forget)
+      fetch("/api/preferences", {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({
+          preferredShippingMethod: shippingMethod,
+        }),
+      }).catch(() => {});
     }
+
+    router.push("/payment");
   };
 
   const inputClass = (field: string) =>
@@ -321,7 +276,7 @@ export default function CheckoutPage() {
     <div className="max-w-6xl mx-auto px-6 py-20">
       <h1 className="font-serif text-3xl font-light text-[#F5F0EB] mb-12 tracking-wide">{t("checkoutTitle")}</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleContinueToPayment}>
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12">
           {/* Left Column - Form */}
           <div className="space-y-10">
@@ -528,37 +483,6 @@ export default function CheckoutPage() {
                 </button>
               </div>
             </section>
-
-            {/* Payment Method */}
-            <section>
-              <h2 className="font-serif text-xl font-light text-[#F5F0EB] mb-6 tracking-wide">
-                {t("checkoutPaymentMethod")}
-              </h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {([
-                  { key: "creditcard" as PaymentMethod, label: t("checkoutCreditCard"), icon: "💳" },
-                  { key: "paypal" as PaymentMethod, label: t("checkoutPayPal"), icon: "P" },
-                  { key: "applepay" as PaymentMethod, label: t("checkoutApplePay"), icon: "" },
-                  { key: "banktransfer" as PaymentMethod, label: t("checkoutBankTransfer"), icon: "↔" },
-                ]).map((pm) => (
-                  <button
-                    key={pm.key}
-                    type="button"
-                    onClick={() => setPaymentMethod(pm.key)}
-                    className={`p-4 border text-center transition-all duration-300 ${
-                      paymentMethod === pm.key
-                        ? "border-[#E8B4B8] bg-[#E8B4B8]/5"
-                        : "border-[#1A1A1A] hover:border-[#333]"
-                    }`}
-                  >
-                    <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-[#1A1A1A] flex items-center justify-center text-xs text-[#8A8580]">
-                      {pm.icon}
-                    </div>
-                    <span className="text-[#F5F0EB] text-xs">{pm.label}</span>
-                  </button>
-                ))}
-              </div>
-            </section>
           </div>
 
           {/* Right Column - Order Summary (sticky) */}
@@ -612,7 +536,7 @@ export default function CheckoutPage() {
                 disabled={submitting}
                 className="w-full mt-6 border border-[#F5F0EB] text-[#F5F0EB] py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {submitting ? "..." : t("checkoutPlaceOrder")}
+                {submitting ? "..." : t("checkoutContinueToPayment")}
               </button>
 
               <Link
