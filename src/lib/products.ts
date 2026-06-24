@@ -624,6 +624,84 @@ export const products: Product[] = [
       "Meteorite Ring Sofa by Fuzz Sofa — a cosmic ring-shaped sculptural sofa with crater-textured surface. Compact 110x80x80cm. Made to order. Free white-glove delivery worldwide.",
     trendingGeo: ["americas", "europe"],
   },
+  {
+    slug: "muscle-gorilla-sofa",
+    name: "Muscle Gorilla Sofa",
+    animal: "Gorilla",
+    tagline: "Raw Power, Refined Craft",
+    description:
+      "The Muscle Gorilla Sofa commands attention with its hyper-realistic sculpted form — every bicep, knuckle, and fur ridge rendered in polished leather. A furniture piece that refuses to be ignored, it transforms any room into a gallery of primal sophistication. Sit in the lap of strength.",
+    concept:
+      "Inspired by the raw musculature of a silverback gorilla in peak form, the Muscle Gorilla Sofa is a study in controlled power. Every surface has been sculpted to convey the tension of muscle beneath skin — the broad chest, the defined arms, the clenched fists. Yet for all its ferocity, the seating experience is pure comfort. The dichotomy between visual intensity and physical ease is the essence of this piece: a throne that earns its presence.",
+    interiorContext:
+      "The Muscle Gorilla Sofa demands a room with gravitas. Grand living rooms with high ceilings, luxury hotel lobbies, executive offices, or collector's penthouses — spaces where boldness is not just accepted but expected. Its 200cm width requires generous floor area, and its sculptural detail rewards close viewing. Best positioned as a centerpiece where it can be appreciated from multiple angles.",
+    priceRange: {
+      americas: [9800, 9800],
+      europe: [9800, 9800],
+      middle_east: [9200, 9200],
+      se_asia: [8500, 8500],
+    },
+    specifications: {
+      width: "W200 cm",
+      height: "H152 cm",
+      depth: "D160 cm",
+      seatHeight: "42 cm",
+      weight: "80 kg (+ frame 10 kg)",
+      capacity: "3-seater, up to 340 kg",
+    },
+    materials: [
+      "Solid hardwood frame (FSC-certified oak)",
+      "High-density foam with sculpted contouring",
+      "Premium leather upholstery with stitching detail",
+      "Solid brass feet with matte black finish",
+    ],
+    materialOptions: [
+      {
+        type: "Leather",
+        options: [
+          "Onyx Black",
+          "Chestnut Brown",
+          "Burgundy Red",
+          "Midnight Navy",
+        ],
+        colors: ["#1A1A1A", "#5C3A21", "#6B1C23", "#1B2A4A"],
+      },
+    ],
+    images: [
+      "/products/muscle-gorilla-sofa/main.jpg",
+      "/products/muscle-gorilla-sofa/scene-2.jpg",
+      "/products/muscle-gorilla-sofa/scene-4.jpg",
+      "/products/muscle-gorilla-sofa/scene-5.jpg",
+      "/products/muscle-gorilla-sofa/scene-6.jpg",
+    ],
+    faq: [
+      {
+        question: "What makes the Muscle Gorilla Sofa different from the Gorilla Sofa?",
+        answer:
+          "The Muscle Gorilla Sofa features hyper-realistic sculpted musculature in premium leather, while the Gorilla Sofa has a softer, more abstract silhouette in plush fabric. The Muscle Gorilla is for those who want maximum visual impact — it's the more dramatic, more detailed statement piece.",
+      },
+      {
+        question: "Is the leather easy to maintain?",
+        answer:
+          "Yes. The premium leather upholstery is treated for stain resistance and can be cleaned with a damp cloth. We include a leather care kit with every purchase. The sculpted stitching details are reinforced to prevent wear in high-contact areas.",
+      },
+      {
+        question: "How is the Muscle Gorilla Sofa delivered?",
+        answer:
+          "All Fuzz Sofa pieces are delivered via our free white-glove service. Due to the Muscle Gorilla's substantial size (W200 x H152 x D160 cm), our delivery team will coordinate with you to ensure smooth access through doorways and elevators. Assembly takes approximately 30 minutes on-site.",
+      },
+      {
+        question: "What is the return policy?",
+        answer:
+          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost.",
+      },
+    ],
+    relatedProducts: ["gorilla-sofa", "bear-sofa", "silverback-sofa"],
+    relatedInteriors: ["luxury-villa-interior", "statement-furniture"],
+    metaDescription:
+      "Muscle Gorilla Sofa by Fuzz Sofa — a hyper-realistic sculpted gorilla sofa in premium leather. Available in 4 colors. W200xH152xD160cm. Made to order. Free white-glove delivery worldwide.",
+    trendingGeo: ["americas", "middle_east", "europe"],
+  },
 ];
 
 export function getProduct(slug: string): Product | undefined {
@@ -643,6 +721,7 @@ export function getPrice(product: Product, region: Region): number {
     "gorilla-leather": { americas: 9800, europe: 9800, middle_east: 9200, se_asia: 8500 },
     "owl-sofa": { americas: 2800, europe: 2800, middle_east: 2650, se_asia: 2500 },
     "meteorite-ring-sofa": { americas: 3500, europe: 3500, middle_east: 3500, se_asia: 3500 },
+    "muscle-gorilla-sofa": { americas: 9800, europe: 9800, middle_east: 9200, se_asia: 8500 },
   };
   const key = product.slug === "gorilla-sofa" ? "gorilla-sofa" : product.slug;
   return mapping[key]?.[region] ?? product.priceRange.americas[0];

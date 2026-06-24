@@ -25,6 +25,8 @@ export function ProductPageClient({ product }: Props) {
     "gorilla-sofa": "gorillaSofa",
     "silverback-sofa": "silverbackSofa",
     "owl-sofa": "owlChair",
+    "meteorite-ring-sofa": "meteoriteRingSofa",
+    "muscle-gorilla-sofa": "muscleGorillaSofa",
   };
   const prefix = slugToPrefix[product.slug] || "";
 
@@ -96,6 +98,13 @@ export function ProductPageClient({ product }: Props) {
       "/products/meteorite-ring-sofa/main.jpg",
       "/products/meteorite-ring-sofa/scene-2.jpg",
       "/products/meteorite-ring-sofa/scene-3.jpg",
+    ],
+    "muscle-gorilla-sofa": [
+      "/products/muscle-gorilla-sofa/main.jpg",
+      "/products/muscle-gorilla-sofa/scene-2.jpg",
+      "/products/muscle-gorilla-sofa/scene-4.jpg",
+      "/products/muscle-gorilla-sofa/scene-5.jpg",
+      "/products/muscle-gorilla-sofa/scene-6.jpg",
     ],
   };
 

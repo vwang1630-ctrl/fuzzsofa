@@ -7,6 +7,8 @@ const productDescriptions: Record<string, string> = {
     "a pink fluffy owl-shaped armchair with shaggy fur texture, large round eyes, and a pointed beak, dusty pink bouclé fabric, sculptural animal furniture",
   "gorilla-sofa":
     "a large gorilla-shaped sofa with plush fur, broad shoulders, and commanding presence, gray-brown luxury fabric, sculptural animal furniture",
+  "muscle-gorilla-sofa":
+    "a hyper-realistic sculpted gorilla sofa with defined musculature, broad chest, clenched fists, and detailed leather upholstery, imposing sculptural animal furniture",
 };
 
 export async function POST(request: NextRequest) {

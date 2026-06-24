@@ -456,6 +456,33 @@ export default function HomePage() {
               </div>
             </Link>
 
+            {/* Muscle Gorilla Sofa — Primal Power */}
+            <Link
+              href="/muscle-gorilla-sofa"
+              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
+            >
+              <div className="aspect-square relative overflow-hidden">
+                <img
+                  src="/products/muscle-gorilla-sofa/main.jpg"
+                  alt={t("muscleGorillaSofaName")}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
+                <div className="absolute top-5 left-5">
+                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
+                    Primal Power
+                  </span>
+                </div>
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
+                  {t("muscleGorillaSofaName")}
+                </h3>
+                <p className="mt-1 text-xs text-[#8A8580]">{t("muscleGorillaSofaTagline")}</p>
+                <p className="mt-3 text-sm text-[#F5F0EB]/60">¥9,800</p>
+              </div>
+            </Link>
+
             {/* Interior Worlds card */}
             <Link
               href="/luxury-villa-interior"
