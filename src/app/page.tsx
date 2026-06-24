@@ -18,8 +18,8 @@ const slugToPrefix: Record<string, string> = {
 };
 
 const heroScenes = [
-  { src: "/hero-scene-1.jpg", alt: "Gorilla sofa in luxury penthouse interior" },
-  { src: "/hero-scene-2.jpg", alt: "Owl chair in elegant night interior" },
+  { src: "/hero-scene-1.jpg", alt: "Gorilla sofa in Dubai luxury penthouse interior" },
+  { src: "/hero-scene-2.jpg", alt: "Pink owl chair in dark contemporary interior" },
 ];
 
 function HeroSlideshow() {
@@ -64,7 +64,7 @@ export default function HomePage() {
       />
 
       {/* HERO: Immersive Scene Banner */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative w-full flex items-center justify-center overflow-hidden" style={{ aspectRatio: '21/9', maxHeight: '80vh' }}>
         {/* Background: AI-generated luxury interior scene */}
         <HeroSlideshow />
 
@@ -97,12 +97,6 @@ export default function HomePage() {
               {t("viewInteriors")}
             </Link>
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in-delay-3">
-          <span className="text-[10px] text-[#F5F0EB]/30 tracking-[0.2em] uppercase">Scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-[#F5F0EB]/30 to-transparent" />
         </div>
       </section>
 
