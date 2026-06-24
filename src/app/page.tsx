@@ -73,12 +73,9 @@ export default function HomePage() {
 
         {/* Hero content — top area, leaving product visible below */}
         <div className="relative z-10 text-center px-6 pt-[8%] max-w-4xl">
-          <p className="text-xs text-[#E8B4B8] tracking-[0.25em] uppercase mb-5 animate-fade-in">
+          <p className="text-xs text-[#E8B4B8] tracking-[0.25em] uppercase mb-6 animate-fade-in">
             {t("heroSubtitle")}
           </p>
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-[5rem] font-light tracking-[0.08em] leading-[1.05] text-[#F5F0EB] animate-fade-in-delay-1">
-            {t("siteTitle")}
-          </h1>
           <p className="mt-5 text-sm md:text-base font-light text-[#F5F0EB]/50 max-w-xl mx-auto leading-[1.7] animate-fade-in-delay-2">
             {t("heroDescription")}
           </p>
