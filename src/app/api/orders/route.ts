@@ -3,7 +3,6 @@ import { getSupabaseServerClient, getAuthenticatedClient } from '@/lib/supabase-
 
 export async function GET(request: NextRequest) {
   try {
-    // Try to get authenticated client from x-session header
     const sessionToken = request.headers.get('x-session');
     const supabase = sessionToken
       ? getAuthenticatedClient(sessionToken)
@@ -34,13 +33,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 });
     }
 
-    // Map snake_case DB fields to camelCase for frontend
     type OrderRow = Record<string, unknown>;
     type OrderItemRow = Record<string, unknown>;
     const mapped = (orders as OrderRow[] || []).map((o) => ({
       id: o.id,
       orderNumber: o.order_number,
       status: o.status,
+      paymentStatus: o.payment_status,
       shippingMethod: o.shipping_method,
       shippingFee: o.shipping_fee,
       subtotal: o.subtotal,
@@ -65,9 +64,11 @@ export async function GET(request: NextRequest) {
         productSlug: item.product_slug,
         productName: item.product_name,
         colorName: item.color_name,
+        colorHex: item.color_hex,
         quantity: item.quantity,
         unitPrice: item.unit_price,
         subtotal: item.subtotal,
+        imageUrl: item.image_url,
       })),
     }));
 
@@ -102,11 +103,27 @@ export async function POST(request: NextRequest) {
       address,
     } = body;
 
+    // Map items from frontend format (flexible: slug or productSlug, name or productName)
+    const mappedItems = (items || []).map((item: Record<string, unknown>) => ({
+      productSlug: item.productSlug || item.slug || '',
+      productName: item.productName || item.name || '',
+      colorName: item.colorName || 'Default',
+      colorHex: item.colorHex || '#000000',
+      quantity: Number(item.quantity) || 1,
+      unitPrice: Number(item.unitPrice || item.price) || 0,
+      subtotal: Number(item.subtotal) || (Number(item.quantity) || 1) * (Number(item.unitPrice || item.price) || 0),
+      imageUrl: item.imageUrl || item.image_url || null,
+    }));
+
+    // Map address from frontend format (zip or zipCode)
+    const addr = address || {};
+    const zipCode = addr.zipCode || addr.zip || null;
+
     // Validate required fields
-    if (!items || items.length === 0) {
+    if (mappedItems.length === 0) {
       return NextResponse.json({ error: 'No items in order' }, { status: 400 });
     }
-    if (!address?.firstName || !address?.lastName || !address?.email || !address?.addressLine1 || !address?.city || !address?.country) {
+    if (!addr.firstName || !addr.lastName || !addr.email || !addr.addressLine1 || !addr.city || !addr.country) {
       return NextResponse.json({ error: 'Missing required address fields' }, { status: 400 });
     }
 
@@ -118,31 +135,37 @@ export async function POST(request: NextRequest) {
     const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
     const orderNumber = `FUZZ-${dateStr}-${random}`;
 
-    // Create order
+    // Determine order status based on payment
+    // Online payment (creditcard/paypal/applepay) → confirmed + paid immediately
+    // Bank transfer → pending + pending_payment
+    const isOnlinePayment = paymentMethod && paymentMethod !== 'banktransfer';
+    const orderStatus = isOnlinePayment ? 'confirmed' : 'pending';
+    const finalPaymentStatus = isOnlinePayment ? 'paid' : 'pending_payment';
+
     const { data: order, error: orderError } = await supabase
       .from('orders')
       .insert({
         user_id: user.id,
         order_number: orderNumber,
-        status: paymentStatus === 'paid' ? 'confirmed' : 'pending',
+        status: orderStatus,
         shipping_method: shippingMethod || 'standard',
         shipping_fee: shippingFee || 0,
         subtotal: subtotal || 0,
         total: total || 0,
         currency: 'USD',
         payment_method: paymentMethod || null,
-        payment_status: paymentStatus || (paymentMethod === 'banktransfer' ? 'pending_payment' : 'paid'),
-        first_name: address.firstName,
-        last_name: address.lastName,
-        recipient_name: `${address.firstName} ${address.lastName}`,
-        email: address.email,
-        phone: address.phone || null,
-        country: address.country,
-        address_line: address.addressLine1,
-        address_line2: address.addressLine2 || null,
-        city: address.city,
-        state: address.state || null,
-        zip_code: address.zipCode || null,
+        payment_status: finalPaymentStatus,
+        first_name: addr.firstName,
+        last_name: addr.lastName,
+        recipient_name: `${addr.firstName} ${addr.lastName}`,
+        email: addr.email,
+        phone: addr.phone || null,
+        country: addr.country,
+        address_line: addr.addressLine1,
+        address_line2: addr.addressLine2 || null,
+        city: addr.city,
+        state: addr.state || null,
+        zip_code: zipCode,
       })
       .select()
       .single();
@@ -153,7 +176,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create order items
-    const orderItems = items.map((item: {
+    const orderItems = mappedItems.map((item: {
       productSlug: string;
       productName: string;
       colorName: string;
@@ -161,6 +184,7 @@ export async function POST(request: NextRequest) {
       quantity: number;
       unitPrice: number;
       subtotal: number;
+      imageUrl: string | null;
     }) => ({
       order_id: order.id,
       product_slug: item.productSlug,
@@ -170,6 +194,7 @@ export async function POST(request: NextRequest) {
       quantity: item.quantity,
       unit_price: item.unitPrice,
       subtotal: item.subtotal,
+      image_url: item.imageUrl,
     }));
 
     const { error: itemsError } = await supabase
@@ -182,25 +207,98 @@ export async function POST(request: NextRequest) {
     }
 
     // Create initial shipping event
+    const shippingEventDesc = isOnlinePayment
+        ? 'Payment confirmed. Your order has been sent to the Fuzz workshop for production.'
+        : 'Order placed. Awaiting bank transfer payment.';
     await supabase.from('shipping_events').insert({
       order_id: order.id,
-      status: 'confirmed',
-      description: paymentStatus === 'paid'
-          ? 'Order confirmed and payment received'
-          : 'Order placed, awaiting payment',
+      status: orderStatus,
+      description: shippingEventDesc,
       happened_at: new Date().toISOString(),
     });
+
+    // For online payment, also add production start event
+    if (isOnlinePayment) {
+      await supabase.from('shipping_events').insert({
+        order_id: order.id,
+        status: 'confirmed',
+        description: 'Your furniture is now being handcrafted by our artisans. Estimated production time: 2 days.',
+        happened_at: new Date().toISOString(),
+      });
+    }
 
     return NextResponse.json({
       order: {
         id: order.id,
         orderNumber: order.order_number,
         status: order.status,
+        paymentStatus: finalPaymentStatus,
         total: order.total,
+        paymentMethod: paymentMethod,
       },
     }, { status: 201 });
   } catch (err) {
     console.error('Order creation error:', err);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
+// DELETE: delete a pending order (only pending orders can be deleted)
+export async function DELETE(request: NextRequest) {
+  try {
+    const sessionToken = request.headers.get('x-session');
+    const supabase = sessionToken
+      ? getAuthenticatedClient(sessionToken)
+      : getSupabaseServerClient();
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const orderId = searchParams.get('id');
+
+    if (!orderId) {
+      return NextResponse.json({ error: 'Order ID is required' }, { status: 400 });
+    }
+
+    // Check that the order belongs to the user and is in pending status
+    const { data: order, error: fetchError } = await supabase
+      .from('orders')
+      .select('id, status, payment_status')
+      .eq('id', orderId)
+      .eq('user_id', user.id)
+      .single();
+
+    if (fetchError || !order) {
+      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+    }
+
+    // Only allow deleting pending orders (unpaid)
+    if ((order as Record<string, unknown>).status !== 'pending') {
+      return NextResponse.json({ error: 'Only pending orders can be deleted' }, { status: 400 });
+    }
+
+    // Delete shipping events first (foreign key)
+    await supabase.from('shipping_events').delete().eq('order_id', orderId);
+    // Delete order items
+    await supabase.from('order_items').delete().eq('order_id', orderId);
+    // Delete the order
+    const { error: deleteError } = await supabase
+      .from('orders')
+      .delete()
+      .eq('id', orderId)
+      .eq('user_id', user.id);
+
+    if (deleteError) {
+      console.error('Error deleting order:', deleteError);
+      return NextResponse.json({ error: 'Failed to delete order' }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error('Order delete error:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

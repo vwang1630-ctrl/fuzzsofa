@@ -1,26 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useCart, getUnitPrice } from "@/lib/cart-context";
+import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
-import type { TranslationKeys } from "@/lib/i18n";
-import { formatPrice } from "@/lib/products";
 import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
-
-type PaymentMethod = "creditcard" | "paypal" | "applepay" | "banktransfer";
 
 interface CheckoutItem {
   productSlug: string;
   productName: string;
-  colorName: string;
-  colorHex: string;
+  colorName?: string;
+  colorHex?: string;
   quantity: number;
   unitPrice: number;
   subtotal: number;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 interface CheckoutData {
@@ -29,434 +24,479 @@ interface CheckoutData {
     lastName: string;
     email: string;
     phone: string;
+    country: string;
     addressLine1: string;
     addressLine2: string;
     city: string;
     state: string;
-    zipCode: string;
-    country: string;
+    zip: string;
   };
-  shippingMethod: "standard" | "express";
-  shippingFee: number;
-  selectedTotal: number;
-  total: number;
-  currency: string;
+  shippingMethod: string;
   items: CheckoutItem[];
+  subtotal: number;
+  shippingFee: number;
+  total: number;
 }
 
-interface CardForm {
-  cardNumber: string;
-  expiryDate: string;
-  cvv: string;
-  cardholderName: string;
+interface ExistingOrderItem {
+  product_slug: string;
+  product_name: string;
+  color_name?: string;
+  quantity: number;
+  unit_price: number;
+  subtotal: number;
+  image_url?: string;
 }
 
-export default function PaymentPage() {
-  const { selectedItems, region, clearCart } = useCart();
-  const { t } = useLanguage();
+interface ExistingOrder {
+  id: string;
+  order_number: string;
+  total: number;
+  items: ExistingOrderItem[];
+}
+
+type PaymentMethod = "creditcard" | "paypal" | "applepay" | "banktransfer";
+type PaymentState = "form" | "processing" | "failed";
+
+function PaymentPageInner() {
   const router = useRouter();
-  const [sessionToken, setSessionToken] = useState<string | null>(null);
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("creditcard");
-  const [submitting, setSubmitting] = useState(false);
-  const [processingPayment, setProcessingPayment] = useState(false);
-  const [paymentError, setPaymentError] = useState<string | null>(null);
-  const [cardForm, setCardForm] = useState<CardForm>({
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
-    cardholderName: "",
-  });
-  const [cardErrors, setCardErrors] = useState<Record<string, boolean>>({});
-  const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
+  const searchParams = useSearchParams();
+  const { clearCart } = useCart();
+  const { t } = useLanguage();
 
-  // Load session + checkout data from sessionStorage
+  // Mode detection: new checkout vs paying existing orders
+  const [mode, setMode] = useState<"checkout" | "existing">("checkout");
+  const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
+  const [existingOrders, setExistingOrders] = useState<ExistingOrder[]>([]);
+  const [existingOrdersTotal, setExistingOrdersTotal] = useState(0);
+
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("creditcard");
+  const [paymentState, setPaymentState] = useState<PaymentState>("form");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Card form fields
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardholderName, setCardholderName] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
+
   useEffect(() => {
-    const stored = sessionStorage.getItem("checkoutData");
-    if (!stored) {
-      router.replace("/checkout");
+    // Check if we have orderIds in URL (paying existing orders)
+    const orderIdsParam = searchParams.get("orderIds");
+    if (orderIdsParam) {
+      setMode("existing");
+      loadExistingOrders(orderIdsParam.split(","));
       return;
     }
 
+    // Otherwise, load checkout data from sessionStorage
     try {
-      const parsed: CheckoutData = JSON.parse(stored);
-      setCheckoutData(parsed);
+      const raw = sessionStorage.getItem("checkoutData");
+      if (!raw) {
+        router.replace("/checkout");
+        return;
+      }
+      setCheckoutData(JSON.parse(raw));
+      setMode("checkout");
     } catch {
       router.replace("/checkout");
-      return;
     }
+  }, [router, searchParams]);
 
-    async function init() {
-      try {
-        const supabase = await getSupabaseBrowserClientWithRetry();
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.access_token) {
-          setSessionToken(session.access_token);
-
-          // Load saved payment preference
-          const prefRes = await fetch("/api/preferences", {
-            headers: { "x-session": session.access_token },
-          });
-          if (prefRes.ok) {
-            const prefData = await prefRes.json();
-            if (prefData.preferences?.default_payment_method) {
-              setPaymentMethod(prefData.preferences.default_payment_method as PaymentMethod);
-            }
-          }
-        }
-      } catch {
-        // Not logged in — order creation will fail with 401
-      }
-    }
-    init();
-  }, [router]);
-
-  const updateCardForm = (field: keyof CardForm, value: string) => {
-    if (field === "cardNumber") {
-      // Format card number with spaces every 4 digits
-      const digits = value.replace(/\D/g, "").slice(0, 16);
-      const formatted = digits.replace(/(.{4})/g, "$1 ").trim();
-      setCardForm({ ...cardForm, cardNumber: formatted });
-    } else if (field === "expiryDate") {
-      // Format MM/YY
-      const digits = value.replace(/\D/g, "").slice(0, 4);
-      const formatted = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
-      setCardForm({ ...cardForm, expiryDate: formatted });
-    } else if (field === "cvv") {
-      setCardForm({ ...cardForm, cvv: value.replace(/\D/g, "").slice(0, 4) });
-    } else {
-      setCardForm({ ...cardForm, [field]: value });
-    }
-    if (cardErrors[field]) {
-      setCardErrors({ ...cardErrors, [field]: false });
-    }
-  };
-
-  const validateCard = (): boolean => {
-    const newErrors: Record<string, boolean> = {};
-    if (paymentMethod === "creditcard") {
-      const digits = cardForm.cardNumber.replace(/\s/g, "");
-      if (digits.length < 15) newErrors.cardNumber = true;
-      if (!/^\d{2}\/\d{2}$/.test(cardForm.expiryDate)) newErrors.expiryDate = true;
-      if (cardForm.cvv.length < 3) newErrors.cvv = true;
-      if (!cardForm.cardholderName.trim()) newErrors.cardholderName = true;
-    }
-    setCardErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handlePayNow = async () => {
-    if (!checkoutData) return;
-    if (paymentMethod === "creditcard" && !validateCard()) return;
-
-    setSubmitting(true);
-    setPaymentError(null);
-
+  const loadExistingOrders = async (orderIds: string[]) => {
     try {
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      };
-      if (sessionToken) {
-        headers["x-session"] = sessionToken;
+      const supabase = await getSupabaseBrowserClientWithRetry();
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token || "";
+
+      const orders: ExistingOrder[] = [];
+      let totalAmount = 0;
+
+      for (const id of orderIds) {
+        const res = await fetch(`/api/orders/${id}`, {
+          headers: token ? { "x-session": token } : {},
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const order = data.order;
+          orders.push({
+            id: order.id,
+            order_number: order.order_number,
+            total: order.total,
+            items: order.items || [],
+          });
+          totalAmount += order.total;
+        }
       }
 
-      // Save payment preference (fire and forget)
-      if (sessionToken) {
-        fetch("/api/preferences", {
-          method: "PUT",
-          headers,
-          body: JSON.stringify({
-            defaultPaymentMethod: paymentMethod,
-            preferredShippingMethod: checkoutData.shippingMethod,
-          }),
-        }).catch(() => {});
-      }
-
-      // For credit card, PayPal, Apple Pay — simulate payment gateway processing
-      // For bank transfer — no processing needed, order is created with pending_payment
-      const isImmediatePayment = paymentMethod !== "banktransfer";
-
-      if (isImmediatePayment) {
-        // Show payment processing overlay
-        setProcessingPayment(true);
-
-        // Simulate payment gateway processing (1.5-3 seconds)
-        await new Promise((resolve) => setTimeout(resolve, 1500 + Math.random() * 1500));
-
-        setProcessingPayment(false);
-      }
-
-      // Create order via API
-      const res = await fetch("/api/orders", {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          shippingMethod: checkoutData.shippingMethod,
-          shippingFee: checkoutData.shippingFee,
-          paymentMethod,
-          paymentStatus: isImmediatePayment ? "paid" : "pending_payment",
-          address: checkoutData.address,
-          items: checkoutData.items.map((item) => ({
-            productSlug: item.productSlug,
-            productName: item.productName,
-            colorName: item.colorName,
-            colorHex: item.colorHex,
-            quantity: item.quantity,
-            unitPrice: item.unitPrice,
-            subtotal: item.subtotal,
-          })),
-          subtotal: checkoutData.selectedTotal,
-          total: checkoutData.total,
-          currency: checkoutData.currency,
-        }),
-      });
-
-      if (res.status === 401) {
-        setPaymentError(t("checkoutLoginRequired"));
-        router.push("/login?redirect=/payment");
+      if (orders.length === 0) {
+        router.replace("/account");
         return;
       }
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || t("checkoutOrderFailed"));
-      }
-
-      const data = await res.json();
-      sessionStorage.removeItem("checkoutData");
-      clearCart();
-      router.push(`/order-confirmed?order=${data.order.orderNumber}&payment=${isImmediatePayment ? "paid" : "banktransfer"}`);
-    } catch (err) {
-      console.error("Payment failed:", err);
-      setProcessingPayment(false);
-      setPaymentError(err instanceof Error ? err.message : t("checkoutOrderFailed"));
-    } finally {
-      setSubmitting(false);
+      setExistingOrders(orders);
+      setExistingOrdersTotal(totalAmount);
+    } catch {
+      router.replace("/account");
     }
   };
 
-  // Loading state while checkout data is being parsed
-  if (!checkoutData) {
+  const formatCardNumber = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 16);
+    return digits.replace(/(\d{4})(?=\d)/g, "$1 ");
+  };
+
+  const formatExpiry = (value: string) => {
+    const digits = value.replace(/\D/g, "").slice(0, 4);
+    if (digits.length >= 3) return digits.slice(0, 2) + "/" + digits.slice(2);
+    return digits;
+  };
+
+  const isCardValid = () => {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="text-[#8A8580] text-sm tracking-[0.1em] uppercase">...</div>
+      cardNumber.replace(/\s/g, "").length === 16 &&
+      cardholderName.trim().length >= 2 &&
+      expiryDate.length === 5 &&
+      cvv.length >= 3
+    );
+  };
+
+  const handleSubmitPayment = async () => {
+    setPaymentState("processing");
+    setErrorMessage("");
+
+    try {
+      // For credit card / PayPal / Apple Pay: simulate payment gateway processing
+      if (paymentMethod !== "banktransfer") {
+        await new Promise((resolve) => setTimeout(resolve, 2500));
+
+        // Simulate 95% success rate for demo
+        const isSuccessful = Math.random() > 0.05;
+        if (!isSuccessful) {
+          setPaymentState("failed");
+          setErrorMessage("Payment was declined. Please check your details and try again.");
+          return;
+        }
+      }
+
+      // Get Supabase session for auth
+      let sessionToken = "";
+      try {
+        const supabase = await getSupabaseBrowserClientWithRetry();
+        const { data } = await supabase.auth.getSession();
+        sessionToken = data.session?.access_token || "";
+      } catch {
+        // Continue without auth
+      }
+
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+        ...(sessionToken ? { "x-session": sessionToken } : {}),
+      };
+
+      if (mode === "checkout" && checkoutData) {
+        // Create new order
+        const orderPayload = {
+          items: checkoutData.items.map((item: CheckoutItem) => ({
+            productSlug: item.productSlug,
+            productName: item.productName,
+            colorName: item.colorName || "",
+            colorHex: item.colorHex || "#333333",
+            quantity: item.quantity,
+            unitPrice: item.unitPrice,
+            subtotal: item.subtotal,
+            imageUrl: item.imageUrl || "",
+          })),
+          address: checkoutData.address,
+          shippingMethod: checkoutData.shippingMethod,
+          paymentMethod,
+          subtotal: checkoutData.subtotal,
+          shippingFee: checkoutData.shippingFee,
+          total: checkoutData.total,
+          paymentStatus: paymentMethod === "banktransfer" ? "pending_payment" : "paid",
+          orderStatus: paymentMethod === "banktransfer" ? "pending" : "confirmed",
+        };
+
+        const response = await fetch("/api/orders", {
+          method: "POST",
+          headers,
+          body: JSON.stringify(orderPayload),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          if (response.status === 401) {
+            router.push(`/login?redirect=/payment`);
+            return;
+          }
+          throw new Error(errorData.error || "Failed to create order");
+        }
+
+        const orderData = await response.json();
+        clearCart();
+        sessionStorage.removeItem("checkoutData");
+
+        const orderId = orderData.orderId || orderData.id || "";
+        router.push(`/order-confirmed?order=${encodeURIComponent(orderId)}&payment=${paymentMethod}`);
+      } else if (mode === "existing" && existingOrders.length > 0) {
+        // Pay for existing orders
+        const response = await fetch("/api/orders/pay", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            orderIds: existingOrders.map((o) => o.id),
+            paymentMethod,
+            paymentStatus: paymentMethod === "banktransfer" ? "pending_payment" : "paid",
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          if (response.status === 401) {
+            router.push(`/login?redirect=/payment`);
+            return;
+          }
+          throw new Error(errorData.error || "Failed to process payment");
+        }
+
+        router.push(`/order-confirmed?payment=${paymentMethod}`);
+      }
+    } catch (err: unknown) {
+      setPaymentState("failed");
+      const message = err instanceof Error ? err.message : "An unexpected error occurred";
+      setErrorMessage(message);
+    }
+  };
+
+  const totalAmount = mode === "checkout" && checkoutData ? checkoutData.total : existingOrdersTotal;
+  const shippingFee = mode === "checkout" && checkoutData ? checkoutData.shippingFee : 0;
+  const subtotal = mode === "checkout" && checkoutData ? checkoutData.subtotal : existingOrdersTotal;
+
+  if ((!checkoutData && mode === "checkout") || (existingOrders.length === 0 && mode === "existing")) {
+    return (
+      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+        <div className="animate-spin w-8 h-8 border-2 border-[#E8B4B8] border-t-transparent rounded-full" />
       </div>
     );
   }
 
-  const inputClass = (field: string) =>
-    `w-full bg-[#111111] border ${cardErrors[field] ? "border-red-500" : "border-[#1A1A1A]"} px-4 py-3 text-[#F5F0EB] text-sm focus:border-[#E8B4B8] focus:outline-none transition-colors placeholder:text-[#8A8580]/40`;
+  // Processing overlay
+  if (paymentState === "processing") {
+    return (
+      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center px-6">
+        <div className="relative mb-8">
+          <div className="w-20 h-20 border-2 border-[#E8B4B8] border-t-transparent rounded-full animate-spin" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+              <line x1="1" y1="10" x2="23" y2="10" />
+            </svg>
+          </div>
+        </div>
+        <h2 className="text-[#F5F0EB] text-xl font-light tracking-wide mb-2">
+          {t("paymentProcessing")}
+        </h2>
+        <p className="text-[#8A8580] text-sm">{t("paymentDoNotClose")}</p>
+      </div>
+    );
+  }
+
+  // Failed state
+  if (paymentState === "failed") {
+    return (
+      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center px-6">
+        <div className="w-20 h-20 rounded-full border-2 border-red-500/50 flex items-center justify-center mb-8">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </div>
+        <h2 className="text-[#F5F0EB] text-xl font-light tracking-wide mb-2">
+          Payment Failed
+        </h2>
+        <p className="text-red-400 text-sm mb-8 text-center max-w-md">
+          {errorMessage}
+        </p>
+        <button
+          onClick={() => {
+            setPaymentState("form");
+            setErrorMessage("");
+          }}
+          className="px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-20">
-      {/* Payment Processing Overlay */}
-      {processingPayment && (
-        <div className="fixed inset-0 z-50 bg-[#0A0A0A]/90 flex flex-col items-center justify-center">
-          <div className="relative w-16 h-16 mb-6">
-            <div className="absolute inset-0 rounded-full border-2 border-[#1A1A1A]" />
-            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#E8B4B8] animate-spin" />
+    <div className="min-h-screen bg-[#0A0A0A]">
+      {/* Nav */}
+      <div className="border-b border-[#1A1A1A] px-6 py-4">
+        <Link href="/" className="font-serif text-xl text-[#F5F0EB] tracking-[0.15em]">
+          FUZZ SOFA
+        </Link>
+      </div>
+
+      <div className="max-w-[1100px] mx-auto px-6 py-12">
+        <h1 className="font-serif text-3xl font-light text-[#F5F0EB] tracking-wide mb-10">
+          {t("paymentTitle")}
+        </h1>
+
+        {/* Error banner */}
+        {errorMessage && (
+          <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 mb-6 text-sm">
+            {errorMessage}
           </div>
-          <p className="text-[#F5F0EB] text-sm tracking-[0.1em] uppercase mb-2">
-            {paymentMethod === "paypal"
-              ? t("paymentPayPalRedirect")
-              : paymentMethod === "applepay"
-                ? t("paymentApplePayConfirm")
-                : t("paymentProcessing")}
-          </p>
-          <p className="text-[#8A8580] text-xs">{t("paymentDoNotClose")}</p>
-        </div>
-      )}
+        )}
 
-      <h1 className="font-serif text-3xl font-light text-[#F5F0EB] mb-12 tracking-wide">
-        {t("paymentTitle")}
-      </h1>
-
-      {/* Payment Error */}
-      {paymentError && (
-        <div className="mb-8 bg-red-900/20 border border-red-500/30 px-5 py-4 text-red-400 text-sm">
-          {paymentError}
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12">
-        {/* Left Column - Payment */}
-        <div className="space-y-10">
-          {/* Order Summary / Shipping Recap */}
-          <section>
-            <h2 className="font-serif text-xl font-light text-[#F5F0EB] mb-6 tracking-wide">
-              {t("paymentOrderSummary")}
-            </h2>
-            <div className="bg-[#111111] border border-[#1A1A1A] p-5 space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-[#8A8580]">{t("paymentShippingTo")}</span>
-                <span className="text-[#F5F0EB] text-right">
-                  {checkoutData.address.firstName} {checkoutData.address.lastName}
-                </span>
-              </div>
-              <p className="text-xs text-[#8A8580] text-right">
-                {checkoutData.address.addressLine1}
-                {checkoutData.address.addressLine2 ? `, ${checkoutData.address.addressLine2}` : ""}
-                <br />
-                {checkoutData.address.city}, {checkoutData.address.state} {checkoutData.address.zipCode}
-                <br />
-                {checkoutData.address.country}
-              </p>
-              <div className="border-t border-[#1A1A1A] pt-3 flex justify-between text-sm">
-                <span className="text-[#8A8580]">{t("checkoutShippingMethod")}</span>
-                <span className="text-[#F5F0EB]">
-                  {checkoutData.shippingMethod === "express"
-                    ? t("checkoutExpressShipping")
-                    : t("checkoutStandardShipping")}
-                </span>
-              </div>
-              <Link
-                href="/checkout"
-                className="inline-block text-xs text-[#E8B4B8] tracking-[0.05em] hover:underline mt-1"
-              >
-                {t("paymentEditShipping")}
-              </Link>
-            </div>
-          </section>
-
-          {/* Payment Method Selection */}
-          <section>
-            <h2 className="font-serif text-xl font-light text-[#F5F0EB] mb-6 tracking-wide">
-              {t("checkoutPaymentMethod")}
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {([
-                { key: "creditcard" as PaymentMethod, label: t("checkoutCreditCard"), icon: "💳" },
-                { key: "paypal" as PaymentMethod, label: t("checkoutPayPal"), icon: "P" },
-                { key: "applepay" as PaymentMethod, label: t("checkoutApplePay"), icon: "" },
-                { key: "banktransfer" as PaymentMethod, label: t("checkoutBankTransfer"), icon: "↔" },
-              ]).map((pm) => (
-                <button
-                  key={pm.key}
-                  type="button"
-                  onClick={() => setPaymentMethod(pm.key)}
-                  className={`p-4 border text-center transition-all duration-300 ${
-                    paymentMethod === pm.key
-                      ? "border-[#E8B4B8] bg-[#E8B4B8]/5"
-                      : "border-[#1A1A1A] hover:border-[#333]"
-                  }`}
-                >
-                  <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-[#1A1A1A] flex items-center justify-center text-xs text-[#8A8580]">
-                    {pm.icon}
-                  </div>
-                  <span className="text-[#F5F0EB] text-xs">{pm.label}</span>
-                </button>
-              ))}
-            </div>
-          </section>
-
-          {/* Conditional Payment Forms */}
-          {paymentMethod === "creditcard" && (
-            <section>
-              <h2 className="font-serif text-xl font-light text-[#F5F0EB] mb-6 tracking-wide">
-                {t("paymentCardDetails")}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
+          {/* Left: Payment methods + card form */}
+          <div className="lg:col-span-3 space-y-8">
+            {/* Payment Method Selection */}
+            <div>
+              <h2 className="text-sm text-[#8A8580] tracking-[0.15em] uppercase mb-4">
+                {t("checkoutPaymentMethod")}
               </h2>
-              <div className="space-y-4">
-                {/* Card Number */}
-                <div>
-                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
-                    {t("paymentCardNumber")} *
-                  </label>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={cardForm.cardNumber}
-                    onChange={(e) => updateCardForm("cardNumber", e.target.value)}
-                    placeholder="1234 5678 9012 3456"
-                    className={inputClass("cardNumber")}
-                  />
-                </div>
+              <div className="grid grid-cols-2 gap-3">
+                {([
+                  ["creditcard", t("checkoutCreditCard")],
+                  ["paypal", t("checkoutPayPal")],
+                  ["applepay", t("checkoutApplePay")],
+                  ["banktransfer", t("checkoutBankTransfer")],
+                ] as [PaymentMethod, string][]).map(([method, label]) => (
+                  <button
+                    key={method}
+                    onClick={() => setPaymentMethod(method)}
+                    className={`p-4 border text-left transition-all duration-300 ${
+                      paymentMethod === method
+                        ? "border-[#E8B4B8] bg-[#E8B4B8]/5"
+                        : "border-[#1A1A1A] hover:border-[#333]"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                          paymentMethod === method ? "border-[#E8B4B8]" : "border-[#333]"
+                        }`}
+                      >
+                        {paymentMethod === method && (
+                          <div className="w-2 h-2 rounded-full bg-[#E8B4B8]" />
+                        )}
+                      </div>
+                      <span className="text-[#F5F0EB] text-sm">{label}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
 
-                {/* Cardholder Name */}
-                <div>
-                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
-                    {t("paymentCardholderName")} *
-                  </label>
-                  <input
-                    type="text"
-                    value={cardForm.cardholderName}
-                    onChange={(e) => updateCardForm("cardholderName", e.target.value)}
-                    placeholder="Name on card"
-                    className={inputClass("cardholderName")}
-                  />
-                </div>
-
-                {/* Expiry + CVV row */}
-                <div className="grid grid-cols-2 gap-4">
+            {/* Credit Card Form */}
+            {paymentMethod === "creditcard" && (
+              <div>
+                <h2 className="text-sm text-[#8A8580] tracking-[0.15em] uppercase mb-4">
+                  {t("paymentCardDetails")}
+                </h2>
+                <div className="space-y-4">
                   <div>
                     <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
-                      {t("paymentExpiryDate")} *
+                      {t("paymentCardNumber")}
                     </label>
                     <input
                       type="text"
-                      inputMode="numeric"
-                      value={cardForm.expiryDate}
-                      onChange={(e) => updateCardForm("expiryDate", e.target.value)}
-                      placeholder="MM/YY"
-                      className={inputClass("expiryDate")}
+                      value={cardNumber}
+                      onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
+                      placeholder="0000 0000 0000 0000"
+                      maxLength={19}
+                      className="w-full bg-[#111111] border border-[#1A1A1A] px-4 py-3 text-[#F5F0EB] placeholder:text-[#8A8580]/40 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
                     />
                   </div>
                   <div>
                     <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
-                      {t("paymentCVV")} *
+                      {t("paymentCardholderName")}
                     </label>
                     <input
                       type="text"
-                      inputMode="numeric"
-                      value={cardForm.cvv}
-                      onChange={(e) => updateCardForm("cvv", e.target.value)}
-                      placeholder="123"
-                      className={inputClass("cvv")}
+                      value={cardholderName}
+                      onChange={(e) => setCardholderName(e.target.value)}
+                      placeholder="Name on card"
+                      className="w-full bg-[#111111] border border-[#1A1A1A] px-4 py-3 text-[#F5F0EB] placeholder:text-[#8A8580]/40 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
                     />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
+                        {t("paymentExpiryDate")}
+                      </label>
+                      <input
+                        type="text"
+                        value={expiryDate}
+                        onChange={(e) => setExpiryDate(formatExpiry(e.target.value))}
+                        placeholder="MM/YY"
+                        maxLength={5}
+                        className="w-full bg-[#111111] border border-[#1A1A1A] px-4 py-3 text-[#F5F0EB] placeholder:text-[#8A8580]/40 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
+                        {t("paymentCVV")}
+                      </label>
+                      <input
+                        type="text"
+                        value={cvv}
+                        onChange={(e) => setCvv(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                        placeholder="123"
+                        maxLength={4}
+                        className="w-full bg-[#111111] border border-[#1A1A1A] px-4 py-3 text-[#F5F0EB] placeholder:text-[#8A8580]/40 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 pt-2">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A8580" strokeWidth="1.5">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    <span className="text-xs text-[#8A8580]">{t("paymentSecureNote")}</span>
                   </div>
                 </div>
               </div>
+            )}
 
-              {/* Security note */}
-              <div className="mt-4 flex items-center gap-2 text-xs text-[#8A8580]">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-                <span>{t("paymentSecureNote")}</span>
-              </div>
-            </section>
-          )}
-
-          {paymentMethod === "paypal" && (
-            <section>
-              <div className="bg-[#111111] border border-[#1A1A1A] p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#1A1A1A] flex items-center justify-center">
-                  <span className="text-2xl font-bold text-[#003087]">P</span>
+            {/* PayPal */}
+            {paymentMethod === "paypal" && (
+              <div className="border border-[#1A1A1A] p-8 flex flex-col items-center justify-center">
+                <div className="text-2xl font-bold text-[#003087] mb-1">
+                  Pay<span className="text-[#009CDE]">Pal</span>
                 </div>
-                <p className="text-[#F5F0EB] text-sm mb-2">{t("paymentPayPalRedirect")}</p>
-                <p className="text-xs text-[#8A8580]">{t("paymentPayPalDescription")}</p>
+                <p className="text-[#8A8580] text-sm mt-2 text-center">
+                  {t("paymentPayPalDescription")}
+                </p>
+                <p className="text-[#8A8580] text-xs mt-4 text-center">
+                  {t("paymentPayPalRedirect")}
+                </p>
               </div>
-            </section>
-          )}
+            )}
 
-          {paymentMethod === "applepay" && (
-            <section>
-              <div className="bg-[#111111] border border-[#1A1A1A] p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#1A1A1A] flex items-center justify-center">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="#F5F0EB">
-                    <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
-                  </svg>
+            {/* Apple Pay */}
+            {paymentMethod === "applepay" && (
+              <div className="border border-[#1A1A1A] p-8 flex flex-col items-center justify-center">
+                <div className="text-[#F5F0EB] text-2xl font-light mb-1">
+                  <span className="font-normal">&#xF8FF;</span> Pay
                 </div>
-                <p className="text-[#F5F0EB] text-sm mb-2">{t("paymentApplePayConfirm")}</p>
-                <p className="text-xs text-[#8A8580]">{t("paymentApplePayDescription")}</p>
+                <p className="text-[#8A8580] text-sm mt-2 text-center">
+                  {t("paymentApplePayDescription")}
+                </p>
               </div>
-            </section>
-          )}
+            )}
 
-          {paymentMethod === "banktransfer" && (
-            <section>
-              <div className="bg-[#111111] border border-[#1A1A1A] p-6 space-y-3">
-                <h3 className="text-[#F5F0EB] text-sm font-light tracking-wide">{t("paymentBankTransferInfo")}</h3>
-                <div className="space-y-2 text-sm">
+            {/* Bank Transfer */}
+            {paymentMethod === "banktransfer" && (
+              <div className="border border-[#1A1A1A] p-6">
+                <h3 className="text-[#F5F0EB] text-sm tracking-[0.1em] uppercase mb-4">
+                  {t("paymentBankTransferInfo")}
+                </h3>
+                <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="text-[#8A8580]">Bank</span>
                     <span className="text-[#F5F0EB]">HSBC International</span>
@@ -470,79 +510,176 @@ export default function PaymentPage() {
                     <span className="text-[#F5F0EB]">FUZZ-2024-8891</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#8A8580]">Reference</span>
-                    <span className="text-[#F5F0EB]">{t("paymentUseOrderNumber")}</span>
+                    <span className="text-[#8A8580]">Beneficiary</span>
+                    <span className="text-[#F5F0EB]">Fuzz Sofa International Ltd.</span>
                   </div>
                 </div>
-                <p className="text-xs text-[#8A8580] pt-2 border-t border-[#1A1A1A]">
+                <div className="mt-4 pt-4 border-t border-[#1A1A1A]">
+                  <h4 className="text-[#F5F0EB] text-xs tracking-[0.1em] uppercase mb-3">
+                    How to Pay by Bank Transfer
+                  </h4>
+                  <ol className="text-xs text-[#8A8580] space-y-2 list-decimal list-inside">
+                    <li>Complete your order below</li>
+                    <li>Visit your bank or online banking</li>
+                    <li>Transfer the exact total amount to the account above</li>
+                    <li>Use your order number as the payment reference</li>
+                    <li>Your order will be confirmed once payment is received (within 48 hours)</li>
+                  </ol>
+                </div>
+                <p className="text-xs text-[#8A8580] mt-4 pt-3 border-t border-[#1A1A1A]">
                   {t("paymentBankTransferNote")}
                 </p>
               </div>
-            </section>
-          )}
-        </div>
+            )}
 
-        {/* Right Column - Order Summary (sticky) */}
-        <div className="lg:sticky lg:top-24 lg:self-start">
-          <div className="bg-[#111111] border border-[#1A1A1A] p-6">
-            <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">{t("checkoutOrderSummary")}</h2>
-
-            <div className="space-y-4 mb-6">
-              {checkoutData.items.map((item) => (
-                <div key={item.productSlug + item.colorName} className="flex gap-3">
-                  <div className="w-12 h-12 bg-[#1A1A1A] shrink-0 overflow-hidden relative">
-                    <Image src={item.imageUrl || "/products/placeholder/thumb.jpg"} alt={item.productName} fill className="object-cover" sizes="48px" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[#F5F0EB] text-sm truncate">{item.productName}</p>
-                    <p className="text-xs text-[#8A8580]">
-                      {item.colorName} x{item.quantity}
-                    </p>
-                  </div>
-                  <p className="text-[#F5F0EB] text-sm shrink-0">{formatPrice(item.subtotal, region)}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t border-[#1A1A1A] pt-4 space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-[#8A8580]">{t("cartSubtotal")}</span>
-                <span className="text-[#F5F0EB]">{formatPrice(checkoutData.selectedTotal, region)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-[#8A8580]">{t("cartShipping")}</span>
-                <span className={checkoutData.shippingFee === 0 ? "text-[#E8B4B8]" : "text-[#F5F0EB]"}>
-                  {checkoutData.shippingFee === 0 ? (t("free") || "Free") : formatPrice(checkoutData.shippingFee, region)}
-                </span>
-              </div>
-              <div className="border-t border-[#1A1A1A] pt-3 flex justify-between">
-                <span className="text-[#F5F0EB] font-light">{t("cartTotal")}</span>
-                <span className="text-[#F5F0EB] text-lg">{formatPrice(checkoutData.total, region)}</span>
-              </div>
-            </div>
-
+            {/* Submit Button */}
             <button
-              type="button"
-              onClick={handlePayNow}
-              disabled={submitting}
-              className="w-full mt-6 border border-[#F5F0EB] text-[#F5F0EB] py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={handleSubmitPayment}
+              disabled={paymentMethod === "creditcard" && !isCardValid()}
+              className={`w-full py-4 text-sm tracking-[0.15em] uppercase transition-all duration-300 ${
+                paymentMethod === "creditcard" && !isCardValid()
+                  ? "border border-[#1A1A1A] text-[#8A8580]/40 cursor-not-allowed"
+                  : "border border-[#E8B4B8] text-[#E8B4B8] hover:bg-[#E8B4B8] hover:text-[#0A0A0A]"
+              }`}
             >
-              {submitting
-                ? "..."
-                : paymentMethod === "banktransfer"
-                  ? t("paymentConfirmOrder")
-                  : t("paymentPayNow")}
+              {paymentMethod === "banktransfer" ? t("paymentConfirmOrder") : t("paymentPayNow")}
             </button>
 
             <Link
-              href="/checkout"
-              className="block text-center mt-4 text-[#8A8580] text-xs tracking-[0.1em] uppercase hover:text-[#F5F0EB] transition-colors"
+              href={mode === "checkout" ? "/checkout" : "/account"}
+              className="block text-center text-sm text-[#8A8580] hover:text-[#E8B4B8] transition-colors"
             >
-              {t("paymentBackToCheckout")}
+              {mode === "checkout" ? t("paymentBackToCheckout") : "Back to My Orders"}
             </Link>
+          </div>
+
+          {/* Right: Order Summary */}
+          <div className="lg:col-span-2">
+            <div className="bg-[#111111] border border-[#1A1A1A] p-6 sticky top-24">
+              <h2 className="text-sm text-[#8A8580] tracking-[0.15em] uppercase mb-4">
+                {t("paymentOrderSummary")}
+              </h2>
+
+              {/* Checkout mode: show shipping address */}
+              {mode === "checkout" && checkoutData && (
+                <div className="mb-4 pb-4 border-b border-[#1A1A1A]">
+                  <span className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1">
+                    {t("paymentShippingTo")}
+                  </span>
+                  <p className="text-[#F5F0EB] text-sm">
+                    {checkoutData.address.firstName} {checkoutData.address.lastName}
+                  </p>
+                  <p className="text-[#8A8580] text-xs">
+                    {checkoutData.address.addressLine1}
+                    {checkoutData.address.addressLine2 && `, ${checkoutData.address.addressLine2}`}
+                  </p>
+                  <p className="text-[#8A8580] text-xs">
+                    {checkoutData.address.city}, {checkoutData.address.state} {checkoutData.address.zip}
+                  </p>
+                  <p className="text-[#8A8580] text-xs">{checkoutData.address.country}</p>
+                  <Link
+                    href="/checkout"
+                    className="text-xs text-[#E8B4B8] hover:underline mt-2 inline-block"
+                  >
+                    {t("paymentEditShipping")}
+                  </Link>
+                </div>
+              )}
+
+              {/* Existing orders mode: show order numbers */}
+              {mode === "existing" && (
+                <div className="mb-4 pb-4 border-b border-[#1A1A1A]">
+                  <span className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1">
+                    Paying for
+                  </span>
+                  {existingOrders.map((order) => (
+                    <p key={order.id} className="text-[#F5F0EB] text-sm">
+                      {order.order_number} - ${order.total.toFixed(2)}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              {/* Items (checkout mode) */}
+              {mode === "checkout" && checkoutData && (
+                <div className="space-y-3 mb-4 pb-4 border-b border-[#1A1A1A]">
+                  {checkoutData.items.map((item: CheckoutItem, idx: number) => (
+                    <div key={idx} className="flex gap-3">
+                      <div className="w-12 h-12 bg-[#0A0A0A] border border-[#1A1A1A] flex-shrink-0 overflow-hidden">
+                        {item.imageUrl && (
+                          <img src={item.imageUrl} alt={item.productName} className="w-full h-full object-cover" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[#F5F0EB] text-sm truncate">{item.productName}</p>
+                        <p className="text-[#8A8580] text-xs">Qty: {item.quantity}</p>
+                      </div>
+                      <p className="text-[#F5F0EB] text-sm">${item.unitPrice.toFixed(2)}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Items (existing orders mode) */}
+              {mode === "existing" && existingOrders.map((order) => (
+                <div key={order.id} className="space-y-3 mb-4 pb-4 border-b border-[#1A1A1A]">
+                  <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase">{order.order_number}</p>
+                  {order.items.map((item: ExistingOrderItem, idx: number) => (
+                    <div key={idx} className="flex gap-3">
+                      <div className="w-12 h-12 bg-[#0A0A0A] border border-[#1A1A1A] flex-shrink-0 overflow-hidden">
+                        {item.image_url && (
+                          <img src={item.image_url} alt={item.product_name} className="w-full h-full object-cover" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[#F5F0EB] text-sm truncate">{item.product_name}</p>
+                        <p className="text-[#8A8580] text-xs">Qty: {item.quantity}</p>
+                      </div>
+                      <p className="text-[#F5F0EB] text-sm">${item.unit_price.toFixed(2)}</p>
+                    </div>
+                  ))}
+                </div>
+              ))}
+
+              {/* Totals */}
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-[#8A8580]">Subtotal</span>
+                  <span className="text-[#F5F0EB]">${subtotal.toFixed(2)}</span>
+                </div>
+                {mode === "checkout" && (
+                  <div className="flex justify-between">
+                    <span className="text-[#8A8580]">
+                      {checkoutData?.shippingMethod === "express" ? "Express Shipping" : "Standard Shipping"}
+                    </span>
+                    <span className="text-[#F5F0EB]">
+                      {shippingFee === 0 ? "Free" : `$${shippingFee.toFixed(2)}`}
+                    </span>
+                  </div>
+                )}
+                <div className="flex justify-between pt-2 border-t border-[#1A1A1A]">
+                  <span className="text-[#F5F0EB]">Total</span>
+                  <span className="text-[#E8B4B8] text-lg">${totalAmount.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PaymentPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+          <div className="animate-spin w-8 h-8 border-2 border-[#E8B4B8] border-t-transparent rounded-full" />
+        </div>
+      }
+    >
+      <PaymentPageInner />
+    </Suspense>
   );
 }

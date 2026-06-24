@@ -29,10 +29,10 @@ export async function GET(
       return NextResponse.json({ error: 'Order not found' }, { status: 404 });
     }
 
-    // Sort shipping events by happened_at descending (most recent first)
+    // Sort shipping events by happened_at ascending (chronological)
     if (order.shipping_events) {
       (order.shipping_events as { happened_at: string }[]).sort(
-        (a, b) => new Date(b.happened_at).getTime() - new Date(a.happened_at).getTime()
+        (a, b) => new Date(a.happened_at).getTime() - new Date(b.happened_at).getTime()
       );
     }
 
@@ -60,15 +60,27 @@ export async function PATCH(
 
     const { id } = await params;
     const body = await request.json();
-    const { status } = body;
+    const { status, paymentStatus, paymentMethod, trackingNumber, carrier } = body;
 
-    if (!status) {
-      return NextResponse.json({ error: 'Status is required' }, { status: 400 });
+    // Build update object
+    const updateData: Record<string, unknown> = {
+      updated_at: new Date().toISOString(),
+    };
+
+    if (status) updateData.status = status;
+    if (paymentStatus) updateData.payment_status = paymentStatus;
+    if (paymentMethod) updateData.payment_method = paymentMethod;
+    if (trackingNumber !== undefined) updateData.tracking_number = trackingNumber;
+    if (carrier !== undefined) updateData.carrier = carrier;
+
+    // If marking as paid + confirmed, also set both
+    if (paymentStatus === 'paid' && !status) {
+      updateData.status = 'confirmed';
     }
 
     const { data: order, error } = await supabase
       .from('orders')
-      .update({ status, updated_at: new Date().toISOString() })
+      .update(updateData)
       .eq('id', id)
       .eq('user_id', user.id)
       .select()
@@ -77,6 +89,36 @@ export async function PATCH(
     if (error) {
       console.error('Error updating order:', error);
       return NextResponse.json({ error: 'Failed to update order' }, { status: 500 });
+    }
+
+    // If payment was marked as paid, add shipping event
+    if (paymentStatus === 'paid') {
+      await supabase.from('shipping_events').insert({
+        order_id: id,
+        status: 'confirmed',
+        description: 'Payment confirmed. Your order has been sent to the Fuzz workshop for production.',
+        happened_at: new Date().toISOString(),
+      });
+    }
+
+    // If status changed to shipped, add shipping event
+    if (status === 'shipped') {
+      await supabase.from('shipping_events').insert({
+        order_id: id,
+        status: 'shipped',
+        description: `Your order has been shipped${trackingNumber ? ` via ${carrier || 'carrier'} (Tracking: ${trackingNumber})` : ''}.`,
+        happened_at: new Date().toISOString(),
+      });
+    }
+
+    // If status changed to delivered
+    if (status === 'delivered') {
+      await supabase.from('shipping_events').insert({
+        order_id: id,
+        status: 'delivered',
+        description: 'Your order has been delivered. Thank you for choosing Fuzz Sofa!',
+        happened_at: new Date().toISOString(),
+      });
     }
 
     return NextResponse.json({ order });
