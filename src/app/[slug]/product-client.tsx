@@ -61,6 +61,7 @@ export function ProductPageClient({ product }: Props) {
       materialType,
       materialOption,
       region,
+      selected: true,
     });
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);

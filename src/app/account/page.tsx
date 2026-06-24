@@ -1,200 +1,352 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
-import { useSupabaseConfig } from "@/lib/supabase-config-inject";
+import { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
-import type { User } from "@supabase/supabase-js";
+import { formatPrice } from "@/lib/products";
+
+/* ------------------------------------------------------------------ */
+/*  Types                                                              */
+/* ------------------------------------------------------------------ */
+
+type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+
+interface ShippingEvent {
+  status: string;
+  description: string;
+  location?: string;
+  happened_at: string;
+}
+
+interface OrderItem {
+  productSlug: string;
+  productName: string;
+  colorName: string;
+  quantity: number;
+  unitPrice: number;
+  subtotal: number;
+}
+
+interface Order {
+  id: string;
+  orderNumber: string;
+  status: OrderStatus;
+  shippingMethod: string;
+  shippingFee: number;
+  subtotal: number;
+  total: number;
+  currency: string;
+  paymentMethod: string;
+  recipientName: string;
+  phone: string;
+  province: string;
+  city: string;
+  district: string;
+  addressLine: string;
+  zipCode: string;
+  carrier?: string;
+  trackingNumber?: string;
+  estimatedDelivery?: string;
+  createdAt: string;
+  items: OrderItem[];
+  shippingEvents: ShippingEvent[];
+}
+
+type TabKey = "all" | "pending" | "processing" | "shipped" | "delivered";
+
+/* ------------------------------------------------------------------ */
+/*  Helpers                                                            */
+/* ------------------------------------------------------------------ */
+
+const statusLabel = (status: OrderStatus): TranslationKeys => {
+  const map: Record<OrderStatus, TranslationKeys> = {
+    pending: "orderStatusPending",
+    processing: "orderStatusProcessing",
+    shipped: "orderStatusShipped",
+    delivered: "orderStatusDelivered",
+    cancelled: "orderStatusCancelled",
+  };
+  return map[status];
+};
+
+const statusColor = (status: OrderStatus): string => {
+  switch (status) {
+    case "pending": return "text-[#8A8580]";
+    case "processing": return "text-yellow-400";
+    case "shipped": return "text-blue-400";
+    case "delivered": return "text-[#E8B4B8]";
+    case "cancelled": return "text-red-400";
+    default: return "text-[#8A8580]";
+  }
+};
+
+const formatDate = (iso: string): string => {
+  try {
+    return new Date(iso).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  } catch {
+    return iso;
+  }
+};
+
+/* ------------------------------------------------------------------ */
+/*  Component                                                          */
+/* ------------------------------------------------------------------ */
 
 export default function AccountPage() {
-  const router = useRouter();
-  const { isLoading: configLoading } = useSupabaseConfig();
   const { t } = useLanguage();
-  const [user, setUser] = useState<User | null>(null);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
-  const [editName, setEditName] = useState("");
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState("");
+  const [activeTab, setActiveTab] = useState<TabKey>("all");
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const fetchOrders = useCallback(async () => {
+    try {
+      const res = await fetch("/api/orders");
+      if (res.ok) {
+        const data = await res.json();
+        setOrders(data.orders || []);
+      }
+    } catch (err) {
+      console.error("Failed to fetch orders:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    async function loadUser() {
-      try {
-        const supabase = await getSupabaseBrowserClientWithRetry();
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-          router.push("/login");
-          return;
-        }
-        setUser(session.user);
-        setEditName(session.user.user_metadata?.full_name || "");
-      } catch {
-        router.push("/login");
-      } finally {
-        setLoading(false);
-      }
-    }
-    if (!configLoading) {
-      loadUser();
-    }
-  }, [configLoading, router]);
+    fetchOrders();
+  }, [fetchOrders]);
 
-  const handleLogout = async () => {
+  const filtered = activeTab === "all"
+    ? orders
+    : orders.filter((o) => o.status === activeTab);
+
+  const tabs: { key: TabKey; label: string }[] = [
+    { key: "all", label: t("accountAll") },
+    { key: "pending", label: t("orderStatusPending") },
+    { key: "processing", label: t("orderStatusProcessing") },
+    { key: "shipped", label: t("orderStatusShipped") },
+    { key: "delivered", label: t("orderStatusDelivered") },
+  ];
+
+  const handleCopy = async (text: string) => {
     try {
-      const supabase = await getSupabaseBrowserClientWithRetry();
-      await supabase.auth.signOut();
-      router.push("/login");
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
     } catch {
-      // fallback: clear and redirect
-      router.push("/login");
+      /* noop */
     }
   };
 
-  const handleSaveName = async () => {
-    if (!editName.trim()) return;
-    setSaving(true);
-    setMessage("");
-    try {
-      const supabase = await getSupabaseBrowserClientWithRetry();
-      const { data, error } = await supabase.auth.updateUser({
-        data: { full_name: editName.trim() },
-      });
-      if (error) throw error;
-      if (data.user) {
-        setUser(data.user);
-      }
-      setIsEditingName(false);
-      setMessage(t("profileUpdated" as TranslationKeys));
-      setTimeout(() => setMessage(""), 3000);
-    } catch {
-      setMessage(t("updateFailed" as TranslationKeys));
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  if (configLoading || loading) {
+  /* ---- Order Detail View ---- */
+  if (selectedOrder) {
+    const o = selectedOrder;
     return (
-      <div className="min-h-[80vh] flex items-center justify-center bg-[#0A0A0A]">
-        <div className="text-[#8A8580] text-sm tracking-[0.1em]">{t("loading" as TranslationKeys)}</div>
+      <div className="max-w-4xl mx-auto px-6 py-20">
+        <button
+          onClick={() => setSelectedOrder(null)}
+          className="flex items-center gap-2 text-sm text-[#8A8580] hover:text-[#E8B4B8] transition-colors mb-8"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          {t("orderDetailBackToOrders")}
+        </button>
+
+        <div className="flex items-center justify-between mb-10">
+          <div>
+            <h1 className="font-serif text-2xl text-[#F5F0EB] tracking-wide">{t("accountMyOrders")}</h1>
+            <p className="text-sm text-[#8A8580] mt-1">
+              {t("accountOrderNumber")}: {o.orderNumber}
+            </p>
+          </div>
+          <span className={`text-sm uppercase tracking-wider ${statusColor(o.status)}`}>
+            {t(statusLabel(o.status))}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-10">
+          {/* Left - Timeline + Items */}
+          <div className="space-y-10">
+            {/* Shipping Timeline */}
+            {o.shippingEvents && o.shippingEvents.length > 0 && (
+              <section>
+                <h2 className="font-serif text-lg text-[#F5F0EB] mb-6">{t("orderDetailTracking")}</h2>
+                <div className="relative pl-6 border-l border-[#1A1A1A] space-y-6">
+                  {o.shippingEvents.map((evt, i) => (
+                    <div key={i} className="relative">
+                      <div
+                        className={`absolute -left-[1.55rem] top-1 w-2.5 h-2.5 rounded-full ${
+                          i === 0 ? "bg-[#E8B4B8]" : "bg-[#333]"
+                        }`}
+                      />
+                      <p className="text-sm text-[#F5F0EB]">{evt.description}</p>
+                      <p className="text-xs text-[#8A8580] mt-1">
+                        {formatDate(evt.happened_at)}
+                        {evt.location ? ` · ${evt.location}` : ""}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Order Items */}
+            <section>
+              <h2 className="font-serif text-lg text-[#F5F0EB] mb-4">{t("orderDetailItems")}</h2>
+              <div className="space-y-3">
+                {o.items.map((item, i) => (
+                  <div key={i} className="flex items-center justify-between bg-[#111111] border border-[#1A1A1A] p-4">
+                    <div>
+                      <p className="text-[#F5F0EB] text-sm">{item.productName}</p>
+                      <p className="text-xs text-[#8A8580]">
+                        {item.colorName} x{item.quantity}
+                      </p>
+                    </div>
+                    <p className="text-[#F5F0EB] text-sm">{formatPrice(item.subtotal)}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          {/* Right - Summary */}
+          <div className="space-y-6">
+            {/* Tracking Info */}
+            {o.trackingNumber && (
+              <div className="bg-[#111111] border border-[#1A1A1A] p-5">
+                <h3 className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-3">
+                  {t("orderDetailTrackingNumber")}
+                </h3>
+                <div className="flex items-center gap-2">
+                  <span className="text-[#F5F0EB] font-mono text-sm">{o.trackingNumber}</span>
+                  <button
+                    onClick={() => handleCopy(o.trackingNumber!)}
+                    className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors shrink-0"
+                  >
+                    {copied ? t("orderDetailCopied") : t("orderDetailCopy")}
+                  </button>
+                </div>
+                {o.carrier && (
+                  <p className="text-xs text-[#8A8580] mt-2">{o.carrier}</p>
+                )}
+              </div>
+            )}
+
+            {/* Price Summary */}
+            <div className="bg-[#111111] border border-[#1A1A1A] p-5">
+              <h3 className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-4">
+                {t("orderDetailSummary")}
+              </h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-[#8A8580]">{t("orderDetailSubtotal")}</span>
+                  <span className="text-[#F5F0EB]">{formatPrice(o.subtotal)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#8A8580]">{t("orderDetailShippingFee")}</span>
+                  <span className="text-[#F5F0EB]">
+                    {o.shippingFee === 0 ? (t("free") || "Free") : formatPrice(o.shippingFee)}
+                  </span>
+                </div>
+                <div className="border-t border-[#1A1A1A] pt-2 flex justify-between">
+                  <span className="text-[#F5F0EB]">{t("orderDetailTotal")}</span>
+                  <span className="text-[#E8B4B8]">{formatPrice(o.total)}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Shipping Address */}
+            <div className="bg-[#111111] border border-[#1A1A1A] p-5">
+              <h3 className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-3">
+                {t("orderDetailShippingAddress")}
+              </h3>
+              <p className="text-[#F5F0EB] text-sm">{o.recipientName}</p>
+              <p className="text-[#F5F0EB] text-sm">{o.phone}</p>
+              <p className="text-[#8A8580] text-sm">
+                {o.province} {o.city} {o.district} {o.addressLine}
+              </p>
+              {o.zipCode && <p className="text-[#8A8580] text-sm">{o.zipCode}</p>}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
-  if (!user) return null;
-
+  /* ---- Order List View ---- */
   return (
-    <div className="min-h-[80vh] bg-[#0A0A0A]">
-      <div className="max-w-[700px] mx-auto px-6 py-16">
-        <h1 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10 tracking-[0.05em]">
-          {t("myAccount" as TranslationKeys)}
-        </h1>
+    <div className="max-w-5xl mx-auto px-6 py-20">
+      <h1 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10 tracking-wide">
+        {t("accountTitle")}
+      </h1>
 
-        {/* Profile section */}
-        <div className="border-t border-[#1A1A1A] pt-8">
-          <h2 className="text-xs text-[#8A8580] tracking-[0.15em] uppercase mb-6">
-            {t("profileInfo" as TranslationKeys)}
-          </h2>
-
-          <div className="space-y-6">
-            {/* Name */}
-            <div>
-              <label className="block text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-2">
-                {t("displayName" as TranslationKeys)}
-              </label>
-              {isEditingName ? (
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    value={editName}
-                    onChange={(e) => setEditName(e.target.value)}
-                    className="flex-1 bg-[#111111] border border-[#333] text-[#F5F0EB] px-4 py-3 text-sm focus:outline-none focus:border-[#E8B4B8] transition-colors duration-300"
-                  />
-                  <button
-                    onClick={handleSaveName}
-                    disabled={saving}
-                    className="border border-[#F5F0EB] text-[#F5F0EB] px-5 py-3 text-xs tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 disabled:opacity-50"
-                  >
-                    {saving ? "..." : t("save" as TranslationKeys)}
-                  </button>
-                  <button
-                    onClick={() => { setIsEditingName(false); setEditName(user.user_metadata?.full_name || ""); }}
-                    className="border border-[#333] text-[#8A8580] px-5 py-3 text-xs tracking-[0.1em] uppercase hover:text-[#F5F0EB] transition-colors duration-300"
-                  >
-                    {t("cancel" as TranslationKeys)}
-                  </button>
-                </div>
-              ) : (
-                <div className="flex items-center justify-between">
-                  <p className="text-sm text-[#F5F0EB]/80">
-                    {user.user_metadata?.full_name || t("notSet" as TranslationKeys)}
-                  </p>
-                  <button
-                    onClick={() => setIsEditingName(true)}
-                    className="text-xs text-[#E8B4B8] hover:underline tracking-[0.05em]"
-                  >
-                    {t("edit" as TranslationKeys)}
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="block text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-2">
-                {t("email" as TranslationKeys)}
-              </label>
-              <p className="text-sm text-[#F5F0EB]/80">{user.email}</p>
-            </div>
-
-            {/* User ID */}
-            <div>
-              <label className="block text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-2">
-                {t("userId" as TranslationKeys)}
-              </label>
-              <p className="text-sm text-[#F5F0EB]/50 font-mono">{user.id.slice(0, 8)}...</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Message */}
-        {message && (
-          <div className="mt-4 text-sm text-[#E8B4B8]">{message}</div>
-        )}
-
-        {/* Logout */}
-        <div className="border-t border-[#1A1A1A] mt-10 pt-8">
-          {showLogoutConfirm ? (
-            <div className="space-y-4">
-              <p className="text-sm text-[#F5F0EB]/70">{t("logoutConfirm" as TranslationKeys)}</p>
-              <div className="flex gap-3">
-                <button
-                  onClick={handleLogout}
-                  className="border border-red-500/50 text-red-400 px-5 py-3 text-xs tracking-[0.1em] uppercase hover:bg-red-500/10 transition-all duration-300"
-                >
-                  {t("confirmLogout" as TranslationKeys)}
-                </button>
-                <button
-                  onClick={() => setShowLogoutConfirm(false)}
-                  className="border border-[#333] text-[#8A8580] px-5 py-3 text-xs tracking-[0.1em] uppercase hover:text-[#F5F0EB] transition-colors duration-300"
-                >
-                  {t("cancel" as TranslationKeys)}
-                </button>
-              </div>
-            </div>
-          ) : (
-            <button
-              onClick={() => setShowLogoutConfirm(true)}
-              className="border border-[#333] text-[#8A8580] px-5 py-3 text-xs tracking-[0.1em] uppercase hover:text-red-400 hover:border-red-400/50 transition-all duration-300"
-            >
-              {t("signOut" as TranslationKeys)}
-            </button>
-          )}
-        </div>
+      {/* Tabs */}
+      <div className="flex gap-1 mb-8 overflow-x-auto border-b border-[#1A1A1A]">
+        {tabs.map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={`px-4 py-3 text-xs tracking-[0.1em] uppercase whitespace-nowrap transition-colors border-b-2 -mb-[1px] ${
+              activeTab === tab.key
+                ? "border-[#E8B4B8] text-[#E8B4B8]"
+                : "border-transparent text-[#8A8580] hover:text-[#F5F0EB]"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
+
+      {/* Order List */}
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <div className="w-6 h-6 border-2 border-[#333] border-t-[#E8B4B8] rounded-full animate-spin" />
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="text-center py-20">
+          <p className="text-[#8A8580] mb-6">{t("accountNoOrders")}</p>
+          <Link
+            href="/animal-sofa-collection"
+            className="inline-flex items-center px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
+          >
+            {t("cartContinueShopping")}
+          </Link>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {filtered.map((order) => (
+            <button
+              key={order.id}
+              onClick={() => setSelectedOrder(order)}
+              className="w-full text-left bg-[#111111] border border-[#1A1A1A] p-6 hover:border-[#333] transition-all duration-300"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-4">
+                  <span className="text-sm text-[#F5F0EB] font-mono">{order.orderNumber}</span>
+                  <span className={`text-xs uppercase tracking-wider ${statusColor(order.status)}`}>
+                    {t(statusLabel(order.status))}
+                  </span>
+                </div>
+                <span className="text-sm text-[#8A8580]">{formatDate(order.createdAt)}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-[#8A8580]">
+                  {order.items.length} {t("cartItems")}
+                </span>
+                <span className="text-[#F5F0EB]">{formatPrice(order.total)}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
