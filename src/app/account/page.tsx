@@ -373,7 +373,7 @@ export default function AccountPage() {
                             <img src={item.image_url} alt={item.product_name} className="w-full h-full object-cover" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-[#333] text-xs">
-                              {item.product_name.charAt(0)}
+                              {(item.product_name || "?").charAt(0)}
                             </div>
                           )}
                         </div>
