@@ -267,11 +267,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-                <div className="absolute top-5 left-5">
-                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    {t("contemporaryHomes")}
-                  </span>
-                </div>
+
               </div>
               <div className="p-5">
                 <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
@@ -294,11 +290,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-                <div className="absolute top-5 left-5">
-                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    {t("sculpturalTrendScene")}
-                  </span>
-                </div>
+
               </div>
               <div className="p-5">
                 <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
@@ -321,11 +313,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-                <div className="absolute top-5 left-5">
-                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    {t("boutiqueHotelScene")}
-                  </span>
-                </div>
+
               </div>
               <div className="p-5">
                 <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
@@ -350,11 +338,7 @@ export default function HomePage() {
                 {/* Gradient overlay hides watermark in bottom-right + adds depth */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
                 <div className="absolute bottom-0 right-0 w-[30%] h-[15%] bg-gradient-to-tl from-[#0A0A0A]/90 to-transparent" />
-                <div className="absolute top-5 left-5">
-                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    {t("sculpturalTrendScene")}
-                  </span>
-                </div>
+
               </div>
               <div className="p-5">
                 <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
@@ -377,11 +361,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-                <div className="absolute top-5 left-5">
-                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
-                    {t("muscleGorillaSofaTagline")}
-                  </span>
-                </div>
+
               </div>
               <div className="p-5">
                 <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
@@ -455,12 +435,7 @@ export default function HomePage() {
                 accent: "from-[#151015] to-[#0A0A0A]",
                 label: t("statementFurnitureScene"),
               },
-              {
-                href: "/sculptural-furniture-trend",
-                title: t("sculpturalTrend"),
-                accent: "from-[#101218] to-[#0A0A0A]",
-                label: t("sculpturalTrendScene"),
-              },
+
             ].map((interior) => (
               <Link
                 key={interior.href}
@@ -472,10 +447,7 @@ export default function HomePage() {
                     className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500"
                     style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
                   />
-                  {/* Scene label inside image area */}
-                  <span className="absolute top-4 left-4 text-[10px] text-[#8A8580]/50 tracking-[0.15em] uppercase">
-                    {interior.label}
-                  </span>
+
                 </div>
                 <div className="p-6">
                   <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
