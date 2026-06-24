@@ -34,10 +34,19 @@ export default function LoginPage() {
         },
       });
       if (oauthError) {
-        setError(oauthError.message);
+        if (oauthError.message.includes("provider is not enabled") || oauthError.message.includes("Unsupported provider")) {
+          setError(t("googleNotConfigured" as TranslationKeys));
+        } else {
+          setError(oauthError.message);
+        }
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Google login failed");
+      const msg = err instanceof Error ? err.message : "Google login failed";
+      if (msg.includes("provider is not enabled") || msg.includes("Unsupported provider")) {
+        setError(t("googleNotConfigured" as TranslationKeys));
+      } else {
+        setError(msg);
+      }
     } finally {
       setGoogleLoading(false);
     }
