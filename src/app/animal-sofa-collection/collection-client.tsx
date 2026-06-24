@@ -12,7 +12,14 @@ const slugToPrefix: Record<string, string> = {
   "lion-sofa": "lionSofa",
   "tiger-sofa": "tigerSofa",
   "gorilla-sofa": "gorillaSofa",
+  "silverback-sofa": "silverbackSofa",
   "owl-sofa": "owlChair",
+};
+
+const productCardImages: Record<string, string> = {
+  "gorilla-sofa": "/products/gorilla-sofa/gray.jpg",
+  "silverback-sofa": "/products/silverback-sofa/beige.jpg",
+  "owl-sofa": "/products/owl/snowy-white.png",
 };
 
 export function CollectionClient() {
@@ -60,8 +67,8 @@ export function CollectionClient() {
               className="group bg-[#111111] border border-[#1A1A1A] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
             >
               <div className="aspect-square bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
-                {product.slug === "owl-sofa" ? (
-                  <img src="/products/owl/snowy-white.png" alt={product.name} className="w-full h-full object-cover" />
+                {productCardImages[product.slug] ? (
+                  <img src={productCardImages[product.slug]} alt={product.name} className="w-full h-full object-cover" />
                 ) : (
                   <>
                     <div className="absolute inset-0 opacity-5 group-hover:opacity-15 transition-opacity duration-500"

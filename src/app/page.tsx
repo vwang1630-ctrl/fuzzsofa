@@ -13,6 +13,7 @@ const slugToPrefix: Record<string, string> = {
   "tiger-sofa": "tigerSofa",
   "gorilla-sofa": "gorillaSofa",
   "owl-sofa": "owlChair",
+  "silverback-sofa": "silverbackSofa",
 };
 
 export default function HomePage() {
@@ -223,28 +224,52 @@ export default function HomePage() {
               href="/gorilla-sofa"
               className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
             >
-              <div className="aspect-square bg-gradient-to-b from-[#101218] via-[#0C0D12] to-[#0A0A0A] relative">
-                <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-700"
-                  style={{ background: "radial-gradient(ellipse at 50% 40%, #E8B4B8, transparent 60%)" }}
+              <div className="aspect-square relative overflow-hidden">
+                <img
+                  src="/products/gorilla-sofa/gray.jpg"
+                  alt={t("gorillaSofaName")}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif text-[12rem] text-[#F5F0EB]/[0.04] group-hover:text-[#E8B4B8]/[0.08] transition-all duration-700 select-none">
-                    G
-                  </span>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
                 <div className="absolute top-5 left-5">
                   <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
                     {t("sculpturalTrendScene")}
                   </span>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-transparent h-1/3" />
               </div>
               <div className="p-5">
                 <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                   {t("gorillaSofaName")}
                 </h3>
                 <p className="mt-1 text-xs text-[#8A8580]">{t("gorillaSofaTagline")}</p>
-                <p className="mt-3 text-sm text-[#F5F0EB]/60">$7,200</p>
+                <p className="mt-3 text-sm text-[#F5F0EB]/60">$7,800</p>
+              </div>
+            </Link>
+
+            {/* Silverback Sofa — Boutique Hotel scene */}
+            <Link
+              href="/silverback-sofa"
+              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
+            >
+              <div className="aspect-square relative overflow-hidden">
+                <img
+                  src="/products/silverback-sofa/beige.jpg"
+                  alt={t("silverbackSofaName")}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
+                <div className="absolute top-5 left-5">
+                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
+                    {t("boutiqueHotelScene")}
+                  </span>
+                </div>
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
+                  {t("silverbackSofaName")}
+                </h3>
+                <p className="mt-1 text-xs text-[#8A8580]">{t("silverbackSofaTagline")}</p>
+                <p className="mt-3 text-sm text-[#F5F0EB]/60">$7,800</p>
               </div>
             </Link>
 
