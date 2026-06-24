@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { products } from "@/lib/products";
 import { journalArticles } from "@/lib/journal";
@@ -16,6 +17,37 @@ const slugToPrefix: Record<string, string> = {
   "silverback-sofa": "silverbackSofa",
 };
 
+const heroScenes = [
+  { src: "/hero-scene-1.jpg", alt: "Gorilla sofa in luxury penthouse interior" },
+  { src: "/hero-scene-2.jpg", alt: "Bear sofa in luxury apartment interior" },
+];
+
+function HeroSlideshow() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % heroScenes.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="absolute inset-0">
+      {heroScenes.map((scene, idx) => (
+        <img
+          key={scene.src}
+          src={scene.src}
+          alt={scene.alt}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${
+            idx === current ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function HomePage() {
   const { t } = useLanguage();
   const latestArticles = journalArticles.slice(0, 3);
@@ -31,52 +63,46 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
       />
 
-      {/* HERO: Scene-Based Banner */}
-      <section className="relative min-h-[100vh] flex items-end overflow-hidden">
-        {/* Background: owl chair in interior context */}
-        <div className="absolute inset-0">
-          <img
-            src="/products/owl/interior-context.png"
-            alt=""
-            className="w-full h-full object-cover object-center"
-          />
-          {/* Dark overlays for text readability */}
-          <div className="absolute inset-0 bg-[#0A0A0A]/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-[#0A0A0A]/70" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/80 via-transparent to-[#0A0A0A]/30" />
-        </div>
+      {/* HERO: Immersive Scene Banner */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Background: AI-generated luxury interior scene */}
+        <HeroSlideshow />
 
-        {/* Decorative accent glow */}
-        <div
-          className="absolute top-1/4 right-1/4 w-[600px] h-[600px] opacity-[0.04] pointer-events-none"
-          style={{ background: "radial-gradient(circle, #E8B4B8, transparent 70%)" }}
-        />
+        {/* Dark overlays for text readability */}
+        <div className="absolute inset-0 bg-[#0A0A0A]/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />
 
-        {/* Hero content */}
-        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 pb-20 pt-40">
-          <p className="text-xs text-[#E8B4B8]/70 tracking-[0.2em] uppercase mb-5">
+        {/* Centered hero content */}
+        <div className="relative z-10 text-center px-6 max-w-4xl">
+          <p className="text-xs text-[#E8B4B8] tracking-[0.25em] uppercase mb-6 animate-fade-in">
             {t("heroSubtitle")}
           </p>
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-light tracking-[0.05em] md:tracking-[0.1em] leading-[1.05] text-[#F5F0EB] max-w-4xl">
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-[5.5rem] font-light tracking-[0.08em] leading-[1.05] text-[#F5F0EB] animate-fade-in-delay-1">
             {t("siteTitle")}
           </h1>
-          <p className="mt-6 text-base md:text-lg font-light text-[#F5F0EB]/50 max-w-xl leading-relaxed">
+          <p className="mt-8 text-base md:text-lg font-light text-[#F5F0EB]/60 max-w-2xl mx-auto leading-[1.7] animate-fade-in-delay-2">
             {t("heroDescription")}
           </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-start gap-4">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-delay-3">
             <Link
               href="/animal-sofa-collection"
-              className="inline-flex items-center px-8 py-3.5 border border-[#F5F0EB] text-[#F5F0EB] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
+              className="inline-flex items-center px-10 py-4 border border-[#F5F0EB] text-[#F5F0EB] text-sm tracking-[0.15em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
             >
               {t("exploreCollection")}
             </Link>
             <Link
               href="/luxury-villa-interior"
-              className="inline-flex items-center px-8 py-3.5 border border-[#333] text-[#F5F0EB]/50 text-sm tracking-[0.1em] uppercase hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
+              className="inline-flex items-center px-10 py-4 border border-[#333] text-[#F5F0EB]/50 text-sm tracking-[0.15em] uppercase hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
             >
               {t("viewInteriors")}
             </Link>
           </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in-delay-3">
+          <span className="text-[10px] text-[#F5F0EB]/30 tracking-[0.2em] uppercase">Scroll</span>
+          <div className="w-px h-8 bg-gradient-to-b from-[#F5F0EB]/30 to-transparent" />
         </div>
       </section>
 
