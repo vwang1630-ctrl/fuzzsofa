@@ -278,7 +278,7 @@ export function RoomVisualizationModal({
 
               {/* Room preview with shimmer overlay */}
               <div className="relative w-full max-w-md mx-auto">
-                <div className="aspect-[4/3] overflow-hidden rounded-[4px] relative">
+                <div className="aspect-square overflow-hidden rounded-[4px] relative">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={roomImage}

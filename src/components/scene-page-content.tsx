@@ -40,7 +40,7 @@ export function ScenePageContent({
     <>
       {/* Hero */}
       <section className="relative">
-        <div className={`aspect-[21/9] md:aspect-[21/7] bg-gradient-to-b ${accent} relative overflow-hidden`}>
+        <div className={`aspect-square md:aspect-[21/9] lg:aspect-[21/7] bg-gradient-to-b ${accent} relative overflow-hidden`}>
           <div className="absolute inset-0 opacity-10" style={{ background: "radial-gradient(ellipse at 30% 60%, #E8B4B8, transparent 50%)" }} />
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent">
             <div className="max-w-7xl mx-auto px-6 pb-8 pt-24">
@@ -77,7 +77,7 @@ export function ScenePageContent({
                 href={`/${product.slug}`}
                 className="group bg-[#111111] border border-[#1A1A1A] p-6 hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="aspect-[4/3] mb-4 bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
+                <div className="aspect-square mb-4 bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
                   {product.slug === "owl-sofa" ? (
                     <img src="/products/owl/snowy-white.png" alt={product.name} className="w-full h-full object-cover" />
                   ) : (

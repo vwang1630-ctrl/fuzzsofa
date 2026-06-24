@@ -59,7 +59,7 @@ export function CollectionClient() {
               href={`/${product.slug}`}
               className="group bg-[#111111] border border-[#1A1A1A] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="aspect-[4/3] bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
+              <div className="aspect-square bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden">
                 {product.slug === "owl-sofa" ? (
                   <img src="/products/owl/snowy-white.png" alt={product.name} className="w-full h-full object-cover" />
                 ) : (

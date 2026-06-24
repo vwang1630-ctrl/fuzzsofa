@@ -104,7 +104,7 @@ export default function HomePage() {
               href="/bear-sofa"
               className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
             >
-              <div className="aspect-[4/5] bg-gradient-to-b from-[#1A1510] via-[#12100C] to-[#0A0A0A] relative">
+              <div className="aspect-square bg-gradient-to-b from-[#1A1510] via-[#12100C] to-[#0A0A0A] relative">
                 <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-700"
                   style={{ background: "radial-gradient(ellipse at 50% 40%, #E8B4B8, transparent 60%)" }}
                 />
@@ -136,7 +136,7 @@ export default function HomePage() {
               href="/lion-sofa"
               className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
             >
-              <div className="aspect-[4/5] bg-gradient-to-b from-[#101518] via-[#0C1012] to-[#0A0A0A] relative">
+              <div className="aspect-square bg-gradient-to-b from-[#101518] via-[#0C1012] to-[#0A0A0A] relative">
                 <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-700"
                   style={{ background: "radial-gradient(ellipse at 50% 40%, #E8B4B8, transparent 60%)" }}
                 />
@@ -166,7 +166,7 @@ export default function HomePage() {
               href="/owl-sofa"
               className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
             >
-              <div className="aspect-[4/5] relative overflow-hidden">
+              <div className="aspect-square relative overflow-hidden">
                 <img
                   src="/products/owl/snowy-white.png"
                   alt={t("owlChairName")}
@@ -193,7 +193,7 @@ export default function HomePage() {
               href="/tiger-sofa"
               className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
             >
-              <div className="aspect-[4/5] bg-gradient-to-b from-[#151015] via-[#100C10] to-[#0A0A0A] relative">
+              <div className="aspect-square bg-gradient-to-b from-[#151015] via-[#100C10] to-[#0A0A0A] relative">
                 <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-700"
                   style={{ background: "radial-gradient(ellipse at 50% 40%, #E8B4B8, transparent 60%)" }}
                 />
@@ -223,7 +223,7 @@ export default function HomePage() {
               href="/gorilla-sofa"
               className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
             >
-              <div className="aspect-[4/5] bg-gradient-to-b from-[#101218] via-[#0C0D12] to-[#0A0A0A] relative">
+              <div className="aspect-square bg-gradient-to-b from-[#101218] via-[#0C0D12] to-[#0A0A0A] relative">
                 <div className="absolute inset-0 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-700"
                   style={{ background: "radial-gradient(ellipse at 50% 40%, #E8B4B8, transparent 60%)" }}
                 />
@@ -253,7 +253,7 @@ export default function HomePage() {
               href="/luxury-villa-interior"
               className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
             >
-              <div className="aspect-[4/5] bg-gradient-to-br from-[#111111] via-[#0D0D0D] to-[#0A0A0A] relative">
+              <div className="aspect-square bg-gradient-to-br from-[#111111] via-[#0D0D0D] to-[#0A0A0A] relative">
                 <div className="absolute inset-0 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-700"
                   style={{ background: "radial-gradient(circle at 30% 70%, #E8B4B8, transparent 50%), radial-gradient(circle at 70% 30%, #E8B4B8, transparent 50%)" }}
                 />

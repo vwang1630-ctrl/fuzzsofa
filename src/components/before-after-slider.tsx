@@ -72,7 +72,7 @@ export function BeforeAfterSlider({
       {/* Container */}
       <div
         ref={containerRef}
-        className="relative aspect-[4/3] w-full cursor-ew-resize touch-none"
+        className="relative aspect-square w-full cursor-ew-resize touch-none"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

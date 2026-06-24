@@ -120,9 +120,9 @@ export function ProductPageClient({ product }: Props) {
       {/* 1) HERO: Product Image + Key Info Side-by-Side */}
       <section className="border-b border-[#1A1A1A]">
         <div className="max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[85vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* LEFT: Product Image */}
-            <div className="relative bg-gradient-to-b from-[#111111] to-[#0A0A0A] flex items-center justify-center overflow-hidden">
+            <div className="relative aspect-square bg-gradient-to-b from-[#111111] to-[#0A0A0A] overflow-hidden">
               <div
                 className="absolute inset-0 opacity-[0.03]"
                 style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
@@ -131,7 +131,7 @@ export function ProductPageClient({ product }: Props) {
                 <img
                   src={galleryImages[activeImage].src}
                   alt={galleryImages[activeImage].label}
-                  className="w-full h-full object-cover max-h-[85vh]"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
