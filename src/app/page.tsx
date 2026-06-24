@@ -115,10 +115,12 @@ export default function HomePage() {
         productSlug={aiRoomProduct}
       />
 
-      {/* HERO: Immersive Scene Banner */}
-      <section className="relative w-full flex items-end overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
-        {/* Background: cinematic interior scenes */}
-        <HeroSlideshow current={heroScene} />
+      {/* HERO: Immersive Scene Banner — click image to navigate to product */}
+      <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
+        {/* Background: cinematic interior scenes — clickable */}
+        <Link href={sceneConfig.keys.href} className="block absolute inset-0 z-0" aria-label={t(sceneConfig.keys.title)}>
+          <HeroSlideshow current={heroScene} />
+        </Link>
 
         {/* Left-side vignette for text readability */}
         <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
@@ -151,40 +153,9 @@ export default function HomePage() {
             {t(sceneConfig.keys.description)}
           </p>
 
-          {/* CTA buttons — stacked vertically */}
+          {/* CTA button — AI Room only */}
           <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
-            {/* Primary CTA — editorial style, hover fills with accent */}
-            <Link
-              href={sceneConfig.keys.href}
-              className="group inline-flex items-center gap-3"
-            >
-              <span
-                className="inline-flex items-center gap-3 px-6 py-2.5 border text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:border-transparent"
-                style={{
-                  borderColor: sceneConfig.textColor + '80',
-                  color: sceneConfig.textColor + 'CC',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = sceneConfig.accentColor;
-                  e.currentTarget.style.borderColor = sceneConfig.accentColor;
-                  e.currentTarget.style.color = '#0A0A0A';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.borderColor = sceneConfig.textColor + '80';
-                  e.currentTarget.style.color = sceneConfig.textColor + 'CC';
-                }}
-              >
-                {t(sceneConfig.keys.cta)}
-              </span>
-              <span className="flex items-center transition-all duration-300 group-hover:translate-x-1" style={{ color: sceneConfig.textColor + '66' }}>
-                <svg width="20" height="12" viewBox="0 0 20 12" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M0 6h18M13 1l5 5-5 5" />
-                </svg>
-              </span>
-            </Link>
-
-            {/* AI Room Composite CTA — below primary CTA */}
+            {/* AI Room Composite CTA */}
             <button
               onClick={() => {
                 const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
@@ -233,7 +204,7 @@ export default function HomePage() {
             ))}
           </div>
         )}
-      </section>
+      </div>
 
       {/* SCENE-BASED PRODUCT SHOWCASE */}
       <section className="border-t border-[#1A1A1A]">
