@@ -155,20 +155,23 @@ export default function AccountPage() {
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [selectedOrders, setSelectedOrders] = useState<Set<string>>(new Set());
   /* ---- Tab-based order grouping ---- */
-  type OrderTab = "pending" | "production" | "shipped" | "cancelled";
-  const [orderTab, setOrderTab] = useState<OrderTab>("pending");
+  type OrderTab = "all" | "pending" | "production" | "shipped" | "cancelled";
+  const [orderTab, setOrderTab] = useState<OrderTab>("all");
 
   const orderTabs: { key: OrderTab; labelKey: TranslationKeys; statuses: string[] }[] = [
+    { key: "all", labelKey: "accountAll", statuses: [] },
     { key: "pending", labelKey: "orderTabPending", statuses: ["pending"] },
     { key: "production", labelKey: "orderTabProduction", statuses: ["confirmed", "processing"] },
     { key: "shipped", labelKey: "orderTabShipped", statuses: ["shipped", "delivered"] },
     { key: "cancelled", labelKey: "orderTabCancelled", statuses: ["cancelled"] },
   ];
 
-  const tabOrders = orders.filter(o => {
-    const tab = orderTabs.find(t => t.key === orderTab);
-    return tab ? tab.statuses.includes(o.status) : false;
-  });
+  const tabOrders = orderTab === "all"
+    ? orders
+    : orders.filter(o => {
+        const tab = orderTabs.find(t => t.key === orderTab);
+        return tab ? tab.statuses.includes(o.status) : false;
+      });
   const [deleting, setDeleting] = useState<string | null>(null);
 
   // Addresses
@@ -355,13 +358,14 @@ export default function AccountPage() {
       {tab === "orders" && (
         <div>
           {/* Order Sub-tabs */}
-          <div className="flex gap-6 border-b border-[#1A1A1A] mb-6">
+          <div className="flex gap-6 border-b border-[#1A1A1A] mb-6 overflow-x-auto">
             {([
-              { key: "pending", label: t("orderTabPending"), count: orders.filter(o => o.status === "pending").length },
-              { key: "production", label: t("orderTabProduction"), count: orders.filter(o => o.status === "confirmed" || o.status === "processing").length },
-              { key: "shipped", label: t("orderTabShipped"), count: orders.filter(o => o.status === "shipped" || o.status === "delivered").length },
-              { key: "cancelled", label: t("orderTabCancelled"), count: orders.filter(o => o.status === "cancelled" || o.payment_status === "failed").length },
-            ] as { key: OrderTab; label: string; count: number }[]).map(tab => (
+              { key: "all" as OrderTab, label: t("orderTabAll"), count: orders.length },
+              { key: "pending" as OrderTab, label: t("orderTabPending"), count: orders.filter(o => o.status === "pending").length },
+              { key: "production" as OrderTab, label: t("orderTabProduction"), count: orders.filter(o => o.status === "confirmed" || o.status === "processing").length },
+              { key: "shipped" as OrderTab, label: t("orderTabShipped"), count: orders.filter(o => o.status === "shipped" || o.status === "delivered").length },
+              { key: "cancelled" as OrderTab, label: t("orderTabCancelled"), count: orders.filter(o => o.status === "cancelled" || o.payment_status === "failed").length },
+            ]).map(tab => (
               <button
                 key={tab.key}
                 onClick={() => setOrderTab(tab.key)}
@@ -428,17 +432,35 @@ export default function AccountPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className={`text-xs tracking-wider uppercase ${statusColor(order.status)}`}>
+                      <button
+                        onClick={() => {
+                          const statusToTab: Record<string, OrderTab> = {
+                            pending: 'pending',
+                            confirmed: 'production',
+                            processing: 'production',
+                            shipped: 'shipped',
+                            delivered: 'shipped',
+                            cancelled: 'cancelled',
+                          };
+                          const paymentFailedTab = order.payment_status === 'failed' ? 'cancelled' as OrderTab : null;
+                          setOrderTab(paymentFailedTab || statusToTab[order.status] || 'all');
+                        }}
+                        className={`text-xs tracking-wider uppercase hover:opacity-80 transition-opacity ${statusColor(order.status)}`}
+                      >
                         {statusLabel(order.status, t)}
-                      </span>
-                      {/* Logistics badge */}
+                      </button>
+                      {/* Logistics badge - clickable to shipping tab */}
                       {(() => {
                         const badge = logisticsBadge(order.latest_shipping_event, t);
                         if (!badge) return null;
                         return (
-                          <span key="logistics-badge" className={`text-[10px] tracking-wider uppercase px-2 py-0.5 rounded ${badge.color}`}>
+                          <button
+                            key="logistics-badge"
+                            onClick={() => setOrderTab('shipped')}
+                            className={`text-[10px] tracking-wider uppercase px-2 py-0.5 rounded hover:opacity-80 transition-opacity ${badge.color}`}
+                          >
                             {badge.label}
-                          </span>
+                          </button>
                         );
                       })()}
                       <span className="text-[#F5F0EB] text-sm">{formatPrice(order.total)}</span>
