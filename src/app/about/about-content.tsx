@@ -22,19 +22,19 @@ export function AboutContent() {
       <div className="max-w-3xl mx-auto px-6 py-20">
         <div className="space-y-8">
           <p className="text-[#F5F0EB]/70 leading-relaxed text-lg">
-            Fuzz Sofa began with a question: what if furniture could carry the presence of the living forms that inspire it? Not through decoration or pattern, but through the essential qualities of form — the broad protective embrace of a bear, the upright authority of a lion, the kinetic energy of a tiger, the grounded strength of a gorilla, the watchful alertness of an owl.
+            {t("aboutP1")}
           </p>
 
           <p className="text-[#F5F0EB]/60 leading-relaxed">
-            Our workshop in Shanghai brings together traditional woodworking, master upholstery, and contemporary design thinking. Each piece is made to order — never mass-produced, never from inventory.
+            {t("aboutP2")}
           </p>
 
           <p className="text-[#F5F0EB]/60 leading-relaxed">
-            The animal-inspired collection is our design language, not a theme. We distill essential qualities — presence, authority, energy, strength, watchfulness — into sculptural silhouettes that happen to be comfortable, durable, and functional.
+            {t("aboutP3")}
           </p>
 
           <p className="text-[#F5F0EB]/60 leading-relaxed">
-            We ship worldwide with white-glove delivery service. Every piece arrives with photo and video documentation of its construction, a 14-day quality guarantee, and the knowledge that it was made specifically for you.
+            {t("aboutP4")}
           </p>
         </div>
 

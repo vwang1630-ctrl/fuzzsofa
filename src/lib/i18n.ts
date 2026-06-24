@@ -41,6 +41,10 @@ export type TranslationKeys =
   | "freeDelivery"
   | "qualityGuarantee"
   | "about"
+  | "aboutP1"
+  | "aboutP2"
+  | "aboutP3"
+  | "aboutP4"
   | "contact"
   | "journal"
   | "process"
@@ -647,6 +651,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "Profile updated",
     updateFailed: "Update failed",
     loading: "Loading...",
+    aboutP1: "Fuzz Sofa began with a question: what if furniture could carry the presence of the living forms that inspire it? Not through decoration or pattern, but through the essential qualities of form — the broad protective embrace of a bear, the upright authority of a lion, the kinetic energy of a tiger, the grounded strength of a gorilla, the watchful alertness of an owl.",
+    aboutP2: "Our workshop in Shanghai brings together traditional woodworking, master upholstery, and contemporary design thinking. Each piece is made to order — never mass-produced, never from inventory.",
+    aboutP3: "The animal-inspired collection is our design language, not a theme. We distill essential qualities — presence, authority, energy, strength, watchfulness — into sculptural silhouettes that happen to be comfortable, durable, and functional.",
+    aboutP4: "We ship worldwide with white-glove delivery service. Every piece arrives with photo and video documentation of its construction, a 14-day quality guarantee, and the knowledge that it was made specifically for you.",
 },
   zh: {
     siteTitle: "Fuzz Sofa",
@@ -960,6 +968,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "个人信息已更新",
     updateFailed: "更新失败",
     loading: "加载中...",
+    aboutP1: "Fuzz Sofa的起源始于一个疑问：如果家具能承载其灵感来源——鲜活生命的特质会怎样？不是通过装饰或纹样，而是通过形态的本质特质：如熊一般宽厚有保护感的包裹感、狮子般挺拔的威严感、老虎的灵动活力、大猩猩沉稳的力量感，以及猫头鹰的警觉敏锐感。",
+    aboutP2: "我们位于上海的工坊融合了传统木工技艺、大师级软包工艺，以及当代设计理念。每一件产品都是定制款——绝非批量生产，也绝非库存现货。",
+    aboutP3: "以动物为灵感的系列是我们的设计语言，而非一个主题。我们将这些核心特质——存在感、威严感、活力、力量、警觉——提炼出来，融入兼具舒适感、耐用性与实用性的雕塑感家具轮廓中。",
+    aboutP4: "我们提供全球配送的高端尊享送货服务。每一件产品送达时，都会附带制作过程的照片与视频记录、14天品质保障，并且这件产品是为您专属定制的。",
 },
   ja: {
     siteTitle: "Fuzz Sofa",
@@ -1273,6 +1285,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "プロフィールを更新しました",
     updateFailed: "更新に失敗しました",
     loading: "読み込み中...",
+    aboutP1: "Fuzz Sofaはある問いから始まりました：もし家具が、インスピレーションとなった生きた形態の存在感を宿すことができたら？装飾や柄ではなく、形の本質的な特質を通して——熊の広く守るような抱擁、ライオンの直立した威厳、虎の躍動的なエネルギー、ゴリラの地に足をつけた力、フクロウの警戒する鋭さ。",
+    aboutP2: "上海の工房では、伝統的な木工、マスターアップホルスタリー、現代のデザイン思考を融合しています。各ピースはオーダーメイドで作られ——量産されることはなく、在庫から出されることもありません。",
+    aboutP3: "動物インスパイアのコレクションは、私たちのデザイン言語であり、テーマではありません。本質的な特質——存在感、権威、エネルギー、力、警戒心——を、快適で耐久性があり機能的な彫刻的なシルエットに蒸留します。",
+    aboutP4: "世界中にホワイトグローブ配達サービスで出荷しています。各ピースは、制作過程の写真・動画ドキュメント、14日間の品質保証、そしてあなたのために特別に作られたという知識と共に届きます。",
 },
   fr: {
     siteTitle: "Fuzz Sofa",
@@ -1586,6 +1602,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "Profil mis à jour",
     updateFailed: "Échec de la mise à jour",
     loading: "Chargement...",
+    aboutP1: "Fuzz Sofa est né d'une question : et si le mobilier pouvait porter la présence des formes vivantes qui l'inspirent ? Non par la décoration ou le motif, mais par les qualités essentielles de la forme — l'étreinte protectrice de l'ours, l'autorité verticale du lion, l'énergie cinétique du tigre, la force ancrée du gorille, la vigilance attentive du hibou.",
+    aboutP2: "Notre atelier à Shanghai réunit la menuiserie traditionnelle, le tapissage de maître et la pensée de design contemporaine. Chaque pièce est faite sur commande — jamais produite en masse, jamais issue de stock.",
+    aboutP3: "La collection inspirée des animaux est notre langage de design, pas un thème. Nous distillons les qualités essentielles — présence, autorité, énergie, force, vigilance — en silhouettes sculpturales qui se trouvent être confortables, durables et fonctionnelles.",
+    aboutP4: "Nous expédions dans le monde entier avec un service de livraison gants blancs. Chaque pièce arrive avec une documentation photo et vidéo de sa construction, une garantie qualité de 14 jours, et la certitude qu'elle a été faite spécifiquement pour vous.",
 },
   de: {
     siteTitle: "Fuzz Sofa",
@@ -1899,6 +1919,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "Profil aktualisiert",
     updateFailed: "Aktualisierung fehlgeschlagen",
     loading: "Laden...",
+    aboutP1: "Fuzz Sofa begann mit einer Frage: Was wäre, wenn Möbel die Präsenz der lebendigen Formen tragen könnten, die sie inspirieren? Nicht durch Dekoration oder Muster, sondern durch die wesentlichen Qualitäten der Form — die breite schützende Umarmung des Bären, die aufrechte Autorität des Löwen, die kinetische Energie des Tigers, die geerdete Stärke des Gorillas, die wachsame Aufmerksamkeit der Eule.",
+    aboutP2: "Unsere Werkstatt in Shanghai vereint traditionelle Schreinerei, Meisterpolsterung und zeitgenössisches Designdenken. Jedes Stück wird auf Bestellung gefertigt — nie in Massenproduktion, nie aus Lagerbestand.",
+    aboutP3: "Die tiernspirierte Kollektion ist unsere Designsprache, kein Thema. Wir destillieren wesentliche Qualitäten — Präsenz, Autorität, Energie, Stärke, Wachsamkeit — in skulpturale Silhouetten, die zufällig komfortabel, langlebig und funktional sind.",
+    aboutP4: "Wir liefern weltweit mit White-Glove-Lieferdienst. Jedes Stück kommt mit Foto- und Videodokumentation seiner Entstehung, einer 14-tägigen Qualitätsgarantie und dem Wissen, dass es speziell für Sie angefertigt wurde.",
 },
   es: {
     siteTitle: "Fuzz Sofa",
@@ -2212,6 +2236,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "Perfil actualizado",
     updateFailed: "Error al actualizar",
     loading: "Cargando...",
+    aboutP1: "Fuzz Sofa comenzó con una pregunta: ¿y si los muebles pudieran llevar la presencia de las formas vivas que los inspiran? No a través de la decoración o el patrón, sino a través de las cualidades esenciales de la forma — el abrazo protector del oso, la autoridad erguida del león, la energía cinética del tigre, la fuerza arraigada del gorila, la alerta vigilante del búho.",
+    aboutP2: "Nuestro taller en Shanghái reúne ebanistería tradicional, tapicería maestra y pensamiento de diseño contemporáneo. Cada pieza se hace por encargo — nunca producida en masa, nunca de inventario.",
+    aboutP3: "La colección inspirada en animales es nuestro lenguaje de diseño, no un tema. Destilamos cualidades esenciales — presencia, autoridad, energía, fuerza, vigilancia — en siluetas escultóricas que resultan ser cómodas, duraderas y funcionales.",
+    aboutP4: "Enviamos a todo el mundo con servicio de entrega de guante blanco. Cada pieza llega con documentación fotográfica y en video de su construcción, una garantía de calidad de 14 días y el conocimiento de que fue hecha específicamente para usted.",
 },
   it: {
     siteTitle: "Fuzz Sofa",
@@ -2525,6 +2553,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "Profilo aggiornato",
     updateFailed: "Aggiornamento fallito",
     loading: "Caricamento...",
+    aboutP1: "Fuzz Sofa è nato da una domanda: e se i mobili potessero portare la presenza delle forme viventi che li ispirano? Non attraverso la decorazione o il motivo, ma attraverso le qualità essenziali della forma — l'abbraccio protettivo dell'orso, l'autorità eretta del leone, l'energia cinetica della tigre, la forza radicata del gorilla, la vigile attenzione del gufo.",
+    aboutP2: "La nostra bottega a Shanghai riunisce falegnameria tradizionale, tappezzeria magistrale e pensiero progettuale contemporaneo. Ogni pezzo è fatto su ordinazione — mai prodotto in serie, mai da magazzino.",
+    aboutP3: "La collezione ispirata agli animali è il nostro linguaggio di design, non un tema. Distilliamo qualità essenziali — presenza, autorità, energia, forza, vigilanza — in silhouette scultoree che risultano essere confortevoli, durevoli e funzionali.",
+    aboutP4: "Spediamo in tutto il mondo con servizio di consegna white-glove. Ogni pezzo arriva con documentazione fotografica e video della sua costruzione, una garanzia di qualità di 14 giorni e la consapevolezza che è stato realizzato specificamente per te.",
 },
   pt: {
     siteTitle: "Fuzz Sofa",
@@ -2838,6 +2870,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "Perfil atualizado",
     updateFailed: "Falha na atualização",
     loading: "Carregando...",
+    aboutP1: "Fuzz Sofa começou com uma pergunta: e se os móveis pudessem carregar a presença das formas vivas que os inspiram? Não através da decoração ou padrão, mas através das qualidades essenciais da forma — o abraço protetor do urso, a autoridade ereta do leão, a energia cinética do tigre, a força enraizada do gorila, a vigilância atenta da coruja.",
+    aboutP2: "A nossa oficina em Xangai reúne marcenaria tradicional, estofamento de mestre e pensamento de design contemporâneo. Cada peça é feita por encomenda — nunca produzida em massa, nunca de inventário.",
+    aboutP3: "A coleção inspirada em animais é a nossa linguagem de design, não um tema. Destilamos qualidades essenciais — presença, autoridade, energia, força, vigilância — em silhuetas escultóricas que acabam por ser confortáveis, duradouras e funcionais.",
+    aboutP4: "Enviamos para todo o mundo com serviço de entrega de luvas brancas. Cada peça chega com documentação fotográfica e em vídeo da sua construção, uma garantia de qualidade de 14 dias e o conhecimento de que foi feita especificamente para si.",
 },
   "pt-BR": {
     siteTitle: "Fuzz Sofa",
@@ -3151,6 +3187,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "Perfil atualizado",
     updateFailed: "Falha na atualização",
     loading: "Carregando...",
+    aboutP1: "Fuzz Sofa começou com uma pergunta: e se os móveis pudessem carregar a presença das formas vivas que os inspiram? Não através da decoração ou padrão, mas através das qualidades essenciais da forma — o abraço protetor do urso, a autoridade ereta do leão, a energia cinética do tigre, a força enraizada do gorila, a vigilância atenta da coruja.",
+    aboutP2: "Nossa oficina em Xangai reúne marcenaria tradicional, estofamento de mestre e pensamento de design contemporâneo. Cada peça é feita por encomenda — nunca produzida em massa, nunca de inventário.",
+    aboutP3: "A coleção inspirada em animais é a nossa linguagem de design, não um tema. Destilamos qualidades essenciais — presença, autoridade, energia, força, vigilância — em silhuetas escultóricas que acabam por ser confortáveis, duradouras e funcionais.",
+    aboutP4: "Enviamos para todo o mundo com serviço de entrega de luvas brancas. Cada peça chega com documentação fotográfica e em vídeo da sua construção, uma garantia de qualidade de 14 dias e o conhecimento de que foi feita especificamente para si.",
 },
   ar: {
     siteTitle: "Fuzz Sofa",
@@ -3464,6 +3504,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "تم تحديث الحساب",
     updateFailed: "فشل التحديث",
     loading: "جاري التحميل...",
+    aboutP1: "بدأ Fuzz Sofa بسؤال: ماذا لو كان بإمكان الأثاث أن يحمل حضور الأشكال الحية التي تلهمه؟ ليس من خلال الزخرفة أو النمط، بل من خلال الصفات الجوهرية للشكل — العناق الواسع الحامي للدب، السلطة المنتصبة للأسد، الطاقة الحركية للنمر، القوة الراسخة للغوريلا، واليقظة الحذرة للبومة.",
+    aboutP2: "يجمع ورشتنا في شنغهاي بين النجارة التقليدية والتنجيد الاحترافي والتفكير التصميمي المعاصر. كل قطعة مصنوعة حسب الطلب — لا إنتاجها بكميات كبيرة ولا من المخزون.",
+    aboutP3: "المجموعة المستوحاة من الحيوانات هي لغتنا التصميمية، وليست مجرد موضوع. نستخلص الصفات الجوهرية — الحضور، السلطة، الطاقة، القوة، اليقظة — في صور ظلية نحتية تكون مريحة ومتينة وعملية.",
+    aboutP4: "نشحن إلى جميع أنحاء العالم مع خدمة التوصيل بالقفاز الأبيض. كل قطعة تصل مع توثيق صوري ومرئي لصناعتها، ضمان جودة لمدة 14 يومًا، والمعرفة بأنها صُنعت خصيصًا لك.",
 },
   fa: {
     siteTitle: "Fuzz Sofa",
@@ -3777,6 +3821,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "پروفایل به‌روزرسانی شد",
     updateFailed: "به‌روزرسانی ناموفق",
     loading: "در حال بارگذاری...",
+    aboutP1: "فاز سفا با یک سوال آغاز شد: چه می‌شود اگر مبلمان بتواند حضور اشکال زنده‌ای که الهام‌بخش آن هستند را در خود داشته باشد؟ نه از طریق تزئین یا الگو، بلکه از طریق کیفیت‌های اساسی فرم — آغوش محافظ گسترده خرس، اقتدار صاف شیر، انرژی جنبشی ببر، قدرت ریشه‌دار گوریلا، و هوشیاری بیدار جغد.",
+    aboutP2: "کارگاه ما در شانگهای نجاری سنتی، روکش‌کاری استادانه و تفکر طراحی معاصر را گرد هم می‌آورد. هر قطعه سفارشی ساخته می‌شود — هرگز تولید انبوه نیست، هرگز از موجودی انبار نیست.",
+    aboutP3: "مجموعه الهام‌گرفته از حیوانات زبان طراحی ماست، نه یک تم. ما کیفیت‌های اساسی — حضور، اقتدار، انرژی، قدرت، هوشیاری — را در سیلوئت‌های مجسمه‌ای تقطیر می‌کنیم که اتفاقاً راحت، بادوام و کاربردی هستند.",
+    aboutP4: "ما با خدمات تحویل دستکش سفید به سراسر جهان ارسال می‌کنیم. هر قطعه با مستندات عکسی و ویدیویی ساخت، ضمانت کیفیت ۱۴ روزه و این دانش که مخصوص شما ساخته شده به دست می‌رسد.",
 },
   hi: {
     siteTitle: "Fuzz Sofa",
@@ -4090,6 +4138,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "प्रोफ़ाइल अपडेट किया गया",
     updateFailed: "अपडेट विफल",
     loading: "लोड हो रहा है...",
+    aboutP1: "Fuzz Sofa एक सवाल से शुरू हुआ: क्या होता अगर फर्नीचर उन जीवित रूपों की उपस्थिति को वहन कर सके जो उसे प्रेरित करते हैं? सजावट या पैटर्न के माध्यम से नहीं, बल्कि रूप के आवश्यक गुणों के माध्यम से — भालू की व्यापक सुरक्षात्मक गले लगाना, शेर की सीधी प्राधिकरण, बाघ की गतिशील ऊर्जा, गोरिला की जमीनी ताकत, और उल्लू की सतर्कता।",
+    aboutP2: "शंघाई में हमारी कार्यशाला पारंपरिक बढ़ईगिरी, मास्टर अपहोल्स्ट्री और समकालीन डिज़ाइन सोच को एक साथ लाती है। प्रत्येक टुकड़ा ऑर्डर पर बनाया जाता है — कभी भी बड़े पैमाने पर उत्पादित नहीं, कभी भी इन्वेंट्री से नहीं।",
+    aboutP3: "जानवरों से प्रेरित कलेक्शन हमारी डिज़ाइन भाषा है, कोई विषय नहीं। हम आवश्यक गुणों — उपस्थिति, प्राधिकरण, ऊर्जा, शक्ति, सतर्कता — को मूर्तिकला सिलुएट में आसवित करते हैं जो आरामदायक, टिकाऊ और कार्यात्मक होते हैं।",
+    aboutP4: "हम व्हाइट-ग्लव डिलीवरी सेवा के साथ दुनिया भर में शिप करते हैं। हर टुकड़ा अपने निर्माण का फोटो और वीडियो दस्तावेज़ीकरण, 14-दिन की गुणवत्ता गारंटी, और यह ज्ञान कि यह विशेष रूप से आपके लिए बनाया गया था, के साथ आता है।",
 },
   ko: {
     siteTitle: "Fuzz Sofa",
@@ -4403,6 +4455,10 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     profileUpdated: "프로필이 업데이트되었습니다",
     updateFailed: "업데이트 실패",
     loading: "로딩 중...",
+    aboutP1: "Fuzz Sofa은 하나의 질문으로 시작되었습니다: 가구가 영감을 준 생명체의 형태적 존재감을 담을 수 있다면 어떨까? 장식이나 패턴이 아니라 형태의 본질적 특성을 통해 — 곰의 넓은 보호적 포옹, 사자의 곧은 위엄, 호랑이의 역동적 에너지, 고릴라의 뿌리깊은 힘, 올빼미의 경계하는 날카로움.",
+    aboutP2: "상하이의 우리 공방은 전통 목공, 마스터 장식, 현대적 디자인 사고를 결합합니다. 각 피스는 주문 제작됩니다 — 대량 생산되지 않고, 재고에서 나오지 않습니다.",
+    aboutP3: "동물 영감 컬렉션은 우리의 디자인 언어이지 테마가 아닙니다. 우리는 본질적 특성 — 존재감, 위엄, 에너지, 힘, 경계심 — 을 조각적 실루엣으로 증류하며, 우연히 편안하고 내구성 있으며 기능적입니다.",
+    aboutP4: "우리는 화이트글러브 배송 서비스로 전 세계에 배송합니다. 모든 피스는 제작 과정의 사진 및 비디오 문서, 14일 품질 보증, 그리고 고객님만을 위해 특별히 제작되었다는 확신과 함께 도착합니다.",
 },
 };
 

@@ -41,11 +41,11 @@ export function Footer() {
         <div>
           <h4 className="text-xs font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("collection")}</h4>
           <ul className="space-y-3">
-            <li><Link href="/bear-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Bear Sofa</Link></li>
-            <li><Link href="/lion-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Lion Sofa</Link></li>
-            <li><Link href="/tiger-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Tiger Sofa</Link></li>
-            <li><Link href="/gorilla-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Gorilla Sofa</Link></li>
-            <li><Link href="/owl-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Owl Chair</Link></li>
+            <li><Link href="/bear-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("bearSofaName")}</Link></li>
+            <li><Link href="/lion-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("lionSofaName")}</Link></li>
+            <li><Link href="/tiger-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("tigerSofaName")}</Link></li>
+            <li><Link href="/gorilla-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("gorillaSofaName")}</Link></li>
+            <li><Link href="/owl-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("owlChairName")}</Link></li>
           </ul>
         </div>
 
@@ -53,10 +53,10 @@ export function Footer() {
         <div>
           <h4 className="text-xs font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("explore")}</h4>
           <ul className="space-y-3">
-            <li><Link href="/luxury-villa-interior" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Luxury Villa Interior</Link></li>
-            <li><Link href="/boutique-hotel-lobby" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Boutique Hotel Lobby</Link></li>
-            <li><Link href="/statement-furniture" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Statement Furniture</Link></li>
-            <li><Link href="/sculptural-furniture-trend" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Sculptural Furniture Trend</Link></li>
+            <li><Link href="/luxury-villa-interior" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("luxuryVillaScene")}</Link></li>
+            <li><Link href="/boutique-hotel-lobby" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("boutiqueHotelScene")}</Link></li>
+            <li><Link href="/statement-furniture" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("statementFurnitureScene")}</Link></li>
+            <li><Link href="/sculptural-furniture-trend" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("sculpturalTrendScene")}</Link></li>
             <li><Link href="/process" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("ourProcess")}</Link></li>
             <li><Link href="/materials" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("materialsGuide")}</Link></li>
             <li><Link href="/animal-sofa-collection" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("fullCollection")}</Link></li>
