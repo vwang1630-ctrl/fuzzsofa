@@ -435,6 +435,13 @@ export default function HomePage() {
                 accent: "from-[#151015] to-[#0A0A0A]",
                 label: t("statementFurnitureScene"),
               },
+              {
+                href: "/sculptural-trend",
+                title: t("sculpturalTrend"),
+                accent: "from-[#0A0A1A] to-[#0A0A0A]",
+                label: t("sculpturalTrendScene"),
+                image: "/products/meteorite-ring-sofa/sculptural-trend.png",
+              },
 
             ].map((interior) => (
               <Link
@@ -443,11 +450,22 @@ export default function HomePage() {
                 className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className={`h-56 bg-gradient-to-b ${interior.accent} relative`}>
-                  <div
-                    className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500"
-                    style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
-                  />
-
+                  {"image" in interior && interior.image ? (
+                    <>
+                      <img
+                        src={interior.image}
+                        alt={interior.title}
+                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
+                      <div className="absolute bottom-0 right-0 w-[30%] h-[15%] bg-gradient-to-tl from-[#0A0A0A] to-transparent" />
+                    </>
+                  ) : (
+                    <div
+                      className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500"
+                      style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
+                    />
+                  )}
                 </div>
                 <div className="p-6">
                   <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
