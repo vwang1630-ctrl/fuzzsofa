@@ -87,9 +87,9 @@ export function ProductPageClient({ product }: Props) {
       "/products/gorilla-sofa/black.jpg",
     ],
     "silverback-sofa": [
+      "/products/silverback-sofa/gray.jpg",
       "/products/silverback-sofa/beige.jpg",
       "/products/silverback-sofa/navy.jpg",
-      "/products/silverback-sofa/gray.jpg",
       "/products/silverback-sofa/charcoal.jpg",
     ],
   };

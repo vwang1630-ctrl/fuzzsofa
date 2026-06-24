@@ -253,7 +253,7 @@ export default function HomePage() {
             >
               <div className="aspect-square relative overflow-hidden">
                 <img
-                  src="/products/silverback-sofa/beige.jpg"
+                  src="/products/silverback-sofa/gray.jpg"
                   alt={t("silverbackSofaName")}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

@@ -516,8 +516,8 @@ export const products: Product[] = [
     materialOptions: [
       {
         type: "Fabric",
-        options: ["Beige Fabric", "Navy Velvet", "Gray Fabric", "Charcoal Velvet"],
-        colors: ["#D4C4A8", "#1B2A4A", "#8A8A8A", "#363636"],
+        options: ["Gray Fabric", "Beige Fabric", "Navy Velvet", "Charcoal Velvet"],
+        colors: ["#8A8A8A", "#D4C4A8", "#1B2A4A", "#363636"],
       },
     ],
     faq: [
