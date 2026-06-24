@@ -293,13 +293,14 @@ export default function CheckoutPage() {
       });
 
       if (res.status === 401) {
+        alert(t("checkoutLoginRequired"));
         router.push("/login?redirect=/checkout");
         return;
       }
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Order creation failed");
+        throw new Error(data.error || t("checkoutOrderFailed"));
       }
 
       const data = await res.json();
@@ -307,7 +308,7 @@ export default function CheckoutPage() {
       router.push(`/order-confirmed?order=${data.order.orderNumber}`);
     } catch (err) {
       console.error("Order failed:", err);
-      alert("Order creation failed. Please try again.");
+      alert(t("checkoutOrderFailed"));
     } finally {
       setSubmitting(false);
     }
