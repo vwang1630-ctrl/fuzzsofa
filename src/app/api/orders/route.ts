@@ -62,6 +62,7 @@ export async function GET(request: NextRequest) {
       latestShippingEvent: o.latest_shipping_event,
       createdAt: o.created_at,
       items: ((o.order_items as OrderItemRow[]) || []).map((item) => ({
+        id: item.id,
         productSlug: item.product_slug,
         productName: item.product_name,
         colorName: item.color_name,
