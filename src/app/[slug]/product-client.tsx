@@ -92,6 +92,11 @@ export function ProductPageClient({ product }: Props) {
       "/products/silverback-sofa/navy.jpg",
       "/products/silverback-sofa/charcoal.jpg",
     ],
+    "meteorite-ring-sofa": [
+      "/products/meteorite-ring-sofa/main.jpg",
+      "/products/meteorite-ring-sofa/scene-2.jpg",
+      "/products/meteorite-ring-sofa/scene-3.jpg",
+    ],
   };
 
   const images = productImages[product.slug] || [];
@@ -345,6 +350,26 @@ export function ProductPageClient({ product }: Props) {
           </div>
         </div>
       </section>
+
+      {/* 3.5) TRENDING REGIONS */}
+      {product.trendingGeo && product.trendingGeo.length > 0 && (
+        <section className="border-b border-[#1A1A1A]">
+          <div className="max-w-[1100px] mx-auto px-6 py-16">
+            <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-2">{t("trendingRegionsTitle")}</h2>
+            <p className="text-sm text-[#8A8580] mb-8">{t("trendingRegionsDesc")}</p>
+            <div className="flex flex-wrap gap-2">
+              {product.trendingGeo.map((region: string) => (
+                <span
+                  key={region}
+                  className="px-4 py-2 border border-[#1A1A1A] text-sm text-[#F5F0EB]/80 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300 cursor-default"
+                >
+                  {region}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 4) MATERIALS DETAIL */}
       <section className="border-b border-[#1A1A1A]">

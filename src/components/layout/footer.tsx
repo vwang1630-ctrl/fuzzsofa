@@ -46,6 +46,7 @@ export function Footer() {
             <li><Link href="/tiger-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("tigerSofaName")}</Link></li>
             <li><Link href="/gorilla-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("gorillaSofaName")}</Link></li>
             <li><Link href="/owl-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("owlChairName")}</Link></li>
+            <li><Link href="/meteorite-ring-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("meteoriteRingSofaName")}</Link></li>
           </ul>
         </div>
 

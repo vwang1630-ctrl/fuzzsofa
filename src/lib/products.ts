@@ -35,6 +35,8 @@ export interface Product {
   metaDescription: string;
   /** Hide this product in specific regions */
   hiddenInRegions?: Region[];
+  /** Regions where this product is trending/popular for SEO boost */
+  trendingGeo?: string[];
 }
 
 export const products: Product[] = [
@@ -133,6 +135,7 @@ export const products: Product[] = [
     metaDescription:
       "Bear Sofa by Fuzz Sofa — a sculptural three-seater inspired by the grizzly bear. Made to order in Shanghai with premium fabric or leather. Free white-glove delivery worldwide.",
     hiddenInRegions: ["middle_east"],
+    trendingGeo: ["US", "EU", "JP", "KR", "SG", "AU"],
   },
   {
     slug: "lion-sofa",
@@ -404,6 +407,7 @@ export const products: Product[] = [
     relatedInteriors: ["luxury-villa-interior", "statement-furniture"],
     metaDescription:
       "Gorilla Sofa by Fuzz Sofa — a massive low-slung sculptural sofa inspired by the gorilla. Available in fabric or leather. Made to order in Shanghai. Free white-glove delivery worldwide.",
+    trendingGeo: ["US", "EU", "JP", "AU", "AE", "SG"],
   },
   {
     slug: "owl-sofa",
@@ -547,6 +551,79 @@ export const products: Product[] = [
     metaDescription:
       "Silverback Sofa by Fuzz Sofa — a sculptural upholstered gorilla sofa in premium fabric and velvet. Available in 4 colors. Made to order. Free white-glove delivery worldwide.",
   },
+  {
+    slug: "meteorite-ring-sofa",
+    name: "Meteorite Ring Sofa",
+    animal: "Meteorite",
+    tagline: "Cosmic Impact, Grounded Comfort",
+    description:
+      "The Meteorite Ring Sofa captures the raw beauty of a celestial body frozen at the moment of impact. Its distinctive ring silhouette and crater-textured surface create a seating experience that is both sculptural and deeply comfortable — a conversation piece that transforms any space into a gallery of cosmic wonder.",
+    concept:
+      "A meteorite strikes the earth not with destruction but with transformation — the energy of the cosmos made tangible. The Meteorite Ring Sofa embodies this moment of cosmic impact. Its ring form evokes the crater left by a celestial visitor, while the textured surface recalls the fusion crust of a real meteorite — rough, organic, and utterly unique. The circular embrace of the ring creates a natural gathering space, an intimate orbit where conversation flows like gravity. This is furniture that reminds you the universe is both vast and personal.",
+    interiorContext:
+      "The Meteorite Ring Sofa's circular form makes it a natural centerpiece for open-plan living spaces, creative studios, and boutique hospitality environments. Its compact footprint fits surprisingly well in urban apartments, while its 360-degree design invites conversation from every angle. Best placed where it can be viewed in the round — center of room, near floor-to-ceiling windows, or as a room divider in open spaces.",
+    priceRange: {
+      americas: [3500, 3500],
+      europe: [3500, 3500],
+      middle_east: [3500, 3500],
+      se_asia: [3500, 3500],
+    },
+    specifications: {
+      width: "W110 cm",
+      height: "H80 cm",
+      depth: "D80 cm",
+      seatHeight: "42 cm",
+      weight: "30 kg (+ frame 10 kg)",
+      capacity: "1-seater, up to 150 kg",
+    },
+    materials: [
+      "Solid hardwood frame (FSC-certified)",
+      "High-density foam with down feather wrap",
+      "Meteorite-textured premium fabric",
+      "Sculpted matte details",
+    ],
+    materialOptions: [
+      {
+        type: "Meteorite Fabric",
+        options: [
+          "Obsidian Black",
+        ],
+        colors: ["#1A1A1A"],
+      },
+    ],
+    images: [
+      "/products/meteorite-ring-sofa/main.jpg",
+      "/products/meteorite-ring-sofa/scene-2.jpg",
+      "/products/meteorite-ring-sofa/scene-3.jpg",
+    ],
+    faq: [
+      {
+        question: "What makes the Meteorite Ring Sofa different from other Fuzz Sofa models?",
+        answer:
+          "The Meteorite Ring Sofa is the most compact piece in the collection. Its ring shape creates a 360-degree seating experience, while the crater-textured surface offers a unique tactile quality unlike any other furniture piece. It's designed for intimate spaces that demand a statement.",
+      },
+      {
+        question: "Is the Meteorite Ring Sofa suitable for outdoor use?",
+        answer:
+          "The Meteorite Ring Sofa is designed for indoor use. The meteorite-textured fabric is treated for durability but is not weather-resistant. For covered outdoor spaces, we recommend consulting our trade team for custom outdoor specifications.",
+      },
+      {
+        question: "How is the Meteorite Ring Sofa delivered?",
+        answer:
+          "All Fuzz Sofa pieces are delivered via our free white-glove service. The Meteorite Ring Sofa's compact size makes it one of the easiest pieces in the collection to deliver — it fits through standard doorways and elevators without special arrangements.",
+      },
+      {
+        question: "What is the return policy?",
+        answer:
+          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost.",
+      },
+    ],
+    relatedProducts: ["gorilla-sofa", "owl-sofa", "bear-sofa"],
+    relatedInteriors: ["creative-studio", "urban-apartment"],
+    metaDescription:
+      "Meteorite Ring Sofa by Fuzz Sofa — a cosmic ring-shaped sculptural sofa with crater-textured surface. Compact 110x80x80cm. Made to order. Free white-glove delivery worldwide.",
+    trendingGeo: ["americas", "europe"],
+  },
 ];
 
 export function getProduct(slug: string): Product | undefined {
@@ -565,6 +642,7 @@ export function getPrice(product: Product, region: Region): number {
     "gorilla-sofa": { americas: 7200, europe: 7200, middle_east: 6800, se_asia: 6200 },
     "gorilla-leather": { americas: 9800, europe: 9800, middle_east: 9200, se_asia: 8500 },
     "owl-sofa": { americas: 2800, europe: 2800, middle_east: 2650, se_asia: 2500 },
+    "meteorite-ring-sofa": { americas: 3500, europe: 3500, middle_east: 3500, se_asia: 3500 },
   };
   const key = product.slug === "gorilla-sofa" ? "gorilla-sofa" : product.slug;
   return mapping[key]?.[region] ?? product.priceRange.americas[0];

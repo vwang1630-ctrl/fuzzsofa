@@ -429,6 +429,33 @@ export default function HomePage() {
               </div>
             </Link>
 
+            {/* Meteorite Ring Sofa — Punk Concrete scene */}
+            <Link
+              href="/meteorite-ring-sofa"
+              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
+            >
+              <div className="aspect-square relative overflow-hidden">
+                <img
+                  src="/products/meteorite-ring-sofa/main.jpg"
+                  alt={t("meteoriteRingSofaName")}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
+                <div className="absolute top-5 left-5">
+                  <span className="text-[10px] text-[#8A8580]/60 tracking-[0.15em] uppercase">
+                    Punk Concrete
+                  </span>
+                </div>
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
+                  {t("meteoriteRingSofaName")}
+                </h3>
+                <p className="mt-1 text-xs text-[#8A8580]">{t("meteoriteRingSofaTagline")}</p>
+                <p className="mt-3 text-sm text-[#F5F0EB]/60">¥3,500</p>
+              </div>
+            </Link>
+
             {/* Interior Worlds card */}
             <Link
               href="/luxury-villa-interior"
