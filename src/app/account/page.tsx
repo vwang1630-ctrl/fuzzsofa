@@ -185,6 +185,25 @@ export default function AccountPage() {
   const [loadingFavorites, setLoadingFavorites] = useState(false);
   const [removingFavorite, setRemovingFavorite] = useState<string | null>(null);
 
+  // Address modal
+  const [showAddrModal, setShowAddrModal] = useState(false);
+  const [editingAddr, setEditingAddr] = useState<Address | null>(null);
+  const [addrForm, setAddrForm] = useState({
+    label: "Home",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    country: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    isDefault: false,
+  });
+  const [addrSaving, setAddrSaving] = useState(false);
+
   // Auth
   const [sessionToken, setSessionToken] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -263,6 +282,124 @@ export default function AccountPage() {
       }
     } catch (err) { console.error("Remove favorite failed:", err); }
     finally { setRemovingFavorite(null); }
+  };
+
+  // Open address modal for adding
+  const openAddAddress = () => {
+    setEditingAddr(null);
+    setAddrForm({
+      label: "Home",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      country: "",
+      addressLine1: "",
+      addressLine2: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      isDefault: addresses.length === 0,
+    });
+    setShowAddrModal(true);
+  };
+
+  // Open address modal for editing
+  const openEditAddress = (addr: Address) => {
+    setEditingAddr(addr);
+    setAddrForm({
+      label: addr.label,
+      firstName: addr.first_name,
+      lastName: addr.last_name,
+      email: addr.email || "",
+      phone: addr.phone || "",
+      country: addr.country,
+      addressLine1: addr.address_line1,
+      addressLine2: addr.address_line2 || "",
+      city: addr.city,
+      state: addr.state || "",
+      zipCode: addr.zip_code || "",
+      isDefault: addr.is_default,
+    });
+    setShowAddrModal(true);
+  };
+
+  // Save address (create or update)
+  const handleSaveAddress = async () => {
+    setAddrSaving(true);
+    try {
+      const payload = {
+        label: addrForm.label,
+        firstName: addrForm.firstName,
+        lastName: addrForm.lastName,
+        email: addrForm.email,
+        phone: addrForm.phone,
+        country: addrForm.country,
+        addressLine1: addrForm.addressLine1,
+        addressLine2: addrForm.addressLine2,
+        city: addrForm.city,
+        state: addrForm.state,
+        zipCode: addrForm.zipCode,
+        isDefault: addrForm.isDefault,
+      };
+
+      let res: Response;
+      if (editingAddr) {
+        res = await fetch(`/api/addresses/${editingAddr.id}`, {
+          method: "PUT",
+          headers: authHeaders(),
+          body: JSON.stringify(payload),
+        });
+      } else {
+        res = await fetch("/api/addresses", {
+          method: "POST",
+          headers: authHeaders(),
+          body: JSON.stringify(payload),
+        });
+      }
+
+      if (res.ok) {
+        setShowAddrModal(false);
+        // Refresh addresses
+        const addrRes = await fetch("/api/addresses", { headers: authHeaders() });
+        if (addrRes.ok) {
+          const data = await addrRes.json();
+          setAddresses(data.addresses || []);
+        }
+      }
+    } catch (err) { console.error("Save address failed:", err); }
+    finally { setAddrSaving(false); }
+  };
+
+  // Delete address
+  const handleDeleteAddress = async (addrId: string) => {
+    if (!confirm(t("addressDeleteConfirm"))) return;
+    try {
+      const res = await fetch(`/api/addresses/${addrId}`, {
+        method: "DELETE",
+        headers: authHeaders(),
+      });
+      if (res.ok) {
+        setAddresses(prev => prev.filter(a => a.id !== addrId));
+      }
+    } catch (err) { console.error("Delete address failed:", err); }
+  };
+
+  // Set default address
+  const handleSetDefault = async (addrId: string) => {
+    try {
+      const res = await fetch(`/api/addresses/${addrId}`, {
+        method: "PATCH",
+        headers: authHeaders(),
+        body: JSON.stringify({ isDefault: true }),
+      });
+      if (res.ok) {
+        setAddresses(prev => prev.map(a => ({
+          ...a,
+          is_default: a.id === addrId,
+        })));
+      }
+    } catch (err) { console.error("Set default failed:", err); }
   };
 
   // Delete order
@@ -590,7 +727,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-serif text-xl text-[#F5F0EB]">{t("accountMyAddresses")}</h2>
             <button
-              onClick={() => {/* TODO: add address modal */}}
+              onClick={openAddAddress}
               className="px-4 py-2 text-xs tracking-wider uppercase border border-[#F5F0EB] text-[#F5F0EB] hover:bg-[#E8B4B8] hover:text-[#0A0A0A] hover:border-[#E8B4B8] transition-all"
             >
               {t("accountAddAddress")}
@@ -620,14 +757,221 @@ export default function AccountPage() {
                     {addr.country}
                   </p>
                   <div className="flex gap-3 mt-4">
-                    <button className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("edit")}</button>
-                    <button className="text-xs text-[#8A8580] hover:text-red-400 transition-colors">{t("remove")}</button>
+                    <button
+                      onClick={() => openEditAddress(addr)}
+                      className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors"
+                    >
+                      {t("edit")}
+                    </button>
+                    <button
+                      onClick={() => handleDeleteAddress(addr.id)}
+                      className="text-xs text-[#8A8580] hover:text-red-400 transition-colors"
+                    >
+                      {t("remove")}
+                    </button>
                     {!addr.is_default && (
-                      <button className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("accountSetDefault")}</button>
+                      <button
+                        onClick={() => handleSetDefault(addr.id)}
+                        className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors"
+                      >
+                        {t("accountSetDefault")}
+                      </button>
                     )}
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Address Form Modal */}
+          {showAddrModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setShowAddrModal(false)}>
+              <div
+                className="bg-[#0A0A0A] border border-[#1A1A1A] w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="p-6">
+                  <h3 className="font-serif text-xl text-[#F5F0EB] mb-6">
+                    {editingAddr ? t("addressEditTitle") : t("addressAddTitle")}
+                  </h3>
+
+                  <div className="space-y-4">
+                    {/* Label */}
+                    <div>
+                      <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                        {t("addressLabel")}
+                      </label>
+                      <select
+                        value={addrForm.label}
+                        onChange={e => setAddrForm(p => ({ ...p, label: e.target.value }))}
+                        className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                      >
+                        <option value="Home">Home</option>
+                        <option value="Office">Office</option>
+                        <option value="Warehouse">Warehouse</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+
+                    {/* Name Row */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("addressFirstName")} <span className="text-[#E8B4B8]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={addrForm.firstName}
+                          onChange={e => setAddrForm(p => ({ ...p, firstName: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("addressLastName")} <span className="text-[#E8B4B8]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={addrForm.lastName}
+                          onChange={e => setAddrForm(p => ({ ...p, lastName: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Email & Phone */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("addressEmail")}
+                        </label>
+                        <input
+                          type="email"
+                          value={addrForm.email}
+                          onChange={e => setAddrForm(p => ({ ...p, email: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("addressPhone")}
+                        </label>
+                        <input
+                          type="tel"
+                          value={addrForm.phone}
+                          onChange={e => setAddrForm(p => ({ ...p, phone: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Country */}
+                    <div>
+                      <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                        {t("addressCountry")} <span className="text-[#E8B4B8]">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={addrForm.country}
+                        onChange={e => setAddrForm(p => ({ ...p, country: e.target.value }))}
+                        placeholder="US, AE, GB, DE..."
+                        className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors placeholder:text-[#8A8580]/40"
+                      />
+                    </div>
+
+                    {/* Address Line 1 */}
+                    <div>
+                      <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                        {t("addressLine1")} <span className="text-[#E8B4B8]">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={addrForm.addressLine1}
+                        onChange={e => setAddrForm(p => ({ ...p, addressLine1: e.target.value }))}
+                        className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                      />
+                    </div>
+
+                    {/* Address Line 2 */}
+                    <div>
+                      <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                        {t("addressLine2")}
+                      </label>
+                      <input
+                        type="text"
+                        value={addrForm.addressLine2}
+                        onChange={e => setAddrForm(p => ({ ...p, addressLine2: e.target.value }))}
+                        className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                      />
+                    </div>
+
+                    {/* City + State + Zip */}
+                    <div className="grid grid-cols-3 gap-3">
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("addressCity")} <span className="text-[#E8B4B8]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={addrForm.city}
+                          onChange={e => setAddrForm(p => ({ ...p, city: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("addressState")}
+                        </label>
+                        <input
+                          type="text"
+                          value={addrForm.state}
+                          onChange={e => setAddrForm(p => ({ ...p, state: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("addressZip")}
+                        </label>
+                        <input
+                          type="text"
+                          value={addrForm.zipCode}
+                          onChange={e => setAddrForm(p => ({ ...p, zipCode: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Default toggle */}
+                    <label className="flex items-center gap-3 cursor-pointer mt-2">
+                      <input
+                        type="checkbox"
+                        checked={addrForm.isDefault}
+                        onChange={e => setAddrForm(p => ({ ...p, isDefault: e.target.checked }))}
+                        className="w-4 h-4 accent-[#E8B4B8] bg-[#111111] border-[#1A1A1A]"
+                      />
+                      <span className="text-sm text-[#F5F0EB]/70">{t("addressIsDefault")}</span>
+                    </label>
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="flex gap-3 mt-8">
+                    <button
+                      onClick={handleSaveAddress}
+                      disabled={addrSaving || !addrForm.firstName || !addrForm.lastName || !addrForm.addressLine1 || !addrForm.city || !addrForm.country}
+                      className="flex-1 border border-[#F5F0EB] text-[#F5F0EB] py-3 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] hover:border-[#E8B4B8] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[#F5F0EB] disabled:hover:border-[#F5F0EB]"
+                    >
+                      {addrSaving ? "..." : t("addressSave")}
+                    </button>
+                    <button
+                      onClick={() => setShowAddrModal(false)}
+                      className="flex-1 border border-[#333] text-[#8A8580] py-3 text-sm tracking-[0.1em] uppercase hover:border-[#E8B4B8]/50 hover:text-[#F5F0EB] transition-all"
+                    >
+                      {t("addressCancel")}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
