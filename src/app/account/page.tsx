@@ -35,6 +35,11 @@ interface Order {
   subtotal: number;
   created_at: string;
   items: OrderItem[];
+  tracking_number: string | null;
+  carrier: string | null;
+  estimated_delivery: string | null;
+  latest_shipping_event: string | null;
+  shipping_method: string | null;
 }
 
 interface Address {
@@ -62,16 +67,16 @@ const formatDate = (d: string) => {
   catch { return d; }
 };
 
-const statusLabel = (s: string): string => {
-  const m: Record<string, string> = {
-    pending: "Pending Payment",
-    confirmed: "In Production",
-    processing: "Packing",
-    shipped: "Shipped",
-    delivered: "Delivered",
-    cancelled: "Cancelled",
+const statusLabel = (s: string, t: (key: TranslationKeys) => string): string => {
+  const m: Record<string, TranslationKeys> = {
+    pending: "orderStatusPending",
+    confirmed: "orderStatusConfirmed",
+    processing: "orderStatusProcessing",
+    shipped: "orderStatusShipped",
+    delivered: "orderStatusDelivered",
+    cancelled: "orderStatusCancelled",
   };
-  return m[s] || s;
+  return m[s] ? t(m[s]) : s;
 };
 
 const statusColor = (s: string) => {
@@ -86,15 +91,53 @@ const statusColor = (s: string) => {
   return m[s] || "text-[#8A8580]";
 };
 
-const paymentStatusLabel = (s: string) => {
-  const m: Record<string, string> = {
-    pending: "Unpaid",
-    pending_payment: "Awaiting Transfer",
-    paid: "Paid",
-    refunded: "Refunded",
-    failed: "Failed",
+const paymentStatusLabel = (s: string, t: (key: TranslationKeys) => string): string => {
+  const m: Record<string, TranslationKeys> = {
+    pending: "orderPaymentUnpaid",
+    pending_payment: "orderPaymentAwaitingTransfer",
+    paid: "orderPaymentPaid",
+    refunded: "orderPaymentRefunded",
+    failed: "orderPaymentFailed",
   };
-  return m[s] || s;
+  return m[s] ? t(m[s]) : s;
+};
+
+/* Logistics badge: maps latest_shipping_event → color + label key */
+const logisticsBadge = (event: string | null, t: (key: TranslationKeys) => string) => {
+  if (!event) return null;
+  const map: Record<string, { color: string; key: TranslationKeys }> = {
+    pre_shipping:        { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgePreShipping" },
+    packed:              { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgePreShipping" },
+    picked_up:           { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
+    warehouse_received:  { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
+    warehouse_dispatched:{ color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
+    export_declared:     { color: "bg-[#333] text-[#8A8580]",   key: "shippingStatusBadgeDomestic" },
+    export_cleared:      { color: "bg-[#2563eb]/20 text-blue-400", key: "shippingStatusBadgeInternational" },
+    in_transit_intl:     { color: "bg-[#2563eb]/20 text-blue-400", key: "shippingStatusBadgeInternational" },
+    transit_hub:         { color: "bg-[#2563eb]/20 text-blue-400", key: "shippingStatusBadgeInternational" },
+    arrived_dest:        { color: "bg-orange-500/20 text-orange-400", key: "shippingStatusBadgeCustoms" },
+    import_declared:     { color: "bg-orange-500/20 text-orange-400", key: "shippingStatusBadgeCustoms" },
+    tax_paid:            { color: "bg-orange-500/20 text-orange-400", key: "shippingStatusBadgeCustoms" },
+    import_cleared:      { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
+    local_sorting:       { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
+    local_dispatched:    { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
+    out_for_delivery:    { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeLocalDelivery" },
+    delivered:           { color: "bg-green-500/20 text-green-400", key: "shippingStatusBadgeDelivered" },
+    customs_hold:        { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
+    delay:               { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
+    delivery_failed:     { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
+    return_to_origin:    { color: "bg-red-500/20 text-red-400", key: "shippingStatusBadgeException" },
+  };
+  const badge = map[event];
+  if (!badge) return null;
+  return { color: badge.color, label: t(badge.key) };
+};
+
+const formatEDD = (d: string | null) => {
+  if (!d) return null;
+  try {
+    return new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  } catch { return null; }
 };
 
 /* ------------------------------------------------------------------ */
@@ -171,7 +214,7 @@ export default function AccountPage() {
 
   // Delete order
   const handleDeleteOrder = async (orderId: string) => {
-    if (!confirm("Are you sure you want to delete this order?")) return;
+    if (!confirm(t("accountDeleteConfirm"))) return;
     setDeleting(orderId);
     try {
       const res = await fetch(`/api/orders/${orderId}`, {
@@ -250,7 +293,6 @@ export default function AccountPage() {
     ? orders
     : orders.filter(o => o.status === statusFilter);
 
-  const pendingOrders = orders.filter(o => o.payment_status === "pending");
   const hasSelectedPending = orders.filter(o => selectedOrders.has(o.id) && o.payment_status === "pending").length > 0;
 
   if (!mounted) return null;
@@ -259,9 +301,9 @@ export default function AccountPage() {
   if (!sessionToken && !loadingOrders) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
-        <p className="text-[#8A8580]">Please log in to view your account</p>
+        <p className="text-[#8A8580]">{t("accountLoginRequired")}</p>
         <Link href="/login" className="px-6 py-2 border border-[#F5F0EB] text-[#F5F0EB] text-sm tracking-wider hover:bg-[#E8B4B8] hover:text-[#0A0A0A] hover:border-[#E8B4B8] transition-all">
-          LOG IN
+          {t("signIn")}
         </Link>
       </div>
     );
@@ -270,7 +312,7 @@ export default function AccountPage() {
   /* ---- Main layout ---- */
   return (
     <div className="max-w-6xl mx-auto px-6 py-20">
-      <h1 className="font-serif text-3xl text-[#F5F0EB] tracking-wide mb-10">My Account</h1>
+      <h1 className="font-serif text-3xl text-[#F5F0EB] tracking-wide mb-10">{t("accountTitle")}</h1>
 
       {/* Tabs */}
       <div className="flex gap-8 border-b border-[#1A1A1A] mb-10">
@@ -284,7 +326,7 @@ export default function AccountPage() {
                 : "text-[#8A8580] hover:text-[#F5F0EB]"
             }`}
           >
-            {tabKey === "orders" ? "My Orders" : tabKey === "addresses" ? "My Addresses" : "Payment Settings"}
+            {tabKey === "orders" ? t("accountMyOrders") : tabKey === "addresses" ? t("accountMyAddresses") : t("accountPaymentSettings")}
           </button>
         ))}
       </div>
@@ -305,7 +347,7 @@ export default function AccountPage() {
                       : "border-[#1A1A1A] text-[#8A8580] hover:border-[#333]"
                   }`}
                 >
-                  {s === "all" ? "All" : statusLabel(s)}
+                  {s === "all" ? t("accountAll") : statusLabel(s, t)}
                 </button>
               ))}
             </div>
@@ -314,7 +356,7 @@ export default function AccountPage() {
                 onClick={handleBatchPay}
                 className="px-4 py-2 text-xs tracking-wider uppercase border border-[#E8B4B8] text-[#E8B4B8] hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all"
               >
-                PAY SELECTED ({orders.filter(o => selectedOrders.has(o.id) && o.payment_status === "pending").length})
+                {t("accountPaySelected")} ({orders.filter(o => selectedOrders.has(o.id) && o.payment_status === "pending").length})
               </button>
             )}
           </div>
@@ -325,7 +367,7 @@ export default function AccountPage() {
               <div className="w-6 h-6 border-2 border-[#333] border-t-[#E8B4B8] rounded-full animate-spin" />
             </div>
           ) : filteredOrders.length === 0 ? (
-            <div className="text-center py-20 text-[#8A8580]">No orders found</div>
+            <div className="text-center py-20 text-[#8A8580]">{t("accountNoOrders")}</div>
           ) : (
             <div className="space-y-4">
               {filteredOrders.map(order => (
@@ -353,13 +395,22 @@ export default function AccountPage() {
                     </div>
                     <div className="flex items-center gap-4">
                       <span className={`text-xs tracking-wider uppercase ${statusColor(order.status)}`}>
-                        {statusLabel(order.status)}
+                        {statusLabel(order.status, t)}
                       </span>
                       {order.payment_status === "pending" && order.status !== "cancelled" && (
                         <span className="text-xs text-yellow-500">
-                          {paymentStatusLabel(order.payment_status)}
+                          {paymentStatusLabel(order.payment_status, t)}
                         </span>
                       )}
+                      {/* Logistics badge */}
+                      {logisticsBadge(order.latest_shipping_event, t) && (() => {
+                        const badge = logisticsBadge(order.latest_shipping_event, t)!;
+                        return (
+                          <span className={`text-[10px] tracking-wider uppercase px-2 py-0.5 rounded ${badge.color}`}>
+                            {badge.label}
+                          </span>
+                        );
+                      })()}
                       <span className="text-[#F5F0EB] text-sm">{formatPrice(order.total)}</span>
                     </div>
                   </div>
@@ -379,12 +430,27 @@ export default function AccountPage() {
                         </div>
                       ))}
                       {order.items.length > 3 && (
-                        <span className="text-xs text-[#8A8580]">+{order.items.length - 3} more</span>
+                        <span className="text-xs text-[#8A8580]">{t("moreItems").replace("{n}", String(order.items.length - 3))}</span>
                       )}
                       <span className="text-xs text-[#8A8580] ml-auto">
-                        {order.items.length} item{order.items.length > 1 ? "s" : ""}
+                        {t("itemCount").replace("{n}", String(order.items.length))}
                       </span>
                     </div>
+                    {/* Tracking number + EDD for shipped orders */}
+                    {(order.tracking_number || order.estimated_delivery) && (
+                      <div className="flex items-center gap-4 mt-2 pt-2 border-t border-[#1A1A1A]">
+                        {order.tracking_number && (
+                          <Link href={`/orders/${order.id}`} className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">
+                            {t("trackingNumber")}: {order.tracking_number}
+                          </Link>
+                        )}
+                        {order.estimated_delivery && formatEDD(order.estimated_delivery) && (
+                          <span className="text-xs text-[#8A8580] ml-auto">
+                            {t("shippingEstDelivery")}: {formatEDD(order.estimated_delivery)}
+                          </span>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* Actions for pending orders */}
@@ -394,14 +460,14 @@ export default function AccountPage() {
                         onClick={() => handlePayOrder(order)}
                         className="px-4 py-2 text-xs tracking-wider uppercase border border-[#E8B4B8] text-[#E8B4B8] hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all"
                       >
-                        PAY NOW
+                        {t("accountPayNow")}
                       </button>
                       <button
                         onClick={() => handleDeleteOrder(order.id)}
                         disabled={deleting === order.id}
                         className="px-4 py-2 text-xs tracking-wider uppercase border border-[#333] text-[#8A8580] hover:border-red-400 hover:text-red-400 transition-all disabled:opacity-50"
                       >
-                        {deleting === order.id ? "DELETING..." : "DELETE"}
+                        {deleting === order.id ? t("accountDeleting") : t("accountDelete")}
                       </button>
                     </div>
                   )}
@@ -410,7 +476,7 @@ export default function AccountPage() {
                   {order.status === "confirmed" && (
                     <div className="px-5 py-3 border-t border-[#1A1A1A]">
                       <p className="text-xs text-[#E8B4B8]">
-                        Your order has entered the Fuzz Studio for crafting. Estimated completion: ~2 days.
+                        {t("accountInProductionDesc")}
                       </p>
                     </div>
                   )}
@@ -419,7 +485,7 @@ export default function AccountPage() {
                   {order.status === "shipped" && (
                     <div className="px-5 py-3 border-t border-[#1A1A1A]">
                       <Link href={`/orders/${order.id}`} className="text-xs text-[#E8B4B8] hover:underline">
-                        View tracking information →
+                        {t("accountViewTrackingInfo")}
                       </Link>
                     </div>
                   )}
@@ -434,12 +500,12 @@ export default function AccountPage() {
       {tab === "addresses" && (
         <div>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-serif text-xl text-[#F5F0EB]">My Addresses</h2>
+            <h2 className="font-serif text-xl text-[#F5F0EB]">{t("accountMyAddresses")}</h2>
             <button
               onClick={() => {/* TODO: add address modal */}}
               className="px-4 py-2 text-xs tracking-wider uppercase border border-[#F5F0EB] text-[#F5F0EB] hover:bg-[#E8B4B8] hover:text-[#0A0A0A] hover:border-[#E8B4B8] transition-all"
             >
-              ADD ADDRESS
+              {t("accountAddAddress")}
             </button>
           </div>
 
@@ -448,7 +514,7 @@ export default function AccountPage() {
               <div className="w-6 h-6 border-2 border-[#333] border-t-[#E8B4B8] rounded-full animate-spin" />
             </div>
           ) : addresses.length === 0 ? (
-            <p className="text-[#8A8580] text-center py-10">No saved addresses</p>
+            <p className="text-[#8A8580] text-center py-10">{t("accountNoAddresses")}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {addresses.map(addr => (
@@ -456,7 +522,7 @@ export default function AccountPage() {
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-xs tracking-wider uppercase text-[#8A8580]">{addr.label}</span>
                     {addr.is_default && (
-                      <span className="text-xs text-[#E8B4B8]">Default</span>
+                      <span className="text-xs text-[#E8B4B8]">{t("accountDefaultLabel")}</span>
                     )}
                   </div>
                   <p className="text-[#F5F0EB] text-sm">{addr.first_name} {addr.last_name}</p>
@@ -466,10 +532,10 @@ export default function AccountPage() {
                     {addr.country}
                   </p>
                   <div className="flex gap-3 mt-4">
-                    <button className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Edit</button>
-                    <button className="text-xs text-[#8A8580] hover:text-red-400 transition-colors">Delete</button>
+                    <button className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("edit")}</button>
+                    <button className="text-xs text-[#8A8580] hover:text-red-400 transition-colors">{t("remove")}</button>
                     {!addr.is_default && (
-                      <button className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Set Default</button>
+                      <button className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("accountSetDefault")}</button>
                     )}
                   </div>
                 </div>
@@ -482,10 +548,10 @@ export default function AccountPage() {
       {/* ==================== PAYMENT TAB ==================== */}
       {tab === "payment" && (
         <div>
-          <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">Payment Settings</h2>
+          <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">{t("accountPaymentSettings")}</h2>
           <div className="bg-[#111111] border border-[#1A1A1A] p-6">
             <p className="text-[#8A8580] text-sm">
-              Payment methods are saved securely during checkout. Your default payment method will be pre-selected for future orders.
+              {t("accountPaymentDesc")}
             </p>
           </div>
         </div>

@@ -29,10 +29,10 @@ export async function GET(
       return NextResponse.json({ error: 'Order not found' }, { status: 404 });
     }
 
-    // Sort shipping events by happened_at ascending (chronological)
+    // Sort shipping events by event_time ascending (chronological)
     if (order.shipping_events) {
-      (order.shipping_events as { happened_at: string }[]).sort(
-        (a, b) => new Date(a.happened_at).getTime() - new Date(b.happened_at).getTime()
+      (order.shipping_events as { event_time: string }[]).sort(
+        (a, b) => new Date(a.event_time).getTime() - new Date(b.event_time).getTime()
       );
     }
 

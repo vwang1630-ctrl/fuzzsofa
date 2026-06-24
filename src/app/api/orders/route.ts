@@ -59,6 +59,7 @@ export async function GET(request: NextRequest) {
       carrier: o.carrier,
       trackingNumber: o.tracking_number,
       estimatedDelivery: o.estimated_delivery,
+      latestShippingEvent: o.latest_shipping_event,
       createdAt: o.created_at,
       items: ((o.order_items as OrderItemRow[]) || []).map((item) => ({
         productSlug: item.product_slug,

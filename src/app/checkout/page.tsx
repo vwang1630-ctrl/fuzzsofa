@@ -210,7 +210,7 @@ export default function CheckoutPage() {
       address: form,
       shippingMethod,
       shippingFee,
-      selectedTotal,
+      subtotal: selectedTotal,
       total,
       currency: "USD",
       items: selectedItems.map((item) => {

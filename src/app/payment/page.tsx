@@ -174,7 +174,7 @@ function PaymentPageInner() {
         const isSuccessful = Math.random() > 0.05;
         if (!isSuccessful) {
           setPaymentState("failed");
-          setErrorMessage("Payment was declined. Please check your details and try again.");
+          setErrorMessage(t("paymentDeclined"));
           return;
         }
       }
@@ -263,14 +263,14 @@ function PaymentPageInner() {
       }
     } catch (err: unknown) {
       setPaymentState("failed");
-      const message = err instanceof Error ? err.message : "An unexpected error occurred";
+      const message = err instanceof Error ? err.message : t("paymentUnexpectedError");
       setErrorMessage(message);
     }
   };
 
-  const totalAmount = mode === "checkout" && checkoutData ? checkoutData.total : existingOrdersTotal;
-  const shippingFee = mode === "checkout" && checkoutData ? checkoutData.shippingFee : 0;
-  const subtotal = mode === "checkout" && checkoutData ? checkoutData.subtotal : existingOrdersTotal;
+  const totalAmount = mode === "checkout" && checkoutData ? (checkoutData.total ?? 0) : existingOrdersTotal;
+  const shippingFee = mode === "checkout" && checkoutData ? (checkoutData.shippingFee ?? 0) : 0;
+  const subtotal = mode === "checkout" && checkoutData ? (checkoutData.subtotal ?? 0) : existingOrdersTotal;
 
   if ((!checkoutData && mode === "checkout") || (existingOrders.length === 0 && mode === "existing")) {
     return (
@@ -312,7 +312,7 @@ function PaymentPageInner() {
           </svg>
         </div>
         <h2 className="text-[#F5F0EB] text-xl font-light tracking-wide mb-2">
-          Payment Failed
+          {t("paymentFailed")}
         </h2>
         <p className="text-red-400 text-sm mb-8 text-center max-w-md">
           {errorMessage}
@@ -324,7 +324,7 @@ function PaymentPageInner() {
           }}
           className="px-8 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
         >
-          Try Again
+          {t("paymentTryAgain")}
         </button>
       </div>
     );
@@ -420,7 +420,7 @@ function PaymentPageInner() {
                       type="text"
                       value={cardholderName}
                       onChange={(e) => setCardholderName(e.target.value)}
-                      placeholder="Name on card"
+                      placeholder={t("paymentNameOnCard")}
                       className="w-full bg-[#111111] border border-[#1A1A1A] px-4 py-3 text-[#F5F0EB] placeholder:text-[#8A8580]/40 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
                     />
                   </div>
@@ -498,7 +498,7 @@ function PaymentPageInner() {
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-[#8A8580]">Bank</span>
+                    <span className="text-[#8A8580]">{t("paymentBankLabel")}</span>
                     <span className="text-[#F5F0EB]">HSBC International</span>
                   </div>
                   <div className="flex justify-between">
@@ -506,24 +506,24 @@ function PaymentPageInner() {
                     <span className="text-[#F5F0EB]">HSBCUS33</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#8A8580]">Account</span>
+                    <span className="text-[#8A8580]">{t("paymentAccountLabel")}</span>
                     <span className="text-[#F5F0EB]">FUZZ-2024-8891</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#8A8580]">Beneficiary</span>
+                    <span className="text-[#8A8580]">{t("paymentBeneficiaryLabel")}</span>
                     <span className="text-[#F5F0EB]">Fuzz Sofa International Ltd.</span>
                   </div>
                 </div>
                 <div className="mt-4 pt-4 border-t border-[#1A1A1A]">
                   <h4 className="text-[#F5F0EB] text-xs tracking-[0.1em] uppercase mb-3">
-                    How to Pay by Bank Transfer
+                    {t("paymentHowToPayBankTransfer")}
                   </h4>
                   <ol className="text-xs text-[#8A8580] space-y-2 list-decimal list-inside">
-                    <li>Complete your order below</li>
-                    <li>Visit your bank or online banking</li>
-                    <li>Transfer the exact total amount to the account above</li>
-                    <li>Use your order number as the payment reference</li>
-                    <li>Your order will be confirmed once payment is received (within 48 hours)</li>
+                    <li>{t("paymentBankStep1")}</li>
+                    <li>{t("paymentBankStep2")}</li>
+                    <li>{t("paymentBankStep3")}</li>
+                    <li>{t("paymentBankStep4")}</li>
+                    <li>{t("paymentBankStep5")}</li>
                   </ol>
                 </div>
                 <p className="text-xs text-[#8A8580] mt-4 pt-3 border-t border-[#1A1A1A]">
@@ -549,7 +549,7 @@ function PaymentPageInner() {
               href={mode === "checkout" ? "/checkout" : "/account"}
               className="block text-center text-sm text-[#8A8580] hover:text-[#E8B4B8] transition-colors"
             >
-              {mode === "checkout" ? t("paymentBackToCheckout") : "Back to My Orders"}
+              {mode === "checkout" ? t("paymentBackToCheckout") : t("backToMyOrders")}
             </Link>
           </div>
 
@@ -590,11 +590,11 @@ function PaymentPageInner() {
               {mode === "existing" && (
                 <div className="mb-4 pb-4 border-b border-[#1A1A1A]">
                   <span className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1">
-                    Paying for
+                    {t("paymentPayingFor")}
                   </span>
                   {existingOrders.map((order) => (
                     <p key={order.id} className="text-[#F5F0EB] text-sm">
-                      {order.order_number} - ${order.total.toFixed(2)}
+                      {order.order_number} - ${(order.total ?? 0).toFixed(2)}
                     </p>
                   ))}
                 </div>
@@ -612,9 +612,9 @@ function PaymentPageInner() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[#F5F0EB] text-sm truncate">{item.productName}</p>
-                        <p className="text-[#8A8580] text-xs">Qty: {item.quantity}</p>
+                        <p className="text-[#8A8580] text-xs">{t("cartQty")}: {item.quantity}</p>
                       </div>
-                      <p className="text-[#F5F0EB] text-sm">${item.unitPrice.toFixed(2)}</p>
+                      <p className="text-[#F5F0EB] text-sm">${(item.unitPrice ?? 0).toFixed(2)}</p>
                     </div>
                   ))}
                 </div>
@@ -633,9 +633,9 @@ function PaymentPageInner() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[#F5F0EB] text-sm truncate">{item.product_name}</p>
-                        <p className="text-[#8A8580] text-xs">Qty: {item.quantity}</p>
+                        <p className="text-[#8A8580] text-xs">{t("cartQty")}: {item.quantity}</p>
                       </div>
-                      <p className="text-[#F5F0EB] text-sm">${item.unit_price.toFixed(2)}</p>
+                      <p className="text-[#F5F0EB] text-sm">${(item.unit_price ?? 0).toFixed(2)}</p>
                     </div>
                   ))}
                 </div>
@@ -644,22 +644,22 @@ function PaymentPageInner() {
               {/* Totals */}
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-[#8A8580]">Subtotal</span>
-                  <span className="text-[#F5F0EB]">${subtotal.toFixed(2)}</span>
+                  <span className="text-[#8A8580]">{t("subtotal")}</span>
+                  <span className="text-[#F5F0EB]">${(subtotal ?? 0).toFixed(2)}</span>
                 </div>
                 {mode === "checkout" && (
                   <div className="flex justify-between">
                     <span className="text-[#8A8580]">
-                      {checkoutData?.shippingMethod === "express" ? "Express Shipping" : "Standard Shipping"}
+                      {checkoutData?.shippingMethod === "express" ? t("expressShipping") : t("standardShipping")}
                     </span>
                     <span className="text-[#F5F0EB]">
-                      {shippingFee === 0 ? "Free" : `$${shippingFee.toFixed(2)}`}
+                      {shippingFee === 0 ? t("freeShipping") : `$${(shippingFee ?? 0).toFixed(2)}`}
                     </span>
                   </div>
                 )}
                 <div className="flex justify-between pt-2 border-t border-[#1A1A1A]">
-                  <span className="text-[#F5F0EB]">Total</span>
-                  <span className="text-[#E8B4B8] text-lg">${totalAmount.toFixed(2)}</span>
+                  <span className="text-[#F5F0EB]">{t("total")}</span>
+                  <span className="text-[#E8B4B8] text-lg">${(totalAmount ?? 0).toFixed(2)}</span>
                 </div>
               </div>
             </div>
