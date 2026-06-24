@@ -23,6 +23,7 @@ export function ProductPageClient({ product }: Props) {
     "lion-sofa": "lionSofa",
     "tiger-sofa": "tigerSofa",
     "gorilla-sofa": "gorillaSofa",
+    "silverback-sofa": "silverbackSofa",
     "owl-sofa": "owlChair",
   };
   const prefix = slugToPrefix[product.slug] || "";
@@ -84,6 +85,12 @@ export function ProductPageClient({ product }: Props) {
       "/products/gorilla-sofa/cream.jpg",
       "/products/gorilla-sofa/brown.jpg",
       "/products/gorilla-sofa/black.jpg",
+    ],
+    "silverback-sofa": [
+      "/products/silverback-sofa/beige.jpg",
+      "/products/silverback-sofa/navy.jpg",
+      "/products/silverback-sofa/gray.jpg",
+      "/products/silverback-sofa/charcoal.jpg",
     ],
   };
 

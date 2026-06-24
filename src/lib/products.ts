@@ -487,6 +487,66 @@ export const products: Product[] = [
       "Owl Chair by Fuzz Sofa — a compact sculptural statement chair inspired by the owl. Made to order in Shanghai with premium fabric. Free white-glove delivery worldwide.",
     hiddenInRegions: ["middle_east"],
   },
+  {
+    slug: "silverback-sofa",
+    name: "Silverback Sofa",
+    animal: "Gorilla",
+    tagline: "Upholstered Presence, Sculptural Authority",
+    description:
+      "The Silverback Sofa reimagines the sculptural gorilla form in refined upholstery. Its tailored fabric silhouette brings architectural precision to the primal gorilla outline, creating a statement piece that bridges organic sculpture and contemporary furniture design.",
+    concept:
+      "The silverback gorilla commands through stillness — its presence felt before a single move. The Silverback Sofa captures this quality in structured upholstery: the broad chest becomes a generous seat, the powerful arms form inviting armrests, and the watchful face rises as a sculptural backrest. Wrapped in premium fabric rather than fur, this version speaks to interiors that value clean lines and tactile sophistication alongside organic form.",
+    interiorContext:
+      "The Silverback Sofa's tailored upholstery makes it the most versatile gorilla piece for contemporary interiors. It excels in minimalist living rooms where texture matters more than pattern, modern boutique hotel lobbies, architect-designed residential spaces, and professional design studios. Its fabric construction suits climate-controlled environments and spaces where a refined, non-pile surface is preferred.",
+    priceRange: {
+      americas: [7800, 7800],
+      europe: [7800, 7800],
+      middle_east: [7800, 7800],
+      se_asia: [7800, 7800],
+    },
+    specifications: {
+      width: "W200 cm",
+      height: "H152 cm",
+      depth: "D160 cm",
+      seatHeight: "42 cm",
+      weight: "90 kg (80 kg + frame 10 kg)",
+      capacity: "3-seater",
+    },
+    materials: ["Fabric", "Velvet"],
+    materialOptions: [
+      {
+        type: "Fabric",
+        options: ["Beige Fabric", "Navy Velvet", "Gray Fabric", "Charcoal Velvet"],
+        colors: ["#D4C4A8", "#1B2A4A", "#8A8A8A", "#363636"],
+      },
+    ],
+    faq: [
+      {
+        question: "What is the difference between the Silverback Sofa and Gorilla Sofa?",
+        answer:
+          "The Silverback Sofa features tailored fabric and velvet upholstery for a refined, structured aesthetic. The Gorilla Sofa uses plush fur upholstery for a tactile, organic feel. Both share the same sculptural gorilla form and dimensions — the choice is about material preference and interior style.",
+      },
+      {
+        question: "How is the Silverback Sofa delivered?",
+        answer:
+          "All Fuzz Sofa pieces are delivered via our free white-glove service. The Silverback Sofa's size requires our team to assess access points before delivery. We coordinate doorways, elevators, and staircases to ensure smooth installation.",
+      },
+      {
+        question: "Is the fabric upholstery suitable for commercial spaces?",
+        answer:
+          "Yes. The Silverback Sofa is engineered for both residential and commercial use. For hospitality projects, we offer contract-grade fabric specifications with enhanced durability and stain-resistant treatments. Contact trade@fuzzsofa.com for bulk pricing.",
+      },
+      {
+        question: "What is the return policy?",
+        answer:
+          "Fuzz Sofa offers a 14-day quality guarantee from delivery. If the piece does not meet our quality standards, we will arrange return shipping at no cost.",
+      },
+    ],
+    relatedProducts: ["gorilla-sofa", "bear-sofa", "lion-sofa"],
+    relatedInteriors: ["luxury-villa-interior", "statement-furniture"],
+    metaDescription:
+      "Silverback Sofa by Fuzz Sofa — a sculptural upholstered gorilla sofa in premium fabric and velvet. Available in 4 colors. Made to order. Free white-glove delivery worldwide.",
+  },
 ];
 
 export function getProduct(slug: string): Product | undefined {
