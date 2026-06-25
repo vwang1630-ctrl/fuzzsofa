@@ -217,7 +217,7 @@ export default function HomePage() {
                   <p className="mt-1 text-xs text-[#8A8580]">{t(slugToPrefix[product.slug] + "Tagline" as TranslationKeys)}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <p className="text-sm text-[#F5F0EB]/60">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
-                    <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/70">Made to order</p>
+                    <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/70">Made to order (3–6 weeks)</p>
                   </div>
                 </div>
               </Link>

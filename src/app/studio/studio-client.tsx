@@ -10,11 +10,11 @@ export default function StudioClient() {
         <div className="max-w-[700px] mx-auto">
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Fuzz Sofa Studio</p>
           <h1 className="font-serif text-[2.5rem] md:text-[3.5rem] font-light leading-[1.1] tracking-[0.05em] mb-8">
-            Design-Led<br />Furniture Studio
+            Made-to-Order<br />Sculptural Sofa Studio
           </h1>
           <p className="text-base font-light leading-[1.7] text-[#8A8580] max-w-[540px]">
-            Fuzz Sofa Studio is a design-led furniture studio specializing in sculptural sofas
-            produced through a made-to-order system.
+            Fuzz Sofa Studio is a design-led furniture studio specializing in custom sculptural sofas
+            produced through a made-to-order production system. Each piece is individually crafted after order confirmation.
           </p>
         </div>
       </section>
@@ -24,11 +24,12 @@ export default function StudioClient() {
         <div className="max-w-[700px] mx-auto">
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">What We Do</p>
           <h2 className="font-serif text-[2rem] font-light leading-[1.1] tracking-[0.05em] mb-6">
-            Spatial Objects,<br />Not Mass-Produced Furniture
+            Custom Sculptural Sofas,<br />Not Mass-Produced Furniture
           </h2>
           <p className="text-base font-light leading-[1.7] text-[#8A8580] max-w-[540px]">
             We design sculptural sofas as spatial objects rather than mass-produced furniture.
-            Each piece is conceived as a design statement — a form that defines the room it inhabits.
+            Each piece is conceived as a design statement — a custom sofa form that defines the room it inhabits.
+            Our studio creates contemporary furniture for clients who seek something beyond the ordinary.
           </p>
         </div>
       </section>
@@ -38,11 +39,12 @@ export default function StudioClient() {
         <div className="max-w-[700px] mx-auto">
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">How We Work</p>
           <h2 className="font-serif text-[2rem] font-light leading-[1.1] tracking-[0.05em] mb-6">
-            Individually Produced,<br />After Order Confirmation
+            Made-to-Order Production,<br />After Order Confirmation
           </h2>
           <p className="text-base font-light leading-[1.7] text-[#8A8580] max-w-[540px]">
             Each piece is individually produced after order confirmation.
-            No inventory. No pre-made stock. Every sofa begins its life when a client commits to it.
+            No inventory. No pre-made stock. Every custom sofa begins its life when a client commits to it.
+            Production takes 3–6 weeks, with worldwide shipping and full tracking.
           </p>
         </div>
       </section>
@@ -57,6 +59,7 @@ export default function StudioClient() {
           <p className="text-base font-light leading-[1.7] text-[#8A8580] max-w-[540px]">
             We serve clients worldwide seeking custom contemporary furniture —
             from private residences and boutique hotels to design studios and commercial interiors.
+            Our sculptural sofas are shipped to the Americas, Europe, the Middle East, and Asia.
           </p>
         </div>
       </section>
@@ -71,7 +74,7 @@ export default function StudioClient() {
           <p className="text-base font-light leading-[1.7] text-[#8A8580] max-w-[540px]">
             Sculptural sofas designed with proportion, structure, and material clarity.
             Every curve, joint, and surface is resolved through a studio design process
-            before entering production.
+            before entering production. Each sofa is available in custom sizes, fabrics, and finishes.
           </p>
         </div>
       </section>
@@ -99,6 +102,10 @@ export default function StudioClient() {
             <div className="border-l border-[#333] pl-6">
               <p className="text-[13px] font-light text-[#F5F0EB] mb-1">Worldwide Shipping</p>
               <p className="text-[12px] font-light text-[#8A8580]/70">International delivery with full tracking and packaging.</p>
+            </div>
+            <div className="border-l border-[#333] pl-6">
+              <p className="text-[13px] font-light text-[#F5F0EB] mb-1">Custom Dimensions & Finish</p>
+              <p className="text-[12px] font-light text-[#8A8580]/70">Size, fabric, and proportion can be adjusted per project.</p>
             </div>
           </div>
         </div>
