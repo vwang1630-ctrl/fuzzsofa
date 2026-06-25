@@ -69,12 +69,53 @@ export default function RoomVisualizationModal({
     setResultImage("");
   }, []);
 
+  const [shareStatus, setShareStatus] = useState<string>("");
+
   const handleDownload = useCallback(() => {
     if (!resultImage) return;
     const link = document.createElement("a");
     link.href = resultImage;
     link.download = `fuzzsofa-${productName.toLowerCase().replace(/\s+/g, "-")}-in-room.png`;
     link.click();
+  }, [resultImage, productName]);
+
+  const handleShare = useCallback(async () => {
+    if (!resultImage) return;
+
+    try {
+      // Convert data URL to Blob for Web Share API
+      const response = await fetch(resultImage);
+      const blob = await response.blob();
+      const file = new File(
+        [blob],
+        `fuzzsofa-${productName.toLowerCase().replace(/\s+/g, "-")}-in-room.png`,
+        { type: "image/png" }
+      );
+
+      // Try native Web Share API (mobile-friendly)
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({
+          title: `${productName} — Fuzz Sofa Studio`,
+          text: "See how this sculptural sofa looks in my room!",
+          url: window.location.href,
+          files: [file],
+        });
+        return;
+      }
+    } catch (err) {
+      // User cancelled share sheet — not an error
+      if (err instanceof Error && err.name === "AbortError") return;
+    }
+
+    // Fallback: copy current page link to clipboard
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setShareStatus("Link copied!");
+      setTimeout(() => setShareStatus(""), 2000);
+    } catch {
+      setShareStatus("Copy failed");
+      setTimeout(() => setShareStatus(""), 2000);
+    }
   }, [resultImage, productName]);
 
   const handleClose = useCallback(() => {
@@ -220,7 +261,7 @@ export default function RoomVisualizationModal({
               </div>
 
               {/* Actions */}
-              <div className="flex gap-3 justify-center pt-2">
+              <div className="flex gap-3 justify-center pt-2 flex-wrap">
                 <button
                   onClick={handleBack}
                   className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 
@@ -229,6 +270,31 @@ export default function RoomVisualizationModal({
                     transition-all duration-300 rounded-[4px]"
                 >
                   Reposition
+                </button>
+                <button
+                  onClick={handleShare}
+                  className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 
+                    text-[10px] tracking-[0.1em] uppercase font-light 
+                    hover:border-[#E8B4B8]/40 hover:text-[#F5F0EB]/70 
+                    transition-all duration-300 rounded-[4px] flex items-center gap-2"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                  </svg>
+                  {shareStatus || "Share"}
                 </button>
                 <button
                   onClick={handleDownload}
