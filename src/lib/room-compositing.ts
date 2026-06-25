@@ -126,8 +126,10 @@ export function imageToCanvas(img: HTMLImageElement): HTMLCanvasElement {
 export interface CompositeOptions {
   /** Room image as data URL */
   roomImage: string;
-  /** Product image URL (will be loaded) */
+  /** Product image URL (original with dark background — used as fallback) */
   productImageUrl: string;
+  /** Pre-cutout product image URL (transparent background — preferred if available) */
+  cutoutImageUrl?: string;
   /** Product position X (0-1, relative to room width) */
   positionX: number;
   /** Product position Y (0-1, relative to room height) */
@@ -146,13 +148,34 @@ export interface CompositeOptions {
 
 /**
  * Composite the product cutout onto the room image.
+ * If a pre-cutout image (transparent background) is available, it's used directly.
+ * Otherwise, falls back to luminance-based background removal from the product photo.
  * Returns a data URL of the final composited image.
  */
 export async function compositeRoomImage(
   options: CompositeOptions,
 ): Promise<string> {
   const roomImg = await loadImage(options.roomImage);
-  const productImg = await loadImage(options.productImageUrl);
+
+  // Determine the product source: prefer pre-cutout, fallback to original + bg removal
+  let cutoutCanvas: HTMLCanvasElement;
+  let productNaturalW: number;
+  let productNaturalH: number;
+
+  if (options.cutoutImageUrl) {
+    // Use pre-cutout image directly — pixel-perfect, zero deformation
+    const cutoutImg = await loadImage(options.cutoutImageUrl);
+    cutoutCanvas = imageToCanvas(cutoutImg);
+    productNaturalW = cutoutImg.naturalWidth;
+    productNaturalH = cutoutImg.naturalHeight;
+  } else {
+    // Fallback: load original product photo and remove dark background
+    const productImg = await loadImage(options.productImageUrl);
+    const productCanvas = imageToCanvas(productImg);
+    cutoutCanvas = removeDarkBackground(productCanvas);
+    productNaturalW = productImg.naturalWidth;
+    productNaturalH = productImg.naturalHeight;
+  }
 
   // Create canvas at room image size
   const canvas = document.createElement("canvas");
@@ -163,17 +186,13 @@ export async function compositeRoomImage(
   // Draw room as base
   ctx.drawImage(roomImg, 0, 0);
 
-  // Remove dark background from product
-  const productCanvas = imageToCanvas(productImg);
-  const cutoutCanvas = removeDarkBackground(productCanvas);
-
   // Calculate product placement
   const roomW = canvas.width;
   const roomH = canvas.height;
   
   // Product should fit within the room, scaled by options
   const productDisplayH = roomH * options.scale;
-  const aspectRatio = productImg.naturalWidth / productImg.naturalHeight;
+  const aspectRatio = productNaturalW / productNaturalH;
   const productDisplayW = productDisplayH * aspectRatio;
   
   const posX = roomW * options.positionX - productDisplayW / 2;

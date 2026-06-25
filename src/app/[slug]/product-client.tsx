@@ -842,6 +842,8 @@ export function ProductPageClient({ product }: Props) {
         onClose={() => setShowRoomViz(false)}
         productImageUrl={product.images?.[0] || `/products/${product.slug}/gray-fur.jpg`}
         productName={product.name}
+        productSlug={product.slug}
+        selectedColorName={materialOption}
       />
 
       {/* AI-Readable Product Data Block */}

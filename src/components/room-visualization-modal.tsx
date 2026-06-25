@@ -1,13 +1,16 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import RoomPlacementCanvas from "./room-placement-canvas";
+import { getCutoutImage } from "@/lib/cutout-images";
 
 interface RoomVisualizationModalProps {
   isOpen: boolean;
   onClose: () => void;
   productImageUrl: string;
   productName: string;
+  productSlug?: string;
+  selectedColorName?: string;
 }
 
 type Step = "upload" | "position" | "result";
@@ -17,11 +20,19 @@ export default function RoomVisualizationModal({
   onClose,
   productImageUrl,
   productName,
+  productSlug,
+  selectedColorName,
 }: RoomVisualizationModalProps) {
   const [step, setStep] = useState<Step>("upload");
   const [roomImage, setRoomImage] = useState<string>("");
   const [resultImage, setResultImage] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Resolve cutout image URL if available, fallback to original product image
+  const resolvedProductImageUrl = useMemo(() => {
+    const cutoutUrl = productSlug ? getCutoutImage(productSlug, selectedColorName ?? "") : null;
+    return cutoutUrl || productImageUrl;
+  }, [productSlug, selectedColorName, productImageUrl]);
 
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -183,7 +194,7 @@ export default function RoomVisualizationModal({
           {step === "position" && roomImage && (
             <RoomPlacementCanvas
               roomImage={roomImage}
-              productImageUrl={productImageUrl}
+              productImageUrl={resolvedProductImageUrl}
               productName={productName}
               onComposite={handleComposite}
               onBack={handleBack}
