@@ -76,10 +76,10 @@ export const products: Product[] = [
       {
         type: "Plush Fur",
         options: [
-          "Gray Fur",
-          "Cream Fur",
-          "Brown Fur",
-          "Black Fur",
+          "Storm Gray",
+          "Ivory Cream",
+          "Cognac Brown",
+          "Obsidian Black",
         ],
         colors: ["#6B6B6B", "#E8DFD0", "#5C3A1E", "#1A1A1A"],
       },
@@ -240,7 +240,7 @@ export const products: Product[] = [
     materialOptions: [
       {
         type: "Fabric",
-        options: ["Gray Fabric", "Beige Fabric", "Navy Velvet", "Charcoal Velvet"],
+        options: ["Silver Mist", "Parchment Beige", "Midnight Navy", "Graphite Charcoal"],
         colors: ["#8A8A8A", "#D4C4A8", "#1B2A4A", "#363636"],
       },
     ],

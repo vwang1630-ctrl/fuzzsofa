@@ -143,7 +143,7 @@ export function ProductPageClient({ product }: Props) {
           ═══════════════════════════════════════════ */}
       <section className="min-h-screen border-b border-[#1A1A1A]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] min-h-screen">
+          <div className="grid grid-cols-1 lg:grid-cols-[62%_38%] min-h-screen">
             {/* LEFT: Product Image Area */}
             <div className="relative flex bg-[#0A0A0A]">
               {/* Vertical Thumbnails — Left Side */}
@@ -153,10 +153,10 @@ export function ProductPageClient({ product }: Props) {
                     <button
                       key={img.id}
                       onClick={() => setActiveImage(img.id)}
-                      className={`w-[64px] h-[64px] border transition-all duration-300 bg-[#111] overflow-hidden flex-shrink-0 ${
+                      className={`w-[64px] h-[64px] transition-all duration-300 bg-[#111] overflow-hidden flex-shrink-0 ${
                         activeImage === img.id
-                          ? "border-[#E8B4B8]"
-                          : "border-[#333] hover:border-[#E8B4B8]"
+                          ? "border border-[#F5F0EB]/80 opacity-100"
+                          : "border border-transparent opacity-70 hover:opacity-100"
                       }`}
                       aria-label={`View ${img.id + 1}`}
                     >
@@ -230,10 +230,10 @@ export function ProductPageClient({ product }: Props) {
                       <button
                         key={img.id}
                         onClick={() => setActiveImage(img.id)}
-                        className={`w-[48px] h-[48px] border transition-all duration-300 bg-[#0A0A0A]/80 backdrop-blur-sm overflow-hidden ${
+                        className={`w-[48px] h-[48px] transition-all duration-300 bg-[#0A0A0A]/80 backdrop-blur-sm overflow-hidden ${
                           activeImage === img.id
-                            ? "border-[#E8B4B8]"
-                            : "border-[#333] hover:border-[#E8B4B8]"
+                            ? "border border-[#F5F0EB]/80 opacity-100"
+                            : "border border-transparent opacity-70 hover:opacity-100"
                         }`}
                       >
                         {img.src ? (
@@ -250,39 +250,40 @@ export function ProductPageClient({ product }: Props) {
               </div>
             </div>
 
-            {/* RIGHT: Product Info (35%) */}
-            <div className="flex flex-col justify-center px-8 md:px-12 py-16 lg:py-20 bg-[#0A0A0A] lg:border-l border-[#1A1A1A]">
+            {/* RIGHT: Product Info (38%) */}
+            <div className="flex flex-col justify-center px-8 md:px-12 py-16 lg:py-20 bg-[#0A0A0A] lg:border-l border-[#1A1A1A] lg:-mt-10">
               {/* Collection Label */}
               <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                 {collectionName}
               </p>
 
-              {/* Product Name */}
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-[3.5rem] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
-                {productName}
-              </h1>
-
-              {/* Price */}
-              <div className="mt-6 mb-6">
-                <p className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">
+              {/* Visual Group: Title → Price → One-liner */}
+              <div className="mb-8">
+                <h1 className="font-serif text-2xl md:text-3xl lg:text-[2rem] font-light text-[#F5F0EB] leading-[1.2] tracking-[0.03em] mb-3">
+                  {productName}
+                </h1>
+                <p className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB]/80 mb-3">
                   {displayPrice}
+                </p>
+                <p className="text-sm text-[#F5F0EB]/40 leading-[1.6] max-w-[380px]">
+                  {productTagline}
                 </p>
               </div>
 
-              {/* Description */}
-              <p className="text-sm text-[#F5F0EB]/50 leading-[1.7] max-w-[420px] mb-8">
-                {productTagline}
+              {/* Brand Language */}
+              <p className="text-[11px] text-[#E8B4B8]/50 tracking-[0.12em] italic mb-8 max-w-[380px]">
+                {t("furnitureToDefineSpace" as TranslationKeys) || "Furniture designed to define a space."}
               </p>
 
-              {/* Material Quick Select */}
+              {/* Material Quick Select — Luxury Style */}
               {product.materialOptions && product.materialOptions.length > 0 && (
-                <div className="mb-6">
+                <div className="mb-8">
                   {product.materialOptions.map((mat) => (
-                    <div key={mat.type} className="mb-4">
-                      <label className="text-[10px] text-[#8A8580] tracking-[0.15em] uppercase block mb-2">
+                    <div key={mat.type} className="mb-3">
+                      <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-3">
                         {mat.type}
                       </label>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="space-y-1.5">
                         {mat.options.map((opt) => {
                           const colorIdx = mat.options.indexOf(opt);
                           const colorHex = mat.colors[colorIdx];
@@ -294,32 +295,50 @@ export function ProductPageClient({ product }: Props) {
                                 setMaterialType(mat.type);
                                 setMaterialOption(opt);
                               }}
-                              className={`flex items-center gap-2 text-xs px-3 py-1.5 border transition-all duration-300 ${
+                              className={`flex items-center gap-3 w-full text-left py-1.5 transition-all duration-300 group ${
                                 isSelected
-                                  ? "border-[#E8B4B8] text-[#E8B4B8]"
-                                  : "border-[#333] text-[#F5F0EB]/40 hover:border-[#E8B4B8] hover:text-[#E8B4B8]"
+                                  ? "text-[#F5F0EB]"
+                                  : "text-[#F5F0EB]/35 hover:text-[#F5F0EB]/60"
                               }`}
                             >
                               <span
-                                className="w-3 h-3 rounded-full border border-[#333] flex-shrink-0"
+                                className={`w-5 h-5 rounded-sm flex-shrink-0 transition-all duration-300 ${
+                                  isSelected
+                                    ? "ring-1 ring-[#E8B4B8] ring-offset-1 ring-offset-[#0A0A0A]"
+                                    : "border border-[#333] group-hover:border-[#666]"
+                                }`}
                                 style={{ backgroundColor: colorHex }}
                               />
-                              {opt}
+                              <span className="text-xs tracking-[0.06em]">{opt}</span>
                             </button>
                           );
                         })}
                       </div>
+                      {/* Leather texture bar */}
+                      <div
+                        className="mt-3 h-[2px] w-full opacity-30"
+                        style={{
+                          background: `linear-gradient(90deg, ${mat.colors.join(", ")})`,
+                        }}
+                      />
                     </div>
                   ))}
                 </div>
               )}
 
-              {/* Add to Cart */}
+              {/* Add to Cart — Luxury Outline Style */}
               <button
                 onClick={handleAddToCart}
-                className="w-full border border-[#F5F0EB] text-[#F5F0EB] py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 mb-6"
+                className="w-full border border-[#F5F0EB]/50 text-[#F5F0EB]/80 py-3 text-[11px] tracking-[0.15em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 mb-6 flex items-center justify-center gap-2"
               >
-                {addedToCart ? t("addedToCart") : t("addToCart")}
+                {addedToCart ? t("addedToCart") : (
+                  <>
+                    {t("addToCart")}
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 8h10M9 4l4 4-4 4" />
+                    </svg>
+                  </>
+                )}
               </button>
 
               {/* Delivery Info */}
