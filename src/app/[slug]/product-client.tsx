@@ -139,14 +139,14 @@ export function ProductPageClient({ product }: Props) {
       />
 
       {/* ═══════════════════════════════════════════
-          SCREEN 1 — HERO (65/35 Layout)
+          SCREEN 1 — HERO (56/44 Layout)
           ═══════════════════════════════════════════ */}
-      <section className="min-h-screen border-b border-[#1A1A1A]">
+      <section className="border-b border-[#1A1A1A]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] min-h-screen">
+          <div className="grid grid-cols-1 lg:grid-cols-[56%_44%] min-h-screen">
             {/* LEFT: Product Image Area */}
-            <div className="relative flex items-center justify-center bg-[#0A0A0A] p-6 md:p-10 lg:p-12">
-              <div className="flex gap-4 w-full max-w-[800px]">
+            <div className="relative flex items-center justify-center bg-[#0A0A0A] px-6 pt-5 md:pt-6 lg:pt-5 pb-6 md:pb-10 lg:pb-12">
+              <div className="flex gap-6 w-full max-w-[800px]">
                 {/* Vertical Thumbnails — Left Side */}
                 {galleryImages.length > 1 && (
                   <div className="hidden md:flex flex-col gap-3 flex-shrink-0">
@@ -173,8 +173,8 @@ export function ProductPageClient({ product }: Props) {
                   </div>
                 )}
 
-                {/* Main Image — Square 1:1 */}
-                <div className="relative flex-1 aspect-square bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden">
+                {/* Main Image — Square 1:1 with breathing room */}
+                <div className="relative flex-1 aspect-square bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden p-6 md:p-10 lg:p-14">
                   <div
                     className="absolute inset-0 opacity-[0.03]"
                     style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
@@ -183,7 +183,7 @@ export function ProductPageClient({ product }: Props) {
                     <img
                       src={galleryImages[activeImage].src}
                       alt={productName}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -193,32 +193,32 @@ export function ProductPageClient({ product }: Props) {
                     </div>
                   )}
 
-                  {/* AI Room Preview Floating Button — Bottom Right (Apple/RH AR style) */}
+                  {/* AI Room Preview Floating Button — Bottom Right (Apple Vision Pro style) */}
                   <button
                     onClick={() => setShowRoomViz(true)}
                     onMouseEnter={() => setAiBtnHovered(true)}
                     onMouseLeave={() => setAiBtnHovered(false)}
-                    className="absolute bottom-4 right-4 z-10 flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-300 group"
+                    className="absolute bottom-5 right-5 z-10 flex items-center gap-2.5 px-5 py-3 rounded-full transition-all duration-300 group"
                     style={{
-                      background: aiBtnHovered ? "rgba(0,0,0,0.75)" : "rgba(0,0,0,0.55)",
-                      backdropFilter: "blur(20px)",
-                      WebkitBackdropFilter: "blur(20px)",
+                      background: aiBtnHovered ? "rgba(0,0,0,0.8)" : "rgba(0,0,0,0.5)",
+                      backdropFilter: "blur(24px)",
+                      WebkitBackdropFilter: "blur(24px)",
                     }}
                     aria-label="Preview in your space"
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                       <circle cx="12" cy="13" r="4" />
                     </svg>
-                    <span className="text-[10px] tracking-[0.14em] uppercase text-[#F5F0EB]/80 whitespace-nowrap">
-                      Preview
+                    <span className="text-[9px] tracking-[0.16em] uppercase text-[#F5F0EB]/90 whitespace-nowrap">
+                      Preview In Your Space
                     </span>
                     <span className="text-[10px]">✨</span>
                   </button>
 
-                  {/* Mobile Thumbnails — Bottom */}
+                  {/* Mobile Thumbnails — Bottom Left */}
                   {galleryImages.length > 1 && (
-                    <div className="md:hidden absolute bottom-4 left-4 flex gap-2">
+                    <div className="md:hidden absolute bottom-5 left-5 flex gap-2">
                       {galleryImages.map((img) => (
                         <button
                           key={img.id}
@@ -244,36 +244,39 @@ export function ProductPageClient({ product }: Props) {
               </div>
             </div>
 
-            {/* RIGHT: Product Info (42%) */}
-            <div className="flex flex-col justify-center px-8 md:px-12 py-16 lg:py-20 bg-[#0A0A0A] lg:border-l border-[#1A1A1A] lg:-mt-10">
+            {/* RIGHT: Product Info (44%) */}
+            <div className="flex flex-col justify-center px-8 md:px-12 lg:px-14 py-16 lg:py-20 bg-[#0A0A0A] lg:border-l border-[#1A1A1A] lg:-mt-12">
               {/* Collection Label */}
               <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                 {collectionName}
               </p>
 
               {/* Visual Group: Title → Price → One-liner */}
-              <div className="mb-8">
-                <h1 className="font-serif text-2xl md:text-3xl lg:text-[2rem] font-light text-[#F5F0EB] leading-[1.2] tracking-[0.03em] mb-3">
+              <div className="mb-6">
+                <h1 className="font-serif text-2xl md:text-[1.75rem] lg:text-[2rem] font-light text-[#F5F0EB] leading-[1.15] tracking-[0.02em] mb-3">
                   {productName}
                 </h1>
-                <p className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB]/80 mb-3">
+                <p className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB]/80 mb-2.5">
                   {displayPrice}
                 </p>
-                <p className="text-sm text-[#F5F0EB]/40 leading-[1.6] max-w-[380px]">
+                <p className="text-[13px] text-[#F5F0EB]/50 leading-[1.6] max-w-[400px]">
                   {productTagline}
                 </p>
               </div>
 
               {/* Brand Language */}
-              <p className="text-[11px] text-[#E8B4B8]/50 tracking-[0.12em] italic mb-8 max-w-[380px]">
+              <p className="text-[11px] text-[#E8B4B8]/50 tracking-[0.12em] italic mb-6 max-w-[380px]">
                 {t("furnitureToDefineSpace" as TranslationKeys) || "Furniture designed to define a space."}
               </p>
 
+              {/* Separator */}
+              <div className="h-px bg-[#1A1A1A] mb-6" />
+
               {/* Material Quick Select — Luxury Style */}
               {product.materialOptions && product.materialOptions.length > 0 && (
-                <div className="mb-8">
+                <div className="mb-6">
                   {product.materialOptions.map((mat) => (
-                    <div key={mat.type} className="mb-3">
+                    <div key={mat.type} className="mb-4">
                       <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-3">
                         {mat.type}
                       </label>
@@ -319,6 +322,9 @@ export function ProductPageClient({ product }: Props) {
                   ))}
                 </div>
               )}
+
+              {/* Separator */}
+              <div className="h-px bg-[#1A1A1A] mb-6" />
 
               {/* Add to Cart — Luxury Outline Style */}
               <button
