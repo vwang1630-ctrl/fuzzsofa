@@ -167,6 +167,14 @@ export default function ContactPage() {
                 {t("forTradeHospitalityDesc")}
               </p>
             </div>
+
+            <div className="mt-6 border-t border-[#1A1A1A] pt-6">
+              <div className="space-y-2 text-xs text-[#8A8580]/70 tracking-wide">
+                <p>Brand: Fuzz Sofa Studio</p>
+                <p>Operator: Fudehao</p>
+                <p>Location: Zhejiang, China</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
