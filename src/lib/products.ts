@@ -171,12 +171,19 @@ export const products: Product[] = [
         ],
         colors: ["#5A7A5A", "#8A8580"],
       },
+      {
+        type: "Fur Touch",
+        options: [
+          "Dusty Pink Fur",
+        ],
+        colors: ["#D4A0A0"],
+      },
     ],
     faq: [
       {
         question: "Is the Owl Chair available in leather?",
         answer:
-          "The Owl Chair is available in two fabric lines: Cloud Touch (Snowy White Bouclé, Rose Pink Velvet) and Wild Touch (Forest Green Velvet, Warm Gray Linen) — four colors in total. The curved backrest and wing-like proportions are best expressed in fabric, which drapes naturally over the organic form. Leather options may be available for bespoke orders — contact our design team to discuss.",
+          "The Owl Chair is available in three fabric lines: Cloud Touch (Snowy White Bouclé, Rose Pink Velvet), Wild Touch (Forest Green Velvet, Warm Gray Linen), and Fur Touch (Dusty Pink Fur) — five colors in total. The curved backrest and wing-like proportions are best expressed in fabric, which drapes naturally over the organic form. Leather options may be available for bespoke orders — contact our design team to discuss.",
       },
       {
         question: "Can the Owl Chair be used as a dining chair?",
@@ -206,6 +213,7 @@ export const products: Product[] = [
       "/products/owl/warm-gray.png",
       "/products/owl/rose-pink.png",
       "/products/owl/forest-green.png",
+      "/products/owl/dusty-pink-fur.png",
     ],
     metaDescription:
       "Custom sculptural owl chair by Fuzz Sofa Studio. A made-to-order statement chair for modern interiors. Available in premium fabric. 1–2 weeks production. Worldwide shipping.",

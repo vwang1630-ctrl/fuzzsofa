@@ -7,16 +7,18 @@
  */
 
 export const cutoutImages: Record<string, string> = {
-  // Owl Sofa — 4 color variants matching materialOptions order
-  // Cloud Touch line
+  // Owl Sofa — 5 color variants matching materialOptions order
+  // Cloud Touch line (0-1)
   "owl-sofa/0": "/products/cutout/owl-sofa-snow-white.png",       // Snowy White Bouclé
   "owl-sofa/1": "/products/cutout/owl-sofa-rose-pink.png",        // Rose Pink Velvet
-  // Wild Touch line
+  // Wild Touch line (2-3)
   "owl-sofa/2": "/products/cutout/owl-sofa-forest-green.png",     // Forest Green Velvet
   "owl-sofa/3": "/products/cutout/owl-sofa-warm-gray.png",        // Warm Gray Linen
+  // Fur Touch line (4) — no cutout yet, falls back to dark bg removal
+  // "owl-sofa/4": "/products/cutout/owl-sofa-dusty-pink-fur.png",
 
   // Note: owl-sofa-black-leather.png also available in cutout/ but
-  // Black Leather is not currently a product option. Can be mapped if added.
+  // Black Leather is not currently a product option.
 
   // Other products: gorilla-sofa, silverback-sofa, meteorite-ring-sofa,
   // muscle-gorilla-sofa — cutouts not yet uploaded, will fall back to dark bg removal
@@ -38,8 +40,8 @@ const colorNameToIndex: Record<string, Record<string, number>> = {
     "forest green": 2,
     "warm gray linen": 3,
     "warm gray": 3,
-    "dark brown leather": 3,
-    "dark brown": 3,
+    "dusty pink fur": 4,
+    "dusty pink": 4,
   },
 };
 
