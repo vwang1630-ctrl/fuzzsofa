@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import type { Product } from "@/lib/products";
 import { getProduct, getPrice, formatPrice } from "@/lib/products";
 import { productJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/seo";
@@ -42,6 +42,20 @@ export function ProductPageClient({ product }: Props) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [showRoomViz, setShowRoomViz] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const shareMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close share menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (shareMenuRef.current && !shareMenuRef.current.contains(e.target as Node)) {
+        setShowShareMenu(false);
+      }
+    };
+    if (showShareMenu) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showShareMenu]);
 
   const handleAddToCart = () => {
     addItem({
@@ -114,6 +128,26 @@ export function ProductPageClient({ product }: Props) {
 
   // Collection name from animal
   const collectionName = `${product.animal.toUpperCase()} COLLECTION`;
+
+  const handleShare = (platform: string) => {
+    const url = `https://fuzzsofa.com/${product.slug}`;
+    const text = `${productName} — Fuzz Sofa`;
+    switch (platform) {
+      case "copy":
+        navigator.clipboard.writeText(url);
+        break;
+      case "pinterest":
+        window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(text)}`, "_blank");
+        break;
+      case "facebook":
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
+        break;
+      case "email":
+        window.open(`mailto:?subject=${encodeURIComponent(text)}&body=${encodeURIComponent(url)}`, "_blank");
+        break;
+    }
+    setShowShareMenu(false);
+  };
 
   return (
     <>
@@ -193,23 +227,24 @@ export function ProductPageClient({ product }: Props) {
                     </div>
                   )}
 
-                  {/* AI Room Preview — Bottom Right Circle (Apple Vision Pro style) */}
+                  {/* AI Room Preview — Bottom Right Circle (Brand Pink tint) */}
                   <button
                     onClick={() => setShowRoomViz(true)}
                     className="absolute bottom-8 right-8 z-10 w-[56px] h-[56px] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 group"
                     style={{
-                      background: "rgba(0,0,0,0.6)",
+                      background: "rgba(214,168,172,0.15)",
+                      border: "1px solid rgba(214,168,172,0.35)",
                       backdropFilter: "blur(20px)",
                       WebkitBackdropFilter: "blur(20px)",
                     }}
                     aria-label="Preview in your space"
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D6A8AC" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                       <circle cx="12" cy="13" r="4" />
                     </svg>
                     {/* Tooltip on hover */}
-                    <span className="absolute bottom-full right-0 mb-2 px-3 py-1.5 bg-[#111] border border-[#333] rounded text-[9px] tracking-[0.12em] uppercase text-[#F5F0EB]/80 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <span className="absolute bottom-full right-0 mb-2 px-3 py-1.5 bg-[#111] border border-[rgba(214,168,172,0.25)] rounded text-[9px] tracking-[0.12em] uppercase text-[#D6A8AC]/80 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                       Preview In Your Space
                     </span>
                   </button>
@@ -249,10 +284,66 @@ export function ProductPageClient({ product }: Props) {
                 {collectionName}
               </p>
 
-              {/* Title — 64px, weight 300, leading 1.05, max-w 500px */}
-              <h1 className="font-serif text-[64px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em] max-w-[500px] mb-4">
-                {productName}
-              </h1>
+              {/* Title + Save/Share */}
+              <div className="flex items-start justify-between gap-4 max-w-[500px] mb-4">
+                <h1 className="font-serif text-[64px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em]">
+                  {productName}
+                </h1>
+                <div className="flex items-center gap-1 flex-shrink-0 mt-3">
+                  {/* Save to Moodboard */}
+                  <button
+                    onClick={() => setSaved(!saved)}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded transition-all duration-300 hover:bg-[rgba(255,255,255,0.06)]"
+                    aria-label="Save to moodboard"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#D6A8AC" : "none"} stroke={saved ? "#D6A8AC" : "#8A8580"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                    <span className={`text-[9px] tracking-[0.12em] uppercase ${saved ? "text-[#D6A8AC]" : "text-[#8A8580]"}`}>
+                      {saved ? "Saved" : "Save"}
+                    </span>
+                  </button>
+                  {/* Share */}
+                  <div className="relative" ref={shareMenuRef}>
+                    <button
+                      onClick={() => setShowShareMenu(!showShareMenu)}
+                      className="flex items-center gap-1.5 px-3 py-2 rounded transition-all duration-300 hover:bg-[rgba(255,255,255,0.06)]"
+                      aria-label="Share"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A8580" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                        <polyline points="16 6 12 2 8 6" />
+                        <line x1="12" y1="2" x2="12" y2="15" />
+                      </svg>
+                      <span className="text-[9px] tracking-[0.12em] uppercase text-[#8A8580]">
+                        Share
+                      </span>
+                    </button>
+                    {/* Share Dropdown */}
+                    {showShareMenu && (
+                      <div className="absolute right-0 top-full mt-1 w-44 bg-[#111] border border-[#222] rounded z-50 py-1 shadow-2xl">
+                        {[
+                          { id: "copy", label: "Copy Link", icon: "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" },
+                          { id: "pinterest", label: "Pinterest", icon: "M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.182-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.425 1.808-2.425.853 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.177-4.068-2.845 0-4.515 2.135-4.515 4.34 0 .859.331 1.781.745 2.282a.3.3 0 0 1 .069.288l-.278 1.133c-.044.183-.145.222-.335.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.965-.527-2.291-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z" },
+                          { id: "facebook", label: "Facebook", icon: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" },
+                          { id: "email", label: "Email", icon: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6" },
+                        ].map((item) => (
+                          <button
+                            key={item.id}
+                            onClick={() => handleShare(item.id)}
+                            className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-[11px] tracking-[0.06em] text-[#F5F0EB]/70 hover:bg-[rgba(255,255,255,0.06)] hover:text-[#F5F0EB] transition-all duration-200"
+                          >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                              <path d={item.icon} />
+                            </svg>
+                            {item.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               {/* Price — 42px */}
               <p className="font-serif text-[42px] font-light text-[#F5F0EB]/80 mt-8 mb-6">
@@ -326,19 +417,34 @@ export function ProductPageClient({ product }: Props) {
               {/* Separator */}
               <div className="h-px bg-[#1A1A1A] mb-8" />
 
-              {/* Add to Cart — Thin Luxury Outline */}
+              {/* Add to Cart — Brand Pink Primary CTA */}
               <button
                 onClick={handleAddToCart}
-                className="w-full border border-[rgba(255,255,255,0.12)] bg-transparent text-[#F5F0EB]/80 h-[60px] text-[11px] tracking-[0.15em] uppercase hover:bg-[#111] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300 mb-8 flex items-center justify-center gap-2"
+                className="w-full h-[60px] rounded-[14px] text-[#111] font-semibold text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-3 flex items-center justify-center gap-2"
+                style={{ background: addedToCart ? "#111" : "#D6A8AC", border: addedToCart ? "1px solid #D6A8AC" : "none" }}
+                onMouseEnter={(e) => { if (!addedToCart) { e.currentTarget.style.background = "#E0BEC0"; e.currentTarget.style.transform = "translateY(-1px)"; } }}
+                onMouseLeave={(e) => { if (!addedToCart) { e.currentTarget.style.background = "#D6A8AC"; e.currentTarget.style.transform = "translateY(0)"; } }}
               >
-                {addedToCart ? t("addedToCart") : (
+                {addedToCart ? (
+                  <span className="text-[#D6A8AC]">{t("addedToCart")}</span>
+                ) : (
                   <>
                     {t("addToCart")}
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 8h10M9 4l4 4-4 4" />
                     </svg>
                   </>
                 )}
+              </button>
+
+              {/* Buy Now — Secondary Pink Border */}
+              <button
+                className="w-full h-[60px] rounded-[14px] bg-transparent text-[#D6A8AC] text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-8 flex items-center justify-center"
+                style={{ border: "1px solid #D6A8AC" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(214,168,172,0.08)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+              >
+                Buy Now
               </button>
 
               {/* Delivery Info */}
