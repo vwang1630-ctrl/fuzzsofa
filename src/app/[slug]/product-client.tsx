@@ -9,7 +9,6 @@ import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
 import { RoomVisualizationModal } from "@/components/room-visualization-modal";
-import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
 
 interface Props {
   product: Product;
@@ -18,11 +17,8 @@ interface Props {
 export function ProductPageClient({ product }: Props) {
   const { addItem, region } = useCart();
   const { t } = useLanguage();
-  // Map product slug to i18n key prefix
+
   const slugToPrefix: Record<string, string> = {
-    "bear-sofa": "bearSofa",
-    "lion-sofa": "lionSofa",
-    "tiger-sofa": "tigerSofa",
     "gorilla-sofa": "gorillaSofa",
     "silverback-sofa": "silverbackSofa",
     "owl-sofa": "owlChair",
@@ -31,18 +27,10 @@ export function ProductPageClient({ product }: Props) {
   };
   const prefix = slugToPrefix[product.slug] || "";
 
-  // Translated product name/tagline/concept
+  // Translated product fields
   const productName = prefix ? t(`${prefix}Name` as TranslationKeys) : product.name;
   const productTagline = prefix ? t(`${prefix}Tagline` as TranslationKeys) : product.tagline;
   const productConcept = prefix ? t(`${prefix}Concept` as TranslationKeys) : product.concept;
-
-  // Translated FAQ
-  const faqKeys = ["faqDelivery", "faqCustomization", "faqLeadTime", "faqReturnPolicy"] as TranslationKeys[];
-  const faqAnswerKeys = ["faqDeliveryAnswer", "faqCustomizationAnswer", "faqLeadTimeAnswer", "faqReturnPolicyAnswer"] as TranslationKeys[];
-  const translatedFaq = faqKeys.map((qk, i) => ({
-    question: t(qk),
-    answer: t(faqAnswerKeys[i]),
-  }));
 
   const [materialType, setMaterialType] = useState<string>(
     product.materialOptions?.[0]?.type || "Fabric"
@@ -54,91 +42,7 @@ export function ProductPageClient({ product }: Props) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [showRoomViz, setShowRoomViz] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
-  const [isFavorited, setIsFavorited] = useState(false);
-  const [favoriteLoading, setFavoriteLoading] = useState(false);
-  const [shareCopied, setShareCopied] = useState(false);
-  const [sessionToken, setSessionToken] = useState<string | null>(null);
-
-  // Get session for favorites
-  useEffect(() => {
-    async function getSession() {
-      try {
-        const supabase = await getSupabaseBrowserClientWithRetry();
-        const { data: { session } } = await supabase.auth.getSession();
-        setSessionToken(session?.access_token ?? null);
-      } catch { /* not logged in */ }
-    }
-    getSession();
-  }, []);
-
-  // Check if product is favorited
-  useEffect(() => {
-    async function checkFavorite() {
-      if (!sessionToken) return;
-      try {
-        const res = await fetch("/api/favorites", {
-          headers: { "x-session": sessionToken },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          const found = (data.favorites || []).some(
-            (f: { product_slug: string }) => f.product_slug === product.slug
-          );
-          setIsFavorited(found);
-        }
-      } catch { /* ignore */ }
-    }
-    checkFavorite();
-  }, [sessionToken, product.slug]);
-
-  const authHeaders = useCallback(() => {
-    const h: Record<string, string> = { "Content-Type": "application/json" };
-    if (sessionToken) h["x-session"] = sessionToken;
-    return h;
-  }, [sessionToken]);
-
-  const toggleFavorite = async () => {
-    if (!sessionToken) return;
-    setFavoriteLoading(true);
-    try {
-      if (isFavorited) {
-        const res = await fetch(
-          `/api/favorites?productSlug=${encodeURIComponent(product.slug)}`,
-          { method: "DELETE", headers: authHeaders() }
-        );
-        if (res.ok) {
-          setIsFavorited(false);
-        }
-      } else {
-        const res = await fetch("/api/favorites", {
-          method: "POST",
-          headers: authHeaders(),
-          body: JSON.stringify({ productSlug: product.slug }),
-        });
-        if (res.ok || res.status === 409) {
-          setIsFavorited(true);
-        }
-      }
-    } catch { /* ignore */ }
-    finally { setFavoriteLoading(false); }
-  };
-
-  const handleShare = async () => {
-    const url = `${window.location.origin}/${product.slug}`;
-    try {
-      await navigator.clipboard.writeText(url);
-    } catch {
-      // Fallback
-      const input = document.createElement("input");
-      input.value = url;
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand("copy");
-      document.body.removeChild(input);
-    }
-    setShareCopied(true);
-    setTimeout(() => setShareCopied(false), 2000);
-  };
+  const [aiBtnHovered, setAiBtnHovered] = useState(false);
 
   const handleAddToCart = () => {
     addItem({
@@ -167,7 +71,6 @@ export function ProductPageClient({ product }: Props) {
       "/products/owl/rose-pink.png",
       "/products/owl/forest-green.png",
       "/products/owl/warm-gray.png",
-      "/products/owl/interior-context.png",
     ],
     "gorilla-sofa": [
       "/products/gorilla-sofa/gray.jpg",
@@ -190,23 +93,28 @@ export function ProductPageClient({ product }: Props) {
       "/products/muscle-gorilla-sofa/scene-2.jpg",
       "/products/muscle-gorilla-sofa/scene-4.jpg",
       "/products/muscle-gorilla-sofa/scene-5.jpg",
-      "/products/muscle-gorilla-sofa/scene-6.jpg",
     ],
   };
 
   const images = productImages[product.slug] || [];
 
   const galleryImages = images.length > 0
-    ? images.map((src, i) => ({ label: `${productName} — View ${i + 1}`, id: i, src }))
-    : [
-        { label: `${productName} — Full View`, id: 0, src: "" },
-        { label: `${productName} — Detail`, id: 1, src: "" },
-        { label: `${productName} — In Context`, id: 2, src: "" },
-        { label: `${productName} — Side Profile`, id: 3, src: "" },
-      ];
+    ? images.map((src, i) => ({ id: i, src }))
+    : [{ id: 0, src: "" }];
 
   // Get price for current region
   const displayPrice = formatPrice(getPrice(product, region), region);
+
+  // Map spec keys to clean labels
+  const specLabels: Record<string, TranslationKeys> = {
+    width: "width",
+    height: "height",
+    depth: "depth",
+    weight: "weight",
+  };
+
+  // Collection name from animal
+  const collectionName = `${product.animal.toUpperCase()} COLLECTION`;
 
   return (
     <>
@@ -230,47 +138,32 @@ export function ProductPageClient({ product }: Props) {
         }}
       />
 
-      {/* 1) HERO: Product Image + Key Info Side-by-Side */}
-      <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* LEFT: Product Image */}
-            <div className="relative aspect-square bg-gradient-to-b from-[#111111] to-[#0A0A0A] overflow-hidden">
-              <div
-                className="absolute inset-0 opacity-[0.03]"
-                style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
-              />
-              {galleryImages[activeImage]?.src ? (
-                <img
-                  src={galleryImages[activeImage].src}
-                  alt={galleryImages[activeImage].label}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif text-[15rem] md:text-[20rem] text-[#F5F0EB]/[0.04] select-none">
-                    {product.animal.charAt(0)}
-                  </span>
-                </div>
-              )}
-              {/* Image thumbnails */}
+      {/* ═══════════════════════════════════════════
+          SCREEN 1 — HERO (65/35 Layout)
+          ═══════════════════════════════════════════ */}
+      <section className="min-h-screen border-b border-[#1A1A1A]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] min-h-screen">
+            {/* LEFT: Product Image Area */}
+            <div className="relative flex bg-[#0A0A0A]">
+              {/* Vertical Thumbnails — Left Side */}
               {galleryImages.length > 1 && (
-                <div className="absolute bottom-6 left-6 right-6 flex gap-2">
+                <div className="hidden md:flex flex-col gap-3 p-6 pt-24 w-[88px] flex-shrink-0">
                   {galleryImages.map((img) => (
                     <button
                       key={img.id}
                       onClick={() => setActiveImage(img.id)}
-                      className={`w-[50px] h-[50px] border transition-all duration-300 bg-[#0A0A0A]/80 backdrop-blur-sm flex items-center justify-center overflow-hidden ${
+                      className={`w-[64px] h-[64px] border transition-all duration-300 bg-[#111] overflow-hidden flex-shrink-0 ${
                         activeImage === img.id
                           ? "border-[#E8B4B8]"
                           : "border-[#333] hover:border-[#E8B4B8]"
                       }`}
-                      aria-label={img.label}
+                      aria-label={`View ${img.id + 1}`}
                     >
                       {img.src ? (
                         <img src={img.src} alt="" className="w-full h-full object-cover" />
                       ) : (
-                        <span className="font-serif text-sm text-[#F5F0EB]/20">
+                        <span className="font-serif text-sm text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
                           {product.animal.charAt(0)}
                         </span>
                       )}
@@ -278,192 +171,242 @@ export function ProductPageClient({ product }: Props) {
                   ))}
                 </div>
               )}
+
+              {/* Main Image */}
+              <div className="relative flex-1 aspect-square lg:aspect-auto lg:min-h-screen bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden pt-20 lg:pt-0">
+                <div
+                  className="absolute inset-0 opacity-[0.03]"
+                  style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
+                />
+                {galleryImages[activeImage]?.src ? (
+                  <img
+                    src={galleryImages[activeImage].src}
+                    alt={productName}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="font-serif text-[15rem] md:text-[20rem] text-[#F5F0EB]/[0.04] select-none">
+                      {product.animal.charAt(0)}
+                    </span>
+                  </div>
+                )}
+
+                {/* AI Room Preview Floating Button — Top Right */}
+                <button
+                  onClick={() => setShowRoomViz(true)}
+                  onMouseEnter={() => setAiBtnHovered(true)}
+                  onMouseLeave={() => setAiBtnHovered(false)}
+                  className="absolute top-[88px] right-6 z-10 flex flex-col items-center gap-1 group"
+                  aria-label="Preview in your space"
+                >
+                  <div
+                    className="w-[54px] h-[54px] rounded-full flex items-center justify-center transition-all duration-300"
+                    style={{
+                      background: "rgba(0,0,0,0.55)",
+                      backdropFilter: "blur(20px)",
+                      WebkitBackdropFilter: "blur(20px)",
+                    }}
+                  >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                      <circle cx="12" cy="13" r="4" />
+                    </svg>
+                    <span className="absolute -top-0.5 -right-0.5 text-[10px]">✨</span>
+                  </div>
+                  <span
+                    className={`text-[9px] tracking-[0.12em] uppercase text-[#F5F0EB]/70 whitespace-nowrap transition-opacity duration-300 ${
+                      aiBtnHovered ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    {t("previewInYourSpace" as TranslationKeys)}
+                  </span>
+                </button>
+
+                {/* Mobile Thumbnails — Bottom */}
+                {galleryImages.length > 1 && (
+                  <div className="md:hidden absolute bottom-4 left-4 right-4 flex gap-2 justify-center">
+                    {galleryImages.map((img) => (
+                      <button
+                        key={img.id}
+                        onClick={() => setActiveImage(img.id)}
+                        className={`w-[48px] h-[48px] border transition-all duration-300 bg-[#0A0A0A]/80 backdrop-blur-sm overflow-hidden ${
+                          activeImage === img.id
+                            ? "border-[#E8B4B8]"
+                            : "border-[#333] hover:border-[#E8B4B8]"
+                        }`}
+                      >
+                        {img.src ? (
+                          <img src={img.src} alt="" className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="font-serif text-xs text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
+                            {product.animal.charAt(0)}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* RIGHT: Product Info */}
-            <div className="flex flex-col justify-center px-8 md:px-12 py-12 lg:py-16 bg-[#0A0A0A]">
-              <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-4">
-                {product.animal}-Inspired Sculptural Furniture
+            {/* RIGHT: Product Info (35%) */}
+            <div className="flex flex-col justify-center px-8 md:px-12 py-16 lg:py-20 bg-[#0A0A0A] lg:border-l border-[#1A1A1A]">
+              {/* Collection Label */}
+              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                {collectionName}
               </p>
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-[#F5F0EB] leading-[1.1]">
+
+              {/* Product Name */}
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-[3.5rem] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
                 {productName}
               </h1>
-              <p className="mt-3 text-lg text-[#F5F0EB]/50 font-light">{productTagline}</p>
 
               {/* Price */}
-              <div className="mt-8 mb-6">
+              <div className="mt-6 mb-6">
                 <p className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">
                   {displayPrice}
                 </p>
-                <p className="text-xs text-[#8A8580] mt-1 tracking-[0.05em]">{t("freeDelivery")}</p>
               </div>
 
-              {/* In Your Space - concise */}
-              <div className="mb-8">
-                <p className="text-sm text-[#F5F0EB]/60 leading-[1.7] max-w-[440px]">
-                  {t(`${prefix}Interior` as TranslationKeys)}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {product.relatedInteriors.map((interior) => {
-                    const sceneKeyMap: Record<string, TranslationKeys> = {
-                      "luxury-villa-interior": "luxuryVillaScene",
-                      "boutique-hotel-lobby": "boutiqueHotelScene",
-                      "statement-furniture": "statementFurnitureScene",
-                      "sculptural-furniture-trend": "sculpturalTrendScene",
-                    };
-                    return (
-                      <Link
-                        key={interior}
-                        href={`/${interior}`}
-                        className="text-xs tracking-[0.1em] uppercase border border-[#333] px-3 py-1.5 text-[#F5F0EB]/50 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-all duration-300"
-                      >
-                        {sceneKeyMap[interior] ? t(sceneKeyMap[interior]) : interior.replace(/-/g, " ")}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
+              {/* Description */}
+              <p className="text-sm text-[#F5F0EB]/50 leading-[1.7] max-w-[420px] mb-8">
+                {productTagline}
+              </p>
 
               {/* Material Quick Select */}
               {product.materialOptions && product.materialOptions.length > 0 && (
                 <div className="mb-6">
-                  <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-3">
-                    {t("materialsTitle")}
-                  </label>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {product.materialOptions.map((mat) => (
-                      <button
-                        key={mat.type}
-                        onClick={() => {
-                          setMaterialType(mat.type);
-                          setMaterialOption(mat.options[0]);
-                        }}
-                        className={`text-xs px-3 py-1.5 border transition-all duration-300 ${
-                          materialType === mat.type
-                            ? "border-[#E8B4B8] text-[#E8B4B8]"
-                            : "border-[#333] text-[#F5F0EB]/40 hover:border-[#E8B4B8] hover:text-[#E8B4B8]"
-                        }`}
-                      >
-                        {mat.type === "Cloud Touch" ? t("cloudTouch") :
-                         mat.type === "Wild Touch" ? t("wildTouch") :
-                         mat.type === "Leather Touch" ? t("leatherTouch") : mat.type}
-                      </button>
-                    ))}
-                  </div>
-                  {/* Color options within selected material type */}
-                  {currentMaterialOptions && (
-                    <div className="flex flex-wrap gap-2">
-                      {currentMaterialOptions.options.map((opt) => (
-                        <button
-                          key={opt}
-                          onClick={() => setMaterialOption(opt)}
-                          className={`text-xs px-3 py-1.5 border transition-all duration-300 ${
-                            materialType === currentMaterialOptions.type && materialOption === opt
-                              ? "border-[#E8B4B8] text-[#E8B4B8]"
-                              : "border-[#1A1A1A] text-[#F5F0EB]/30 hover:border-[#333] hover:text-[#F5F0EB]/60"
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      ))}
+                  {product.materialOptions.map((mat) => (
+                    <div key={mat.type} className="mb-4">
+                      <label className="text-[10px] text-[#8A8580] tracking-[0.15em] uppercase block mb-2">
+                        {mat.type}
+                      </label>
+                      <div className="flex flex-wrap gap-2">
+                        {mat.options.map((opt) => {
+                          const colorIdx = mat.options.indexOf(opt);
+                          const colorHex = mat.colors[colorIdx];
+                          const isSelected = materialType === mat.type && materialOption === opt;
+                          return (
+                            <button
+                              key={opt}
+                              onClick={() => {
+                                setMaterialType(mat.type);
+                                setMaterialOption(opt);
+                              }}
+                              className={`flex items-center gap-2 text-xs px-3 py-1.5 border transition-all duration-300 ${
+                                isSelected
+                                  ? "border-[#E8B4B8] text-[#E8B4B8]"
+                                  : "border-[#333] text-[#F5F0EB]/40 hover:border-[#E8B4B8] hover:text-[#E8B4B8]"
+                              }`}
+                            >
+                              <span
+                                className="w-3 h-3 rounded-full border border-[#333] flex-shrink-0"
+                                style={{ backgroundColor: colorHex }}
+                              />
+                              {opt}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
-                  )}
+                  ))}
                 </div>
               )}
 
-              {/* Add to Cart + Secondary CTAs */}
-              <div className="flex flex-col gap-3 mt-2">
-                <button
-                  onClick={handleAddToCart}
-                  className="w-full border border-[#F5F0EB] text-[#F5F0EB] py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
-                >
-                  {addedToCart ? t("addedToCart") : t("addToCart")}
-                </button>
-                <button
-                  onClick={() => setShowRoomViz(true)}
-                  className="w-full border border-[#333] text-[#F5F0EB]/60 py-3 text-sm tracking-[0.1em] uppercase hover:border-[#E8B4B8]/50 hover:text-[#E8B4B8] transition-all duration-300 flex items-center justify-center gap-2"
-                >
-                  <svg width="18" height="18" viewBox="0 0 28 28" fill="none" className="text-[#E8B4B8]/60">
-                    <path
-                      d="M3 10C3 8.89543 3.89543 8 5 8H7.586C7.85122 8 7.89443 7.89464 8.29289 7.70711L9.70711 6.29289C9.89443 6.10536 10.1488 6 10.414 6H17.586C17.8512 6 18.1056 6.10536 18.2929 6.29289L19.7071 7.70711C19.8944 7.89464 20.1488 8 20.414 8H23C24.1046 8 25 8.89543 25 10V20C25 21.1046 24.1046 22 23 22H5C3.89543 22 3 21.1046 3 20V10Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                    />
-                    <circle cx="14" cy="14.5" r="4" stroke="currentColor" strokeWidth="1.5" />
-                  </svg>
-                  {t("tryInRoom")}
-                </button>
-                <Link
-                  href="/contact"
-                  className="w-full border border-[#1A1A1A] text-[#F5F0EB]/40 py-3 text-sm tracking-[0.1em] uppercase hover:border-[#333] hover:text-[#F5F0EB]/60 transition-all duration-300 text-center"
-                >
-                  {t("requestPricing")}
-                </Link>
-              </div>
+              {/* Add to Cart */}
+              <button
+                onClick={handleAddToCart}
+                className="w-full border border-[#F5F0EB] text-[#F5F0EB] py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 mb-6"
+              >
+                {addedToCart ? t("addedToCart") : t("addToCart")}
+              </button>
 
-              {/* Favorite + Share Row */}
-              <div className="flex items-center gap-4 mt-4">
-                <button
-                  onClick={toggleFavorite}
-                  disabled={favoriteLoading || !sessionToken}
-                  className={`flex items-center gap-2 text-xs tracking-[0.1em] uppercase transition-all duration-300 ${
-                    !sessionToken
-                      ? "text-[#8A8580]/40 cursor-not-allowed"
-                      : isFavorited
-                        ? "text-[#E8B4B8]"
-                        : "text-[#8A8580] hover:text-[#E8B4B8]"
-                  }`}
-                  title={!sessionToken ? t("signIn") : isFavorited ? t("removeFavorite") : t("addFavorite")}
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill={isFavorited ? "currentColor" : "none"}
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  >
-                    <path
-                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  {isFavorited ? t("removeFavorite") : t("addFavorite")}
-                </button>
-                <button
-                  onClick={handleShare}
-                  className="flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-all duration-300"
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="18" cy="5" r="3" />
-                    <circle cx="6" cy="12" r="3" />
-                    <circle cx="18" cy="19" r="3" />
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                  </svg>
-                  {shareCopied ? t("shareLinkCopied") : t("shareProduct")}
-                </button>
+              {/* Delivery Info */}
+              <div className="flex items-center gap-6 text-[11px] text-[#8A8580] tracking-[0.05em]">
+                <span>{t("freeWhiteGlove")}</span>
+                <span className="w-px h-3 bg-[#333]" />
+                <span>{t("madeToOrder")}</span>
+                <span className="w-px h-3 bg-[#333]" />
+                <span>8–12 {t("weeks" as TranslationKeys) || "Weeks"}</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              {/* Key specs summary */}
-              <div className="mt-8 pt-6 border-t border-[#1A1A1A] grid grid-cols-3 gap-4">
-                {Object.entries(product.specifications).slice(0, 3).map(([key, value]) => (
-                  <div key={key}>
-                    <p className="text-[10px] text-[#8A8580] tracking-[0.1em] uppercase mb-0.5">
-                      {t(key as TranslationKeys) || key.replace(/([A-Z])/g, " $1").trim()}
-                    </p>
-                    <p className="text-xs text-[#F5F0EB]/60">{value}</p>
+      {/* ═══════════════════════════════════════════
+          SCREEN 2 — DESIGN STORY
+          ═══════════════════════════════════════════ */}
+      <section className="border-b border-[#1A1A1A]">
+        <div className="max-w-[1100px] mx-auto px-6 py-24 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+            {/* Left: Detail Images */}
+            <div className="space-y-6">
+              {galleryImages.length >= 2 ? (
+                <>
+                  <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden">
+                    {galleryImages[1]?.src ? (
+                      <img
+                        src={galleryImages[1].src}
+                        alt={`${productName} detail`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
+                          {product.animal.charAt(0)}
+                        </span>
+                      </div>
+                    )}
                   </div>
+                  {galleryImages.length >= 3 && galleryImages[2]?.src && (
+                    <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden">
+                      <img
+                        src={galleryImages[2].src}
+                        alt={`${productName} texture`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0A0A0A] flex items-center justify-center">
+                  <span className="font-serif text-[12rem] text-[#F5F0EB]/[0.04] select-none">
+                    {product.animal.charAt(0)}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Right: Story Text */}
+            <div className="flex flex-col justify-center">
+              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                {t("designStory" as TranslationKeys) || "Design Story"}
+              </p>
+              <h2 className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
+                {t("theStory" as TranslationKeys) || "The Story"}
+              </h2>
+              <p className="text-[#F5F0EB]/60 leading-[1.8] text-base mb-4">
+                {productConcept}
+              </p>
+              <p className="text-[#F5F0EB]/40 leading-[1.8] text-sm mb-10">
+                {product.interiorContext}
+              </p>
+
+              {/* Attributes */}
+              <div className="flex flex-wrap gap-4">
+                {[
+                  t("handcrafted" as TranslationKeys) || "Handcrafted",
+                  t("madeToOrder" as TranslationKeys) || "Made To Order",
+                  t("collectibleDesign" as TranslationKeys) || "Collectible Design",
+                ].map((label) => (
+                  <span
+                    key={label}
+                    className="text-[10px] tracking-[0.15em] uppercase border border-[#333] px-4 py-2 text-[#F5F0EB]/40"
+                  >
+                    {label}
+                  </span>
                 ))}
               </div>
             </div>
@@ -471,142 +414,159 @@ export function ProductPageClient({ product }: Props) {
         </div>
       </section>
 
-      {/* 2) DESIGN CONCEPT */}
+      {/* ═══════════════════════════════════════════
+          SCREEN 3 — INTERIOR INSPIRATION
+          ═══════════════════════════════════════════ */}
       <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[700px] mx-auto px-6 py-16">
-          <h2 className="font-serif text-2xl font-light text-[#F5F0EB] mb-6">{t("designConcept")}</h2>
-          <p className="text-[#F5F0EB]/70 leading-[1.7] text-base">{productConcept}</p>
-        </div>
-      </section>
-
-      {/* 3) SPECIFICATIONS */}
-      <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[1100px] mx-auto px-6 py-16">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">{t("specificationsTitle")}</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-            {Object.entries(product.specifications).map(([key, value]) => (
-              <div key={key}>
-                <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-1">
-                  {t(key as TranslationKeys) || key.replace(/([A-Z])/g, " $1").trim()}
-                </p>
-                <p className="text-sm text-[#F5F0EB]/80">{value}</p>
-              </div>
-            ))}
-            <div>
-              <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-1">{t("delivery")}</p>
-              <p className="text-sm text-[#F5F0EB]/80">{t("freeDelivery")}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3.5) TRENDING REGIONS */}
-      {product.trendingGeo && product.trendingGeo.length > 0 && (
-        <section className="border-b border-[#1A1A1A]">
-          <div className="max-w-[1100px] mx-auto px-6 py-16">
-            <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-2">{t("trendingRegionsTitle")}</h2>
-            <p className="text-sm text-[#8A8580] mb-8">{t("trendingRegionsDesc")}</p>
-            <div className="flex flex-wrap gap-2">
-              {product.trendingGeo.map((region: string) => (
-                <span
-                  key={region}
-                  className="px-4 py-2 border border-[#1A1A1A] text-sm text-[#F5F0EB]/80 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300 cursor-default"
-                >
-                  {region}
+        <div className="max-w-[1400px] mx-auto">
+          {/* Full-width hero image */}
+          <div className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden">
+            {galleryImages[0]?.src ? (
+              <img
+                src={galleryImages[0].src}
+                alt={`${productName} in interior`}
+                className="w-full h-full object-cover opacity-60"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
+                  {product.animal.charAt(0)}
                 </span>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 4) MATERIALS DETAIL */}
-      <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[1100px] mx-auto px-6 py-16">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-4">{t("materialsTitle")}</h2>
-          <p className="text-sm text-[#8A8580] mb-10">{t("materialOptions")}</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {product.materialOptions?.map((mat) => (
-              <div
-                key={mat.type}
-                onClick={() => {
-                  setMaterialType(mat.type);
-                  setMaterialOption(mat.options[0]);
-                }}
-                className={`cursor-pointer border p-6 transition-all duration-300 ${
-                  materialType === mat.type
-                    ? "border-[#E8B4B8] bg-[#111111]"
-                    : "border-[#1A1A1A] hover:border-[#333]"
-                }`}
-              >
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] mb-1">
-                  {mat.type === "Cloud Touch" ? t("cloudTouch") :
-                   mat.type === "Wild Touch" ? t("wildTouch") :
-                   mat.type === "Leather Touch" ? t("leatherTouch") : mat.type}
-                </h3>
-                <p className="text-xs text-[#8A8580] mb-4">
-                  {mat.type === "Cloud Touch" && t("cloudTouchDesc")}
-                  {mat.type === "Wild Touch" && t("wildTouchDesc")}
-                  {mat.type === "Leather Touch" && t("leatherTouchDesc")}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {mat.options.map((opt) => (
-                    <button
-                      key={opt}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setMaterialType(mat.type);
-                        setMaterialOption(opt);
-                      }}
-                      className={`text-xs px-3 py-1.5 border transition-all duration-300 ${
-                        materialType === mat.type && materialOption === opt
-                          ? "border-[#E8B4B8] text-[#E8B4B8]"
-                          : "border-[#333] text-[#F5F0EB]/40 hover:border-[#E8B4B8] hover:text-[#E8B4B8]"
-                      }`}
-                    >
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )) || (
-              <div className="border border-[#1A1A1A] p-6">
-                <p className="text-sm text-[#F5F0EB]/70">{product.materials.join(", ")}</p>
               </div>
             )}
-          </div>
-        </div>
-      </section>
+            {/* Dark overlay for text legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
 
-      {/* 5) FAQ */}
-      <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[700px] mx-auto px-6 py-16">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
-            {t("faqTitle")}
-          </h2>
-          <div className="space-y-6">
-            {translatedFaq.map((faq, i) => (
-              <div key={i} className="border-b border-[#1A1A1A] pb-6 last:border-0">
-                <h3 className="font-serif text-lg font-light text-[#F5F0EB] mb-2">{faq.question}</h3>
-                <p className="text-sm text-[#8A8580] leading-[1.7]">{faq.answer}</p>
+            {/* Centered text */}
+            <div className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6">
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[#F5F0EB] text-center leading-[1.1] mb-6">
+                {t("designedToDefineSpace" as TranslationKeys) || "Designed To Define A Space"}
+              </h2>
+              <div className="flex flex-wrap gap-4 justify-center">
+                {[
+                  t("luxuryVillas" as TranslationKeys) || "Luxury Villas",
+                  t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels",
+                  t("privateClubs" as TranslationKeys) || "Private Clubs",
+                  t("expressiveInteriors" as TranslationKeys) || "Expressive Interiors",
+                ].map((label) => (
+                  <span
+                    key={label}
+                    className="text-[10px] tracking-[0.15em] uppercase border border-[#F5F0EB]/20 px-4 py-2 text-[#F5F0EB]/50"
+                  >
+                    {label}
+                  </span>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 6) RELATED PRODUCTS */}
+      {/* ═══════════════════════════════════════════
+          SCREEN 4 — DIMENSIONS
+          ═══════════════════════════════════════════ */}
+      <section className="border-b border-[#1A1A1A]">
+        <div className="max-w-[1100px] mx-auto px-6 py-24 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            {/* Left: Dimensions */}
+            <div>
+              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                {t("dimensionsTitle" as TranslationKeys) || "Dimensions"}
+              </p>
+              <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] mb-10">
+                {t("dimensionsTitle" as TranslationKeys) || "Dimensions"}
+              </h2>
+
+              <div className="space-y-6">
+                {Object.entries(product.specifications)
+                  .filter(([key]) => key in specLabels)
+                  .map(([key, value]) => (
+                    <div key={key} className="flex items-baseline gap-8 border-b border-[#1A1A1A] pb-4">
+                      <span className="text-xs text-[#8A8580] tracking-[0.1em] uppercase w-24">
+                        {t(specLabels[key]) || key}
+                      </span>
+                      <span className="text-lg font-light text-[#F5F0EB] font-serif">
+                        {value.replace(/^[WHD]\s*/, "")}
+                      </span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            {/* Right: Silhouette with scale reference */}
+            <div className="flex items-center justify-center bg-gradient-to-b from-[#111] to-[#0A0A0A] min-h-[400px] relative">
+              {galleryImages[0]?.src ? (
+                <img
+                  src={galleryImages[0].src}
+                  alt={`${productName} scale reference`}
+                  className="h-full max-h-[500px] w-auto object-contain opacity-70"
+                />
+              ) : (
+                <span className="font-serif text-[16rem] text-[#F5F0EB]/[0.06] select-none">
+                  {product.animal.charAt(0)}
+                </span>
+              )}
+              {/* Scale figure indicator */}
+              <div className="absolute bottom-8 right-8 flex flex-col items-end gap-1">
+                <div className="h-32 w-px bg-[#E8B4B8]/30" />
+                <span className="text-[9px] text-[#E8B4B8]/40 tracking-[0.1em] uppercase">~170 cm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          SCREEN 5 — MATERIALS & CRAFTSMANSHIP
+          ═══════════════════════════════════════════ */}
+      <section className="border-b border-[#1A1A1A]">
+        <div className="max-w-[1100px] mx-auto px-6 py-24 lg:py-32">
+          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+            {t("materialsTitle")}
+          </p>
+          <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] mb-16">
+            {t("materialsCraftsmanship" as TranslationKeys) || "Materials & Craftsmanship"}
+          </h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {product.materials.map((mat) => {
+              // Extract short name for label
+              const shortName = mat.split("(")[0].trim().split(" ").slice(0, 2).join(" ");
+              return (
+                <div key={mat} className="text-center">
+                  <div className="w-16 h-16 mx-auto border border-[#333] rounded-full flex items-center justify-center mb-4">
+                    <span className="font-serif text-lg text-[#E8B4B8]/60">
+                      {shortName.charAt(0)}
+                    </span>
+                  </div>
+                  <p className="text-sm text-[#F5F0EB]/70 font-light leading-[1.6]">
+                    {mat}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          SCREEN 6 — YOU MAY ALSO LIKE
+          ═══════════════════════════════════════════ */}
       {relatedProducts.length > 0 && (
-        <section className="py-16">
+        <section className="py-24 lg:py-32">
           <div className="max-w-[1200px] mx-auto px-6">
-            <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
+            <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+              {t("youMayAlsoLike" as TranslationKeys) || "You May Also Like"}
+            </p>
+            <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] mb-12">
               {t("relatedProducts")}
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedProducts.map((rp) => {
                 const rpPrefix = slugToPrefix[rp.slug] || "";
                 const rpName = rpPrefix ? t(`${rpPrefix}Name` as TranslationKeys) : rp.name;
                 const rpTagline = rpPrefix ? t(`${rpPrefix}Tagline` as TranslationKeys) : rp.tagline;
+                const rpPrice = formatPrice(getPrice(rp, region), region);
                 const rpImages = productImages[rp.slug] || [];
                 return (
                   <Link
@@ -614,7 +574,7 @@ export function ProductPageClient({ product }: Props) {
                     href={`/${rp.slug}`}
                     className="group border border-[#1A1A1A] hover:border-[#E8B4B8]/30 transition-all duration-300"
                   >
-                    <div className="aspect-square bg-gradient-to-b from-[#111111] to-[#0A0A0A] relative overflow-hidden">
+                    <div className="aspect-square bg-gradient-to-b from-[#111] to-[#0A0A0A] relative overflow-hidden">
                       {rpImages[0] ? (
                         <img
                           src={rpImages[0]}
@@ -629,9 +589,13 @@ export function ProductPageClient({ product }: Props) {
                         </div>
                       )}
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-serif text-lg font-light text-[#F5F0EB]">{rpName}</h3>
-                      <p className="text-xs text-[#8A8580] mt-1">{rpTagline}</p>
+                    <div className="p-5">
+                      <p className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase mb-1">
+                        {rp.animal} COLLECTION
+                      </p>
+                      <h3 className="font-serif text-xl font-light text-[#F5F0EB]">{rpName}</h3>
+                      <p className="text-xs text-[#8A8580] mt-1 mb-3">{rpTagline}</p>
+                      <p className="font-serif text-lg font-light text-[#F5F0EB]/80">{rpPrice}</p>
                     </div>
                   </Link>
                 );
