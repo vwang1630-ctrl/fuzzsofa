@@ -85,6 +85,7 @@ export function ProductPageClient({ product }: Props) {
       "/products/owl/forest-green.png",
       "/products/owl/warm-gray.png",
       "/products/owl/dusty-pink-fur.png",
+      "/products/owl/lifestyle.webp",
     ],
     "gorilla-sofa": [
       "/products/gorilla-sofa/gray.jpg",
@@ -573,19 +574,22 @@ export function ProductPageClient({ product }: Props) {
         <div className="max-w-[1600px] mx-auto">
           {/* Full-width hero image */}
           <div className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden">
-            {galleryImages[0]?.src ? (
-              <img
-                src={galleryImages[0].src}
-                alt={`${productName} in interior`}
-                className="w-full h-full object-cover opacity-60"
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
-                  {product.animal.charAt(0)}
-                </span>
-              </div>
-            )}
+            {(() => {
+              const lifestyleImg = galleryImages.length > 5 ? galleryImages[galleryImages.length - 1] : galleryImages[0];
+              return lifestyleImg?.src ? (
+                <img
+                  src={lifestyleImg.src}
+                  alt={`${productName} in interior`}
+                  className="w-full h-full object-cover opacity-60"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
+                    {product.animal.charAt(0)}
+                  </span>
+                </div>
+              );
+            })()}
             {/* Dark overlay for text legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent" />
 
