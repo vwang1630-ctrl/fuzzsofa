@@ -84,6 +84,7 @@ export function ProductPageClient({ product }: Props) {
       "/products/owl/rose-pink.png",
       "/products/owl/forest-green.png",
       "/products/owl/warm-gray.png",
+      "/products/owl/dusty-pink-fur.png",
     ],
     "gorilla-sofa": [
       "/products/gorilla-sofa/gray.jpg",
