@@ -79,44 +79,75 @@ export default function RoomVisualizationModal({
     link.click();
   }, [resultImage, productName]);
 
-  const handleShare = useCallback(async () => {
-    if (!resultImage) return;
+  const handleSocialShare = useCallback(async (platform: "pinterest" | "instagram" | "facebook" | "youtube") => {
+    const pageUrl = encodeURIComponent(window.location.href);
+    const productNameEnc = encodeURIComponent(productName);
+    const description = encodeURIComponent(`See how the ${productName} looks in my room — Fuzz Sofa Studio`);
+    const mediaUrl = encodeURIComponent(window.location.href); // fallback: product page as media
 
-    try {
-      // Convert data URL to Blob for Web Share API
-      const response = await fetch(resultImage);
-      const blob = await response.blob();
-      const file = new File(
-        [blob],
-        `fuzzsofa-${productName.toLowerCase().replace(/\s+/g, "-")}-in-room.png`,
-        { type: "image/png" }
-      );
-
-      // Try native Web Share API (mobile-friendly)
-      if (navigator.share && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({
-          title: `${productName} — Fuzz Sofa Studio`,
-          text: "See how this sculptural sofa looks in my room!",
-          url: window.location.href,
-          files: [file],
-        });
-        return;
+    switch (platform) {
+      case "pinterest": {
+        // Pinterest Pin Creator: opens with image + description + link
+        const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${pageUrl}&media=${mediaUrl}&description=${description}`;
+        window.open(pinterestUrl, "_blank", "width=800,height=600");
+        break;
       }
-    } catch (err) {
-      // User cancelled share sheet — not an error
-      if (err instanceof Error && err.name === "AbortError") return;
+      case "facebook": {
+        // Facebook Share dialog
+        const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+        window.open(fbUrl, "_blank", "width=800,height=600");
+        break;
+      }
+      case "instagram": {
+        // Instagram doesn't support direct web sharing — download image + copy caption
+        try {
+          const response = await fetch(resultImage);
+          const blob = await response.blob();
+          const file = new File([blob], `fuzzsofa-in-room.png`, { type: "image/png" });
+          
+          // Try Web Share API with file (works on mobile to share to Instagram app)
+          if (navigator.share && navigator.canShare?.({ files: [file] })) {
+            await navigator.share({
+              title: `${productName} — Fuzz Sofa Studio`,
+              text: `See how the ${productName} looks in my room!`,
+              files: [file],
+            });
+            return;
+          }
+        } catch (err) {
+          if (err instanceof Error && err.name === "AbortError") return;
+        }
+        // Fallback: download image + copy caption
+        handleDownload();
+        try {
+          await navigator.clipboard.writeText(
+            `See how the ${productName} looks in my room! ${window.location.href}`
+          );
+          setShareStatus("Image saved, caption copied!");
+          setTimeout(() => setShareStatus(""), 3000);
+        } catch {
+          setShareStatus("Image saved — paste in Instagram");
+          setTimeout(() => setShareStatus(""), 3000);
+        }
+        break;
+      }
+      case "youtube": {
+        // YouTube doesn't support direct image sharing — download + copy link
+        handleDownload();
+        try {
+          await navigator.clipboard.writeText(
+            `See how the ${productName} looks in my room! ${window.location.href}`
+          );
+          setShareStatus("Image saved, link copied!");
+          setTimeout(() => setShareStatus(""), 3000);
+        } catch {
+          setShareStatus("Image saved — share on YouTube");
+          setTimeout(() => setShareStatus(""), 3000);
+        }
+        break;
+      }
     }
-
-    // Fallback: copy current page link to clipboard
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setShareStatus("Link copied!");
-      setTimeout(() => setShareStatus(""), 2000);
-    } catch {
-      setShareStatus("Copy failed");
-      setTimeout(() => setShareStatus(""), 2000);
-    }
-  }, [resultImage, productName]);
+  }, [resultImage, productName, handleDownload]);
 
   const handleClose = useCallback(() => {
     handleReset();
@@ -261,49 +292,83 @@ export default function RoomVisualizationModal({
               </div>
 
               {/* Actions */}
-              <div className="flex gap-3 justify-center pt-2 flex-wrap">
-                <button
-                  onClick={handleBack}
-                  className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 
-                    text-[10px] tracking-[0.1em] uppercase font-light 
-                    hover:border-[#E8B4B8]/40 hover:text-[#F5F0EB]/70 
-                    transition-all duration-300 rounded-[4px]"
-                >
-                  Reposition
-                </button>
-                <button
-                  onClick={handleShare}
-                  className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 
-                    text-[10px] tracking-[0.1em] uppercase font-light 
-                    hover:border-[#E8B4B8]/40 hover:text-[#F5F0EB]/70 
-                    transition-all duration-300 rounded-[4px] flex items-center gap-2"
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+              <div className="space-y-4 pt-2">
+                {/* Social Share Icons */}
+                <div className="flex items-center justify-center gap-4">
+                  <p className="text-[10px] text-[#8A8580] tracking-[0.08em] uppercase mr-1">
+                    Share to
+                  </p>
+                  {/* Pinterest */}
+                  <button
+                    onClick={() => handleSocialShare("pinterest")}
+                    title="Share to Pinterest"
+                    className="w-9 h-9 rounded-full border border-[#1A1A1A] flex items-center justify-center
+                      text-[#8A8580] hover:border-[#E8B4B8]/40 hover:text-[#E8B4B8]
+                      transition-all duration-300"
                   >
-                    <circle cx="18" cy="5" r="3" />
-                    <circle cx="6" cy="12" r="3" />
-                    <circle cx="18" cy="19" r="3" />
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                  </svg>
-                  {shareStatus || "Share"}
-                </button>
-                <button
-                  onClick={handleDownload}
-                  className="bg-[#E8B4B8] text-[#0A0A0A] px-6 py-2.5 text-[10px] 
-                    tracking-[0.1em] uppercase font-medium hover:bg-[#E0BEC0] 
-                    transition-all duration-300 rounded-[4px]"
-                >
-                  Download Image
-                </button>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.08 3.15 9.43 7.6 11.21-.1-.94-.2-2.38.04-3.41.22-.93 1.4-5.93 1.4-5.93s-.36-.72-.36-1.78c0-1.67.97-2.91 2.17-2.91 1.02 0 1.52.77 1.52 1.69 0 1.03-.66 2.57-.99 3.99-.28 1.18.59 2.14 1.76 2.14 2.11 0 3.73-2.23 3.73-5.44 0-2.85-2.05-4.84-4.97-4.84-3.39 0-5.38 2.54-5.38 5.17 0 1.02.39 2.12.89 2.72.1.12.11.22.08.34-.09.37-.29 1.18-.33 1.35-.05.22-.18.27-.41.16-1.53-.71-2.49-2.95-2.49-4.75 0-3.87 2.81-7.42 8.11-7.42 4.26 0 7.57 3.03 7.57 7.09 0 4.23-2.67 7.63-6.37 7.63-1.24 0-2.41-.65-2.81-1.41l-.76 2.92c-.28 1.06-1.03 2.39-1.53 3.2C9.58 23.81 10.77 24 12 24c6.63 0 12-5.37 12-12S18.63 0 12 0z"/>
+                    </svg>
+                  </button>
+                  {/* Instagram */}
+                  <button
+                    onClick={() => handleSocialShare("instagram")}
+                    title="Share to Instagram"
+                    className="w-9 h-9 rounded-full border border-[#1A1A1A] flex items-center justify-center
+                      text-[#8A8580] hover:border-[#E8B4B8]/40 hover:text-[#E8B4B8]
+                      transition-all duration-300"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                      <circle cx="12" cy="12" r="5.5" />
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                    </svg>
+                  </button>
+                  {/* Facebook */}
+                  <button
+                    onClick={() => handleSocialShare("facebook")}
+                    title="Share to Facebook"
+                    className="w-9 h-9 rounded-full border border-[#1A1A1A] flex items-center justify-center
+                      text-[#8A8580] hover:border-[#E8B4B8]/40 hover:text-[#E8B4B8]
+                      transition-all duration-300"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.79-4.7 4.53-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/>
+                    </svg>
+                  </button>
+                  {/* YouTube */}
+                  <button
+                    onClick={() => handleSocialShare("youtube")}
+                    title="Share to YouTube"
+                    className="w-9 h-9 rounded-full border border-[#1A1A1A] flex items-center justify-center
+                      text-[#8A8580] hover:border-[#E8B4B8]/40 hover:text-[#E8B4B8]
+                      transition-all duration-300"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.88.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.75 15.27V8.73L15.82 12l-6.07 3.27z"/>
+                    </svg>
+                  </button>
+                </div>
+                {/* Primary Actions */}
+                <div className="flex gap-3 justify-center flex-wrap">
+                  <button
+                    onClick={handleBack}
+                    className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 
+                      text-[10px] tracking-[0.1em] uppercase font-light 
+                      hover:border-[#E8B4B8]/40 hover:text-[#F5F0EB]/70 
+                      transition-all duration-300 rounded-[4px]"
+                  >
+                    Reposition
+                  </button>
+                  <button
+                    onClick={handleDownload}
+                    className="bg-[#E8B4B8] text-[#0A0A0A] px-6 py-2.5 text-[10px] 
+                      tracking-[0.1em] uppercase font-medium hover:bg-[#E0BEC0] 
+                      transition-all duration-300 rounded-[4px]"
+                  >
+                    Download Image
+                  </button>
+                </div>
               </div>
 
               <button
