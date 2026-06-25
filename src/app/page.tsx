@@ -128,11 +128,11 @@ export default function HomePage() {
             {t(sceneConfig.keys.title)}
           </h1>
           <p className="font-light text-sm md:text-[15px] lg:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
-            Sculptural Sofas for Contemporary Living
+            Sculptural Sofas for Contemporary Interiors
           </p>
           {/* Trust line */}
           <p className="mt-3 text-[11px] tracking-[0.1em] text-[#8A8580] animate-fade-in-delay-2">
-            10+ years of furniture production experience
+            10+ years of studio-based furniture production experience
           </p>
           <p className="mt-1 text-[10px] tracking-[0.1em] text-[#8A8580]/50 animate-fade-in-delay-2">
             Made-to-order · Designed &amp; crafted in China
@@ -167,10 +167,10 @@ export default function HomePage() {
       <section className="bg-[#090909] py-8 md:py-10">
         <div className="max-w-[1200px] mx-auto px-6 flex flex-wrap items-center justify-center gap-8 md:gap-16 text-center">
           {[
-            { icon: '✦', label: 'Made-to-order production' },
-            { icon: '◆', label: 'Studio craftsmanship' },
-            { icon: '◉', label: 'International shipping' },
-            { icon: '✧', label: 'Custom design support' },
+            { icon: '✦', label: 'Made-to-order production only' },
+            { icon: '◆', label: 'Studio-crafted furniture pieces' },
+            { icon: '◉', label: 'International shipping available' },
+            { icon: '✧', label: 'Custom dimensions supported' },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-2.5">
               <span className="text-[#E8B4B8] text-[10px]">{item.icon}</span>
@@ -180,31 +180,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 3. BRAND STATEMENT ─── */}
+      {/* ─── 3. STUDIO STATEMENT ─── */}
       <section className="bg-[#050505] py-20 md:py-28">
         <div className="max-w-[700px] mx-auto px-6 text-center">
-          <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] leading-[1.3] tracking-[0.02em]">
-            We design sculptural sofas for contemporary interiors, focusing on form, proportion, and tactile experience.
-          </h2>
-          <p className="mt-6 text-sm text-[#8A8580] leading-[1.7]">
-            Each piece is developed within our studio production system.
+          <p className="text-[#F5F0EB] leading-[1.7]">
+            We design sculptural furniture pieces through a studio-based production system, where each object is made individually after order confirmation.
           </p>
         </div>
       </section>
 
-      {/* ─── 4. SIGNATURE PRODUCTS ─── */}
+      {/* ─── 4. FEATURED WORKS ─── */}
       <section className="bg-[#090909] py-20 md:py-24">
         <div className="max-w-[1200px] mx-auto px-6">
-          <div className="flex items-baseline justify-between mb-12">
-            <div>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">
-                {t("animalCollectionTitle")}
-              </h2>
-              <p className="mt-2 text-sm text-[#8A8580]">{t("animalCollectionSubtitle")}</p>
-            </div>
-            <Link href="/animal-sofa-collection" className="hidden md:block text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">
-              {t("viewAll")} &rarr;
-            </Link>
+          <div className="mb-12">
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
+              Featured Works
+            </h2>
+            <p className="mt-2 text-sm text-[#8A8580]">Each piece made individually after order confirmation</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -229,7 +221,7 @@ export default function HomePage() {
                   <p className="mt-1 text-xs text-[#8A8580]">{t(slugToPrefix[product.slug] + "Tagline" as TranslationKeys)}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <p className="text-sm text-[#F5F0EB]/60">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
-                    <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/70">Made to order (3–6 weeks)</p>
+                    <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/70">Made to order</p>
                   </div>
                 </div>
               </Link>
@@ -238,81 +230,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 5. STUDIO CAPABILITIES ─── */}
-      <section className="bg-[#050505] py-20 md:py-28">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
-              Studio Capabilities
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { value: '10+', label: 'Years Furniture Manufacturing' },
-              { value: '1,000+', label: 'Custom Sofas Produced' },
-              { value: 'Global', label: 'Export Destinations' },
-              { value: 'Full System', label: 'Custom Production Pipeline' },
-            ].map((item) => (
-              <div key={item.label} className="text-center py-8">
-                <p className="font-serif text-3xl md:text-4xl font-light text-[#E8B4B8] tracking-[0.02em]">{item.value}</p>
-                <p className="mt-3 text-xs tracking-[0.1em] uppercase text-[#8A8580]">{item.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ─── 6. MATERIAL & CRAFT ─── */}
-      <section className="bg-[#080808] py-20 md:py-28">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
-              Material &amp; Structure
-            </h2>
-            <p className="mt-4 text-[#8A8580] text-sm max-w-xl mx-auto leading-[1.7]">
-              We work with selected upholstery and structural systems based on each project&apos;s requirements.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: 'Upholstery Materials', desc: 'Materials selected per order for each specific project' },
-              { title: 'Engineered Frame Systems', desc: 'Wood and metal structural systems built for durability' },
-              { title: 'Multi-Layer Comfort', desc: 'Multi-layer foam construction for comfort and shape retention' },
-              { title: 'Studio Finishing', desc: 'Every detail refined within our studio production system' },
-            ].map((item) => (
-              <div key={item.title} className="border-l border-[#1A1A1A] pl-6 py-2">
-                <h3 className="font-serif text-lg text-[#F5F0EB]">{item.title}</h3>
-                <p className="mt-2 text-sm text-[#8A8580] leading-[1.7]">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── 7. HOW IT WORKS ─── */}
-      <section className="bg-[#050505] py-20 md:py-28">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
-              How It Works
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { step: '01', title: 'Design Confirmation', desc: 'Select your piece, material, and finish — we confirm every detail before production begins.' },
-              { step: '02', title: 'Project Preparation', desc: 'Materials are selected and prepared for your specific project within our studio system.' },
-              { step: '03', title: 'Studio Production', desc: 'Each piece is produced within our studio system, with attention to every detail.' },
-              { step: '04', title: 'Inspection & Global Shipping', desc: 'Quality inspection followed by professional export packaging and worldwide delivery.' },
-            ].map((item) => (
-              <div key={item.step} className="text-center md:text-left">
-                <p className="font-serif text-2xl text-[#E8B4B8]/40 mb-3">{item.step}</p>
-                <h3 className="text-sm tracking-[0.1em] uppercase text-[#F5F0EB] mb-2">{item.title}</h3>
-                <p className="text-sm text-[#8A8580] leading-[1.7]">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ─── INTERIOR WORLDS ─── */}
       <section className="bg-[#090909] py-20 md:py-24">

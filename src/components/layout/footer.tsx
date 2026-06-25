@@ -15,7 +15,7 @@ export function Footer() {
           <p className="text-[11px] tracking-[0.08em] text-[#8A8580] mb-4">Furniture Design &amp; Production Studio</p>
           <p className="text-xs font-light text-[#8A8580]/70 leading-relaxed mb-4">
             Manufactured by XXXX Furniture Co., Ltd.<br />
-            Established 2015 · Zhejiang, China
+            Established 2015 · China
           </p>
           <p className="text-xs text-[#8A8580] mb-4">
             <a href="mailto:support@fuzzsofa.com" className="hover:text-[#E8B4B8] transition-colors">support@fuzzsofa.com</a>
@@ -96,7 +96,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Fuzz Sofa Studio. All rights reserved.
           </p>
           <p className="text-[10px] text-[#8A8580]/30">
-            Fuzz Furniture Co., Ltd. · Zhejiang, China
+            Fuzz Furniture Co., Ltd. · China
           </p>
         </div>
       </div>
