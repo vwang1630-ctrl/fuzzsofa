@@ -531,10 +531,14 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
+              <p className="text-[#8A8580] text-xs leading-relaxed mt-6">
+                Made to order exclusively for you — cannot be returned unless a quality defect is found upon delivery. We recommend confirming dimensions and requesting swatches before ordering. Try our AI room preview to see it in your space first.
+              </p>
+
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full mt-6 border border-[#F5F0EB] text-[#F5F0EB] py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full mt-4 border border-[#F5F0EB] text-[#F5F0EB] py-4 text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? "..." : t("checkoutContinueToPayment")}
               </button>
