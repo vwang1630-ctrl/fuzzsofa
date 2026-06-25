@@ -179,7 +179,7 @@ export default function HomePage() {
       <section className="bg-[#050505] py-20 md:py-28">
         <div className="max-w-[700px] mx-auto px-6 text-center">
           <p className="text-[#F5F0EB] leading-[1.7]">
-            We design sculptural furniture pieces through a studio-based production system, where each object is made individually after order confirmation.
+            Every piece begins as an idea, takes shape by hand, and arrives at your door in 1–2 weeks. No warehouse shelves. No assembly lines. Just your sculpture, made for you.
           </p>
         </div>
       </section>
