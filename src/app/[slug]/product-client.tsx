@@ -143,103 +143,28 @@ export function ProductPageClient({ product }: Props) {
           ═══════════════════════════════════════════ */}
       <section className="min-h-screen border-b border-[#1A1A1A]">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[62%_38%] min-h-screen">
+          <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] min-h-screen">
             {/* LEFT: Product Image Area */}
-            <div className="relative flex bg-[#0A0A0A]">
-              {/* Vertical Thumbnails — Left Side */}
-              {galleryImages.length > 1 && (
-                <div className="hidden md:flex flex-col gap-3 p-6 pt-24 w-[88px] flex-shrink-0">
-                  {galleryImages.map((img) => (
-                    <button
-                      key={img.id}
-                      onClick={() => setActiveImage(img.id)}
-                      className={`w-[64px] h-[64px] transition-all duration-300 bg-[#111] overflow-hidden flex-shrink-0 ${
-                        activeImage === img.id
-                          ? "border border-[#F5F0EB]/80 opacity-100"
-                          : "border border-transparent opacity-70 hover:opacity-100"
-                      }`}
-                      aria-label={`View ${img.id + 1}`}
-                    >
-                      {img.src ? (
-                        <img src={img.src} alt="" className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="font-serif text-sm text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
-                          {product.animal.charAt(0)}
-                        </span>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Main Image */}
-              <div className="relative flex-1 aspect-square lg:aspect-auto lg:min-h-screen bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden pt-20 lg:pt-0">
-                <div
-                  className="absolute inset-0 opacity-[0.03]"
-                  style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
-                />
-                {galleryImages[activeImage]?.src ? (
-                  <img
-                    src={galleryImages[activeImage].src}
-                    alt={productName}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="font-serif text-[15rem] md:text-[20rem] text-[#F5F0EB]/[0.04] select-none">
-                      {product.animal.charAt(0)}
-                    </span>
-                  </div>
-                )}
-
-                {/* AI Room Preview Floating Button — Top Right */}
-                <button
-                  onClick={() => setShowRoomViz(true)}
-                  onMouseEnter={() => setAiBtnHovered(true)}
-                  onMouseLeave={() => setAiBtnHovered(false)}
-                  className="absolute top-[88px] right-6 z-10 flex flex-col items-center gap-1 group"
-                  aria-label="Preview in your space"
-                >
-                  <div
-                    className="w-[54px] h-[54px] rounded-full flex items-center justify-center transition-all duration-300"
-                    style={{
-                      background: "rgba(0,0,0,0.55)",
-                      backdropFilter: "blur(20px)",
-                      WebkitBackdropFilter: "blur(20px)",
-                    }}
-                  >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                      <circle cx="12" cy="13" r="4" />
-                    </svg>
-                    <span className="absolute -top-0.5 -right-0.5 text-[10px]">✨</span>
-                  </div>
-                  <span
-                    className={`text-[9px] tracking-[0.12em] uppercase text-[#F5F0EB]/70 whitespace-nowrap transition-opacity duration-300 ${
-                      aiBtnHovered ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    {t("previewInYourSpace" as TranslationKeys)}
-                  </span>
-                </button>
-
-                {/* Mobile Thumbnails — Bottom */}
+            <div className="relative flex items-center justify-center bg-[#0A0A0A] p-6 md:p-10 lg:p-12">
+              <div className="flex gap-4 w-full max-w-[800px]">
+                {/* Vertical Thumbnails — Left Side */}
                 {galleryImages.length > 1 && (
-                  <div className="md:hidden absolute bottom-4 left-4 right-4 flex gap-2 justify-center">
+                  <div className="hidden md:flex flex-col gap-3 flex-shrink-0">
                     {galleryImages.map((img) => (
                       <button
                         key={img.id}
                         onClick={() => setActiveImage(img.id)}
-                        className={`w-[48px] h-[48px] transition-all duration-300 bg-[#0A0A0A]/80 backdrop-blur-sm overflow-hidden ${
+                        className={`w-[64px] h-[64px] transition-all duration-300 bg-[#111] overflow-hidden flex-shrink-0 ${
                           activeImage === img.id
                             ? "border border-[#F5F0EB]/80 opacity-100"
                             : "border border-transparent opacity-70 hover:opacity-100"
                         }`}
+                        aria-label={`View ${img.id + 1}`}
                       >
                         {img.src ? (
                           <img src={img.src} alt="" className="w-full h-full object-cover" />
                         ) : (
-                          <span className="font-serif text-xs text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
+                          <span className="font-serif text-sm text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
                             {product.animal.charAt(0)}
                           </span>
                         )}
@@ -247,10 +172,79 @@ export function ProductPageClient({ product }: Props) {
                     ))}
                   </div>
                 )}
+
+                {/* Main Image — Square 1:1 */}
+                <div className="relative flex-1 aspect-square bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden">
+                  <div
+                    className="absolute inset-0 opacity-[0.03]"
+                    style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
+                  />
+                  {galleryImages[activeImage]?.src ? (
+                    <img
+                      src={galleryImages[activeImage].src}
+                      alt={productName}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="font-serif text-[10rem] md:text-[15rem] text-[#F5F0EB]/[0.04] select-none">
+                        {product.animal.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* AI Room Preview Floating Button — Bottom Right (Apple/RH AR style) */}
+                  <button
+                    onClick={() => setShowRoomViz(true)}
+                    onMouseEnter={() => setAiBtnHovered(true)}
+                    onMouseLeave={() => setAiBtnHovered(false)}
+                    className="absolute bottom-4 right-4 z-10 flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-300 group"
+                    style={{
+                      background: aiBtnHovered ? "rgba(0,0,0,0.75)" : "rgba(0,0,0,0.55)",
+                      backdropFilter: "blur(20px)",
+                      WebkitBackdropFilter: "blur(20px)",
+                    }}
+                    aria-label="Preview in your space"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                      <circle cx="12" cy="13" r="4" />
+                    </svg>
+                    <span className="text-[10px] tracking-[0.14em] uppercase text-[#F5F0EB]/80 whitespace-nowrap">
+                      Preview
+                    </span>
+                    <span className="text-[10px]">✨</span>
+                  </button>
+
+                  {/* Mobile Thumbnails — Bottom */}
+                  {galleryImages.length > 1 && (
+                    <div className="md:hidden absolute bottom-4 left-4 flex gap-2">
+                      {galleryImages.map((img) => (
+                        <button
+                          key={img.id}
+                          onClick={() => setActiveImage(img.id)}
+                          className={`w-[48px] h-[48px] transition-all duration-300 bg-[#0A0A0A]/80 backdrop-blur-sm overflow-hidden ${
+                            activeImage === img.id
+                              ? "border border-[#F5F0EB]/80 opacity-100"
+                              : "border border-transparent opacity-70 hover:opacity-100"
+                          }`}
+                        >
+                          {img.src ? (
+                            <img src={img.src} alt="" className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="font-serif text-xs text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
+                              {product.animal.charAt(0)}
+                            </span>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* RIGHT: Product Info (38%) */}
+            {/* RIGHT: Product Info (42%) */}
             <div className="flex flex-col justify-center px-8 md:px-12 py-16 lg:py-20 bg-[#0A0A0A] lg:border-l border-[#1A1A1A] lg:-mt-10">
               {/* Collection Label */}
               <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
