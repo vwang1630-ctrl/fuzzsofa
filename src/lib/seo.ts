@@ -128,6 +128,12 @@ export function organizationJsonLd() {
       "Made-to-order Production",
       "Studio Furniture Design",
     ],
+    sameAs: [
+      "https://www.pinterest.com/fuzzsofa",
+      "https://www.instagram.com/fuzzsofa",
+      "https://www.facebook.com/fuzzsofa",
+      "https://www.youtube.com/@fuzzsofa",
+    ],
   };
 }
 
@@ -137,11 +143,7 @@ export function websiteJsonLd() {
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
+    inLanguage: "en",
   };
 }
 
@@ -155,6 +157,45 @@ export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
       name: item.name,
       item: item.url,
     })),
+  };
+}
+
+export function itemPageJsonLd(product: Product) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemPage",
+    "@id": `${SITE_URL}/${product.slug}`,
+    name: product.name,
+    description: product.metaDescription,
+    url: `${SITE_URL}/${product.slug}`,
+    inLanguage: "en",
+    mainEntity: {
+      "@type": "Product",
+      name: product.name,
+      description: product.metaDescription,
+      brand: {
+        "@type": "Brand",
+        name: SITE_NAME,
+      },
+      category: "Sculptural Furniture / Contemporary Sofa",
+    },
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: SITE_URL,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: product.name,
+          item: `${SITE_URL}/${product.slug}`,
+        },
+      ],
+    },
   };
 }
 

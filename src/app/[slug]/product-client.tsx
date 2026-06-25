@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect, useCallback, useRef } from "react";
 import type { Product } from "@/lib/products";
 import { getProduct, getPrice, formatPrice } from "@/lib/products";
-import { productJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/seo";
+import { productJsonLd, faqJsonLd, breadcrumbJsonLd, itemPageJsonLd } from "@/lib/seo";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
@@ -169,6 +169,10 @@ export function ProductPageClient({ product }: Props) {
             ])
           ),
         }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemPageJsonLd(product)) }}
       />
 
       {/* ═══════════════════════════════════════════

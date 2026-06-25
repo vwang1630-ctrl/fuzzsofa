@@ -81,6 +81,12 @@ export default function RootLayout({
                   "Made-to-order Production",
                   "Studio Furniture Design",
                 ],
+                sameAs: [
+                  "https://www.pinterest.com/fuzzsofa",
+                  "https://www.instagram.com/fuzzsofa",
+                  "https://www.facebook.com/fuzzsofa",
+                  "https://www.youtube.com/@fuzzsofa",
+                ],
               }),
             }}
           />
