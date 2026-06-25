@@ -8,7 +8,7 @@ import { productJsonLd, faqJsonLd, breadcrumbJsonLd, itemPageJsonLd } from "@/li
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
-import { RoomVisualizationModal } from "@/components/room-visualization-modal";
+import RoomVisualizationModal from "@/components/room-visualization-modal";
 
 interface Props {
   product: Product;
@@ -838,10 +838,10 @@ export function ProductPageClient({ product }: Props) {
 
       {/* Room Visualization Modal */}
       <RoomVisualizationModal
-        product={product}
         isOpen={showRoomViz}
         onClose={() => setShowRoomViz(false)}
-        onBuyThisPiece={handleAddToCart}
+        productImageUrl={product.images?.[0] || `/products/${product.slug}/gray-fur.jpg`}
+        productName={product.name}
       />
 
       {/* AI-Readable Product Data Block */}
