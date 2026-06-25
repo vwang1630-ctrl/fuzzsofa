@@ -9,39 +9,38 @@ import { SupabaseConfigProvider } from "@/lib/supabase-config-inject";
 
 export const metadata: Metadata = {
   title: {
-    default: "Fuzz Sofa | Sculptural Furniture Inspired by Nature",
-    template: "%s | Fuzz Sofa",
+    default: "Fuzz Sofa Studio | Made-to-Order Sculptural Furniture",
+    template: "%s | Fuzz Sofa Studio",
   },
   description:
-    "Fuzz Sofa creates sculptural animal-inspired furniture made to order in Shanghai. Bear, Lion, Tiger, Gorilla, and Owl designs. Free white-glove delivery worldwide.",
+    "Fuzz Sofa Studio is a design-led furniture studio specializing in sculptural sofas produced through a made-to-order system. Each piece is individually produced after order confirmation. No inventory. No mass production.",
   keywords: [
     "sculptural furniture",
-    "animal sofa",
-    "statement furniture",
-    "bear sofa",
-    "lion sofa",
-    "tiger sofa",
-    "gorilla sofa",
-    "owl chair",
-    "fuzz sofa",
-    "made to order furniture",
-    "Shanghai workshop",
+    "made-to-order sofa",
+    "custom furniture studio",
+    "sculptural sofa",
+    "studio furniture design",
+    "contemporary furniture",
+    "design-led furniture",
+    "fuzz sofa studio",
+    "custom sofa",
+    "bespoke furniture",
   ],
-  authors: [{ name: "Fuzz Sofa", url: "https://fuzzsofa.com" }],
+  authors: [{ name: "Fuzz Sofa Studio", url: "https://fuzzsofa.com" }],
   openGraph: {
-    title: "Fuzz Sofa — Sculptural Furniture Inspired by Nature",
+    title: "Fuzz Sofa Studio — Made-to-Order Sculptural Furniture",
     description:
-      "Animal-inspired sculptural furniture made to order in Shanghai. Free white-glove delivery worldwide.",
+      "A design-led furniture studio specializing in sculptural sofas produced through a made-to-order system. Each piece is individually produced after order confirmation.",
     url: "https://fuzzsofa.com",
-    siteName: "Fuzz Sofa",
+    siteName: "Fuzz Sofa Studio",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fuzz Sofa — Sculptural Furniture Inspired by Nature",
+    title: "Fuzz Sofa Studio — Made-to-Order Sculptural Furniture",
     description:
-      "Animal-inspired sculptural furniture made to order in Shanghai. Free white-glove delivery worldwide.",
+      "A design-led furniture studio specializing in sculptural sofas produced through a made-to-order system. Each piece is individually produced after order confirmation.",
   },
   robots: {
     index: true,
@@ -60,6 +59,31 @@ export default function RootLayout({
         <SupabaseConfigProvider>
         <LanguageProvider>
         <CartProvider>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: "Fuzz Sofa Studio",
+                url: "https://fuzzsofa.com",
+                description:
+                  "A made-to-order sculptural furniture studio specializing in contemporary sofas designed and produced individually through a studio-based system.",
+                foundingDate: "2015",
+                areaServed: "Worldwide",
+                brand: {
+                  "@type": "Brand",
+                  name: "Fuzz Sofa Studio",
+                },
+                knowsAbout: [
+                  "Sculptural Sofa",
+                  "Custom Furniture",
+                  "Made-to-order Production",
+                  "Studio Furniture Design",
+                ],
+              }),
+            }}
+          />
           <FontPreload />
           <Header />
           <main className="min-h-screen pt-[60px]">{children}</main>

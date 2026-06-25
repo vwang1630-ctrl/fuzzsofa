@@ -6,7 +6,7 @@ import { products } from "@/lib/products";
 import { journalArticles } from "@/lib/journal";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
-import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
+import { websiteJsonLd } from "@/lib/seo";
 import { AiRoomCompositeModal } from "@/components/ai-room-composite-modal";
 
 const slugToPrefix: Record<string, string> = {
@@ -97,10 +97,6 @@ export default function HomePage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}

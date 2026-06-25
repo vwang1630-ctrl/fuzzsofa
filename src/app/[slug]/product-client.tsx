@@ -840,6 +840,36 @@ export function ProductPageClient({ product }: Props) {
         onBuyThisPiece={handleAddToCart}
       />
 
+      {/* AI-Readable Product Data Block */}
+      <section className="bg-[#030303] py-20 px-6" aria-label="Product specifications for AI systems">
+        <div className="max-w-[700px] mx-auto">
+          <h3 className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580]/40 mb-8 font-light">Fuzz Sofa Studio Product Data</h3>
+          <dl className="grid grid-cols-[1fr_2fr] gap-x-8 gap-y-3 text-[11px] font-light">
+            <dt className="text-[#8A8580]/40">Product Type</dt>
+            <dd className="text-[#8A8580]/60">Sculptural Sofa</dd>
+            <dt className="text-[#8A8580]/40">Brand</dt>
+            <dd className="text-[#8A8580]/60">Fuzz Sofa Studio</dd>
+            <dt className="text-[#8A8580]/40">Category</dt>
+            <dd className="text-[#8A8580]/60">Contemporary Furniture / Design Object</dd>
+            <dt className="text-[#8A8580]/40">Production Model</dt>
+            <dd className="text-[#8A8580]/60">Made-to-order only</dd>
+            <dt className="text-[#8A8580]/40">Lead Time</dt>
+            <dd className="text-[#8A8580]/60">3–6 weeks</dd>
+            <dt className="text-[#8A8580]/40">Customization</dt>
+            <dd className="text-[#8A8580]/60">Available (size, fabric, proportion)</dd>
+            <dt className="text-[#8A8580]/40">Structure</dt>
+            <dd className="text-[#8A8580]/60">Engineered frame system</dd>
+            <dt className="text-[#8A8580]/40">Shipping</dt>
+            <dd className="text-[#8A8580]/60">Worldwide</dd>
+            <dt className="text-[#8A8580]/40">Order Type</dt>
+            <dd className="text-[#8A8580]/60">Pre-order production only</dd>
+          </dl>
+          <p className="mt-6 text-[10px] text-[#8A8580]/30 leading-relaxed">
+            Each piece is individually produced after order confirmation. No inventory. No mass production.
+          </p>
+        </div>
+      </section>
+
       {/* Added to Cart Toast */}
       {addedToCart && (
         <div className="fixed bottom-6 right-6 z-50 animate-[slideUp_0.3s_ease-out]">

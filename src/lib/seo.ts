@@ -2,7 +2,7 @@ import type { Product } from "./products";
 import type { JournalArticle } from "./journal";
 
 const SITE_URL = "https://fuzzsofa.com";
-const SITE_NAME = "Fuzz Sofa";
+const SITE_NAME = "Fuzz Sofa Studio";
 
 export function productJsonLd(product: Product) {
   return {
@@ -110,19 +110,19 @@ export function organizationJsonLd() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
-    description: "Sculptural Furniture Inspired by Nature. Made to order in Shanghai, shipped worldwide.",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Shanghai",
-      addressCountry: "CN",
+    description:
+      "A made-to-order sculptural furniture studio specializing in contemporary sofas designed and produced individually through a studio-based system.",
+    foundingDate: "2015",
+    areaServed: "Worldwide",
+    brand: {
+      "@type": "Brand",
+      name: SITE_NAME,
     },
-    sameAs: [
-      "https://instagram.com/fuzzsofa",
-      "https://facebook.com/fuzzsofa",
-      "https://tiktok.com/@fuzzsofa",
-      "https://pinterest.com/fuzzsofa",
-      "https://youtube.com/@fuzzsofa",
+    knowsAbout: [
+      "Sculptural Sofa",
+      "Custom Furniture",
+      "Made-to-order Production",
+      "Studio Furniture Design",
     ],
   };
 }

@@ -21,6 +21,14 @@ export function Footer() {
             <a href="mailto:support@fuzzsofa.com" className="hover:text-[#E8B4B8] transition-colors">support@fuzzsofa.com</a>
           </p>
           <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/50 mb-6">Worldwide Shipping Available</p>
+          <p className="text-[10px] text-[#8A8580]/30 leading-relaxed mb-2">
+            Made-to-order sculptural furniture system.<br />
+            Each piece is individually produced after order confirmation.<br />
+            No inventory. No mass production.
+          </p>
+          <p className="text-[10px] text-[#8A8580]/25 leading-relaxed">
+            Production time: 3–6 weeks · Shipping: Worldwide with tracking · Customization: Available
+          </p>
           <div className="flex gap-4">
             <a href="https://instagram.com/fuzzsofa" target="_blank" rel="noopener noreferrer" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors" aria-label="Instagram">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" /></svg>
@@ -55,6 +63,7 @@ export function Footer() {
           <h4 className="text-xs font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("explore")}</h4>
           <ul className="space-y-3">
             <li><Link href="/about" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">About the Studio</Link></li>
+            <li><Link href="/studio" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Studio</Link></li>
             <li><Link href="/workshop" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Workshop</Link></li>
             <li><Link href="/luxury-villa-interior" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("luxuryVillaScene")}</Link></li>
             <li><Link href="/boutique-hotel-lobby" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("boutiqueHotelScene")}</Link></li>
