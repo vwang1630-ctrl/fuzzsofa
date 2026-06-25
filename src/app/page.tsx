@@ -250,7 +250,7 @@ export default function HomePage() {
             {[
               { value: '10+', label: 'Years Furniture Manufacturing' },
               { value: '1,000+', label: 'Custom Sofas Produced' },
-              { value: 'US / EU / ME', label: 'Export Destinations' },
+              { value: 'Global', label: 'Export Destinations' },
               { value: 'Full System', label: 'Custom Production Pipeline' },
             ].map((item) => (
               <div key={item.label} className="text-center py-8">
