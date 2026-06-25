@@ -77,7 +77,6 @@ export default function HomePage() {
   const [aiRoomOpen, setAiRoomOpen] = useState(false);
   const [aiRoomProduct, setAiRoomProduct] = useState("");
 
-  // Auto-advance hero scenes
   useEffect(() => {
     const timer = setInterval(() => {
       setHeroScene((prev) => (prev + 1) % heroScenes.length);
@@ -85,7 +84,6 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, []);
 
-  // Listen for AI room composite events
   const handleOpenAiRoom = useCallback((e: Event) => {
     const detail = (e as CustomEvent).detail;
     setAiRoomProduct(detail?.productSlug || "");
@@ -108,107 +106,92 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
       />
 
-      {/* AI Room Composite Modal */}
       <AiRoomCompositeModal
         isOpen={aiRoomOpen}
         onClose={() => setAiRoomOpen(false)}
         productSlug={aiRoomProduct}
       />
 
-      {/* HERO: Immersive Scene Banner — click image to navigate to product */}
-      <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
-        {/* Background: cinematic interior scenes — clickable */}
+      {/* ─── 1. HERO ─── */}
+      <section className="relative w-full overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
         <Link href={sceneConfig.keys.href} className="block absolute inset-0 z-0" aria-label={t(sceneConfig.keys.title)}>
           <HeroSlideshow current={heroScene} />
         </Link>
-
-        {/* Left-side vignette for text readability */}
         <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
-        {/* Hero content — editorial gallery layout */}
-        <div className={`relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[8%] flex flex-col justify-end md:justify-start ${sceneConfig.compact ? 'max-w-[560px]' : ''}`}>
-
-          {/* Category label — accent, uppercase, wide tracking */}
-          <p
-            className={`tracking-[0.35em] uppercase mb-4 md:mb-5 animate-fade-in ${sceneConfig.compact ? 'text-[9px] md:text-[10px]' : 'text-[10px] md:text-[11px]'}`}
-            style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}
-          >
-            {t(sceneConfig.keys.subtitle)}
+        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[8%] flex flex-col justify-end md:justify-start">
+          <p className="tracking-[0.35em] uppercase mb-3 text-[10px] md:text-[11px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
+            Fuzz Sofa Studio
           </p>
-
-          {/* Display title — large serif, the visual anchor */}
-          <h1
-            className={`font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 ${sceneConfig.compact ? 'text-[2.2rem] md:text-[2.8rem] lg:text-[3.2rem]' : 'text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem]'}`}
-            style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}
-          >
+          <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
             {t(sceneConfig.keys.title)}
           </h1>
-
-          {/* Thin decorative line */}
-          <div className={`w-12 h-px mb-4 md:mb-5 animate-fade-in-delay-2 ${sceneConfig.compact ? '' : 'md:w-16'}`} style={{ backgroundColor: sceneConfig.accentColor + '66' }} />
-
-          {/* Description — quiet, airy */}
-          <p className={`font-light max-w-[380px] leading-[1.75] animate-fade-in-delay-2 ${sceneConfig.compact ? 'text-xs md:text-sm' : 'text-sm md:text-[15px] lg:text-base'}`} style={{ color: sceneConfig.textColor + '80' }}>
-            {t(sceneConfig.keys.description)}
+          <p className="font-light text-sm md:text-[15px] lg:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
+            Sculptural Sofas for Contemporary Living
           </p>
-
-          {/* CTA button — AI Room only */}
+          {/* Trust line */}
+          <p className="mt-3 text-[11px] tracking-[0.1em] text-[#8A8580] animate-fade-in-delay-2">
+            10+ years of furniture manufacturing &amp; custom production
+          </p>
           <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
-            {/* AI Room Composite CTA */}
             <button
               onClick={() => {
                 const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
                 window.dispatchEvent(event);
               }}
               className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[11px] tracking-[0.2em] uppercase transition-all duration-300"
-              style={{
-                borderColor: sceneConfig.accentColor + '50',
-                color: sceneConfig.accentColor + 'CC',
-                backgroundColor: sceneConfig.accentColor + '0A',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18';
-                e.currentTarget.style.borderColor = sceneConfig.accentColor + '80';
-                e.currentTarget.style.color = sceneConfig.accentColor;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A';
-                e.currentTarget.style.borderColor = sceneConfig.accentColor + '50';
-                e.currentTarget.style.color = sceneConfig.accentColor + 'CC';
-              }}
+              style={{ borderColor: sceneConfig.accentColor + '50', color: sceneConfig.accentColor + 'CC', backgroundColor: sceneConfig.accentColor + '0A' }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '80'; e.currentTarget.style.color = sceneConfig.accentColor; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '50'; e.currentTarget.style.color = sceneConfig.accentColor + 'CC'; }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                <path d="M2 17l10 5 10-5" />
-                <path d="M2 12l10 5 10-5" />
-              </svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
               {t(sceneConfig.keys.aiCta as TranslationKeys)}
             </button>
           </div>
         </div>
 
-        {/* Scene indicators */}
         {heroScenes.length > 1 && (
           <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3">
             {heroScenes.map((scene, idx) => (
-              <button
-                key={scene.src}
-                onClick={() => setHeroScene(idx)}
-                className="w-8 h-px transition-all duration-500"
-                style={{
-                  backgroundColor: idx === heroScene ? sceneConfig.accentColor : sceneConfig.textColor + '30',
-                }}
-                aria-label={`Scene ${idx + 1}`}
-              />
+              <button key={scene.src} onClick={() => setHeroScene(idx)} className="w-8 h-px transition-all duration-500" style={{ backgroundColor: idx === heroScene ? sceneConfig.accentColor : sceneConfig.textColor + '30' }} aria-label={`Scene ${idx + 1}`} />
             ))}
           </div>
         )}
-      </div>
+      </section>
 
-      {/* SCENE-BASED PRODUCT SHOWCASE */}
-      <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-[1200px] mx-auto px-6 py-20">
+      {/* ─── 2. TRUST BAR ─── */}
+      <section className="bg-[#090909] py-8 md:py-10">
+        <div className="max-w-[1200px] mx-auto px-6 flex flex-wrap items-center justify-center gap-8 md:gap-16 text-center">
+          {[
+            { icon: '◆', label: 'Factory Direct' },
+            { icon: '✦', label: 'Made-to-Order Craftsmanship' },
+            { icon: '◉', label: 'Worldwide Shipping' },
+            { icon: '✧', label: 'Custom Design Support' },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center gap-2.5">
+              <span className="text-[#E8B4B8] text-[10px]">{item.icon}</span>
+              <span className="text-[11px] tracking-[0.08em] text-[#8A8580]">{item.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── 3. BRAND STATEMENT ─── */}
+      <section className="bg-[#050505] py-20 md:py-28">
+        <div className="max-w-[700px] mx-auto px-6 text-center">
+          <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] leading-[1.3] tracking-[0.02em]">
+            A design studio shaping sculptural furniture for modern interiors.
+          </h2>
+          <p className="mt-6 text-sm text-[#8A8580] leading-[1.7]">
+            We focus on form, proportion, and tactile softness — creating pieces that define a space rather than fill it.
+          </p>
+        </div>
+      </section>
+
+      {/* ─── 4. SIGNATURE PRODUCTS ─── */}
+      <section className="bg-[#090909] py-20 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-6">
           <div className="flex items-baseline justify-between mb-12">
             <div>
               <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">
@@ -216,232 +199,145 @@ export default function HomePage() {
               </h2>
               <p className="mt-2 text-sm text-[#8A8580]">{t("animalCollectionSubtitle")}</p>
             </div>
-            <Link
-              href="/animal-sofa-collection"
-              className="hidden md:block text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors"
-            >
+            <Link href="/animal-sofa-collection" className="hidden md:block text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">
               {t("viewAll")} &rarr;
             </Link>
           </div>
 
-          {/* Scene cards: each product in its ideal interior setting */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {/* Gorilla Sofa — Sculptural Trend scene */}
-            <Link
-              href="/owl-sofa"
-              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
-            >
-              <div className="aspect-square relative overflow-hidden">
-                <img
-                  src="/products/owl/snowy-white.png"
-                  alt={t("owlChairName")}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("owlChairName")}
-                </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{t("owlChairTagline")}</p>
-                <p className="mt-3 text-sm text-[#F5F0EB]/60">$3,500</p>
-              </div>
-            </Link>
-
-            {/* Gorilla Sofa — Sculptural Trend scene */}
-            <Link
-              href="/gorilla-sofa"
-              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
-            >
-              <div className="aspect-square relative overflow-hidden">
-                <img
-                  src="/products/gorilla-sofa/gray.jpg"
-                  alt={t("gorillaSofaName")}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("gorillaSofaName")}
-                </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{t("gorillaSofaTagline")}</p>
-                <p className="mt-3 text-sm text-[#F5F0EB]/60">$7,800</p>
-              </div>
-            </Link>
-
-            {/* Silverback Sofa — Boutique Hotel scene */}
-            <Link
-              href="/silverback-sofa"
-              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
-            >
-              <div className="aspect-square relative overflow-hidden">
-                <img
-                  src="/products/silverback-sofa/gray.jpg"
-                  alt={t("silverbackSofaName")}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("silverbackSofaName")}
-                </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{t("silverbackSofaTagline")}</p>
-                <p className="mt-3 text-sm text-[#F5F0EB]/60">$7,800</p>
-              </div>
-            </Link>
-
-            {/* Meteorite Ring Sofa — Sculptural Trend scene */}
-            <Link
-              href="/meteorite-ring-sofa"
-              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
-            >
-              <div className="aspect-square relative overflow-hidden">
-                <img
-                  src="/products/meteorite-ring-sofa/sculptural-trend.png"
-                  alt={t("meteoriteRingSofaName")}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                {/* Gradient overlay hides watermark in bottom-right + adds depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-                <div className="absolute bottom-0 right-0 w-[30%] h-[15%] bg-gradient-to-tl from-[#0A0A0A]/90 to-transparent" />
-
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("meteoriteRingSofaName")}
-                </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{t("meteoriteRingSofaTagline")}</p>
-                <p className="mt-3 text-sm text-[#F5F0EB]/60">¥3,500</p>
-              </div>
-            </Link>
-
-            {/* Muscle Gorilla Sofa — Primal Power */}
-            <Link
-              href="/muscle-gorilla-sofa"
-              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
-            >
-              <div className="aspect-square relative overflow-hidden">
-                <img
-                  src="/products/muscle-gorilla-sofa/main.jpg"
-                  alt={t("muscleGorillaSofaName")}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("muscleGorillaSofaName")}
-                </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{t("muscleGorillaSofaTagline")}</p>
-                <p className="mt-3 text-sm text-[#F5F0EB]/60">¥9,800</p>
-              </div>
-            </Link>
-
-            {/* Interior Worlds card */}
-            <Link
-              href="/luxury-villa-interior"
-              className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
-            >
-              <div className="aspect-square bg-gradient-to-br from-[#111111] via-[#0D0D0D] to-[#0A0A0A] relative">
-                <div className="absolute inset-0 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-700"
-                  style={{ background: "radial-gradient(circle at 30% 70%, #E8B4B8, transparent 50%), radial-gradient(circle at 70% 30%, #E8B4B8, transparent 50%)" }}
-                />
-                {/* Decorative lines evoking interior architecture */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-[60%] h-[1px] bg-[#F5F0EB]/[0.04] group-hover:bg-[#E8B4B8]/[0.08] transition-all duration-700" />
+            {products.map((product) => (
+              <Link
+                key={product.slug}
+                href={`/${product.slug}`}
+                className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
+              >
+                <div className="aspect-square relative overflow-hidden">
+                  <img
+                    src={(product.images ?? [])[0] ?? ''}
+                    alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-[60%] w-[1px] bg-[#F5F0EB]/[0.04] group-hover:bg-[#E8B4B8]/[0.08] transition-all duration-700" />
+                <div className="p-5">
+                  <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
+                    {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
+                  </h3>
+                  <p className="mt-1 text-xs text-[#8A8580]">{t(slugToPrefix[product.slug] + "Tagline" as TranslationKeys)}</p>
+                  <div className="mt-3 flex items-center justify-between">
+                    <p className="text-sm text-[#F5F0EB]/60">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
+                    <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/70">Made to order (3–6 weeks)</p>
+                  </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] to-transparent h-1/3" />
-              </div>
-              <div className="p-5">
-                <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("interiorWorldsTitle")}
-                </h3>
-                <p className="mt-1 text-xs text-[#8A8580]">{t("interiorWorldsSubtitle")}</p>
-                <p className="mt-3 text-xs tracking-[0.1em] uppercase text-[#E8B4B8]/60 group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {t("viewAll")} &rarr;
-                </p>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* INTERIOR WORLDS */}
-      <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-[1200px] mx-auto px-6 py-20">
+      {/* ─── 5. STUDIO CAPABILITIES ─── */}
+      <section className="bg-[#050505] py-20 md:py-28">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
+              Studio Capabilities
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { value: '10+', label: 'Years Furniture Manufacturing' },
+              { value: '1,000+', label: 'Custom Sofas Produced' },
+              { value: 'US / EU / ME', label: 'Export Destinations' },
+              { value: 'Full System', label: 'Custom Production Pipeline' },
+            ].map((item) => (
+              <div key={item.label} className="text-center py-8">
+                <p className="font-serif text-3xl md:text-4xl font-light text-[#E8B4B8] tracking-[0.02em]">{item.value}</p>
+                <p className="mt-3 text-xs tracking-[0.1em] uppercase text-[#8A8580]">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 6. MATERIAL & CRAFT ─── */}
+      <section className="bg-[#080808] py-20 md:py-28">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
+              Material &amp; Craft
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: 'Italian & Premium Leather', desc: 'Full-grain and top-grain options for lasting luxury' },
+              { title: 'Solid Hardwood Frames', desc: 'Engineered wood structures built for decades of use' },
+              { title: 'High-Density Foam', desc: 'Multi-layer foam systems for comfort and shape retention' },
+              { title: 'Hand-Finished Details', desc: 'Every stitch and curve refined by skilled artisans' },
+            ].map((item) => (
+              <div key={item.title} className="border-l border-[#1A1A1A] pl-6 py-2">
+                <h3 className="font-serif text-lg text-[#F5F0EB]">{item.title}</h3>
+                <p className="mt-2 text-sm text-[#8A8580] leading-[1.7]">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 7. HOW IT WORKS ─── */}
+      <section className="bg-[#050505] py-20 md:py-28">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
+              How It Works
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { step: '01', title: 'Design Confirmation', desc: 'Select your piece, material, and finish — we confirm every detail before production begins.' },
+              { step: '02', title: 'Material Sourcing', desc: 'Premium leathers, hardwoods, and foams are selected and prepared for your specific order.' },
+              { step: '03', title: 'Handmade Production', desc: 'Each sofa is built by hand, one at a time, with meticulous attention to every curve and stitch.' },
+              { step: '04', title: 'International Shipping', desc: 'Professional export packaging and worldwide delivery with real-time tracking to your door.' },
+            ].map((item) => (
+              <div key={item.step} className="text-center md:text-left">
+                <p className="font-serif text-2xl text-[#E8B4B8]/40 mb-3">{item.step}</p>
+                <h3 className="text-sm tracking-[0.1em] uppercase text-[#F5F0EB] mb-2">{item.title}</h3>
+                <p className="text-sm text-[#8A8580] leading-[1.7]">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── INTERIOR WORLDS ─── */}
+      <section className="bg-[#090909] py-20 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-6">
           <div className="flex items-baseline justify-between mb-12">
             <div>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">
-                {t("interiorWorldsTitle")}
-              </h2>
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">{t("interiorWorldsTitle")}</h2>
               <p className="mt-2 text-sm text-[#8A8580]">{t("interiorWorldsSubtitle")}</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {[
-              {
-                href: "/luxury-villa-interior",
-                title: t("luxuryVillas"),
-                accent: "from-[#1A1510] to-[#0A0A0A]",
-                label: t("luxuryVillaScene"),
-              },
-              {
-                href: "/boutique-hotel-lobby",
-                title: t("boutiqueHotels"),
-                accent: "from-[#101518] to-[#0A0A0A]",
-                label: t("boutiqueHotelScene"),
-              },
-              {
-                href: "/statement-furniture",
-                title: t("contemporaryHomes"),
-                accent: "from-[#151015] to-[#0A0A0A]",
-                label: t("statementFurnitureScene"),
-              },
-              {
-                href: "/meteorite-ring-sofa",
-                title: t("sculpturalTrend"),
-                accent: "from-[#0A0A1A] to-[#0A0A0A]",
-                label: t("sculpturalTrendScene"),
-                image: "/products/meteorite-ring-sofa/sculptural-trend.png",
-              },
-
+              { href: "/luxury-villa-interior", title: t("luxuryVillas"), accent: "from-[#1A1510] to-[#0A0A0A]", label: t("luxuryVillaScene") },
+              { href: "/boutique-hotel-lobby", title: t("boutiqueHotels"), accent: "from-[#101518] to-[#0A0A0A]", label: t("boutiqueHotelScene") },
+              { href: "/statement-furniture", title: t("contemporaryHomes"), accent: "from-[#151015] to-[#0A0A0A]", label: t("statementFurnitureScene") },
+              { href: "/meteorite-ring-sofa", title: t("sculpturalTrend"), accent: "from-[#0A0A1A] to-[#0A0A0A]", label: t("sculpturalTrendScene"), image: "/products/meteorite-ring-sofa/sculptural-trend.png" },
             ].map((interior) => (
-              <Link
-                key={interior.href}
-                href={interior.href}
-                className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300"
-              >
+              <Link key={interior.href} href={interior.href} className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300">
                 <div className={`h-56 bg-gradient-to-b ${interior.accent} relative`}>
                   {"image" in interior && interior.image ? (
                     <>
-                      <img
-                        src={interior.image}
-                        alt={interior.title}
-                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                      />
+                      <img src={interior.image} alt={interior.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
                       <div className="absolute bottom-0 right-0 w-[30%] h-[15%] bg-gradient-to-tl from-[#0A0A0A] to-transparent" />
                     </>
                   ) : (
-                    <div
-                      className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500"
-                      style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }}
-                    />
+                    <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500" style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }} />
                   )}
                 </div>
                 <div className="p-6">
-                  <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                    {interior.title}
-                  </h3>
+                  <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">{interior.title}</h3>
                 </div>
               </Link>
             ))}
@@ -449,91 +345,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FURNITURE CONCEPTS */}
-      <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-[1200px] mx-auto px-6 py-20">
+      {/* ─── JOURNAL ─── */}
+      <section className="bg-[#050505] py-20 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-6">
           <div className="flex items-baseline justify-between mb-12">
-            <div>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">
-                {t("furnitureConceptsTitle")}
-              </h2>
-              <p className="mt-2 text-sm text-[#8A8580]">{t("furnitureConceptsSubtitle")}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                href: "/process",
-                title: t("ourProcess"),
-                desc: t("ourProcessDesc"),
-              },
-              {
-                href: "/materials",
-                title: t("materialsGuide"),
-                desc: t("materialsGuideDesc"),
-              },
-              {
-                href: "/animal-sofa-collection",
-                title: t("fullCollection"),
-                desc: t("fullCollectionDesc"),
-              },
-            ].map((concept, i) => (
-              <Link
-                key={i}
-                href={concept.href}
-                className="group border-l-2 border-[#1A1A1A] pl-6 py-2 hover:border-[#E8B4B8] transition-colors duration-300"
-              >
-                <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                  {concept.title}
-                </h3>
-                <p className="mt-2 text-sm text-[#8A8580]">{concept.desc}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* JOURNAL PREVIEW */}
-      <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-[1200px] mx-auto px-6 py-20">
-          <div className="flex items-baseline justify-between mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">
-              {t("journalTitle")}
-            </h2>
-            <Link href="/journal" className="text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">
-              {t("articles")} &rarr;
-            </Link>
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">{t("journalTitle")}</h2>
+            <Link href="/journal" className="text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">{t("articles")} &rarr;</Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {latestArticles.map((article) => (
-              <Link
-                key={article.slug}
-                href={`/journal/${article.slug}`}
-                className="group border-t border-[#1A1A1A] pt-6 hover:border-[#E8B4B8] transition-colors duration-300"
-              >
+              <Link key={article.slug} href={`/journal/${article.slug}`} className="group border-l-2 border-[#1A1A1A] pl-6 py-2 hover:border-[#E8B4B8] transition-colors duration-300">
                 <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase">{article.category}</p>
-                <h3 className="mt-3 font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">
-                  {article.title}
-                </h3>
+                <h3 className="mt-3 font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">{article.title}</h3>
                 <p className="mt-2 text-sm text-[#8A8580] line-clamp-2">{article.excerpt}</p>
               </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* DELIVERY BANNER */}
-      <section className="border-t border-b border-[#1A1A1A] py-8">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-center">
-          <p className="text-sm text-[#F5F0EB]/60">
-            <span className="text-[#E8B4B8]">&#10003;</span> {t("freeDelivery")}
-          </p>
-          <p className="text-sm text-[#F5F0EB]/60">
-            <span className="text-[#E8B4B8]">&#10003;</span> {t("qualityGuarantee")}
-          </p>
-          <p className="text-sm text-[#F5F0EB]/60">
-            <span className="text-[#E8B4B8]">&#10003;</span> {t("madeToOrder")}
-          </p>
         </div>
       </section>
     </>

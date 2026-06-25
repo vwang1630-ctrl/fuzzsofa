@@ -1,12 +1,11 @@
-import type { Metadata } from "next";
-import { AboutContent } from "./about-content";
+import { Metadata } from "next";
+import AboutClient from "./about-client";
 
 export const metadata: Metadata = {
-  title: "About Fuzz Sofa — Sculptural Furniture from Shanghai",
-  description:
-    "Fuzz Sofa creates sculptural animal-inspired furniture at our Shanghai workshop. Learn about our origin, design philosophy, and commitment to lasting quality. Free white-glove delivery worldwide.",
+  title: "About Fuzz Sofa Studio | Furniture Design & Manufacturing",
+  description: "Fuzz Sofa Studio is a contemporary furniture design studio specializing in sculptural sofas for modern interiors. With 10+ years of manufacturing experience, we combine design vision with production capability.",
 };
 
 export default function AboutPage() {
-  return <AboutContent />;
+  return <AboutClient />;
 }

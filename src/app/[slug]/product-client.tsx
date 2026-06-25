@@ -455,6 +455,26 @@ export function ProductPageClient({ product }: Props) {
                 <span className="w-px h-3 bg-[#333]" />
                 <span>8–12 {t("weeks" as TranslationKeys) || "Weeks"}</span>
               </div>
+
+              {/* Trust Elements */}
+              <div className="mt-5 space-y-2">
+                <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/70 tracking-[0.03em]">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+                  <span>{t("madeToOrderWeeks" as TranslationKeys) || "Made to order (3–6 weeks production time)"}</span>
+                </div>
+                <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/70 tracking-[0.03em]">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+                  <span>{t("customSizeFabric" as TranslationKeys) || "Custom size & fabric available"}</span>
+                </div>
+                <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/70 tracking-[0.03em]">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+                  <span>{t("handmadeInChina" as TranslationKeys) || "Handmade in China"}</span>
+                </div>
+                <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/50 tracking-[0.03em]">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                  <span>{t("secureCheckout" as TranslationKeys) || "Secure international checkout supported"}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
