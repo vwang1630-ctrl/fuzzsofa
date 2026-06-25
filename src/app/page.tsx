@@ -126,13 +126,6 @@ export default function HomePage() {
           <p className="font-light text-sm md:text-[15px] lg:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
             Made-to-order, delivered in 1–2 weeks
           </p>
-          {/* Trust line */}
-          <p className="mt-3 text-[11px] tracking-[0.1em] text-[#8A8580] animate-fade-in-delay-2">
-            Serving furniture clients since 2015
-          </p>
-          <p className="mt-1 text-[10px] tracking-[0.1em] text-[#8A8580]/50 animate-fade-in-delay-2">
-            Made-to-order · In collaboration with manufacturing partners in China
-          </p>
           <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
             <button
               onClick={() => {
@@ -175,60 +168,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 3. STUDIO STATEMENT ─── */}
-      <section className="bg-[#050505] py-24 md:py-36">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
-            {/* Left: Product image with subtle vignette */}
-            <div className="relative">
-              <div className="aspect-square bg-[#0A0A0A] rounded-sm overflow-hidden">
-                <img
-                  src="/products/gorilla-sofa/gray.jpg"
-                  alt="Gorilla Sofa — sculptural piece in studio"
-                  className="w-full h-full object-contain p-8 md:p-12"
-                />
-              </div>
-              {/* Floating accent dot */}
-              <div className="absolute -top-2 -right-2 w-3 h-3 rounded-full bg-[#D6A8AC]" />
-            </div>
 
-            {/* Right: Statement + process icons */}
-            <div>
-              <p className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] leading-[1.4] tracking-[0.02em]">
-                Every piece begins as an idea, takes shape by hand, and arrives at your door in 1–2 weeks.
-              </p>
 
-              {/* 3-step process */}
-              <div className="mt-10 grid grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="w-10 h-10 mx-auto rounded-full border border-[#333] flex items-center justify-center mb-3">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A8580" strokeWidth="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                  </div>
-                  <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase">Designed</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-10 h-10 mx-auto rounded-full border border-[#333] flex items-center justify-center mb-3">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A8580" strokeWidth="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                  </div>
-                  <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase">Handcrafted</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-10 h-10 mx-auto rounded-full border border-[#333] flex items-center justify-center mb-3">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A8580" strokeWidth="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="m16 8 5 3-5 3V8Z"/></svg>
-                  </div>
-                  <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase">Delivered</p>
-                </div>
-              </div>
-
-              <div className="mt-10 pt-6 border-t border-[#1A1A1A]">
-                <p className="text-sm text-[#8A8580] tracking-[0.06em] uppercase">
-                  No warehouse shelves &middot; No assembly lines &middot; Just your sculpture, made for you
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ─── 4. FEATURED WORKS ─── */}
       <section className="bg-[#090909] py-20 md:py-24">
