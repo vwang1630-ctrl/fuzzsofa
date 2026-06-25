@@ -4,19 +4,22 @@
  * AI room preview feature — they are never shown on product pages.
  *
  * Only map files that ACTUALLY EXIST in /public/products/cutout/.
- * Non-existent files will cause the canvas to fail silently.
  */
 
 export const cutoutImages: Record<string, string> = {
-  // Owl Sofa — cutout images that exist
-  // color index matches materialOptions[].colors order in products.ts
+  // Owl Sofa — 4 color variants matching materialOptions order
+  // Cloud Touch line
+  "owl-sofa/0": "/products/cutout/owl-sofa-snow-white.png",       // Snowy White Bouclé
   "owl-sofa/1": "/products/cutout/owl-sofa-rose-pink.png",        // Rose Pink Velvet
+  // Wild Touch line
   "owl-sofa/2": "/products/cutout/owl-sofa-forest-green.png",     // Forest Green Velvet
-  "owl-sofa/3": "/products/cutout/owl-sofa-dark-brown.png",       // Dark Brown Leather
+  "owl-sofa/3": "/products/cutout/owl-sofa-warm-gray.png",        // Warm Gray Linen
 
-  // Note: owl-sofa/0 (Snow White Bouclé) cutout not yet uploaded
-  // Note: gorilla-sofa, silverback-sofa, meteorite-ring-sofa, muscle-gorilla-sofa
-  //       cutouts not yet uploaded — will fall back to dark bg removal
+  // Note: owl-sofa-black-leather.png also available in cutout/ but
+  // Black Leather is not currently a product option. Can be mapped if added.
+
+  // Other products: gorilla-sofa, silverback-sofa, meteorite-ring-sofa,
+  // muscle-gorilla-sofa — cutouts not yet uploaded, will fall back to dark bg removal
 };
 
 /**
@@ -25,6 +28,8 @@ export const cutoutImages: Record<string, string> = {
  */
 const colorNameToIndex: Record<string, Record<string, number>> = {
   "owl-sofa": {
+    "snowy white bouclé": 0,
+    "snowy white boucle": 0,
     "snow white bouclé": 0,
     "snow white boucle": 0,
     "rose pink velvet": 1,
@@ -40,8 +45,7 @@ const colorNameToIndex: Record<string, Record<string, number>> = {
 
 /**
  * Get the cutout image path for a product + color selection.
- * Returns null if no cutout exists for this product/color combo —
- * the caller should fall back to the original product image.
+ * Returns null if no cutout exists — caller should fall back to original product image.
  */
 export function getCutoutImage(productSlug: string, colorIndexOrName: number | string = 0): string | null {
   let colorIndex: number;
