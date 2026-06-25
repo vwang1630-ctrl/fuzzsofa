@@ -42,7 +42,6 @@ export function ProductPageClient({ product }: Props) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [showRoomViz, setShowRoomViz] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
-  const [aiBtnHovered, setAiBtnHovered] = useState(false);
 
   const handleAddToCart = () => {
     addItem({
@@ -139,24 +138,25 @@ export function ProductPageClient({ product }: Props) {
       />
 
       {/* ═══════════════════════════════════════════
-          SCREEN 1 — HERO (56/44 Layout)
+          SCREEN 1 — HERO (58/42 Layout)
+          Background: #050505
           ═══════════════════════════════════════════ */}
-      <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[56%_44%] min-h-screen">
+      <section className="bg-[#050505]">
+        <div className="max-w-[1600px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] min-h-screen">
             {/* LEFT: Product Image Area */}
-            <div className="relative flex items-center justify-center bg-[#0A0A0A] px-6 pt-5 md:pt-6 lg:pt-5 pb-6 md:pb-10 lg:pb-12">
-              <div className="flex gap-6 w-full max-w-[800px]">
-                {/* Vertical Thumbnails — Left Side */}
+            <div className="relative flex items-center justify-center bg-[#050505] px-6 pt-5 pb-6 md:pb-10">
+              <div className="flex gap-4 w-full max-w-[800px]">
+                {/* Vertical Thumbnails — Left Side (70x70, gap 16px, opacity .7) */}
                 {galleryImages.length > 1 && (
-                  <div className="hidden md:flex flex-col gap-3 flex-shrink-0">
+                  <div className="hidden md:flex flex-col gap-4 flex-shrink-0">
                     {galleryImages.map((img) => (
                       <button
                         key={img.id}
                         onClick={() => setActiveImage(img.id)}
-                        className={`w-[64px] h-[64px] transition-all duration-300 bg-[#111] overflow-hidden flex-shrink-0 ${
+                        className={`w-[70px] h-[70px] transition-all duration-300 bg-[#111] overflow-hidden flex-shrink-0 ${
                           activeImage === img.id
-                            ? "border border-[#F5F0EB]/80 opacity-100"
+                            ? "border border-[rgba(255,255,255,0.4)] opacity-100"
                             : "border border-transparent opacity-70 hover:opacity-100"
                         }`}
                         aria-label={`View ${img.id + 1}`}
@@ -173,8 +173,8 @@ export function ProductPageClient({ product }: Props) {
                   </div>
                 )}
 
-                {/* Main Image — Square 1:1 with breathing room */}
-                <div className="relative flex-1 aspect-square bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden p-6 md:p-10 lg:p-14">
+                {/* Main Image — Square 1:1 with 60px breathing room */}
+                <div className="relative flex-1 aspect-square bg-gradient-to-b from-[#0a0a0a] to-[#050505] overflow-hidden p-[60px]">
                   <div
                     className="absolute inset-0 opacity-[0.03]"
                     style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
@@ -193,39 +193,37 @@ export function ProductPageClient({ product }: Props) {
                     </div>
                   )}
 
-                  {/* AI Room Preview Floating Button — Bottom Right (Apple Vision Pro style) */}
+                  {/* AI Room Preview — Bottom Right Circle (Apple Vision Pro style) */}
                   <button
                     onClick={() => setShowRoomViz(true)}
-                    onMouseEnter={() => setAiBtnHovered(true)}
-                    onMouseLeave={() => setAiBtnHovered(false)}
-                    className="absolute bottom-5 right-5 z-10 flex items-center gap-2.5 px-5 py-3 rounded-full transition-all duration-300 group"
+                    className="absolute bottom-8 right-8 z-10 w-[56px] h-[56px] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 group"
                     style={{
-                      background: aiBtnHovered ? "rgba(0,0,0,0.8)" : "rgba(0,0,0,0.5)",
-                      backdropFilter: "blur(24px)",
-                      WebkitBackdropFilter: "blur(24px)",
+                      background: "rgba(0,0,0,0.6)",
+                      backdropFilter: "blur(20px)",
+                      WebkitBackdropFilter: "blur(20px)",
                     }}
                     aria-label="Preview in your space"
                   >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                       <circle cx="12" cy="13" r="4" />
                     </svg>
-                    <span className="text-[9px] tracking-[0.16em] uppercase text-[#F5F0EB]/90 whitespace-nowrap">
+                    {/* Tooltip on hover */}
+                    <span className="absolute bottom-full right-0 mb-2 px-3 py-1.5 bg-[#111] border border-[#333] rounded text-[9px] tracking-[0.12em] uppercase text-[#F5F0EB]/80 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                       Preview In Your Space
                     </span>
-                    <span className="text-[10px]">✨</span>
                   </button>
 
                   {/* Mobile Thumbnails — Bottom Left */}
                   {galleryImages.length > 1 && (
-                    <div className="md:hidden absolute bottom-5 left-5 flex gap-2">
+                    <div className="md:hidden absolute bottom-4 left-4 flex gap-2">
                       {galleryImages.map((img) => (
                         <button
                           key={img.id}
                           onClick={() => setActiveImage(img.id)}
                           className={`w-[48px] h-[48px] transition-all duration-300 bg-[#0A0A0A]/80 backdrop-blur-sm overflow-hidden ${
                             activeImage === img.id
-                              ? "border border-[#F5F0EB]/80 opacity-100"
+                              ? "border border-[rgba(255,255,255,0.4)] opacity-100"
                               : "border border-transparent opacity-70 hover:opacity-100"
                           }`}
                         >
@@ -244,39 +242,41 @@ export function ProductPageClient({ product }: Props) {
               </div>
             </div>
 
-            {/* RIGHT: Product Info (44%) */}
-            <div className="flex flex-col justify-center px-8 md:px-12 lg:px-14 py-16 lg:py-20 bg-[#0A0A0A] lg:border-l border-[#1A1A1A] lg:-mt-12">
+            {/* RIGHT: Product Info (42%) — lifted upward */}
+            <div className="flex flex-col justify-center px-8 md:px-12 lg:px-14 py-16 lg:py-20 bg-[#050505] lg:-mt-10" style={{ transform: "translateY(-40px)" }}>
               {/* Collection Label */}
               <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                 {collectionName}
               </p>
 
-              {/* Visual Group: Title → Price → One-liner */}
-              <div className="mb-6">
-                <h1 className="font-serif text-2xl md:text-[1.75rem] lg:text-[2rem] font-light text-[#F5F0EB] leading-[1.15] tracking-[0.02em] mb-3">
-                  {productName}
-                </h1>
-                <p className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB]/80 mb-2.5">
-                  {displayPrice}
-                </p>
-                <p className="text-[13px] text-[#F5F0EB]/50 leading-[1.6] max-w-[400px]">
-                  {productTagline}
-                </p>
-              </div>
+              {/* Title — 64px, weight 300, leading 1.05, max-w 500px */}
+              <h1 className="font-serif text-[64px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em] max-w-[500px] mb-4">
+                {productName}
+              </h1>
+
+              {/* Price — 42px */}
+              <p className="font-serif text-[42px] font-light text-[#F5F0EB]/80 mt-8 mb-6">
+                {displayPrice}
+              </p>
+
+              {/* Tagline */}
+              <p className="text-[13px] text-[#F5F0EB]/50 leading-[1.6] max-w-[400px] mb-3">
+                {productTagline}
+              </p>
 
               {/* Brand Language */}
-              <p className="text-[11px] text-[#E8B4B8]/50 tracking-[0.12em] italic mb-6 max-w-[380px]">
+              <p className="text-[11px] text-[#E8B4B8]/50 tracking-[0.12em] italic mb-8 max-w-[380px]">
                 {t("furnitureToDefineSpace" as TranslationKeys) || "Furniture designed to define a space."}
               </p>
 
               {/* Separator */}
-              <div className="h-px bg-[#1A1A1A] mb-6" />
+              <div className="h-px bg-[#1A1A1A] mb-8" />
 
-              {/* Material Quick Select — Luxury Style */}
+              {/* Material Quick Select — Luxury Vertical List */}
               {product.materialOptions && product.materialOptions.length > 0 && (
-                <div className="mb-6">
+                <div className="mb-8">
                   {product.materialOptions.map((mat) => (
-                    <div key={mat.type} className="mb-4">
+                    <div key={mat.type} className="mb-5">
                       <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-3">
                         {mat.type}
                       </label>
@@ -301,7 +301,7 @@ export function ProductPageClient({ product }: Props) {
                               <span
                                 className={`w-5 h-5 rounded-sm flex-shrink-0 transition-all duration-300 ${
                                   isSelected
-                                    ? "ring-1 ring-[#E8B4B8] ring-offset-1 ring-offset-[#0A0A0A]"
+                                    ? "ring-1 ring-[#E8B4B8] ring-offset-1 ring-offset-[#050505]"
                                     : "border border-[#333] group-hover:border-[#666]"
                                 }`}
                                 style={{ backgroundColor: colorHex }}
@@ -324,12 +324,12 @@ export function ProductPageClient({ product }: Props) {
               )}
 
               {/* Separator */}
-              <div className="h-px bg-[#1A1A1A] mb-6" />
+              <div className="h-px bg-[#1A1A1A] mb-8" />
 
-              {/* Add to Cart — Luxury Outline Style */}
+              {/* Add to Cart — Thin Luxury Outline */}
               <button
                 onClick={handleAddToCart}
-                className="w-full border border-[#F5F0EB]/50 text-[#F5F0EB]/80 py-3 text-[11px] tracking-[0.15em] uppercase hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300 mb-6 flex items-center justify-center gap-2"
+                className="w-full border border-[rgba(255,255,255,0.12)] bg-transparent text-[#F5F0EB]/80 h-[60px] text-[11px] tracking-[0.15em] uppercase hover:bg-[#111] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300 mb-8 flex items-center justify-center gap-2"
               >
                 {addedToCart ? t("addedToCart") : (
                   <>
@@ -356,15 +356,16 @@ export function ProductPageClient({ product }: Props) {
 
       {/* ═══════════════════════════════════════════
           SCREEN 2 — DESIGN STORY
+          Background: #090909
           ═══════════════════════════════════════════ */}
-      <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[1100px] mx-auto px-6 py-24 lg:py-32">
+      <section className="bg-[#090909]">
+        <div className="max-w-[1100px] mx-auto px-6 py-[140px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Left: Detail Images */}
             <div className="space-y-6">
               {galleryImages.length >= 2 ? (
                 <>
-                  <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden">
+                  <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0a0a0a] overflow-hidden">
                     {galleryImages[1]?.src ? (
                       <img
                         src={galleryImages[1].src}
@@ -380,7 +381,7 @@ export function ProductPageClient({ product }: Props) {
                     )}
                   </div>
                   {galleryImages.length >= 3 && galleryImages[2]?.src && (
-                    <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden">
+                    <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0a0a0a] overflow-hidden">
                       <img
                         src={galleryImages[2].src}
                         alt={`${productName} texture`}
@@ -390,7 +391,7 @@ export function ProductPageClient({ product }: Props) {
                   )}
                 </>
               ) : (
-                <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0A0A0A] flex items-center justify-center">
+                <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0a0a0a] flex items-center justify-center">
                   <span className="font-serif text-[12rem] text-[#F5F0EB]/[0.04] select-none">
                     {product.animal.charAt(0)}
                   </span>
@@ -435,11 +436,12 @@ export function ProductPageClient({ product }: Props) {
 
       {/* ═══════════════════════════════════════════
           SCREEN 3 — INTERIOR INSPIRATION
+          Background: #050505
           ═══════════════════════════════════════════ */}
-      <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[1400px] mx-auto">
+      <section className="bg-[#050505]">
+        <div className="max-w-[1600px] mx-auto">
           {/* Full-width hero image */}
-          <div className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#0A0A0A] overflow-hidden">
+          <div className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden">
             {galleryImages[0]?.src ? (
               <img
                 src={galleryImages[0].src}
@@ -454,7 +456,7 @@ export function ProductPageClient({ product }: Props) {
               </div>
             )}
             {/* Dark overlay for text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent" />
 
             {/* Centered text */}
             <div className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6">
@@ -483,9 +485,10 @@ export function ProductPageClient({ product }: Props) {
 
       {/* ═══════════════════════════════════════════
           SCREEN 4 — DIMENSIONS
+          Background: #080808
           ═══════════════════════════════════════════ */}
-      <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[1100px] mx-auto px-6 py-24 lg:py-32">
+      <section className="bg-[#080808]">
+        <div className="max-w-[1100px] mx-auto px-6 py-[140px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Left: Dimensions */}
             <div>
@@ -500,7 +503,7 @@ export function ProductPageClient({ product }: Props) {
                 {Object.entries(product.specifications)
                   .filter(([key]) => key in specLabels)
                   .map(([key, value]) => (
-                    <div key={key} className="flex items-baseline gap-8 border-b border-[#1A1A1A] pb-4">
+                    <div key={key} className="flex items-baseline gap-8 pb-4">
                       <span className="text-xs text-[#8A8580] tracking-[0.1em] uppercase w-24">
                         {t(specLabels[key]) || key}
                       </span>
@@ -513,7 +516,7 @@ export function ProductPageClient({ product }: Props) {
             </div>
 
             {/* Right: Silhouette with scale reference */}
-            <div className="flex items-center justify-center bg-gradient-to-b from-[#111] to-[#0A0A0A] min-h-[400px] relative">
+            <div className="flex items-center justify-center bg-gradient-to-b from-[#111] to-[#080808] min-h-[400px] relative">
               {galleryImages[0]?.src ? (
                 <img
                   src={galleryImages[0].src}
@@ -536,10 +539,11 @@ export function ProductPageClient({ product }: Props) {
       </section>
 
       {/* ═══════════════════════════════════════════
-          SCREEN 5 — MATERIALS & CRAFTSMANSHIP
+          SCREEN 5 — MATERIALS
+          Background: #050505
           ═══════════════════════════════════════════ */}
-      <section className="border-b border-[#1A1A1A]">
-        <div className="max-w-[1100px] mx-auto px-6 py-24 lg:py-32">
+      <section className="bg-[#050505]">
+        <div className="max-w-[1100px] mx-auto px-6 py-[140px]">
           <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
             {t("materialsTitle")}
           </p>
@@ -549,7 +553,6 @@ export function ProductPageClient({ product }: Props) {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {product.materials.map((mat) => {
-              // Extract short name for label
               const shortName = mat.split("(")[0].trim().split(" ").slice(0, 2).join(" ");
               return (
                 <div key={mat} className="text-center">
@@ -569,11 +572,90 @@ export function ProductPageClient({ product }: Props) {
       </section>
 
       {/* ═══════════════════════════════════════════
-          SCREEN 6 — YOU MAY ALSO LIKE
+          SCREEN 6 — CRAFTSMANSHIP
+          Background: #090909
+          ═══════════════════════════════════════════ */}
+      <section className="bg-[#090909]">
+        <div className="max-w-[1600px] mx-auto">
+          {/* Full-width craftsmanship image */}
+          <div className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+            {galleryImages.length >= 4 && galleryImages[3]?.src ? (
+              <img
+                src={galleryImages[3].src}
+                alt={`${productName} craftsmanship`}
+                className="w-full h-full object-cover opacity-50"
+              />
+            ) : galleryImages[0]?.src ? (
+              <img
+                src={galleryImages[0].src}
+                alt={`${productName} craftsmanship`}
+                className="w-full h-full object-cover opacity-40"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
+                  {product.animal.charAt(0)}
+                </span>
+              </div>
+            )}
+            {/* Dark overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/50 to-transparent" />
+
+            {/* Centered text */}
+            <div className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6">
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[#F5F0EB] text-center leading-[1.1] mb-4">
+                {t("madeSlowlyBuiltToLast" as TranslationKeys).split(".")[0]}.
+              </h2>
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[#F5F0EB] text-center leading-[1.1] mb-8">
+                {t("madeSlowlyBuiltToLast" as TranslationKeys).split(". ")[1] || "Built To Last."}
+              </h2>
+              <p className="text-[13px] text-[#F5F0EB]/40 tracking-[0.05em] text-center max-w-[500px] leading-[1.7]">
+                {t("craftsmanshipDesc" as TranslationKeys)}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          SCREEN 7 — WHITE-GLOVE DELIVERY
+          Background: #050505
+          ═══════════════════════════════════════════ */}
+      <section className="bg-[#050505]">
+        <div className="max-w-[700px] mx-auto px-6 py-[140px] text-center">
+          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+            {t("freeWhiteGlove")}
+          </p>
+          <h2 className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
+            {t("deliveredWorldwide" as TranslationKeys)}
+          </h2>
+          <p className="text-[#F5F0EB]/50 leading-[1.8] text-base mb-10">
+            {t("deliveryDesc" as TranslationKeys)}
+          </p>
+          <div className="flex flex-wrap justify-center gap-6">
+            {[
+              t("freeWhiteGlove"),
+              t("madeToOrder"),
+              `8–12 ${t("weeks" as TranslationKeys) || "Weeks"}`,
+            ].map((label) => (
+              <span
+                key={label}
+                className="text-[10px] tracking-[0.15em] uppercase border border-[#333] px-5 py-2.5 text-[#F5F0EB]/40"
+              >
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          SCREEN 8 — RELATED COLLECTION
+          Background: #080808
           ═══════════════════════════════════════════ */}
       {relatedProducts.length > 0 && (
-        <section className="py-24 lg:py-32">
-          <div className="max-w-[1200px] mx-auto px-6">
+        <section className="bg-[#080808]">
+          <div className="max-w-[1200px] mx-auto px-6 py-[140px]">
             <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
               {t("youMayAlsoLike" as TranslationKeys) || "You May Also Like"}
             </p>
@@ -591,9 +673,9 @@ export function ProductPageClient({ product }: Props) {
                   <Link
                     key={rp.slug}
                     href={`/${rp.slug}`}
-                    className="group border border-[#1A1A1A] hover:border-[#E8B4B8]/30 transition-all duration-300"
+                    className="group transition-all duration-300 hover:-translate-y-1"
                   >
-                    <div className="aspect-square bg-gradient-to-b from-[#111] to-[#0A0A0A] relative overflow-hidden">
+                    <div className="aspect-square bg-gradient-to-b from-[#111] to-[#080808] relative overflow-hidden">
                       {rpImages[0] ? (
                         <img
                           src={rpImages[0]}
