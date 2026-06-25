@@ -166,7 +166,6 @@ export default function HomePage() {
             { icon: '✦', label: 'Studio-Crafted Furniture' },
             { icon: '◆', label: 'Made-to-Order Quality Guarantee' },
             { icon: '◉', label: '1–2 Week Delivery' },
-            { icon: '✧', label: 'Custom dimensions supported' },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-2.5">
               <span className="text-[#E8B4B8] text-[10px]">{item.icon}</span>
