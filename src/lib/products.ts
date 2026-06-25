@@ -120,7 +120,7 @@ export const products: Product[] = [
     relatedProducts: ["owl-sofa", "silverback-sofa", "muscle-gorilla-sofa"],
     relatedInteriors: ["luxury-villa-interior", "statement-furniture"],
     metaDescription:
-      "Custom sculptural gorilla sofa by Fuzz Sofa Studio. A made-to-order statement piece for contemporary interiors. Available in fabric or leather. 3–6 weeks production. Worldwide shipping.",
+      "Custom sculptural gorilla sofa by Fuzz Sofa Studio. A made-to-order statement piece for contemporary interiors. Available in fabric or leather. 1–2 weeks production. Worldwide shipping.",
     trendingGeo: ["US", "EU", "JP", "AU", "AE", "SG"],
   },
   {
@@ -208,7 +208,7 @@ export const products: Product[] = [
       "/products/owl/forest-green.png",
     ],
     metaDescription:
-      "Custom sculptural owl chair by Fuzz Sofa Studio. A made-to-order statement chair for modern interiors. Available in premium fabric. 3–6 weeks production. Worldwide shipping.",
+      "Custom sculptural owl chair by Fuzz Sofa Studio. A made-to-order statement chair for modern interiors. Available in premium fabric. 1–2 weeks production. Worldwide shipping.",
     hiddenInRegions: ["middle_east"],
   },
   {
@@ -274,7 +274,7 @@ export const products: Product[] = [
       "/products/silverback-sofa/navy.jpg",
       "/products/silverback-sofa/charcoal.jpg",
     ],
-    metaDescription: "Custom sculptural silverback gorilla sofa by Fuzz Sofa Studio. A made-to-order upholstered sofa for contemporary interiors. Available in 4 colors. 3–6 weeks production. Worldwide shipping.",
+    metaDescription: "Custom sculptural silverback gorilla sofa by Fuzz Sofa Studio. A made-to-order upholstered sofa for contemporary interiors. Available in 4 colors. 1–2 weeks production. Worldwide shipping.",
   },
   {
     slug: "meteorite-ring-sofa",
@@ -346,7 +346,7 @@ export const products: Product[] = [
     relatedProducts: ["gorilla-sofa", "owl-sofa", "silverback-sofa"],
     relatedInteriors: ["creative-studio", "urban-apartment"],
     metaDescription:
-      "Custom sculptural ring sofa by Fuzz Sofa Studio. A made-to-order cosmic-inspired sofa for contemporary interiors. Compact 110x80x80cm. 3–6 weeks production. Worldwide shipping.",
+      "Custom sculptural ring sofa by Fuzz Sofa Studio. A made-to-order cosmic-inspired sofa for contemporary interiors. Compact 110x80x80cm. 1–2 weeks production. Worldwide shipping.",
     trendingGeo: ["americas", "europe"],
   },
   {
@@ -424,7 +424,7 @@ export const products: Product[] = [
     relatedProducts: ["gorilla-sofa", "silverback-sofa", "meteorite-ring-sofa"],
     relatedInteriors: ["luxury-villa-interior", "statement-furniture"],
     metaDescription:
-      "Custom sculptural gorilla sofa by Fuzz Sofa Studio. A made-to-order leather statement piece for contemporary interiors. Available in 4 colors. 3–6 weeks production. Worldwide shipping.",
+      "Custom sculptural gorilla sofa by Fuzz Sofa Studio. A made-to-order leather statement piece for contemporary interiors. Available in 4 colors. 1–2 weeks production. Worldwide shipping.",
     trendingGeo: ["americas", "middle_east", "europe"],
   },
 ];

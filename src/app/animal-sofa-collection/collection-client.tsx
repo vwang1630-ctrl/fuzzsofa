@@ -91,7 +91,7 @@ export function CollectionClient() {
                     {t("from")} {formatPrice(product.priceRange[region][0], region)}
                   </p>
                   <span className="text-xs text-[#8A8580] tracking-wide">
-                    Made to order (3–6 weeks)
+                    Made to order (1–2 weeks)
                   </span>
                 </div>
               </div>

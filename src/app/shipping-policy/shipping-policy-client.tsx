@@ -15,7 +15,7 @@ export default function ShippingPolicyClient() {
               <h2 className="text-base font-light tracking-[0.02em] text-[#F5F0EB] mb-3">Made-to-Order Production</h2>
               <p>
                 Made-to-order products require production time before shipping.
-                Production typically takes 3–6 weeks depending on the complexity of the piece
+                Production typically takes 1–2 weeks depending on the complexity of the piece
                 and current studio capacity. Production begins after order confirmation and payment.
               </p>
             </div>

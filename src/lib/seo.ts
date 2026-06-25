@@ -48,10 +48,10 @@ export function productJsonLd(product: Product) {
           "@type": "ShippingDeliveryTime",
           handlingTime: {
             "@type": "QuantitativeValue",
-            minValue: 21,
-            maxValue: 42,
+            minValue: 7,
+            maxValue: 14,
             unitCode: "DAY",
-            description: "Production time: 3–6 weeks. Each piece is individually produced after order confirmation.",
+            description: "Production time: 1–2 weeks. Each piece is individually produced after order confirmation.",
           },
           transitTime: {
             "@type": "QuantitativeValue",

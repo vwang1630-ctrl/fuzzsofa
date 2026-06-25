@@ -44,7 +44,7 @@ export default function StudioClient() {
           <p className="text-base font-light leading-[1.7] text-[#8A8580] max-w-[540px]">
             Each piece is individually produced after order confirmation.
             No inventory. No pre-made stock. Every custom sofa begins its life when a client commits to it.
-            Production takes 3–6 weeks, with worldwide shipping and full tracking.
+            Production takes 1–2 weeks, with worldwide shipping and full tracking.
           </p>
         </div>
       </section>
@@ -96,7 +96,7 @@ export default function StudioClient() {
               <p className="text-[12px] font-light text-[#8A8580]/70">Production begins only after order confirmation.</p>
             </div>
             <div className="border-l border-[#333] pl-6">
-              <p className="text-[13px] font-light text-[#F5F0EB] mb-1">3–6 Weeks Production</p>
+              <p className="text-[13px] font-light text-[#F5F0EB] mb-1">1–2 Weeks Production</p>
               <p className="text-[12px] font-light text-[#8A8580]/70">Each piece receives dedicated studio attention.</p>
             </div>
             <div className="border-l border-[#333] pl-6">

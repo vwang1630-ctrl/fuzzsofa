@@ -464,7 +464,7 @@ export function ProductPageClient({ product }: Props) {
               <div className="mt-5 space-y-2">
                 <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/70 tracking-[0.03em]">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-                  <span>{t("madeToOrderWeeks" as TranslationKeys) || "Made to order (3–6 weeks production time)"}</span>
+                  <span>{t("madeToOrderWeeks" as TranslationKeys) || "Made to order (1–2 weeks production time)"}</span>
                 </div>
                 <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/70 tracking-[0.03em]">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
@@ -547,7 +547,7 @@ export function ProductPageClient({ product }: Props) {
               {/* Attributes */}
               <div className="flex flex-wrap gap-4">
                 {[
-                  t("handcrafted" as TranslationKeys) || "Handcrafted",
+                  t("studioCrafted" as TranslationKeys) || "Studio-Crafted",
                   t("madeToOrder" as TranslationKeys) || "Made To Order",
                   t("collectibleDesign" as TranslationKeys) || "Collectible Design",
                 ].map((label) => (
@@ -858,7 +858,7 @@ export function ProductPageClient({ product }: Props) {
             <dt className="text-[#8A8580]/40">Production Model</dt>
             <dd className="text-[#8A8580]/60">Made-to-order only</dd>
             <dt className="text-[#8A8580]/40">Lead Time</dt>
-            <dd className="text-[#8A8580]/60">3–6 weeks</dd>
+            <dd className="text-[#8A8580]/60">1–2 weeks</dd>
             <dt className="text-[#8A8580]/40">Customization</dt>
             <dd className="text-[#8A8580]/60">Available (size, fabric, proportion)</dd>
             <dt className="text-[#8A8580]/40">Structure</dt>

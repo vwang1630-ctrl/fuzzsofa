@@ -168,13 +168,13 @@ For designers considering animal motifs, the principle is straightforward: abstr
     slug: "how-is-fuzz-sofa-made",
     title: "How Is Fuzz Sofa Made?",
     excerpt:
-      "Every Fuzz Sofa piece is made to order at our Shanghai workshop. From frame construction to final upholstery, the process takes 8–12 weeks and involves over 40 individual steps.",
+      "Every Fuzz Sofa piece is made to order at our Shanghai workshop. From frame construction to final upholstery, the process takes 1–2 weeks and involves over 40 individual steps.",
     category: "Process",
     datePublished: "2025-05-28",
     dateModified: "2025-06-20",
     metaDescription:
-      "How Fuzz Sofa pieces are made: the complete process from frame to finish at our Shanghai workshop. Made to order, 40+ steps, 8-12 weeks production.",
-    content: `Every Fuzz Sofa piece is made to order at our Shanghai workshop. From frame construction to final upholstery, the process takes 8–12 weeks and involves over 40 individual steps.
+      "How Fuzz Sofa pieces are made: the complete process from frame to finish at our Shanghai workshop. Made to order, 40+ steps, 1–2 weeks production.",
+    content: `Every Fuzz Sofa piece is made to order at our Shanghai workshop. From frame construction to final upholstery, the process takes 1–2 weeks and involves over 40 individual steps.
 
 The process begins with frame construction. Each frame is built from FSC-certified hardwood — oak for the Bear and Gorilla Sofas, walnut for the Lion and Owl, ash for the Tiger. The wood is kiln-dried to a moisture content below 12%, then cut and joined using traditional mortise-and-tenon joints reinforced with modern adhesives. The frame is the skeleton of the piece, and its integrity determines decades of structural performance.
 

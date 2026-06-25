@@ -10,11 +10,10 @@ export default function AboutClient() {
         <div className="max-w-[700px] mx-auto text-center">
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6">About the Studio</p>
           <h1 className="font-serif text-[2.8rem] font-light leading-[1.1] tracking-[0.02em] text-[#F5F0EB] mb-8">
-            Fuzz Sofa Studio
+            About Fuzz Sofa Studio
           </h1>
           <p className="text-base font-light leading-[1.8] text-[#8A8580] max-w-[540px] mx-auto">
-            A contemporary furniture design studio shaping sculptural sofas for modern interiors.
-            We focus on form, proportion, and tactile experience — creating pieces that define spaces.
+            Fuzz Sofa Studio is an independent furniture brand focused on sculptural seating. Serving furniture clients since 2015. Made-to-order in collaboration with manufacturing partners in Shanghai, China.
           </p>
         </div>
       </section>
@@ -27,8 +26,8 @@ export default function AboutClient() {
               <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Studio Identity</p>
               <h2 className="font-serif text-2xl font-light tracking-[0.02em] mb-6">Between Design and Production</h2>
               <p className="text-sm font-light leading-[1.8] text-[#8A8580] mb-4">
-                Fuzz Sofa Studio is a contemporary design studio that operates between design
-                and production — creating sculptural sofas for residential and commercial interiors worldwide.
+                Fuzz Sofa Studio is an independent furniture brand focused on sculptural seating.
+                We work with manufacturing partners in Shanghai to bring each design to life — from concept through final upholstery.
               </p>
               <p className="text-sm font-light leading-[1.8] text-[#8A8580]">
                 Every piece begins with an idea about form — how a silhouette can change a room,
@@ -45,13 +44,13 @@ export default function AboutClient() {
       {/* Section 2: Production Background */}
       <section className="py-20 px-6 bg-[#050505]">
         <div className="max-w-[900px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Production Background</p>
+          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Production Partners</p>
           <h2 className="font-serif text-2xl font-light tracking-[0.02em] mb-8">
-            10+ Years of Production Experience
+            Serving Furniture Clients Since 2015
           </h2>
           <p className="text-sm font-light leading-[1.8] text-[#8A8580] max-w-[600px] mb-12">
-            With over a decade of production experience, our studio handles the full production
-            process — from structural engineering to final upholstery.
+            With over a decade of experience, we collaborate with manufacturing partners in Shanghai
+            to handle the full production process — from structural engineering to final upholstery.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {[
@@ -78,8 +77,8 @@ export default function AboutClient() {
             We believe design should be physical.
           </h2>
           <p className="text-sm font-light leading-[1.8] text-[#8A8580]">
-            Each piece is developed within our studio production system — made to order, cut, shaped,
-            and upholstered by hand. This takes longer, but it ensures that every curve, every seam,
+            Each piece is developed within our made-to-order system — individually produced after order confirmation, cut, shaped,
+            and upholstered by hand in collaboration with our manufacturing partners. This takes longer, but it ensures that every curve, every seam,
             and every joint meets the standard our clients expect.
           </p>
         </div>
@@ -89,7 +88,7 @@ export default function AboutClient() {
       <section className="py-20 px-6 bg-[#050505]">
         <div className="max-w-[900px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            ["10+", "Years Production Experience"],
+            ["10+", "Years Serving Clients"],
             ["1000+", "Custom Pieces Created"],
             ["30+", "Countries Shipped"],
             ["100%", "Made to Order"],

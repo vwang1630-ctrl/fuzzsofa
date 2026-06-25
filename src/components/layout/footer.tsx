@@ -12,22 +12,9 @@ export function Footer() {
         {/* Brand + Manufacturing Entity */}
         <div>
           <h3 className="font-serif text-lg tracking-[0.08em] text-[#F5F0EB] mb-1">Fuzz Sofa Studio</h3>
-          <p className="text-[11px] tracking-[0.08em] text-[#8A8580] mb-4">Furniture Design &amp; Production Studio</p>
-          <p className="text-xs font-light text-[#8A8580]/70 leading-relaxed mb-4">
-            Manufactured by XXXX Furniture Co., Ltd.<br />
-            Established 2015 · China
-          </p>
+          <p className="text-[11px] tracking-[0.08em] text-[#8A8580] mb-4">An independent furniture brand operated by Fudehao. Serving furniture clients since 2015. Made-to-order in collaboration with manufacturing partners in Shanghai, China.</p>
           <p className="text-xs text-[#8A8580] mb-4">
             <a href="mailto:support@fuzzsofa.com" className="hover:text-[#E8B4B8] transition-colors">support@fuzzsofa.com</a>
-          </p>
-          <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/50 mb-6">Worldwide Shipping Available</p>
-          <p className="text-[10px] text-[#8A8580]/30 leading-relaxed mb-2">
-            Made-to-order sculptural furniture system.<br />
-            Each piece is individually produced after order confirmation.<br />
-            No inventory. No mass production.
-          </p>
-          <p className="text-[10px] text-[#8A8580]/25 leading-relaxed">
-            Production time: 3–6 weeks · Shipping: Worldwide with tracking · Customization: Available
           </p>
           <div className="flex gap-4">
             <a href="https://instagram.com/fuzzsofa" target="_blank" rel="noopener noreferrer" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors" aria-label="Instagram">
@@ -105,7 +92,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Fuzz Sofa Studio. All rights reserved.
           </p>
           <p className="text-[10px] text-[#8A8580]/30">
-            Fuzz Furniture Co., Ltd. · China
+            Fuzz Sofa Studio · Fudehao · China
           </p>
         </div>
       </div>

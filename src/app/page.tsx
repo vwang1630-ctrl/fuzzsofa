@@ -124,7 +124,7 @@ export default function HomePage() {
             {t(sceneConfig.keys.title)}
           </h1>
           <p className="font-light text-sm md:text-[15px] lg:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
-            Sculptural Sofas for Contemporary Interiors
+            Made-to-order, delivered in 1–2 weeks
           </p>
           {/* Trust line */}
           <p className="mt-3 text-[11px] tracking-[0.1em] text-[#8A8580] animate-fade-in-delay-2">
@@ -163,9 +163,9 @@ export default function HomePage() {
       <section className="bg-[#090909] py-8 md:py-10">
         <div className="max-w-[1200px] mx-auto px-6 flex flex-wrap items-center justify-center gap-8 md:gap-16 text-center">
           {[
-            { icon: '✦', label: 'Made-to-order production only' },
-            { icon: '◆', label: 'Studio-crafted furniture pieces' },
-            { icon: '◉', label: 'International shipping available' },
+            { icon: '✦', label: 'Studio-Crafted Furniture' },
+            { icon: '◆', label: 'Made-to-Order Quality Guarantee' },
+            { icon: '◉', label: '1–2 Week Delivery' },
             { icon: '✧', label: 'Custom dimensions supported' },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-2.5">
@@ -217,7 +217,7 @@ export default function HomePage() {
                   <p className="mt-1 text-xs text-[#8A8580]">{t(slugToPrefix[product.slug] + "Tagline" as TranslationKeys)}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <p className="text-sm text-[#F5F0EB]/60">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
-                    <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/70">Made to order (3–6 weeks)</p>
+                    <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/70">Made to order (1–2 weeks)</p>
                   </div>
                 </div>
               </Link>
