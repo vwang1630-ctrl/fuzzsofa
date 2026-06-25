@@ -128,10 +128,10 @@ export default function HomePage() {
           </p>
           {/* Trust line */}
           <p className="mt-3 text-[11px] tracking-[0.1em] text-[#8A8580] animate-fade-in-delay-2">
-            10+ years of studio-based furniture production experience
+            Serving furniture clients since 2015
           </p>
           <p className="mt-1 text-[10px] tracking-[0.1em] text-[#8A8580]/50 animate-fade-in-delay-2">
-            Made-to-order · Designed &amp; crafted in China
+            Made-to-order · In collaboration with manufacturing partners in China
           </p>
           <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
             <button
