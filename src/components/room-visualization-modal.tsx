@@ -28,11 +28,10 @@ export default function RoomVisualizationModal({
   const [resultImage, setResultImage] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Resolve cutout image URL if available, fallback to original product image
-  const resolvedProductImageUrl = useMemo(() => {
-    const cutoutUrl = productSlug ? getCutoutImage(productSlug, selectedColorName ?? "") : null;
-    return cutoutUrl || productImageUrl;
-  }, [productSlug, selectedColorName, productImageUrl]);
+  // Resolve cutout image URL (transparent background) — separate from the product image
+  const cutoutImageUrl = useMemo(() => {
+    return productSlug ? getCutoutImage(productSlug, selectedColorName ?? "") : null;
+  }, [productSlug, selectedColorName]);
 
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -194,7 +193,8 @@ export default function RoomVisualizationModal({
           {step === "position" && roomImage && (
             <RoomPlacementCanvas
               roomImage={roomImage}
-              productImageUrl={resolvedProductImageUrl}
+              productImageUrl={productImageUrl}
+              cutoutImageUrl={cutoutImageUrl}
               productName={productName}
               onComposite={handleComposite}
               onBack={handleBack}

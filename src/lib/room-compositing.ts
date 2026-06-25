@@ -99,14 +99,19 @@ export function removeDarkBackground(
 }
 
 /**
- * Load an image from URL into an HTMLImageElement
+ * Load an image from URL into an HTMLImageElement.
+ * For data URLs (from FileReader), skip crossOrigin since it's not needed
+ * and can cause loading failures in some browsers.
  */
 export function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "anonymous";
+    // Only set crossOrigin for non-data URLs
+    if (!src.startsWith("data:")) {
+      img.crossOrigin = "anonymous";
+    }
     img.onload = () => resolve(img);
-    img.onerror = reject;
+    img.onerror = () => reject(new Error(`Failed to load image: ${src.substring(0, 80)}`));
     img.src = src;
   });
 }

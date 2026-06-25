@@ -10,8 +10,10 @@ import {
 interface RoomPlacementCanvasProps {
   /** Room image data URL */
   roomImage: string;
-  /** Product image URL */
+  /** Original product image URL (with dark background) */
   productImageUrl: string;
+  /** Pre-cutout product image URL (transparent background) — preferred if available */
+  cutoutImageUrl: string | null;
   /** Called when user clicks "Done" — returns the final composited data URL */
   onComposite: (dataUrl: string) => void;
   /** Called when user wants to go back */
@@ -23,6 +25,7 @@ interface RoomPlacementCanvasProps {
 export default function RoomPlacementCanvas({
   roomImage,
   productImageUrl,
+  cutoutImageUrl,
   onComposite,
   onBack,
   productName,
@@ -38,30 +41,53 @@ export default function RoomPlacementCanvas({
   const [shadowOpacity, setShadowOpacity] = useState(0.5);
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string>("");
   const [canvasSize, setCanvasSize] = useState({ width: 800, height: 600 });
+  const [hasProduct, setHasProduct] = useState(false);
 
   // Drag tracking
   const dragStartRef = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
 
-  // Load assets
+  // Load assets — with fallback logic and error handling
   useEffect(() => {
     let cancelled = false;
+    setIsLoading(true);
+    setLoadError("");
+    setHasProduct(false);
+
+    async function tryLoadCutout(url: string): Promise<HTMLCanvasElement | null> {
+      try {
+        const img = await loadImage(url);
+        // Cutout images already have transparent background — use directly
+        return imageToCanvas(img);
+      } catch {
+        console.warn(`Cutout image failed to load: ${url.substring(0, 60)}...`);
+        return null;
+      }
+    }
+
+    async function tryLoadProductWithBgRemoval(url: string): Promise<HTMLCanvasElement | null> {
+      try {
+        const img = await loadImage(url);
+        const productCanvas = imageToCanvas(img);
+        return removeDarkBackground(productCanvas);
+      } catch {
+        console.warn(`Product image failed to load: ${url.substring(0, 60)}...`);
+        return null;
+      }
+    }
+
     async function load() {
       try {
-        const [roomImg, productImg] = await Promise.all([
-          loadImage(roomImage),
-          loadImage(productImageUrl),
-        ]);
+        // Load room image first (data URL — should always work)
+        const roomImg = await loadImage(roomImage);
         if (cancelled) return;
-
         roomImgRef.current = roomImg;
-        const productCanvas = imageToCanvas(productImg);
-        cutoutRef.current = removeDarkBackground(productCanvas);
 
         // Auto-size canvas to fit container while maintaining room aspect ratio
         const container = containerRef.current;
         if (container) {
-          const maxW = container.clientWidth;
+          const maxW = container.clientWidth || 600;
           const maxH = Math.min(window.innerHeight * 0.55, 600);
           const roomAspect = roomImg.naturalWidth / roomImg.naturalHeight;
           let w = maxW;
@@ -73,21 +99,43 @@ export default function RoomPlacementCanvas({
           setCanvasSize({ width: Math.round(w), height: Math.round(h) });
         }
 
-        setIsLoading(false);
+        // Try loading product cutout in priority order:
+        // 1. Pre-cutout transparent image (best quality)
+        // 2. Original product photo with dark bg removal (fallback)
+        let productCutout: HTMLCanvasElement | null = null;
+
+        if (cutoutImageUrl) {
+          productCutout = await tryLoadCutout(cutoutImageUrl);
+        }
+
+        if (!productCutout && productImageUrl) {
+          productCutout = await tryLoadProductWithBgRemoval(productImageUrl);
+        }
+
+        cutoutRef.current = productCutout;
+        setHasProduct(!!productCutout);
+
+        if (!cancelled) {
+          setIsLoading(false);
+        }
       } catch (err) {
-        console.error("Failed to load images:", err);
+        console.error("Failed to load room image:", err);
+        if (!cancelled) {
+          setLoadError("Failed to load your room photo. Please try a different image.");
+          setIsLoading(false);
+        }
       }
     }
     load();
     return () => { cancelled = true; };
-  }, [roomImage, productImageUrl]);
+  }, [roomImage, productImageUrl, cutoutImageUrl]);
 
   // Redraw canvas whenever position/scale/shadow changes
   useEffect(() => {
     const canvas = canvasRef.current;
     const roomImg = roomImgRef.current;
     const cutout = cutoutRef.current;
-    if (!canvas || !roomImg || !cutout) return;
+    if (!canvas || !roomImg) return;
 
     const ctx = canvas.getContext("2d")!;
     const cw = canvasSize.width;
@@ -97,6 +145,15 @@ export default function RoomPlacementCanvas({
 
     // Draw room
     ctx.drawImage(roomImg, 0, 0, cw, ch);
+
+    if (!cutout) {
+      // No product cutout — show hint on the room
+      ctx.fillStyle = "rgba(232, 180, 184, 0.7)";
+      ctx.font = "13px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Room loaded — product image unavailable", cw / 2, ch / 2);
+      return;
+    }
 
     // Calculate product placement
     const productH = ch * scale;
@@ -214,6 +271,27 @@ export default function RoomPlacementCanvas({
     onComposite(dataUrl);
   }, [position, scale, shadowOpacity, onComposite]);
 
+  // Error state
+  if (loadError) {
+    return (
+      <div className="space-y-5">
+        <div className="flex items-center justify-center h-[200px]">
+          <div className="text-center">
+            <p className="text-[#E8B4B8]/80 text-sm mb-3">{loadError}</p>
+            <button
+              onClick={onBack}
+              className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 text-[10px] 
+                tracking-[0.1em] uppercase font-light hover:border-[#E8B4B8]/40 
+                hover:text-[#F5F0EB]/70 transition-all duration-300 rounded-[4px]"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-5">
       {/* Instructions */}
@@ -224,8 +302,9 @@ export default function RoomPlacementCanvas({
       {/* Canvas container */}
       <div ref={containerRef} className="w-full flex justify-center">
         {isLoading ? (
-          <div className="flex items-center justify-center h-[300px]">
+          <div className="flex flex-col items-center justify-center h-[300px] gap-3">
             <div className="w-6 h-6 border-2 border-[#E8B4B8]/40 border-t-[#E8B4B8] rounded-full animate-spin" />
+            <p className="text-[10px] text-[#8A8580] tracking-[0.1em] uppercase">Loading images...</p>
           </div>
         ) : (
           <canvas
@@ -242,58 +321,60 @@ export default function RoomPlacementCanvas({
         )}
       </div>
 
-      {/* Controls */}
-      <div className="space-y-4">
-        {/* Size slider */}
-        <div className="flex items-center gap-3">
-          <span className="text-[10px] text-[#8A8580] uppercase tracking-[0.1em] w-14 shrink-0">
-            Size
-          </span>
-          <input
-            type="range"
-            min={0.15}
-            max={0.85}
-            step={0.01}
-            value={scale}
-            onChange={(e) => setScale(parseFloat(e.target.value))}
-            className="flex-1 h-[1px] appearance-none bg-[#1A1A1A] accent-[#E8B4B8] 
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 
-              [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full 
-              [&::-webkit-slider-thumb]:bg-[#E8B4B8] [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 
-              [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#E8B4B8] 
-              [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:cursor-pointer"
-          />
-          <span className="text-[10px] text-[#8A8580] w-8 text-right">
-            {Math.round(scale * 100)}%
-          </span>
-        </div>
+      {/* Controls — only show when product cutout is available */}
+      {hasProduct && !isLoading && (
+        <div className="space-y-4">
+          {/* Size slider */}
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] text-[#8A8580] uppercase tracking-[0.1em] w-14 shrink-0">
+              Size
+            </span>
+            <input
+              type="range"
+              min={0.15}
+              max={0.85}
+              step={0.01}
+              value={scale}
+              onChange={(e) => setScale(parseFloat(e.target.value))}
+              className="flex-1 h-[1px] appearance-none bg-[#1A1A1A] accent-[#E8B4B8] 
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 
+                [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full 
+                [&::-webkit-slider-thumb]:bg-[#E8B4B8] [&::-webkit-slider-thumb]:cursor-pointer
+                [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 
+                [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#E8B4B8] 
+                [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:cursor-pointer"
+            />
+            <span className="text-[10px] text-[#8A8580] w-8 text-right">
+              {Math.round(scale * 100)}%
+            </span>
+          </div>
 
-        {/* Shadow slider */}
-        <div className="flex items-center gap-3">
-          <span className="text-[10px] text-[#8A8580] uppercase tracking-[0.1em] w-14 shrink-0">
-            Shadow
-          </span>
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.05}
-            value={shadowOpacity}
-            onChange={(e) => setShadowOpacity(parseFloat(e.target.value))}
-            className="flex-1 h-[1px] appearance-none bg-[#1A1A1A] accent-[#E8B4B8]
-              [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 
-              [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full 
-              [&::-webkit-slider-thumb]:bg-[#E8B4B8] [&::-webkit-slider-thumb]:cursor-pointer
-              [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 
-              [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#E8B4B8] 
-              [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:cursor-pointer"
-          />
-          <span className="text-[10px] text-[#8A8580] w-8 text-right">
-            {Math.round(shadowOpacity * 100)}%
-          </span>
+          {/* Shadow slider */}
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] text-[#8A8580] uppercase tracking-[0.1em] w-14 shrink-0">
+              Shadow
+            </span>
+            <input
+              type="range"
+              min={0}
+              max={1}
+              step={0.05}
+              value={shadowOpacity}
+              onChange={(e) => setShadowOpacity(parseFloat(e.target.value))}
+              className="flex-1 h-[1px] appearance-none bg-[#1A1A1A] accent-[#E8B4B8]
+                [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 
+                [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full 
+                [&::-webkit-slider-thumb]:bg-[#E8B4B8] [&::-webkit-slider-thumb]:cursor-pointer
+                [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 
+                [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#E8B4B8] 
+                [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:cursor-pointer"
+            />
+            <span className="text-[10px] text-[#8A8580] w-8 text-right">
+              {Math.round(shadowOpacity * 100)}%
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Product name label */}
       <div className="flex items-center justify-center gap-2">
@@ -320,9 +401,11 @@ export default function RoomPlacementCanvas({
         </button>
         <button
           onClick={handleDone}
+          disabled={!hasProduct || isLoading}
           className="bg-[#E8B4B8] text-[#0A0A0A] px-6 py-2.5 text-[10px] 
             tracking-[0.1em] uppercase font-medium hover:bg-[#E0BEC0] 
-            transition-all duration-300 rounded-[4px]"
+            transition-all duration-300 rounded-[4px]
+            disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Done — Save Image
         </button>

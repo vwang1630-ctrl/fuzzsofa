@@ -3,29 +3,20 @@
  * These transparent-background product images are used exclusively by the
  * AI room preview feature — they are never shown on product pages.
  *
- * Key format: `{productSlug}/{colorIndex}`
- * Value: path to transparent PNG in /public/products/cutout/
+ * Only map files that ACTUALLY EXIST in /public/products/cutout/.
+ * Non-existent files will cause the canvas to fail silently.
  */
 
 export const cutoutImages: Record<string, string> = {
-  // Owl Sofa — 4 color variants
+  // Owl Sofa — cutout images that exist
   // color index matches materialOptions[].colors order in products.ts
-  "owl-sofa/0": "/products/cutout/owl-sofa-snow-white.png",       // Snow White Bouclé
   "owl-sofa/1": "/products/cutout/owl-sofa-rose-pink.png",        // Rose Pink Velvet
   "owl-sofa/2": "/products/cutout/owl-sofa-forest-green.png",     // Forest Green Velvet
   "owl-sofa/3": "/products/cutout/owl-sofa-dark-brown.png",       // Dark Brown Leather
 
-  // Gorilla Sofa — using first image as default cutout
-  "gorilla-sofa/0": "/products/cutout/gorilla-sofa-default.png",
-
-  // Silverback Sofa
-  "silverback-sofa/0": "/products/cutout/silverback-sofa-default.png",
-
-  // Meteorite Ring Sofa
-  "meteorite-ring-sofa/0": "/products/cutout/meteorite-ring-sofa-default.png",
-
-  // Muscle Gorilla Sofa
-  "muscle-gorilla-sofa/0": "/products/cutout/muscle-gorilla-sofa-default.png",
+  // Note: owl-sofa/0 (Snow White Bouclé) cutout not yet uploaded
+  // Note: gorilla-sofa, silverback-sofa, meteorite-ring-sofa, muscle-gorilla-sofa
+  //       cutouts not yet uploaded — will fall back to dark bg removal
 };
 
 /**
@@ -49,7 +40,8 @@ const colorNameToIndex: Record<string, Record<string, number>> = {
 
 /**
  * Get the cutout image path for a product + color selection.
- * Falls back to the first available cutout for the product if the specific color isn't found.
+ * Returns null if no cutout exists for this product/color combo —
+ * the caller should fall back to the original product image.
  */
 export function getCutoutImage(productSlug: string, colorIndexOrName: number | string = 0): string | null {
   let colorIndex: number;
