@@ -16,7 +16,7 @@ const slugToPrefix: Record<string, string> = {
 };
 
 const productCardImages: Record<string, string> = {
-  "gorilla-sofa": "/products/gorilla-sofa/gray.jpg",
+  "gorilla-sofa": "/products/gorilla-sofa/featured.webp",
   "silverback-sofa": "/products/silverback-sofa/gray.jpg",
   "owl-sofa": "/products/owl/snowy-white.png",
   "meteorite-ring-sofa": "/products/meteorite-ring-sofa/main.jpg",
