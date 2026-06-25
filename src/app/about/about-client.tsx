@@ -14,7 +14,7 @@ export default function AboutClient() {
           </h1>
           <p className="text-base font-light leading-[1.8] text-[#8A8580] max-w-[540px] mx-auto">
             A contemporary furniture design studio shaping sculptural sofas for modern interiors.
-            We focus on form, proportion, and tactile softness — creating pieces that define spaces.
+            We focus on form, proportion, and tactile experience — creating pieces that define spaces.
           </p>
         </div>
       </section>
@@ -25,10 +25,10 @@ export default function AboutClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div>
               <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Studio Identity</p>
-              <h2 className="font-serif text-2xl font-light tracking-[0.02em] mb-6">Design Vision, Manufacturing Depth</h2>
+              <h2 className="font-serif text-2xl font-light tracking-[0.02em] mb-6">Between Design and Production</h2>
               <p className="text-sm font-light leading-[1.8] text-[#8A8580] mb-4">
-                Fuzz Sofa Studio is a contemporary design studio that creates sculptural sofas for
-                residential and commercial interiors worldwide.
+                Fuzz Sofa Studio is a contemporary design studio that operates between design
+                and production — creating sculptural sofas for residential and commercial interiors worldwide.
               </p>
               <p className="text-sm font-light leading-[1.8] text-[#8A8580]">
                 Every piece begins with an idea about form — how a silhouette can change a room,
@@ -42,22 +42,22 @@ export default function AboutClient() {
         </div>
       </section>
 
-      {/* Section 2: Manufacturing Background */}
+      {/* Section 2: Production Background */}
       <section className="py-20 px-6 bg-[#050505]">
         <div className="max-w-[900px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Manufacturing Background</p>
+          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Production Background</p>
           <h2 className="font-serif text-2xl font-light tracking-[0.02em] mb-8">
-            10+ Years of Furniture Manufacturing
+            10+ Years of Production Experience
           </h2>
           <p className="text-sm font-light leading-[1.8] text-[#8A8580] max-w-[600px] mb-12">
-            With over a decade of production experience, our facility handles the full manufacturing
-            process — from frame engineering to final upholstery.
+            With over a decade of production experience, our studio handles the full production
+            process — from structural engineering to final upholstery.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {[
               "Custom Sofa Production",
-              "Upholstery Craftsmanship",
-              "Wood Structure Engineering",
+              "Upholstery Craft",
+              "Structural Engineering",
               "Export Packaging & Logistics",
               "Quality Inspection Systems",
               "Material Sourcing & Selection",
@@ -75,12 +75,12 @@ export default function AboutClient() {
         <div className="max-w-[700px] mx-auto text-center">
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6">Production Philosophy</p>
           <h2 className="font-serif text-[2rem] font-light tracking-[0.02em] leading-[1.15] mb-8 text-[#F5F0EB]">
-            Every piece is made slowly, built to last.
+            We believe design should be physical.
           </h2>
           <p className="text-sm font-light leading-[1.8] text-[#8A8580]">
-            We don&apos;t mass-produce. Each sofa is made to order — cut, shaped, and upholstered
-            by hand. This takes longer, but it ensures that every curve, every seam, and every
-            joint meets the standard our clients expect.
+            Each piece is developed within our studio production system — made to order, cut, shaped,
+            and upholstered by hand. This takes longer, but it ensures that every curve, every seam,
+            and every joint meets the standard our clients expect.
           </p>
         </div>
       </section>
@@ -89,8 +89,8 @@ export default function AboutClient() {
       <section className="py-20 px-6 bg-[#050505]">
         <div className="max-w-[900px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            ["10+", "Years Manufacturing"],
-            ["1000+", "Custom Sofas Produced"],
+            ["10+", "Years Production Experience"],
+            ["1000+", "Custom Pieces Created"],
             ["30+", "Countries Shipped"],
             ["100%", "Made to Order"],
           ].map(([num, label]) => (
@@ -109,13 +109,13 @@ export default function AboutClient() {
             See How We Work
           </h2>
           <p className="text-sm font-light text-[#8A8580] mb-8">
-            Visit our workshop to see the process behind every piece.
+            Visit our studio to see the process behind every piece.
           </p>
           <Link
             href="/workshop"
             className="inline-block px-8 py-3 border border-[#333] text-sm tracking-[0.08em] text-[#F5F0EB] hover:border-[#D6A8AC] hover:text-[#D6A8AC] transition-all duration-300 rounded-lg"
           >
-            Visit Workshop →
+            Visit Studio →
           </Link>
         </div>
       </section>

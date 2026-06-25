@@ -12,7 +12,7 @@ export default function WorkshopClient() {
           </h1>
           <p className="text-base font-light leading-[1.8] text-[#8A8580] max-w-[540px] mx-auto">
             This is where design becomes physical furniture.
-            Every piece passes through our workshop — from raw materials to finished product.
+            Every piece passes through our studio — from raw materials to finished product.
           </p>
         </div>
       </section>
@@ -24,16 +24,16 @@ export default function WorkshopClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
             {[
               {
-                title: "Frame Fabrication",
+                title: "Frame Construction",
                 desc: "Solid hardwood frames cut, assembled, and reinforced by hand. Every joint is checked for structural integrity.",
               },
               {
                 title: "Upholstery Production",
-                desc: "Premium leather and fabric applied by skilled upholsterers. Each panel is stretched, pinned, and secured with precision.",
+                desc: "Selected leather and fabric applied by skilled upholsterers. Each panel is stretched, pinned, and secured with precision.",
               },
               {
-                title: "Material Selection",
-                desc: "Italian leather, high-density foam, solid hardwood — sourced from verified suppliers and inspected on arrival.",
+                title: "Material Preparation",
+                desc: "Materials sourced from verified suppliers and inspected on arrival — leather, foam, hardwood, and structural components.",
               },
               {
                 title: "Sculpting & Shaping",
@@ -44,7 +44,7 @@ export default function WorkshopClient() {
                 desc: "Every finished piece undergoes a multi-point inspection before export. We check seams, symmetry, and structural soundness.",
               },
               {
-                title: "Export Preparation",
+                title: "Export Packaging",
                 desc: "Protective packaging designed for international shipping. Corner guards, wrapped frames, reinforced cartons.",
               },
             ].map((item) => (
@@ -70,9 +70,9 @@ export default function WorkshopClient() {
           <div className="space-y-8">
             {[
               { step: "01", title: "Design Confirmation", desc: "Every detail is confirmed — dimensions, materials, finish." },
-              { step: "02", title: "Material Sourcing", desc: "Leather, fabric, foam, and wood are selected and inspected." },
-              { step: "03", title: "Handmade Production", desc: "Frame, upholstery, and finishing — each step by hand." },
-              { step: "04", title: "International Shipping", desc: "Export-packed and shipped worldwide via reliable logistics partners." },
+              { step: "02", title: "Project Preparation", desc: "Materials selected, inspected, and prepared for production." },
+              { step: "03", title: "Studio Production", desc: "Frame, upholstery, and finishing — each step crafted by hand." },
+              { step: "04", title: "Inspection & Global Shipping", desc: "Export-packed and shipped worldwide via trusted logistics partners." },
             ].map((item) => (
               <div key={item.step} className="flex gap-6">
                 <span className="text-2xl font-serif font-light text-[#333] shrink-0">{item.step}</span>

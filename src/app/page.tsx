@@ -132,7 +132,10 @@ export default function HomePage() {
           </p>
           {/* Trust line */}
           <p className="mt-3 text-[11px] tracking-[0.1em] text-[#8A8580] animate-fade-in-delay-2">
-            10+ years of furniture manufacturing &amp; custom production
+            10+ years of furniture production experience
+          </p>
+          <p className="mt-1 text-[10px] tracking-[0.1em] text-[#8A8580]/50 animate-fade-in-delay-2">
+            Made-to-order · Designed &amp; crafted in China
           </p>
           <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
             <button
@@ -164,10 +167,10 @@ export default function HomePage() {
       <section className="bg-[#090909] py-8 md:py-10">
         <div className="max-w-[1200px] mx-auto px-6 flex flex-wrap items-center justify-center gap-8 md:gap-16 text-center">
           {[
-            { icon: '◆', label: 'Factory Direct' },
-            { icon: '✦', label: 'Made-to-Order Craftsmanship' },
-            { icon: '◉', label: 'Worldwide Shipping' },
-            { icon: '✧', label: 'Custom Design Support' },
+            { icon: '✦', label: 'Made-to-order production' },
+            { icon: '◆', label: 'Studio craftsmanship' },
+            { icon: '◉', label: 'International shipping' },
+            { icon: '✧', label: 'Custom design support' },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-2.5">
               <span className="text-[#E8B4B8] text-[10px]">{item.icon}</span>
@@ -181,10 +184,10 @@ export default function HomePage() {
       <section className="bg-[#050505] py-20 md:py-28">
         <div className="max-w-[700px] mx-auto px-6 text-center">
           <h2 className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] leading-[1.3] tracking-[0.02em]">
-            A design studio shaping sculptural furniture for modern interiors.
+            We design sculptural sofas for contemporary interiors, focusing on form, proportion, and tactile experience.
           </h2>
           <p className="mt-6 text-sm text-[#8A8580] leading-[1.7]">
-            We focus on form, proportion, and tactile softness — creating pieces that define a space rather than fill it.
+            Each piece is developed within our studio production system.
           </p>
         </div>
       </section>
@@ -264,15 +267,18 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
-              Material &amp; Craft
+              Material &amp; Structure
             </h2>
+            <p className="mt-4 text-[#8A8580] text-sm max-w-xl mx-auto leading-[1.7]">
+              We work with selected upholstery and structural systems based on each project&apos;s requirements.
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: 'Italian & Premium Leather', desc: 'Full-grain and top-grain options for lasting luxury' },
-              { title: 'Solid Hardwood Frames', desc: 'Engineered wood structures built for decades of use' },
-              { title: 'High-Density Foam', desc: 'Multi-layer foam systems for comfort and shape retention' },
-              { title: 'Hand-Finished Details', desc: 'Every stitch and curve refined by skilled artisans' },
+              { title: 'Upholstery Materials', desc: 'Materials selected per order for each specific project' },
+              { title: 'Engineered Frame Systems', desc: 'Wood and metal structural systems built for durability' },
+              { title: 'Multi-Layer Comfort', desc: 'Multi-layer foam construction for comfort and shape retention' },
+              { title: 'Studio Finishing', desc: 'Every detail refined within our studio production system' },
             ].map((item) => (
               <div key={item.title} className="border-l border-[#1A1A1A] pl-6 py-2">
                 <h3 className="font-serif text-lg text-[#F5F0EB]">{item.title}</h3>
@@ -294,9 +300,9 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
               { step: '01', title: 'Design Confirmation', desc: 'Select your piece, material, and finish — we confirm every detail before production begins.' },
-              { step: '02', title: 'Material Sourcing', desc: 'Premium leathers, hardwoods, and foams are selected and prepared for your specific order.' },
-              { step: '03', title: 'Handmade Production', desc: 'Each sofa is built by hand, one at a time, with meticulous attention to every curve and stitch.' },
-              { step: '04', title: 'International Shipping', desc: 'Professional export packaging and worldwide delivery with real-time tracking to your door.' },
+              { step: '02', title: 'Project Preparation', desc: 'Materials are selected and prepared for your specific project within our studio system.' },
+              { step: '03', title: 'Studio Production', desc: 'Each piece is produced within our studio system, with attention to every detail.' },
+              { step: '04', title: 'Inspection & Global Shipping', desc: 'Quality inspection followed by professional export packaging and worldwide delivery.' },
             ].map((item) => (
               <div key={item.step} className="text-center md:text-left">
                 <p className="font-serif text-2xl text-[#E8B4B8]/40 mb-3">{item.step}</p>

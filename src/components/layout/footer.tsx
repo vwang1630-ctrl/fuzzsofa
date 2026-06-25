@@ -12,9 +12,9 @@ export function Footer() {
         {/* Brand + Manufacturing Entity */}
         <div>
           <h3 className="font-serif text-lg tracking-[0.08em] text-[#F5F0EB] mb-1">Fuzz Sofa Studio</h3>
-          <p className="text-[11px] tracking-[0.08em] text-[#8A8580] mb-4">Furniture Design &amp; Manufacturing Studio</p>
+          <p className="text-[11px] tracking-[0.08em] text-[#8A8580] mb-4">Furniture Design &amp; Production Studio</p>
           <p className="text-xs font-light text-[#8A8580]/70 leading-relaxed mb-4">
-            Manufactured by Fuzz Furniture Co., Ltd.<br />
+            Manufactured by XXXX Furniture Co., Ltd.<br />
             Established 2015 · Zhejiang, China
           </p>
           <p className="text-xs text-[#8A8580] mb-4">
@@ -78,7 +78,7 @@ export function Footer() {
       <div className="border-t border-[#1A1A1A] px-6 py-5">
         <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/50">
-            Payments are securely processed via Stripe. We accept Visa, Mastercard, American Express, and Apple Pay.
+            Payments are securely processed by international payment providers.
           </p>
           <div className="flex items-center gap-4">
             <span className="text-[10px] tracking-[0.05em] text-[#8A8580]/40">VISA</span>
