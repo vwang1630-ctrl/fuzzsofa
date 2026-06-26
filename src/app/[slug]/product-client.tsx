@@ -222,28 +222,29 @@ export function ProductPageClient({ product }: Props) {
                     {/* Outer ring — rotates on hover */}
                     <span className="absolute inset-0 w-12 h-12 rounded-full transition-all duration-500 group-hover/icon:rotate-45"
                       style={{
-                        background: "conic-gradient(from 0deg, rgba(232,180,184,0.0), rgba(232,180,184,0.3), rgba(232,180,184,0.0), rgba(232,180,184,0.3), rgba(232,180,184,0.0))",
+                        background: "conic-gradient(from 0deg, rgba(232,180,184,0.0), rgba(232,180,184,0.4), rgba(232,180,184,0.0), rgba(232,180,184,0.4), rgba(232,180,184,0.0))",
                       }}
                     />
-                    {/* Inner circle */}
+                    {/* Inner circle — black bg with pink ring border */}
                     <span className="relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300"
                       style={{
-                        background: "linear-gradient(135deg, #E8B4B8 0%, #d9a0a5 100%)",
-                        boxShadow: "0 2px 12px rgba(232,180,184,0.25), inset 0 1px 0 rgba(255,255,255,0.15)",
+                        background: "#0A0A0A",
+                        border: "1.5px solid #E8B4B8",
+                        boxShadow: "0 0 16px rgba(232,180,184,0.15)",
                       }}
                     >
-                      {/* Custom room perspective icon */}
+                      {/* Custom room perspective icon — pink stroke */}
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         {/* Room walls perspective */}
-                        <path d="M3 21V9L12 3L21 9V21" stroke="#0A0A0A" strokeWidth="1.5" strokeLinejoin="round" />
+                        <path d="M3 21V9L12 3L21 9V21" stroke="#E8B4B8" strokeWidth="1.5" strokeLinejoin="round" />
                         {/* Floor line */}
-                        <path d="M3 21H21" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" />
+                        <path d="M3 21H21" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" />
                         {/* Sofa silhouette inside room */}
-                        <path d="M8 21V16C8 15 8.5 14 10 14H14C15.5 14 16 15 16 16V21" stroke="#0A0A0A" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M8 21V16C8 15 8.5 14 10 14H14C15.5 14 16 15 16 16V21" stroke="#E8B4B8" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
                         {/* Sofa cushion */}
-                        <path d="M9.5 16.5C9.5 15.8 10 15 11 15H13C14 15 14.5 15.8 14.5 16.5" stroke="#0A0A0A" strokeWidth="1" strokeLinecap="round" />
+                        <path d="M9.5 16.5C9.5 15.8 10 15 11 15H13C14 15 14.5 15.8 14.5 16.5" stroke="#E8B4B8" strokeWidth="1" strokeLinecap="round" />
                         {/* Sparkle — denotes AI/magic */}
-                        <path d="M18 6L18.5 7.5L20 8L18.5 8.5L18 10L17.5 8.5L16 8L17.5 7.5Z" fill="#0A0A0A" opacity="0.7" />
+                        <path d="M18 6L18.5 7.5L20 8L18.5 8.5L18 10L17.5 8.5L16 8L17.5 7.5Z" fill="#E8B4B8" opacity="0.9" />
                       </svg>
                     </span>
                   </button>
