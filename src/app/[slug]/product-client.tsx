@@ -178,209 +178,112 @@ export function ProductPageClient({ product }: Props) {
       />
 
       {/* ═══════════════════════════════════════════
-          SCREEN 1 — HERO (58/42 Layout)
-          Background: #050505
+          SCREEN 1 — HERO (Luxury Compact Layout)
+          Background: #0A0A0A
           ═══════════════════════════════════════════ */}
-      <section className="bg-[#050505]">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] min-h-screen">
-            {/* LEFT: Product Image Area */}
-            <div className="relative flex items-center justify-center bg-[#050505] px-6 pt-5 pb-6 md:pb-10">
-              <div className="flex gap-4 w-full max-w-[800px]">
-                {/* Vertical Thumbnails — Left Side (70x70, gap 16px, opacity .7) */}
-                {galleryImages.length > 1 && (
-                  <div className="hidden md:flex flex-col gap-4 flex-shrink-0">
-                    {galleryImages.map((img) => (
-                      <button
-                        key={img.id}
-                        onClick={() => setActiveImage(img.id)}
-                        className={`w-[70px] h-[70px] transition-all duration-300 bg-[#111] overflow-hidden flex-shrink-0 ${
-                          activeImage === img.id
-                            ? "border border-[rgba(255,255,255,0.4)] opacity-100"
-                            : "border border-transparent opacity-70 hover:opacity-100"
-                        }`}
-                        aria-label={`View ${img.id + 1}`}
-                      >
-                        {img.src ? (
-                          <img src={img.src} alt="" className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="font-serif text-sm text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
-                            {product.animal.charAt(0)}
-                          </span>
-                        )}
-                      </button>
-                    ))}
+      <section className="bg-[#0A0A0A]">
+        <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-8 md:pt-12 pb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:gap-12">
+            {/* LEFT: Product Image Area — Main Image + Bottom Thumbnails */}
+            <div className="flex flex-col">
+              {/* Main Image */}
+              <div className="relative w-full aspect-square bg-[#111] rounded-lg overflow-hidden">
+                {galleryImages[activeImage]?.src ? (
+                  <img
+                    src={galleryImages[activeImage].src}
+                    alt={productName}
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="font-serif text-[10rem] md:text-[15rem] text-[#F5F0EB]/[0.04] select-none">
+                      {product.animal.charAt(0)}
+                    </span>
                   </div>
                 )}
-
-                {/* Main Image — Square 1:1 with 60px breathing room */}
-                <div className="relative flex-1 aspect-square bg-gradient-to-b from-[#0a0a0a] to-[#050505] overflow-hidden p-[60px]">
-                  <div
-                    className="absolute inset-0 opacity-[0.03]"
-                    style={{ background: "radial-gradient(ellipse at 50% 70%, #E8B4B8, transparent 60%)" }}
-                  />
-                  {galleryImages[activeImage]?.src ? (
-                    <img
-                      src={galleryImages[activeImage].src}
-                      alt={productName}
-                      className="w-full h-full object-contain"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="font-serif text-[10rem] md:text-[15rem] text-[#F5F0EB]/[0.04] select-none">
-                        {product.animal.charAt(0)}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* AI Room Preview — Bottom Right Circle (Brand Pink tint) */}
-                  <button
-                    onClick={() => setShowRoomViz(true)}
-                    className="absolute bottom-8 right-8 z-10 w-[56px] h-[56px] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 group"
-                    style={{
-                      background: "rgba(214,168,172,0.15)",
-                      border: "1px solid rgba(214,168,172,0.35)",
-                      backdropFilter: "blur(20px)",
-                      WebkitBackdropFilter: "blur(20px)",
-                    }}
-                    aria-label="Preview in your space"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D6A8AC" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                      <circle cx="12" cy="13" r="4" />
-                    </svg>
-                    {/* Tooltip on hover */}
-                    <span className="absolute bottom-full right-0 mb-2 px-3 py-1.5 bg-[#111] border border-[rgba(214,168,172,0.25)] rounded text-[9px] tracking-[0.12em] uppercase text-[#D6A8AC]/80 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                      Preview In Your Space
-                    </span>
-                  </button>
-
-                  {/* Mobile Thumbnails — Bottom Left */}
-                  {galleryImages.length > 1 && (
-                    <div className="md:hidden absolute bottom-4 left-4 flex gap-2">
-                      {galleryImages.map((img) => (
-                        <button
-                          key={img.id}
-                          onClick={() => setActiveImage(img.id)}
-                          className={`w-[48px] h-[48px] transition-all duration-300 bg-[#0A0A0A]/80 backdrop-blur-sm overflow-hidden ${
-                            activeImage === img.id
-                              ? "border border-[rgba(255,255,255,0.4)] opacity-100"
-                              : "border border-transparent opacity-70 hover:opacity-100"
-                          }`}
-                        >
-                          {img.src ? (
-                            <img src={img.src} alt="" className="w-full h-full object-cover" />
-                          ) : (
-                            <span className="font-serif text-xs text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
-                              {product.animal.charAt(0)}
-                            </span>
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                {/* AI Room Preview — Bottom Right Circle */}
+                <button
+                  onClick={() => setShowRoomViz(true)}
+                  className="absolute bottom-4 right-4 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 group"
+                  style={{
+                    background: "rgba(214,168,172,0.15)",
+                    border: "1px solid rgba(214,168,172,0.35)",
+                  }}
+                  aria-label="Preview in your space"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D6A8AC" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                    <circle cx="12" cy="13" r="4" />
+                  </svg>
+                  <span className="absolute bottom-full right-0 mb-2 px-2 py-1 bg-[#111] border border-[rgba(214,168,172,0.25)] rounded text-[8px] tracking-[0.12em] uppercase text-[#D6A8AC]/80 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    Preview In Your Space
+                  </span>
+                </button>
               </div>
+
+              {/* Horizontal Thumbnails Below Main Image */}
+              {galleryImages.length > 1 && (
+                <div className="mt-3 flex gap-3 overflow-x-auto pb-1 scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                  {galleryImages.map((img) => (
+                    <button
+                      key={img.id}
+                      onClick={() => setActiveImage(img.id)}
+                      className={`w-20 h-20 flex-shrink-0 rounded transition-all duration-300 bg-[#111] overflow-hidden ${
+                        activeImage === img.id
+                          ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]"
+                          : "opacity-70 hover:opacity-100"
+                      }`}
+                      aria-label={`View ${img.id + 1}`}
+                    >
+                      {img.src ? (
+                        <img src={img.src} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="font-serif text-sm text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
+                          {product.animal.charAt(0)}
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* RIGHT: Product Info (42%) — lifted upward */}
-            <div className="flex flex-col justify-center px-8 md:px-12 lg:px-14 py-16 lg:py-20 bg-[#050505] lg:-mt-10" style={{ transform: "translateY(-40px)" }}>
-              {/* Collection Label */}
-              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+            {/* RIGHT: Product Info — Compact Luxury */}
+            <div className="flex flex-col">
+              {/* Category Label */}
+              <p className="text-[10px] text-[#8A8580] tracking-[2px] uppercase mb-2">
                 {collectionName}
               </p>
 
-              {/* Title + Save/Share */}
-              <div className="flex items-start justify-between gap-4 max-w-[500px] mb-4">
-                <h1 className="font-serif text-[64px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em]">
-                  {productName}
-                </h1>
-                <div className="flex items-center gap-1 flex-shrink-0 mt-3">
-                  {/* Save to Moodboard */}
-                  <button
-                    onClick={() => setSaved(!saved)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded transition-all duration-300 hover:bg-[rgba(255,255,255,0.06)]"
-                    aria-label="Save to moodboard"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#D6A8AC" : "none"} stroke={saved ? "#D6A8AC" : "#8A8580"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                    </svg>
-                    <span className={`text-[9px] tracking-[0.12em] uppercase ${saved ? "text-[#D6A8AC]" : "text-[#8A8580]"}`}>
-                      {saved ? "Saved" : "Save"}
-                    </span>
-                  </button>
-                  {/* Share */}
-                  <div className="relative" ref={shareMenuRef}>
-                    <button
-                      onClick={() => setShowShareMenu(!showShareMenu)}
-                      className="flex items-center gap-1.5 px-3 py-2 rounded transition-all duration-300 hover:bg-[rgba(255,255,255,0.06)]"
-                      aria-label="Share"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A8580" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                        <polyline points="16 6 12 2 8 6" />
-                        <line x1="12" y1="2" x2="12" y2="15" />
-                      </svg>
-                      <span className="text-[9px] tracking-[0.12em] uppercase text-[#8A8580]">
-                        Share
-                      </span>
-                    </button>
-                    {/* Share Dropdown */}
-                    {showShareMenu && (
-                      <div className="absolute right-0 top-full mt-1 w-44 bg-[#111] border border-[#222] rounded z-50 py-1 shadow-2xl">
-                        {[
-                          { id: "copy", label: "Copy Link", icon: "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" },
-                          { id: "pinterest", label: "Pinterest", icon: "M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.182-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.425 1.808-2.425.853 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.177-4.068-2.845 0-4.515 2.135-4.515 4.34 0 .859.331 1.781.745 2.282a.3.3 0 0 1 .069.288l-.278 1.133c-.044.183-.145.222-.335.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.965-.527-2.291-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z" },
-                          { id: "facebook", label: "Facebook", icon: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" },
-                          { id: "email", label: "Email", icon: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6" },
-                        ].map((item) => (
-                          <button
-                            key={item.id}
-                            onClick={() => handleShare(item.id)}
-                            className="flex items-center gap-3 w-full text-left px-4 py-2.5 text-[11px] tracking-[0.06em] text-[#F5F0EB]/70 hover:bg-[rgba(255,255,255,0.06)] hover:text-[#F5F0EB] transition-all duration-200"
-                          >
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                              <path d={item.icon} />
-                            </svg>
-                            {item.label}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+              {/* Title */}
+              <h1 className="font-serif text-[28px] md:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
+                {productName}
+              </h1>
 
-              {/* Price — 42px */}
-              <p className="font-serif text-[42px] font-light text-[#F5F0EB]/80 mt-8 mb-6">
+              {/* Price — tight below title */}
+              <p className="font-serif text-[22px] md:text-[24px] font-light text-[#F5F0EB]/80 mt-1">
                 {displayPrice}
               </p>
 
-              {/* Tagline */}
-              <p className="text-[13px] text-[#F5F0EB]/50 leading-[1.6] max-w-[400px] mb-3">
+              {/* One-liner Description */}
+              <p className="text-[14px] text-[#8A8580] leading-[1.6] mt-2">
                 {productTagline}
               </p>
 
-              {/* Brand Language */}
-              <p className="text-[11px] text-[#E8B4B8]/50 tracking-[0.12em] italic mb-8 max-w-[380px]">
-                {t("furnitureToDefineSpace" as TranslationKeys) || "Furniture designed to define a space."}
-              </p>
-
               {/* Separator */}
-              <div className="h-px bg-[#1A1A1A] mb-8" />
+              <div className="h-px bg-[#333] my-5" />
 
-              {/* Material Quick Select — Luxury Vertical List */}
+              {/* Material Options — Grouped Swatches */}
               {product.materialOptions && product.materialOptions.length > 0 && (
-                <div className="mb-8">
+                <div className="mb-5">
                   {product.materialOptions.map((mat) => (
-                    <div key={mat.type} className="mb-5">
-                      <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-3">
+                    <div key={mat.type} className="mb-4">
+                      <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">
                         {mat.type}
                       </label>
-                      <div className="space-y-1.5">
-                        {mat.options.map((opt) => {
-                          const colorIdx = mat.options.indexOf(opt);
-                          const colorHex = mat.colors[colorIdx];
+                      <div className="flex flex-wrap gap-2">
+                        {mat.options.map((opt, optIdx) => {
+                          const colorHex = mat.colors[optIdx];
                           const isSelected = materialType === mat.type && materialOption === opt;
                           return (
                             <button
@@ -389,50 +292,43 @@ export function ProductPageClient({ product }: Props) {
                                 setMaterialType(mat.type);
                                 setMaterialOption(opt);
                               }}
-                              className={`flex items-center gap-3 w-full text-left py-1.5 transition-all duration-300 group ${
-                                isSelected
-                                  ? "text-[#F5F0EB]"
-                                  : "text-[#F5F0EB]/35 hover:text-[#F5F0EB]/60"
-                              }`}
+                              className="flex items-center gap-2 transition-all duration-300 group"
                             >
                               <span
-                                className={`w-5 h-5 rounded-sm flex-shrink-0 transition-all duration-300 ${
+                                className={`w-6 h-6 rounded flex-shrink-0 transition-all duration-300 ${
                                   isSelected
-                                    ? "ring-1 ring-[#E8B4B8] ring-offset-1 ring-offset-[#050505]"
+                                    ? "ring-2 ring-[#E8B4B8] ring-offset-1 ring-offset-[#0A0A0A]"
                                     : "border border-[#333] group-hover:border-[#666]"
                                 }`}
                                 style={{ backgroundColor: colorHex }}
                               />
-                              <span className="text-xs tracking-[0.06em]">{opt}</span>
+                              <span className={`text-xs tracking-[0.04em] whitespace-nowrap ${
+                                isSelected ? "text-[#F5F0EB]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"
+                              }`}>
+                                {opt}
+                              </span>
                             </button>
                           );
                         })}
                       </div>
-                      {/* Leather texture bar */}
-                      <div
-                        className="mt-3 h-[2px] w-full opacity-30"
-                        style={{
-                          background: `linear-gradient(90deg, ${mat.colors.join(", ")})`,
-                        }}
-                      />
                     </div>
                   ))}
                 </div>
               )}
 
               {/* Separator */}
-              <div className="h-px bg-[#1A1A1A] mb-8" />
+              <div className="h-px bg-[#333] mb-5" />
 
-              {/* Add to Cart — Brand Pink Primary CTA */}
+              {/* CTA Buttons — Stacked, tight spacing */}
               <button
                 onClick={handleAddToCart}
-                className="w-full h-[60px] rounded-[14px] text-[#111] font-semibold text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-3 flex items-center justify-center gap-2"
-                style={{ background: addedToCart ? "#111" : "#D6A8AC", border: addedToCart ? "1px solid #D6A8AC" : "none" }}
-                onMouseEnter={(e) => { if (!addedToCart) { e.currentTarget.style.background = "#E0BEC0"; e.currentTarget.style.transform = "translateY(-1px)"; } }}
-                onMouseLeave={(e) => { if (!addedToCart) { e.currentTarget.style.background = "#D6A8AC"; e.currentTarget.style.transform = "translateY(0)"; } }}
+                className="w-full py-4 rounded-lg text-[#0A0A0A] font-semibold text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2"
+                style={{ background: addedToCart ? "#111" : "#E8B4B8", border: addedToCart ? "1px solid #E8B4B8" : "none" }}
+                onMouseEnter={(e) => { if (!addedToCart) { e.currentTarget.style.background = "#D6A8AC"; } }}
+                onMouseLeave={(e) => { if (!addedToCart) { e.currentTarget.style.background = "#E8B4B8"; } }}
               >
                 {addedToCart ? (
-                  <span className="text-[#D6A8AC]">{t("addedToCart")}</span>
+                  <span className="text-[#E8B4B8]">{t("addedToCart")}</span>
                 ) : (
                   <>
                     {t("addToCart")}
@@ -443,44 +339,35 @@ export function ProductPageClient({ product }: Props) {
                 )}
               </button>
 
-              {/* Buy Now — Secondary Pink Border */}
               <button
-                className="w-full h-[60px] rounded-[14px] bg-transparent text-[#D6A8AC] text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-8 flex items-center justify-center"
-                style={{ border: "1px solid #D6A8AC" }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(214,168,172,0.08)"; }}
+                className="w-full py-4 rounded-lg bg-transparent text-[#E8B4B8] text-[11px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
+                style={{ border: "1px solid #E8B4B8" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(232,180,184,0.08)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
               >
                 Buy Now
               </button>
 
-              {/* Delivery Info */}
-              <div className="flex items-center gap-6 text-[11px] text-[#8A8580] tracking-[0.05em]">
-                <span>{t("freeWhiteGlove")}</span>
-                <span className="w-px h-3 bg-[#333]" />
-                <span>{t("madeToOrder")}</span>
-                <span className="w-px h-3 bg-[#333]" />
-                <span>8–12 {t("weeks" as TranslationKeys) || "Weeks"}</span>
+              {/* Key Info Strip */}
+              <div className="flex items-center gap-1 mt-4 text-[11px] text-[#8A8580] tracking-[0.04em]">
+                <span>1–2 Weeks</span>
+                <span className="mx-1">·</span>
+                <span>Free White Glove</span>
+                <span className="mx-1">·</span>
+                <span>Made to Order</span>
               </div>
 
-              {/* Trust Elements */}
-              <div className="mt-5 space-y-2">
-                <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/70 tracking-[0.03em]">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-                  <span>{t("madeToOrderWeeks" as TranslationKeys) || "Made to order (1–2 weeks production time)"}</span>
-                </div>
-                <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/70 tracking-[0.03em]">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-                  <span>{t("customSizeFabric" as TranslationKeys) || "Custom size & finish"}</span>
-                </div>
-                <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/70 tracking-[0.03em]">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-                  <span>{t("handmadeInChina" as TranslationKeys) || "Studio-crafted in China"}</span>
-                </div>
-                <div className="flex items-center gap-2 text-[11px] text-[#8A8580]/50 tracking-[0.03em]">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                  <span>{t("secureCheckout" as TranslationKeys) || "Secure international checkout"}</span>
-                </div>
-              </div>
+              {/* AI Room Preview Link */}
+              <button
+                onClick={() => setShowRoomViz(true)}
+                className="mt-3 text-[11px] text-[#8A8580] tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-1.5"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                  <circle cx="12" cy="13" r="4" />
+                </svg>
+                Preview in your room
+              </button>
             </div>
           </div>
         </div>
