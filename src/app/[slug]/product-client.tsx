@@ -201,34 +201,42 @@ export function ProductPageClient({ product }: Props) {
                     </span>
                   </div>
                 )}
-                {/* AI Room Preview — Black circle + pink filled icon with hover label */}
+                {/* AI Room Preview — Luxury icon + hover label */}
                 <div className="absolute bottom-5 right-5 z-10 group/room flex items-center">
-                  {/* Hover label — slides in from right, black text for visibility on any product background */}
-                  <span className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[11px] tracking-[0.15em] uppercase font-medium mr-3 px-3 py-1.5 rounded-full"
+                  {/* Hover label — pink text + black capsule */}
+                  <span className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[11px] tracking-[0.18em] uppercase font-light mr-3 px-4 py-2 rounded-full"
                     style={{
-                      background: "#F5F0EB",
-                      color: "#0A0A0A",
+                      background: "#0A0A0A",
+                      color: "#E8B4B8",
+                      border: "1px solid rgba(232,180,184,0.25)",
                     }}
                   >
                     Preview in your room
                   </span>
                   <button
                     onClick={() => setShowRoomViz(true)}
-                    className="flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-[0_0_20px_rgba(232,180,184,0.35)]"
-                    style={{ background: "#0A0A0A" }}
+                    className="relative flex items-center justify-center w-12 h-12 rounded-full transition-all duration-500 hover:scale-[1.08] active:scale-95"
+                    style={{
+                      background: "#0A0A0A",
+                      boxShadow: "0 2px 12px rgba(0,0,0,0.6)",
+                    }}
                     aria-label="Preview in your room"
                   >
-                    {/* Custom room icon: pink filled room + black cutout sofa on black circle */}
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {/* Room shape — solid pink fill, no stroke */}
-                      <path d="M3 21V9L12 3L21 9V21H3Z" fill="#E8B4B8" />
-                      {/* Sofa cutout — solid black (same as circle background =镂空效果) */}
-                      <path d="M7.5 21V15.5C7.5 14.2 8.5 13 10.5 13H13.5C15.5 13 16.5 14.2 16.5 15.5V21H7.5Z" fill="#0A0A0A" />
-                      {/* Sofa back cushion cutout */}
-                      <path d="M9 15.2C9 14.5 9.5 13.8 10.8 13.8H13.2C14.5 13.8 15 14.5 15 15.2V16H9Z" fill="#0A0A0A" opacity="0.6" />
-                      {/* AI sparkle — solid pink */}
-                      <path d="M18 5L18.6 6.8L20.5 7.3L18.6 7.8L18 9.5L17.4 7.8L15.5 7.3L17.4 6.8Z" fill="#E8B4B8" />
+                    {/* Luxury "Room Eye" icon — geometric abstraction */}
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {/* Outer room frame — thin architectural lines */}
+                      <rect x="4" y="6" width="24" height="20" rx="1" stroke="#E8B4B8" strokeWidth="1.2" strokeOpacity="0.5" />
+                      {/* Floor line — grounded */}
+                      <line x1="4" y1="22" x2="28" y2="22" stroke="#E8B4B8" strokeWidth="1" strokeOpacity="0.3" />
+                      {/* Sofa silhouette — single elegant curve */}
+                      <path d="M9 22V17.5C9 15.8 10.2 14.5 12 14.5H20C21.8 14.5 23 15.8 23 17.5V22" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      {/* Sofa seat cushion line */}
+                      <path d="M11 17.5C11 16.7 11.6 16 12.5 16H19.5C20.4 16 21 16.7 21 17.5" stroke="#E8B4B8" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.6" />
+                      {/* AI indicator — minimal diamond */}
+                      <path d="M25 5L26 7L28 8L26 9L25 11L24 9L22 8L24 7Z" fill="#E8B4B8" fillOpacity="0.85" />
                     </svg>
+                    {/* Subtle ring pulse on hover */}
+                    <span className="absolute inset-0 rounded-full border border-[#E8B4B8]/0 group-hover/room:border-[#E8B4B8]/30 transition-all duration-700" />
                   </button>
                 </div>
               </div>
