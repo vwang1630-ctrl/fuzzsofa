@@ -187,7 +187,7 @@ export function ProductPageClient({ product }: Props) {
             {/* LEFT: Product Image Area — Main Image + Bottom Thumbnails */}
             <div className="flex flex-col">
               {/* Main Image */}
-              <div className="relative w-full aspect-square bg-[#111] rounded-lg overflow-hidden">
+              <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
                 {galleryImages[activeImage]?.src ? (
                   <img
                     src={galleryImages[activeImage].src}
@@ -228,7 +228,7 @@ export function ProductPageClient({ product }: Props) {
                     <button
                       key={img.id}
                       onClick={() => setActiveImage(img.id)}
-                      className={`w-20 h-20 flex-shrink-0 rounded transition-all duration-300 bg-[#111] overflow-hidden ${
+                      className={`w-20 h-20 flex-shrink-0 transition-all duration-300 bg-[#111] overflow-hidden ${
                         activeImage === img.id
                           ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]"
                           : "opacity-70 hover:opacity-100"
@@ -322,7 +322,7 @@ export function ProductPageClient({ product }: Props) {
               {/* CTA Buttons — Stacked, tight spacing */}
               <button
                 onClick={handleAddToCart}
-                className="w-full py-4 rounded-lg text-[#0A0A0A] font-semibold text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2"
+                className="w-full py-4 text-[#0A0A0A] font-semibold text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2"
                 style={{ background: addedToCart ? "#111" : "#E8B4B8", border: addedToCart ? "1px solid #E8B4B8" : "none" }}
                 onMouseEnter={(e) => { if (!addedToCart) { e.currentTarget.style.background = "#D6A8AC"; } }}
                 onMouseLeave={(e) => { if (!addedToCart) { e.currentTarget.style.background = "#E8B4B8"; } }}
@@ -340,7 +340,7 @@ export function ProductPageClient({ product }: Props) {
               </button>
 
               <button
-                className="w-full py-4 rounded-lg bg-transparent text-[#E8B4B8] text-[11px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
+                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[11px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
                 style={{ border: "1px solid #E8B4B8" }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(232,180,184,0.08)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
