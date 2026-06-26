@@ -504,17 +504,12 @@ export function ProductPageClient(
                                         {useCm ? 'CM / 切换英寸' : 'IN / 切换厘米'}
                                     </button>
                                 </div>
-                                <div className="space-y-1">
-                                    {(() => {
-                                        const fmt = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
-                                        return (<>
-                                            <p className="text-[12px] text-[#F5F0EB]/70">宽：约 {fmt(product.specifications.width)}</p>
-                                            <p className="text-[12px] text-[#F5F0EB]/70">深：约 {fmt(product.specifications.depth)}</p>
-                                            <p className="text-[12px] text-[#F5F0EB]/70">高：约 {fmt(product.specifications.height)}</p>
-                                            <p className="text-[12px] text-[#F5F0EB]/70">坐高：约 {fmt(product.specifications.seatHeight)}</p>
-                                        </>);
-                                    })()}
-                                </div>
+                                <p className="text-[12px] text-[#F5F0EB]/70">
+                                        {(() => {
+                                            const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
+                                            return `W${f(product.specifications.width)} × D${f(product.specifications.depth)} × H${f(product.specifications.height)} · 坐高${f(product.specifications.seatHeight)}`;
+                                        })()}
+                                    </p>
                             </div>}
                             {}
                             {product.materials && product.materials.length > 0 && <div className="mb-5">
