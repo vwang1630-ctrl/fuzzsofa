@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
 import type { Product } from "@/lib/products";
 import { getProduct, getPrice, formatPrice } from "@/lib/products";
 import { productJsonLd, faqJsonLd, breadcrumbJsonLd, itemPageJsonLd } from "@/lib/seo";
@@ -17,6 +18,7 @@ interface Props {
 export function ProductPageClient({ product }: Props) {
   const { addItem, region } = useCart();
   const { t } = useLanguage();
+  const router = useRouter();
 
   const slugToPrefix: Record<string, string> = {
     "gorilla-sofa": "gorillaSofa",
@@ -68,6 +70,18 @@ export function ProductPageClient({ product }: Props) {
     });
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 3000);
+  };
+
+  const handleBuyNow = () => {
+    addItem({
+      product,
+      quantity,
+      materialType,
+      materialOption,
+      region,
+      selected: true,
+    });
+    router.push("/checkout");
   };
 
   const currentMaterialOptions = product.materialOptions?.find(
@@ -464,6 +478,7 @@ export function ProductPageClient({ product }: Props) {
                 style={{ border: "1px solid #E8B4B8" }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(232,180,184,0.08)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                onClick={handleBuyNow}
               >
                 Buy Now
               </button>
