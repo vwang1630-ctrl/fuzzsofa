@@ -215,7 +215,7 @@ export function ProductPageClient({ product }: Props) {
                   </span>
                   <button
                     onClick={() => setShowRoomViz(true)}
-                    className="relative flex items-center justify-center w-14 h-14 rounded-[2px] transition-all duration-500 hover:scale-[1.08] active:scale-95"
+                    className="relative flex items-center justify-center w-14 h-14 rounded-full transition-all duration-500 hover:scale-[1.08] active:scale-95"
                     style={{
                       background: "#0A0A0A",
                       boxShadow: "0 2px 12px rgba(0,0,0,0.6)",
