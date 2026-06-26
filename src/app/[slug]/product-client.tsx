@@ -684,18 +684,14 @@ export function ProductPageClient(
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex items-end">
-                                <div className="flex flex-wrap gap-3">
-                                    {[
-                                        t("studioCrafted" as TranslationKeys) || "Studio-Crafted",
-                                        t("madeToOrder" as TranslationKeys) || "Made To Order",
-                                        t("collectibleDesign" as TranslationKeys) || "Collectible Design"
-                                    ].map(label => <span
-                                        key={label}
-                                        className="text-[10px] tracking-[0.15em] uppercase border border-[#333] px-4 py-2 text-[#F5F0EB]/40 hover:border-[#E8B4B8]/40 hover:text-[#E8B4B8]/70 transition-colors duration-300">
-                                        {label}
-                                    </span>)}
-                                </div>
+                            <div className="flex items-center justify-center">
+                                <Image
+                                    src="/products/owl/story-image.webp"
+                                    alt="Owl Sofa Story"
+                                    width={500}
+                                    height={600}
+                                    className="w-full max-w-[500px] object-cover"
+                                />
                             </div>
                         </div>
                     </div>
