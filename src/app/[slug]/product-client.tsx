@@ -530,7 +530,7 @@ export function ProductPageClient({ product }: Props) {
             ].map((space, idx) => (
               <div key={idx} className="group cursor-pointer">
                 {/* Image */}
-                <div className="relative aspect-[4/5] bg-[#111] overflow-hidden mb-4">
+                <div className="relative aspect-[2/1] bg-[#111] overflow-hidden mb-4">
                   {space.image ? (
                     <img
                       src={space.image}
