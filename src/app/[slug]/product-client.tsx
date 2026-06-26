@@ -525,10 +525,10 @@ export function ProductPageClient(
                                     {/* Dimension values */}
                                     <div className="flex flex-col gap-1">
                                         <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em] font-light">
-                                            W {useCm ? `${product.specifications.width}cm` : `${(parseFloat(product.specifications.width) / 2.54).toFixed(1)"`} × D {useCm ? `${product.specifications.depth}cm` : `${(parseFloat(product.specifications.depth) / 2.54).toFixed(1)"`} × H {useCm ? `${product.specifications.height}cm` : `${(parseFloat(product.specifications.height) / 2.54).toFixed(1)"`}
+                                            W {useCm ? `${product.specifications.width}cm` : `${(parseFloat(product.specifications.width) / 2.54).toFixed(1)}"`} × D {useCm ? `${product.specifications.depth}cm` : `${(parseFloat(product.specifications.depth) / 2.54).toFixed(1)}"`} × H {useCm ? `${product.specifications.height}cm` : `${(parseFloat(product.specifications.height) / 2.54).toFixed(1)}"`}
                                         </p>
                                         <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em] font-light">
-                                            坐高 {useCm ? `${product.specifications.seatHeight}cm` : `${(parseFloat(product.specifications.seatHeight) / 2.54).toFixed(1)"`} · 净重 50kg（含包装 60kg）
+                                            坐高 {useCm ? `${product.specifications.seatHeight}cm` : `${(parseFloat(product.specifications.seatHeight) / 2.54).toFixed(1)}"`} · 净重 50kg（含包装 60kg）
                                         </p>
                                         <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em] font-light">承重 150kg</p>
                                         <button
