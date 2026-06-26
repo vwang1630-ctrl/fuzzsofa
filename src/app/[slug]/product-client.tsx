@@ -201,23 +201,30 @@ export function ProductPageClient({ product }: Props) {
                     </span>
                   </div>
                 )}
-                {/* AI Room Preview — Prominent Bottom-Left Overlay */}
+                {/* AI Room Preview — Floating Pill */}
                 <button
                   onClick={() => setShowRoomViz(true)}
-                  className="absolute bottom-4 left-4 z-10 flex items-center gap-2.5 px-5 py-3 transition-all duration-300 hover:gap-3.5 group"
-                  style={{
-                    background: "rgba(10,10,10,0.85)",
-                    border: "1px solid #E8B4B8",
-                    backdropFilter: "blur(8px)",
-                  }}
+                  className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3 transition-all duration-500 hover:scale-[1.03] active:scale-[0.98] group"
                   aria-label="Preview in your space"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                    <circle cx="12" cy="13" r="4" />
-                  </svg>
-                  <span className="text-[11px] tracking-[0.16em] uppercase text-[#E8B4B8] whitespace-nowrap font-medium">
-                    Preview In Your Room
+                  <span className="flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-500"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(232,180,184,0.12) 0%, rgba(232,180,184,0.04) 100%)",
+                      border: "1px solid rgba(232,180,184,0.25)",
+                      backdropFilter: "blur(12px)",
+                    }}
+                  >
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-500"
+                      style={{ background: "rgba(232,180,184,0.15)" }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                        <circle cx="12" cy="13" r="4" />
+                      </svg>
+                    </span>
+                    <span className="text-[11px] tracking-[0.2em] uppercase text-[#F5F0EB]/90 whitespace-nowrap font-light group-hover:text-[#E8B4B8] transition-colors duration-500">
+                      Preview In Your Room
+                    </span>
                   </span>
                 </button>
               </div>
