@@ -201,31 +201,19 @@ export function ProductPageClient({ product }: Props) {
                     </span>
                   </div>
                 )}
-                {/* AI Room Preview — Floating Pill */}
+                {/* AI Room Preview — Icon Only */}
                 <button
                   onClick={() => setShowRoomViz(true)}
-                  className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3 transition-all duration-500 hover:scale-[1.03] active:scale-[0.98] group"
-                  aria-label="Preview in your space"
+                  className="absolute bottom-5 right-5 z-10 flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(232,180,184,0.35)] active:scale-95 group"
+                  style={{
+                    background: "rgba(232,180,184,0.9)",
+                  }}
+                  aria-label="Preview in your room"
                 >
-                  <span className="flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-500"
-                    style={{
-                      background: "linear-gradient(135deg, rgba(232,180,184,0.12) 0%, rgba(232,180,184,0.04) 100%)",
-                      border: "1px solid rgba(232,180,184,0.25)",
-                      backdropFilter: "blur(12px)",
-                    }}
-                  >
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-500"
-                      style={{ background: "rgba(232,180,184,0.15)" }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                        <circle cx="12" cy="13" r="4" />
-                      </svg>
-                    </span>
-                    <span className="text-[11px] tracking-[0.2em] uppercase text-[#F5F0EB]/90 whitespace-nowrap font-light group-hover:text-[#E8B4B8] transition-colors duration-500">
-                      Preview In Your Room
-                    </span>
-                  </span>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                    <circle cx="12" cy="13" r="4" />
+                  </svg>
                 </button>
               </div>
 
