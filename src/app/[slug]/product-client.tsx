@@ -238,7 +238,7 @@ export function ProductPageClient({ product }: Props) {
                       <path d="M24.5 6.5L25 8L26.5 8.5L25 9L24.5 10.5L24 9L22.5 8.5L24 8Z" fill="#E8B4B8" fillOpacity="0.9" />
                     </svg>
                     {/* Subtle ring pulse on hover */}
-                    <span className="absolute inset-0 rounded-[2px] border border-[#E8B4B8]/0 group-hover/room:border-[#E8B4B8]/30 transition-all duration-700" />
+                    <span className="absolute inset-0 rounded-full border border-[#E8B4B8]/0 group-hover/room:border-[#E8B4B8]/30 transition-all duration-700" />
                   </button>
                 </div>
               </div>
