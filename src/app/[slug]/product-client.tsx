@@ -459,131 +459,102 @@ export function ProductPageClient({ product }: Props) {
       </section>
 
       {/* ═══════════════════════════════════════════
-          SCREEN 2 — DESIGN STORY
-          Background: #090909
+          SCREEN 2 — SEE IT IN REAL SPACES
+          Background: #0A0A0A
           ═══════════════════════════════════════════ */}
-      <section className="bg-[#090909]">
-        <div className="max-w-[1100px] mx-auto px-6 py-[140px]">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-            {/* Left: Detail Images */}
-            <div className="space-y-6">
-              {galleryImages.length >= 2 ? (
-                <>
-                  <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0a0a0a] overflow-hidden">
-                    {galleryImages[1]?.src ? (
-                      <img
-                        src={galleryImages[1].src}
-                        alt={`${productName} detail`}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
-                          {product.animal.charAt(0)}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  {galleryImages.length >= 3 && galleryImages[2]?.src && (
-                    <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0a0a0a] overflow-hidden">
-                      <img
-                        src={galleryImages[2].src}
-                        alt={`${productName} texture`}
-                        className="w-full h-full object-cover"
-                      />
+      <section className="bg-[#0A0A0A]">
+        <div className="max-w-[1200px] mx-auto px-6 py-20">
+          {/* Section Header */}
+          <div className="mb-12">
+            <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
+              {t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
+            </p>
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
+              {t("seeItInRealSpaces" as TranslationKeys) || "See It In Real Spaces"}
+            </h2>
+          </div>
+
+          {/* 3 Space Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[
+              {
+                image: galleryImages.length > 1 && galleryImages[1]?.src ? galleryImages[1].src : null,
+                title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas",
+                desc: "Open-plan living with sculptural presence",
+              },
+              {
+                image: galleryImages.length > 2 && galleryImages[2]?.src ? galleryImages[2].src : null,
+                title: t("privateLibraries" as TranslationKeys) || "Private Libraries",
+                desc: "Intimate reading spaces with character",
+              },
+              {
+                image: galleryImages.length > 3 && galleryImages[3]?.src ? galleryImages[3].src : null,
+                title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels",
+                desc: "Statement pieces in curated lobbies",
+              },
+            ].map((space, idx) => (
+              <div key={idx} className="group cursor-pointer">
+                {/* Image */}
+                <div className="relative aspect-[4/5] bg-[#111] overflow-hidden mb-4">
+                  {space.image ? (
+                    <img
+                      src={space.image}
+                      alt={`${productName} in ${space.title}`}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
+                        {product.animal.charAt(0)}
+                      </span>
                     </div>
                   )}
-                </>
-              ) : (
-                <div className="aspect-[4/3] bg-gradient-to-b from-[#111] to-[#0a0a0a] flex items-center justify-center">
-                  <span className="font-serif text-[12rem] text-[#F5F0EB]/[0.04] select-none">
-                    {product.animal.charAt(0)}
-                  </span>
+                  {/* Bottom gradient for text legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
                 </div>
-              )}
-            </div>
-
-            {/* Right: Story Text */}
-            <div className="flex flex-col justify-center">
-              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
-                {t("designStory" as TranslationKeys) || "Design Story"}
-              </p>
-              <h2 className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
-                {t("theStory" as TranslationKeys) || "The Story"}
-              </h2>
-              <p className="text-[#F5F0EB]/60 leading-[1.8] text-base mb-4">
-                {productConcept}
-              </p>
-              <p className="text-[#F5F0EB]/40 leading-[1.8] text-sm mb-10">
-                {product.interiorContext}
-              </p>
-
-              {/* Attributes */}
-              <div className="flex flex-wrap gap-4">
-                {[
-                  t("studioCrafted" as TranslationKeys) || "Studio-Crafted",
-                  t("madeToOrder" as TranslationKeys) || "Made To Order",
-                  t("collectibleDesign" as TranslationKeys) || "Collectible Design",
-                ].map((label) => (
-                  <span
-                    key={label}
-                    className="text-[10px] tracking-[0.15em] uppercase border border-[#333] px-4 py-2 text-[#F5F0EB]/40"
-                  >
-                    {label}
-                  </span>
-                ))}
+                {/* Caption */}
+                <p className="text-[11px] tracking-[0.15em] uppercase text-[#F5F0EB]/70 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
+                  {space.title}
+                </p>
+                <p className="text-[12px] text-[#8A8580] leading-[1.5]">
+                  {space.desc}
+                </p>
               </div>
-            </div>
+            ))}
           </div>
-        </div>
-      </section>
 
-      {/* ═══════════════════════════════════════════
-          SCREEN 3 — INTERIOR INSPIRATION
-          Background: #050505
-          ═══════════════════════════════════════════ */}
-      <section className="bg-[#050505]">
-        <div className="max-w-[1600px] mx-auto">
-          {/* Full-width hero image */}
-          <div className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden">
-            {(() => {
-              const lifestyleImg = galleryImages.length > 5 ? galleryImages[galleryImages.length - 1] : galleryImages[0];
-              return lifestyleImg?.src ? (
-                <img
-                  src={lifestyleImg.src}
-                  alt={`${productName} in interior`}
-                  className="w-full h-full object-cover opacity-60"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
-                    {product.animal.charAt(0)}
-                  </span>
+          {/* Design Story - compact below space cards */}
+          <div className="mt-16 pt-12 border-t border-[#1A1A1A]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+              <div>
+                <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4">
+                  {t("designStory" as TranslationKeys) || "Design Story"}
+                </p>
+                <h3 className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB] leading-[1.2] mb-4">
+                  {t("theStory" as TranslationKeys) || "The Story"}
+                </h3>
+                <p className="text-[#F5F0EB]/60 leading-[1.8] text-[14px] mb-4">
+                  {productConcept}
+                </p>
+                <p className="text-[#F5F0EB]/40 leading-[1.8] text-[13px]">
+                  {product.interiorContext}
+                </p>
+              </div>
+              <div className="flex items-end">
+                <div className="flex flex-wrap gap-3">
+                  {[
+                    t("studioCrafted" as TranslationKeys) || "Studio-Crafted",
+                    t("madeToOrder" as TranslationKeys) || "Made To Order",
+                    t("collectibleDesign" as TranslationKeys) || "Collectible Design",
+                  ].map((label) => (
+                    <span
+                      key={label}
+                      className="text-[10px] tracking-[0.15em] uppercase border border-[#333] px-4 py-2 text-[#F5F0EB]/40 hover:border-[#E8B4B8]/40 hover:text-[#E8B4B8]/70 transition-colors duration-300"
+                    >
+                      {label}
+                    </span>
+                  ))}
                 </div>
-              );
-            })()}
-            {/* Dark overlay for text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent" />
-
-            {/* Centered text */}
-            <div className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6">
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[#F5F0EB] text-center leading-[1.1] mb-6">
-                {t("designedToDefineSpace" as TranslationKeys) || "Designed To Define A Space"}
-              </h2>
-              <div className="flex flex-wrap gap-4 justify-center">
-                {[
-                  t("luxuryVillas" as TranslationKeys) || "Luxury Villas",
-                  t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels",
-                  t("privateClubs" as TranslationKeys) || "Private Clubs",
-                  t("expressiveInteriors" as TranslationKeys) || "Expressive Interiors",
-                ].map((label) => (
-                  <span
-                    key={label}
-                    className="text-[10px] tracking-[0.15em] uppercase border border-[#F5F0EB]/20 px-4 py-2 text-[#F5F0EB]/50"
-                  >
-                    {label}
-                  </span>
-                ))}
               </div>
             </div>
           </div>
