@@ -260,31 +260,35 @@ export function ProductPageClient({ product }: Props) {
                 <h1 className="font-serif text-[28px] md:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
                   {productName}
                 </h1>
-                <div className="flex items-center gap-2 mt-1 flex-shrink-0">
+                <div className="flex items-center gap-3 mt-1 flex-shrink-0">
                   {/* Share Button */}
                   <div className="relative" ref={shareMenuRef}>
                     <button
                       onClick={() => setShowShareMenu(!showShareMenu)}
-                      className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 p-1"
+                      className="group flex items-center justify-center w-9 h-9 border border-[#333] hover:border-[#E8B4B8] transition-all duration-300"
                       aria-label="Share"
                     >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="18" cy="5" r="3" />
-                        <circle cx="6" cy="12" r="3" />
-                        <circle cx="18" cy="19" r="3" />
-                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                      <svg className="text-[#8A8580] group-hover:text-[#E8B4B8] transition-colors duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                        <polyline points="16 6 12 2 8 6" />
+                        <line x1="12" y1="2" x2="12" y2="15" />
                       </svg>
                     </button>
                     {showShareMenu && (
-                      <div className="absolute right-0 top-full mt-2 bg-[#111] border border-[#333] py-1 z-50 min-w-[140px]">
-                        {["Pinterest", "Facebook", "Twitter", "Copy Link"].map((platform) => (
+                      <div className="absolute right-0 top-full mt-1 bg-[#111] border border-[#2A2A2A] py-0.5 z-50 min-w-[160px] shadow-[0_8px_24px_rgba(0,0,0,0.6)]">
+                        {[
+                          { name: "Pinterest", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="12" cy="12" r="10"/><path d="M8 21c1-3 1.5-5 2-7 .5-2-.5-3.5 1-5s4-.5 4 1.5-1.5 4-2 6c-.5 1.5.5 3 2 3 3 0 5-3 5-7 0-4-3-6-7-6-5 0-8 3.5-8 7 0 1.5.5 3 1.5 4"/></svg> },
+                          { name: "Facebook", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> },
+                          { name: "Twitter", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M4 4l11.7 16M20 4L8.3 20M4 4h16M4 20h16"/></svg> },
+                          { name: "Copy Link", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> },
+                        ].map((platform) => (
                           <button
-                            key={platform}
-                            onClick={() => handleShare(platform)}
-                            className="w-full text-left px-4 py-2 text-[11px] text-[#8A8580] hover:text-[#F5F0EB] hover:bg-[#1A1A1A] tracking-[0.04em] transition-colors"
+                            key={platform.name}
+                            onClick={() => handleShare(platform.name)}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-[10px] text-[#8A8580] hover:text-[#F5F0EB] hover:bg-[#1A1A1A] tracking-[0.12em] uppercase transition-all duration-200 group/item"
                           >
-                            {platform}
+                            <span className="text-[#555] group-hover/item:text-[#E8B4B8] transition-colors duration-200">{platform.icon}</span>
+                            {platform.name}
                           </button>
                         ))}
                       </div>
@@ -293,11 +297,11 @@ export function ProductPageClient({ product }: Props) {
                   {/* Bookmark / Save */}
                   <button
                     onClick={() => setSaved(!saved)}
-                    className={`transition-colors duration-300 p-1 ${saved ? "text-[#E8B4B8]" : "text-[#8A8580] hover:text-[#E8B4B8]"}`}
+                    className={`group flex items-center justify-center w-9 h-9 border transition-all duration-300 ${saved ? "border-[#E8B4B8] bg-[#E8B4B8]/10" : "border-[#333] hover:border-[#E8B4B8]"}`}
                     aria-label="Save"
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                    <svg className={`transition-all duration-300 ${saved ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#E8B4B8]"}`} width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                     </svg>
                   </button>
                 </div>
