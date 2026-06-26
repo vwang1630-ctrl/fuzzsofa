@@ -500,9 +500,9 @@ export function ProductPageClient(
                                                       </label>
                                 <div
                                     className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]">
-                                    <span>宽（W）：约 {product.specifications.width}</span>
-                                    <span>深（D）：约 {product.specifications.depth}</span>
-                                    <span>高（H）：约 {product.specifications.height}</span>
+                                    <span>宽：约 {product.specifications.width}</span>
+                                    <span>深：约 {product.specifications.depth}</span>
+                                    <span>高：约 {product.specifications.height}</span>
                                     <span>坐高：约 {product.specifications.seatHeight}</span>
                                 </div>
                             </div>}
