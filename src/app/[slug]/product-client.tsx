@@ -50,6 +50,7 @@ export function ProductPageClient(
     const [activeImage, setActiveImage] = useState(0);
     const [showShareMenu, setShowShareMenu] = useState(false);
     const [saved, setSaved] = useState(false);
+    const [useCm, setUseCm] = useState(true);
     const shareMenuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -495,15 +496,21 @@ export function ProductPageClient(
                             <div className="h-px bg-[#333] mb-5" />
                             {}
                             {product.specifications && <div className="mb-4">
-                                <label
-                                    className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">Dimensions
-                                                      </label>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label
+                                        className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase">Dimensions</label>
+                                    <button
+                                        onClick={() => setUseCm(!useCm)}
+                                        className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
+                                        {useCm ? 'CM / 切换英寸' : 'IN / 切换厘米'}
+                                    </button>
+                                </div>
                                 <div
                                     className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]">
-                                    <span>宽：约 {product.specifications.width}</span>
-                                    <span>深：约 {product.specifications.depth}</span>
-                                    <span>高：约 {product.specifications.height}</span>
-                                    <span>坐高：约 {product.specifications.seatHeight}</span>
+                                    <span>宽：约 {useCm ? `${product.specifications.width}cm` : `${(parseFloat(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
+                                    <span>深：约 {useCm ? `${product.specifications.depth}cm` : `${(parseFloat(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
+                                    <span>高：约 {useCm ? `${product.specifications.height}cm` : `${(parseFloat(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
+                                    <span>坐高：约 {useCm ? `${product.specifications.seatHeight}cm` : `${(parseFloat(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                 </div>
                             </div>}
                             {}
