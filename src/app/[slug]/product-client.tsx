@@ -524,15 +524,23 @@ export function ProductPageClient(
                                     </svg>
                                     {/* Dimensions text */}
                                     <div className="flex flex-col gap-0.5">
-                                        <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                            W {useCm ? `${product.specifications.width}cm` : `${(parseFloat(product.specifications.width) / 2.54).toFixed(1)"`} × D {useCm ? `${product.specifications.depth}cm` : `${(parseFloat(product.specifications.depth) / 2.54).toFixed(1)"`} × H {useCm ? `${product.specifications.height}cm` : `${(parseFloat(product.specifications.height) / 2.54).toFixed(1)"`}
-                                        </p>
-                                        <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                            坐高 {useCm ? `${product.specifications.seatHeight}cm` : `${(parseFloat(product.specifications.seatHeight) / 2.54).toFixed(1)"`} · 净重 50kg（含包装 60kg）
-                                        </p>
-                                        <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                            承重 150kg
-                                        </p>
+                                        {(() => {
+                                            const w = useCm ? `${product.specifications.width}cm` : `${(parseFloat(product.specifications.width) / 2.54).toFixed(1)}"`;
+                                            const d = useCm ? `${product.specifications.depth}cm` : `${(parseFloat(product.specifications.depth) / 2.54).toFixed(1)}"`;
+                                            const h = useCm ? `${product.specifications.height}cm` : `${(parseFloat(product.specifications.height) / 2.54).toFixed(1)}"`;
+                                            const sh = useCm ? `${product.specifications.seatHeight}cm` : `${(parseFloat(product.specifications.seatHeight) / 2.54).toFixed(1)}"`;
+                                            return (<>
+                                                <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                                    W {w} × D {d} × H {h}
+                                                </p>
+                                                <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                                    坐高 {sh} · 净重 50kg（含包装 60kg）
+                                                </p>
+                                                <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                                    承重 150kg
+                                                </p>
+                                            </>);
+                                        })()}
                                         <button
                                             onClick={() => setUseCm(!useCm)}
                                             className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors mt-1 self-start border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
