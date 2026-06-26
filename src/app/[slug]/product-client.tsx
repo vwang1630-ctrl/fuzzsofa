@@ -496,49 +496,22 @@ export function ProductPageClient(
                             <div className="h-px bg-[#333] mb-5" />
                             {}
                             {product.specifications && <div className="mb-4">
-                                <div className="flex items-center gap-5">
-                                    {/* Isometric wireframe SVG */}
-                                    <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                                        {/* Isometric box */}
-                                        {/* Front face */}
-                                        <polygon points="10,56 56,56 56,28 10,28" stroke="#8A8580" strokeWidth="0.7" fill="none" />
-                                        {/* Top face */}
-                                        <polygon points="10,28 56,28 82,14 36,14" stroke="#8A8580" strokeWidth="0.7" fill="none" />
-                                        {/* Right face */}
-                                        <polygon points="56,28 82,14 82,42 56,56" stroke="#8A8580" strokeWidth="0.7" fill="none" />
-                                        {/* W dimension arrow (bottom of front face) */}
-                                        <line x1="10" y1="64" x2="56" y2="64" stroke="#E8B4B8" strokeWidth="0.5" />
-                                        <polygon points="10,64 14,62.5 14,65.5" fill="#E8B4B8" />
-                                        <polygon points="56,64 52,62.5 52,65.5" fill="#E8B4B8" />
-                                        <text x="33" y="69" textAnchor="middle" fontSize="7" fontFamily="Inter" fill="#E8B4B8" letterSpacing="0.1em">W</text>
-                                        {/* D dimension arrow (bottom-right of right face) */}
-                                        <line x1="60" y1="58" x2="86" y2="44" stroke="#E8B4B8" strokeWidth="0.5" />
-                                        <polygon points="60,58 63.2,56.2 61.8,59" fill="#E8B4B8" />
-                                        <polygon points="86,44 82.8,45.8 84.2,43" fill="#E8B4B8" />
-                                        <text x="77" y="55" textAnchor="middle" fontSize="7" fontFamily="Inter" fill="#E8B4B8" letterSpacing="0.1em">D</text>
-                                        {/* H dimension arrow (left side) */}
-                                        <line x1="4" y1="28" x2="4" y2="56" stroke="#E8B4B8" strokeWidth="0.5" />
-                                        <polygon points="4,28 2.5,32 5.5,32" fill="#E8B4B8" />
-                                        <polygon points="4,56 2.5,52 5.5,52" fill="#E8B4B8" />
-                                        <text x="4" y="24" textAnchor="middle" fontSize="7" fontFamily="Inter" fill="#E8B4B8" letterSpacing="0.1em">H</text>
-                                    </svg>
-                                    {/* Dimension values */}
-                                    <div className="flex flex-col gap-1">
-                                        <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em] font-light">
-                                            W {useCm ? `${product.specifications.width}cm` : `${(parseFloat(product.specifications.width) / 2.54).toFixed(1)}"`} × D {useCm ? `${product.specifications.depth}cm` : `${(parseFloat(product.specifications.depth) / 2.54).toFixed(1)}"`} × H {useCm ? `${product.specifications.height}cm` : `${(parseFloat(product.specifications.height) / 2.54).toFixed(1)}"`}
-                                        </p>
-                                        <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em] font-light">
-                                            坐高 {useCm ? `${product.specifications.seatHeight}cm` : `${(parseFloat(product.specifications.seatHeight) / 2.54).toFixed(1)}"`} · 净重 50kg（含包装 60kg）
-                                        </p>
-                                        <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em] font-light">承重 150kg</p>
-                                        <button
-                                            onClick={() => setUseCm(!useCm)}
-                                            className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8]/60 hover:text-[#E8B4B8] transition-colors self-start mt-0.5">
-                                            {useCm ? '切换英寸' : '切换厘米'}
-                                        </button>
-                                    </div>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label
+                                        className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase">Dimensions</label>
+                                    <button
+                                        onClick={() => setUseCm(!useCm)}
+                                        className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
+                                        {useCm ? 'CM / 切换英寸' : 'IN / 切换厘米'}
+                                    </button>
                                 </div>
-                                <p className="text-[9px] text-[#8A8580]/60 tracking-[0.04em] mt-2">手工测量 ±1–3cm 误差，仅供参考</p>
+                                <div
+                                    className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]">
+                                    <span>宽：约 {useCm ? `${product.specifications.width}cm` : `${(parseFloat(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
+                                    <span>深：约 {useCm ? `${product.specifications.depth}cm` : `${(parseFloat(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
+                                    <span>高：约 {useCm ? `${product.specifications.height}cm` : `${(parseFloat(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
+                                    <span>坐高：约 {useCm ? `${product.specifications.seatHeight}cm` : `${(parseFloat(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
+                                </div>
                             </div>}
                             {}
                             {product.materials && product.materials.length > 0 && <div className="mb-5">
