@@ -217,21 +217,23 @@ export function ProductPageClient({ product }: Props) {
                   <button
                     onClick={() => setShowRoomViz(true)}
                     className="flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-[0_0_20px_rgba(232,180,184,0.3)]"
-                    style={{ background: "#E8B4B8" }}
+                    style={{ background: "#0A0A0A" }}
                     aria-label="Preview in your room"
                   >
-                    {/* Custom room perspective icon — dark on pink */}
+                    {/* Custom room perspective icon — pink filled on black */}
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {/* Room walls perspective */}
-                      <path d="M3 21V9L12 3L21 9V21" stroke="#0A0A0A" strokeWidth="1.5" strokeLinejoin="round" />
+                      {/* Room walls perspective — filled pink */}
+                      <path d="M3 21V9L12 3L21 9V21H3Z" fill="#E8B4B8" opacity="0.15" />
+                      {/* Room outline — pink stroke */}
+                      <path d="M3 21V9L12 3L21 9V21" stroke="#E8B4B8" strokeWidth="1.5" strokeLinejoin="round" />
                       {/* Floor line */}
-                      <path d="M3 21H21" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" />
-                      {/* Sofa silhouette inside room */}
-                      <path d="M8 21V16C8 15 8.5 14 10 14H14C15.5 14 16 15 16 16V21" stroke="#0A0A0A" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-                      {/* Sofa cushion */}
-                      <path d="M9.5 16.5C9.5 15.8 10 15 11 15H13C14 15 14.5 15.8 14.5 16.5" stroke="#0A0A0A" strokeWidth="1" strokeLinecap="round" />
-                      {/* Sparkle — AI magic */}
-                      <path d="M18 6L18.5 7.5L20 8L18.5 8.5L18 10L17.5 8.5L16 8L17.5 7.5Z" fill="#0A0A0A" opacity="0.85" />
+                      <path d="M3 21H21" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" />
+                      {/* Sofa silhouette — filled pink */}
+                      <path d="M8 21V16C8 15 8.5 14 10 14H14C15.5 14 16 15 16 16V21H8Z" fill="#E8B4B8" opacity="0.9" />
+                      {/* Sofa top cushion — filled pink lighter */}
+                      <path d="M9.5 16.5C9.5 15.8 10 15 11 15H13C14 15 14.5 15.8 14.5 16.5V17H9.5Z" fill="#0A0A0A" opacity="0.4" />
+                      {/* Sparkle — AI magic, filled pink */}
+                      <path d="M18 6L18.5 7.5L20 8L18.5 8.5L18 10L17.5 8.5L16 8L17.5 7.5Z" fill="#E8B4B8" />
                     </svg>
                   </button>
                 </div>
