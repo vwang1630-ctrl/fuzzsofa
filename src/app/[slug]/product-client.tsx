@@ -282,34 +282,32 @@ export function ProductPageClient({ product }: Props) {
                 <h1 className="font-serif text-[28px] md:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
                   {productName}
                 </h1>
-                <div className="flex items-center gap-3 mt-1 flex-shrink-0">
+                <div className="flex items-center gap-2 mt-1 flex-shrink-0">
                   {/* Share Button */}
                   <div className="relative" ref={shareMenuRef}>
                     <button
                       onClick={() => setShowShareMenu(!showShareMenu)}
-                      className="group flex items-center justify-center w-9 h-9 border border-[#333] hover:border-[#E8B4B8] transition-all duration-300"
+                      className="group flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A] hover:scale-110 transition-all duration-300 shadow-[0_0_12px_rgba(255,255,255,0.06)]"
                       aria-label="Share"
                     >
-                      <svg className="text-[#8A8580] group-hover:text-[#E8B4B8] transition-colors duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                        <polyline points="16 6 12 2 8 6" />
-                        <line x1="12" y1="2" x2="12" y2="15" />
+                      <svg className="text-[#E8B4B8] transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill="#E8B4B8" stroke="none">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-3.5H7.5c-.28 0-.5-.22-.5-.5s.22-.5.5-.5H11V8.5c0-.28.22-.5.5-.5s.5.22.5.5V11h3.5c.28 0 .5.22.5.5s-.22.5-.5.5H12v3.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5z"/>
                       </svg>
                     </button>
                     {showShareMenu && (
-                      <div className="absolute right-0 top-full mt-1 bg-[#111] border border-[#2A2A2A] py-0.5 z-50 min-w-[160px] shadow-[0_8px_24px_rgba(0,0,0,0.6)]">
+                      <div className="absolute right-0 top-full mt-2 bg-[#111] border border-[#2A2A2A] rounded-full py-0.5 z-50 min-w-[160px] shadow-[0_8px_24px_rgba(0,0,0,0.6)]">
                         {[
-                          { name: "Pinterest", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="12" cy="12" r="10"/><path d="M8 21c1-3 1.5-5 2-7 .5-2-.5-3.5 1-5s4-.5 4 1.5-1.5 4-2 6c-.5 1.5.5 3 2 3 3 0 5-3 5-7 0-4-3-6-7-6-5 0-8 3.5-8 7 0 1.5.5 3 1.5 4"/></svg> },
-                          { name: "Facebook", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> },
-                          { name: "Twitter", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M4 4l11.7 16M20 4L8.3 20M4 4h16M4 20h16"/></svg> },
-                          { name: "Copy Link", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> },
+                          { name: "Pinterest", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8B4B8" stroke="none"><circle cx="12" cy="12" r="10"/><path d="M8 21c1-3 1.5-5 2-7 .5-2-.5-3.5 1-5s4-.5 4 1.5-1.5 4-2 6c-.5 1.5.5 3 2 3 3 0 5-3 5-7 0-4-3-6-7-6-5 0-8 3.5-8 7 0 1.5.5 3 1.5 4" fill="#0A0A0A"/></svg> },
+                          { name: "Facebook", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8B4B8" stroke="none"><rect width="24" height="24" rx="4"/><path d="M15 12h-2v6h-2v-6H9v-2h2V8.5C11 7.12 12.12 6 13.5 6H15v2h-1.5c-.28 0-.5.22-.5.5V10h2l-.5 2z" fill="#0A0A0A"/></svg> },
+                          { name: "Twitter", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8B4B8" stroke="none"><rect width="24" height="24" rx="4"/><path d="M7 8l4.5 4L7 16h2.5L14 12l-4.5-4H7zm6 0l4.5 4L13 16h2.5L20 12l-4.5-4H13z" fill="#0A0A0A"/></svg> },
+                          { name: "Copy Link", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8B4B8" stroke="none"><circle cx="12" cy="12" r="10"/><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#0A0A0A" strokeWidth="2" fill="none"/></svg> },
                         ].map((platform) => (
                           <button
                             key={platform.name}
                             onClick={() => handleShare(platform.name)}
-                            className="w-full flex items-center gap-3 px-4 py-2.5 text-[10px] text-[#8A8580] hover:text-[#F5F0EB] hover:bg-[#1A1A1A] tracking-[0.12em] uppercase transition-all duration-200 group/item"
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-[10px] text-[#8A8580] hover:text-[#F5F0EB] hover:bg-[#1A1A1A] tracking-[0.12em] uppercase transition-all duration-200 group/item first:rounded-t-full last:rounded-b-full"
                           >
-                            <span className="text-[#555] group-hover/item:text-[#E8B4B8] transition-colors duration-200">{platform.icon}</span>
+                            <span className="transition-transform duration-200 group-hover/item:scale-110">{platform.icon}</span>
                             {platform.name}
                           </button>
                         ))}
@@ -319,10 +317,10 @@ export function ProductPageClient({ product }: Props) {
                   {/* Bookmark / Save */}
                   <button
                     onClick={() => setSaved(!saved)}
-                    className={`group flex items-center justify-center w-9 h-9 border transition-all duration-300 ${saved ? "border-[#E8B4B8] bg-[#E8B4B8]/10" : "border-[#333] hover:border-[#E8B4B8]"}`}
+                    className="group flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A] hover:scale-110 transition-all duration-300 shadow-[0_0_12px_rgba(255,255,255,0.06)]"
                     aria-label="Save"
                   >
-                    <svg className={`transition-all duration-300 ${saved ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#E8B4B8]"}`} width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                     </svg>
                   </button>
@@ -354,6 +352,16 @@ export function ProductPageClient({ product }: Props) {
                         {mat.options.map((opt, optIdx) => {
                           const colorHex = mat.colors[optIdx];
                           const isSelected = materialType === mat.type && materialOption === opt;
+                          // Calculate global option index across all groups for image lookup
+                          let globalIdx = optIdx;
+                          if (product.materialOptions) {
+                            globalIdx = 0;
+                            for (const m of product.materialOptions) {
+                              if (m.type === mat.type) { globalIdx += optIdx; break; }
+                              globalIdx += m.options.length;
+                            }
+                          }
+                          const swatchImage = galleryImages[globalIdx];
                           return (
                             <button
                               key={opt}
@@ -364,13 +372,18 @@ export function ProductPageClient({ product }: Props) {
                               className="flex items-center gap-2 transition-all duration-300 group"
                             >
                               <span
-                                className={`w-6 h-6 rounded flex-shrink-0 transition-all duration-300 ${
+                                className={`w-8 h-8 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${
                                   isSelected
-                                    ? "ring-2 ring-[#E8B4B8] ring-offset-1 ring-offset-[#0A0A0A]"
-                                    : "border border-[#333] group-hover:border-[#666]"
+                                    ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]"
+                                    : "border border-[#333] group-hover:border-[#555]"
                                 }`}
-                                style={{ backgroundColor: colorHex }}
-                              />
+                              >
+                                {swatchImage ? (
+                                  <img src={swatchImage.src} alt={opt} width={32} height={32} className="w-full h-full object-cover" />
+                                ) : (
+                                  <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />
+                                )}
+                              </span>
                               <span className={`text-xs tracking-[0.04em] whitespace-nowrap ${
                                 isSelected ? "text-[#F5F0EB]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"
                               }`}>
