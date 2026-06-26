@@ -258,7 +258,7 @@ export function ProductPageClient({ product }: Props) {
                       aria-label={`View ${img.id + 1}`}
                     >
                       {img.src ? (
-                        <img src={img.src} alt="" className="w-full h-full object-cover" />
+                        <img src={img.src} alt="" className="w-full h-full object-contain" />
                       ) : (
                         <span className="font-serif text-sm text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
                           {product.animal.charAt(0)}
