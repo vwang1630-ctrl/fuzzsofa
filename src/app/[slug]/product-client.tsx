@@ -723,9 +723,10 @@ export function ProductPageClient(
                             return (
                                 <div key={mat} className="text-center">
                                     <div
-                                        className="w-16 h-16 mx-auto border border-[#333] rounded-full flex items-center justify-center mb-4">
-                                        <span className="font-serif text-lg text-[#E8B4B8]/60">
-                                            {shortName.charAt(0)}
+                                        className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4"
+                                        style={{ backgroundColor: '#E8B4B8' }}>
+                                        <span className="font-serif text-xl text-white font-light">
+                                            {shortName.charAt(0).toUpperCase()}
                                         </span>
                                     </div>
                                     <p className="text-sm text-[#F5F0EB]/70 font-light leading-[1.6]">
