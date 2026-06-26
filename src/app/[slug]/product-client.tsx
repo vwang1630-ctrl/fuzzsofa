@@ -201,39 +201,33 @@ export function ProductPageClient({ product }: Props) {
                     </span>
                   </div>
                 )}
-                {/* AI Room Preview — Pink icon with hover label */}
+                {/* AI Room Preview — Black circle + pink filled icon with hover label */}
                 <div className="absolute bottom-5 right-5 z-10 group/room flex items-center">
-                  {/* Hover label — slides in from right */}
-                  <span className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[11px] tracking-[0.15em] uppercase font-light mr-3 px-3 py-1.5 rounded-full"
+                  {/* Hover label — slides in from right, black text for visibility on any product background */}
+                  <span className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[11px] tracking-[0.15em] uppercase font-medium mr-3 px-3 py-1.5 rounded-full"
                     style={{
-                      background: "rgba(232,180,184,0.12)",
-                      border: "1px solid rgba(232,180,184,0.2)",
-                      color: "#E8B4B8",
-                      backdropFilter: "blur(8px)",
+                      background: "#F5F0EB",
+                      color: "#0A0A0A",
                     }}
                   >
                     Preview in your room
                   </span>
                   <button
                     onClick={() => setShowRoomViz(true)}
-                    className="flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-[0_0_20px_rgba(232,180,184,0.3)]"
+                    className="flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-[0_0_20px_rgba(232,180,184,0.35)]"
                     style={{ background: "#0A0A0A" }}
                     aria-label="Preview in your room"
                   >
-                    {/* Custom room perspective icon — pink filled on black */}
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {/* Room walls perspective — filled pink */}
-                      <path d="M3 21V9L12 3L21 9V21H3Z" fill="#E8B4B8" opacity="0.15" />
-                      {/* Room outline — pink stroke */}
-                      <path d="M3 21V9L12 3L21 9V21" stroke="#E8B4B8" strokeWidth="1.5" strokeLinejoin="round" />
-                      {/* Floor line */}
-                      <path d="M3 21H21" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" />
-                      {/* Sofa silhouette — filled pink */}
-                      <path d="M8 21V16C8 15 8.5 14 10 14H14C15.5 14 16 15 16 16V21H8Z" fill="#E8B4B8" opacity="0.9" />
-                      {/* Sofa top cushion — filled pink lighter */}
-                      <path d="M9.5 16.5C9.5 15.8 10 15 11 15H13C14 15 14.5 15.8 14.5 16.5V17H9.5Z" fill="#0A0A0A" opacity="0.4" />
-                      {/* Sparkle — AI magic, filled pink */}
-                      <path d="M18 6L18.5 7.5L20 8L18.5 8.5L18 10L17.5 8.5L16 8L17.5 7.5Z" fill="#E8B4B8" />
+                    {/* Custom room icon: pink filled room + black cutout sofa on black circle */}
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {/* Room shape — solid pink fill, no stroke */}
+                      <path d="M3 21V9L12 3L21 9V21H3Z" fill="#E8B4B8" />
+                      {/* Sofa cutout — solid black (same as circle background =镂空效果) */}
+                      <path d="M7.5 21V15.5C7.5 14.2 8.5 13 10.5 13H13.5C15.5 13 16.5 14.2 16.5 15.5V21H7.5Z" fill="#0A0A0A" />
+                      {/* Sofa back cushion cutout */}
+                      <path d="M9 15.2C9 14.5 9.5 13.8 10.8 13.8H13.2C14.5 13.8 15 14.5 15 15.2V16H9Z" fill="#0A0A0A" opacity="0.6" />
+                      {/* AI sparkle — solid pink */}
+                      <path d="M18 5L18.6 6.8L20.5 7.3L18.6 7.8L18 9.5L17.4 7.8L15.5 7.3L17.4 6.8Z" fill="#E8B4B8" />
                     </svg>
                   </button>
                 </div>
