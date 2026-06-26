@@ -201,22 +201,23 @@ export function ProductPageClient({ product }: Props) {
                     </span>
                   </div>
                 )}
-                {/* AI Room Preview — Bottom Right Circle */}
+                {/* AI Room Preview — Prominent Bottom-Left Overlay */}
                 <button
                   onClick={() => setShowRoomViz(true)}
-                  className="absolute bottom-4 right-4 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 group"
+                  className="absolute bottom-4 left-4 z-10 flex items-center gap-2.5 px-5 py-3 transition-all duration-300 hover:gap-3.5 group"
                   style={{
-                    background: "rgba(214,168,172,0.15)",
-                    border: "1px solid rgba(214,168,172,0.35)",
+                    background: "rgba(10,10,10,0.85)",
+                    border: "1px solid #E8B4B8",
+                    backdropFilter: "blur(8px)",
                   }}
                   aria-label="Preview in your space"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D6A8AC" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                     <circle cx="12" cy="13" r="4" />
                   </svg>
-                  <span className="absolute bottom-full right-0 mb-2 px-2 py-1 bg-[#111] border border-[rgba(214,168,172,0.25)] rounded text-[8px] tracking-[0.12em] uppercase text-[#D6A8AC]/80 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    Preview In Your Space
+                  <span className="text-[11px] tracking-[0.16em] uppercase text-[#E8B4B8] whitespace-nowrap font-medium">
+                    Preview In Your Room
                   </span>
                 </button>
               </div>
