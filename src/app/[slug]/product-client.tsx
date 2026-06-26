@@ -201,20 +201,53 @@ export function ProductPageClient({ product }: Props) {
                     </span>
                   </div>
                 )}
-                {/* AI Room Preview — Icon Only */}
-                <button
-                  onClick={() => setShowRoomViz(true)}
-                  className="absolute bottom-5 right-5 z-10 flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(232,180,184,0.35)] active:scale-95 group"
-                  style={{
-                    background: "rgba(232,180,184,0.9)",
-                  }}
-                  aria-label="Preview in your room"
-                >
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                    <circle cx="12" cy="13" r="4" />
-                  </svg>
-                </button>
+                {/* AI Room Preview — Creative Icon with Hover Label */}
+                <div className="absolute bottom-5 right-5 z-10 group/room flex items-center">
+                  {/* Hover label — slides in from right */}
+                  <span className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[11px] tracking-[0.15em] uppercase font-light mr-3 px-3 py-1.5 rounded-full"
+                    style={{
+                      background: "rgba(232,180,184,0.12)",
+                      border: "1px solid rgba(232,180,184,0.2)",
+                      color: "#E8B4B8",
+                      backdropFilter: "blur(8px)",
+                    }}
+                  >
+                    Preview in your room
+                  </span>
+                  <button
+                    onClick={() => setShowRoomViz(true)}
+                    className="relative flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group/icon"
+                    aria-label="Preview in your room"
+                  >
+                    {/* Outer ring — rotates on hover */}
+                    <span className="absolute inset-0 w-12 h-12 rounded-full transition-all duration-500 group-hover/icon:rotate-45"
+                      style={{
+                        background: "conic-gradient(from 0deg, rgba(232,180,184,0.0), rgba(232,180,184,0.3), rgba(232,180,184,0.0), rgba(232,180,184,0.3), rgba(232,180,184,0.0))",
+                      }}
+                    />
+                    {/* Inner circle */}
+                    <span className="relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300"
+                      style={{
+                        background: "linear-gradient(135deg, #E8B4B8 0%, #d9a0a5 100%)",
+                        boxShadow: "0 2px 12px rgba(232,180,184,0.25), inset 0 1px 0 rgba(255,255,255,0.15)",
+                      }}
+                    >
+                      {/* Custom room perspective icon */}
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        {/* Room walls perspective */}
+                        <path d="M3 21V9L12 3L21 9V21" stroke="#0A0A0A" strokeWidth="1.5" strokeLinejoin="round" />
+                        {/* Floor line */}
+                        <path d="M3 21H21" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" />
+                        {/* Sofa silhouette inside room */}
+                        <path d="M8 21V16C8 15 8.5 14 10 14H14C15.5 14 16 15 16 16V21" stroke="#0A0A0A" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                        {/* Sofa cushion */}
+                        <path d="M9.5 16.5C9.5 15.8 10 15 11 15H13C14 15 14.5 15.8 14.5 16.5" stroke="#0A0A0A" strokeWidth="1" strokeLinecap="round" />
+                        {/* Sparkle — denotes AI/magic */}
+                        <path d="M18 6L18.5 7.5L20 8L18.5 8.5L18 10L17.5 8.5L16 8L17.5 7.5Z" fill="#0A0A0A" opacity="0.7" />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
               </div>
 
               {/* Horizontal Thumbnails Below Main Image */}
