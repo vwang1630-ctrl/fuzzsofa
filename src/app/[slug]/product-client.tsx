@@ -222,18 +222,22 @@ export function ProductPageClient({ product }: Props) {
                     }}
                     aria-label="Preview in your room"
                   >
-                    {/* Luxury "Room Eye" icon — geometric abstraction */}
+                    {/* Room Preview — pink solid room + black cutout sofa + pink line outline */}
                     <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {/* Outer room frame — thin architectural lines */}
-                      <rect x="4" y="6" width="24" height="20" rx="1" stroke="#E8B4B8" strokeWidth="1.2" strokeOpacity="0.5" />
-                      {/* Floor line — grounded */}
-                      <line x1="4" y1="22" x2="28" y2="22" stroke="#E8B4B8" strokeWidth="1" strokeOpacity="0.3" />
-                      {/* Sofa silhouette — single elegant curve */}
-                      <path d="M9 22V17.5C9 15.8 10.2 14.5 12 14.5H20C21.8 14.5 23 15.8 23 17.5V22" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      {/* Sofa seat cushion line */}
-                      <path d="M11 17.5C11 16.7 11.6 16 12.5 16H19.5C20.4 16 21 16.7 21 17.5" stroke="#E8B4B8" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.6" />
-                      {/* AI indicator — minimal diamond */}
-                      <path d="M25 5L26 7L28 8L26 9L25 11L24 9L22 8L24 7Z" fill="#E8B4B8" fillOpacity="0.85" />
+                      {/* Pink solid room shape */}
+                      <path d="M5 7H27V23H5V7Z" fill="#E8B4B8" />
+                      {/* Pink floor strip */}
+                      <rect x="5" y="22" width="22" height="1" fill="#E8B4B8" />
+                      {/* Black cutout for sofa area (reveals black circle bg) */}
+                      <path d="M9 22V17C9 15 10.5 13.5 12.5 13.5H19.5C21.5 13.5 23 15 23 17V22H9Z" fill="#0A0A0A" />
+                      {/* Sofa outline — pink line on black cutout */}
+                      <path d="M9 22V17C9 15 10.5 13.5 12.5 13.5H19.5C21.5 13.5 23 15 23 17V22" stroke="#E8B4B8" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                      {/* Seat cushion curve */}
+                      <path d="M11 17.5C11 16.5 11.8 15.8 12.8 15.8H19.2C20.2 15.8 21 16.5 21 17.5" stroke="#E8B4B8" strokeWidth="0.9" strokeLinecap="round" fill="none" strokeOpacity="0.7" />
+                      {/* Backrest detail */}
+                      <path d="M12 14V13C12 12.4 12.4 12 13 12H19C19.6 12 20 12.4 20 13V14" stroke="#E8B4B8" strokeWidth="0.8" strokeLinecap="round" fill="none" strokeOpacity="0.5" />
+                      {/* AI spark — top right */}
+                      <path d="M24.5 6.5L25 8L26.5 8.5L25 9L24.5 10.5L24 9L22.5 8.5L24 8Z" fill="#E8B4B8" fillOpacity="0.9" />
                     </svg>
                     {/* Subtle ring pulse on hover */}
                     <span className="absolute inset-0 rounded-full border border-[#E8B4B8]/0 group-hover/room:border-[#E8B4B8]/30 transition-all duration-700" />
