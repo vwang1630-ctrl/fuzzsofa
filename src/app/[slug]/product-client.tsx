@@ -255,10 +255,53 @@ export function ProductPageClient({ product }: Props) {
                 {collectionName}
               </p>
 
-              {/* Title */}
-              <h1 className="font-serif text-[28px] md:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
-                {productName}
-              </h1>
+              {/* Title Row */}
+              <div className="flex items-start justify-between gap-3">
+                <h1 className="font-serif text-[28px] md:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
+                  {productName}
+                </h1>
+                <div className="flex items-center gap-2 mt-1 flex-shrink-0">
+                  {/* Share Button */}
+                  <div className="relative" ref={shareMenuRef}>
+                    <button
+                      onClick={() => setShowShareMenu(!showShareMenu)}
+                      className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 p-1"
+                      aria-label="Share"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="18" cy="5" r="3" />
+                        <circle cx="6" cy="12" r="3" />
+                        <circle cx="18" cy="19" r="3" />
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                      </svg>
+                    </button>
+                    {showShareMenu && (
+                      <div className="absolute right-0 top-full mt-2 bg-[#111] border border-[#333] py-1 z-50 min-w-[140px]">
+                        {["Pinterest", "Facebook", "Twitter", "Copy Link"].map((platform) => (
+                          <button
+                            key={platform}
+                            onClick={() => handleShare(platform)}
+                            className="w-full text-left px-4 py-2 text-[11px] text-[#8A8580] hover:text-[#F5F0EB] hover:bg-[#1A1A1A] tracking-[0.04em] transition-colors"
+                          >
+                            {platform}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {/* Bookmark / Save */}
+                  <button
+                    onClick={() => setSaved(!saved)}
+                    className={`transition-colors duration-300 p-1 ${saved ? "text-[#E8B4B8]" : "text-[#8A8580] hover:text-[#E8B4B8]"}`}
+                    aria-label="Save"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
 
               {/* Price — tight below title */}
               <p className="font-serif text-[22px] md:text-[24px] font-light text-[#F5F0EB]/80 mt-1">
