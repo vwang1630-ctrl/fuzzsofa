@@ -309,20 +309,27 @@ export function ProductPageClient({ product }: Props) {
                       </svg>
                     </button>
                     {showShareMenu && (
-                      <div className="absolute right-0 top-full mt-2 bg-[#111] border border-[#2A2A2A] rounded-full py-0.5 z-50 min-w-[160px] shadow-[0_8px_24px_rgba(0,0,0,0.6)]">
+                      <div
+                        className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-full py-2 px-3 z-50"
+                        style={{
+                          background: "#0A0A0A",
+                          border: "1px solid rgba(232,180,184,0.25)",
+                          boxShadow: "0 4px 16px rgba(0,0,0,0.6)",
+                        }}
+                      >
                         {[
-                          { name: "Pinterest", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8B4B8" stroke="none"><circle cx="12" cy="12" r="10"/><path d="M8 21c1-3 1.5-5 2-7 .5-2-.5-3.5 1-5s4-.5 4 1.5-1.5 4-2 6c-.5 1.5.5 3 2 3 3 0 5-3 5-7 0-4-3-6-7-6-5 0-8 3.5-8 7 0 1.5.5 3 1.5 4" fill="#0A0A0A"/></svg> },
-                          { name: "Facebook", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8B4B8" stroke="none"><rect width="24" height="24" rx="4"/><path d="M15 12h-2v6h-2v-6H9v-2h2V8.5C11 7.12 12.12 6 13.5 6H15v2h-1.5c-.28 0-.5.22-.5.5V10h2l-.5 2z" fill="#0A0A0A"/></svg> },
-                          { name: "Twitter", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8B4B8" stroke="none"><rect width="24" height="24" rx="4"/><path d="M7 8l4.5 4L7 16h2.5L14 12l-4.5-4H7zm6 0l4.5 4L13 16h2.5L20 12l-4.5-4H13z" fill="#0A0A0A"/></svg> },
-                          { name: "Copy Link", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#E8B4B8" stroke="none"><circle cx="12" cy="12" r="10"/><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#0A0A0A" strokeWidth="2" fill="none"/></svg> },
+                          { name: "Pinterest", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 21c1-3 1.5-5 2-7 .5-2-.5-3.5 1-5s4-.5 4 1.5-1.5 4-2 6c-.5 1.5.5 3 2 3 3 0 5-3 5-7 0-4-3-6-7-6-5 0-8 3.5-8 7 0 1.5.5 3 1.5 4" fill="#E8B4B8" stroke="none"/></svg> },
+                          { name: "Facebook", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> },
+                          { name: "Twitter", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg> },
+                          { name: "Copy Link", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> },
                         ].map((platform) => (
                           <button
                             key={platform.name}
                             onClick={() => handleShare(platform.name)}
-                            className="w-full flex items-center gap-3 px-4 py-2.5 text-[10px] text-[#8A8580] hover:text-[#F5F0EB] hover:bg-[#1A1A1A] tracking-[0.12em] uppercase transition-all duration-200 group/item first:rounded-t-full last:rounded-b-full"
+                            className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-[#E8B4B8]/10 transition-all duration-200"
+                            title={platform.name}
                           >
-                            <span className="transition-transform duration-200 group-hover/item:scale-110">{platform.icon}</span>
-                            {platform.name}
+                            {platform.icon}
                           </button>
                         ))}
                       </div>
