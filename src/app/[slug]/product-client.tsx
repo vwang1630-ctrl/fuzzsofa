@@ -362,6 +362,44 @@ export function ProductPageClient({ product }: Props) {
               {/* Separator */}
               <div className="h-px bg-[#333] mb-5" />
 
+              {/* Dimensions — compact spec row */}
+              {product.specifications && (
+                <div className="mb-4">
+                  <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">
+                    Dimensions
+                  </label>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]">
+                    <span>W {product.specifications.width}</span>
+                    <span>D {product.specifications.depth}</span>
+                    <span>H {product.specifications.height}</span>
+                    <span>Seat {product.specifications.seatHeight}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-[#8A8580] tracking-[0.02em] mt-1">
+                    <span>{product.specifications.weight}</span>
+                    <span>{product.specifications.capacity}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Materials — compact list */}
+              {product.materials && product.materials.length > 0 && (
+                <div className="mb-5">
+                  <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">
+                    Materials
+                  </label>
+                  <div className="space-y-0.5">
+                    {product.materials.map((mat, i) => (
+                      <p key={i} className="text-[12px] text-[#F5F0EB]/60 tracking-[0.02em] leading-[1.5]">
+                        {mat}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Separator */}
+              <div className="h-px bg-[#333] mb-5" />
+
               {/* CTA Buttons — Stacked, tight spacing */}
               <button
                 onClick={handleAddToCart}
