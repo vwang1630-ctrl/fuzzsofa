@@ -223,19 +223,19 @@ export function ProductPageClient({ product }: Props) {
                     aria-label="Preview in your room"
                   >
                     {/* Room Preview — gabled roof + pink solid + black cutout sofa + pink line outline */}
-                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      {/* Pink solid room with gabled/人字形 roof */}
-                      <path d="M4 16L16 6L28 16V26H4V16Z" fill="#E8B4B8" />
+                    <svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {/* Pink solid room with gabled/人字形 roof — thicker, bolder */}
+                      <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" />
                       {/* Black cutout for sofa area (reveals black bg = 镂空) */}
-                      <path d="M9 26V19C9 16.5 10.8 14.5 13 14.5H19C21.2 14.5 23 16.5 23 19V26H9Z" fill="#0A0A0A" />
-                      {/* Sofa outline — pink line on black cutout */}
-                      <path d="M9 26V19C9 16.5 10.8 14.5 13 14.5H19C21.2 14.5 23 16.5 23 19V26" stroke="#E8B4B8" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                      <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                      {/* Sofa outline — bold pink line on black cutout */}
+                      <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                       {/* Seat cushion curve */}
-                      <path d="M11 19.5C11 18.2 12 17.2 13.2 17.2H18.8C20 17.2 21 18.2 21 19.5" stroke="#E8B4B8" strokeWidth="0.9" strokeLinecap="round" fill="none" strokeOpacity="0.7" />
+                      <path d="M9.5 20C9.5 18 11 16.5 13 16.5H19C21 16.5 22.5 18 22.5 20" stroke="#E8B4B8" strokeWidth="1.3" strokeLinecap="round" fill="none" strokeOpacity="0.8" />
                       {/* Backrest detail */}
-                      <path d="M13 15V14C13 13.4 13.4 13 14 13H18C18.6 13 19 13.4 19 14V15" stroke="#E8B4B8" strokeWidth="0.8" strokeLinecap="round" fill="none" strokeOpacity="0.5" />
-                      {/* AI spark — top right */}
-                      <path d="M24.5 6.5L25 8L26.5 8.5L25 9L24.5 10.5L24 9L22.5 8.5L24 8Z" fill="#E8B4B8" fillOpacity="0.9" />
+                      <path d="M12 14V13C12 12.4 12.4 12 13 12H19C19.6 12 20 12.4 20 13V14" stroke="#E8B4B8" strokeWidth="1.1" strokeLinecap="round" fill="none" strokeOpacity="0.55" />
+                      {/* AI spark — top right, bolder */}
+                      <path d="M24 5L24.8 7L27 7.8L24.8 8.6L24 10.6L23.2 8.6L21 7.8L23.2 7Z" fill="#E8B4B8" fillOpacity="0.95" />
                     </svg>
                     {/* Subtle ring pulse on hover */}
                     <span className="absolute inset-0 rounded-full border border-[#E8B4B8]/0 group-hover/room:border-[#E8B4B8]/30 transition-all duration-700" />
