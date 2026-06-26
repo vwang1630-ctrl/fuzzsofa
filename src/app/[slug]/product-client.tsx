@@ -496,59 +496,25 @@ export function ProductPageClient(
                             <div className="h-px bg-[#333] mb-5" />
                             {}
                             {product.specifications && <div className="mb-5">
-                                <div className="flex items-center gap-4">
-                                    {/* Isometric wireframe SVG */}
-                                    <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                                        {/* Isometric box */}
-                                        {/* Front face */}
-                                        <path d="M30 55 L70 55 L70 25 L30 25 Z" stroke="#555" strokeWidth="0.8" fill="none" />
-                                        {/* Top face */}
-                                        <path d="M30 25 L50 12 L90 12 L70 25 Z" stroke="#555" strokeWidth="0.8" fill="none" />
-                                        {/* Right face */}
-                                        <path d="M70 55 L90 42 L90 12 L70 25 Z" stroke="#555" strokeWidth="0.8" fill="none" />
-                                        {/* W arrow (bottom front edge) */}
-                                        <line x1="30" y1="62" x2="70" y2="62" stroke="#8A8580" strokeWidth="0.6" />
-                                        <polygon points="30,60 30,64 27,62" fill="#8A8580" />
-                                        <polygon points="70,60 70,64 73,62" fill="#8A8580" />
-                                        <text x="50" y="68" textAnchor="middle" fontSize="8" fill="#8A8580" fontFamily="Inter, sans-serif" letterSpacing="0.1em">W</text>
-                                        {/* D arrow (bottom right edge) */}
-                                        <line x1="76" y1="55" x2="96" y2="42" stroke="#8A8580" strokeWidth="0.6" />
-                                        <polygon points="76,55 78,53 74,53" fill="#8A8580" />
-                                        <polygon points="96,42 94,44 98,44" fill="#8A8580" />
-                                        <text x="92" y="52" textAnchor="middle" fontSize="8" fill="#8A8580" fontFamily="Inter, sans-serif" letterSpacing="0.1em">D</text>
-                                        {/* H arrow (left front edge) */}
-                                        <line x1="23" y1="25" x2="23" y2="55" stroke="#8A8580" strokeWidth="0.6" />
-                                        <polygon points="21,25 25,25 23,22" fill="#8A8580" />
-                                        <polygon points="21,55 25,55 23,58" fill="#8A8580" />
-                                        <text x="19" y="42" textAnchor="middle" fontSize="8" fill="#8A8580" fontFamily="Inter, sans-serif" letterSpacing="0.1em">H</text>
-                                    </svg>
-                                    {/* Dimensions text */}
-                                    <div className="flex flex-col gap-0.5">
-                                        {(() => {
-                                            const w = useCm ? `${product.specifications.width}cm` : `${(parseFloat(product.specifications.width) / 2.54).toFixed(1)}"`;
-                                            const d = useCm ? `${product.specifications.depth}cm` : `${(parseFloat(product.specifications.depth) / 2.54).toFixed(1)}"`;
-                                            const h = useCm ? `${product.specifications.height}cm` : `${(parseFloat(product.specifications.height) / 2.54).toFixed(1)}"`;
-                                            const sh = useCm ? `${product.specifications.seatHeight}cm` : `${(parseFloat(product.specifications.seatHeight) / 2.54).toFixed(1)}"`;
-                                            return (<>
-                                                <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                                    W {w} × D {d} × H {h}
-                                                </p>
-                                                <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                                    坐高 {sh} · 净重 50kg（含包装 60kg）
-                                                </p>
-                                                <p className="text-[12px] text-[#F5F0EB]/70 tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                                    承重 150kg
-                                                </p>
-                                            </>);
-                                        })()}
-                                        <button
-                                            onClick={() => setUseCm(!useCm)}
-                                            className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors mt-1 self-start border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
-                                            {useCm ? 'CM / 切换英寸' : 'IN / 切换厘米'}
-                                        </button>
-                                    </div>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase">Dimensions</label>
+                                    <button
+                                        onClick={() => setUseCm(!useCm)}
+                                        className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
+                                        {useCm ? 'CM / 切换英寸' : 'IN / 切换厘米'}
+                                    </button>
                                 </div>
-                                <p className="text-[9px] text-[#8A8580] tracking-[0.05em] mt-2">手工测量 ±1–3cm 误差，仅供参考</p>
+                                <div className="space-y-1">
+                                    {(() => {
+                                        const fmt = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
+                                        return (<>
+                                            <p className="text-[12px] text-[#F5F0EB]/70">宽：约 {fmt(product.specifications.width)}</p>
+                                            <p className="text-[12px] text-[#F5F0EB]/70">深：约 {fmt(product.specifications.depth)}</p>
+                                            <p className="text-[12px] text-[#F5F0EB]/70">高：约 {fmt(product.specifications.height)}</p>
+                                            <p className="text-[12px] text-[#F5F0EB]/70">坐高：约 {fmt(product.specifications.seatHeight)}</p>
+                                        </>);
+                                    })()}
+                                </div>
                             </div>}
                             {}
                             {product.materials && product.materials.length > 0 && <div className="mb-5">
@@ -735,25 +701,56 @@ export function ProductPageClient(
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                         {}
                         <div>
-                            <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
-                                {t("dimensionsTitle" as TranslationKeys) || "Dimensions"}
-                            </p>
-                            <h2
-                                className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] mb-10">
-                                {t("dimensionsTitle" as TranslationKeys) || "Dimensions"}
-                            </h2>
-                            <div className="space-y-6">
-                                {Object.entries(product.specifications).filter(([key]) => key in specLabels).map(
-                                    ([key, value]) => <div key={key} className="flex items-baseline gap-8 pb-4">
-                                        <span className="text-xs text-[#8A8580] tracking-[0.1em] uppercase w-24">
-                                            {t(specLabels[key]) || key}
-                                        </span>
-                                        <span className="text-lg font-light text-[#F5F0EB] font-serif">
-                                            {value.replace(/^[WHD]\s*/, "")}
-                                        </span>
-                                    </div>
-                                )}
+                            <div className="flex items-center gap-4">
+                                {/* Isometric wireframe SVG */}
+                                <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+                                    {/* Isometric box */}
+                                    <path d="M30 55 L70 55 L70 25 L30 25 Z" stroke="#555" strokeWidth="0.8" fill="none" />
+                                    <path d="M30 25 L50 12 L90 12 L70 25 Z" stroke="#555" strokeWidth="0.8" fill="none" />
+                                    <path d="M70 55 L90 42 L90 12 L70 25 Z" stroke="#555" strokeWidth="0.8" fill="none" />
+                                    {/* W arrow */}
+                                    <line x1="30" y1="62" x2="70" y2="62" stroke="#8A8580" strokeWidth="0.6" />
+                                    <polygon points="30,60 30,64 27,62" fill="#8A8580" />
+                                    <polygon points="70,60 70,64 73,62" fill="#8A8580" />
+                                    <text x="50" y="68" textAnchor="middle" fontSize="8" fill="#8A8580" fontFamily="Inter, sans-serif" letterSpacing="0.1em">W</text>
+                                    {/* D arrow */}
+                                    <line x1="76" y1="55" x2="96" y2="42" stroke="#8A8580" strokeWidth="0.6" />
+                                    <polygon points="76,55 78,53 74,53" fill="#8A8580" />
+                                    <polygon points="96,42 94,44 98,44" fill="#8A8580" />
+                                    <text x="92" y="52" textAnchor="middle" fontSize="8" fill="#8A8580" fontFamily="Inter, sans-serif" letterSpacing="0.1em">D</text>
+                                    {/* H arrow */}
+                                    <line x1="23" y1="25" x2="23" y2="55" stroke="#8A8580" strokeWidth="0.6" />
+                                    <polygon points="21,25 25,25 23,22" fill="#8A8580" />
+                                    <polygon points="21,55 25,55 23,58" fill="#8A8580" />
+                                    <text x="19" y="42" textAnchor="middle" fontSize="8" fill="#8A8580" fontFamily="Inter, sans-serif" letterSpacing="0.1em">H</text>
+                                </svg>
+                                {/* Dimensions text */}
+                                <div className="flex flex-col gap-0.5">
+                                    {(() => {
+                                        const w = useCm ? `${product.specifications.width}cm` : `${(parseFloat(product.specifications.width) / 2.54).toFixed(1)}"`;
+                                        const d = useCm ? `${product.specifications.depth}cm` : `${(parseFloat(product.specifications.depth) / 2.54).toFixed(1)}"`;
+                                        const h = useCm ? `${product.specifications.height}cm` : `${(parseFloat(product.specifications.height) / 2.54).toFixed(1)}"`;
+                                        const sh = useCm ? `${product.specifications.seatHeight}cm` : `${(parseFloat(product.specifications.seatHeight) / 2.54).toFixed(1)}"`;
+                                        return (<>
+                                            <p className="text-[12px] text-[#333] tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                                W {w} × D {d} × H {h}
+                                            </p>
+                                            <p className="text-[12px] text-[#333] tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                                坐高 {sh} · 净重 50kg（含包装 60kg）
+                                            </p>
+                                            <p className="text-[12px] text-[#333] tracking-[0.02em]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                                承重 150kg
+                                            </p>
+                                        </>);
+                                    })()}
+                                    <button
+                                        onClick={() => setUseCm(!useCm)}
+                                        className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors mt-1 self-start border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
+                                        {useCm ? 'CM / 切换英寸' : 'IN / 切换厘米'}
+                                    </button>
+                                </div>
                             </div>
+                            <p className="text-[9px] text-[#8A8580] tracking-[0.05em] mt-2">手工测量 ±1–3cm 误差，仅供参考</p>
                         </div>
                         {}
                         <div
