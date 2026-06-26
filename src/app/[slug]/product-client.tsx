@@ -509,21 +509,21 @@ export function ProductPageClient({ product }: Props) {
             </h2>
           </div>
 
-          {/* 3 Space Cards - Independent static images */}
+          {/* 3 Space Cards - 3 owl color variants */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
-                image: "/products/spaces/space-1.jpg",
+                image: "/products/owl/snowy-white.png",
                 title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas",
                 desc: "Open-plan living with sculptural presence",
               },
               {
-                image: "/products/spaces/space-2.jpg",
+                image: "/products/owl/rose-pink.png",
                 title: t("privateLibraries" as TranslationKeys) || "Private Libraries",
                 desc: "Intimate reading spaces with character",
               },
               {
-                image: "/products/spaces/space-1.jpg",
+                image: "/products/owl/black-leather.png",
                 title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels",
                 desc: "Statement pieces in curated lobbies",
               },
