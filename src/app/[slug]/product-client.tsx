@@ -85,7 +85,7 @@ export function ProductPageClient({ product }: Props) {
       "/products/owl/forest-green.png",
       "/products/owl/warm-gray.png",
       "/products/owl/dusty-pink-fur.png",
-      "/products/owl/lifestyle.webp",
+      "/products/owl/lifestyle-square.webp",
     ],
     "gorilla-sofa": [
       "/products/gorilla-sofa/gray.jpg",
@@ -258,7 +258,7 @@ export function ProductPageClient({ product }: Props) {
                       aria-label={`View ${img.id + 1}`}
                     >
                       {img.src ? (
-                        <img src={img.src} alt="" className="w-full h-full object-contain" />
+                        <img src={img.src} alt="" className="w-full h-full object-cover" />
                       ) : (
                         <span className="font-serif text-sm text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
                           {product.animal.charAt(0)}
