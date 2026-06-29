@@ -732,36 +732,36 @@ export function ProductPageClient(
                             <div className="flex flex-col items-center lg:pt-[56px]">
                                 {}
                                 <div
-                                    className="relative bg-[#FAFAF7] rounded-sm overflow-hidden w-full max-w-[480px]"
+                                    className="relative bg-[#1A1918] rounded-sm overflow-hidden w-full max-w-[380px]"
                                     style={{
-                                        border: "1px solid rgba(255,255,255,0.25)"
+                                        border: "1px solid rgba(255,255,255,0.08)"
                                     }}>
                                     {}
                                     <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10">
-                                        <div className="absolute top-0 left-0 w-[20px] h-px bg-[#E8B4B8]/30" />
-                                        <div className="absolute top-0 left-0 w-px h-[20px] bg-[#E8B4B8]/30" />
+                                        <div className="absolute top-0 left-0 w-[20px] h-px bg-[#E8B4B8]/20" />
+                                        <div className="absolute top-0 left-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
                                     {}
                                     <div className="absolute top-3 right-3 w-[20px] h-[20px] z-10">
-                                        <div className="absolute top-0 right-0 w-[20px] h-px bg-[#E8B4B8]/30" />
-                                        <div className="absolute top-0 right-0 w-px h-[20px] bg-[#E8B4B8]/30" />
+                                        <div className="absolute top-0 right-0 w-[20px] h-px bg-[#E8B4B8]/20" />
+                                        <div className="absolute top-0 right-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
                                     {}
                                     <div className="absolute bottom-3 left-3 w-[20px] h-[20px] z-10">
-                                        <div className="absolute bottom-0 left-0 w-[20px] h-px bg-[#E8B4B8]/30" />
-                                        <div className="absolute bottom-0 left-0 w-px h-[20px] bg-[#E8B4B8]/30" />
+                                        <div className="absolute bottom-0 left-0 w-[20px] h-px bg-[#E8B4B8]/20" />
+                                        <div className="absolute bottom-0 left-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
                                     {}
                                     <div className="absolute bottom-3 right-3 w-[20px] h-[20px] z-10">
-                                        <div className="absolute bottom-0 right-0 w-[20px] h-px bg-[#E8B4B8]/30" />
-                                        <div className="absolute bottom-0 right-0 w-px h-[20px] bg-[#E8B4B8]/30" />
+                                        <div className="absolute bottom-0 right-0 w-[20px] h-px bg-[#E8B4B8]/20" />
+                                        <div className="absolute bottom-0 right-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
                                     <Image
                                         src={storySketchMap[product.slug] || "/products/owl/story-sketch.webp"}
                                         alt="Owl Sofa Sketch"
                                         width={500}
                                         height={500}
-                                        className="w-full h-auto block" />
+                                        className="w-full h-auto block opacity-70 brightness-[0.85] contrast-[0.9]" />
                                 </div>
                                 {}
                                 <div className="flex items-center justify-center gap-8 mt-6">
