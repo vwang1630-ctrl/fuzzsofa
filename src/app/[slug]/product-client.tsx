@@ -635,7 +635,7 @@ export function ProductPageClient(
             </section>
             {}
             <section className="bg-[#0A0A0A]">
-                <div className="max-w-[1200px] mx-auto px-6 py-20">
+                <div className="max-w-[1200px] mx-auto px-6 py-10">
                     {}
                     <div className="mb-12">
                         <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
@@ -799,7 +799,7 @@ export function ProductPageClient(
                             className="absolute inset-0 bg-gradient-to-t from-[#090909]/80 via-[#090909]/30 to-transparent" />
                         {}
                         <div
-                            className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6"
+                            className="absolute inset-0 flex flex-col items-center justify-end pb-10 lg:pb-14 px-6"
                             style={{
                                 backgroundColor: "#0A0A0A"
                             }}>
