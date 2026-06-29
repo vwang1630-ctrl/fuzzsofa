@@ -150,6 +150,7 @@ export function ProductPageClient(
         ],
 
         "meteorite-ring-sofa": [
+            "/products/meteorite-ring-sofa/hero-1.webp",
             "/products/meteorite-ring-sofa/main.jpg",
             "/products/meteorite-ring-sofa/scene-2.jpg"
         ],
