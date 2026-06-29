@@ -710,7 +710,7 @@ export function ProductPageClient(
                                         <div className="absolute bottom-0 right-0 w-px h-[20px] bg-[#E8B4B8]/30" />
                                     </div>
                                     <Image
-                                        src="/products/owl/story-owl.png"
+                                        src="/products/owl/story-sketch.webp"
                                         alt="Owl Sofa Sketch"
                                         width={500}
                                         height={500}
