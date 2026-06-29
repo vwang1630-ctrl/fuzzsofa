@@ -809,17 +809,10 @@ export function ProductPageClient(
                     {/* Background image */}
                     <div
                         className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
-                        {galleryImages.length >= 4 && galleryImages[3]?.src ? <img
-                            src={galleryImages[3].src}
+                        <img
+                            src="/products/owl/materials-bg.webp"
                             alt={`${productName} craftsmanship`}
-                            className="w-full h-full object-cover opacity-50" /> : galleryImages[0]?.src ? <img
-                            src={galleryImages[0].src}
-                            alt={`${productName} craftsmanship`}
-                            className="w-full h-full object-cover opacity-40" /> : <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
-                                {product.animal.charAt(0)}
-                            </span>
-                        </div>}
+                            className="w-full h-full object-cover opacity-50" />
                         {/* Gradient overlay */}
                         <div
                             className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/50 to-transparent" />
