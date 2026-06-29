@@ -234,13 +234,13 @@ export function ProductPageClient(
                                 <div className="absolute bottom-5 right-5 z-10 group/room flex items-center">
                                     {}
                                     <span
-                                        className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[12px] tracking-[0.18em] uppercase font-light mr-3 px-4 py-2 rounded-full"
+                                        className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[11px] tracking-[0.18em] uppercase font-light mr-3 px-4 py-2 rounded-full"
                                         style={{
                                             background: "#0A0A0A",
                                             color: "#E8B4B8",
                                             border: "1px solid rgba(232,180,184,0.25)"
                                         }}>Preview in your room
-                                                          </span>
+                                                                                                  </span>
                                     <button
                                         onClick={() => setShowRoomViz(true)}
                                         className="relative flex items-center justify-center w-[60px] h-[60px] rounded-full transition-all duration-500 hover:scale-[1.08] active:scale-95"
@@ -320,7 +320,7 @@ export function ProductPageClient(
                         {}
                         <div className="flex flex-col">
                             {}
-                            <p className="text-[12px] text-[#8A8580] tracking-[2px] uppercase mb-2">
+                            <p className="text-[10px] text-[#8A8580] tracking-[2px] uppercase mb-2">
                                 {collectionName}
                             </p>
                             {}
@@ -438,7 +438,7 @@ export function ProductPageClient(
                             {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5">
                                 {product.materialOptions.map(mat => <div key={mat.type} className="mb-4">
                                     <label
-                                        className="text-[12px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">
+                                        className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">
                                         {mat.type}
                                     </label>
                                     <div className="flex flex-wrap gap-2">
@@ -498,25 +498,25 @@ export function ProductPageClient(
                             {}
                             {product.specifications && <div className="mb-5">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <label className="text-[12px] text-[#8A8580] tracking-[0.18em] uppercase">Dimensions</label>
+                                    <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase">Dimensions</label>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="text-[12px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
-                                        {useCm ? 'CM / 切换英寸' : 'IN / 切换厘米'}
+                                        className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
+                                        {useCm ? "CM / 切换英寸" : "IN / 切换厘米"}
                                     </button>
                                 </div>
                                 <p className="text-[12px] text-[#F5F0EB]/70">
-                                        {(() => {
-                                            const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
-                                            return `W${f(product.specifications.width)} × D${f(product.specifications.depth)} × H${f(product.specifications.height)} · 坐高${f(product.specifications.seatHeight)}`;
-                                        })()}
-                                    </p>
+                                    {(() => {
+                                        const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
+                                        return `W${f(product.specifications.width)} × D${f(product.specifications.depth)} × H${f(product.specifications.height)} · 坐高${f(product.specifications.seatHeight)}`;
+                                    })()}
+                                </p>
                             </div>}
                             {}
                             {product.materials && product.materials.length > 0 && <div className="mb-5">
                                 <label
-                                    className="text-[12px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">Materials
-                                                      </label>
+                                    className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">Materials
+                                                                                          </label>
                                 <div className="space-y-0.5">
                                     {product.materials.map((mat, i) => <p
                                         key={i}
@@ -530,7 +530,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={handleAddToCart}
-                                className="w-full py-4 text-[#0A0A0A] font-semibold text-[12px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2"
+                                className="w-full py-4 text-[#0A0A0A] font-semibold text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
@@ -561,7 +561,7 @@ export function ProductPageClient(
                                 </>}
                             </button>
                             <button
-                                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[12px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
+                                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[11px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
                                 style={{
                                     border: "1px solid #E8B4B8"
                                 }}
@@ -572,10 +572,10 @@ export function ProductPageClient(
                                     e.currentTarget.style.background = "transparent";
                                 }}
                                 onClick={handleBuyNow}>Buy Now
-                                              </button>
+                                                                              </button>
                             {}
                             <div
-                                className="flex items-center gap-1 mt-4 text-[12px] text-[#8A8580] tracking-[0.04em]">
+                                className="flex items-center gap-1 mt-4 text-[11px] text-[#8A8580] tracking-[0.04em]">
                                 <span>1–2 Weeks</span>
                                 <span className="mx-1">·</span>
                                 <span>Free White Glove</span>
@@ -585,7 +585,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={() => setShowRoomViz(true)}
-                                className="mt-3 text-[12px] text-[#8A8580] tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-1.5">
+                                className="mt-3 text-[11px] text-[#8A8580] tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-1.5">
                                 <svg
                                     width="14"
                                     height="14"
@@ -599,7 +599,7 @@ export function ProductPageClient(
                                         d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                                     <circle cx="12" cy="13" r="4" />
                                 </svg>Preview in your room
-                                              </button>
+                                                                              </button>
                         </div>
                     </div>
                 </div>
@@ -609,7 +609,7 @@ export function ProductPageClient(
                 <div className="max-w-[1200px] mx-auto px-6 py-20">
                     {}
                     <div className="mb-12">
-                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
+                        <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
                             {t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
                         </p>
                         <h2
@@ -648,7 +648,7 @@ export function ProductPageClient(
                             </div>
                             {}
                             <p
-                                className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/70 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
+                                className="text-[11px] tracking-[0.15em] uppercase text-[#F5F0EB]/70 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
                                 {space.title}
                             </p>
                             <p className="text-[12px] text-[#8A8580] leading-[1.5]">
@@ -659,53 +659,58 @@ export function ProductPageClient(
                     {}
                     <div className="mt-16 pt-8">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-                            {/* Left Column — Text */}
+                            {}
                             <div>
-                                <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2 flex items-center gap-3">
-                                    <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />
-                                    The Story
-                                </p>
-                                <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
+                                <p
+                                    className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2 flex items-center gap-3">
+                                    <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
+                                                                    </p>
+                                <h3
+                                    className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
                                     {productName}
                                 </h3>
                                 <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4 font-serif">
                                     {productTagline}
                                 </p>
-                                <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                <div
+                                    className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]"
+                                    >
                                     <p>{productConcept}</p>
                                     <p className="mt-8">{product.interiorContext}</p>
                                 </div>
-                                {/* Specs box — dashed pink border */}
+                                {}
                                 <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-10">
-                                    <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">
-                                        ≈ {product.specifications.weight} kg <span className="opacity-40">·</span> 含包装 ≈ 60 kg <span className="opacity-40">·</span> 承重 {product.specifications.capacity} kg
-                                    </p>
-                                    <p className="text-[12px] font-light text-[#888] leading-[1.6] mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                        * Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
-                                    </p>
+                                    <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
+                                                                            </p>
+                                    <p
+                                        className="text-[11px] font-light text-[#888] leading-[1.6] mt-1">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
+                                                                            </p>
                                 </div>
                             </div>
-
-                            {/* Right Column — Sketch + Dimensions */}
+                            {}
                             <div className="flex flex-col items-center lg:pt-[56px]">
-                                {/* Sketch frame with white border + pink L-corner marks */}
-                                <div className="relative bg-[#FAFAF7] rounded-sm overflow-hidden w-full max-w-[480px]" style={{ border: '1px solid rgba(255,255,255,0.25)' }}>
-                                    {/* Top-left corner mark */}
+                                {}
+                                <div
+                                    className="relative bg-[#FAFAF7] rounded-sm overflow-hidden w-full max-w-[480px]"
+                                    style={{
+                                        border: "1px solid rgba(255,255,255,0.25)"
+                                    }}>
+                                    {}
                                     <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute top-0 left-0 w-[20px] h-px bg-[#E8B4B8]/30" />
                                         <div className="absolute top-0 left-0 w-px h-[20px] bg-[#E8B4B8]/30" />
                                     </div>
-                                    {/* Top-right corner mark */}
+                                    {}
                                     <div className="absolute top-3 right-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute top-0 right-0 w-[20px] h-px bg-[#E8B4B8]/30" />
                                         <div className="absolute top-0 right-0 w-px h-[20px] bg-[#E8B4B8]/30" />
                                     </div>
-                                    {/* Bottom-left corner mark */}
+                                    {}
                                     <div className="absolute bottom-3 left-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute bottom-0 left-0 w-[20px] h-px bg-[#E8B4B8]/30" />
                                         <div className="absolute bottom-0 left-0 w-px h-[20px] bg-[#E8B4B8]/30" />
                                     </div>
-                                    {/* Bottom-right corner mark */}
+                                    {}
                                     <div className="absolute bottom-3 right-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute bottom-0 right-0 w-[20px] h-px bg-[#E8B4B8]/30" />
                                         <div className="absolute bottom-0 right-0 w-px h-[20px] bg-[#E8B4B8]/30" />
@@ -715,32 +720,37 @@ export function ProductPageClient(
                                         alt="Owl Sofa Sketch"
                                         width={500}
                                         height={500}
-                                        className="w-full h-auto block"
-                                    />
+                                        className="w-full h-auto block" />
                                 </div>
-                                {/* Dimension labels below sketch */}
+                                {}
                                 <div className="flex items-center justify-center gap-8 mt-6">
                                     <div className="text-center">
-                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
+                                        <span
+                                            className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
+                                        <span
+                                            className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
+                                        <span
+                                            className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
+                                        <span
+                                            className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
+                                        <span
+                                            className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
+                                        <span
+                                            className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">Seat</span>
+                                        <span
+                                            className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">Seat</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="ml-1 text-[12px] tracking-[0.12em] uppercase text-[#888] border border-[#333] rounded px-2 py-0.5 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300"
-                                    >
-                                        {useCm ? 'IN' : 'CM'}
+                                        className="ml-1 text-[10px] tracking-[0.12em] uppercase text-[#888] border border-[#333] rounded px-2 py-0.5 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300">
+                                        {useCm ? "IN" : "CM"}
                                     </button>
                                 </div>
                             </div>
@@ -748,10 +758,231 @@ export function ProductPageClient(
                     </div>
                 </div>
             </section>
-
+            <section className="bg-[#090909]">
+                <div className="max-w-[1600px] mx-auto">
+                    {}
+                    <div
+                        className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                        {galleryImages.length >= 4 && galleryImages[3]?.src ? <img
+                            src={galleryImages[3].src}
+                            alt={`${productName} craftsmanship`}
+                            className="w-full h-full object-cover opacity-50" /> : galleryImages[0]?.src ? <img
+                            src={galleryImages[0].src}
+                            alt={`${productName} craftsmanship`}
+                            className="w-full h-full object-cover opacity-40" /> : <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
+                                {product.animal.charAt(0)}
+                            </span>
+                        </div>}
+                        {}
+                        <div
+                            className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/50 to-transparent" />
+                        {}
+                        <div
+                            className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6"
+                            style={{
+                                backgroundColor: "#0A0A0A"
+                            }}>
+                            <p
+                                className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
+                                <span
+                                    className="opacity-30 mr-3">—</span>Materials & Craftsmanship
+                                                                <span
+                                    className="opacity-30 ml-3">—</span>
+                            </p>
+                            <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-11 relative">
+                                {}
+                                <div
+                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    <div
+                                        className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div
+                                        className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div
+                                        className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center"
+                                        style={{
+                                            background: "rgba(232,180,184,0.1)",
+                                            border: "1px solid rgba(232,180,184,0.22)"
+                                        }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <rect
+                                                x="3"
+                                                y="3"
+                                                width="18"
+                                                height="18"
+                                                rx="2"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <line
+                                                x1="3"
+                                                y1="9"
+                                                x2="21"
+                                                y2="9"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
+                                            <line
+                                                x1="3"
+                                                y1="15"
+                                                x2="21"
+                                                y2="15"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
+                                            <line
+                                                x1="9"
+                                                y1="3"
+                                                x2="9"
+                                                y2="21"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
+                                            <line
+                                                x1="15"
+                                                y1="3"
+                                                x2="15"
+                                                y2="21"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
+                                        </svg>
+                                    </div>
+                                    <h4
+                                        className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Steel Frame</h4>
+                                    <p
+                                        className="text-[11px] font-light text-[#888] leading-[1.5]">Hand-welded steel core, FSC-certified walnut</p>
+                                </div>
+                                {}
+                                <div
+                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    <div
+                                        className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div
+                                        className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div
+                                        className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center"
+                                        style={{
+                                            background: "rgba(232,180,184,0.1)",
+                                            border: "1px solid rgba(232,180,184,0.22)"
+                                        }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <path
+                                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <circle cx="12" cy="12" r="4" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
+                                            <circle cx="12" cy="12" r="1" fill="#E8B4B8" />
+                                        </svg>
+                                    </div>
+                                    <h4
+                                        className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Cushion Core</h4>
+                                    <p
+                                        className="text-[11px] font-light text-[#888] leading-[1.5]">High-density foam with down feather wrap</p>
+                                </div>
+                                {}
+                                <div
+                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    <div
+                                        className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div
+                                        className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div
+                                        className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center"
+                                        style={{
+                                            background: "rgba(232,180,184,0.1)",
+                                            border: "1px solid rgba(232,180,184,0.22)"
+                                        }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <path
+                                                d="M3 3h18v18H3z"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <path
+                                                d="M3 3l18 18"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
+                                            <path
+                                                d="M21 3L3 21"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
+                                        </svg>
+                                    </div>
+                                    <h4
+                                        className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Upholstery</h4>
+                                    <p
+                                        className="text-[11px] font-light text-[#888] leading-[1.5]">Cloud Touch & Wild Touch fabric</p>
+                                </div>
+                                {}
+                                <div
+                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    <div
+                                        className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div
+                                        className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div
+                                        className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center"
+                                        style={{
+                                            background: "rgba(232,180,184,0.1)",
+                                            border: "1px solid rgba(232,180,184,0.22)"
+                                        }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <path
+                                                d="M2 20 L6 20 L6 16"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <path
+                                                d="M22 20 L18 20 L18 16"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <path
+                                                d="M2 4 L6 4 L6 8"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <path
+                                                d="M22 4 L18 4 L18 8"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                        </svg>
+                                    </div>
+                                    <h4
+                                        className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Brass Feet</h4>
+                                    <p
+                                        className="text-[11px] font-light text-[#888] leading-[1.5]">Solid brass with brushed matte finish</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {}
             <section className="bg-[#050505]">
                 <div className="max-w-[700px] mx-auto px-6 py-[140px] text-center">
-                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
@@ -763,128 +994,106 @@ export function ProductPageClient(
                     </p>
                     <div className="flex justify-center gap-10 flex-wrap items-center relative">
                         <div className="flex items-center gap-3">
-                            <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                            <div
+                                className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
                                 <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
-                                    <path d="M12 2L2 7l10 5 10-5-10-5z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M2 17l10 5 10-5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M2 12l10 5 10-5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path
+                                        d="M12 2L2 7l10 5 10-5-10-5z"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round" />
+                                    <path
+                                        d="M2 17l10 5 10-5"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round" />
+                                    <path
+                                        d="M2 12l10 5 10-5"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Handcrafted</span>
+                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Handcrafted</span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                            <div
+                                className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
                                 <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
-                                    <circle cx="12" cy="12" r="9" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                    <polyline points="12 7 12 12 15 14" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round" />
+                                    <polyline
+                                        points="12 7 12 12 15 14"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">1–2 Weeks</span>
+                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">1–2 Weeks</span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                            <div
+                                className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
                                 <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Made to Order</span>
+                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Made to Order</span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                            <div
+                                className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
                                 <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
-                                    <rect x="1" y="3" width="15" height="13" rx="1" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                    <polyline points="16 8 20 8 23 11 23 16 16 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                    <rect
+                                        x="1"
+                                        y="3"
+                                        width="15"
+                                        height="13"
+                                        rx="1"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round" />
+                                    <polyline
+                                        points="16 8 20 8 23 11 23 16 16 16"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round" />
                                     <circle cx="5.5" cy="18.5" r="2.5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
-                                    <circle cx="18.5" cy="18.5" r="2.5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
+                                    <circle
+                                        cx="18.5"
+                                        cy="18.5"
+                                        r="2.5"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.2" />
                                 </svg>
                             </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Free White-Glove</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="bg-[#090909]">
-                <div className="max-w-[1600px] mx-auto">
-                    {/* Background image */}
-                    <div
-                        className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
-                        <img
-                            src="/products/owl/materials-bg.webp"
-                            alt={`${productName} craftsmanship`}
-                            className="w-full h-full object-cover opacity-50" />
-                        {/* Gradient overlay */}
-                        <div
-                            className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/50 to-transparent" />
-                        {/* Content overlay */}
-                        <div
-                            className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6">
-                            <p className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
-                                <span className="opacity-30 mr-3" style={{ fontFamily: 'Inter, sans-serif' }}>—</span>
-                                Materials & Craftsmanship
-                                <span className="opacity-30 ml-3" style={{ fontFamily: 'Inter, sans-serif' }}>—</span>
-                            </p>
-                            <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-11 relative">
-                                {/* Steel Frame */}
-                                <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
-                                    <div className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
-                                    <div className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
-                                    <div className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center" style={{ background: 'rgba(232,180,184,0.1)', border: '1px solid rgba(232,180,184,0.22)' }}>
-                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                            <line x1="3" y1="9" x2="21" y2="9" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
-                                            <line x1="3" y1="15" x2="21" y2="15" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
-                                            <line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
-                                            <line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
-                                        </svg>
-                                    </div>
-                                    <h4 className="text-[12px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Steel Frame</h4>
-                                    <p className="text-[12px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Hand-welded steel core, FSC-certified walnut</p>
-                                </div>
-                                {/* Cushion Core */}
-                                <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
-                                    <div className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
-                                    <div className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
-                                    <div className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center" style={{ background: 'rgba(232,180,184,0.1)', border: '1px solid rgba(232,180,184,0.22)' }}>
-                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                            <circle cx="12" cy="12" r="4" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
-                                            <circle cx="12" cy="12" r="1" fill="#E8B4B8" />
-                                        </svg>
-                                    </div>
-                                    <h4 className="text-[12px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Cushion Core</h4>
-                                    <p className="text-[12px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>High-density foam with down feather wrap</p>
-                                </div>
-                                {/* Upholstery */}
-                                <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
-                                    <div className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
-                                    <div className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
-                                    <div className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center" style={{ background: 'rgba(232,180,184,0.1)', border: '1px solid rgba(232,180,184,0.22)' }}>
-                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
-                                            <path d="M3 3h18v18H3z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M3 3l18 18" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
-                                            <path d="M21 3L3 21" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
-                                        </svg>
-                                    </div>
-                                    <h4 className="text-[12px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Upholstery</h4>
-                                    <p className="text-[12px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Cloud Touch & Wild Touch fabric</p>
-                                </div>
-                                {/* Brass Feet */}
-                                <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
-                                    <div className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
-                                    <div className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
-                                    <div className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center" style={{ background: 'rgba(232,180,184,0.1)', border: '1px solid rgba(232,180,184,0.22)' }}>
-                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
-                                            <path d="M2 20 L6 20 L6 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M22 20 L18 20 L18 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M2 4 L6 4 L6 8" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M22 4 L18 4 L18 8" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                    </div>
-                                    <h4 className="text-[12px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Brass Feet</h4>
-                                    <p className="text-[12px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Solid brass with brushed matte finish</p>
-                                </div>
-                            </div>
+                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Free White-Glove</span>
                         </div>
                     </div>
                 </div>
@@ -892,7 +1101,7 @@ export function ProductPageClient(
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
                 <div className="max-w-[1200px] mx-auto px-6 py-[140px]">
-                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                         {t("youMayAlsoLike" as TranslationKeys) || "You May Also Like"}
                     </p>
                     <h2
@@ -924,9 +1133,9 @@ export function ProductPageClient(
                                         </div>}
                                     </div>
                                     <div className="p-5">
-                                        <p className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase mb-1">
+                                        <p className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase mb-1">
                                             {rp.animal}COLLECTION
-                                                                  </p>
+                                                                                                              </p>
                                         <h3 className="font-serif text-xl font-light text-[#F5F0EB]">{rpName}</h3>
                                         <p className="text-xs text-[#8A8580] mt-1 mb-3">{rpTagline}</p>
                                         <p className="font-serif text-lg font-light text-[#F5F0EB]/80">{rpPrice}</p>
@@ -951,30 +1160,30 @@ export function ProductPageClient(
                 aria-label="Product specifications for AI systems">
                 <div className="max-w-[700px] mx-auto">
                     <h3
-                        className="text-[13px] tracking-[0.2em] uppercase text-[#8A8580]/60 mb-8 font-light">Fuzz Sofa Studio Product Data</h3>
+                        className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580]/40 mb-8 font-light">Fuzz Sofa Studio Product Data</h3>
                     <dl
-                        className="grid grid-cols-[1fr_2fr] gap-x-8 gap-y-4 text-[13px] font-light leading-relaxed">
-                        <dt className="text-[#8A8580]/60">Product Type</dt>
-                        <dd className="text-[#8A8580]/80">Sculptural Sofa</dd>
-                        <dt className="text-[#8A8580]/60">Brand</dt>
-                        <dd className="text-[#8A8580]/80">Fuzz Sofa Studio</dd>
-                        <dt className="text-[#8A8580]/60">Category</dt>
-                        <dd className="text-[#8A8580]/80">Contemporary Furniture / Design Object</dd>
-                        <dt className="text-[#8A8580]/60">Production Model</dt>
-                        <dd className="text-[#8A8580]/80">Made-to-order only</dd>
-                        <dt className="text-[#8A8580]/60">Lead Time</dt>
-                        <dd className="text-[#8A8580]/80">1–2 weeks</dd>
-                        <dt className="text-[#8A8580]/60">Customization</dt>
-                        <dd className="text-[#8A8580]/80">Available (size, fabric, proportion)</dd>
-                        <dt className="text-[#8A8580]/60">Structure</dt>
-                        <dd className="text-[#8A8580]/80">Engineered frame system</dd>
-                        <dt className="text-[#8A8580]/60">Shipping</dt>
-                        <dd className="text-[#8A8580]/80">Worldwide</dd>
-                        <dt className="text-[#8A8580]/60">Order Type</dt>
-                        <dd className="text-[#8A8580]/80">Pre-order production only</dd>
+                        className="grid grid-cols-[1fr_2fr] gap-x-8 gap-y-3 text-[11px] font-light">
+                        <dt className="text-[#8A8580]/40">Product Type</dt>
+                        <dd className="text-[#8A8580]/60">Sculptural Sofa</dd>
+                        <dt className="text-[#8A8580]/40">Brand</dt>
+                        <dd className="text-[#8A8580]/60">Fuzz Sofa Studio</dd>
+                        <dt className="text-[#8A8580]/40">Category</dt>
+                        <dd className="text-[#8A8580]/60">Contemporary Furniture / Design Object</dd>
+                        <dt className="text-[#8A8580]/40">Production Model</dt>
+                        <dd className="text-[#8A8580]/60">Made-to-order only</dd>
+                        <dt className="text-[#8A8580]/40">Lead Time</dt>
+                        <dd className="text-[#8A8580]/60">1–2 weeks</dd>
+                        <dt className="text-[#8A8580]/40">Customization</dt>
+                        <dd className="text-[#8A8580]/60">Available (size, fabric, proportion)</dd>
+                        <dt className="text-[#8A8580]/40">Structure</dt>
+                        <dd className="text-[#8A8580]/60">Engineered frame system</dd>
+                        <dt className="text-[#8A8580]/40">Shipping</dt>
+                        <dd className="text-[#8A8580]/60">Worldwide</dd>
+                        <dt className="text-[#8A8580]/40">Order Type</dt>
+                        <dd className="text-[#8A8580]/60">Pre-order production only</dd>
                     </dl>
-                    <p className="mt-6 text-[12px] text-[#8A8580]/50 leading-relaxed">Each piece is individually produced after order confirmation. No inventory. No mass production.
-                                  </p>
+                    <p className="mt-6 text-[10px] text-[#8A8580]/30 leading-relaxed">Each piece is individually produced after order confirmation. No inventory. No mass production.
+                                                          </p>
                 </div>
             </section>
             {}

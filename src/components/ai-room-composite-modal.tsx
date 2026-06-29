@@ -161,8 +161,8 @@ export function AiRoomCompositeModal({
                   dragOver
                     ? "border-[#FF69B4]/60 bg-[#FF69B4]/05"
                     : previewUrl
-                      ? "border-[#333] bg-[#0A0A0A]"
-                      : "border-[#333] hover:border-[#FF69B4]/40"
+                      ? "border-[#1A1A1A] bg-[#0A0A0A]"
+                      : "border-[#1A1A1A] hover:border-[#FF69B4]/40"
                 }`}
                 onClick={() => fileInputRef.current?.click()}
                 onDragOver={(e) => {
@@ -242,10 +242,10 @@ export function AiRoomCompositeModal({
               <button
                 onClick={handleGenerate}
                 disabled={!roomImage || isGenerating}
-                className={`mt-5 w-full py-3 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 border ${
+                className={`mt-5 w-full py-3 text-[12px] tracking-[0.2em] uppercase transition-all duration-300 border ${
                   roomImage && !isGenerating
                     ? "border-[#FF69B4]/60 text-[#FF69B4] hover:bg-[#FF69B4] hover:text-[#0A0A0A] hover:border-[#FF69B4]"
-                    : "border-[#333] text-[#8A8580] cursor-not-allowed"
+                    : "border-[#1A1A1A] text-[#8A8580] cursor-not-allowed"
                 }`}
               >
                 {isGenerating ? (
@@ -297,7 +297,7 @@ export function AiRoomCompositeModal({
               <div className="mt-5 flex gap-3">
                 <button
                   onClick={handleDownload}
-                  className="flex-1 py-2.5 text-[11px] tracking-[0.2em] uppercase border border-[#FF69B4]/60 text-[#FF69B4] hover:bg-[#FF69B4] hover:text-[#0A0A0A] hover:border-[#FF69B4] transition-all duration-300"
+                  className="flex-1 py-2.5 text-[12px] tracking-[0.2em] uppercase border border-[#FF69B4]/60 text-[#FF69B4] hover:bg-[#FF69B4] hover:text-[#0A0A0A] hover:border-[#FF69B4] transition-all duration-300"
                 >
                   {t("aiRoomDownload" as TranslationKeys)}
                 </button>
@@ -307,7 +307,7 @@ export function AiRoomCompositeModal({
                     setPreviewUrl(null);
                     setRoomImage(null);
                   }}
-                  className="flex-1 py-2.5 text-[11px] tracking-[0.2em] uppercase border border-[#333] text-[#8A8580] hover:border-[#F5F0EB]/40 hover:text-[#F5F0EB] transition-all duration-300"
+                  className="flex-1 py-2.5 text-[12px] tracking-[0.2em] uppercase border border-[#1A1A1A] text-[#8A8580] hover:border-[#F5F0EB]/40 hover:text-[#F5F0EB] transition-all duration-300"
                 >
                   {t("aiRoomRetry" as TranslationKeys)}
                 </button>

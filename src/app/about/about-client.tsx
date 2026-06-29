@@ -8,7 +8,7 @@ export default function AboutClient() {
       {/* Hero */}
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-[700px] mx-auto text-center">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6">About the Studio</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6">About the Studio</p>
           <h1 className="font-serif text-[2.8rem] font-light leading-[1.1] tracking-[0.02em] text-[#F5F0EB] mb-8">
             About Fuzz Sofa Studio
           </h1>
@@ -23,7 +23,7 @@ export default function AboutClient() {
         <div className="max-w-[900px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Studio Identity</p>
+              <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Studio Identity</p>
               <h2 className="font-serif text-2xl font-light tracking-[0.02em] mb-6">Between Design and Production</h2>
               <p className="text-sm font-light leading-[1.8] text-[#8A8580] mb-4">
                 Fuzz Sofa Studio is an independent furniture brand focused on sculptural seating.
@@ -44,7 +44,7 @@ export default function AboutClient() {
       {/* Section 2: Production Background */}
       <section className="py-20 px-6 bg-[#050505]">
         <div className="max-w-[900px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Production Partners</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Production Partners</p>
           <h2 className="font-serif text-2xl font-light tracking-[0.02em] mb-8">
             Serving Furniture Clients Since 2015
           </h2>
@@ -72,7 +72,7 @@ export default function AboutClient() {
       {/* Section 3: Production Philosophy */}
       <section className="py-20 px-6 bg-[#080808]">
         <div className="max-w-[700px] mx-auto text-center">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6">Production Philosophy</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6">Production Philosophy</p>
           <h2 className="font-serif text-[2rem] font-light tracking-[0.02em] leading-[1.15] mb-8 text-[#F5F0EB]">
             We believe design should be physical.
           </h2>
@@ -95,7 +95,7 @@ export default function AboutClient() {
           ].map(([num, label]) => (
             <div key={label}>
               <p className="font-serif text-3xl font-light text-[#F5F0EB] mb-2">{num}</p>
-              <p className="text-[11px] tracking-[0.1em] text-[#8A8580]">{label}</p>
+              <p className="text-[12px] tracking-[0.1em] text-[#8A8580]">{label}</p>
             </div>
           ))}
         </div>

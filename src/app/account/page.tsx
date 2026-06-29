@@ -550,7 +550,7 @@ export default function AccountPage() {
               >
                 {tab.label}
                 {tab.count > 0 && (
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                  <span className={`text-[12px] px-1.5 py-0.5 rounded-full ${
                     orderTab === tab.key ? "bg-[#E8B4B8] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#8A8580]"
                   }`}>
                     {tab.count}
@@ -618,7 +618,7 @@ export default function AccountPage() {
                           const paymentFailedTab = order.payment_status === 'failed' ? 'cancelled' as OrderTab : null;
                           setOrderTab(paymentFailedTab || statusToTab[order.status] || 'all');
                         }}
-                        className={`text-[11px] tracking-widest uppercase px-2.5 py-1 rounded hover:opacity-70 transition-opacity cursor-pointer border ${statusColor(order.status)}`}
+                        className={`text-[12px] tracking-widest uppercase px-2.5 py-1 rounded hover:opacity-70 transition-opacity cursor-pointer border ${statusColor(order.status)}`}
                       >
                         {statusLabel(order.status, t)}
                       </button>
@@ -630,7 +630,7 @@ export default function AccountPage() {
                           <button
                             key="logistics-badge"
                             onClick={() => setOrderTab('shipped')}
-                            className={`text-[10px] tracking-wider uppercase px-2 py-0.5 rounded hover:opacity-80 transition-opacity ${badge.color}`}
+                            className={`text-[12px] tracking-wider uppercase px-2 py-0.5 rounded hover:opacity-80 transition-opacity ${badge.color}`}
                           >
                             {badge.label}
                           </button>

@@ -280,7 +280,7 @@ export default function RoomPlacementCanvas({
             <p className="text-[#E8B4B8]/80 text-sm mb-3">{loadError}</p>
             <button
               onClick={onBack}
-              className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 text-[10px] 
+              className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 text-[12px] 
                 tracking-[0.1em] uppercase font-light hover:border-[#E8B4B8]/40 
                 hover:text-[#F5F0EB]/70 transition-all duration-300 rounded-[4px]"
             >
@@ -304,7 +304,7 @@ export default function RoomPlacementCanvas({
         {isLoading ? (
           <div className="flex flex-col items-center justify-center h-[300px] gap-3">
             <div className="w-6 h-6 border-2 border-[#E8B4B8]/40 border-t-[#E8B4B8] rounded-full animate-spin" />
-            <p className="text-[10px] text-[#8A8580] tracking-[0.1em] uppercase">Loading images...</p>
+            <p className="text-[12px] text-[#8A8580] tracking-[0.1em] uppercase">Loading images...</p>
           </div>
         ) : (
           <canvas
@@ -326,7 +326,7 @@ export default function RoomPlacementCanvas({
         <div className="space-y-4">
           {/* Size slider */}
           <div className="flex items-center gap-3">
-            <span className="text-[10px] text-[#8A8580] uppercase tracking-[0.1em] w-14 shrink-0">
+            <span className="text-[12px] text-[#8A8580] uppercase tracking-[0.1em] w-14 shrink-0">
               Size
             </span>
             <input
@@ -344,14 +344,14 @@ export default function RoomPlacementCanvas({
                 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#E8B4B8] 
                 [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:cursor-pointer"
             />
-            <span className="text-[10px] text-[#8A8580] w-8 text-right">
+            <span className="text-[12px] text-[#8A8580] w-8 text-right">
               {Math.round(scale * 100)}%
             </span>
           </div>
 
           {/* Shadow slider */}
           <div className="flex items-center gap-3">
-            <span className="text-[10px] text-[#8A8580] uppercase tracking-[0.1em] w-14 shrink-0">
+            <span className="text-[12px] text-[#8A8580] uppercase tracking-[0.1em] w-14 shrink-0">
               Shadow
             </span>
             <input
@@ -369,7 +369,7 @@ export default function RoomPlacementCanvas({
                 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[#E8B4B8] 
                 [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:cursor-pointer"
             />
-            <span className="text-[10px] text-[#8A8580] w-8 text-right">
+            <span className="text-[12px] text-[#8A8580] w-8 text-right">
               {Math.round(shadowOpacity * 100)}%
             </span>
           </div>
@@ -383,8 +383,8 @@ export default function RoomPlacementCanvas({
             {productName.charAt(0)}
           </span>
         </div>
-        <span className="text-[11px] text-[#8A8580]">{productName}</span>
-        <span className="text-[10px] text-[#E8B4B8]/50 ml-1">
+        <span className="text-[12px] text-[#8A8580]">{productName}</span>
+        <span className="text-[12px] text-[#E8B4B8]/50 ml-1">
           — Exact product, not AI-generated
         </span>
       </div>
@@ -393,7 +393,7 @@ export default function RoomPlacementCanvas({
       <div className="flex gap-3 justify-center pt-2">
         <button
           onClick={onBack}
-          className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 text-[10px] 
+          className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 text-[12px] 
             tracking-[0.1em] uppercase font-light hover:border-[#E8B4B8]/40 
             hover:text-[#F5F0EB]/70 transition-all duration-300 rounded-[4px]"
         >
@@ -402,7 +402,7 @@ export default function RoomPlacementCanvas({
         <button
           onClick={handleDone}
           disabled={!hasProduct || isLoading}
-          className="bg-[#E8B4B8] text-[#0A0A0A] px-6 py-2.5 text-[10px] 
+          className="bg-[#E8B4B8] text-[#0A0A0A] px-6 py-2.5 text-[12px] 
             tracking-[0.1em] uppercase font-medium hover:bg-[#E0BEC0] 
             transition-all duration-300 rounded-[4px]
             disabled:opacity-50 disabled:cursor-not-allowed"

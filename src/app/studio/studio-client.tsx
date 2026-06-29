@@ -8,7 +8,7 @@ export default function StudioClient() {
       {/* Hero */}
       <section className="py-[140px] px-6">
         <div className="max-w-[700px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Fuzz Sofa Studio</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Fuzz Sofa Studio</p>
           <h1 className="font-serif text-[2.5rem] md:text-[3.5rem] font-light leading-[1.1] tracking-[0.05em] mb-8">
             Made-to-Order<br />Sculptural Sofa Studio
           </h1>
@@ -22,7 +22,7 @@ export default function StudioClient() {
       {/* What We Do */}
       <section className="bg-[#050505] py-[140px] px-6">
         <div className="max-w-[700px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">What We Do</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">What We Do</p>
           <h2 className="font-serif text-[2rem] font-light leading-[1.1] tracking-[0.05em] mb-6">
             Custom Sculptural Sofas,<br />Not Mass-Produced Furniture
           </h2>
@@ -37,7 +37,7 @@ export default function StudioClient() {
       {/* How We Work */}
       <section className="py-[140px] px-6">
         <div className="max-w-[700px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">How We Work</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">How We Work</p>
           <h2 className="font-serif text-[2rem] font-light leading-[1.1] tracking-[0.05em] mb-6">
             Made-to-Order Production,<br />After Order Confirmation
           </h2>
@@ -52,7 +52,7 @@ export default function StudioClient() {
       {/* Who We Serve */}
       <section className="bg-[#050505] py-[140px] px-6">
         <div className="max-w-[700px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Who We Serve</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Who We Serve</p>
           <h2 className="font-serif text-[2rem] font-light leading-[1.1] tracking-[0.05em] mb-6">
             Clients Worldwide Seeking<br />Custom Contemporary Furniture
           </h2>
@@ -67,7 +67,7 @@ export default function StudioClient() {
       {/* What We Create */}
       <section className="py-[140px] px-6">
         <div className="max-w-[700px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">What We Create</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">What We Create</p>
           <h2 className="font-serif text-[2rem] font-light leading-[1.1] tracking-[0.05em] mb-6">
             Proportion, Structure,<br />and Material Clarity
           </h2>
@@ -82,7 +82,7 @@ export default function StudioClient() {
       {/* Production Model */}
       <section className="bg-[#050505] py-[140px] px-6">
         <div className="max-w-[700px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Production Model</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Production Model</p>
           <h2 className="font-serif text-[2rem] font-light leading-[1.1] tracking-[0.05em] mb-10">
             Made-to-Order Only
           </h2>
@@ -114,23 +114,23 @@ export default function StudioClient() {
       {/* Studio Capabilities */}
       <section className="py-[140px] px-6">
         <div className="max-w-[700px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Studio Capabilities</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Studio Capabilities</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
               <p className="font-serif text-[2rem] font-light text-[#F5F0EB] mb-1">10+</p>
-              <p className="text-[11px] tracking-[0.1em] uppercase text-[#8A8580] font-light">Years Production</p>
+              <p className="text-[12px] tracking-[0.1em] uppercase text-[#8A8580] font-light">Years Production</p>
             </div>
             <div>
               <p className="font-serif text-[2rem] font-light text-[#F5F0EB] mb-1">1000+</p>
-              <p className="text-[11px] tracking-[0.1em] uppercase text-[#8A8580] font-light">Custom Pieces</p>
+              <p className="text-[12px] tracking-[0.1em] uppercase text-[#8A8580] font-light">Custom Pieces</p>
             </div>
             <div>
               <p className="font-serif text-[2rem] font-light text-[#F5F0EB] mb-1">40+</p>
-              <p className="text-[11px] tracking-[0.1em] uppercase text-[#8A8580] font-light">Countries Served</p>
+              <p className="text-[12px] tracking-[0.1em] uppercase text-[#8A8580] font-light">Countries Served</p>
             </div>
             <div>
               <p className="font-serif text-[2rem] font-light text-[#F5F0EB] mb-1">5</p>
-              <p className="text-[11px] tracking-[0.1em] uppercase text-[#8A8580] font-light">Studio Designs</p>
+              <p className="text-[12px] tracking-[0.1em] uppercase text-[#8A8580] font-light">Studio Designs</p>
             </div>
           </div>
         </div>
@@ -139,7 +139,7 @@ export default function StudioClient() {
       {/* CTA */}
       <section className="bg-[#050505] py-[140px] px-6">
         <div className="max-w-[700px] mx-auto text-center">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Explore the Collection</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Explore the Collection</p>
           <h2 className="font-serif text-[2rem] md:text-[2.5rem] font-light leading-[1.1] tracking-[0.05em] mb-8">
             Each Piece Is a Design Statement
           </h2>

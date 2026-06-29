@@ -260,7 +260,7 @@ function RouteDiagram({ t, currentPhase }: { t: (key: TranslationKeys) => string
             i <= currentPhase ? "bg-[#E8B4B8]/10" : "bg-[#1A1A1A]"
           }`}>
             <span className="text-lg">{phase.icon}</span>
-            <span className={`text-[10px] tracking-wide ${
+            <span className={`text-[12px] tracking-wide ${
               i <= currentPhase ? "text-[#F5F0EB]" : "text-[#333]"
             }`}>
               {t(phase.label as TranslationKeys)}

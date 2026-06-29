@@ -241,7 +241,7 @@ export default function TrackingPage() {
                 <div key={eventType} className="flex gap-4">
                   {/* Timeline dot + line */}
                   <div className="flex flex-col items-center">
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] flex-shrink-0 ${color}`}>
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[12px] flex-shrink-0 ${color}`}>
                       {icon}
                     </div>
                     {idx < PHASE_ORDER.length - 1 && (
@@ -257,7 +257,7 @@ export default function TrackingPage() {
                       <p className="text-xs text-[#8A8580] mt-0.5">{event.location}</p>
                     )}
                     {event?.happened_at && (
-                      <p className="text-[10px] text-[#8A8580]/60 mt-0.5">
+                      <p className="text-[12px] text-[#8A8580]/60 mt-0.5">
                         {new Date(event.happened_at).toLocaleString()}
                       </p>
                     )}
@@ -276,7 +276,7 @@ export default function TrackingPage() {
             return (
               <div key={event.id} className="flex gap-4 mt-2">
                 <div className="flex flex-col items-center">
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] flex-shrink-0 ${color}`}>
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[12px] flex-shrink-0 ${color}`}>
                     {icon}
                   </div>
                 </div>
@@ -288,7 +288,7 @@ export default function TrackingPage() {
                   {event.location && (
                     <p className="text-xs text-[#8A8580] mt-0.5">{event.location}</p>
                   )}
-                  <p className="text-[10px] text-[#8A8580]/60 mt-0.5">
+                  <p className="text-[12px] text-[#8A8580]/60 mt-0.5">
                     {new Date(event.happened_at).toLocaleString()}
                   </p>
                 </div>
@@ -322,7 +322,7 @@ export default function TrackingPage() {
                   <div key={step.phase} className="flex items-center gap-2">
                     <div className="flex flex-col items-center">
                       <div className={`w-3 h-3 rounded-full ${isActive ? "bg-blue-500" : "bg-[#333]"}`} />
-                      <span className={`text-[10px] mt-1 ${isActive ? "text-[#F5F0EB]" : "text-[#8A8580]/50"}`}>
+                      <span className={`text-[12px] mt-1 ${isActive ? "text-[#F5F0EB]" : "text-[#8A8580]/50"}`}>
                         {step.label}
                       </span>
                     </div>

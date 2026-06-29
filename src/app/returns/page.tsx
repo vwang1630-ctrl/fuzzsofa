@@ -5,7 +5,7 @@ export default function ReturnsPage() {
     <main className="bg-[#0A0A0A] text-[#F5F0EB] min-h-screen">
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-[700px] mx-auto">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580] mb-6">Refund Policy</p>
+          <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6">Refund Policy</p>
           <h1 className="font-serif text-[2.5rem] font-light leading-[1.1] tracking-[0.02em] text-[#F5F0EB] mb-10">
             Made-to-Order, Exclusively for You
           </h1>

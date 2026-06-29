@@ -117,7 +117,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
         <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[8%] flex flex-col justify-end md:justify-start">
-          <p className="tracking-[0.35em] uppercase mb-3 text-[10px] md:text-[11px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
+          <p className="tracking-[0.35em] uppercase mb-3 text-[12px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
             Fuzz Sofa Studio
           </p>
           <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
@@ -132,7 +132,7 @@ export default function HomePage() {
                 const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
                 window.dispatchEvent(event);
               }}
-              className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[11px] tracking-[0.2em] uppercase transition-all duration-300"
+              className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[12px] tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer"
               style={{ borderColor: sceneConfig.accentColor + '50', color: sceneConfig.accentColor + 'CC', backgroundColor: sceneConfig.accentColor + '0A' }}
               onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '80'; e.currentTarget.style.color = sceneConfig.accentColor; }}
               onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '50'; e.currentTarget.style.color = sceneConfig.accentColor + 'CC'; }}
@@ -161,8 +161,8 @@ export default function HomePage() {
             { icon: '◉', label: '1–2 Week Delivery' },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-2.5">
-              <span className="text-[#E8B4B8] text-[10px]">{item.icon}</span>
-              <span className="text-[11px] tracking-[0.08em] text-[#8A8580]">{item.label}</span>
+              <span className="text-[#E8B4B8] text-[12px]">{item.icon}</span>
+              <span className="text-[12px] tracking-[0.08em] text-[#8A8580]">{item.label}</span>
             </div>
           ))}
         </div>
@@ -203,7 +203,7 @@ export default function HomePage() {
                   <p className="mt-1 text-xs text-[#8A8580]">{t(slugToPrefix[product.slug] + "Tagline" as TranslationKeys)}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <p className="text-sm text-[#F5F0EB]/60">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
-                    <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/70">Made to order (1–2 weeks)</p>
+                    <p className="text-[12px] tracking-[0.08em] text-[#8A8580]/70">Made to order (1–2 weeks)</p>
                   </div>
                 </div>
               </Link>

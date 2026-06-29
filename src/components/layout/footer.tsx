@@ -12,7 +12,7 @@ export function Footer() {
         {/* Brand + Manufacturing Entity */}
         <div>
           <h3 className="font-serif text-lg tracking-[0.08em] text-[#F5F0EB] mb-1">Fuzz Sofa Studio</h3>
-          <p className="text-[11px] tracking-[0.08em] text-[#8A8580] mb-4">An independent furniture brand operated by Fudehao. Serving furniture clients since 2015. Made-to-order in collaboration with manufacturing partners in Shanghai, China.</p>
+          <p className="text-[12px] tracking-[0.08em] text-[#8A8580] mb-4">An independent furniture brand operated by Fudehao. Serving furniture clients since 2015. Made-to-order in collaboration with manufacturing partners in Shanghai, China.</p>
           <p className="text-xs text-[#8A8580] mb-4">
             <a href="mailto:support@fuzzsofa.com" className="hover:text-[#E8B4B8] transition-colors">support@fuzzsofa.com</a>
           </p>
@@ -73,14 +73,14 @@ export function Footer() {
       {/* Payment Trust Bar */}
       <div className="border-t border-[#1A1A1A] px-6 py-5">
         <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-[10px] tracking-[0.08em] text-[#8A8580]/50">
+          <p className="text-[12px] tracking-[0.08em] text-[#8A8580]/50">
             Payments are securely processed by international payment providers.
           </p>
           <div className="flex items-center gap-4">
-            <span className="text-[10px] tracking-[0.05em] text-[#8A8580]/40">VISA</span>
-            <span className="text-[10px] tracking-[0.05em] text-[#8A8580]/40">MC</span>
-            <span className="text-[10px] tracking-[0.05em] text-[#8A8580]/40">AMEX</span>
-            <span className="text-[10px] tracking-[0.05em] text-[#8A8580]/40">Apple Pay</span>
+            <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50">VISA</span>
+            <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50">MC</span>
+            <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50">AMEX</span>
+            <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50">Apple Pay</span>
           </div>
         </div>
       </div>
@@ -88,10 +88,10 @@ export function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-[#1A1A1A] px-6 py-5">
         <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
-          <p className="text-[11px] font-light text-[#8A8580]/50 tracking-[0.03em]">
+          <p className="text-[12px] font-light text-[#8A8580]/50 tracking-[0.03em]">
             &copy; {new Date().getFullYear()} Fuzz Sofa Studio. All rights reserved.
           </p>
-          <p className="text-[10px] text-[#8A8580]/30">
+          <p className="text-[12px] text-[#8A8580]/40">
             Fuzz Sofa Studio · Fudehao · China
           </p>
         </div>

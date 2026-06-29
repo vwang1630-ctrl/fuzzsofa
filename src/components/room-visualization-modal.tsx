@@ -176,7 +176,7 @@ export default function RoomVisualizationModal({
             <h3 className="text-[#F5F0EB] font-serif text-lg font-light tracking-wide">
               Preview In Your Space
             </h3>
-            <p className="text-[10px] text-[#8A8580] mt-1 tracking-[0.08em] uppercase">
+            <p className="text-[12px] text-[#8A8580] mt-1 tracking-[0.08em] uppercase">
               {step === "upload" && "Upload a photo of your room"}
               {step === "position" && "Position your sculpture in the room"}
               {step === "result" && "Your sculpture in the room"}
@@ -229,7 +229,7 @@ export default function RoomVisualizationModal({
                 <p className="text-[#F5F0EB]/70 text-sm font-light mb-1">
                   Upload a photo of your room
                 </p>
-                <p className="text-[10px] text-[#8A8580]">
+                <p className="text-[12px] text-[#8A8580]">
                   JPG or PNG · Your photo stays on your device
                 </p>
               </div>
@@ -243,18 +243,18 @@ export default function RoomVisualizationModal({
               />
 
               {/* Privacy note */}
-              <p className="text-[10px] text-[#8A8580]/60 text-center leading-relaxed">
+              <p className="text-[12px] text-[#8A8580]/60 text-center leading-relaxed">
                 Your room photo is processed entirely in your browser.
                 Nothing is uploaded to any server.
               </p>
 
               {/* Product preview */}
               <div className="flex items-center justify-center gap-3 pt-2">
-                <div className="text-[10px] text-[#8A8580]">Placing:</div>
-                <div className="text-[11px] text-[#F5F0EB]/80 font-light">
+                <div className="text-[12px] text-[#8A8580]">Placing:</div>
+                <div className="text-[12px] text-[#F5F0EB]/80 font-light">
                   {productName}
                 </div>
-                <div className="text-[10px] text-[#E8B4B8]/50">
+                <div className="text-[12px] text-[#E8B4B8]/50">
                   — Your exact product
                 </div>
               </div>
@@ -286,7 +286,7 @@ export default function RoomVisualizationModal({
 
               {/* Tag */}
               <div className="flex items-center justify-center gap-2">
-                <span className="text-[10px] text-[#E8B4B8]/60">
+                <span className="text-[12px] text-[#E8B4B8]/60">
                   Pixel-perfect product placement — no AI generation
                 </span>
               </div>
@@ -295,7 +295,7 @@ export default function RoomVisualizationModal({
               <div className="space-y-4 pt-2">
                 {/* Social Share Icons */}
                 <div className="flex items-center justify-center gap-4">
-                  <p className="text-[10px] text-[#8A8580] tracking-[0.08em] uppercase mr-1">
+                  <p className="text-[12px] text-[#8A8580] tracking-[0.08em] uppercase mr-1">
                     Share to
                   </p>
                   {/* Pinterest */}
@@ -354,7 +354,7 @@ export default function RoomVisualizationModal({
                   <button
                     onClick={handleBack}
                     className="border border-[#1A1A1A] text-[#8A8580] px-5 py-2.5 
-                      text-[10px] tracking-[0.1em] uppercase font-light 
+                      text-[12px] tracking-[0.1em] uppercase font-light 
                       hover:border-[#E8B4B8]/40 hover:text-[#F5F0EB]/70 
                       transition-all duration-300 rounded-[4px]"
                   >
@@ -362,7 +362,7 @@ export default function RoomVisualizationModal({
                   </button>
                   <button
                     onClick={handleDownload}
-                    className="bg-[#E8B4B8] text-[#0A0A0A] px-6 py-2.5 text-[10px] 
+                    className="bg-[#E8B4B8] text-[#0A0A0A] px-6 py-2.5 text-[12px] 
                       tracking-[0.1em] uppercase font-medium hover:bg-[#E0BEC0] 
                       transition-all duration-300 rounded-[4px]"
                   >
@@ -373,7 +373,7 @@ export default function RoomVisualizationModal({
 
               <button
                 onClick={handleReset}
-                className="block mx-auto text-[10px] text-[#8A8580]/50 
+                className="block mx-auto text-[12px] text-[#8A8580]/50 
                   hover:text-[#8A8580] transition-colors pt-1"
               >
                 Try another room
