@@ -635,9 +635,9 @@ export function ProductPageClient(
             </section>
             {}
             <section className="bg-[#0A0A0A]">
-                <div className="max-w-[1200px] mx-auto px-6 py-10">
+                <div className="max-w-[1200px] mx-auto px-6 py-6">
                     {}
-                    <div className="mb-12">
+                    <div className="mb-6">
                         <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
                             {t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
                         </p>
@@ -779,7 +779,7 @@ export function ProductPageClient(
                 <div className="max-w-[1600px] mx-auto">
                     {}
                     <div
-                        className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                        className="relative w-full aspect-[16/9] lg:aspect-[3/1] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
                         {madeBg ? <img
                             src={madeBg}
                             alt={`${productName} craftsmanship`}
