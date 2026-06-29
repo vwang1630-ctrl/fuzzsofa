@@ -234,7 +234,7 @@ export function ProductPageClient(
                                 <div className="absolute bottom-5 right-5 z-10 group/room flex items-center">
                                     {}
                                     <span
-                                        className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[11px] tracking-[0.18em] uppercase font-light mr-3 px-4 py-2 rounded-full"
+                                        className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[12px] tracking-[0.18em] uppercase font-light mr-3 px-4 py-2 rounded-full"
                                         style={{
                                             background: "#0A0A0A",
                                             color: "#E8B4B8",
@@ -320,7 +320,7 @@ export function ProductPageClient(
                         {}
                         <div className="flex flex-col">
                             {}
-                            <p className="text-[10px] text-[#8A8580] tracking-[2px] uppercase mb-2">
+                            <p className="text-[12px] text-[#8A8580] tracking-[2px] uppercase mb-2">
                                 {collectionName}
                             </p>
                             {}
@@ -438,7 +438,7 @@ export function ProductPageClient(
                             {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5">
                                 {product.materialOptions.map(mat => <div key={mat.type} className="mb-4">
                                     <label
-                                        className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">
+                                        className="text-[12px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">
                                         {mat.type}
                                     </label>
                                     <div className="flex flex-wrap gap-2">
@@ -498,10 +498,10 @@ export function ProductPageClient(
                             {}
                             {product.specifications && <div className="mb-5">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase">Dimensions</label>
+                                    <label className="text-[12px] text-[#8A8580] tracking-[0.18em] uppercase">Dimensions</label>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
+                                        className="text-[12px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
                                         {useCm ? 'CM / 切换英寸' : 'IN / 切换厘米'}
                                     </button>
                                 </div>
@@ -515,7 +515,7 @@ export function ProductPageClient(
                             {}
                             {product.materials && product.materials.length > 0 && <div className="mb-5">
                                 <label
-                                    className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">Materials
+                                    className="text-[12px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">Materials
                                                       </label>
                                 <div className="space-y-0.5">
                                     {product.materials.map((mat, i) => <p
@@ -530,7 +530,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={handleAddToCart}
-                                className="w-full py-4 text-[#0A0A0A] font-semibold text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2"
+                                className="w-full py-4 text-[#0A0A0A] font-semibold text-[12px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
@@ -561,7 +561,7 @@ export function ProductPageClient(
                                 </>}
                             </button>
                             <button
-                                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[11px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
+                                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[12px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
                                 style={{
                                     border: "1px solid #E8B4B8"
                                 }}
@@ -575,7 +575,7 @@ export function ProductPageClient(
                                               </button>
                             {}
                             <div
-                                className="flex items-center gap-1 mt-4 text-[11px] text-[#8A8580] tracking-[0.04em]">
+                                className="flex items-center gap-1 mt-4 text-[12px] text-[#8A8580] tracking-[0.04em]">
                                 <span>1–2 Weeks</span>
                                 <span className="mx-1">·</span>
                                 <span>Free White Glove</span>
@@ -585,7 +585,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={() => setShowRoomViz(true)}
-                                className="mt-3 text-[11px] text-[#8A8580] tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-1.5">
+                                className="mt-3 text-[12px] text-[#8A8580] tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-1.5">
                                 <svg
                                     width="14"
                                     height="14"
@@ -609,7 +609,7 @@ export function ProductPageClient(
                 <div className="max-w-[1200px] mx-auto px-6 py-20">
                     {}
                     <div className="mb-12">
-                        <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
+                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
                             {t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
                         </p>
                         <h2
@@ -648,7 +648,7 @@ export function ProductPageClient(
                             </div>
                             {}
                             <p
-                                className="text-[11px] tracking-[0.15em] uppercase text-[#F5F0EB]/70 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
+                                className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/70 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
                                 {space.title}
                             </p>
                             <p className="text-[12px] text-[#8A8580] leading-[1.5]">
@@ -680,7 +680,7 @@ export function ProductPageClient(
                                     <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">
                                         ≈ {product.specifications.weight} kg <span className="opacity-40">·</span> 含包装 ≈ 60 kg <span className="opacity-40">·</span> 承重 {product.specifications.capacity} kg
                                     </p>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.6] mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                    <p className="text-[12px] font-light text-[#888] leading-[1.6] mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
                                         * Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
                                     </p>
                                 </div>
@@ -738,7 +738,7 @@ export function ProductPageClient(
                                     </div>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="ml-1 text-[10px] tracking-[0.12em] uppercase text-[#888] border border-[#333] rounded px-2 py-0.5 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300"
+                                        className="ml-1 text-[12px] tracking-[0.12em] uppercase text-[#888] border border-[#333] rounded px-2 py-0.5 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300"
                                     >
                                         {useCm ? 'IN' : 'CM'}
                                     </button>
@@ -751,7 +751,7 @@ export function ProductPageClient(
 
             <section className="bg-[#050505]">
                 <div className="max-w-[700px] mx-auto px-6 py-[140px] text-center">
-                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
@@ -770,7 +770,7 @@ export function ProductPageClient(
                                     <path d="M2 12l10 5 10-5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Handcrafted</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Handcrafted</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
@@ -779,7 +779,7 @@ export function ProductPageClient(
                                     <polyline points="12 7 12 12 15 14" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">1–2 Weeks</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">1–2 Weeks</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
@@ -787,7 +787,7 @@ export function ProductPageClient(
                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Made to Order</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Made to Order</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
@@ -798,7 +798,7 @@ export function ProductPageClient(
                                     <circle cx="18.5" cy="18.5" r="2.5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
                                 </svg>
                             </div>
-                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Free White-Glove</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Free White-Glove</span>
                         </div>
                     </div>
                 </div>
@@ -838,8 +838,8 @@ export function ProductPageClient(
                                             <line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
                                         </svg>
                                     </div>
-                                    <h4 className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Steel Frame</h4>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Hand-welded steel core, FSC-certified walnut</p>
+                                    <h4 className="text-[12px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Steel Frame</h4>
+                                    <p className="text-[12px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Hand-welded steel core, FSC-certified walnut</p>
                                 </div>
                                 {/* Cushion Core */}
                                 <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
@@ -852,8 +852,8 @@ export function ProductPageClient(
                                             <circle cx="12" cy="12" r="1" fill="#E8B4B8" />
                                         </svg>
                                     </div>
-                                    <h4 className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Cushion Core</h4>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>High-density foam with down feather wrap</p>
+                                    <h4 className="text-[12px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Cushion Core</h4>
+                                    <p className="text-[12px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>High-density foam with down feather wrap</p>
                                 </div>
                                 {/* Upholstery */}
                                 <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
@@ -866,8 +866,8 @@ export function ProductPageClient(
                                             <path d="M21 3L3 21" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
                                         </svg>
                                     </div>
-                                    <h4 className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Upholstery</h4>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Cloud Touch & Wild Touch fabric</p>
+                                    <h4 className="text-[12px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Upholstery</h4>
+                                    <p className="text-[12px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Cloud Touch & Wild Touch fabric</p>
                                 </div>
                                 {/* Brass Feet */}
                                 <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
@@ -881,8 +881,8 @@ export function ProductPageClient(
                                             <path d="M22 4 L18 4 L18 8" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                         </svg>
                                     </div>
-                                    <h4 className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Brass Feet</h4>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Solid brass with brushed matte finish</p>
+                                    <h4 className="text-[12px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Brass Feet</h4>
+                                    <p className="text-[12px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Solid brass with brushed matte finish</p>
                                 </div>
                             </div>
                         </div>
@@ -892,7 +892,7 @@ export function ProductPageClient(
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
                 <div className="max-w-[1200px] mx-auto px-6 py-[140px]">
-                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                         {t("youMayAlsoLike" as TranslationKeys) || "You May Also Like"}
                     </p>
                     <h2
@@ -924,7 +924,7 @@ export function ProductPageClient(
                                         </div>}
                                     </div>
                                     <div className="p-5">
-                                        <p className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase mb-1">
+                                        <p className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase mb-1">
                                             {rp.animal}COLLECTION
                                                                   </p>
                                         <h3 className="font-serif text-xl font-light text-[#F5F0EB]">{rpName}</h3>
