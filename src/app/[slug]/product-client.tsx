@@ -661,21 +661,21 @@ export function ProductPageClient(
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                             {/* Left Column — Text */}
                             <div>
-                                <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-4">
+                                <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-8">
                                     The Story
                                 </p>
-                                <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-3">
+                                <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-6">
                                     {productName}
                                 </h3>
-                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-8" style={{ fontFamily: "'Caveat', cursive" }}>
+                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-14" style={{ fontFamily: "'Caveat', cursive" }}>
                                     {productTagline}
                                 </p>
                                 <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]" style={{ fontFamily: 'Inter, sans-serif' }}>
                                     <p>{productConcept}</p>
-                                    <p className="mt-[14px]">{product.interiorContext}</p>
+                                    <p className="mt-6">{product.interiorContext}</p>
                                 </div>
                                 {/* Specs box — dashed pink border */}
-                                <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-10">
+                                <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-16">
                                     <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8]" style={{ fontFamily: "'Caveat', cursive" }}>
                                         ≈ {product.specifications.weight} kg <span className="opacity-40">·</span> 含包装 ≈ 60 kg <span className="opacity-40">·</span> 承重 {product.specifications.capacity} kg
                                     </p>
