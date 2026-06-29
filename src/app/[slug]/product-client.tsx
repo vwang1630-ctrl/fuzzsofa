@@ -686,7 +686,7 @@ export function ProductPageClient(
                             </div>
 
                             {/* Right Column — Sketch + Dimensions */}
-                            <div className="flex flex-col items-center">
+                            <div className="flex flex-col items-center lg:pt-[140px]">
                                 {/* Sketch frame with white border + pink L-corner marks */}
                                 <div className="relative bg-[#FAFAF7] rounded-sm overflow-hidden w-full max-w-[480px]" style={{ border: '1px solid rgba(255,255,255,0.25)' }}>
                                     {/* Top-left corner mark */}
