@@ -44,6 +44,7 @@ export function ProductPageClient(
         "meteorite-ring-sofa": "/products/meteorite-ring/story-sketch.webp",
         "gorilla-sofa": "/products/gorilla/story-sketch.png",
         "muscle-gorilla-sofa": "/products/gorilla/story-sketch.png",
+        "silverback-sofa": "/products/silverback/story-sketch.jpg",
     };
 
     const madeBgMap: Record<string, string> = {
