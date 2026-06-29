@@ -701,8 +701,9 @@ export function ProductPageClient(
                     </div>
                     {}
                     {/* Transition: gallery → story */}
-                    <div className="mt-12 mb-2">
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#E8B4B8]/15 to-transparent" />
+                    <div className="mt-12 mb-2 relative">
+                        <div className="w-full h-px bg-white/[0.03]" />
+                        <div className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                     </div>
                     <div className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
                         {/* Text content */}
