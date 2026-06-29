@@ -658,7 +658,7 @@ export function ProductPageClient(
                     </div>
                     {}
                     <div className="mt-16 pt-12 border-t border-[#1A1A1A]">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-6">
                             <div>
                                 <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4">
                                     {t("designStory" as TranslationKeys) || "Design Story"}
@@ -667,19 +667,18 @@ export function ProductPageClient(
                                     className="font-serif text-xl md:text-2xl font-light text-[#F5F0EB] leading-[1.2] mb-4">
                                     {t("theStory" as TranslationKeys) || "The Story"}
                                 </h3>
-                                <p className="text-[#F5F0EB]/60 leading-[1.8] text-[14px] mb-4">
+                                <p className="text-[#F5F0EB]/60 leading-[2.2] text-[15.5px] mb-4">
                                     {productConcept}
                                 </p>
-                                <p className="text-[#F5F0EB]/40 leading-[1.8] text-[13px] mb-6">
+                                <p className="text-[#F5F0EB]/40 leading-[2.2] text-[14px] mb-6">
                                     {product.interiorContext}
                                 </p>
                                 <div className="border-t border-[#2A2A2A] pt-4">
-                                    <p className="text-[13px] text-[#9A958F] leading-[1.8]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                        约 W{product.specifications.width} × D{product.specifications.depth} × H{product.specifications.height}cm · 坐高约 {product.specifications.seatHeight}cm
-                                    </p>
-                                    <p className="text-[13px] text-[#9A958F] leading-[1.8]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                        净重约 50kg（含包装约 60kg）· 最大承重 150kg
-                                    </p>
+                                    <div className="flex items-center text-[13px] text-[#9A958F] leading-[1.8]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                        <span>净重约 50kg（含包装约 60kg）· 最大承重 150kg</span>
+                                        <span className="mx-4 text-[#333]">|</span>
+                                        <span>约 W{product.specifications.width} × D{product.specifications.depth} × H{product.specifications.height}cm · 坐高约 {product.specifications.seatHeight}cm</span>
+                                    </div>
                                     <p className="text-[11px] text-[#8A8580] leading-[1.8] mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
                                         * 手工测量 ±1–3cm 误差，重量随面料批次略有浮动，仅供参考
                                     </p>
