@@ -648,69 +648,31 @@ export function ProductPageClient(
                         </h2>
                     </div>
                     {}
-                    <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-3">
-                        {}
-                        {spaceImages[0] && <div className="group cursor-pointer relative aspect-[4/3] md:aspect-auto md:row-span-2 bg-[#111] overflow-hidden">
-                            {spaceImages[0].image ? <img
-                                src={spaceImages[0].image}
-                                alt={`${productName} in ${spaceImages[0].title}`}
-                                className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110" /> : <div className="w-full h-full flex items-center justify-center">
-                                <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
-                                    {product.animal.charAt(0)}
-                                </span>
-                            </div>}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer">
                             {}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                            {}
-                            <div className="absolute bottom-0 left-0 right-0 p-5">
-                                <p className="text-[11px] tracking-[0.2em] uppercase text-[#E8B4B8]/80 mb-1 transition-colors duration-300 group-hover:text-[#E8B4B8]">
-                                    {spaceImages[0].title}
-                                </p>
-                                <p className="text-[12px] text-[#F5F0EB]/50 leading-[1.5]">
-                                    {spaceImages[0].desc}
-                                </p>
+                            <div className="relative aspect-[4/3] bg-[#111] overflow-hidden">
+                                {space.image ? <img
+                                    src={space.image}
+                                    alt={`${productName} in ${space.title}`}
+                                    className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110" /> : <div className="w-full h-full flex items-center justify-center">
+                                    <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
+                                        {product.animal.charAt(0)}
+                                    </span>
+                                </div>}
+                                {}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+                                {}
+                                <div className="absolute bottom-0 left-0 right-0 p-4">
+                                    <p className="text-[11px] tracking-[0.2em] uppercase text-[#E8B4B8]/80 mb-1 transition-colors duration-300 group-hover:text-[#E8B4B8]">
+                                        {space.title}
+                                    </p>
+                                    <p className="text-[12px] text-[#F5F0EB]/50 leading-[1.5]">
+                                        {space.desc}
+                                    </p>
+                                </div>
                             </div>
-                        </div>}
-                        {}
-                        {spaceImages[1] && <div className="group cursor-pointer relative aspect-[2/1] bg-[#111] overflow-hidden">
-                            {spaceImages[1].image ? <img
-                                src={spaceImages[1].image}
-                                alt={`${productName} in ${spaceImages[1].title}`}
-                                className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110" /> : <div className="w-full h-full flex items-center justify-center">
-                                <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
-                                    {product.animal.charAt(0)}
-                                </span>
-                            </div>}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                            <div className="absolute bottom-0 left-0 right-0 p-4">
-                                <p className="text-[11px] tracking-[0.2em] uppercase text-[#E8B4B8]/80 mb-1 transition-colors duration-300 group-hover:text-[#E8B4B8]">
-                                    {spaceImages[1].title}
-                                </p>
-                                <p className="text-[12px] text-[#F5F0EB]/50 leading-[1.5]">
-                                    {spaceImages[1].desc}
-                                </p>
-                            </div>
-                        </div>}
-                        {}
-                        {spaceImages[2] && <div className="group cursor-pointer relative aspect-[2/1] bg-[#111] overflow-hidden">
-                            {spaceImages[2].image ? <img
-                                src={spaceImages[2].image}
-                                alt={`${productName} in ${spaceImages[2].title}`}
-                                className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110" /> : <div className="w-full h-full flex items-center justify-center">
-                                <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
-                                    {product.animal.charAt(0)}
-                                </span>
-                            </div>}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                            <div className="absolute bottom-0 left-0 right-0 p-4">
-                                <p className="text-[11px] tracking-[0.2em] uppercase text-[#E8B4B8]/80 mb-1 transition-colors duration-300 group-hover:text-[#E8B4B8]">
-                                    {spaceImages[2].title}
-                                </p>
-                                <p className="text-[12px] text-[#F5F0EB]/50 leading-[1.5]">
-                                    {spaceImages[2].desc}
-                                </p>
-                            </div>
-                        </div>}
+                        </div>)}
                     </div>
                     {}
                     <div className="mt-12 pt-6 border-t border-white/5">
