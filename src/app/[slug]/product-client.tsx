@@ -700,9 +700,31 @@ export function ProductPageClient(
                         </div>)}
                     </div>
                     {}
-                    <div className="mt-12 relative">
-                        {/* Sketch - float right, text wraps around it */}
-                        <div className="float-right ml-8 mb-4 w-[220px] lg:w-[260px]">
+                    <div className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
+                        {/* Text content */}
+                        <div className="flex-1">
+                            <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2 flex items-center gap-3">
+                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
+                            </p>
+                            <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
+                                {productName}
+                            </h3>
+                            <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4 font-serif">
+                                {productTagline}
+                            </p>
+                            <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2]">
+                                <p>{productConcept}</p>
+                                <p className="mt-5">{product.interiorContext}</p>
+                            </div>
+                            <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
+                                <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
+                                </p>
+                                <p className="text-[11px] font-light text-[#888] leading-[1.6] mt-1">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
+                                </p>
+                            </div>
+                        </div>
+                        {/* Sketch - bottom aligned */}
+                        <div className="w-[220px] lg:w-[260px] shrink-0">
                             <div className="flex flex-col items-center">
                                 <div
                                     className="relative bg-[#1A1918] rounded-sm overflow-hidden w-full"
@@ -755,29 +777,6 @@ export function ProductPageClient(
                                 </div>
                             </div>
                         </div>
-                        {/* Text content flows alongside the sketch */}
-                        <div>
-                            <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2 flex items-center gap-3">
-                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
-                            </p>
-                            <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
-                                {productName}
-                            </h3>
-                            <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4 font-serif">
-                                {productTagline}
-                            </p>
-                            <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2]">
-                                <p>{productConcept}</p>
-                                <p className="mt-5">{product.interiorContext}</p>
-                            </div>
-                            <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
-                                <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
-                                </p>
-                                <p className="text-[11px] font-light text-[#888] leading-[1.6] mt-1">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="clear-both" />
                     </div>
                 </div>
             </section>
