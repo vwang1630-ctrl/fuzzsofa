@@ -722,19 +722,19 @@ export function ProductPageClient(
                                 <div className="flex items-center justify-center gap-8 mt-6">
                                     <div className="text-center">
                                         <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
                                         <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
                                         <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
                                         <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">Seat</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
