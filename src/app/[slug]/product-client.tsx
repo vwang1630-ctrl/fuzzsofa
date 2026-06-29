@@ -852,6 +852,90 @@ export function ProductPageClient(
                 </div>
             </section>
             {}
+            <div className="flex items-center justify-center gap-[14px] py-16 bg-[#0A0A0A] relative">
+                <div className="w-[70px] h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(232,180,184,0.25), transparent)' }} />
+                <div className="w-[4px] h-[4px] bg-[#E8B4B8] rotate-45 opacity-45" />
+                <div className="w-[70px] h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(232,180,184,0.25), transparent)' }} />
+            </div>
+            <div className="flex justify-center gap-10 flex-wrap items-center pb-16 bg-[#0A0A0A] relative">
+                <div className="flex items-center gap-3">
+                    <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                        <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M2 17l10 5 10-5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M2 12l10 5 10-5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </div>
+                    <span className="text-[10px] font-normal tracking-[0.2em] uppercase text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>Handcrafted</span>
+                </div>
+                <div className="flex items-center gap-3">
+                    <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                        <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
+                            <circle cx="12" cy="12" r="9" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                            <polyline points="12 7 12 12 15 14" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </div>
+                    <span className="text-[10px] font-normal tracking-[0.2em] uppercase text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>1–2 Weeks</span>
+                </div>
+                <div className="flex items-center gap-3">
+                    <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                        <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </div>
+                    <span className="text-[10px] font-normal tracking-[0.2em] uppercase text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>Made to Order</span>
+                </div>
+                <div className="flex items-center gap-3">
+                    <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                        <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
+                            <rect x="1" y="3" width="15" height="13" rx="1" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                            <polyline points="16 8 20 8 23 11 23 16 16 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                            <circle cx="5.5" cy="18.5" r="2.5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
+                            <circle cx="18.5" cy="18.5" r="2.5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
+                        </svg>
+                    </div>
+                    <span className="text-[10px] font-normal tracking-[0.2em] uppercase text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>Free White-Glove</span>
+                </div>
+            </div>
+            {}
+            <section className="bg-[#090909]">
+                <div className="max-w-[1600px] mx-auto">
+                    {}
+                    <div
+                        className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                        {galleryImages.length >= 4 && galleryImages[3]?.src ? <img
+                            src={galleryImages[3].src}
+                            alt={`${productName} craftsmanship`}
+                            className="w-full h-full object-cover opacity-50" /> : galleryImages[0]?.src ? <img
+                            src={galleryImages[0].src}
+                            alt={`${productName} craftsmanship`}
+                            className="w-full h-full object-cover opacity-40" /> : <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
+                                {product.animal.charAt(0)}
+                            </span>
+                        </div>}
+                        {}
+                        <div
+                            className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/50 to-transparent" />
+                        {}
+                        <div
+                            className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6">
+                            <h2
+                                className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[#F5F0EB] text-center leading-[1.1] mb-4">
+                                {t("madeSlowlyBuiltToLast" as TranslationKeys).split(".")[0]}.
+                                              </h2>
+                            <h2
+                                className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[#F5F0EB] text-center leading-[1.1] mb-8">
+                                {t("madeSlowlyBuiltToLast" as TranslationKeys).split(". ")[1] || "Built To Last."}
+                            </h2>
+                            <p
+                                className="text-[13px] text-[#F5F0EB]/40 tracking-[0.05em] text-center max-w-[500px] leading-[1.7]">
+                                {t("craftsmanshipDesc" as TranslationKeys)}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
                 <div className="max-w-[1200px] mx-auto px-6 py-[140px]">
