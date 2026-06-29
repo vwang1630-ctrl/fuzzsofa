@@ -700,13 +700,9 @@ export function ProductPageClient(
                         </div>)}
                     </div>
                     {}
-                    {/* Transition divider: gallery → story */}
-                    <div className="flex items-center gap-4 mt-10 mb-2">
-                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#E8B4B8]/15 to-transparent" />
-                        <svg width="8" height="8" viewBox="0 0 8 8" className="text-[#E8B4B8]/20">
-                            <rect x="3" y="3" width="2" height="2" transform="rotate(45 4 4)" fill="currentColor" />
-                        </svg>
-                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#E8B4B8]/15 to-transparent" />
+                    {/* Transition: gallery → story */}
+                    <div className="mt-12 mb-0 text-center">
+                        <span className="text-[10px] tracking-[0.4em] text-[#E8B4B8]/25 font-serif italic">· · ·</span>
                     </div>
                     <div className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
                         {/* Text content */}
