@@ -999,7 +999,7 @@ export function ProductPageClient(
             <section className="relative overflow-hidden">
                 <div className="absolute inset-0">
                     <Image
-                        src={product.slug === "owl-sofa" ? "/products/owl/delivery-bg.webp" : `/products/${product.slug}/hero-1.jpg`}
+                        src={product.slug === "owl-sofa" ? "/products/owl/delivery-bg.webp" : product.slug === "meteor" ? "/products/meteor/delivery-bg.webp" : `/products/${product.slug}/hero-1.jpg`}
                         alt=""
                         fill
                         className="object-cover opacity-30"
