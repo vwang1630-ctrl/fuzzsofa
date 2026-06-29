@@ -44,6 +44,12 @@ export function ProductPageClient(
         "meteorite-ring-sofa": "/products/meteorite-ring/story-sketch.webp",
     };
 
+    const madeBgMap: Record<string, string> = {
+        "owl-sofa": "/products/owl/made-bg.webp",
+        "meteorite-ring-sofa": "/products/meteorite-ring/made-bg.webp",
+    };
+    const madeBg = madeBgMap[product.slug];
+
     const spaceImagesMap: Record<string, { image: string; title: string; desc: string }[]> = {
         "owl-sofa": [
             { image: "/products/spaces/owl-space-1.jpg", title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas", desc: "Open-plan living with sculptural presence" },
@@ -770,8 +776,8 @@ export function ProductPageClient(
                     {}
                     <div
                         className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
-                        {product.slug === "owl-sofa" ? <img
-                            src="/products/owl/made-bg.webp"
+                        {madeBg ? <img
+                            src={madeBg}
                             alt={`${productName} craftsmanship`}
                             className="w-full h-full object-cover opacity-50" /> : galleryImages.length >= 4 && galleryImages[3]?.src ? <img
                             src={galleryImages[3].src}
