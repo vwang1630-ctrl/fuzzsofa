@@ -700,89 +700,51 @@ export function ProductPageClient(
                         </div>)}
                     </div>
                     {}
-                    <div className="mt-12">
-                        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6 lg:gap-4 items-start">
-                            {}
-                            <div>
-                                <p
-                                    className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2 flex items-center gap-3">
-                                    <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
-                                                                                                        </p>
-                                <h3
-                                    className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
-                                    {productName}
-                                </h3>
-                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4 font-serif">
-                                    {productTagline}
-                                </p>
-                                <div
-                                    className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]">
-                                    <p>{productConcept}</p>
-                                    <p className="mt-5">{product.interiorContext}</p>
-                                </div>
-                                {}
-                                <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6">
-                                    <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
-                                                                                                                    </p>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.6] mt-1">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
-                                                                                                                    </p>
-                                </div>
-                            </div>
-                            {}
-                            <div className="flex flex-col items-center lg:pt-[24px]">
-                                {}
+                    <div className="mt-12 relative">
+                        {/* Sketch - float right, text wraps around it */}
+                        <div className="float-right ml-8 mb-4 w-[280px] lg:w-[320px]">
+                            <div className="flex flex-col items-center">
                                 <div
                                     className="relative bg-[#1A1918] rounded-sm overflow-hidden w-full"
-                                    style={{
-                                        border: "1px solid rgba(255,255,255,0.08)"
-                                    }}>
-                                    {}
+                                    style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
                                     <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute top-0 left-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute top-0 left-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
-                                    {}
                                     <div className="absolute top-3 right-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute top-0 right-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute top-0 right-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
-                                    {}
                                     <div className="absolute bottom-3 left-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute bottom-0 left-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute bottom-0 left-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
-                                    {}
                                     <div className="absolute bottom-3 right-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute bottom-0 right-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute bottom-0 right-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
                                     <Image
                                         src={storySketchMap[product.slug] || "/products/owl/story-sketch.webp"}
-                                        alt="Owl Sofa Sketch"
+                                        alt="Product Sketch"
                                         width={500}
                                         height={500}
                                         className="w-full h-auto block opacity-70 brightness-[0.85] contrast-[0.9]" />
                                 </div>
-                                {}
                                 <div className="flex items-center justify-center gap-8 mt-3">
                                     <div className="text-center">
-                                        <span
-                                            className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
+                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span
-                                            className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
+                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span
-                                            className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
+                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span
-                                            className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">Seat</span>
+                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">Seat</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <button
@@ -793,6 +755,29 @@ export function ProductPageClient(
                                 </div>
                             </div>
                         </div>
+                        {/* Text content flows alongside the sketch */}
+                        <div>
+                            <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2 flex items-center gap-3">
+                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
+                            </p>
+                            <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
+                                {productName}
+                            </h3>
+                            <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4 font-serif">
+                                {productTagline}
+                            </p>
+                            <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2]">
+                                <p>{productConcept}</p>
+                                <p className="mt-5">{product.interiorContext}</p>
+                            </div>
+                            <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
+                                <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
+                                </p>
+                                <p className="text-[11px] font-light text-[#888] leading-[1.6] mt-1">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="clear-both" />
                     </div>
                 </div>
             </section>
