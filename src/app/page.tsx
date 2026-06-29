@@ -172,13 +172,19 @@ export default function HomePage() {
 
 
       {/* ─── 4. FEATURED WORKS ─── */}
-      <section className="bg-[#090909] py-20 md:py-24">
+      <section id="featured-works" className="bg-[#090909] py-20 md:py-24">
         <div className="max-w-[1200px] mx-auto px-6">
-          <div className="mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
-              Featured Works
-            </h2>
-            <p className="mt-2 text-sm text-[#8A8580]">Each piece made individually after order confirmation</p>
+          <div className="mb-12 flex items-end justify-between">
+            <div>
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
+                Featured Works
+              </h2>
+              <p className="mt-2 text-sm text-[#8A8580]">Each piece made individually after order confirmation</p>
+            </div>
+            <Link href="/#featured-works" className="hidden md:flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 group/coll">
+              <span>Explore Collection</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="group-hover/coll:translate-x-1 transition-transform duration-300"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
