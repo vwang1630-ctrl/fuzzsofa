@@ -42,6 +42,7 @@ export function ProductPageClient(
     const storySketchMap: Record<string, string> = {
         "owl-sofa": "/products/owl/story-sketch.webp",
         "meteorite-ring-sofa": "/products/meteorite-ring/story-sketch.webp",
+        "muscle-gorilla-sofa": "/products/gorilla/story-sketch.png",
     };
 
     const madeBgMap: Record<string, string> = {
