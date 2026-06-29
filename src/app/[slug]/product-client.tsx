@@ -852,31 +852,6 @@ export function ProductPageClient(
                 </div>
             </section>
             {}
-            <section className="bg-[#050505]">
-                <div className="max-w-[700px] mx-auto px-6 py-[140px] text-center">
-                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
-                        {t("freeWhiteGlove")}
-                    </p>
-                    <h2
-                        className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
-                        {t("deliveredWorldwide" as TranslationKeys)}
-                    </h2>
-                    <p className="text-[#F5F0EB]/50 leading-[1.8] text-base mb-10">
-                        {t("deliveryDesc" as TranslationKeys)}
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-6">
-                        {[
-                            t("freeWhiteGlove"),
-                            t("madeToOrder"),
-                            `8–12 ${t("weeks" as TranslationKeys) || "Weeks"}`
-                        ].map(label => <span
-                            key={label}
-                            className="text-[10px] tracking-[0.15em] uppercase border border-[#333] px-5 py-2.5 text-[#F5F0EB]/40">
-                            {label}
-                        </span>)}
-                    </div>
-                </div>
-            </section>
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
                 <div className="max-w-[1200px] mx-auto px-6 py-[140px]">
@@ -933,6 +908,32 @@ export function ProductPageClient(
                 productName={product.name}
                 productSlug={product.slug}
                 selectedColorName={materialOption} />
+            {}
+            <section className="bg-[#050505]">
+                <div className="max-w-[700px] mx-auto px-6 py-[140px] text-center">
+                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                        {t("freeWhiteGlove")}
+                    </p>
+                    <h2
+                        className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
+                        {t("deliveredWorldwide" as TranslationKeys)}
+                    </h2>
+                    <p className="text-[#F5F0EB]/50 leading-[1.8] text-base mb-10">
+                        {t("deliveryDesc" as TranslationKeys)}
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-6">
+                        {[
+                            t("freeWhiteGlove"),
+                            t("madeToOrder"),
+                            `8–12 ${t("weeks" as TranslationKeys) || "Weeks"}`
+                        ].map(label => <span
+                            key={label}
+                            className="text-[10px] tracking-[0.15em] uppercase border border-[#333] px-5 py-2.5 text-[#F5F0EB]/40">
+                            {label}
+                        </span>)}
+                    </div>
+                </div>
+            </section>
             {}
             <section
                 className="bg-[#030303] py-20 px-6"
