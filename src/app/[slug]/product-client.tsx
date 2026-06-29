@@ -285,7 +285,7 @@ export function ProductPageClient(
                                 <div className="absolute bottom-5 right-5 z-10 group/room flex items-center">
                                     {}
                                     <span
-                                        className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[11px] tracking-[0.18em] uppercase font-light mr-3 px-4 py-2 rounded-full"
+                                        className="opacity-0 translate-x-2 group-hover/room:opacity-100 group-hover/room:translate-x-0 transition-all duration-300 ease-out whitespace-nowrap text-[12px] tracking-[0.15em] uppercase font-light mr-3 px-4 py-2 rounded-full"
                                         style={{
                                             background: "#0A0A0A",
                                             color: "#E8B4B8",
@@ -359,7 +359,7 @@ export function ProductPageClient(
                                 {galleryImages.map(img => <button
                                     key={img.id}
                                     onClick={() => setActiveImage(img.id)}
-                                    className={`w-20 h-20 flex-shrink-0 transition-all duration-300 bg-[#111] overflow-hidden ${activeImage === img.id ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "opacity-70 hover:opacity-100"}`}
+                                    className={`w-[72px] h-[72px] flex-shrink-0 transition-all duration-300 bg-[#111] overflow-hidden rounded-sm ${activeImage === img.id ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "opacity-70 hover:opacity-100"}`}
                                     aria-label={`View ${img.id + 1}`}>
                                     {img.src ? <img src={img.src} alt="" className="w-full h-full object-cover" /> : <span
                                         className="font-serif text-sm text-[#F5F0EB]/15 flex items-center justify-center w-full h-full">
@@ -385,7 +385,7 @@ export function ProductPageClient(
                                     <div className="relative" ref={shareMenuRef}>
                                         <button
                                             onClick={() => setShowShareMenu(!showShareMenu)}
-                                            className="group flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A] hover:scale-110 transition-all duration-300 shadow-[0_0_12px_rgba(255,255,255,0.06)]"
+                                            className="group flex items-center justify-center w-10 h-10 rounded-full bg-[#0A0A0A] hover:scale-110 transition-all duration-300 shadow-[0_0_12px_rgba(255,255,255,0.06)]"
                                             aria-label="Share">
                                             <svg
                                                 className="text-[#E8B4B8] transition-transform duration-300 group-hover:scale-110"
@@ -399,7 +399,7 @@ export function ProductPageClient(
                                             </svg>
                                         </button>
                                         {showShareMenu && <div
-                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-full py-2 px-3 z-50"
+                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
                                             style={{
                                                 background: "#0A0A0A",
                                                 border: "1px solid rgba(232,180,184,0.25)",
@@ -447,7 +447,7 @@ export function ProductPageClient(
                                             }].map(platform => <button
                                                 key={platform.name}
                                                 onClick={() => handleShare(platform.name)}
-                                                className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-[#E8B4B8]/10 transition-all duration-200"
+                                                className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-[#E8B4B8]/10 transition-all duration-200"
                                                 title={platform.name}>
                                                 {platform.icon}
                                             </button>)}
@@ -456,7 +456,7 @@ export function ProductPageClient(
                                     {}
                                     <button
                                         onClick={() => setSaved(!saved)}
-                                        className="group flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A] hover:scale-110 transition-all duration-300 shadow-[0_0_12px_rgba(255,255,255,0.06)]"
+                                        className="group flex items-center justify-center w-10 h-10 rounded-full bg-[#0A0A0A] hover:scale-110 transition-all duration-300 shadow-[0_0_12px_rgba(255,255,255,0.06)]"
                                         aria-label="Save">
                                         <svg
                                             className="transition-transform duration-300 group-hover:scale-110"
@@ -522,7 +522,7 @@ export function ProductPageClient(
                                                     }}
                                                     className="flex items-center gap-2 transition-all duration-300 group">
                                                     <span
-                                                        className={`w-8 h-8 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
+                                                        className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
                                                         {swatchImage ? <img
                                                             src={swatchImage.src}
                                                             alt={opt}
@@ -552,7 +552,7 @@ export function ProductPageClient(
                                     <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase">Dimensions</label>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="text-[11px] tracking-[0.12em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors border border-[#333] px-2 py-0.5 rounded-none">
+                                        className="text-[12px] tracking-[0.12em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors border border-[#333] px-2.5 py-1 rounded-sm">
                                         {useCm ? "CM / 切换英寸" : "IN / 切换厘米"}
                                     </button>
                                 </div>
@@ -581,20 +581,10 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={handleAddToCart}
-                                className="w-full py-4 text-[#0A0A0A] font-semibold text-[11px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2"
+                                className="w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2 rounded-sm"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
-                                }}
-                                onMouseEnter={e => {
-                                    if (!addedToCart) {
-                                        e.currentTarget.style.background = "#D6A8AC";
-                                    }
-                                }}
-                                onMouseLeave={e => {
-                                    if (!addedToCart) {
-                                        e.currentTarget.style.background = "#E8B4B8";
-                                    }
                                 }}>
                                 {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : <>
                                     {t("addToCart")}
@@ -612,15 +602,9 @@ export function ProductPageClient(
                                 </>}
                             </button>
                             <button
-                                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[14px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
+                                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[13px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
                                 style={{
                                     border: "1px solid #E8B4B8"
-                                }}
-                                onMouseEnter={e => {
-                                    e.currentTarget.style.background = "rgba(232,180,184,0.08)";
-                                }}
-                                onMouseLeave={e => {
-                                    e.currentTarget.style.background = "transparent";
                                 }}
                                 onClick={handleBuyNow}>Buy Now
                                                                                                               </button>
@@ -776,7 +760,7 @@ export function ProductPageClient(
                                     </div>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="ml-1 text-[10px] tracking-[0.12em] uppercase text-[#8A8580] border border-[#333] rounded px-2 py-0.5 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300">
+                                        className="ml-1 text-[12px] tracking-[0.12em] uppercase text-[#8A8580] border border-[#333] rounded-sm px-2.5 py-1 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300">
                                         {useCm ? "IN" : "CM"}
                                     </button>
                                 </div>
@@ -821,13 +805,13 @@ export function ProductPageClient(
                             <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-11 relative">
                                 {}
                                 <div
-                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
-                                        className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                        className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                        className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -884,13 +868,13 @@ export function ProductPageClient(
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
-                                        className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                        className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                        className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -913,13 +897,13 @@ export function ProductPageClient(
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
-                                        className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                        className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                        className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -952,13 +936,13 @@ export function ProductPageClient(
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
-                                        className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                        className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                        className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -1028,7 +1012,7 @@ export function ProductPageClient(
                     <div className="flex justify-center gap-10 flex-wrap items-center relative">
                         <div className="flex items-center gap-3">
                             <div
-                                className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                                className="w-9 h-9 rounded-full border border-[#E8B4B8]/25 flex items-center justify-center shrink-0">
                                 <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
                                     <path
                                         d="M12 2L2 7l10 5 10-5-10-5z"
@@ -1057,7 +1041,7 @@ export function ProductPageClient(
                         </div>
                         <div className="flex items-center gap-3">
                             <div
-                                className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                                className="w-9 h-9 rounded-full border border-[#E8B4B8]/25 flex items-center justify-center shrink-0">
                                 <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
                                     <circle
                                         cx="12"
@@ -1081,7 +1065,7 @@ export function ProductPageClient(
                         </div>
                         <div className="flex items-center gap-3">
                             <div
-                                className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                                className="w-9 h-9 rounded-full border border-[#E8B4B8]/25 flex items-center justify-center shrink-0">
                                 <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
                                     <path
                                         d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
@@ -1096,7 +1080,7 @@ export function ProductPageClient(
                         </div>
                         <div className="flex items-center gap-3">
                             <div
-                                className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
+                                className="w-9 h-9 rounded-full border border-[#E8B4B8]/25 flex items-center justify-center shrink-0">
                                 <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
                                     <rect
                                         x="1"
@@ -1153,7 +1137,7 @@ export function ProductPageClient(
                                 <Link
                                     key={rp.slug}
                                     href={`/${rp.slug}`}
-                                    className="group transition-all duration-300 hover:-translate-y-1">
+                                    className="group transition-all duration-300 hover:-translate-y-0.5">
                                     <div
                                         className="aspect-square bg-gradient-to-b from-[#111] to-[#080808] relative overflow-hidden">
                                         {rpImages[0] ? <img
@@ -1222,7 +1206,7 @@ export function ProductPageClient(
             {}
             {addedToCart && <div className="fixed bottom-6 right-6 z-50 animate-[slideUp_0.3s_ease-out]">
                 <div
-                    className="bg-[#111] border border-[#333] rounded-lg px-6 py-4 shadow-2xl flex items-center gap-4 max-w-sm">
+                    className="bg-[#111] border border-[#333] rounded-sm px-6 py-4 shadow-2xl flex items-center gap-4 max-w-sm">
                     <div
                         className="w-8 h-8 rounded-full bg-[#E8B4B8]/20 flex items-center justify-center flex-shrink-0">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
