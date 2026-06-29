@@ -657,7 +657,7 @@ export function ProductPageClient(
                         </div>)}
                     </div>
                     {}
-                    <div className="mt-16 border-t border-[#1A1A1A]">
+                    <div className="mt-16 border-t border-[#1A1A1A] pt-8">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                             {/* Left Column — Text */}
                             <div>
@@ -747,13 +747,7 @@ export function ProductPageClient(
                     </div>
                 </div>
             </section>
-            {}
-            <div className="h-8 flex items-center justify-center">
-                <div className="w-[200px] h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(232,180,184,0.35), transparent)' }} />
-                <div className="w-[5px] h-[5px] bg-[#E8B4B8] rotate-45 mx-3 opacity-50" />
-                <div className="w-[200px] h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(232,180,184,0.35), transparent)' }} />
-            </div>
-            {}
+
             <section className="bg-[#090909]">
                 <div className="max-w-[1600px] mx-auto">
                     {}
