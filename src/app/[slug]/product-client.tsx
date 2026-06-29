@@ -44,26 +44,48 @@ export function ProductPageClient(
         "meteorite-ring-sofa": "/products/meteorite-ring/story-sketch.webp",
         "gorilla-sofa": "/products/gorilla/story-sketch.jpg",
         "muscle-gorilla-sofa": "/products/muscle-gorilla/story-sketch.png",
-        "silverback-sofa": "/products/silverback/story-sketch.jpg",
+        "silverback-sofa": "/products/silverback/story-sketch.jpg"
     };
 
     const madeBgMap: Record<string, string> = {
         "owl-sofa": "/products/owl/made-bg.webp",
-        "meteorite-ring-sofa": "/products/meteorite-ring/made-bg.webp",
+        "meteorite-ring-sofa": "/products/meteorite-ring/made-bg.webp"
     };
+
     const madeBg = madeBgMap[product.slug];
 
-    const spaceImagesMap: Record<string, { image: string; title: string; desc: string }[]> = {
-        "owl-sofa": [
-            { image: "/products/spaces/owl-space-1.jpg", title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas", desc: "Open-plan living with sculptural presence" },
-            { image: "/products/spaces/owl-space-2.jpg", title: t("privateLibraries" as TranslationKeys) || "Private Libraries", desc: "Intimate reading spaces with character" },
-            { image: "/products/spaces/owl-space-3.jpg", title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels", desc: "Statement pieces in curated lobbies" },
-        ],
-        "meteorite-ring-sofa": [
-            { image: "/products/meteorite-ring/spaces/space-1.webp", title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas", desc: "Open-plan living with sculptural presence" },
-            { image: "/products/meteorite-ring/spaces/space-2.webp", title: t("privateLibraries" as TranslationKeys) || "Private Libraries", desc: "Intimate reading spaces with character" },
-            { image: "/products/meteorite-ring/spaces/space-3.webp", title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels", desc: "Statement pieces in curated lobbies" },
-        ],
+    const spaceImagesMap: Record<string, {
+        image: string;
+        title: string;
+        desc: string;
+    }[]> = {
+        "owl-sofa": [{
+            image: "/products/spaces/owl-space-1.jpg",
+            title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas",
+            desc: "Open-plan living with sculptural presence"
+        }, {
+            image: "/products/spaces/owl-space-2.jpg",
+            title: t("privateLibraries" as TranslationKeys) || "Private Libraries",
+            desc: "Intimate reading spaces with character"
+        }, {
+            image: "/products/spaces/owl-space-3.jpg",
+            title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels",
+            desc: "Statement pieces in curated lobbies"
+        }],
+
+        "meteorite-ring-sofa": [{
+            image: "/products/meteorite-ring/spaces/space-1.webp",
+            title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas",
+            desc: "Open-plan living with sculptural presence"
+        }, {
+            image: "/products/meteorite-ring/spaces/space-2.webp",
+            title: t("privateLibraries" as TranslationKeys) || "Private Libraries",
+            desc: "Intimate reading spaces with character"
+        }, {
+            image: "/products/meteorite-ring/spaces/space-3.webp",
+            title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels",
+            desc: "Statement pieces in curated lobbies"
+        }]
     };
 
     const spaceImages = spaceImagesMap[product.slug] || spaceImagesMap["owl-sofa"];
@@ -269,7 +291,7 @@ export function ProductPageClient(
                                             color: "#E8B4B8",
                                             border: "1px solid rgba(232,180,184,0.25)"
                                         }}>Preview in your room
-                                                                                                  </span>
+                                                                                                                                          </span>
                                     <button
                                         onClick={() => setShowRoomViz(true)}
                                         className="relative flex items-center justify-center w-[60px] h-[60px] rounded-full transition-all duration-500 hover:scale-[1.08] active:scale-95"
@@ -545,7 +567,7 @@ export function ProductPageClient(
                             {product.materials && product.materials.length > 0 && <div className="mb-5">
                                 <label
                                     className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">Materials
-                                                                                          </label>
+                                                                                                                              </label>
                                 <div className="space-y-0.5">
                                     {product.materials.map((mat, i) => <p
                                         key={i}
@@ -601,7 +623,7 @@ export function ProductPageClient(
                                     e.currentTarget.style.background = "transparent";
                                 }}
                                 onClick={handleBuyNow}>Buy Now
-                                                                              </button>
+                                                                                                              </button>
                             {}
                             <div
                                 className="flex items-center gap-1 mt-4 text-[11px] text-[#8A8580] tracking-[0.04em]">
@@ -628,19 +650,18 @@ export function ProductPageClient(
                                         d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                                     <circle cx="12" cy="13" r="4" />
                                 </svg>Preview in your room
-                                                                              </button>
+                                                                                                              </button>
                         </div>
                     </div>
                 </div>
             </section>
             {}
-            <section className="bg-[#0D0D0D]">
-                <div className="border-t border-[#E8B4B8]/8"></div>
-                <div className="max-w-[1200px] mx-auto px-6 py-12">
+            <section
+                className="bg-[#0F0E0E]">
+                <div className="max-w-[1200px] mx-auto px-6 py-6">
                     {}
-                    <div className="mb-8">
-                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3 flex items-center gap-3">
-                            <span className="inline-block w-8 h-px bg-[#E8B4B8]/30" />
+                    <div className="mb-6">
+                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
                             {t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
                         </p>
                         <h2
@@ -649,66 +670,62 @@ export function ProductPageClient(
                         </h2>
                     </div>
                     {}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer">
                             {}
-                            <div className="relative aspect-[4/3] bg-[#111] overflow-hidden border border-white/[0.04] group-hover:border-[#E8B4B8]/20 transition-colors duration-500">
+                            <div className="relative aspect-[2/1] bg-[#111] overflow-hidden mb-4">
                                 {space.image ? <img
                                     src={space.image}
                                     alt={`${productName} in ${space.title}`}
-                                    className="w-full h-full object-cover transition-all duration-700 ease-out grayscale-[20%] group-hover:grayscale-0 group-hover:scale-[1.03]" /> : <div className="w-full h-full flex items-center justify-center">
+                                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" /> : <div className="w-full h-full flex items-center justify-center">
                                     <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
                                         {product.animal.charAt(0)}
                                     </span>
                                 </div>}
                                 {}
-                                <div className="absolute top-3 left-4 text-[11px] font-serif text-[#F5F0EB]/20 tracking-[0.1em] group-hover:text-[#E8B4B8]/40 transition-colors duration-500">
-                                    0{idx + 1}
-                                </div>
-                                {}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-                                {}
-                                <div className="absolute bottom-0 left-0 right-0 p-5 pt-8">
-                                    <div className="w-6 h-px bg-[#E8B4B8]/40 mb-3 transition-all duration-500 group-hover:w-10 group-hover:bg-[#E8B4B8]/70" />
-                                    <p className="text-[11px] tracking-[0.2em] uppercase text-[#F5F0EB]/60 mb-1 transition-colors duration-300 group-hover:text-[#F5F0EB]/90">
-                                        {space.title}
-                                    </p>
-                                    <p className="text-[12px] text-[#F5F0EB]/35 leading-[1.5] transition-colors duration-300 group-hover:text-[#F5F0EB]/55">
-                                        {space.desc}
-                                    </p>
-                                </div>
+                                <div
+                                    className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent"
+                                    style={{
+                                        borderRadius: "8px"
+                                    }} />
                             </div>
+                            {}
+                            <p
+                                className="text-[11px] tracking-[0.15em] uppercase text-[#F5F0EB]/70 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
+                                {space.title}
+                            </p>
+                            <p className="text-[12px] text-[#8A8580] leading-[1.5]">
+                                {space.desc}
+                            </p>
                         </div>)}
                     </div>
                     {}
-                    <div className="mt-8">
+                    <div className="mt-16 pt-8">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                             {}
                             <div>
                                 <p
-                                    className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-3 flex items-center gap-3">
+                                    className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2 flex items-center gap-3">
                                     <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
-                                                                    </p>
+                                                                                                        </p>
                                 <h3
-                                    className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2.5">
+                                    className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
                                     {productName}
                                 </h3>
-                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-5 font-serif">
+                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4 font-serif">
                                     {productTagline}
                                 </p>
                                 <div
-                                    className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]"
-                                    >
+                                    className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]">
                                     <p>{productConcept}</p>
-                                    <p className="mt-6">{product.interiorContext}</p>
+                                    <p className="mt-8">{product.interiorContext}</p>
                                 </div>
                                 {}
-                                <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-5 mt-8">
+                                <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-10">
                                     <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
-                                                                            </p>
-                                    <p
-                                        className="text-[11px] font-light text-[#888] leading-[1.6] mt-1">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
-                                                                            </p>
+                                                                                                                    </p>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.6] mt-1">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
+                                                                                                                    </p>
                                 </div>
                             </div>
                             {}
@@ -751,20 +768,17 @@ export function ProductPageClient(
                                     <div className="text-center">
                                         <span
                                             className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
-                                        <span
-                                            className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
                                         <span
                                             className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
-                                        <span
-                                            className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
                                         <span
                                             className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
-                                        <span
-                                            className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
                                         <span
@@ -806,21 +820,19 @@ export function ProductPageClient(
                             className="absolute inset-0 bg-gradient-to-t from-[#090909]/80 via-[#090909]/30 to-transparent" />
                         {}
                         <div
-                            className="absolute inset-0 flex flex-col items-center justify-end pb-8 lg:pb-10 px-6"
+                            className="absolute inset-0 flex flex-col items-center justify-end pb-10 lg:pb-14 px-6"
                             style={{
                                 backgroundColor: "#0A0A0A"
                             }}>
                             <p
-                                className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-8 relative">
-                                <span
-                                    className="opacity-30 mr-3">—</span>Materials & Craftsmanship
-                                                                <span
-                                    className="opacity-30 ml-3">—</span>
+                                className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
+                                <span className="opacity-30 mr-3">—</span>Materials & Craftsmanship
+                                                                                                <span className="opacity-30 ml-3">—</span>
                             </p>
-                            <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-8 relative">
+                            <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-11 relative">
                                 {}
                                 <div
-                                    className="text-center py-5 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
                                     <div
                                         className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
                                     <div
@@ -879,12 +891,11 @@ export function ProductPageClient(
                                     </div>
                                     <h4
                                         className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Steel Frame</h4>
-                                    <p
-                                        className="text-[11px] font-light text-[#888] leading-[1.5]">Hand-welded steel core, FSC-certified walnut</p>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]">Hand-welded steel core, FSC-certified walnut</p>
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-5 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
                                     <div
                                         className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
                                     <div
@@ -909,12 +920,11 @@ export function ProductPageClient(
                                     </div>
                                     <h4
                                         className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Cushion Core</h4>
-                                    <p
-                                        className="text-[11px] font-light text-[#888] leading-[1.5]">High-density foam with down feather wrap</p>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]">High-density foam with down feather wrap</p>
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-5 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
                                     <div
                                         className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
                                     <div
@@ -949,12 +959,11 @@ export function ProductPageClient(
                                     </div>
                                     <h4
                                         className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Upholstery</h4>
-                                    <p
-                                        className="text-[11px] font-light text-[#888] leading-[1.5]">Cloud Touch & Wild Touch fabric</p>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]">Cloud Touch & Wild Touch fabric</p>
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-5 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
                                     <div
                                         className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
                                     <div
@@ -998,8 +1007,7 @@ export function ProductPageClient(
                                     </div>
                                     <h4
                                         className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Brass Feet</h4>
-                                    <p
-                                        className="text-[11px] font-light text-[#888] leading-[1.5]">Solid brass with brushed matte finish</p>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]">Solid brass with brushed matte finish</p>
                                 </div>
                             </div>
                         </div>
@@ -1013,19 +1021,19 @@ export function ProductPageClient(
                         src={product.slug === "owl-sofa" ? "/products/owl/delivery-bg.webp" : product.slug === "meteorite-ring-sofa" ? "/products/meteorite-ring-sofa/delivery-bg.webp" : `/products/${product.slug}/hero-1.jpg`}
                         alt=""
                         fill
-                        className="object-cover opacity-65"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
+                        className="object-cover opacity-65" />
+                    <div
+                        className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
-                <div className="relative max-w-[700px] mx-auto px-6 py-24 text-center">
-                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4">
+                <div className="relative max-w-[700px] mx-auto px-6 py-[140px] text-center">
+                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
-                        className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-5">
+                        className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
                         {t("deliveredWorldwide" as TranslationKeys)}
                     </h2>
-                    <p className="text-[#F5F0EB]/50 leading-[1.8] text-base mb-8">
+                    <p className="text-[#F5F0EB]/50 leading-[1.8] text-base mb-10">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
                     <div className="flex justify-center gap-10 flex-wrap items-center relative">
@@ -1171,7 +1179,7 @@ export function ProductPageClient(
                                     <div className="p-5">
                                         <p className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase mb-1">
                                             {rp.animal}COLLECTION
-                                                                                                              </p>
+                                                                                                                                                          </p>
                                         <h3 className="font-serif text-xl font-light text-[#F5F0EB]">{rpName}</h3>
                                         <p className="text-xs text-[#8A8580] mt-1 mb-3">{rpTagline}</p>
                                         <p className="font-serif text-lg font-light text-[#F5F0EB]/80">{rpPrice}</p>
@@ -1219,7 +1227,7 @@ export function ProductPageClient(
                         <dd className="text-[#8A8580]/60">Pre-order production only</dd>
                     </dl>
                     <p className="mt-6 text-[10px] text-[#8A8580]/30 leading-relaxed">Each piece is individually produced after order confirmation. No inventory. No mass production.
-                                                          </p>
+                                                                                  </p>
                 </div>
             </section>
             {}
