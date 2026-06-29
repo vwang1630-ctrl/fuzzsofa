@@ -668,7 +668,7 @@ export function ProductPageClient(
                                 <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
                                     {productName}
                                 </h3>
-                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4" style={{ fontFamily: "'Caveat', cursive" }}>
+                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4 font-serif">
                                     {productTagline}
                                 </p>
                                 <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -677,7 +677,7 @@ export function ProductPageClient(
                                 </div>
                                 {/* Specs box — dashed pink border */}
                                 <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-10">
-                                    <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8]" style={{ fontFamily: "'Caveat', cursive" }}>
+                                    <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">
                                         ≈ {product.specifications.weight} kg <span className="opacity-40">·</span> 含包装 ≈ 60 kg <span className="opacity-40">·</span> 承重 {product.specifications.capacity} kg
                                     </p>
                                     <p className="text-[11px] font-light text-[#888] leading-[1.6] mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -721,19 +721,19 @@ export function ProductPageClient(
                                 {/* Dimension labels below sketch */}
                                 <div className="flex items-center justify-center gap-8 mt-6">
                                     <div className="text-center">
-                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>W</span>
+                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>D</span>
+                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>H</span>
+                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>Seat</span>
+                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">Seat</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <button
@@ -771,7 +771,7 @@ export function ProductPageClient(
                         {/* Content overlay */}
                         <div
                             className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6">
-                            <p className="text-[14px] font-semibold tracking-[0.2em] uppercase text-[#E8B4B8] text-center mb-10 relative" style={{ fontFamily: "'Caveat', cursive" }}>
+                            <p className="text-[14px] font-semibold tracking-[0.2em] uppercase text-[#E8B4B8] text-center mb-10 relative font-serif">
                                 <span className="opacity-30 mr-3" style={{ fontFamily: 'Inter, sans-serif' }}>—</span>
                                 Materials & Craftsmanship
                                 <span className="opacity-30 ml-3" style={{ fontFamily: 'Inter, sans-serif' }}>—</span>
