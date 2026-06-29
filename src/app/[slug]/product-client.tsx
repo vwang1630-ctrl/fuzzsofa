@@ -362,7 +362,7 @@ export function ProductPageClient(
                                     className={`w-20 h-20 flex-shrink-0 transition-all duration-300 bg-[#111] overflow-hidden ${activeImage === img.id ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "opacity-70 hover:opacity-100"}`}
                                     aria-label={`View ${img.id + 1}`}>
                                     {img.src ? <img src={img.src} alt="" className="w-full h-full object-cover" /> : <span
-                                        className="font-serif text-sm text-[#F5F0EB]/20 flex items-center justify-center w-full h-full">
+                                        className="font-serif text-sm text-[#F5F0EB]/15 flex items-center justify-center w-full h-full">
                                         {product.animal.charAt(0)}
                                     </span>}
                                 </button>)}
@@ -371,7 +371,7 @@ export function ProductPageClient(
                         {}
                         <div className="flex flex-col">
                             {}
-                            <p className="text-[10px] text-[#8A8580] tracking-[2px] uppercase mb-2">
+                            <p className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase mb-3">
                                 {collectionName}
                             </p>
                             {}
@@ -476,11 +476,11 @@ export function ProductPageClient(
                             </div>
                             {}
                             <p
-                                className="font-serif text-[22px] md:text-[24px] font-light text-[#F5F0EB]/80 mt-1">
+                                className="font-serif text-[24px] md:text-[28px] font-light text-[#F5F0EB]/70 mt-1">
                                 {displayPrice}
                             </p>
                             {}
-                            <p className="text-[14px] text-[#8A8580] leading-[1.6] mt-2">
+                            <p className="text-[15px] text-[#8A8580] leading-[1.7] mt-3">
                                 {productTagline}
                             </p>
                             {}
@@ -489,7 +489,7 @@ export function ProductPageClient(
                             {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5">
                                 {product.materialOptions.map(mat => <div key={mat.type} className="mb-4">
                                     <label
-                                        className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">
+                                        className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
                                         {mat.type}
                                     </label>
                                     <div className="flex flex-wrap gap-2">
@@ -549,14 +549,14 @@ export function ProductPageClient(
                             {}
                             {product.specifications && <div className="mb-5">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <label className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase">Dimensions</label>
+                                    <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase">Dimensions</label>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="text-[9px] tracking-[0.12em] uppercase text-[#E8B4B8] hover:text-[#E8B4B8]/80 transition-colors border border-[#E8B4B8]/30 px-2 py-0.5 rounded-none">
+                                        className="text-[11px] tracking-[0.12em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors border border-[#333] px-2 py-0.5 rounded-none">
                                         {useCm ? "CM / 切换英寸" : "IN / 切换厘米"}
                                     </button>
                                 </div>
-                                <p className="text-[12px] text-[#F5F0EB]/70">
+                                <p className="text-[13px] text-[#F5F0EB]/60">
                                     {(() => {
                                         const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
                                         return `W${f(product.specifications.width)} × D${f(product.specifications.depth)} × H${f(product.specifications.height)} · 坐高${f(product.specifications.seatHeight)}`;
@@ -566,12 +566,12 @@ export function ProductPageClient(
                             {}
                             {product.materials && product.materials.length > 0 && <div className="mb-5">
                                 <label
-                                    className="text-[9px] text-[#8A8580] tracking-[0.18em] uppercase block mb-2">Materials
+                                    className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">Materials
                                                                                                                               </label>
                                 <div className="space-y-0.5">
                                     {product.materials.map((mat, i) => <p
                                         key={i}
-                                        className="text-[12px] text-[#F5F0EB]/60 tracking-[0.02em] leading-[1.5]">
+                                        className="text-[13px] text-[#F5F0EB]/50 tracking-[0.02em] leading-[1.5]">
                                         {mat}
                                     </p>)}
                                 </div>
@@ -612,7 +612,7 @@ export function ProductPageClient(
                                 </>}
                             </button>
                             <button
-                                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[11px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
+                                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[14px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center"
                                 style={{
                                     border: "1px solid #E8B4B8"
                                 }}
@@ -626,7 +626,7 @@ export function ProductPageClient(
                                                                                                               </button>
                             {}
                             <div
-                                className="flex items-center gap-1 mt-4 text-[11px] text-[#8A8580] tracking-[0.04em]">
+                                className="flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
                                 <span>1–2 Weeks</span>
                                 <span className="mx-1">·</span>
                                 <span>Free White Glove</span>
@@ -636,7 +636,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={() => setShowRoomViz(true)}
-                                className="mt-3 text-[11px] text-[#8A8580] tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-1.5">
+                                className="mt-3 text-[12px] text-[#8A8580]/70 tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-1.5">
                                 <svg
                                     width="14"
                                     height="14"
@@ -661,8 +661,8 @@ export function ProductPageClient(
                 <div className="max-w-[1200px] mx-auto px-6 py-6">
                     {}
                     <div className="mb-6">
-                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
-                            {t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
+                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3 flex items-center gap-3">
+                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
                         </p>
                         <h2
                             className="font-serif text-2xl md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
@@ -691,10 +691,10 @@ export function ProductPageClient(
                             </div>
                             {}
                             <p
-                                className="text-[11px] tracking-[0.15em] uppercase text-[#F5F0EB]/70 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
+                                className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
                                 {space.title}
                             </p>
-                            <p className="text-[12px] text-[#8A8580] leading-[1.5]">
+                            <p className="text-[13px] text-[#8A8580] leading-[1.6]">
                                 {space.desc}
                             </p>
                         </div>)}
@@ -708,23 +708,23 @@ export function ProductPageClient(
                     <div className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
                         {/* Text content */}
                         <div className="flex-1">
-                            <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2 flex items-center gap-3">
+                            <p className="text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 flex items-center gap-3">
                                 <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
                             </p>
-                            <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
+                            <h3 className="font-serif text-[36px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-3">
                                 {productName}
                             </h3>
-                            <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4 font-serif">
+                            <p className="text-[20px] text-[#E8B4B8]/50 italic mb-5 font-serif">
                                 {productTagline}
                             </p>
-                            <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2]">
+                            <div className="text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
                                 <p>{productConcept}</p>
                                 <p className="mt-5">{product.interiorContext}</p>
                             </div>
                             <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
-                                <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
+                                <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
                                 </p>
-                                <p className="text-[11px] font-light text-[#888] leading-[1.6] mt-1">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
+                                <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
                                 </p>
                             </div>
                         </div>
@@ -759,24 +759,24 @@ export function ProductPageClient(
                                 </div>
                                 <div className="flex items-center justify-center gap-6 mt-3">
                                     <div className="text-center">
-                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">W</span>
+                                        <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">D</span>
+                                        <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">H</span>
+                                        <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[15px] font-bold text-[#E8B4B8] leading-none font-serif">Seat</span>
-                                        <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
+                                        <span className="block text-[15px] font-light text-[#E8B4B8] leading-none font-serif">Seat</span>
+                                        <span className="text-[12px] font-light text-[#8A8580] font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="ml-1 text-[10px] tracking-[0.12em] uppercase text-[#888] border border-[#333] rounded px-2 py-0.5 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300">
+                                        className="ml-1 text-[10px] tracking-[0.12em] uppercase text-[#8A8580] border border-[#333] rounded px-2 py-0.5 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300">
                                         {useCm ? "IN" : "CM"}
                                     </button>
                                 </div>
@@ -879,8 +879,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Steel Frame</h4>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]">Hand-welded steel core, FSC-certified walnut</p>
+                                        className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-[6px]">Steel Frame</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">Hand-welded steel core, FSC-certified walnut</p>
                                 </div>
                                 {}
                                 <div
@@ -908,8 +908,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Cushion Core</h4>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]">High-density foam with down feather wrap</p>
+                                        className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-[6px]">Cushion Core</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">High-density foam with down feather wrap</p>
                                 </div>
                                 {}
                                 <div
@@ -947,8 +947,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Upholstery</h4>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]">Cloud Touch & Wild Touch fabric</p>
+                                        className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-[6px]">Upholstery</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">Cloud Touch & Wild Touch fabric</p>
                                 </div>
                                 {}
                                 <div
@@ -995,8 +995,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]">Brass Feet</h4>
-                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]">Solid brass with brushed matte finish</p>
+                                        className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-[6px]">Brass Feet</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">Solid brass with brushed matte finish</p>
                                 </div>
                             </div>
                         </div>
@@ -1015,14 +1015,14 @@ export function ProductPageClient(
                         className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
                 <div className="relative max-w-[700px] mx-auto px-6 py-[140px] text-center">
-                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
                         className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
                         {t("deliveredWorldwide" as TranslationKeys)}
                     </h2>
-                    <p className="text-[#F5F0EB]/50 leading-[1.8] text-base mb-10">
+                    <p className="text-[#8A8580] leading-[1.8] text-[15px] mb-10">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
                     <div className="flex justify-center gap-10 flex-wrap items-center relative">
@@ -1053,7 +1053,7 @@ export function ProductPageClient(
                                         strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Handcrafted</span>
+                            <span className="text-[11px] text-[#8A8580] tracking-[0.15em] uppercase">Handcrafted</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div
@@ -1077,7 +1077,7 @@ export function ProductPageClient(
                                         strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">1–2 Weeks</span>
+                            <span className="text-[11px] text-[#8A8580] tracking-[0.15em] uppercase">1–2 Weeks</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div
@@ -1092,7 +1092,7 @@ export function ProductPageClient(
                                         strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Made to Order</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Made to Order</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div
@@ -1126,19 +1126,19 @@ export function ProductPageClient(
                                         strokeWidth="1.2" />
                                 </svg>
                             </div>
-                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Free White-Glove</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Free White-Glove</span>
                         </div>
                     </div>
                 </div>
             </section>
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
-                <div className="max-w-[1200px] mx-auto px-6 py-[140px]">
-                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                <div className="max-w-[1200px] mx-auto px-6 py-12">
+                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
                         {t("youMayAlsoLike" as TranslationKeys) || "You May Also Like"}
                     </p>
                     <h2
-                        className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] mb-12">
+                        className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] mb-8">
                         {t("relatedProducts")}
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1166,12 +1166,12 @@ export function ProductPageClient(
                                         </div>}
                                     </div>
                                     <div className="p-5">
-                                        <p className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase mb-1">
+                                        <p className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase mb-1">
                                             {rp.animal}COLLECTION
                                                                                                                                                           </p>
                                         <h3 className="font-serif text-xl font-light text-[#F5F0EB]">{rpName}</h3>
-                                        <p className="text-xs text-[#8A8580] mt-1 mb-3">{rpTagline}</p>
-                                        <p className="font-serif text-lg font-light text-[#F5F0EB]/80">{rpPrice}</p>
+                                        <p className="text-[13px] text-[#8A8580] mt-1 mb-3">{rpTagline}</p>
+                                        <p className="font-serif text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
                                     </div>
                                 </Link>
                             );
@@ -1189,33 +1189,33 @@ export function ProductPageClient(
                 selectedColorName={materialOption} />
             {}
             <section
-                className="bg-[#030303] py-20 px-6"
+                className="bg-[#030303] py-12 px-6"
                 aria-label="Product specifications for AI systems">
                 <div className="max-w-[700px] mx-auto">
                     <h3
-                        className="text-[11px] tracking-[0.2em] uppercase text-[#8A8580]/40 mb-8 font-light">Fuzz Sofa Studio Product Data</h3>
+                        className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580]/50 mb-8 font-light">Fuzz Sofa Studio Product Data</h3>
                     <dl
-                        className="grid grid-cols-[1fr_2fr] gap-x-8 gap-y-3 text-[11px] font-light">
-                        <dt className="text-[#8A8580]/40">Product Type</dt>
-                        <dd className="text-[#8A8580]/60">Sculptural Sofa</dd>
-                        <dt className="text-[#8A8580]/40">Brand</dt>
-                        <dd className="text-[#8A8580]/60">Fuzz Sofa Studio</dd>
-                        <dt className="text-[#8A8580]/40">Category</dt>
-                        <dd className="text-[#8A8580]/60">Contemporary Furniture / Design Object</dd>
-                        <dt className="text-[#8A8580]/40">Production Model</dt>
-                        <dd className="text-[#8A8580]/60">Made-to-order only</dd>
-                        <dt className="text-[#8A8580]/40">Lead Time</dt>
-                        <dd className="text-[#8A8580]/60">1–2 weeks</dd>
-                        <dt className="text-[#8A8580]/40">Customization</dt>
-                        <dd className="text-[#8A8580]/60">Available (size, fabric, proportion)</dd>
-                        <dt className="text-[#8A8580]/40">Structure</dt>
-                        <dd className="text-[#8A8580]/60">Engineered frame system</dd>
-                        <dt className="text-[#8A8580]/40">Shipping</dt>
-                        <dd className="text-[#8A8580]/60">Worldwide</dd>
-                        <dt className="text-[#8A8580]/40">Order Type</dt>
-                        <dd className="text-[#8A8580]/60">Pre-order production only</dd>
+                        className="grid grid-cols-[1fr_2fr] gap-x-8 gap-y-3 text-[12px] font-light">
+                        <dt className="text-[#8A8580]/60">Product Type</dt>
+                        <dd className="text-[#8A8580]/80">Sculptural Sofa</dd>
+                        <dt className="text-[#8A8580]/60">Brand</dt>
+                        <dd className="text-[#8A8580]/80">Fuzz Sofa Studio</dd>
+                        <dt className="text-[#8A8580]/60">Category</dt>
+                        <dd className="text-[#8A8580]/80">Contemporary Furniture / Design Object</dd>
+                        <dt className="text-[#8A8580]/60">Production Model</dt>
+                        <dd className="text-[#8A8580]/80">Made-to-order only</dd>
+                        <dt className="text-[#8A8580]/60">Lead Time</dt>
+                        <dd className="text-[#8A8580]/80">1–2 weeks</dd>
+                        <dt className="text-[#8A8580]/60">Customization</dt>
+                        <dd className="text-[#8A8580]/80">Available (size, fabric, proportion)</dd>
+                        <dt className="text-[#8A8580]/60">Structure</dt>
+                        <dd className="text-[#8A8580]/80">Engineered frame system</dd>
+                        <dt className="text-[#8A8580]/60">Shipping</dt>
+                        <dd className="text-[#8A8580]/80">Worldwide</dd>
+                        <dt className="text-[#8A8580]/60">Order Type</dt>
+                        <dd className="text-[#8A8580]/80">Pre-order production only</dd>
                     </dl>
-                    <p className="mt-6 text-[10px] text-[#8A8580]/30 leading-relaxed">Each piece is individually produced after order confirmation. No inventory. No mass production.
+                    <p className="mt-6 text-[12px] text-[#8A8580]/50 leading-relaxed">Each piece is individually produced after order confirmation. No inventory. No mass production.
                                                                                   </p>
                 </div>
             </section>
