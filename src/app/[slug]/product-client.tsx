@@ -996,8 +996,17 @@ export function ProductPageClient(
                 </div>
             </section>
             {}
-            <section className="bg-[#050505]">
-                <div className="max-w-[700px] mx-auto px-6 py-[140px] text-center">
+            <section className="relative overflow-hidden">
+                <div className="absolute inset-0">
+                    <Image
+                        src={product.slug === "owl-sofa" ? "/products/owl/delivery-bg.webp" : `/products/${product.slug}/hero-1.jpg`}
+                        alt=""
+                        fill
+                        className="object-cover opacity-30"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/80 via-[#0A0A0A]/60 to-[#0A0A0A]/80" />
+                </div>
+                <div className="relative max-w-[700px] mx-auto px-6 py-[140px] text-center">
                     <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                         {t("freeWhiteGlove")}
                     </p>
