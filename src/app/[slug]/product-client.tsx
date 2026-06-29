@@ -700,13 +700,9 @@ export function ProductPageClient(
                         </div>)}
                     </div>
                     {}
-                    {/* Transition: gallery → story — editorial rule */}
-                    <div className="flex items-center justify-center gap-3 mt-12 mb-2">
-                        <div className="w-1 h-1 rounded-full bg-[#E8B4B8]/20" />
-                        <div className="w-24 h-px bg-gradient-to-r from-[#E8B4B8]/0 via-[#E8B4B8]/18 to-[#E8B4B8]/0" />
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#E8B4B8]/30" />
-                        <div className="w-24 h-px bg-gradient-to-r from-[#E8B4B8]/0 via-[#E8B4B8]/18 to-[#E8B4B8]/0" />
-                        <div className="w-1 h-1 rounded-full bg-[#E8B4B8]/20" />
+                    {/* Transition: gallery → story */}
+                    <div className="mt-12 mb-2">
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#E8B4B8]/15 to-transparent" />
                     </div>
                     <div className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
                         {/* Text content */}
