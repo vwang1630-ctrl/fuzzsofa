@@ -672,7 +672,7 @@ export function ProductPageClient(
                                 </p>
                                 <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]" style={{ fontFamily: 'Inter, sans-serif' }}>
                                     <p>{productConcept}</p>
-                                    <p className="mt-[14px]">{product.interiorContext}</p>
+                                    <p className="mt-8">{product.interiorContext}</p>
                                 </div>
                                 {/* Specs box — dashed pink border */}
                                 <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-10">
