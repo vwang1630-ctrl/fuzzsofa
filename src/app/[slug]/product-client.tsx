@@ -660,7 +660,7 @@ export function ProductPageClient(
                     <div className="mt-16 border-t border-[#1A1A1A]">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                             {/* Left Column — Text */}
-                            <div>
+                            <div className="pt-8">
                                 <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-8">
                                     The Story
                                 </p>
