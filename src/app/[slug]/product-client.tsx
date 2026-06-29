@@ -657,11 +657,11 @@ export function ProductPageClient(
                         </div>)}
                     </div>
                     {}
-                    <div className="mt-16 pt-12 border-t border-[#1A1A1A]">
+                    <div className="mt-16 border-t border-[#1A1A1A]">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                             {/* Left Column — Text */}
                             <div>
-                                <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-6 pb-2" style={{ fontFamily: "'Caveat', cursive", borderBottom: '1px dashed rgba(232,180,184,0.35)' }}>
+                                <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-4">
                                     The Story
                                 </p>
                                 <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-3">
