@@ -43,6 +43,21 @@ export function ProductPageClient(
         "owl-sofa": "/products/owl/story-sketch.webp",
         "meteorite-ring-sofa": "/products/meteorite-ring/story-sketch.webp",
     };
+
+    const spaceImagesMap: Record<string, { image: string; title: string; desc: string }[]> = {
+        "owl-sofa": [
+            { image: "/products/spaces/owl-space-1.jpg", title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas", desc: "Open-plan living with sculptural presence" },
+            { image: "/products/spaces/owl-space-2.jpg", title: t("privateLibraries" as TranslationKeys) || "Private Libraries", desc: "Intimate reading spaces with character" },
+            { image: "/products/spaces/owl-space-3.jpg", title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels", desc: "Statement pieces in curated lobbies" },
+        ],
+        "meteorite-ring-sofa": [
+            { image: "/products/meteorite-ring/spaces/space-1.webp", title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas", desc: "Open-plan living with sculptural presence" },
+            { image: "/products/meteorite-ring/spaces/space-2.webp", title: t("privateLibraries" as TranslationKeys) || "Private Libraries", desc: "Intimate reading spaces with character" },
+            { image: "/products/meteorite-ring/spaces/space-3.webp", title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels", desc: "Statement pieces in curated lobbies" },
+        ],
+    };
+
+    const spaceImages = spaceImagesMap[product.slug] || spaceImagesMap["owl-sofa"];
     const prefix = slugToPrefix[product.slug] || "";
     const productName = prefix ? t(`${prefix}Name` as TranslationKeys) : product.name;
     const productTagline = prefix ? t(`${prefix}Tagline` as TranslationKeys) : product.tagline;
@@ -613,7 +628,7 @@ export function ProductPageClient(
                 <div className="max-w-[1200px] mx-auto px-6 py-20">
                     {}
                     <div className="mb-12">
-                        <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
+                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
                             {t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
                         </p>
                         <h2
@@ -623,19 +638,7 @@ export function ProductPageClient(
                     </div>
                     {}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {[{
-                            image: "/products/spaces/owl-space-1.jpg",
-                            title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas",
-                            desc: "Open-plan living with sculptural presence"
-                        }, {
-                            image: "/products/spaces/owl-space-2.jpg",
-                            title: t("privateLibraries" as TranslationKeys) || "Private Libraries",
-                            desc: "Intimate reading spaces with character"
-                        }, {
-                            image: "/products/spaces/owl-space-3.jpg",
-                            title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels",
-                            desc: "Statement pieces in curated lobbies"
-                        }].map((space, idx) => <div key={idx} className="group cursor-pointer">
+                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer">
                             {}
                             <div className="relative aspect-[2/1] bg-[#111] overflow-hidden mb-4">
                                 {space.image ? <img
