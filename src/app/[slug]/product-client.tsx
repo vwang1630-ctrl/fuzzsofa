@@ -782,20 +782,20 @@ export function ProductPageClient(
                         {madeBg ? <img
                             src={madeBg}
                             alt={`${productName} craftsmanship`}
-                            className="w-full h-full object-cover opacity-50" /> : galleryImages.length >= 4 && galleryImages[3]?.src ? <img
+                            className="w-full h-full object-cover opacity-65" /> : galleryImages.length >= 4 && galleryImages[3]?.src ? <img
                             src={galleryImages[3].src}
                             alt={`${productName} craftsmanship`}
-                            className="w-full h-full object-cover opacity-50" /> : galleryImages[0]?.src ? <img
+                            className="w-full h-full object-cover opacity-65" /> : galleryImages[0]?.src ? <img
                             src={galleryImages[0].src}
                             alt={`${productName} craftsmanship`}
-                            className="w-full h-full object-cover opacity-40" /> : <div className="absolute inset-0 flex items-center justify-center">
+                            className="w-full h-full object-cover opacity-55" /> : <div className="absolute inset-0 flex items-center justify-center">
                             <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
                                 {product.animal.charAt(0)}
                             </span>
                         </div>}
                         {}
                         <div
-                            className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/50 to-transparent" />
+                            className="absolute inset-0 bg-gradient-to-t from-[#090909]/80 via-[#090909]/30 to-transparent" />
                         {}
                         <div
                             className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6"
@@ -1005,9 +1005,9 @@ export function ProductPageClient(
                         src={product.slug === "owl-sofa" ? "/products/owl/delivery-bg.webp" : product.slug === "meteorite-ring-sofa" ? "/products/meteorite-ring-sofa/delivery-bg.webp" : `/products/${product.slug}/hero-1.jpg`}
                         alt=""
                         fill
-                        className="object-cover opacity-45"
+                        className="object-cover opacity-65"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/70 via-[#0A0A0A]/50 to-[#0A0A0A]/70" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
                 <div className="relative max-w-[700px] mx-auto px-6 py-[140px] text-center">
                     <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
