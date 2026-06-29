@@ -771,7 +771,7 @@ export function ProductPageClient(
                         {/* Content overlay */}
                         <div
                             className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6">
-                            <p className="text-[14px] font-semibold tracking-[0.2em] uppercase text-[#E8B4B8] text-center mb-10 relative font-serif">
+                            <p className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
                                 <span className="opacity-30 mr-3" style={{ fontFamily: 'Inter, sans-serif' }}>—</span>
                                 Materials & Craftsmanship
                                 <span className="opacity-30 ml-3" style={{ fontFamily: 'Inter, sans-serif' }}>—</span>
