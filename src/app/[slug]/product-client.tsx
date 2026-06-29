@@ -638,8 +638,9 @@ export function ProductPageClient(
                 <div className="border-t border-[#E8B4B8]/8"></div>
                 <div className="max-w-[1200px] mx-auto px-6 py-10">
                     {}
-                    <div className="mb-8">
-                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
+                    <div className="mb-10">
+                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4 flex items-center gap-3">
+                            <span className="inline-block w-8 h-px bg-[#E8B4B8]/30" />
                             {t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
                         </p>
                         <h2
@@ -648,26 +649,31 @@ export function ProductPageClient(
                         </h2>
                     </div>
                     {}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer">
                             {}
-                            <div className="relative aspect-[4/3] bg-[#111] overflow-hidden">
+                            <div className="relative aspect-[4/3] bg-[#111] overflow-hidden border border-white/[0.04] group-hover:border-[#E8B4B8]/20 transition-colors duration-500">
                                 {space.image ? <img
                                     src={space.image}
                                     alt={`${productName} in ${space.title}`}
-                                    className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-110" /> : <div className="w-full h-full flex items-center justify-center">
+                                    className="w-full h-full object-cover transition-all duration-700 ease-out grayscale-[20%] group-hover:grayscale-0 group-hover:scale-[1.03]" /> : <div className="w-full h-full flex items-center justify-center">
                                     <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
                                         {product.animal.charAt(0)}
                                     </span>
                                 </div>}
                                 {}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="absolute top-3 left-4 text-[11px] font-serif text-[#F5F0EB]/20 tracking-[0.1em] group-hover:text-[#E8B4B8]/40 transition-colors duration-500">
+                                    0{idx + 1}
+                                </div>
                                 {}
-                                <div className="absolute bottom-0 left-0 right-0 p-4">
-                                    <p className="text-[11px] tracking-[0.2em] uppercase text-[#E8B4B8]/80 mb-1 transition-colors duration-300 group-hover:text-[#E8B4B8]">
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                                {}
+                                <div className="absolute bottom-0 left-0 right-0 p-5 pt-8">
+                                    <div className="w-6 h-px bg-[#E8B4B8]/40 mb-3 transition-all duration-500 group-hover:w-10 group-hover:bg-[#E8B4B8]/70" />
+                                    <p className="text-[11px] tracking-[0.2em] uppercase text-[#F5F0EB]/60 mb-1 transition-colors duration-300 group-hover:text-[#F5F0EB]/90">
                                         {space.title}
                                     </p>
-                                    <p className="text-[12px] text-[#F5F0EB]/50 leading-[1.5]">
+                                    <p className="text-[12px] text-[#F5F0EB]/35 leading-[1.5] transition-colors duration-300 group-hover:text-[#F5F0EB]/55">
                                         {space.desc}
                                     </p>
                                 </div>
