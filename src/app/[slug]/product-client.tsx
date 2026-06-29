@@ -634,7 +634,7 @@ export function ProductPageClient(
                 </div>
             </section>
             {}
-            <section className="bg-black">
+            <section className="bg-[#0A0A0A]">
                 <div className="max-w-[1200px] mx-auto px-6 py-6">
                     {}
                     <div className="mb-6">
