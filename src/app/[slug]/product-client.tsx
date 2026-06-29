@@ -681,7 +681,7 @@ export function ProductPageClient(
                         </div>)}
                     </div>
                     {}
-                    <div className="mt-10 pt-5 border-t border-white/5">
+                    <div className="mt-8">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                             {}
                             <div>
