@@ -702,7 +702,7 @@ export function ProductPageClient(
                     {}
                     <div className="mt-12 relative">
                         {/* Sketch - float right, text wraps around it */}
-                        <div className="float-right ml-8 mb-4 w-[280px] lg:w-[320px]">
+                        <div className="float-right ml-8 mb-4 w-[220px] lg:w-[260px]">
                             <div className="flex flex-col items-center">
                                 <div
                                     className="relative bg-[#1A1918] rounded-sm overflow-hidden w-full"
@@ -730,21 +730,21 @@ export function ProductPageClient(
                                         height={500}
                                         className="w-full h-auto block opacity-70 brightness-[0.85] contrast-[0.9]" />
                                 </div>
-                                <div className="flex items-center justify-center gap-8 mt-3">
+                                <div className="flex items-center justify-center gap-6 mt-3">
                                     <div className="text-center">
-                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
+                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">W</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
+                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">D</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
+                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">H</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none font-serif">Seat</span>
+                                        <span className="block text-[15px] font-bold text-[#E8B4B8] leading-none font-serif">Seat</span>
                                         <span className="text-[12px] font-light text-[#E8E0D8]/70 font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <button
