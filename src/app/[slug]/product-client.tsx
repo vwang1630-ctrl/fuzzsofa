@@ -863,7 +863,7 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-[6px]">Steel Frame</h4>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">Steel Frame</h4>
                                     <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">Hand-welded steel core, FSC-certified walnut</p>
                                 </div>
                                 {}
@@ -892,7 +892,7 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-[6px]">Cushion Core</h4>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">Cushion Core</h4>
                                     <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">High-density foam with down feather wrap</p>
                                 </div>
                                 {}
@@ -931,7 +931,7 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-[6px]">Upholstery</h4>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">Upholstery</h4>
                                     <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">Cloud Touch & Wild Touch fabric</p>
                                 </div>
                                 {}
@@ -979,7 +979,7 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-[6px]">Brass Feet</h4>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">Brass Feet</h4>
                                     <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">Solid brass with brushed matte finish</p>
                                 </div>
                             </div>
@@ -1012,105 +1012,121 @@ export function ProductPageClient(
                     <div className="flex justify-center gap-10 flex-wrap items-center relative">
                         <div className="flex items-center gap-3">
                             <div
-                                className="w-9 h-9 rounded-full border border-[#E8B4B8]/25 flex items-center justify-center shrink-0">
-                                <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
-                                    <path
-                                        d="M12 2L2 7l10 5 10-5-10-5z"
-                                        fill="none"
-                                        stroke="#E8B4B8"
-                                        strokeWidth="1.2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round" />
-                                    <path
-                                        d="M2 17l10 5 10-5"
-                                        fill="none"
-                                        stroke="#E8B4B8"
-                                        strokeWidth="1.2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round" />
-                                    <path
-                                        d="M2 12l10 5 10-5"
-                                        fill="none"
-                                        stroke="#E8B4B8"
-                                        strokeWidth="1.2"
+                                className="w-10 h-10 rounded-full mx-auto flex items-center justify-center"
+                                        style={{
+                                            background: "rgba(232,180,184,0.1)",
+                                            border: "1px solid rgba(232,180,184,0.22)"
+                                        }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <path
+                                                d="M12 2L2 7l10 5 10-5-10-5z"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <path
+                                                d="M2 17l10 5 10-5"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <path
+                                                d="M2 12l10 5 10-5"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5"
                                         strokeLinecap="round"
                                         strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[11px] text-[#8A8580] tracking-[0.15em] uppercase">Handcrafted</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase">Handcrafted</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div
-                                className="w-9 h-9 rounded-full border border-[#E8B4B8]/25 flex items-center justify-center shrink-0">
-                                <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
-                                    <circle
-                                        cx="12"
-                                        cy="12"
-                                        r="9"
-                                        fill="none"
-                                        stroke="#E8B4B8"
-                                        strokeWidth="1.2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round" />
-                                    <polyline
-                                        points="12 7 12 12 15 14"
-                                        fill="none"
-                                        stroke="#E8B4B8"
-                                        strokeWidth="1.2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round" />
-                                </svg>
-                            </div>
-                            <span className="text-[11px] text-[#8A8580] tracking-[0.15em] uppercase">1–2 Weeks</span>
+                                className="w-10 h-10 rounded-full mx-auto flex items-center justify-center"
+                                        style={{
+                                            background: "rgba(232,180,184,0.1)",
+                                            border: "1px solid rgba(232,180,184,0.22)"
+                                        }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <circle
+                                                cx="12"
+                                                cy="12"
+                                                r="9"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <polyline
+                                                points="12 7 12 12 15 14"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                        </svg>
+                                    </div>
+                                    <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase">1–2 Weeks</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div
-                                className="w-9 h-9 rounded-full border border-[#E8B4B8]/25 flex items-center justify-center shrink-0">
-                                <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                                        fill="none"
-                                        stroke="#E8B4B8"
-                                        strokeWidth="1.2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round" />
-                                </svg>
-                            </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Made to Order</span>
+                                className="w-10 h-10 rounded-full mx-auto flex items-center justify-center"
+                                        style={{
+                                            background: "rgba(232,180,184,0.1)",
+                                            border: "1px solid rgba(232,180,184,0.22)"
+                                        }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <path
+                                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                        </svg>
+                                    </div>
+                                    <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase">Made to Order</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div
-                                className="w-9 h-9 rounded-full border border-[#E8B4B8]/25 flex items-center justify-center shrink-0">
-                                <svg viewBox="0 0 24 24" className="w-[15px] h-[15px]">
-                                    <rect
-                                        x="1"
-                                        y="3"
-                                        width="15"
-                                        height="13"
-                                        rx="1"
-                                        fill="none"
-                                        stroke="#E8B4B8"
-                                        strokeWidth="1.2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round" />
-                                    <polyline
-                                        points="16 8 20 8 23 11 23 16 16 16"
-                                        fill="none"
-                                        stroke="#E8B4B8"
-                                        strokeWidth="1.2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round" />
-                                    <circle cx="5.5" cy="18.5" r="2.5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
-                                    <circle
-                                        cx="18.5"
-                                        cy="18.5"
-                                        r="2.5"
-                                        fill="none"
-                                        stroke="#E8B4B8"
-                                        strokeWidth="1.2" />
+                                className="w-10 h-10 rounded-full mx-auto flex items-center justify-center"
+                                        style={{
+                                            background: "rgba(232,180,184,0.1)",
+                                            border: "1px solid rgba(232,180,184,0.22)"
+                                        }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <rect
+                                                x="1"
+                                                y="3"
+                                                width="15"
+                                                height="13"
+                                                rx="1"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <polyline
+                                                points="16 8 20 8 23 11 23 16 16 16"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <circle cx="5.5" cy="18.5" r="2.5" fill="none" stroke="#E8B4B8" strokeWidth="1.5" />
+                                            <circle
+                                                cx="18.5"
+                                                cy="18.5"
+                                                r="2.5"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5" />
                                 </svg>
                             </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase">Free White-Glove</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase">Free White-Glove</span>
                         </div>
                     </div>
                 </div>
@@ -1150,7 +1166,7 @@ export function ProductPageClient(
                                         </div>}
                                     </div>
                                     <div className="p-5">
-                                        <p className="text-[12px] text-[#8A8580] tracking-[0.15em] uppercase mb-1">
+                                        <p className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-1">
                                             {rp.animal}COLLECTION
                                                                                                                                                           </p>
                                         <h3 className="font-serif text-xl font-light text-[#F5F0EB]">{rpName}</h3>
