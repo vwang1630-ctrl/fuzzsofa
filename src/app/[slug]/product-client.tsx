@@ -658,84 +658,90 @@ export function ProductPageClient(
                     </div>
                     {}
                     <div className="mt-16 pt-12 border-t border-[#1A1A1A]">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+                            {/* Left Column — Text */}
                             <div>
-                                <p className="text-[15px] tracking-[0.2em] uppercase text-[#E8B4B8] mb-5" style={{ fontFamily: "'Caveat', cursive" }}>
+                                <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-6 pb-2" style={{ fontFamily: "'Caveat', cursive", borderBottom: '1px dashed rgba(232,180,184,0.35)' }}>
                                     The Story
                                 </p>
-                                <h3
-                                    className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
+                                <h3 className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-3">
                                     {productName}
                                 </h3>
-                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-9" style={{ fontFamily: "'Caveat', cursive" }}>
+                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-8" style={{ fontFamily: "'Caveat', cursive" }}>
                                     {productTagline}
                                 </p>
-                                <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px] mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                <div className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]" style={{ fontFamily: 'Inter, sans-serif' }}>
                                     <p>{productConcept}</p>
                                     <p className="mt-[14px]">{product.interiorContext}</p>
                                 </div>
+                                {/* Specs box — dashed pink border */}
+                                <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-10">
+                                    <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8]" style={{ fontFamily: "'Caveat', cursive" }}>
+                                        ≈ {product.specifications.weight} kg <span className="opacity-40">·</span> 含包装 ≈ 60 kg <span className="opacity-40">·</span> 承重 {product.specifications.capacity} kg
+                                    </p>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.6] mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                        * Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
+                                    </p>
+                                </div>
                             </div>
-                            <div className="flex items-center justify-center">
-                                <div className="relative bg-[#FAFAF7] rounded-lg overflow-hidden">
-                                    <div className="absolute top-2 left-2 w-[18px] h-[18px] z-10">
-                                        <div className="absolute top-0 left-0 w-[18px] h-px bg-[#E8B4B8]/20" />
-                                        <div className="absolute top-0 left-0 w-px h-[18px] bg-[#E8B4B8]/20" />
+
+                            {/* Right Column — Sketch + Dimensions */}
+                            <div className="flex flex-col items-center">
+                                {/* Sketch frame with white border + pink L-corner marks */}
+                                <div className="relative bg-[#FAFAF7] rounded-sm overflow-hidden w-full max-w-[480px]" style={{ border: '1px solid rgba(255,255,255,0.25)' }}>
+                                    {/* Top-left corner mark */}
+                                    <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10">
+                                        <div className="absolute top-0 left-0 w-[20px] h-px bg-[#E8B4B8]/30" />
+                                        <div className="absolute top-0 left-0 w-px h-[20px] bg-[#E8B4B8]/30" />
                                     </div>
-                                    <div className="absolute top-2 right-2 w-[18px] h-[18px] z-10">
-                                        <div className="absolute top-0 right-0 w-[18px] h-px bg-[#E8B4B8]/20" />
-                                        <div className="absolute top-0 right-0 w-px h-[18px] bg-[#E8B4B8]/20" />
+                                    {/* Top-right corner mark */}
+                                    <div className="absolute top-3 right-3 w-[20px] h-[20px] z-10">
+                                        <div className="absolute top-0 right-0 w-[20px] h-px bg-[#E8B4B8]/30" />
+                                        <div className="absolute top-0 right-0 w-px h-[20px] bg-[#E8B4B8]/30" />
                                     </div>
-                                    <div className="absolute bottom-2 left-2 w-[18px] h-[18px] z-10">
-                                        <div className="absolute bottom-0 left-0 w-[18px] h-px bg-[#E8B4B8]/20" />
-                                        <div className="absolute bottom-0 left-0 w-px h-[18px] bg-[#E8B4B8]/20" />
+                                    {/* Bottom-left corner mark */}
+                                    <div className="absolute bottom-3 left-3 w-[20px] h-[20px] z-10">
+                                        <div className="absolute bottom-0 left-0 w-[20px] h-px bg-[#E8B4B8]/30" />
+                                        <div className="absolute bottom-0 left-0 w-px h-[20px] bg-[#E8B4B8]/30" />
                                     </div>
-                                    <div className="absolute bottom-2 right-2 w-[18px] h-[18px] z-10">
-                                        <div className="absolute bottom-0 right-0 w-[18px] h-px bg-[#E8B4B8]/20" />
-                                        <div className="absolute bottom-0 right-0 w-px h-[18px] bg-[#E8B4B8]/20" />
+                                    {/* Bottom-right corner mark */}
+                                    <div className="absolute bottom-3 right-3 w-[20px] h-[20px] z-10">
+                                        <div className="absolute bottom-0 right-0 w-[20px] h-px bg-[#E8B4B8]/30" />
+                                        <div className="absolute bottom-0 right-0 w-px h-[20px] bg-[#E8B4B8]/30" />
                                     </div>
                                     <Image
-                                        src="/products/owl/story-image.webp"
-                                        alt="Owl Sofa Story"
+                                        src="/products/owl/story-owl.png"
+                                        alt="Owl Sofa Sketch"
                                         width={500}
-                                        height={600}
+                                        height={500}
                                         className="w-full h-auto block"
                                     />
                                 </div>
-                            </div>
-                        </div>
-                        {}
-                        <div className="grid grid-cols-2 gap-12 py-7 border-t border-dashed border-[#E8B4B8]/22 border-b mt-10">
-                            <div>
-                                <p className="text-[17px] font-semibold text-[#E8B4B8]/85 leading-[1.6]" style={{ fontFamily: "'Caveat', cursive" }}>
-                                    ≈ {product.specifications.weight} kg <span className="opacity-40">·</span> <span className="opacity-40">含包装 60 kg</span>
-                                </p>
-                                <p className="text-[11px] font-light text-[#888] italic leading-[1.6]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                    * 手工测量 ±1–3cm 误差，重量随面料批次略有浮动
-                                </p>
-                            </div>
-                            <div className="flex items-center justify-end gap-7">
-                                <div className="text-center">
-                                    <span className="block text-[24px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>W</span>
-                                    <span className="text-[11px] font-light text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
+                                {/* Dimension labels below sketch */}
+                                <div className="flex items-center justify-center gap-8 mt-6">
+                                    <div className="text-center">
+                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>W</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
+                                    </div>
+                                    <div className="text-center">
+                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>D</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
+                                    </div>
+                                    <div className="text-center">
+                                        <span className="block text-[22px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>H</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
+                                    </div>
+                                    <div className="text-center">
+                                        <span className="block text-[18px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>Seat</span>
+                                        <span className="text-[12px] font-light text-[#E8E0D8]/70" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
+                                    </div>
+                                    <button
+                                        onClick={() => setUseCm(!useCm)}
+                                        className="ml-1 text-[10px] tracking-[0.12em] uppercase text-[#888] border border-[#333] rounded px-2 py-0.5 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300"
+                                    >
+                                        {useCm ? 'IN' : 'CM'}
+                                    </button>
                                 </div>
-                                <div className="text-center">
-                                    <span className="block text-[24px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>D</span>
-                                    <span className="text-[11px] font-light text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
-                                </div>
-                                <div className="text-center">
-                                    <span className="block text-[24px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>H</span>
-                                    <span className="text-[11px] font-light text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
-                                </div>
-                                <div className="text-center">
-                                    <span className="block text-[20px] font-bold text-[#E8B4B8] leading-none" style={{ fontFamily: "'Caveat', cursive" }}>Seat</span>
-                                    <span className="text-[11px] font-light text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
-                                </div>
-                                <button
-                                    onClick={() => setUseCm(!useCm)}
-                                    className="ml-2 text-[10px] tracking-[0.1em] uppercase text-[#888] border border-[#333] rounded px-2 py-1 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300"
-                                >
-                                    {useCm ? 'IN' : 'CM'}
-                                </button>
                             </div>
                         </div>
                     </div>
