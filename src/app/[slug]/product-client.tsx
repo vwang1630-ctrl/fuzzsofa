@@ -763,7 +763,10 @@ export function ProductPageClient(
                     {}
                     <div
                         className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
-                        {galleryImages.length >= 4 && galleryImages[3]?.src ? <img
+                        {slug === "owl-sofa" ? <img
+                            src="/products/owl/made-bg.webp"
+                            alt={`${productName} craftsmanship`}
+                            className="w-full h-full object-cover opacity-50" /> : galleryImages.length >= 4 && galleryImages[3]?.src ? <img
                             src={galleryImages[3].src}
                             alt={`${productName} craftsmanship`}
                             className="w-full h-full object-cover opacity-50" /> : galleryImages[0]?.src ? <img
