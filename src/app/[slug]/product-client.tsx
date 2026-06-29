@@ -749,6 +749,99 @@ export function ProductPageClient(
                 </div>
             </section>
 
+            <section className="bg-[#090909]">
+                <div className="max-w-[1600px] mx-auto">
+                    {/* Background image */}
+                    <div
+                        className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                        {galleryImages.length >= 4 && galleryImages[3]?.src ? <img
+                            src={galleryImages[3].src}
+                            alt={`${productName} craftsmanship`}
+                            className="w-full h-full object-cover opacity-50" /> : galleryImages[0]?.src ? <img
+                            src={galleryImages[0].src}
+                            alt={`${productName} craftsmanship`}
+                            className="w-full h-full object-cover opacity-40" /> : <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
+                                {product.animal.charAt(0)}
+                            </span>
+                        </div>}
+                        {/* Gradient overlay */}
+                        <div
+                            className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/50 to-transparent" />
+                        {/* Content overlay */}
+                        <div
+                            className="absolute inset-0 flex flex-col items-center justify-end pb-16 lg:pb-24 px-6">
+                            <p className="text-[14px] font-semibold tracking-[0.2em] uppercase text-[#E8B4B8] text-center mb-10 relative" style={{ fontFamily: "'Caveat', cursive" }}>
+                                <span className="opacity-30 mr-3" style={{ fontFamily: 'Inter, sans-serif' }}>—</span>
+                                Materials & Craftsmanship
+                                <span className="opacity-30 ml-3" style={{ fontFamily: 'Inter, sans-serif' }}>—</span>
+                            </p>
+                            <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-11 relative">
+                                {/* Steel Frame */}
+                                <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    <div className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center" style={{ background: 'rgba(232,180,184,0.1)', border: '1px solid rgba(232,180,184,0.22)' }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                            <line x1="3" y1="9" x2="21" y2="9" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                            <line x1="3" y1="15" x2="21" y2="15" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                            <line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                            <line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                        </svg>
+                                    </div>
+                                    <h4 className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Steel Frame</h4>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Hand-welded steel core, FSC-certified walnut</p>
+                                </div>
+                                {/* Cushion Core */}
+                                <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    <div className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center" style={{ background: 'rgba(232,180,184,0.1)', border: '1px solid rgba(232,180,184,0.22)' }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                            <circle cx="12" cy="12" r="4" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
+                                            <circle cx="12" cy="12" r="1" fill="#E8B4B8" />
+                                        </svg>
+                                    </div>
+                                    <h4 className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Cushion Core</h4>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>High-density foam with down feather wrap</p>
+                                </div>
+                                {/* Upholstery */}
+                                <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    <div className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center" style={{ background: 'rgba(232,180,184,0.1)', border: '1px solid rgba(232,180,184,0.22)' }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <path d="M3 3h18v18H3z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M3 3l18 18" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                            <path d="M21 3L3 21" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                        </svg>
+                                    </div>
+                                    <h4 className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Upholstery</h4>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Cloud Touch & Wild Touch fabric</p>
+                                </div>
+                                {/* Brass Feet */}
+                                <div className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    <div className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div className="absolute bottom-[5px] right-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
+                                    <div className="w-[42px] h-[42px] rounded-full mx-auto mb-[14px] flex items-center justify-center" style={{ background: 'rgba(232,180,184,0.1)', border: '1px solid rgba(232,180,184,0.22)' }}>
+                                        <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                            <path d="M2 20 L6 20 L6 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M22 20 L18 20 L18 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M2 4 L6 4 L6 8" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M22 4 L18 4 L18 8" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </div>
+                                    <h4 className="text-[10px] font-medium tracking-[0.18em] uppercase text-[#E8E0D8] mb-[6px]" style={{ fontFamily: 'Inter, sans-serif' }}>Brass Feet</h4>
+                                    <p className="text-[11px] font-light text-[#888] leading-[1.5]" style={{ fontFamily: 'Inter, sans-serif' }}>Solid brass with brushed matte finish</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {}
             <section className="bg-[#050505]">
                 <div className="max-w-[700px] mx-auto px-6 py-[140px] text-center">
@@ -771,7 +864,7 @@ export function ProductPageClient(
                                     <path d="M2 12l10 5 10-5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[10px] font-normal tracking-[0.2em] uppercase text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>Handcrafted</span>
+                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Handcrafted</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
@@ -780,7 +873,7 @@ export function ProductPageClient(
                                     <polyline points="12 7 12 12 15 14" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[10px] font-normal tracking-[0.2em] uppercase text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>1–2 Weeks</span>
+                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">1–2 Weeks</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
@@ -788,7 +881,7 @@ export function ProductPageClient(
                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[10px] font-normal tracking-[0.2em] uppercase text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>Made to Order</span>
+                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Made to Order</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div className="w-[34px] h-[34px] rounded-full border border-[#E8B4B8]/22 flex items-center justify-center shrink-0">
@@ -799,7 +892,7 @@ export function ProductPageClient(
                                     <circle cx="18.5" cy="18.5" r="2.5" fill="none" stroke="#E8B4B8" strokeWidth="1.2" />
                                 </svg>
                             </div>
-                            <span className="text-[10px] font-normal tracking-[0.2em] uppercase text-[#888]" style={{ fontFamily: 'Inter, sans-serif' }}>Free White-Glove</span>
+                            <span className="text-[9px] text-[#8A8580] tracking-[0.15em] uppercase">Free White-Glove</span>
                         </div>
                     </div>
                 </div>
