@@ -658,7 +658,7 @@ export function ProductPageClient(
                     </div>
                     {}
                     <div className="mt-16 border-t border-[#1A1A1A]">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                             {/* Left Column — Text */}
                             <div>
                                 <p className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2">
@@ -686,7 +686,7 @@ export function ProductPageClient(
                             </div>
 
                             {/* Right Column — Sketch + Dimensions */}
-                            <div className="flex flex-col items-center lg:pt-[68px]">
+                            <div className="flex flex-col items-center lg:pt-[56px]">
                                 {/* Sketch frame with white border + pink L-corner marks */}
                                 <div className="relative bg-[#FAFAF7] rounded-sm overflow-hidden w-full max-w-[480px]" style={{ border: '1px solid rgba(255,255,255,0.25)' }}>
                                     {/* Top-left corner mark */}
