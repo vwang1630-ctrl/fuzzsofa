@@ -39,6 +39,10 @@ export function ProductPageClient(
         "muscle-gorilla-sofa": "muscleGorillaSofa"
     };
 
+    const storySketchMap: Record<string, string> = {
+        "owl-sofa": "/products/owl/story-sketch.webp",
+        "meteorite-ring-sofa": "/products/meteorite-ring/story-sketch.webp",
+    };
     const prefix = slugToPrefix[product.slug] || "";
     const productName = prefix ? t(`${prefix}Name` as TranslationKeys) : product.name;
     const productTagline = prefix ? t(`${prefix}Tagline` as TranslationKeys) : product.tagline;
@@ -716,7 +720,7 @@ export function ProductPageClient(
                                         <div className="absolute bottom-0 right-0 w-px h-[20px] bg-[#E8B4B8]/30" />
                                     </div>
                                     <Image
-                                        src="/products/owl/story-sketch.webp"
+                                        src={storySketchMap[product.slug] || "/products/owl/story-sketch.webp"}
                                         alt="Owl Sofa Sketch"
                                         width={500}
                                         height={500}
@@ -763,7 +767,7 @@ export function ProductPageClient(
                     {}
                     <div
                         className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
-                        {slug === "owl-sofa" ? <img
+                        {product.slug === "owl-sofa" ? <img
                             src="/products/owl/made-bg.webp"
                             alt={`${productName} craftsmanship`}
                             className="w-full h-full object-cover opacity-50" /> : galleryImages.length >= 4 && galleryImages[3]?.src ? <img
