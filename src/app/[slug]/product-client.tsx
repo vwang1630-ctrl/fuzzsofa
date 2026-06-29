@@ -1012,7 +1012,7 @@ export function ProductPageClient(
                     <p className="text-[#8A8580] leading-[1.8] text-[15px] mb-10">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
-                    <div className="flex justify-center gap-8 lg:gap-12 items-center relative">
+                    <div className="flex justify-center gap-10 lg:gap-16 items-center relative px-4 lg:px-12">
                         <div className="flex items-center gap-3">
                             <div
                                 className="w-10 h-10 rounded-full mx-auto flex items-center justify-center"
