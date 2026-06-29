@@ -636,10 +636,10 @@ export function ProductPageClient(
             {}
             <section className="bg-[#0D0D0D]">
                 <div className="border-t border-[#E8B4B8]/8"></div>
-                <div className="max-w-[1200px] mx-auto px-6 py-10">
+                <div className="max-w-[1200px] mx-auto px-6 py-12">
                     {}
-                    <div className="mb-10">
-                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4 flex items-center gap-3">
+                    <div className="mb-8">
+                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3 flex items-center gap-3">
                             <span className="inline-block w-8 h-px bg-[#E8B4B8]/30" />
                             {t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
                         </p>
@@ -649,7 +649,7 @@ export function ProductPageClient(
                         </h2>
                     </div>
                     {}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer">
                             {}
                             <div className="relative aspect-[4/3] bg-[#111] overflow-hidden border border-white/[0.04] group-hover:border-[#E8B4B8]/20 transition-colors duration-500">
@@ -681,29 +681,29 @@ export function ProductPageClient(
                         </div>)}
                     </div>
                     {}
-                    <div className="mt-12 pt-6 border-t border-white/5">
+                    <div className="mt-10 pt-5 border-t border-white/5">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                             {}
                             <div>
                                 <p
-                                    className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-2 flex items-center gap-3">
+                                    className="text-[13px] tracking-[0.25em] uppercase text-[#E8B4B8] mb-3 flex items-center gap-3">
                                     <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
                                                                     </p>
                                 <h3
-                                    className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2">
+                                    className="font-serif text-[40px] font-normal text-[#F5F0EB] leading-[1.15] mb-2.5">
                                     {productName}
                                 </h3>
-                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-4 font-serif">
+                                <p className="text-[19px] text-[#E8B4B8]/60 italic mb-5 font-serif">
                                     {productTagline}
                                 </p>
                                 <div
                                     className="text-[15.5px] font-light text-[#E8E0D8]/82 leading-[2.2] max-w-[460px]"
                                     >
                                     <p>{productConcept}</p>
-                                    <p className="mt-8">{product.interiorContext}</p>
+                                    <p className="mt-6">{product.interiorContext}</p>
                                 </div>
                                 {}
-                                <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-10">
+                                <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-5 mt-8">
                                     <p className="text-[15px] text-[#E8B4B8]/85 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
                                                                             </p>
                                     <p
@@ -806,21 +806,21 @@ export function ProductPageClient(
                             className="absolute inset-0 bg-gradient-to-t from-[#090909]/80 via-[#090909]/30 to-transparent" />
                         {}
                         <div
-                            className="absolute inset-0 flex flex-col items-center justify-end pb-10 lg:pb-14 px-6"
+                            className="absolute inset-0 flex flex-col items-center justify-end pb-8 lg:pb-10 px-6"
                             style={{
                                 backgroundColor: "#0A0A0A"
                             }}>
                             <p
-                                className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
+                                className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-8 relative">
                                 <span
                                     className="opacity-30 mr-3">—</span>Materials & Craftsmanship
                                                                 <span
                                     className="opacity-30 ml-3">—</span>
                             </p>
-                            <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-11 relative">
+                            <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-8 relative">
                                 {}
                                 <div
-                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-5 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
                                     <div
                                         className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
                                     <div
@@ -884,7 +884,7 @@ export function ProductPageClient(
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-5 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
                                     <div
                                         className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
                                     <div
@@ -914,7 +914,7 @@ export function ProductPageClient(
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-5 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
                                     <div
                                         className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
                                     <div
@@ -954,7 +954,7 @@ export function ProductPageClient(
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-[26px] px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
+                                    className="text-center py-5 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25">
                                     <div
                                         className="absolute top-[5px] left-[5px] w-[3px] h-[3px] rounded-full bg-[#E8B4B8]/12" />
                                     <div
@@ -1017,15 +1017,15 @@ export function ProductPageClient(
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
-                <div className="relative max-w-[700px] mx-auto px-6 py-[140px] text-center">
-                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                <div className="relative max-w-[700px] mx-auto px-6 py-24 text-center">
+                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
-                        className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
+                        className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-5">
                         {t("deliveredWorldwide" as TranslationKeys)}
                     </h2>
-                    <p className="text-[#F5F0EB]/50 leading-[1.8] text-base mb-10">
+                    <p className="text-[#F5F0EB]/50 leading-[1.8] text-base mb-8">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
                     <div className="flex justify-center gap-10 flex-wrap items-center relative">
