@@ -370,24 +370,7 @@ export function ProductPageClient(
                     <div className="absolute top-2.5 right-3 z-10">
                         <span className="text-[10px] text-[#F5F0EB]/40 tracking-[0.08em] font-light">{activeImage + 1}<span className="text-[#F5F0EB]/20">/{galleryImages.length}</span></span>
                     </div>
-                    {/* Color swatches — floating circles, no container */}
-                    {currentMaterialOptions && currentMaterialOptions.colors.length > 0 && (
-                        <div className="absolute bottom-5 left-0 right-0 flex justify-center items-center gap-3 z-10">
-                            {currentMaterialOptions.colors.map((color, ci) => {
-                                const colorKey = colorNameKeyMap[color] || color;
-                                const isSelected = materialOption === currentMaterialOptions.options[ci];
-                                return (
-                                    <button
-                                        key={ci}
-                                        onClick={() => setMaterialOption(currentMaterialOptions.options[ci])}
-                                        className={`rounded-full transition-all duration-300 ${isSelected ? "w-8 h-8 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-7 h-7 ring-1 ring-white/25 hover:ring-white/50"}`}
-                                        style={{ backgroundColor: currentMaterialOptions.colors?.[ci] || "#888" }}
-                                        aria-label={t(colorKey as TranslationKeys) || color}
-                                    />
-                                );
-                            })}
-                        </div>
-                    )}
+                    {}
                 </div>
 
                 <div className="max-w-[1200px] mx-auto px-5 lg:px-8 pt-5 lg:pt-12 pb-8 lg:pb-12">
@@ -494,6 +477,76 @@ export function ProductPageClient(
                         </div>
                         {}
                         <div className="flex flex-col">
+                            {/* Color / Material selector — placed right after gallery for luxury UX flow */}
+                            {product.materialOptions && product.materialOptions.length > 0 && <div className="lg:mb-4">
+                                {product.materialOptions.map(mat => <div key={mat.type} className="mb-4 lg:mb-5">
+                                    <label
+                                        className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase block mb-3">
+                                        {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
+                                        <span className="hidden lg:inline"> — </span>
+                                        <span className="hidden lg:inline text-[#F5F0EB]/40 normal-case tracking-[0.02em]">{t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}</span>
+                                    </label>
+                                    {/* Mobile: color circles only, selected name shown in label */}
+                                    <div className="flex lg:hidden gap-3 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1">
+                                        {mat.options.map((opt, optIdx) => {
+                                            const colorHex = mat.colors[optIdx];
+                                            const isSelected = materialType === mat.type && materialOption === opt;
+                                            let globalIdx = optIdx;
+                                            if (product.materialOptions) {
+                                                globalIdx = 0;
+                                                for (const m of product.materialOptions) {
+                                                    if (m.type === mat.type) { globalIdx += optIdx; break; }
+                                                    globalIdx += m.options.length;
+                                                }
+                                            }
+                                            const swatchImage = galleryImages[globalIdx];
+                                            const colorKey = colorNameKeyMap[opt] || opt;
+                                            return (
+                                                <button
+                                                    key={opt}
+                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); }}
+                                                    className="flex flex-col items-center gap-1.5 flex-shrink-0 group"
+                                                >
+                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-10 h-10 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-9 h-9 ring-1 ring-[#333] group-hover:ring-[#555]"}`}>
+                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                    </span>
+                                                    {isSelected && <span className="text-[10px] text-[#F5F0EB]/60 tracking-[0.04em] whitespace-nowrap">{t(colorKey as TranslationKeys)}</span>}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                    {/* Desktop: full color selector with text names */}
+                                    <div className="hidden lg:flex flex-wrap gap-2">
+                                        {mat.options.map((opt, optIdx) => {
+                                            const colorHex = mat.colors[optIdx];
+                                            const isSelected = materialType === mat.type && materialOption === opt;
+                                            let globalIdx = optIdx;
+                                            if (product.materialOptions) {
+                                                globalIdx = 0;
+                                                for (const m of product.materialOptions) {
+                                                    if (m.type === mat.type) { globalIdx += optIdx; break; }
+                                                    globalIdx += m.options.length;
+                                                }
+                                            }
+                                            const swatchImage = galleryImages[globalIdx];
+                                            return (
+                                                <button
+                                                    key={opt}
+                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); }}
+                                                    className="flex items-center gap-2 transition-all duration-300 group">
+                                                    <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
+                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={32} height={32} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                    </span>
+                                                    <span className={`text-xs tracking-[0.04em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
+                                                        {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
+                                                    </span>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>)}
+                                <div className="h-px bg-white/[0.04] mt-2 lg:mt-3 mb-5 lg:mb-4" />
+                            </div>}
                             {}
                             <p className="text-[10px] lg:text-[11px] text-[#8A8580]/60 tracking-[0.25em] uppercase mb-2 lg:mb-3">
                                 {collectionName}
@@ -620,78 +673,7 @@ export function ProductPageClient(
                                 {productTagline}
                             </p>
                             {}
-                            <div className="h-px bg-white/[0.04] my-8 lg:my-7" />
-                            {}
-                            {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-6">
-                                {product.materialOptions.map(mat => <div key={mat.type} className="mb-5">
-                                    <label
-                                        className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase block mb-3">
-                                        {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
-                                        <span className="hidden lg:inline"> — </span>
-                                        <span className="hidden lg:inline text-[#F5F0EB]/40 normal-case tracking-[0.02em]">{t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}</span>
-                                    </label>
-                                    {/* Mobile: color circles only, selected name shown in label */}
-                                    <div className="flex lg:hidden gap-3 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1">
-                                        {mat.options.map((opt, optIdx) => {
-                                            const colorHex = mat.colors[optIdx];
-                                            const isSelected = materialType === mat.type && materialOption === opt;
-                                            let globalIdx = optIdx;
-                                            if (product.materialOptions) {
-                                                globalIdx = 0;
-                                                for (const m of product.materialOptions) {
-                                                    if (m.type === mat.type) { globalIdx += optIdx; break; }
-                                                    globalIdx += m.options.length;
-                                                }
-                                            }
-                                            const swatchImage = galleryImages[globalIdx];
-                                            const colorKey = colorNameKeyMap[opt] || opt;
-                                            return (
-                                                <button
-                                                    key={opt}
-                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); }}
-                                                    className="flex flex-col items-center gap-1.5 flex-shrink-0 group"
-                                                >
-                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-10 h-10 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-9 h-9 ring-1 ring-[#333] group-hover:ring-[#555]"}`}>
-                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
-                                                    </span>
-                                                    {isSelected && <span className="text-[10px] text-[#F5F0EB]/60 tracking-[0.04em] whitespace-nowrap">{t(colorKey as TranslationKeys)}</span>}
-                                                </button>
-                                            );
-                                        })}
-                                    </div>
-                                    {/* Desktop: full color selector with text names */}
-                                    <div className="hidden lg:flex flex-wrap gap-2">
-                                        {mat.options.map((opt, optIdx) => {
-                                            const colorHex = mat.colors[optIdx];
-                                            const isSelected = materialType === mat.type && materialOption === opt;
-                                            let globalIdx = optIdx;
-                                            if (product.materialOptions) {
-                                                globalIdx = 0;
-                                                for (const m of product.materialOptions) {
-                                                    if (m.type === mat.type) { globalIdx += optIdx; break; }
-                                                    globalIdx += m.options.length;
-                                                }
-                                            }
-                                            const swatchImage = galleryImages[globalIdx];
-                                            return (
-                                                <button
-                                                    key={opt}
-                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); }}
-                                                    className="flex items-center gap-2 transition-all duration-300 group">
-                                                    <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
-                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={32} height={32} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
-                                                    </span>
-                                                    <span className={`text-xs tracking-[0.04em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
-                                                        {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
-                                                    </span>
-                                                </button>
-                                            );
-                                        })}
-                                    </div>
-                                </div>)}
-                            </div>}
-                            {}
-                            <div className="h-px bg-white/[0.04] mb-5" />
+                            <div className="h-px bg-white/[0.04] my-6 lg:my-5" />
                             {}
                             {product.specifications && <div className="mb-6">
                                 <div className="flex items-center gap-2 mb-2">
