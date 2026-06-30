@@ -507,7 +507,7 @@ export function ProductPageClient(
                             </div>}
                         </div>
                         {}
-                        <div className="flex flex-col">
+                        <div className="flex flex-col hidden lg:flex">
                             {}
                             <p className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase mb-3">
                                 {collectionName}
@@ -626,15 +626,15 @@ export function ProductPageClient(
                             </div>
                             {}
                             <p
-                                className="font-serif text-[24px] md:text-[28px] font-light text-[#F5F0EB]/70 mt-1">
+                                className="font-serif text-[24px] md:text-[28px] font-light text-[#F5F0EB]/70 mt-1 hidden lg:block">
                                 {displayPrice}
                             </p>
                             {}
-                            <p className="text-[15px] text-[#8A8580] leading-[1.7] mt-3">
+                            <p className="text-[15px] text-[#8A8580] leading-[1.7] mt-3 hidden lg:block">
                                 {productTagline}
                             </p>
                             {}
-                            <div className="h-px bg-[#333] my-5" />
+                            <div className="h-px bg-[#333] my-5 hidden lg:block" />
                             {}
                             {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5 hidden lg:block">
                                 {product.materialOptions.map(mat => <div key={mat.type} className="mb-4">
