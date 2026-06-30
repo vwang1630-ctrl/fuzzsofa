@@ -495,13 +495,13 @@ export function ProductPageClient(
                         {}
                         <div className="flex flex-col">
                             {}
-                            <p className="text-[11px] lg:text-[12px] text-[#8A8580] tracking-[0.2em] uppercase mb-2 lg:mb-3">
+                            <p className="text-[10px] lg:text-[11px] text-[#8A8580]/60 tracking-[0.25em] uppercase mb-2 lg:mb-3">
                                 {collectionName}
                             </p>
                             {}
                             <div className="flex items-start justify-between gap-3">
                                 <h1
-                                    className="font-serif text-[26px] lg:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
+                                    className="font-serif text-[26px] lg:text-[34px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em]">
                                     {productName}
                                 </h1>
                                 <div className="flex items-center gap-2 mt-1 flex-shrink-0">
@@ -612,7 +612,7 @@ export function ProductPageClient(
                             </div>
                             {}
                             <p
-                                className="font-serif text-[20px] md:text-[24px] lg:text-[28px] font-light text-[#F5F0EB]/70 mt-1">
+                                className="font-serif text-[22px] md:text-[26px] lg:text-[28px] font-light text-[#F5F0EB] mt-3 tracking-[0.02em]">
                                 {displayPrice}
                             </p>
                             {}
@@ -620,15 +620,15 @@ export function ProductPageClient(
                                 {productTagline}
                             </p>
                             {}
-                            <div className="h-px bg-[#1A1A1A] my-6 lg:my-5" />
+                            <div className="h-px bg-white/[0.04] my-8 lg:my-7" />
                             {}
-                            {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5">
-                                {product.materialOptions.map(mat => <div key={mat.type} className="mb-4">
+                            {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-6">
+                                {product.materialOptions.map(mat => <div key={mat.type} className="mb-5">
                                     <label
-                                        className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
+                                        className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase block mb-3">
                                         {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
                                         <span className="hidden lg:inline"> — </span>
-                                        <span className="hidden lg:inline text-[#F5F0EB]/50 normal-case tracking-[0.02em]">{t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}</span>
+                                        <span className="hidden lg:inline text-[#F5F0EB]/40 normal-case tracking-[0.02em]">{t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}</span>
                                     </label>
                                     {/* Mobile: color circles only, selected name shown in label */}
                                     <div className="flex lg:hidden gap-3 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1">
@@ -691,32 +691,32 @@ export function ProductPageClient(
                                 </div>)}
                             </div>}
                             {}
-                            <div className="h-px bg-[#333] mb-5" />
+                            <div className="h-px bg-white/[0.04] mb-5" />
                             {}
-                            {product.specifications && <div className="mb-5">
+                            {product.specifications && <div className="mb-6">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
+                                    <label className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="text-[11px] tracking-[0.1em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors border border-[#1A1A1A] px-2 py-0.5 rounded-sm">
+                                        className="text-[10px] tracking-[0.15em] uppercase text-[#8A8580]/50 hover:text-[#E8B4B8] transition-colors border border-white/[0.06] px-2 py-0.5 rounded-sm">
                                         {useCm ? "IN" : "CM"}
                                     </button>
                                 </div>
-                                <p className="text-[13px] text-[#F5F0EB]/60 tracking-[0.02em]">
+                                <p className="text-[13px] text-[#F5F0EB]/50 tracking-[0.02em]">
                                     {(() => {
                                         const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
                                         return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`;
                                     })()}
                                 </p>
-                                <p className="text-[12px] text-[#F5F0EB]/40 mt-1">
+                                <p className="text-[12px] text-[#F5F0EB]/30 mt-1">
                                     {t("seatHeightLabel" as TranslationKeys)}{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}
                                 </p>
                             </div>}
                             {}
-                            {product.materials && product.materials.length > 0 && <div className="mb-5">
+                            {product.materials && product.materials.length > 0 && <div className="mb-6">
                                 <label
-                                    className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">{t("materialsLabel" as TranslationKeys)}
-                                                                                                                                                                  </label>
+                                    className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase block mb-2">{t("materialsLabel" as TranslationKeys)}
+                                </label>
                                 <div className="space-y-0.5">
                                     {product.materials.map((mat, i) => {
                                         const matKeyMap: Record<string, string[]> = {
@@ -730,7 +730,7 @@ export function ProductPageClient(
                                         const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
                                         return <p
                                         key={i}
-                                        className="text-[13px] text-[#F5F0EB]/50 tracking-[0.02em] leading-[1.5]">
+                                        className="text-[13px] text-[#F5F0EB]/40 tracking-[0.02em] leading-[1.6]">
                                         {i18nMat}
                                     </p>})}
                                 </div>
@@ -738,47 +738,33 @@ export function ProductPageClient(
                             {}
                             <div className="h-px bg-[#333] mb-5" />
                             {}
+                            {/* Desktop: Single prominent CTA + subtle secondary */}
                             <button
                                 onClick={handleAddToCart}
-                                className="hidden lg:flex w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
+                                className="hidden lg:flex w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center gap-2 rounded-sm"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
                                 }}>
-                                {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : <>
-                                    {t("addToCart")}
-                                    <svg
-                                        width="14"
-                                        height="14"
-                                        viewBox="0 0 16 16"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round">
-                                        <path d="M3 8h10M9 4l4 4-4 4" />
-                                    </svg>
-                                </>}
+                                {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : t("addToCart")}
                             </button>
                             <button
-                                className="hidden lg:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[13px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
-                                style={{
-                                    border: "1px solid #E8B4B8"
-                                }}
+                                className="hidden lg:flex w-full py-3.5 bg-transparent text-[#F5F0EB]/60 text-[12px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:text-[#F5F0EB] hover:bg-white/[0.03]"
+                                style={{ border: "1px solid #333" }}
                                 onClick={handleBuyNow}>{t("buyNow" as TranslationKeys)}</button>
                             {}
                             <div
-                                className="hidden lg:flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
+                                className="hidden lg:flex items-center gap-2 mt-5 text-[11px] text-[#8A8580]/50 tracking-[0.06em]">
                                 <span>{t("leadTimeShort" as TranslationKeys)}</span>
-                                <span className="mx-1">·</span>
+                                <span className="text-[#8A8580]/20">|</span>
                                 <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
-                                <span className="mx-1">·</span>
+                                <span className="text-[#8A8580]/20">|</span>
                                 <span>{t("madeToOrderShort" as TranslationKeys)}</span>
                             </div>
                             {}
                             <button
                                 onClick={() => setShowRoomViz(true)}
-                                className="mt-3 text-[12px] text-[#8A8580]/70 tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-1.5">
+                                className="mt-4 text-[11px] text-[#8A8580]/50 tracking-[0.08em] uppercase hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-2">
                                 <svg
                                     width="14"
                                     height="14"
@@ -1397,37 +1383,23 @@ export function ProductPageClient(
                     </Link>
                 </div>
             </div>}
-            {/* Mobile Sticky CTA */}
-            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-md border-t border-white/[0.04]">
-                <div className="px-4 py-3 flex items-center gap-3">
-                    {/* Price Info */}
-                    <div className="flex-1 min-w-0">
-                        <p className="font-serif text-[20px] font-light text-[#F5F0EB] leading-tight">{displayPrice}</p>
-                        <p className="text-[9px] text-[#8A8580]/50 tracking-[0.1em] uppercase mt-0.5">
-                            {t("leadTimeShort" as TranslationKeys)} · {t("freeWhiteGloveShort" as TranslationKeys)}
-                        </p>
+            {/* Mobile Sticky CTA — Luxury single-action bar */}
+            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40">
+                <div className="bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/98 to-transparent pt-6 pb-0">
+                    <div className="px-5 pb-3 flex flex-col gap-2">
+                        {/* Price line */}
+                        <div className="flex items-baseline justify-between">
+                            <span className="font-serif text-[18px] font-light text-[#F5F0EB]">{displayPrice}</span>
+                            <span className="text-[10px] text-[#8A8580]/60 tracking-[0.08em]">{t("leadTimeShort" as TranslationKeys)} · {t("freeWhiteGloveShort" as TranslationKeys)}</span>
+                        </div>
+                        {/* Single full-width CTA */}
+                        <button
+                            onClick={addedToCart ? handleBuyNow : handleAddToCart}
+                            className="w-full py-3.5 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[12px] tracking-[0.2em] uppercase transition-all duration-300 rounded-sm active:scale-[0.98]"
+                            style={{ minHeight: 52 }}>
+                            {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
+                        </button>
                     </div>
-                    {/* Add to Cart - Icon */}
-                    <button
-                        onClick={handleAddToCart}
-                        className="flex-shrink-0 w-11 h-11 flex items-center justify-center transition-all duration-300 rounded-sm"
-                        style={{
-                            background: addedToCart ? "#E8B4B8" : "transparent",
-                            border: addedToCart ? "none" : "1px solid #333",
-                        }}>
-                        {addedToCart ? (
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                        ) : (
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-                        )}
-                    </button>
-                    {/* Buy Now - Primary CTA */}
-                    <button
-                        onClick={handleBuyNow}
-                        className="flex-shrink-0 px-6 py-2.5 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[11px] tracking-[0.15em] uppercase transition-all duration-300 rounded-sm active:scale-[0.97]"
-                        style={{ minHeight: 44 }}>
-                        {t("buyNow" as TranslationKeys)}
-                    </button>
                 </div>
             </div>
         </>
