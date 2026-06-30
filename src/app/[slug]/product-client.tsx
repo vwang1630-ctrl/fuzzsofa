@@ -948,13 +948,64 @@ export function ProductPageClient(
                             </div>
                         </div>
                     </div>
+                    {}
+                    <div className="lg:hidden">
+                        {}
+                        <div className="relative w-full aspect-[3/2] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                            {madeBg ? <img
+                                src={madeBg}
+                                alt={`${productName} craftsmanship`}
+                                className="w-full h-full object-cover opacity-65" /> : galleryImages.length >= 4 && galleryImages[3]?.src ? <img
+                                src={galleryImages[3].src}
+                                alt={`${productName} craftsmanship`}
+                                className="w-full h-full object-cover opacity-65" /> : galleryImages[0]?.src ? <img
+                                src={galleryImages[0].src}
+                                alt={`${productName} craftsmanship`}
+                                className="w-full h-full object-cover opacity-55" /> : <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
+                                    {product.animal.charAt(0)}
+                                </span>
+                            </div>}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/40 to-transparent" />
+                        </div>
+                        {}
+                        <div className="px-6 py-8 bg-[#090909]">
+                            <p className="font-serif text-xl font-light text-[#F5F0EB] leading-[1.2] text-center mb-6">
+                                <span className="opacity-30 mr-2">—</span>{t("materialsCraftsmanship" as TranslationKeys)}<span className="opacity-30 ml-2">—</span>
+                            </p>
+                            <div
+                                className="flex gap-3 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-4 px-4 pb-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                {(() => {
+                                    const cards = materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"];
+                                    return cards.map((card: { titleKey: string; descKey: string; icon: string }, idx: number) => (
+                                        <div
+                                            key={idx}
+                                            className="flex-shrink-0 w-[70vw] snap-start text-center py-5 px-4 pb-4 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
+                                            <div className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
+                                            <div className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
+                                            <div className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: "rgba(232,180,184,0.1)", border: "1px solid rgba(232,180,184,0.22)" }}>
+                                                <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
+                                                    {card.icon === "fabric" && <><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><line x1="3" y1="9" x2="21" y2="9" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="3" y1="15" x2="21" y2="15" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
+                                                    {card.icon === "frame" && <><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
+                                                    {card.icon === "cushion" && <><path d="M3 3h18v18H3z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 9h18" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><path d="M9 3v18" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
+                                                    {card.icon === "detail" && <><path d="M2 20 L6 20 L6 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M22 20 L18 20 L18 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M6 16 L18 16 L18 4 L6 4 Z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></>}
+                                                </svg>
+                                            </div>
+                                            <h4 className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[4px]">{t(card.titleKey as TranslationKeys)}</h4>
+                                            <p className="text-[11px] font-light text-[#8A8580] leading-[1.5]">{t(card.descKey as TranslationKeys)}</p>
+                                        </div>
+                                    ));
+                                })()}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
             <section className="bg-[#090909]">
                 <div className="max-w-[1600px] mx-auto">
                     {}
                     <div
-                        className="relative w-full aspect-[3/4] lg:aspect-[3/1] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                        className="relative w-full aspect-[3/1] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden hidden lg:block">
                         {madeBg ? <img
                             src={madeBg}
                             alt={`${productName} craftsmanship`}
