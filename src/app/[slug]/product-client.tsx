@@ -378,7 +378,7 @@ export function ProductPageClient(
                         {/* Mobile color selector — single row large circles */}
                         {product.materialOptions && product.materialOptions.length > 0 && (
                             <div className="px-4 py-4">
-                                <div className="flex items-center justify-center gap-9 overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                <div className="flex items-center justify-center gap-9 overflow-x-auto scrollbar-hide py-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                                     {(() => {
                                         const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
                                         let gIdx = 0;
