@@ -294,3 +294,34 @@ img {
 [dir="rtl"] {
   text-align: right;
 }
+
+/* ─── Mobile (≤480px) adaptive ─── */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 14px;
+  }
+
+  .section {
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .hero-info p[style*="font-size: 28px"] {
+    font-size: 24px !important;
+  }
+
+  .btn {
+    min-height: 52px;
+  }
+
+  .faq-question {
+    padding: 10px 0;
+  }
+
+  body {
+    padding-bottom: 110px; /* prevent sticky CTA overlap */
+  }
+}
