@@ -24,7 +24,11 @@ export function productJsonLd(product: Product) {
       },
     },
     category: "Sculptural Furniture / Contemporary Sofa",
-    material: product.materials.join(", "),
+    material: Array.isArray(product.materials) ? product.materials : [product.materials],
+    additionalProperty: product.slug === "meteorite-ring-sofa" ? [
+      { "@type": "PropertyValue", name: "Design", value: "360-degree conversation sofa" },
+      { "@type": "PropertyValue", name: "Style", value: "Sculptural furniture" },
+    ] : undefined,
     productionMode: "MadeToOrder",
     customizable: true,
     offers: {

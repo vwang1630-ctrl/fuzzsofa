@@ -740,7 +740,7 @@ export function ProductPageClient(
                                 className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
                                 <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
                                     {product.slug === "meteorite-ring-sofa" ? (
-                                        <>Tested Load Capacity: Up to {product.specifications.capacity}kg</>
+                                        <>Tested Load Capacity: Up to 150 kg</>
                                     ) : (
                                         <>≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg</>
                                     )}

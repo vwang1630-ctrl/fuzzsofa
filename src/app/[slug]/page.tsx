@@ -18,10 +18,10 @@ export async function generateMetadata({ params }: PageProps) {
   if (!product) return { title: "Not Found" };
 
   return {
-    title: `${product.name} — Custom Sculptural Sofa | Fuzz Sofa Studio`,
+    title: `${product.name} | Sculptural Circular Sofa | Fuzz Sofa`,
     description: product.metaDescription,
     openGraph: {
-      title: `${product.name} — Custom Sculptural Sofa for Modern Interiors`,
+      title: `${product.name} | Sculptural Circular Sofa | Fuzz Sofa`,
       description: product.metaDescription,
       url: `https://fuzzsofa.com/${product.slug}`,
       type: "website",
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps) {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} — Custom Sculptural Sofa | Fuzz Sofa Studio`,
+      title: `${product.name} | Sculptural Circular Sofa | Fuzz Sofa`,
       description: product.metaDescription,
     },
   };

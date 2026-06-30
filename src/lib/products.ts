@@ -290,7 +290,7 @@ export const products: Product[] = [
     animal: "Meteorite",
     tagline: "Sculptural Seating, Born from the Cosmos",
     description:
-      "The Meteorite Ring Sofa captures the raw beauty of a celestial body frozen at the moment of impact. Its distinctive ring silhouette and crater-textured surface create a seating experience that is both sculptural and deeply comfortable — a conversation piece that transforms any space into a gallery of cosmic wonder. A sculptural circular sofa inspired by celestial forms, featuring a galvanized steel tube frame, high-density shaped foam, and a 360-degree conversation-friendly design.",
+      "The Meteorite Ring Sofa captures the raw beauty of a celestial body frozen at the moment of impact. Its distinctive ring silhouette and crater-textured surface create a seating experience that is both sculptural and deeply comfortable — a modern statement furniture piece that transforms any space into a gallery of cosmic wonder. A cosmos-inspired sculptural circular sofa featuring a galvanized steel tube frame, high-density shaped foam, and a 360-degree conversation sofa design for artistic living.",
     concept:
       "Inspired by celestial bodies and orbital forms, the Meteorite Ring Sofa is more than a place to sit — it is a sculptural statement. Its circular 360-degree design naturally encourages conversation and connection, making it an ideal centerpiece for open-plan homes, creative studios, and boutique hospitality spaces.",
     interiorContext:
@@ -355,7 +355,7 @@ export const products: Product[] = [
     relatedProducts: ["gorilla-sofa", "owl-sofa", "silverback-sofa"],
     relatedInteriors: ["creative-studio", "urban-apartment"],
     metaDescription:
-      "Custom sculptural ring sofa by Fuzz Sofa Studio. A made-to-order cosmic-inspired sofa for contemporary interiors. Compact 110x80x80cm. 1–2 weeks production. Worldwide shipping.",
+      "A sculptural circular sofa inspired by celestial forms, featuring a galvanized steel tube frame, high-density shaped foam, and a 360° conversation-friendly design for artistic living.",
     trendingGeo: ["americas", "europe"],
   },
   {
