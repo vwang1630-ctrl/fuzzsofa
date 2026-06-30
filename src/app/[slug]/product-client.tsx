@@ -378,7 +378,7 @@ export function ProductPageClient(
                         {/* Mobile color selector — single row large circles */}
                         {product.materialOptions && product.materialOptions.length > 0 && (
                             <div className="px-4 py-4">
-                                <div className="flex items-center justify-center gap-9 overflow-x-auto scrollbar-hide py-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                <div className="flex items-center justify-center gap-9 overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                                     {(() => {
                                         const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
                                         let gIdx = 0;
@@ -392,8 +392,8 @@ export function ProductPageClient(
                                             const isActive = materialType === c.type && materialOption === c.opt;
                                             const swatchImg = galleryImages[c.globalIdx];
                                             return (
-                                                <button key={`${c.type}-${c.opt}`} onClick={() => { setMaterialType(c.type); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-1.5">
-                                                    <span className={`w-14 h-14 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden py-2 ${isActive ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333]"}`}>
+                                                <button key={`${c.type}-${c.opt}`} onClick={() => { setMaterialType(c.type); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-2">
+                                                    <span className={`w-14 h-14 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isActive ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333]"}`}>
                                                         {swatchImg ? <img src={swatchImg.src} alt={c.opt} width={56} height={56} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.hex }} />}
                                                     </span>
                                                 </button>
