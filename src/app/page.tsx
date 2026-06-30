@@ -109,22 +109,22 @@ export default function HomePage() {
       />
 
       {/* ─── 1. HERO ─── */}
-      <section className="relative w-full overflow-hidden" style={{ aspectRatio: '3/4', maxHeight: '82vh' }}>
+      <section className="relative w-full overflow-hidden" style={{ aspectRatio: 'auto', minHeight: '65vh', maxHeight: '85vh' }}>
         <Link href={sceneConfig.keys.href} className="block absolute inset-0 z-0" aria-label={t(sceneConfig.keys.title)}>
           <HeroSlideshow current={heroScene} />
         </Link>
         <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay} hidden md:block`} />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/30 to-[#0A0A0A]/20 md:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-[#0A0A0A]/10 md:hidden" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15 hidden md:block" />
 
-        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-10 lg:px-16 h-full flex flex-col justify-end pb-[12%] md:pb-[6%] md:pt-[8%] md:justify-start">
-          <p className="tracking-[0.35em] uppercase mb-2 md:mb-3 text-[10px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
+        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-10 lg:px-16 h-full flex flex-col justify-end pb-[15%] md:pb-[6%] md:pt-[8%] md:justify-start">
+          <p className="tracking-[0.35em] uppercase mb-2 md:mb-3 text-[9px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
             Fuzz Sofa Studio
           </p>
-          <h1 className="font-light leading-[1.08] tracking-[0.02em] mb-3 md:mb-5 animate-fade-in-delay-1 text-[2rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
+          <h1 className="font-light leading-[1.1] tracking-[0.02em] mb-2 md:mb-5 animate-fade-in-delay-1 text-[1.75rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
             {t(sceneConfig.keys.title)}
           </h1>
-          <p className="font-light text-[12px] md:text-[15px] lg:text-base max-w-[380px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
+          <p className="font-light text-[11px] md:text-[15px] lg:text-base max-w-[320px] md:max-w-[380px] leading-[1.7] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '70' }}>
             Made-to-order, delivered in 1–2 weeks
           </p>
           <div className="mt-4 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
@@ -205,10 +205,10 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent" />
                   {/* Mobile: text overlay on image */}
                   <div className="absolute bottom-0 left-0 right-0 p-3 md:hidden">
-                    <h3 className="font-serif text-[14px] font-light text-[#F5F0EB] leading-tight">
+                    <h3 className="font-serif text-[13px] font-light text-[#F5F0EB] leading-tight">
                       {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     </h3>
-                    <p className="mt-1 text-[11px] text-[#F5F0EB]/70">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
+                    <p className="mt-0.5 text-[11px] text-[#F5F0EB]/50">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
                   </div>
                 </div>
                 {/* Desktop: text below image */}
@@ -258,8 +258,8 @@ export default function HomePage() {
                     <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500" style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }} />
                   )}
                   {/* Mobile: title overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 md:hidden">
-                    <h3 className="font-serif text-lg text-[#F5F0EB]">{interior.title}</h3>
+                  <div className="absolute bottom-0 left-0 right-0 p-3 md:hidden">
+                    <h3 className="font-serif text-[15px] text-[#F5F0EB]">{interior.title}</h3>
                   </div>
                 </div>
                 {/* Desktop: title below image */}
