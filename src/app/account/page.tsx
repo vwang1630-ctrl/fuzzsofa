@@ -545,13 +545,13 @@ export default function AccountPage() {
               <button
                 key={tab.key}
                 onClick={() => setOrderTab(tab.key)}
-                className={`pb-3 text-xs lg:text-sm tracking-[0.1em] uppercase transition-colors flex items-center gap-1.5 lg:gap-2 whitespace-nowrap flex-shrink-0 ${
+                className={`pb-3 text-xs lg:text-sm tracking-[0.1em] uppercase transition-colors flex flex-col items-center lg:flex-row lg:items-center lg:gap-2 whitespace-nowrap flex-shrink-0 ${
                   orderTab === tab.key
                     ? "text-[#F5F0EB] border-b-2 border-[#E8B4B8]"
                     : "text-[#8A8580] hover:text-[#F5F0EB]"
                 }`}
               >
-                {tab.label}
+                <span>{tab.label}</span>
                 {tab.count > 0 && (
                   <span className={`text-[12px] px-1.5 py-0.5 rounded-full ${
                     orderTab === tab.key ? "bg-[#E8B4B8] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#8A8580]"

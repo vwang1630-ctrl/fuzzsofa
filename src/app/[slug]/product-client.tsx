@@ -357,7 +357,7 @@ export function ProductPageClient(
                             {galleryImages.map((img, idx) => (
                                 <div key={img.id} className="w-full flex-shrink-0 snap-center">
                                     <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
-                                        {img.src ? <img src={img.src} alt={productName} className="w-full h-full object-contain" /> : <div className="absolute inset-0 flex items-center justify-center"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
+                                        {img.src ? <img src={img.src} alt={productName} className="w-full h-full object-cover" /> : <div className="absolute inset-0 flex items-center justify-center"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
                                         {/* Share & Wishlist overlay — mobile only */}
                                         {idx === activeImage && <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
                                             <button onClick={() => setShowShareMenu(!showShareMenu)} className="flex items-center justify-center w-10 h-10 rounded-full border border-[#333] bg-[#0A0A0A]/80 backdrop-blur-sm hover:border-[#E8B4B8]/25 transition-all duration-300" aria-label="Share">
@@ -1405,28 +1405,28 @@ export function ProductPageClient(
             </section>
             {/* Mobile Sticky CTA */}
             <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A] border-t border-white/[0.06]" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
-                <div className="px-4 py-3">
-                    <div className="flex items-center justify-between mb-2.5">
+                <div className="px-4 py-4">
+                    <div className="flex items-center justify-between mb-3">
                         <div className="min-w-0 flex-1">
                             <p className="text-[11px] text-[#8A8580] tracking-[0.12em] uppercase truncate">{collectionName}</p>
-                            <p className="font-serif text-[15px] font-light text-[#F5F0EB] truncate">{productName}</p>
+                            <p className="font-serif text-[18px] font-light text-[#F5F0EB] truncate">{productName}</p>
                         </div>
-                        <p className="font-serif text-[18px] font-light text-[#F5F0EB]/70 ml-3 flex-shrink-0">{displayPrice}</p>
+                        <p className="font-serif text-[22px] font-light text-[#F5F0EB] ml-3 flex-shrink-0">{displayPrice}</p>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-3">
                         <button
                             onClick={() => setShowRoomViz(true)}
-                            className="flex items-center justify-center gap-1.5 py-3 px-4 bg-transparent text-[#8A8580] text-[11px] tracking-[0.12em] uppercase transition-all duration-300 rounded-sm border border-[#333] hover:border-[#E8B4B8]/25 hover:text-[#E8B4B8] flex-shrink-0">
-                            <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+                            className="flex items-center justify-center gap-2 py-3 px-5 bg-transparent text-[#F5F0EB] text-[13px] tracking-[0.12em] uppercase transition-all duration-300 rounded-sm border border-[#E8B4B8]/40 hover:border-[#E8B4B8] hover:text-[#E8B4B8] flex-shrink-0">
+                            <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
                                 <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
                                 <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
                                 <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                             </svg>
-                            AI
+                            AI ROOM
                         </button>
                         <button
                             onClick={handleBuyNow}
-                            className="flex-1 py-3 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center gap-2 rounded-sm"
+                            className="flex-1 py-3 text-[#0A0A0A] font-medium text-[14px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center gap-2 rounded-sm"
                             style={{ background: "#E8B4B8", border: "none" }}>
                             {t("buyNow" as TranslationKeys)}
                         </button>
