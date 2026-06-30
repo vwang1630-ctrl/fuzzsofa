@@ -916,7 +916,7 @@ export function ProductPageClient(
                                         alt="Product Sketch"
                                         width={500}
                                         height={500}
-                                        className="w-full h-auto block opacity-70 brightness-[0.85] contrast-[0.9]" />
+                                        className="mx-auto h-auto block opacity-70 brightness-[0.85] contrast-[0.9] lg:w-full" />
                                 </div>
                                 <div className="flex items-center justify-center gap-6 mt-3">
                                     <div className="text-center">
