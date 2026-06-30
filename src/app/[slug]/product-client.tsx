@@ -123,6 +123,15 @@ export function ProductPageClient(
     // Touch/swipe handlers for mobile gallery
     const touchStartX = useRef(0);
     const touchDeltaX = useRef(0);
+    const mobileGalleryRef = useRef<HTMLDivElement>(null);
+    // Scroll mobile gallery to activeImage when it changes (color click or swipe)
+    useEffect(() => {
+        const container = mobileGalleryRef.current;
+        if (container) {
+            const slideWidth = container.offsetWidth;
+            container.scrollTo({ left: slideWidth * activeImage, behavior: "smooth" });
+        }
+    }, [activeImage]);
     // Touch handlers defined after `images` to avoid block-scoped variable error
 
     useEffect(() => {
@@ -338,6 +347,7 @@ export function ProductPageClient(
                 {/* Mobile: full-bleed immersive gallery — luxury editorial style */}
                 <div className="lg:hidden relative">
                     <div
+                        ref={mobileGalleryRef}
                         className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
                         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                         onTouchStart={handleTouchStart}
@@ -617,7 +627,7 @@ export function ProductPageClient(
                                 const selectedColor = allColors.find(c => c.matType === materialType && c.opt === materialOption);
                                 return (<div className="lg:mb-4">
                                     {/* Mobile: single-row color circles */}
-                                    <div className="flex gap-5 lg:hidden overflow-x-auto scrollbar-hide pb-1 justify-center">
+                                    <div className="flex gap-4 lg:hidden overflow-x-auto scrollbar-hide py-2 justify-center">
                                         {allColors.map(c => {
                                             const isSelected = materialType === c.matType && materialOption === c.opt;
                                             const swatchImage = galleryImages[c.globalIdx];
@@ -626,10 +636,10 @@ export function ProductPageClient(
                                                 <button
                                                     key={c.opt}
                                                     onClick={() => { setMaterialType(c.matType); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }}
-                                                    className="flex flex-col items-center gap-1.5 transition-all duration-200 flex-shrink-0"
+                                                    className="flex flex-col items-center gap-2 transition-all duration-200 flex-shrink-0"
                                                 >
-                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-9 h-9 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-8 h-8 ring-1 ring-[#333]"}`}>
-                                                        {swatchImage ? <img src={swatchImage.src} alt={c.opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.colorHex }} />}
+                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-16 h-16 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-14 h-14 ring-1 ring-[#333]"}`}>
+                                                        {swatchImage ? <img src={swatchImage.src} alt={c.opt} width={64} height={64} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.colorHex }} />}
                                                     </span>
                                                     <span className={`text-[9px] tracking-[0.02em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]/80" : "text-[#8A8580]/50"}`}>{t(colorKey as TranslationKeys).split(" ").pop()}</span>
                                                 </button>
