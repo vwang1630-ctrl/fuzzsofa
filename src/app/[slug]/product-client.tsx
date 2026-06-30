@@ -456,74 +456,7 @@ export function ProductPageClient(
                                         {product.animal.charAt(0)}
                                     </span>
                                 </div>}
-                                {/* Share + Wishlist floating on desktop gallery image */}
-                                <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-                                    <div className="relative" ref={shareMenuRef}>
-                                        <button
-                                            onClick={() => setShowShareMenu(!showShareMenu)}
-                                            className="group flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
-                                            aria-label="Share">
-                                            <svg
-                                                className="transition-transform duration-300 group-hover:scale-110"
-                                                width="16"
-                                                height="16"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="#F5F0EB"
-                                                strokeWidth="1.5">
-                                                <circle cx="18" cy="5" r="3" />
-                                                <circle cx="6" cy="12" r="3" />
-                                                <circle cx="18" cy="19" r="3" />
-                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                                            </svg>
-                                        </button>
-                                        {showShareMenu && <div
-                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 py-2 px-3 z-50"
-                                            style={{
-                                                background: "rgba(10,10,10,0.85)",
-                                                backdropFilter: "blur(12px)",
-                                                boxShadow: "0 4px 16px rgba(0,0,0,0.4)"
-                                            }}>
-                                            {[{
-                                                name: "Pinterest",
-                                                icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="10" /></svg>
-                                            }, {
-                                                name: "Facebook",
-                                                icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
-                                            }, {
-                                                name: "Instagram",
-                                                icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" /></svg>
-                                            }, {
-                                                name: "YouTube",
-                                                icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" /><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8" /></svg>
-                                            }].map(platform => <button
-                                                key={platform.name}
-                                                onClick={() => handleShare(platform.name)}
-                                                className="flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
-                                                title={platform.name}>
-                                                {platform.icon}
-                                            </button>)}
-                                        </div>}
-                                    </div>
-                                    <button
-                                        onClick={() => setSaved(!saved)}
-                                        className="group flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
-                                        aria-label="Save">
-                                        <svg
-                                            className="transition-transform duration-300 group-hover:scale-110"
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill={saved ? "#E8B4B8" : "none"}
-                                            stroke={saved ? "#E8B4B8" : "#F5F0EB"}
-                                            strokeWidth="1.5"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round">
-                                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                                        </svg>
-                                    </button>
-                                </div>
+                                {/* Desktop gallery - no floating buttons, share/wishlist in title area */}
                                 {}
                                 <div className="absolute bottom-5 right-5 z-10 group/room flex items-center">
                                     {}
@@ -673,22 +606,49 @@ export function ProductPageClient(
                             <p className="hidden lg:block text-[11px] text-[#8A8580]/60 tracking-[0.25em] uppercase mb-3">
                                 {collectionName}
                             </p>
-                            {}
-                            <h1
-                                className="hidden lg:block font-serif text-[34px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em]">
-                                {productName}
-                            </h1>
-                            {}
+                            {/* Desktop: title with share/wishlist buttons */}
+                            <div className="hidden lg:flex items-start justify-between gap-4">
+                                <h1
+                                    className="font-serif text-[34px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em]">
+                                    {productName}
+                                </h1>
+                                <div className="flex items-center gap-3 pt-2 flex-shrink-0">
+                                    {/* Share button */}
+                                    <div className="relative">
+                                        <button
+                                            onClick={() => setShowShareMenu(!showShareMenu)}
+                                            className="w-9 h-9 flex items-center justify-center border border-[#333] rounded-sm hover:border-[#E8B4B8] hover:text-[#E8B4B8] text-[#8A8580] transition-all duration-300"
+                                            aria-label="Share">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                        </button>
+                                        {showShareMenu && (
+                                            <div ref={shareMenuRef} className="absolute right-0 top-full mt-2 w-48 bg-[#111] border border-[#333] rounded-sm shadow-xl py-1 z-50">
+                                                <button onClick={() => { navigator.clipboard?.writeText(window.location.href); setShowShareMenu(false); }} className="w-full text-left px-4 py-2.5 text-[12px] text-[#F5F0EB]/70 hover:text-[#F5F0EB] hover:bg-white/[0.04] transition-colors">Copy Link</button>
+                                                <button onClick={() => { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`, '_blank'); setShowShareMenu(false); }} className="w-full text-left px-4 py-2.5 text-[12px] text-[#F5F0EB]/70 hover:text-[#F5F0EB] hover:bg-white/[0.04] transition-colors">Twitter</button>
+                                                <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank'); setShowShareMenu(false); }} className="w-full text-left px-4 py-2.5 text-[12px] text-[#F5F0EB]/70 hover:text-[#F5F0EB] hover:bg-white/[0.04] transition-colors">Facebook</button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {/* Wishlist button */}
+                                    <button
+                                        onClick={() => setSaved(!saved)}
+                                        className="w-9 h-9 flex items-center justify-center border border-[#333] rounded-sm hover:border-[#E8B4B8] transition-all duration-300"
+                                        aria-label="Save">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            {/* Mobile: title only (sticky CTA shows name/price) */}
+                            {/* Mobile: productName shown in sticky CTA, hidden here */}
                             <p
                                 className="hidden lg:block font-serif text-[28px] font-light text-[#F5F0EB] mt-3 tracking-[0.02em]">
                                 {displayPrice}
                             </p>
-                            {}
                             <p className="hidden lg:block text-[15px] text-[#8A8580] leading-[1.7] mt-3">
                                 {productTagline}
                             </p>
                             {}
-                            <div className="hidden lg:block h-px bg-white/[0.04] my-5" />
+                            <div className="h-px bg-white/[0.04] my-6 lg:my-5" />
                             {}
                             {product.specifications && <div className="mb-6">
                                 <div className="flex items-center gap-2 mb-2">
@@ -735,27 +695,32 @@ export function ProductPageClient(
                             {}
                             <div className="h-px bg-[#333] mb-5" />
                             {}
-                            {/* Desktop: Single prominent CTA + subtle secondary */}
+                            {/* Desktop CTA buttons */}
                             <button
                                 onClick={handleAddToCart}
-                                className="hidden lg:flex w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center gap-2 rounded-sm"
+                                className="hidden lg:flex w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
                                 }}>
-                                {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : t("addToCart")}
+                                {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : <>
+                                    {t("addToCart")}
+                                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M3 8h10M9 4l4 4-4 4" />
+                                    </svg>
+                                </>}
                             </button>
                             <button
-                                className="hidden lg:flex w-full py-3.5 bg-transparent text-[#F5F0EB]/60 text-[12px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:text-[#F5F0EB] hover:bg-white/[0.03]"
-                                style={{ border: "1px solid #333" }}
+                                className="hidden lg:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[13px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
+                                style={{ border: "1px solid #E8B4B8" }}
                                 onClick={handleBuyNow}>{t("buyNow" as TranslationKeys)}</button>
                             {}
                             <div
-                                className="hidden lg:flex items-center gap-2 mt-5 text-[11px] text-[#8A8580]/50 tracking-[0.06em]">
+                                className="hidden lg:flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
                                 <span>{t("leadTimeShort" as TranslationKeys)}</span>
-                                <span className="text-[#8A8580]/20">|</span>
+                                <span className="mx-1">·</span>
                                 <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
-                                <span className="text-[#8A8580]/20">|</span>
+                                <span className="mx-1">·</span>
                                 <span>{t("madeToOrderShort" as TranslationKeys)}</span>
                             </div>
                             {/* Desktop: Preview in Room */}
