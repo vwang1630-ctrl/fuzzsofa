@@ -47,18 +47,18 @@ export function ProductPageClient(
         "silverback-sofa": "/products/silverback/story-sketch.jpg"
     };
 
-    const materialsCardsMap: Record<string, Array<{title: string; description: string; icon: string}>> = {
+    const materialsCardsMap: Record<string, Array<{titleKey: string; descKey: string; icon: string}>> = {
         "meteorite-ring-sofa": [
-            { title: "GALVANIZED STEEL TUBE FRAME", description: "Precision-welded galvanized steel tube framework engineered for exceptional stability and long-term durability while maintaining the sofa's sculptural form.", icon: "frame" },
-            { title: "HIGH-DENSITY SHAPED FOAM", description: "High-density shaped foam designed to maintain its form and provide consistent support, preserving comfort through years of everyday use.", icon: "cushion" },
-            { title: "UPHOLSTERY", description: "Cloud Touch and Wild Touch fabrics create a tactile experience that feels both contemporary and inviting.", icon: "fabric" },
-            { title: "INTEGRATED METAL BASE", description: "A matte-finished metal base that seamlessly continues the sofa's orbital and monolithic silhouette.", icon: "base" },
+            { titleKey: "meteorGalvanizedSteelTitle", descKey: "meteorGalvanizedSteelDesc", icon: "frame" },
+            { titleKey: "meteorHighDensityTitle", descKey: "meteorHighDensityDesc", icon: "cushion" },
+            { titleKey: "meteorUpholsteryTitle", descKey: "meteorUpholsteryDesc", icon: "fabric" },
+            { titleKey: "meteorIntegratedBaseTitle", descKey: "meteorIntegratedBaseDesc", icon: "base" },
         ],
         "owl-sofa": [
-            { title: "STEEL FRAME", description: "Hand-welded steel core provides a foundation of exceptional strength and lasting stability for years of daily use.", icon: "frame" },
-            { title: "CUSHION CORE", description: "High-density foam with a down feather wrap delivers cloud-like comfort that holds its shape over time.", icon: "cushion" },
-            { title: "UPHOLSTERY", description: "Cloud Touch and Wild Touch fabrics create a tactile experience that feels both contemporary and inviting.", icon: "fabric" },
-            { title: "WALNUT FEET", description: "FSC-certified solid walnut with a hand-brushed matte finish, grounding each piece in natural elegance.", icon: "base" },
+            { titleKey: "owlSteelFrameTitle", descKey: "owlSteelFrameDesc", icon: "frame" },
+            { titleKey: "owlCushionCoreTitle", descKey: "owlCushionCoreDesc", icon: "cushion" },
+            { titleKey: "owlUpholsteryTitle", descKey: "owlUpholsteryDesc", icon: "fabric" },
+            { titleKey: "owlWalnutFeetTitle", descKey: "owlWalnutFeetDesc", icon: "base" },
         ],
     };
 
@@ -71,35 +71,36 @@ export function ProductPageClient(
 
     const spaceImagesMap: Record<string, {
         image: string;
-        title: string;
-        desc: string;
+        titleKey?: string;
+        title?: string;
+        descKey: string;
     }[]> = {
         "owl-sofa": [{
             image: "/products/spaces/owl-space-1.jpg",
-            title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas",
-            desc: "Open-plan living with sculptural presence"
+            titleKey: "luxuryVillas",
+            descKey: "owlSpace1Desc"
         }, {
             image: "/products/spaces/owl-space-2.jpg",
-            title: t("privateLibraries" as TranslationKeys) || "Private Libraries",
-            desc: "Intimate reading spaces with character"
+            titleKey: "privateLibraries",
+            descKey: "owlSpace2Desc"
         }, {
             image: "/products/spaces/owl-space-3.jpg",
-            title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels",
-            desc: "Statement pieces in curated lobbies"
+            titleKey: "boutiqueHotels",
+            descKey: "owlSpace3Desc"
         }],
 
         "meteorite-ring-sofa": [{
             image: "/products/meteorite-ring/spaces/space-1.webp",
-            title: "INTERSTELLAR LOUNGE",
-            desc: "A living room that feels like an observation deck among the stars — but with better coffee and better company."
+            titleKey: "meteorSpace1Title",
+            descKey: "meteorSpace1Desc"
         }, {
             image: "/products/meteorite-ring/spaces/space-2.webp",
-            title: "DUNE RETREAT",
-            desc: "Quiet, contemplative, and warm enough for a rainy afternoon read."
+            titleKey: "meteorSpace2Title",
+            descKey: "meteorSpace2Desc"
         }, {
             image: "/products/meteorite-ring/spaces/space-3.webp",
-            title: "GALACTIC SALON",
-            desc: "A sculptural gathering place designed for long conversations and memorable evenings."
+            titleKey: "meteorSpace3Title",
+            descKey: "meteorSpace3Desc"
         }]
     };
 
@@ -576,31 +577,41 @@ export function ProductPageClient(
                             {}
                             {product.specifications && <div className="mb-5">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase">Dimensions</label>
+                                    <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
                                         className="text-[12px] tracking-[0.12em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors border border-[#333] px-2.5 py-1 rounded-sm">
-                                        {useCm ? "CM / 切换英寸" : "IN / 切换厘米"}
+                                        {useCm ? t("switchToInches" as TranslationKeys) : t("switchToCm" as TranslationKeys)}
                                     </button>
                                 </div>
                                 <p className="text-[13px] text-[#F5F0EB]/60">
                                     {(() => {
                                         const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
-                                        return `W${f(product.specifications.width)} × D${f(product.specifications.depth)} × H${f(product.specifications.height)} · 坐高${f(product.specifications.seatHeight)}`;
+                                        return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)} · ${t("seatHeightLabel" as TranslationKeys)}${f(product.specifications.seatHeight)}`;
                                     })()}
                                 </p>
                             </div>}
                             {}
                             {product.materials && product.materials.length > 0 && <div className="mb-5">
                                 <label
-                                    className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">Materials
+                                    className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">{t("materialsLabel" as TranslationKeys)}
                                                                                                                                                                   </label>
                                 <div className="space-y-0.5">
-                                    {product.materials.map((mat, i) => <p
+                                    {product.materials.map((mat, i) => {
+                                        const matKeyMap: Record<string, string[]> = {
+                                            "gorilla-sofa": ["gorillaMat1", "gorillaMat2", "gorillaMat3", "gorillaMat4"],
+                                            "owl-sofa": ["owlMat1", "owlMat2", "owlMat3", "owlMat4"],
+                                            "silverback-sofa": ["silverbackMat1", "silverbackMat2"],
+                                            "meteorite-ring-sofa": ["meteorMat1", "meteorMat2", "meteorMat3", "meteorMat4"],
+                                            "muscle-gorilla-sofa": ["muscleGorillaMat1", "muscleGorillaMat2", "muscleGorillaMat3", "muscleGorillaMat4"],
+                                        };
+                                        const keys = matKeyMap[product.slug];
+                                        const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
+                                        return <p
                                         key={i}
                                         className="text-[13px] text-[#F5F0EB]/50 tracking-[0.02em] leading-[1.5]">
-                                        {mat}
-                                    </p>)}
+                                        {i18nMat}
+                                    </p>})}
                                 </div>
                             </div>}
                             {}
@@ -633,16 +644,16 @@ export function ProductPageClient(
                                 style={{
                                     border: "1px solid #E8B4B8"
                                 }}
-                                onClick={handleBuyNow}>Buy Now
+                                onClick={handleBuyNow}>{t("buyNow" as TranslationKeys)}
                                                                                                                                               </button>
                             {}
                             <div
                                 className="flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
-                                <span>1–2 Weeks</span>
+                                <span>{t("leadTimeShort" as TranslationKeys)}</span>
                                 <span className="mx-1">·</span>
-                                <span>Free White Glove</span>
+                                <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
                                 <span className="mx-1">·</span>
-                                <span>Made to Order</span>
+                                <span>{t("madeToOrderShort" as TranslationKeys)}</span>
                             </div>
                             {}
                             <button
@@ -673,11 +684,11 @@ export function ProductPageClient(
                     <div className="mb-6">
                         <p
                             className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3 flex items-center gap-3">
-                            <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
+                            <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys)}
                         </p>
                         <h2
                             className="font-serif text-2xl md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
-                            {t("seeItInRealSpaces" as TranslationKeys) || "See It In Real Spaces"}
+                            {t("seeItInRealSpaces" as TranslationKeys)}
                         </h2>
                     </div>
                     {}
@@ -703,10 +714,10 @@ export function ProductPageClient(
                             {}
                             <p
                                 className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
-                                {space.title}
+                                {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
                             </p>
                             <p className="text-[13px] text-[#8A8580] leading-[1.6]">
-                                {space.desc}
+                                {t(space.descKey as TranslationKeys)}
                             </p>
                         </div>)}
                     </div>
@@ -723,7 +734,7 @@ export function ProductPageClient(
                         <div className="flex-1">
                             <p
                                 className="text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 flex items-center gap-3">
-                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
+                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
                                                             </p>
                             <h3
                                 className="font-serif text-[36px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-3">
@@ -740,12 +751,12 @@ export function ProductPageClient(
                                 className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
                                 <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
                                     {product.slug === "meteorite-ring-sofa" ? (
-                                        <>Tested Load Capacity: Up to 150 kg</>
+                                        <>{t("testedLoadCapacity" as TranslationKeys)}</>
                                     ) : (
-                                        <>≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg</>
+                                        <>{t("specWeight" as TranslationKeys).replace("{weight}", String(product.specifications.weight))} <span className="opacity-40">·</span>{t("specWeightWithPkg" as TranslationKeys)} <span className="opacity-40">·</span>{t("specLoadCapacity" as TranslationKeys).replace("{capacity}", String(product.specifications.capacity))}</>
                                     )}
                                                                     </p>
-                                <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">* Handcrafted product. Dimensions may vary by ±1–3 cm. Weight varies slightly by fabric batch.
+                                <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">{t("specDisclaimer" as TranslationKeys)}
                                                                     </p>
                             </div>
                         </div>
@@ -783,22 +794,22 @@ export function ProductPageClient(
                                 <div className="flex items-center justify-center gap-6 mt-3">
                                     <div className="text-center">
                                         <span
-                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">W</span>
+                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsW" as TranslationKeys)}</span>
                                         <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
                                         <span
-                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">D</span>
+                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsD" as TranslationKeys)}</span>
                                         <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
                                         <span
-                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">H</span>
+                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsH" as TranslationKeys)}</span>
                                         <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
                                         <span
-                                            className="block text-[15px] font-light text-[#E8B4B8] leading-none font-serif">Seat</span>
+                                            className="block text-[15px] font-light text-[#E8B4B8] leading-none font-serif">{t("seatHeightUnit" as TranslationKeys)}</span>
                                         <span className="text-[12px] font-light text-[#8A8580] font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <button
@@ -842,7 +853,7 @@ export function ProductPageClient(
                             }}>
                             <p
                                 className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
-                                <span className="opacity-30 mr-3">—</span>Materials & Craftsmanship
+                                <span className="opacity-30 mr-3">—</span>{t("materialsCraftsmanship" as TranslationKeys)}
                                                                                                                                 <span className="opacity-30 ml-3">—</span>
                             </p>
                             <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-11 relative">
@@ -906,8 +917,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].title}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].description}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].descKey as TranslationKeys)}</p>
                                 </div>
                                 {}
                                 <div
@@ -935,8 +946,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].title}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].description}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].descKey as TranslationKeys)}</p>
                                 </div>
                                 {}
                                 <div
@@ -974,8 +985,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].title}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].description}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].descKey as TranslationKeys)}</p>
                                 </div>
                                 {}
                                 <div
@@ -1022,8 +1033,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].title}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].description}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].descKey as TranslationKeys)}</p>
                                 </div>
                             </div>
                         </div>
@@ -1086,7 +1097,7 @@ export function ProductPageClient(
                                 </svg>
                             </div>
                             <span
-                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">Handcrafted</span>
+                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("handcraftedShort" as TranslationKeys)}</span>
                         </div>
                         <div className="flex flex-col items-center gap-2">
                             <div
@@ -1115,7 +1126,7 @@ export function ProductPageClient(
                                 </svg>
                             </div>
                             <span
-                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">1–2 Weeks</span>
+                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("leadTimeShort" as TranslationKeys)}</span>
                         </div>
                         <div className="flex flex-col items-center gap-2">
                             <div
@@ -1135,7 +1146,7 @@ export function ProductPageClient(
                                 </svg>
                             </div>
                             <span
-                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">Made to Order</span>
+                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("madeToOrderShort" as TranslationKeys)}</span>
                         </div>
                         <div className="flex flex-col items-center gap-2">
                             <div
@@ -1173,7 +1184,7 @@ export function ProductPageClient(
                                         strokeWidth="1.5" />
                                 </svg>
                             </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase">Free White-Glove</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase">{t("freeWhiteGloveShort" as TranslationKeys)}</span>
                         </div>
                     </div>
                 </div>
@@ -1182,7 +1193,7 @@ export function ProductPageClient(
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
                 <div className="max-w-[1200px] mx-auto px-6 py-12">
                     <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
-                        {t("youMayAlsoLike" as TranslationKeys) || "You May Also Like"}
+                        {t("youMayAlsoLike" as TranslationKeys)}
                     </p>
                     <h2
                         className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] mb-8">
