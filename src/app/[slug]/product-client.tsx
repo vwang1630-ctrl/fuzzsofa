@@ -118,22 +118,10 @@ export function ProductPageClient(
     const [showShareMenu, setShowShareMenu] = useState(false);
     const [saved, setSaved] = useState(false);
     const [useCm, setUseCm] = useState(true);
-    const [selectedMaterial, setSelectedMaterial] = useState<string>("");
     const shareMenuRef = useRef<HTMLDivElement>(null);
-
-    // Touch/swipe handlers for mobile gallery
-    const touchStartX = useRef(0);
-    const touchDeltaX = useRef(0);
     const mobileGalleryRef = useRef<HTMLDivElement>(null);
-    // Scroll mobile gallery to activeImage when it changes (color click or swipe)
-    useEffect(() => {
-        const container = mobileGalleryRef.current;
-        if (container) {
-            const slideWidth = container.offsetWidth;
-            container.scrollTo({ left: slideWidth * activeImage, behavior: "smooth" });
-        }
-    }, [activeImage]);
-    // Touch handlers defined after `images` to avoid block-scoped variable error
+    const touchStartX = useRef<number>(0);
+    const touchEndX = useRef<number>(0);
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -228,23 +216,34 @@ export function ProductPageClient(
 
     const displayPrice = formatPrice(getPrice(product, region), region);
 
-    // Touch handlers for mobile swipeable gallery (must be after `images` definition)
     const handleTouchStart = useCallback((e: React.TouchEvent) => {
         touchStartX.current = e.touches[0].clientX;
     }, []);
+
     const handleTouchMove = useCallback((e: React.TouchEvent) => {
-        touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
+        touchEndX.current = e.touches[0].clientX;
     }, []);
+
     const handleTouchEnd = useCallback(() => {
-        if (Math.abs(touchDeltaX.current) > 50) {
-            if (touchDeltaX.current > 0 && activeImage > 0) {
-                setActiveImage(prev => prev - 1);
-            } else if (touchDeltaX.current < 0 && activeImage < images.length - 1) {
+        const diff = touchStartX.current - touchEndX.current;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0 && activeImage < images.length - 1) {
                 setActiveImage(prev => prev + 1);
+            } else if (diff < 0 && activeImage > 0) {
+                setActiveImage(prev => prev - 1);
             }
         }
-        touchDeltaX.current = 0;
     }, [activeImage, images.length]);
+
+    useEffect(() => {
+        if (mobileGalleryRef.current) {
+            const container = mobileGalleryRef.current;
+            const slide = container.children[activeImage] as HTMLElement;
+            if (slide) {
+                slide.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+            }
+        }
+    }, [activeImage]);
 
     const specLabels: Record<string, TranslationKeys> = {
         width: "width",
@@ -345,106 +344,69 @@ export function ProductPageClient(
                 }} />
             {}
             <section className="bg-[#0A0A0A]">
-                {/* Mobile: full-bleed immersive gallery — luxury editorial style */}
-                <div className="lg:hidden relative">
-                    <div
-                        ref={mobileGalleryRef}
-                        className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
-                        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={handleTouchEnd}
-                    >
-                        {galleryImages.map((img, idx) => (
-                            <div key={img.id} className="w-full flex-shrink-0 snap-start relative aspect-square">
-                                {img.src ? (
-                                    <img src={img.src} alt={product.name} className="w-full h-full object-cover" />
-                                ) : (
-                                    <div className="w-full h-full bg-[#111] flex items-center justify-center">
-                                        <span className="font-serif text-6xl text-[#F5F0EB]/10">{product.animal.charAt(0)}</span>
+                <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-8 md:pt-12 pb-12">
+                    {/* Mobile Gallery — swipeable, full-bleed */}
+                    <div className="lg:hidden -mx-4 md:-mx-8 -mt-8 md:-mt-12 mb-4">
+                        <div
+                            ref={mobileGalleryRef}
+                            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+                            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}>
+                            {galleryImages.map((img, idx) => (
+                                <div key={img.id} className="w-full flex-shrink-0 snap-center">
+                                    <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
+                                        {img.src ? <img src={img.src} alt={productName} className="w-full h-full object-contain" /> : <div className="absolute inset-0 flex items-center justify-center"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
+                                        {/* Share & Wishlist overlay — mobile only */}
+                                        {idx === activeImage && <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+                                            <button onClick={() => setShowShareMenu(!showShareMenu)} className="flex items-center justify-center w-10 h-10 rounded-full border border-[#333] bg-[#0A0A0A]/80 backdrop-blur-sm hover:border-[#E8B4B8]/25 transition-all duration-300" aria-label="Share">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
+                                            </button>
+                                            <button onClick={() => setSaved(!saved)} className="flex items-center justify-center w-10 h-10 rounded-full border border-[#333] bg-[#0A0A0A]/80 backdrop-blur-sm hover:border-[#E8B4B8]/25 transition-all duration-300" aria-label="Save">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                                            </button>
+                                        </div>}
+                                        {/* Image counter — mobile only */}
+                                        {galleryImages.length > 1 && <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
+                                            <span className="text-[11px] tracking-[0.15em] text-[#F5F0EB]/50 font-light">{activeImage + 1} / {galleryImages.length}</span>
+                                        </div>}
                                     </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Share + Wishlist floating on image */}
-                    <div className="absolute top-2.5 right-3 z-10 flex items-center gap-2">
-                        <div className="relative" ref={shareMenuRef}>
-                            <button
-                                onClick={() => setShowShareMenu(!showShareMenu)}
-                                className="group flex items-center justify-center w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
-                                aria-label="Share">
-                                <svg
-                                    className="transition-transform duration-300 group-hover:scale-110"
-                                    width="14"
-                                    height="14"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="#F5F0EB"
-                                    strokeWidth="1.5">
-                                    <circle cx="18" cy="5" r="3" />
-                                    <circle cx="6" cy="12" r="3" />
-                                    <circle cx="18" cy="19" r="3" />
-                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                                </svg>
-                            </button>
-                            {showShareMenu && <div
-                                className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
-                                style={{
-                                    background: "#0A0A0A",
-                                    border: "1px solid rgba(232,180,184,0.25)",
-                                    boxShadow: "0 4px 16px rgba(0,0,0,0.6)"
-                                }}>
-                                {[{
-                                    name: "Pinterest",
-                                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="10" /></svg>
-                                }, {
-                                    name: "Facebook",
-                                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
-                                }, {
-                                    name: "Instagram",
-                                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" /></svg>
-                                }, {
-                                    name: "YouTube",
-                                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" /><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8" /></svg>
-                                }].map(platform => <button
-                                    key={platform.name}
-                                    onClick={() => handleShare(platform.name)}
-                                    className="flex items-center justify-center w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
-                                    title={platform.name}>
-                                    {platform.icon}
-                                </button>)}
-                            </div>}
+                                </div>
+                            ))}
                         </div>
-                        <button
-                            onClick={() => setSaved(!saved)}
-                            className="group flex items-center justify-center w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
-                            aria-label="Save">
-                            <svg
-                                className="transition-transform duration-300 group-hover:scale-110"
-                                width="14"
-                                height="14"
-                                viewBox="0 0 24 24"
-                                fill={saved ? "#E8B4B8" : "none"}
-                                stroke={saved ? "#E8B4B8" : "#F5F0EB"}
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                            </svg>
-                        </button>
+                        {/* Mobile color selector — single row large circles */}
+                        {product.materialOptions && product.materialOptions.length > 0 && (
+                            <div className="px-4 pt-4 pb-2">
+                                <div className="flex items-center justify-center gap-9 overflow-x-auto scrollbar-hide py-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                    {(() => {
+                                        const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
+                                        let gIdx = 0;
+                                        for (const m of product.materialOptions) {
+                                            for (let i = 0; i < m.options.length; i++) {
+                                                allColors.push({ type: m.type, opt: m.options[i], hex: m.colors[i], globalIdx: gIdx });
+                                                gIdx++;
+                                            }
+                                        }
+                                        return allColors.map((c) => {
+                                            const isActive = materialType === c.type && materialOption === c.opt;
+                                            const swatchImg = galleryImages[c.globalIdx];
+                                            return (
+                                                <button key={`${c.type}-${c.opt}`} onClick={() => { setMaterialType(c.type); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-1.5">
+                                                    <span className={`w-14 h-14 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden py-2 ${isActive ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333]"}`}>
+                                                        {swatchImg ? <img src={swatchImg.src} alt={c.opt} width={56} height={56} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.hex }} />}
+                                                    </span>
+                                                </button>
+                                            );
+                                        });
+                                    })()}
+                                </div>
+                            </div>
+                        )}
                     </div>
-                    {/* Image counter — inside image, bottom center */}
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
-                        <span className="text-[11px] text-white/40 tracking-[0.15em] font-light drop-shadow-lg">{activeImage + 1}<span className="text-white/20"> / {galleryImages.length}</span></span>
-                    </div>
-                </div>
 
-                <div className="max-w-[1200px] mx-auto px-5 lg:px-8 pt-5 lg:pt-12 pb-8 lg:pb-12">
-                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 lg:gap-12">
-                        {}
+                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:gap-12">
+                        {/* Desktop gallery column — hidden on mobile */}
                         <div className="hidden lg:flex flex-col">
                             {}
                             <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
@@ -457,7 +419,6 @@ export function ProductPageClient(
                                         {product.animal.charAt(0)}
                                     </span>
                                 </div>}
-                                {/* Desktop gallery - no floating buttons, share/wishlist in title area */}
                                 {}
                                 <div className="absolute bottom-5 right-5 z-10 group/room flex items-center">
                                     {}
@@ -548,122 +509,215 @@ export function ProductPageClient(
                         {}
                         <div className="flex flex-col">
                             {}
-                            <p className="text-[11px] lg:text-[12px] text-[#8A8580] tracking-[0.2em] uppercase mb-2 lg:mb-3">
+                            <p className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase mb-3">
                                 {collectionName}
                             </p>
+                            {}
                             <div className="flex items-start justify-between gap-3">
-                                <h1 className="font-serif text-[26px] lg:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
+                                <h1
+                                    className="font-serif text-[28px] md:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
                                     {productName}
                                 </h1>
-                                <div className="hidden lg:flex items-center gap-2 mt-1 flex-shrink-0">
+                                <div className="flex items-center gap-2 mt-1 flex-shrink-0">
+                                    {}
                                     <div className="relative" ref={shareMenuRef}>
                                         <button
                                             onClick={() => setShowShareMenu(!showShareMenu)}
                                             className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300"
                                             aria-label="Share">
-                                            <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                            <svg
+                                                className="transition-transform duration-300 group-hover:scale-110"
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.5">
+                                                <circle cx="18" cy="5" r="3" />
+                                                <circle cx="6" cy="12" r="3" />
+                                                <circle cx="18" cy="19" r="3" />
+                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                            </svg>
                                         </button>
-                                        {showShareMenu && (
-                                            <div className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50" style={{ background: "#0A0A0A", border: "1px solid rgba(232,180,184,0.25)", boxShadow: "0 4px 16px rgba(0,0,0,0.6)" }}>
-                                                {[{ name: "Pinterest", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="10"/></svg> }, { name: "Facebook", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> }, { name: "Instagram", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg> }, { name: "YouTube", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8"/></svg> }].map(platform => (
-                                                <button key={platform.name} onClick={() => handleShare(platform.name)} className="flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300" title={platform.name}>
-                                                    {platform.icon}
-                                                </button>
-                                            ))}
-                                            </div>
-                                        )}
+                                        {showShareMenu && <div
+                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
+                                            style={{
+                                                background: "#0A0A0A",
+                                                border: "1px solid rgba(232,180,184,0.25)",
+                                                boxShadow: "0 4px 16px rgba(0,0,0,0.6)"
+                                            }}>
+                                            {[{
+                                                name: "Pinterest",
+
+                                                icon: <svg
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="#E8B4B8"
+                                                    strokeWidth="1.5"><path
+                                                        d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round" /><circle cx="12" cy="12" r="10" /></svg>
+                                            }, {
+                                                name: "Facebook",
+
+                                                icon: <svg
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="#E8B4B8"
+                                                    strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
+                                            }, {
+                                                name: "Instagram",
+
+                                                icon: <svg
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="#E8B4B8"
+                                                    strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" /></svg>
+                                            }, {
+                                                name: "YouTube",
+
+                                                icon: <svg
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="#E8B4B8"
+                                                    strokeWidth="1.5"><path
+                                                        d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" /><polygon
+                                                        points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"
+                                                        fill="none"
+                                                        stroke="#E8B4B8" /></svg>
+                                            }].map(platform => <button
+                                                key={platform.name}
+                                                onClick={() => handleShare(platform.name)}
+                                                className="flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300"
+                                                title={platform.name}>
+                                                {platform.icon}
+                                            </button>)}
+                                        </div>}
                                     </div>
-                                    <button onClick={() => setSaved(!saved)} className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300" aria-label="Save">
-                                        <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                    {}
+                                    <button
+                                        onClick={() => setSaved(!saved)}
+                                        className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300"
+                                        aria-label="Save">
+                                        <svg
+                                            className="transition-transform duration-300 group-hover:scale-110"
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill={saved ? "#E8B4B8" : "none"}
+                                            stroke="#E8B4B8"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round">
+                                            <path
+                                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                        </svg>
                                     </button>
                                 </div>
                             </div>
-                            <p className="font-serif text-[20px] md:text-[24px] lg:text-[28px] font-light text-[#F5F0EB]/70 mt-1">
+                            {}
+                            <p
+                                className="font-serif text-[24px] md:text-[28px] font-light text-[#F5F0EB]/70 mt-1">
                                 {displayPrice}
                             </p>
-                            <p className="text-[13px] lg:text-[15px] text-[#8A8580] leading-[1.7] mt-3">
+                            {}
+                            <p className="text-[15px] text-[#8A8580] leading-[1.7] mt-3">
                                 {productTagline}
                             </p>
                             {}
-                            {/* Color / Material Selector */}
-                            {(() => {
-                              if (!product.materialOptions || product.materialOptions.length === 0) return null;
-                              const allColors: { matType: string; opt: string; colorHex: string; globalIdx: number }[] = [];
-                              let idx = 0;
-                              product.materialOptions.forEach(mo => {
-                                if (mo.colors && mo.colors.length > 0 && mo.options && mo.options.length > 0) {
-                                  mo.options.forEach((opt, oi) => {
-                                    if (oi < mo.colors.length) {
-                                      allColors.push({ matType: mo.type, opt, colorHex: mo.colors[oi], globalIdx: idx });
-                                    }
-                                    idx++;
-                                  });
-                                } else {
-                                  idx += (mo.options?.length || 0);
-                                }
-                              });
-                              return (
-                                <div className="mt-5">
-                                  {/* Mobile: single row centered circles */}
-                                  <div className="lg:hidden flex justify-center gap-9 py-2">
-                                    {allColors.map((c, i) => (
-                                      <button key={i} onClick={() => { setSelectedMaterial(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-1.5">
-                                        <div className={`${selectedMaterial === c.opt ? 'w-16 h-16' : 'w-14 h-14'} rounded-full ring-2 ring-offset-2 ring-offset-[#0A0A0A] transition-all ${selectedMaterial === c.opt ? 'ring-[#E8B4B8] ring-offset-[3px]' : 'ring-white/20 ring-offset-0 hover:ring-white/40'}`} style={{ backgroundColor: c.colorHex }} />
-                                        <span className="text-[10px] text-[#8A8580] tracking-[0.15em] uppercase">{c.opt.split(' ').pop()}</span>
-                                      </button>
-                                    ))}
-                                  </div>
-                                  {/* Desktop: grouped by material type */}
-                                  <div className="hidden lg:block">
-                                    {product.materialOptions!.map((mo, mi) => (
-                                      <div key={mi} className="mb-4 last:mb-0">
-                                        <p className="text-[11px] text-[#8A8580] tracking-[0.25em] uppercase mb-2.5">
-                                          {matTypeKeyMap[mo.type] ? t(matTypeKeyMap[mo.type] as TranslationKeys) : mo.type}
-                                        </p>
-                                        <div className="flex flex-wrap gap-3">
-                                          {mo.options.map((opt, oi) => (
-                                            <button key={oi}
-                                              onClick={() => { setSelectedMaterial(opt); setActiveImage(mi * (mo.options?.length || 1) + oi); }}
-                                              className={`flex items-center gap-2.5 px-4 py-2.5 rounded-full border transition-all ${selectedMaterial === opt ? 'border-[#E8B4B8] bg-[#E8B4B8]/10' : 'border-white/10 hover:border-white/25'}`}
-                                            >
-                                              {mo.colors && mo.colors[oi] && (
-                                                <div className="w-4 h-4 rounded-full border border-white/10" style={{ backgroundColor: mo.colors[oi] }} />
-                                              )}
-                                              <span className="text-[12px] text-[#F5F0EB]">{colorNameKeyMap[opt] ? t(colorNameKeyMap[opt] as TranslationKeys) : opt}</span>
-                                            </button>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              );
-                            })()}
-                            <div className="h-px bg-white/[0.04] my-6 lg:my-5" />
-                            {product.specifications && <div className="mb-6">
+                            <div className="h-px bg-[#333] my-5" />
+                            {}
+                            {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5 hidden lg:block">
+                                {product.materialOptions.map(mat => <div key={mat.type} className="mb-4">
+                                    <label
+                                        className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
+                                        {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
+                                    </label>
+                                    <div className="flex flex-wrap gap-2">
+                                        {mat.options.map((opt, optIdx) => {
+                                            const colorHex = mat.colors[optIdx];
+                                            const isSelected = materialType === mat.type && materialOption === opt;
+                                            let globalIdx = optIdx;
+
+                                            if (product.materialOptions) {
+                                                globalIdx = 0;
+
+                                                for (const m of product.materialOptions) {
+                                                    if (m.type === mat.type) {
+                                                        globalIdx += optIdx;
+                                                        break;
+                                                    }
+
+                                                    globalIdx += m.options.length;
+                                                }
+                                            }
+
+                                            const swatchImage = galleryImages[globalIdx];
+
+                                            return (
+                                                <button
+                                                    key={opt}
+                                                    onClick={() => {
+                                                        setMaterialType(mat.type);
+                                                        setMaterialOption(opt);
+                                                    }}
+                                                    className="flex items-center gap-2 transition-all duration-300 group">
+                                                    <span
+                                                        className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
+                                                        {swatchImage ? <img
+                                                            src={swatchImage.src}
+                                                            alt={opt}
+                                                            width={32}
+                                                            height={32}
+                                                            className="w-full h-full object-cover" /> : <span
+                                                            className="w-full h-full block"
+                                                            style={{
+                                                                backgroundColor: colorHex
+                                                            }} />}
+                                                    </span>
+                                                    <span
+                                                        className={`text-xs tracking-[0.04em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
+                                                        {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
+                                                    </span>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>)}
+                            </div>}
+                            {}
+                            <div className="h-px bg-[#333] mb-5" />
+                            {}
+                            {product.specifications && <div className="mb-5">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <label className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
+                                    <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="text-[10px] tracking-[0.15em] uppercase text-[#8A8580]/50 hover:text-[#E8B4B8] transition-colors border border-white/[0.06] px-2 py-0.5 rounded-sm">
-                                        {useCm ? "IN" : "CM"}
+                                        className="text-[12px] tracking-[0.12em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors border border-[#333] px-2.5 py-1 rounded-sm">
+                                        {useCm ? t("switchToInches" as TranslationKeys) : t("switchToCm" as TranslationKeys)}
                                     </button>
                                 </div>
-                                <p className="text-[13px] text-[#F5F0EB]/50 tracking-[0.02em]">
+                                <p className="text-[13px] text-[#F5F0EB]/60">
                                     {(() => {
                                         const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
-                                        return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`;
+                                        return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)} · ${t("seatHeightLabel" as TranslationKeys)}${f(product.specifications.seatHeight)}`;
                                     })()}
-                                </p>
-                                <p className="text-[12px] text-[#F5F0EB]/30 mt-1">
-                                    {t("seatHeightLabel" as TranslationKeys)}{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}
                                 </p>
                             </div>}
                             {}
-                            {product.materials && product.materials.length > 0 && <div className="mb-6">
+                            {product.materials && product.materials.length > 0 && <div className="mb-5">
                                 <label
-                                    className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase block mb-2">{t("materialsLabel" as TranslationKeys)}
-                                </label>
+                                    className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">{t("materialsLabel" as TranslationKeys)}
+                                                                                                                                                                  </label>
                                 <div className="space-y-0.5">
                                     {product.materials.map((mat, i) => {
                                         const matKeyMap: Record<string, string[]> = {
@@ -677,7 +731,7 @@ export function ProductPageClient(
                                         const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
                                         return <p
                                         key={i}
-                                        className="text-[13px] text-[#F5F0EB]/40 tracking-[0.02em] leading-[1.6]">
+                                        className="text-[13px] text-[#F5F0EB]/50 tracking-[0.02em] leading-[1.5]">
                                         {i18nMat}
                                     </p>})}
                                 </div>
@@ -685,7 +739,6 @@ export function ProductPageClient(
                             {}
                             <div className="h-px bg-[#333] mb-5" />
                             {}
-                            {/* Desktop CTA buttons */}
                             <button
                                 onClick={handleAddToCart}
                                 className="hidden lg:flex w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
@@ -695,15 +748,26 @@ export function ProductPageClient(
                                 }}>
                                 {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : <>
                                     {t("addToCart")}
-                                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <svg
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 16 16"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round">
                                         <path d="M3 8h10M9 4l4 4-4 4" />
                                     </svg>
                                 </>}
                             </button>
                             <button
                                 className="hidden lg:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[13px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
-                                style={{ border: "1px solid #E8B4B8" }}
-                                onClick={handleBuyNow}>{t("buyNow" as TranslationKeys)}</button>
+                                style={{
+                                    border: "1px solid #E8B4B8"
+                                }}
+                                onClick={handleBuyNow}>{t("buyNow" as TranslationKeys)}
+                                                                                                                                              </button>
                             {}
                             <div
                                 className="hidden lg:flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
@@ -713,38 +777,45 @@ export function ProductPageClient(
                                 <span className="mx-1">·</span>
                                 <span>{t("madeToOrderShort" as TranslationKeys)}</span>
                             </div>
-                            {/* Desktop: Preview in Room */}
+                            {}
                             <button
                                 onClick={() => setShowRoomViz(true)}
-                                className="hidden lg:flex items-center gap-2 mt-4 text-[11px] tracking-[0.15em] uppercase transition-all duration-300 text-[#8A8580]/70 hover:text-[#E8B4B8]">
-                                <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
-                                    <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
-                                    <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
-                                    <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                                </svg>
-                                {t("previewInYourRoom" as TranslationKeys)}
-                            </button>
+                                className="hidden lg:flex mt-3 text-[12px] text-[#8A8580]/70 tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 items-center gap-1.5">
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round">
+                                    <path
+                                        d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                                    <circle cx="12" cy="13" r="4" />
+                                </svg>{t("previewInYourRoom" as TranslationKeys)}
+                                                                                                                                              </button>
                         </div>
                     </div>
                 </div>
             </section>
             {}
             <section className="bg-[#0F0E0E]">
-                <div className="max-w-[1200px] mx-auto px-5 lg:px-6 py-8 lg:py-6">
+                <div className="max-w-[1200px] mx-auto px-6 py-6">
                     {}
-                    <div className="mb-4 lg:mb-6">
+                    <div className="mb-6">
                         <p
-                            className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2 lg:mb-3 flex items-center gap-3">
+                            className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3 flex items-center gap-3">
                             <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys)}
                         </p>
                         <h2
-                            className="font-serif text-xl lg:text-2xl xl:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
+                            className="font-serif text-2xl md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
                             {t("seeItInRealSpaces" as TranslationKeys)}
                         </h2>
                     </div>
                     {}
-                    <div className="flex lg:grid lg:grid-cols-3 gap-3 lg:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 lg:mx-0 lg:px-0 pb-2 lg:pb-0">
-                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[88vw] lg:w-auto snap-start">
+                    <div className="flex lg:grid lg:grid-cols-3 gap-3 lg:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 md:-mx-8 px-4 md:px-8 lg:mx-0 lg:px-0 pb-2 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[85vw] lg:w-auto snap-start">
                             {}
                             <div className="relative aspect-[3/2] lg:aspect-[2/1] bg-[#111] overflow-hidden mb-3 lg:mb-4">
                                 {space.image ? <img
@@ -756,23 +827,24 @@ export function ProductPageClient(
                                     </span>
                                 </div>}
                                 {}
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-transparent to-transparent" />
-                                {}
+                                <div
+                                    className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-transparent to-transparent" />
+                                {/* Mobile: title overlay on image */}
                                 <div className="absolute bottom-0 left-0 right-0 p-3 lg:hidden">
-                                    <p className="text-[10px] tracking-[0.12em] uppercase text-[#F5F0EB]/40 mb-0.5">
+                                    <p className="text-[10px] tracking-[0.12em] uppercase text-[#F5F0EB]/50">
                                         {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
                                     </p>
                                 </div>
                             </div>
-                            {}
+                            {/* Desktop: title & description below image */}
                             <div className="hidden lg:block">
-                                <p
-                                    className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
-                                    {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
-                                </p>
-                                <p className="text-[13px] text-[#8A8580] leading-[1.6]">
-                                    {t(space.descKey as TranslationKeys)}
-                                </p>
+                            <p
+                                className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
+                                {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
+                            </p>
+                            <p className="text-[13px] text-[#8A8580] leading-[1.6]">
+                                {t(space.descKey as TranslationKeys)}
+                            </p>
                             </div>
                         </div>)}
                     </div>
@@ -783,42 +855,59 @@ export function ProductPageClient(
                         <div
                             className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                     </div>
-                    {}
-                    <div className="mt-12">
-                        <p
-                            className="text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 flex items-center gap-3">
-                            <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
-                        </p>
-                        <h3
-                            className="font-serif text-[32px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-3">
-                            {productName}
-                        </h3>
-                        <p className="text-[18px] md:text-[20px] text-[#E8B4B8]/50 italic mb-5 font-serif">
-                            {productTagline}
-                        </p>
+                    <div
+                        className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
                         {}
-                        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
-                            {}
-                            <div className="w-full lg:w-[300px] xl:w-[340px] shrink-0 order-1 lg:order-2 mb-2 lg:mb-0 -mx-5 lg:mx-0">
+                        <div className="flex-1">
+                            <p
+                                className="text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 flex items-center gap-3">
+                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
+                                                            </p>
+                            <h3
+                                className="font-serif text-[36px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-3">
+                                {productName}
+                            </h3>
+                            <p className="text-[20px] text-[#E8B4B8]/50 italic mb-5 font-serif">
+                                {productTagline}
+                            </p>
+                            <div className="text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
+                                <p>{productConcept}</p>
+                                <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
+                            </div>
+                            <div
+                                className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
+                                <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
+                                    {product.slug === "meteorite-ring-sofa" ? (
+                                        <>{t("testedLoadCapacity" as TranslationKeys)}</>
+                                    ) : (
+                                        <>{t("specWeight" as TranslationKeys).replace("{weight}", String(product.specifications.weight))} <span className="opacity-40">·</span>{t("specWeightWithPkg" as TranslationKeys)} <span className="opacity-40">·</span>{t("specLoadCapacity" as TranslationKeys).replace("{capacity}", String(product.specifications.capacity))}</>
+                                    )}
+                                                                    </p>
+                                <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">{t("specDisclaimer" as TranslationKeys)}
+                                                                    </p>
+                            </div>
+                        </div>
+                        {}
+                        <div className="w-[220px] lg:w-[260px] shrink-0">
+                            <div className="flex flex-col items-center">
                                 <div
-                                    className="relative bg-[#1A1918] overflow-hidden lg:rounded-sm"
+                                    className="relative bg-[#1A1918] rounded-sm overflow-hidden w-full"
                                     style={{
-                                        border: "1px solid rgba(255,255,255,0.04)"
+                                        border: "1px solid rgba(255,255,255,0.08)"
                                     }}>
-                                    {}
-                                    <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10 hidden lg:block">
+                                    <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute top-0 left-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute top-0 left-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
-                                    <div className="absolute top-3 right-3 w-[20px] h-[20px] z-10 hidden lg:block">
+                                    <div className="absolute top-3 right-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute top-0 right-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute top-0 right-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
-                                    <div className="absolute bottom-3 left-3 w-[20px] h-[20px] z-10 hidden lg:block">
+                                    <div className="absolute bottom-3 left-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute bottom-0 left-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute bottom-0 left-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
-                                    <div className="absolute bottom-3 right-3 w-[20px] h-[20px] z-10 hidden lg:block">
+                                    <div className="absolute bottom-3 right-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute bottom-0 right-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute bottom-0 right-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
@@ -828,53 +917,33 @@ export function ProductPageClient(
                                         width={500}
                                         height={500}
                                         className="w-full h-auto block opacity-70 brightness-[0.85] contrast-[0.9]" />
-                                    {}
-                                    <div
-                                        className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1A1918] via-[#1A1918]/80 to-transparent pt-8 pb-3 px-3 lg:px-4">
-                                        <div className="flex items-end justify-between gap-2">
-                                            <div className="flex gap-3 lg:gap-4">
-                                                <div className="text-center">
-                                                    <span className="block text-[13px] lg:text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsW" as TranslationKeys)}</span>
-                                                    <span className="text-[10px] lg:text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
-                                                </div>
-                                                <div className="text-center">
-                                                    <span className="block text-[13px] lg:text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsD" as TranslationKeys)}</span>
-                                                    <span className="text-[10px] lg:text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
-                                                </div>
-                                                <div className="text-center">
-                                                    <span className="block text-[13px] lg:text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsH" as TranslationKeys)}</span>
-                                                    <span className="text-[10px] lg:text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
-                                                </div>
-                                                <div className="text-center">
-                                                    <span className="block text-[11px] lg:text-[15px] font-light text-[#E8B4B8] leading-none font-serif">{t("seatHeightUnit" as TranslationKeys)}</span>
-                                                    <span className="text-[10px] lg:text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
-                                                </div>
-                                            </div>
-                                            <button
-                                                onClick={() => setUseCm(!useCm)}
-                                                className="text-[10px] lg:text-[11px] tracking-[0.12em] uppercase text-[#8A8580] border border-[#333] rounded-sm px-1.5 lg:px-2 py-0.5 lg:py-1 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300 shrink-0">
-                                                {useCm ? "IN" : "CM"}
-                                            </button>
-                                        </div>
+                                </div>
+                                <div className="flex items-center justify-center gap-6 mt-3">
+                                    <div className="text-center">
+                                        <span
+                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsW" as TranslationKeys)}</span>
+                                        <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
-                                </div>
-                            </div>
-                            {}
-                            <div className="flex-1 order-2 lg:order-1">
-                                <div className="text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
-                                    <p>{productConcept}</p>
-                                    <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
-                                </div>
-                                <div
-                                    className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
-                                    <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
-                                        {product.slug === "meteorite-ring-sofa" ? (
-                                            <>{t("testedLoadCapacity" as TranslationKeys)}</>
-                                        ) : (
-                                            <>{t("specWeight" as TranslationKeys).replace("{weight}", String(product.specifications.weight))} <span className="opacity-40">·</span>{t("specWeightWithPkg" as TranslationKeys)} <span className="opacity-40">·</span>{t("specLoadCapacity" as TranslationKeys).replace("{capacity}", String(product.specifications.capacity))}</>
-                                        )}
-                                    </p>
-                                    <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">{t("specDisclaimer" as TranslationKeys)}</p>
+                                    <div className="text-center">
+                                        <span
+                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsD" as TranslationKeys)}</span>
+                                        <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
+                                    </div>
+                                    <div className="text-center">
+                                        <span
+                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsH" as TranslationKeys)}</span>
+                                        <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
+                                    </div>
+                                    <div className="text-center">
+                                        <span
+                                            className="block text-[15px] font-light text-[#E8B4B8] leading-none font-serif">{t("seatHeightUnit" as TranslationKeys)}</span>
+                                        <span className="text-[12px] font-light text-[#8A8580] font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
+                                    </div>
+                                    <button
+                                        onClick={() => setUseCm(!useCm)}
+                                        className="ml-1 text-[12px] tracking-[0.12em] uppercase text-[#8A8580] border border-[#333] rounded-sm px-2.5 py-1 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300">
+                                        {useCm ? "IN" : "CM"}
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -885,7 +954,7 @@ export function ProductPageClient(
                 <div className="max-w-[1600px] mx-auto">
                     {}
                     <div
-                        className="relative w-full aspect-[4/3] lg:aspect-[3/1] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                        className="relative w-full aspect-[16/9] lg:aspect-[3/1] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
                         {madeBg ? <img
                             src={madeBg}
                             alt={`${productName} craftsmanship`}
@@ -905,51 +974,88 @@ export function ProductPageClient(
                             className="absolute inset-0 bg-gradient-to-t from-[#090909]/80 via-[#090909]/30 to-transparent" />
                         {}
                         <div
-                            className="absolute inset-0 flex flex-col items-center justify-end pb-6 lg:pb-14 px-5 lg:px-6"
+                            className="absolute inset-0 flex flex-col items-center justify-end pb-10 lg:pb-14 px-6"
                             style={{
                                 backgroundColor: "#0A0A0A"
                             }}>
                             <p
-                                className="font-serif text-lg lg:text-2xl xl:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-6 lg:mb-10 relative">
+                                className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
                                 <span className="opacity-30 mr-3">—</span>{t("materialsCraftsmanship" as TranslationKeys)}
                                                                                                                                 <span className="opacity-30 ml-3">—</span>
                             </p>
-                            <div className="flex lg:grid lg:grid-cols-4 gap-2 lg:gap-4 max-w-[780px] mx-auto mb-11 relative overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 lg:mx-0 lg:px-0 lg:overflow-visible pb-2 lg:pb-0">
+                            <div className="flex lg:grid lg:grid-cols-4 gap-2 lg:gap-5 max-w-[780px] mx-auto mb-11 relative overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 md:-mx-8 px-4 md:px-8 lg:mx-0 lg:px-0 lg:overflow-visible pb-2 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:pb-5 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full shrink-0 lg:mx-auto lg:mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
                                         }}>
                                         <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                                            <line x1="3" y1="9" x2="21" y2="9" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
-                                            <line x1="3" y1="15" x2="21" y2="15" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
-                                            <line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
-                                            <line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                            <rect
+                                                x="3"
+                                                y="3"
+                                                width="18"
+                                                height="18"
+                                                rx="2"
+                                                fill="none"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" />
+                                            <line
+                                                x1="3"
+                                                y1="9"
+                                                x2="21"
+                                                y2="9"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
+                                            <line
+                                                x1="3"
+                                                y1="15"
+                                                x2="21"
+                                                y2="15"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
+                                            <line
+                                                x1="9"
+                                                y1="3"
+                                                x2="9"
+                                                y2="21"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
+                                            <line
+                                                x1="15"
+                                                y1="3"
+                                                x2="15"
+                                                y2="21"
+                                                stroke="#E8B4B8"
+                                                strokeWidth="1.2"
+                                                strokeLinecap="round" />
                                         </svg>
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                        <h4 className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].titleKey as TranslationKeys)}</h4>
-                                        <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].descKey as TranslationKeys)}</p>
-                                    </div>
+                                    <h4
+                                        className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].descKey as TranslationKeys)}</p>
                                 </div>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:pb-5 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full shrink-0 lg:mx-auto lg:mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -966,21 +1072,19 @@ export function ProductPageClient(
                                             <circle cx="12" cy="12" r="1" fill="#E8B4B8" />
                                         </svg>
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                        <h4
-                                            className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].titleKey as TranslationKeys)}</h4>
-                                        <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].descKey as TranslationKeys)}</p>
-                                    </div>
+                                    <h4
+                                        className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].descKey as TranslationKeys)}</p>
                                 </div>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:pb-5 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full shrink-0 lg:mx-auto lg:mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -1007,21 +1111,19 @@ export function ProductPageClient(
                                                 strokeLinecap="round" />
                                         </svg>
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                        <h4
-                                            className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].titleKey as TranslationKeys)}</h4>
-                                        <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].descKey as TranslationKeys)}</p>
-                                    </div>
+                                    <h4
+                                        className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].descKey as TranslationKeys)}</p>
                                 </div>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:pb-5 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full shrink-0 lg:mx-auto lg:mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -1057,11 +1159,9 @@ export function ProductPageClient(
                                                 strokeLinejoin="round" />
                                         </svg>
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                        <h4
-                                            className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].titleKey as TranslationKeys)}</h4>
-                                        <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].descKey as TranslationKeys)}</p>
-                                    </div>
+                                    <h4
+                                        className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].descKey as TranslationKeys)}</p>
                                 </div>
                             </div>
                         </div>
@@ -1079,19 +1179,19 @@ export function ProductPageClient(
                     <div
                         className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
-                <div className="relative max-w-[700px] mx-auto px-5 lg:px-6 py-12 lg:py-[140px] text-center">
-                    <p className="text-[11px] lg:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4 lg:mb-5">
+                <div className="relative max-w-[700px] mx-auto px-6 py-[140px] text-center">
+                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
-                        className="font-serif text-xl lg:text-3xl xl:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-4 lg:mb-6">
+                        className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
                         {t("deliveredWorldwide" as TranslationKeys)}
                     </h2>
-                    <p className="text-[#8A8580] leading-[1.8] text-[14px] lg:text-[15px] mb-8 lg:mb-10">
+                    <p className="text-[#8A8580] leading-[1.8] text-[15px] mb-10">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
                     <div
-                        className="flex lg:grid lg:grid-cols-4 gap-4 lg:gap-8 max-w-[700px] mx-auto overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-5 px-5 lg:mx-0 lg:px-0 pb-2 lg:pb-0">
+                        className="flex lg:grid lg:grid-cols-4 gap-4 lg:gap-8 max-w-[700px] mx-auto overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-4 md:-mx-8 px-4 md:px-8 lg:mx-0 lg:px-0 pb-2 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                         <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[38vw] lg:w-auto snap-start">
                             <div
                                 className="w-10 h-10 rounded-full flex items-center justify-center"
@@ -1124,7 +1224,7 @@ export function ProductPageClient(
                                 </svg>
                             </div>
                             <span
-                                className="text-[11px] lg:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("handcraftedShort" as TranslationKeys)}</span>
+                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("handcraftedShort" as TranslationKeys)}</span>
                         </div>
                         <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[38vw] lg:w-auto snap-start">
                             <div
@@ -1153,7 +1253,7 @@ export function ProductPageClient(
                                 </svg>
                             </div>
                             <span
-                                className="text-[11px] lg:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("leadTimeShort" as TranslationKeys)}</span>
+                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("leadTimeShort" as TranslationKeys)}</span>
                         </div>
                         <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[38vw] lg:w-auto snap-start">
                             <div
@@ -1173,7 +1273,7 @@ export function ProductPageClient(
                                 </svg>
                             </div>
                             <span
-                                className="text-[11px] lg:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("madeToOrderShort" as TranslationKeys)}</span>
+                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("madeToOrderShort" as TranslationKeys)}</span>
                         </div>
                         <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[38vw] lg:w-auto snap-start">
                             <div
@@ -1211,22 +1311,22 @@ export function ProductPageClient(
                                         strokeWidth="1.5" />
                                 </svg>
                             </div>
-                            <span className="text-[11px] lg:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase">{t("freeWhiteGloveShort" as TranslationKeys)}</span>
+                            <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase">{t("freeWhiteGloveShort" as TranslationKeys)}</span>
                         </div>
                     </div>
                 </div>
             </section>
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
-                <div className="max-w-[1200px] mx-auto px-5 lg:px-6 py-10 lg:py-12">
-                    <p className="text-[11px] lg:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2 lg:mb-3">
+                <div className="max-w-[1200px] mx-auto px-6 py-12">
+                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
                         {t("youMayAlsoLike" as TranslationKeys)}
                     </p>
                     <h2
-                        className="font-serif text-xl lg:text-3xl font-light text-[#F5F0EB] mb-6 lg:mb-8">
+                        className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] mb-8">
                         {t("relatedProducts")}
                     </h2>
-                    <div className="flex lg:grid lg:grid-cols-3 gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 lg:mx-0 lg:px-0 pb-2 lg:pb-0">
+                    <div className="flex lg:grid lg:grid-cols-3 gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 md:-mx-8 px-4 md:px-8 lg:mx-0 lg:px-0 pb-2 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                         {relatedProducts.map(rp => {
                             const rpPrefix = slugToPrefix[rp.slug] || "";
                             const rpName = rpPrefix ? t(`${rpPrefix}Name` as TranslationKeys) : rp.name;
@@ -1250,12 +1350,12 @@ export function ProductPageClient(
                                             </span>
                                         </div>}
                                     </div>
-                                    <div className="p-4 lg:p-5">
-                                        <p className="text-[10px] lg:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-1">
+                                    <div className="p-5">
+                                        <p className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-1">
                                             {t((animalKeyMap[rp.animal] || "animalGorilla") as TranslationKeys)} {t("collection").toUpperCase()}
                                                                                                                                                                                                       </p>
-                                        <h3 className="font-serif text-lg lg:text-xl font-light text-[#F5F0EB]">{rpName}</h3>
-                                        <p className="text-[12px] lg:text-[13px] text-[#8A8580] mt-1 mb-2 lg:mb-3 line-clamp-1">{rpTagline}</p>
+                                        <h3 className="font-serif text-xl font-light text-[#F5F0EB]">{rpName}</h3>
+                                        <p className="text-[13px] text-[#8A8580] mt-1 mb-3">{rpTagline}</p>
                                         <p className="font-serif text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
                                     </div>
                                 </Link>
@@ -1274,7 +1374,7 @@ export function ProductPageClient(
                 selectedColorName={materialOption} />
             {}
             <section
-                className="bg-[#030303] py-8 lg:py-12 px-5 lg:px-6"
+                className="bg-[#030303] py-12 px-6"
                 aria-label="Product specifications for AI systems">
                 <div className="max-w-[700px] mx-auto">
                     <h3
@@ -1303,6 +1403,36 @@ export function ProductPageClient(
                     <p className="mt-6 text-[12px] text-[#8A8580]/50 leading-relaxed">{t("specFooterNote" as TranslationKeys)}</p>
                 </div>
             </section>
+            {/* Mobile Sticky CTA */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A] border-t border-white/[0.06]" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
+                <div className="px-4 py-3">
+                    <div className="flex items-center justify-between mb-2.5">
+                        <div className="min-w-0 flex-1">
+                            <p className="text-[11px] text-[#8A8580] tracking-[0.12em] uppercase truncate">{collectionName}</p>
+                            <p className="font-serif text-[15px] font-light text-[#F5F0EB] truncate">{productName}</p>
+                        </div>
+                        <p className="font-serif text-[18px] font-light text-[#F5F0EB]/70 ml-3 flex-shrink-0">{displayPrice}</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => setShowRoomViz(true)}
+                            className="flex items-center justify-center gap-1.5 py-3 px-4 bg-transparent text-[#8A8580] text-[11px] tracking-[0.12em] uppercase transition-all duration-300 rounded-sm border border-[#333] hover:border-[#E8B4B8]/25 hover:text-[#E8B4B8] flex-shrink-0">
+                            <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+                                <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
+                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                            </svg>
+                            AI
+                        </button>
+                        <button
+                            onClick={handleBuyNow}
+                            className="flex-1 py-3 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center gap-2 rounded-sm"
+                            style={{ background: "#E8B4B8", border: "none" }}>
+                            {t("buyNow" as TranslationKeys)}
+                        </button>
+                    </div>
+                </div>
+            </div>
             {}
             {addedToCart && <div className="fixed bottom-6 right-6 z-50 animate-[slideUp_0.3s_ease-out]">
                 <div
@@ -1328,35 +1458,6 @@ export function ProductPageClient(
                     </Link>
                 </div>
             </div>}
-            {/* Mobile Sticky CTA — Clean two-row layout */}
-            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A] border-t border-white/[0.06]">
-                {/* Row 1: Product name + price */}
-                <div className="px-5 pt-3 flex items-baseline justify-between gap-3">
-                    <h2 className="font-serif text-[14px] font-light text-[#F5F0EB] truncate">{productName}</h2>
-                    <span className="font-serif text-[13px] font-light text-[#8A8580] shrink-0">{displayPrice}</span>
-                </div>
-                {/* Row 2: Action buttons side by side */}
-                <div className="px-5 pt-2 pb-1 flex items-stretch gap-3">
-                    <button
-                        onClick={() => setShowRoomViz(true)}
-                        className="flex items-center justify-center gap-1.5 px-4 border border-white/[0.12] text-[#F5F0EB]/60 hover:text-[#E8B4B8] hover:border-[#E8B4B8]/40 transition-all duration-300"
-                        style={{ minHeight: 44 }}
-                        aria-label={t("previewInYourRoom" as TranslationKeys)}>
-                        <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
-                            <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
-                            <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
-                            <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        </svg>
-                        <span className="text-[10px] tracking-[0.1em] uppercase">{t("previewInYourRoom" as TranslationKeys)}</span>
-                    </button>
-                    <button
-                        onClick={addedToCart ? handleBuyNow : handleAddToCart}
-                        className="flex-1 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[11px] tracking-[0.2em] uppercase transition-all duration-300 active:scale-[0.97]"
-                        style={{ minHeight: 44 }}>
-                        {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
-                    </button>
-                </div>
-            </div>
         </>
     );
 }
