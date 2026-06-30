@@ -13,8 +13,11 @@ export function Footer() {
         <div>
           <h3 className="font-serif text-lg tracking-[0.08em] text-[#F5F0EB] mb-1">Fuzz Sofa Studio</h3>
           <p className="text-[12px] tracking-[0.08em] text-[#8A8580] mb-4">An independent furniture brand operated by Fudehao. Serving furniture clients since 2015. Made-to-order in collaboration with manufacturing partners in Shanghai, China.</p>
-          <p className="text-xs text-[#8A8580] mb-4">
+          <p className="text-xs text-[#8A8580] mb-1">
             <a href="mailto:support@fuzzsofa.com" className="hover:text-[#E8B4B8] transition-colors">support@fuzzsofa.com</a>
+          </p>
+          <p className="text-xs text-[#8A8580] mb-4">
+            <a href="tel:+862112345678" className="hover:text-[#E8B4B8] transition-colors">+86 21 1234 5678</a>
           </p>
           <div className="flex gap-4">
             <a href="https://instagram.com/fuzzsofa" target="_blank" rel="noopener noreferrer" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors" aria-label="Instagram">

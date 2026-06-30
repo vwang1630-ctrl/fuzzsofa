@@ -291,7 +291,7 @@ export function ProductPageClient(
                                             color: "#E8B4B8",
                                             border: "1px solid rgba(232,180,184,0.25)"
                                         }}>Preview in your room
-                                                                                                                                          </span>
+                                                                                                                                                                                  </span>
                                     <button
                                         onClick={() => setShowRoomViz(true)}
                                         className="relative flex items-center justify-center w-[60px] h-[60px] rounded-full transition-all duration-500 hover:scale-[1.08] active:scale-95"
@@ -412,7 +412,16 @@ export function ProductPageClient(
                                             {[{
                                                 name: "Pinterest",
 
-                                                icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="10" /></svg>
+                                                icon: <svg
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="#E8B4B8"
+                                                    strokeWidth="1.5"><path
+                                                        d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round" /><circle cx="12" cy="12" r="10" /></svg>
                                             }, {
                                                 name: "Facebook",
 
@@ -570,7 +579,7 @@ export function ProductPageClient(
                             {product.materials && product.materials.length > 0 && <div className="mb-5">
                                 <label
                                     className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">Materials
-                                                                                                                              </label>
+                                                                                                                                                                  </label>
                                 <div className="space-y-0.5">
                                     {product.materials.map((mat, i) => <p
                                         key={i}
@@ -610,7 +619,7 @@ export function ProductPageClient(
                                     border: "1px solid #E8B4B8"
                                 }}
                                 onClick={handleBuyNow}>Buy Now
-                                                                                                              </button>
+                                                                                                                                              </button>
                             {}
                             <div
                                 className="flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
@@ -637,19 +646,19 @@ export function ProductPageClient(
                                         d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                                     <circle cx="12" cy="13" r="4" />
                                 </svg>Preview in your room
-                                                                                                              </button>
+                                                                                                                                              </button>
                         </div>
                     </div>
                 </div>
             </section>
             {}
-            <section
-                className="bg-[#0F0E0E]">
+            <section className="bg-[#0F0E0E]">
                 <div className="max-w-[1200px] mx-auto px-6 py-6">
                     {}
                     <div className="mb-6">
-                        <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3 flex items-center gap-3">
-                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
+                        <p
+                            className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3 flex items-center gap-3">
+                            <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys) || "Interior Inspiration"}
                         </p>
                         <h2
                             className="font-serif text-2xl md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
@@ -673,7 +682,7 @@ export function ProductPageClient(
                                 <div
                                     className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent"
                                     style={{
-                                        borderRadius: "8px"
+                                        borderRadius: "0px"
                                     }} />
                             </div>
                             {}
@@ -687,18 +696,22 @@ export function ProductPageClient(
                         </div>)}
                     </div>
                     {}
-                    {/* Transition: gallery → story */}
+                    {}
                     <div className="mt-12 mb-2 relative">
                         <div className="w-full h-px bg-white/[0.03]" />
-                        <div className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+                        <div
+                            className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                     </div>
-                    <div className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
-                        {/* Text content */}
+                    <div
+                        className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
+                        {}
                         <div className="flex-1">
-                            <p className="text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 flex items-center gap-3">
+                            <p
+                                className="text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 flex items-center gap-3">
                                 <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />The Story
-                            </p>
-                            <h3 className="font-serif text-[36px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-3">
+                                                            </p>
+                            <h3
+                                className="font-serif text-[36px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-3">
                                 {productName}
                             </h3>
                             <p className="text-[20px] text-[#E8B4B8]/50 italic mb-5 font-serif">
@@ -708,19 +721,22 @@ export function ProductPageClient(
                                 <p>{productConcept}</p>
                                 <p className="mt-5">{product.interiorContext}</p>
                             </div>
-                            <div className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
+                            <div
+                                className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
                                 <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
-                                </p>
+                                                                    </p>
                                 <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
-                                </p>
+                                                                    </p>
                             </div>
                         </div>
-                        {/* Sketch - bottom aligned */}
+                        {}
                         <div className="w-[220px] lg:w-[260px] shrink-0">
                             <div className="flex flex-col items-center">
                                 <div
                                     className="relative bg-[#1A1918] rounded-sm overflow-hidden w-full"
-                                    style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
+                                    style={{
+                                        border: "1px solid rgba(255,255,255,0.08)"
+                                    }}>
                                     <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10">
                                         <div className="absolute top-0 left-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute top-0 left-0 w-px h-[20px] bg-[#E8B4B8]/20" />
@@ -746,19 +762,23 @@ export function ProductPageClient(
                                 </div>
                                 <div className="flex items-center justify-center gap-6 mt-3">
                                     <div className="text-center">
-                                        <span className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">W</span>
+                                        <span
+                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">W</span>
                                         <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">D</span>
+                                        <span
+                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">D</span>
                                         <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">H</span>
+                                        <span
+                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">H</span>
                                         <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <div className="text-center">
-                                        <span className="block text-[15px] font-light text-[#E8B4B8] leading-none font-serif">Seat</span>
+                                        <span
+                                            className="block text-[15px] font-light text-[#E8B4B8] leading-none font-serif">Seat</span>
                                         <span className="text-[12px] font-light text-[#8A8580] font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <button
@@ -803,7 +823,7 @@ export function ProductPageClient(
                             <p
                                 className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
                                 <span className="opacity-30 mr-3">—</span>Materials & Craftsmanship
-                                                                                                <span className="opacity-30 ml-3">—</span>
+                                                                                                                                <span className="opacity-30 ml-3">—</span>
                             </p>
                             <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-11 relative">
                                 {}
@@ -1012,7 +1032,8 @@ export function ProductPageClient(
                     <p className="text-[#8A8580] leading-[1.8] text-[15px] mb-10">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-[700px] mx-auto">
+                    <div
+                        className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-[700px] mx-auto">
                         <div className="flex flex-col items-center gap-2">
                             <div
                                 className="w-10 h-10 rounded-full flex items-center justify-center"
@@ -1044,7 +1065,8 @@ export function ProductPageClient(
                                         strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">Handcrafted</span>
+                            <span
+                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">Handcrafted</span>
                         </div>
                         <div className="flex flex-col items-center gap-2">
                             <div
@@ -1072,7 +1094,8 @@ export function ProductPageClient(
                                         strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">1–2 Weeks</span>
+                            <span
+                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">1–2 Weeks</span>
                         </div>
                         <div className="flex flex-col items-center gap-2">
                             <div
@@ -1091,7 +1114,8 @@ export function ProductPageClient(
                                         strokeLinejoin="round" />
                                 </svg>
                             </div>
-                            <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">Made to Order</span>
+                            <span
+                                className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">Made to Order</span>
                         </div>
                         <div className="flex flex-col items-center gap-2">
                             <div
@@ -1121,12 +1145,12 @@ export function ProductPageClient(
                                         strokeLinejoin="round" />
                                     <circle cx="5.5" cy="18.5" r="2.5" fill="none" stroke="#E8B4B8" strokeWidth="1.5" />
                                     <circle
-                                                cx="18.5"
-                                                cy="18.5"
-                                                r="2.5"
-                                                fill="none"
-                                                stroke="#E8B4B8"
-                                                strokeWidth="1.5" />
+                                        cx="18.5"
+                                        cy="18.5"
+                                        r="2.5"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.5" />
                                 </svg>
                             </div>
                             <span className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase">Free White-Glove</span>
@@ -1171,7 +1195,7 @@ export function ProductPageClient(
                                     <div className="p-5">
                                         <p className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-1">
                                             {rp.animal}COLLECTION
-                                                                                                                                                          </p>
+                                                                                                                                                                                                      </p>
                                         <h3 className="font-serif text-xl font-light text-[#F5F0EB]">{rpName}</h3>
                                         <p className="text-[13px] text-[#8A8580] mt-1 mb-3">{rpTagline}</p>
                                         <p className="font-serif text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
@@ -1219,7 +1243,7 @@ export function ProductPageClient(
                         <dd className="text-[#8A8580]/80">Pre-order production only</dd>
                     </dl>
                     <p className="mt-6 text-[12px] text-[#8A8580]/50 leading-relaxed">Each piece is individually produced after order confirmation. No inventory. No mass production.
-                                                                                  </p>
+                                                                                                          </p>
                 </div>
             </section>
             {}
