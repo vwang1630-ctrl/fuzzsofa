@@ -120,6 +120,11 @@ export function ProductPageClient(
     const [useCm, setUseCm] = useState(true);
     const shareMenuRef = useRef<HTMLDivElement>(null);
 
+    // Touch/swipe handlers for mobile gallery
+    const touchStartX = useRef(0);
+    const touchDeltaX = useRef(0);
+    // Touch handlers defined after `images` to avoid block-scoped variable error
+
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (shareMenuRef.current && !shareMenuRef.current.contains(e.target as Node)) {
@@ -212,6 +217,24 @@ export function ProductPageClient(
     }];
 
     const displayPrice = formatPrice(getPrice(product, region), region);
+
+    // Touch handlers for mobile swipeable gallery (must be after `images` definition)
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+    }, []);
+    const handleTouchMove = useCallback((e: React.TouchEvent) => {
+        touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
+    }, []);
+    const handleTouchEnd = useCallback(() => {
+        if (Math.abs(touchDeltaX.current) > 50) {
+            if (touchDeltaX.current > 0 && activeImage > 0) {
+                setActiveImage(prev => prev - 1);
+            } else if (touchDeltaX.current < 0 && activeImage < images.length - 1) {
+                setActiveImage(prev => prev + 1);
+            }
+        }
+        touchDeltaX.current = 0;
+    }, [activeImage, images.length]);
 
     const specLabels: Record<string, TranslationKeys> = {
         width: "width",
@@ -312,10 +335,69 @@ export function ProductPageClient(
                 }} />
             {}
             <section className="bg-[#0A0A0A]">
+                {/* Mobile: full-bleed immersive gallery */}
+                <div className="lg:hidden relative">
+                    <div
+                        className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+                        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                    >
+                        {galleryImages.map((img, idx) => (
+                            <div key={img.id} className="w-full flex-shrink-0 snap-start relative aspect-square">
+                                {img.src ? (
+                                    <img src={img.src} alt={product.name} className="w-full h-full object-cover" />
+                                ) : (
+                                    <div className="w-full h-full bg-[#111] flex items-center justify-center">
+                                        <span className="font-serif text-6xl text-[#F5F0EB]/10">{product.animal.charAt(0)}</span>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    {/* Image counter */}
+                    <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full">
+                        <span className="text-[11px] text-[#F5F0EB]/80 tracking-[0.1em] font-light">{activeImage + 1}/{galleryImages.length}</span>
+                    </div>
+                    {/* Dot indicators */}
+                    {galleryImages.length > 1 && (
+                        <div className="absolute bottom-20 left-0 right-0 flex justify-center gap-1.5">
+                            {galleryImages.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setActiveImage(idx)}
+                                    className={`h-1 rounded-full transition-all duration-300 ${activeImage === idx ? "w-6 bg-[#E8B4B8]" : "w-1.5 bg-[#F5F0EB]/30"}`}
+                                    aria-label={`Image ${idx + 1}`}
+                                />
+                            ))}
+                        </div>
+                    )}
+                    {/* Color swatches overlay on image - show current material group colors */}
+                    {currentMaterialOptions && currentMaterialOptions.colors.length > 0 && (
+                        <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+                            <div className="flex gap-2 bg-black/30 backdrop-blur-sm rounded-full px-3 py-2">
+                                {currentMaterialOptions.colors.map((color, ci) => {
+                                    const colorKey = colorNameKeyMap[color] || color;
+                                    return (
+                                        <button
+                                            key={ci}
+                                            onClick={() => setMaterialOption(currentMaterialOptions.options[ci])}
+                                            className={`w-7 h-7 rounded-full border-2 transition-all duration-300 ${materialOption === currentMaterialOptions.options[ci] ? "border-[#E8B4B8] scale-110" : "border-white/20 hover:border-white/40"}`}
+                                            style={{ backgroundColor: currentMaterialOptions.colors?.[ci] || "#888" }}
+                                            aria-label={t(colorKey as TranslationKeys) || color}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 lg:gap-12">
                         {}
-                        <div className="flex flex-col">
+                        <div className="hidden lg:flex flex-col">
                             {}
                             <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
                                 {galleryImages[activeImage]?.src ? <img

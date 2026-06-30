@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import { useState, useRef, useEffect } from "react";
@@ -11,15 +12,30 @@ import type { User } from "@supabase/supabase-js";
 import type { TranslationKeys } from "@/lib/i18n";
 
 export function Header() {
+  const pathname = usePathname();
+  const isProductPage = pathname && /^\/[a-z]+-[a-z]+(-[a-z]+)*$/.test(pathname) && !pathname.startsWith('/journal') && !pathname.startsWith('/animal');
   const { totalItems } = useCart();
   const { locale, setLocale, region, t, isRtl } = useLanguage();
+  const otherLocale = locale === 'en' ? 'zh' : 'en';
   const { isLoading: configLoading } = useSupabaseConfig();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Scroll detection for transparent header
+  useEffect(() => {
+    if (!isProductPage) return;
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [isProductPage]);
+
+  const headerSolid = !isProductPage || scrolled;
 
   // Load user session
   useEffect(() => {
@@ -57,7 +73,7 @@ export function Header() {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0A]/80 backdrop-blur-[8px] border-b border-[#1A1A1A]"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerSolid ? 'bg-[#0A0A0A]/95 backdrop-blur-[8px] border-b border-[#1A1A1A]' : 'bg-transparent border-b border-transparent'}`}
       dir={isRtl ? "rtl" : "ltr"}
     >
       <div className="max-w-[1200px] mx-auto px-6 h-[60px] flex items-center justify-between">
@@ -68,13 +84,13 @@ export function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-6 text-xs font-light tracking-[0.1em] uppercase">
-          <Link href="/animal-sofa-collection" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300">
+          <Link href="/animal-sofa-collection" className={`${isProductPage ? 'text-white/60' : 'text-[#8A8580]'} hover:text-[#E8B4B8] transition-colors duration-300`}>
             {t("collection")}
           </Link>
-          <Link href="/luxury-villa-interior" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300">
+          <Link href="/luxury-villa-interior" className={`${isProductPage ? 'text-white/60' : 'text-[#8A8580]'} hover:text-[#E8B4B8] transition-colors duration-300`}>
             {t("interiorWorlds")}
           </Link>
-          <Link href="/about" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300">
+          <Link href="/about" className={`${isProductPage ? 'text-white/60' : 'text-[#8A8580]'} hover:text-[#E8B4B8] transition-colors duration-300`}>
             {t("about")}
           </Link>
           <Link href="/contact" className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300">
@@ -85,21 +101,21 @@ export function Header() {
         {/* Right side controls */}
         <div className="flex items-center gap-3">
           {/* Region indicator - auto detected */}
-          <span className="hidden md:flex items-center gap-1 text-[#555] text-xs tracking-[0.05em]">
+          <span className={`hidden md:flex items-center gap-1 text-xs tracking-[0.05em] ${headerSolid ? 'text-[#555]' : 'text-white/40'}`}>
             {region === "europe" ? "EUR" : "USD"} / {region === "americas" ? "Americas" : region === "europe" ? "Europe" : region === "middle_east" ? "Middle East" : "SE Asia"}
           </span>
 
           {/* Language selector */}
-          <div ref={langRef} className="relative hidden md:block">
+          <div ref={langRef} className="relative">
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className="flex items-center gap-1 text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 text-xs tracking-[0.05em] uppercase"
+              className={`flex items-center gap-1 transition-colors duration-300 text-[11px] tracking-[0.08em] uppercase px-2 py-1 rounded-sm border ${isProductPage ? 'border-white/20 text-white/70 hover:text-white hover:border-white/40' : 'border-[#1A1A1A] text-[#8A8580] hover:text-[#E8B4B8] hover:border-[#E8B4B8]/30'}`}
               aria-label="Select language"
             >
-              🌐 {localeNames[locale]}
+              {localeNames[locale]}
             </button>
             {langOpen && (
-              <div className="absolute top-full mt-2 right-0 bg-[#111111] border border-[#1A1A1A] rounded-[4px] py-1 min-w-[160px] max-h-[300px] overflow-y-auto z-50">
+              <div className={`absolute top-full mt-2 right-0 border rounded-[4px] py-1 min-w-[160px] max-h-[300px] overflow-y-auto z-50 ${isProductPage ? 'bg-black/90 backdrop-blur-md border-white/10' : 'bg-[#111111] border-[#1A1A1A]'}`}>
                 {locales.map((loc: Locale) => (
                   <button
                     key={loc}
@@ -120,7 +136,7 @@ export function Header() {
             {user ? (
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-1 text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300"
+                className={`flex items-center gap-1 transition-colors duration-300 ${headerSolid ? 'text-[#8A8580] hover:text-[#E8B4B8]' : 'text-white/50 hover:text-white'}`}
                 aria-label="Account"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -131,7 +147,7 @@ export function Header() {
             ) : (
               <Link
                 href="/login"
-                className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300"
+                className={`transition-colors duration-300 ${headerSolid ? 'text-[#8A8580] hover:text-[#E8B4B8]' : 'text-white/50 hover:text-white'}`}
                 aria-label="Login"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -170,7 +186,7 @@ export function Header() {
           {/* Cart */}
           <Link
             href="/cart"
-            className="relative text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300"
+            className={`relative transition-colors duration-300 ${headerSolid ? 'text-[#8A8580] hover:text-[#E8B4B8]' : 'text-white/50 hover:text-white'}`}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
@@ -187,7 +203,7 @@ export function Header() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden text-[#8A8580] hover:text-[#E8B4B8] transition-colors"
+            className={`lg:hidden transition-colors ${headerSolid ? 'text-[#8A8580] hover:text-[#E8B4B8]' : 'text-white/50 hover:text-white'}`}
             aria-label="Toggle menu"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -217,8 +233,8 @@ export function Header() {
           ) : (
             <Link href="/login" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("signIn" as TranslationKeys)}</Link>
           )}
-          <div className="flex gap-3 pt-2 border-t border-[#1A1A1A]">
-            <span className="text-[#8A8580]">🌐 {localeNames[locale]}</span>
+          <div className="flex gap-3 pt-2 border-t border-[#1A1A1A] items-center">
+            <button onClick={() => { setLocale(otherLocale); setMobileOpen(false); }} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors text-xs tracking-[0.1em] uppercase">🌐 {localeNames[otherLocale]}</button>
             <span className="text-[#555]">{region === "europe" ? "EUR" : "USD"}</span>
           </div>
         </nav>
