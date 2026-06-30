@@ -670,25 +670,25 @@ export function ProductPageClient(
                                 </div>);
                             })()}
                             {}
-                            <p className="text-[10px] lg:text-[11px] text-[#8A8580]/60 tracking-[0.25em] uppercase mb-2 lg:mb-3">
+                            <p className="hidden lg:block text-[11px] text-[#8A8580]/60 tracking-[0.25em] uppercase mb-3">
                                 {collectionName}
                             </p>
                             {}
                             <h1
-                                className="font-serif text-[26px] lg:text-[34px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em]">
+                                className="hidden lg:block font-serif text-[34px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em]">
                                 {productName}
                             </h1>
                             {}
                             <p
-                                className="hidden lg:block font-serif text-[26px] lg:text-[28px] font-light text-[#F5F0EB] mt-3 tracking-[0.02em]">
+                                className="hidden lg:block font-serif text-[28px] font-light text-[#F5F0EB] mt-3 tracking-[0.02em]">
                                 {displayPrice}
                             </p>
                             {}
-                            <p className="text-[13px] lg:text-[15px] text-[#8A8580] leading-[1.7] mt-3">
+                            <p className="hidden lg:block text-[15px] text-[#8A8580] leading-[1.7] mt-3">
                                 {productTagline}
                             </p>
                             {}
-                            <div className="h-px bg-white/[0.04] my-6 lg:my-5" />
+                            <div className="hidden lg:block h-px bg-white/[0.04] my-5" />
                             {}
                             {product.specifications && <div className="mb-6">
                                 <div className="flex items-center gap-2 mb-2">
@@ -1373,31 +1373,35 @@ export function ProductPageClient(
                     </Link>
                 </div>
             </div>}
-            {/* Mobile Sticky CTA — Luxury single-action bar */}
-            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40">
-                <div className="bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/98 to-transparent pt-4 pb-0">
-                    {/* Price line with side padding */}
-                    <div className="px-5 pb-2 flex items-baseline justify-between">
-                        <span className="font-serif text-[18px] font-light text-[#F5F0EB]">{displayPrice}</span>
+            {/* Mobile Sticky CTA — Integrated product info + action bar */}
+            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A] border-t border-white/[0.06]">
+                <div className="px-5 pt-3 pb-1 flex items-center gap-4">
+                    {/* Left: Product info */}
+                    <div className="flex-1 min-w-0">
+                        <p className="text-[9px] text-[#8A8580]/60 tracking-[0.2em] uppercase truncate">{collectionName}</p>
+                        <h2 className="font-serif text-[16px] font-light text-[#F5F0EB] leading-tight truncate">{productName}</h2>
+                        <p className="font-serif text-[14px] font-light text-[#8A8580] mt-0.5">{displayPrice}</p>
+                    </div>
+                    {/* Right: Action buttons */}
+                    <div className="flex flex-col items-end gap-1.5 shrink-0">
                         <button
                             onClick={() => setShowRoomViz(true)}
                             className="flex items-center gap-1 text-[#8A8580]/60 hover:text-[#E8B4B8] transition-colors"
                             aria-label={t("previewInYourRoom" as TranslationKeys)}>
-                            <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+                            <svg width="14" height="14" viewBox="0 0 32 32" fill="none">
                                 <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
                                 <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
                                 <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                             </svg>
-                            <span className="text-[9px] tracking-[0.1em] uppercase">{t("previewInYourRoom" as TranslationKeys)}</span>
+                            <span className="text-[8px] tracking-[0.1em] uppercase">{t("previewInYourRoom" as TranslationKeys)}</span>
+                        </button>
+                        <button
+                            onClick={addedToCart ? handleBuyNow : handleAddToCart}
+                            className="px-8 py-2.5 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[11px] tracking-[0.2em] uppercase transition-all duration-300 active:scale-[0.97]"
+                            style={{ minHeight: 44 }}>
+                            {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
                         </button>
                     </div>
-                    {/* Full-bleed CTA button — no side padding */}
-                    <button
-                        onClick={addedToCart ? handleBuyNow : handleAddToCart}
-                        className="w-full py-3.5 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[12px] tracking-[0.2em] uppercase transition-all duration-300 active:scale-[0.98]"
-                        style={{ minHeight: 52 }}>
-                        {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
-                    </button>
                 </div>
             </div>
         </>
