@@ -1373,35 +1373,33 @@ export function ProductPageClient(
                     </Link>
                 </div>
             </div>}
-            {/* Mobile Sticky CTA — Integrated product info + action bar */}
+            {/* Mobile Sticky CTA — Clean two-row layout */}
             <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A] border-t border-white/[0.06]">
-                <div className="px-5 pt-3 pb-1 flex items-center gap-4">
-                    {/* Left: Product info */}
-                    <div className="flex-1 min-w-0">
-                        <p className="text-[9px] text-[#8A8580]/60 tracking-[0.2em] uppercase truncate">{collectionName}</p>
-                        <h2 className="font-serif text-[16px] font-light text-[#F5F0EB] leading-tight truncate">{productName}</h2>
-                        <p className="font-serif text-[14px] font-light text-[#8A8580] mt-0.5">{displayPrice}</p>
-                    </div>
-                    {/* Right: Action buttons */}
-                    <div className="flex flex-col items-end gap-1.5 shrink-0">
-                        <button
-                            onClick={() => setShowRoomViz(true)}
-                            className="flex items-center gap-1 text-[#8A8580]/60 hover:text-[#E8B4B8] transition-colors"
-                            aria-label={t("previewInYourRoom" as TranslationKeys)}>
-                            <svg width="14" height="14" viewBox="0 0 32 32" fill="none">
-                                <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
-                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
-                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                            </svg>
-                            <span className="text-[8px] tracking-[0.1em] uppercase">{t("previewInYourRoom" as TranslationKeys)}</span>
-                        </button>
-                        <button
-                            onClick={addedToCart ? handleBuyNow : handleAddToCart}
-                            className="px-8 py-2.5 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[11px] tracking-[0.2em] uppercase transition-all duration-300 active:scale-[0.97]"
-                            style={{ minHeight: 44 }}>
-                            {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
-                        </button>
-                    </div>
+                {/* Row 1: Product name + price */}
+                <div className="px-5 pt-3 flex items-baseline justify-between gap-3">
+                    <h2 className="font-serif text-[14px] font-light text-[#F5F0EB] truncate">{productName}</h2>
+                    <span className="font-serif text-[13px] font-light text-[#8A8580] shrink-0">{displayPrice}</span>
+                </div>
+                {/* Row 2: Action buttons side by side */}
+                <div className="px-5 pt-2 pb-1 flex items-stretch gap-3">
+                    <button
+                        onClick={() => setShowRoomViz(true)}
+                        className="flex items-center justify-center gap-1.5 px-4 border border-white/[0.12] text-[#F5F0EB]/60 hover:text-[#E8B4B8] hover:border-[#E8B4B8]/40 transition-all duration-300"
+                        style={{ minHeight: 44 }}
+                        aria-label={t("previewInYourRoom" as TranslationKeys)}>
+                        <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+                            <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
+                            <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                            <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                        </svg>
+                        <span className="text-[10px] tracking-[0.1em] uppercase">{t("previewInYourRoom" as TranslationKeys)}</span>
+                    </button>
+                    <button
+                        onClick={addedToCart ? handleBuyNow : handleAddToCart}
+                        className="flex-1 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[11px] tracking-[0.2em] uppercase transition-all duration-300 active:scale-[0.97]"
+                        style={{ minHeight: 44 }}>
+                        {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
+                    </button>
                 </div>
             </div>
         </>
