@@ -1375,31 +1375,29 @@ export function ProductPageClient(
             </div>}
             {/* Mobile Sticky CTA — Luxury single-action bar */}
             <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40">
-                <div className="bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/98 to-transparent pt-6 pb-0">
-                    <div className="px-5 pb-3 flex flex-col gap-2">
-                        {/* Price line */}
-                        <div className="flex items-baseline justify-between">
-                            <span className="font-serif text-[18px] font-light text-[#F5F0EB]">{displayPrice}</span>
-                            <button
-                                onClick={() => setShowRoomViz(true)}
-                                className="flex items-center gap-1 text-[#8A8580]/60 hover:text-[#E8B4B8] transition-colors"
-                                aria-label={t("previewInYourRoom" as TranslationKeys)}>
-                                <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
-                                    <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
-                                    <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
-                                    <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                                </svg>
-                                <span className="text-[9px] tracking-[0.1em] uppercase">{t("previewInYourRoom" as TranslationKeys)}</span>
-                            </button>
-                        </div>
-                        {/* Single full-width CTA */}
+                <div className="bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/98 to-transparent pt-4 pb-0">
+                    {/* Price line with side padding */}
+                    <div className="px-5 pb-2 flex items-baseline justify-between">
+                        <span className="font-serif text-[18px] font-light text-[#F5F0EB]">{displayPrice}</span>
                         <button
-                            onClick={addedToCart ? handleBuyNow : handleAddToCart}
-                            className="w-full py-3.5 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[12px] tracking-[0.2em] uppercase transition-all duration-300 rounded-sm active:scale-[0.98]"
-                            style={{ minHeight: 52 }}>
-                            {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
+                            onClick={() => setShowRoomViz(true)}
+                            className="flex items-center gap-1 text-[#8A8580]/60 hover:text-[#E8B4B8] transition-colors"
+                            aria-label={t("previewInYourRoom" as TranslationKeys)}>
+                            <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+                                <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
+                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                            </svg>
+                            <span className="text-[9px] tracking-[0.1em] uppercase">{t("previewInYourRoom" as TranslationKeys)}</span>
                         </button>
                     </div>
+                    {/* Full-bleed CTA button — no side padding */}
+                    <button
+                        onClick={addedToCart ? handleBuyNow : handleAddToCart}
+                        className="w-full py-3.5 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[12px] tracking-[0.2em] uppercase transition-all duration-300 active:scale-[0.98]"
+                        style={{ minHeight: 52 }}>
+                        {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
+                    </button>
                 </div>
             </div>
         </>
