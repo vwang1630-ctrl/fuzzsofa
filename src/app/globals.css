@@ -63,6 +63,15 @@
   will-change: transform;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .sticky-cta {
   padding-bottom: calc(12px + env(safe-area-inset-bottom));
 }

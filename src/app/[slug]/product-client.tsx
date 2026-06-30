@@ -550,7 +550,7 @@ export function ProductPageClient(
                                         className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
                                         {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
                                     </label>
-                                    <div className="flex flex-wrap gap-2">
+                                    <div className="flex lg:flex-wrap gap-2 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1 snap-x snap-mandatory">
                                         {mat.options.map((opt, optIdx) => {
                                             const colorHex = mat.colors[optIdx];
                                             const isSelected = materialType === mat.type && materialOption === opt;
@@ -578,7 +578,7 @@ export function ProductPageClient(
                                                         setMaterialType(mat.type);
                                                         setMaterialOption(opt);
                                                     }}
-                                                    className="flex items-center gap-2 transition-all duration-300 group">
+                                                    className="flex items-center gap-2 transition-all duration-300 group flex-shrink-0 snap-start">
                                                     <span
                                                         className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
                                                         {swatchImage ? <img
@@ -649,7 +649,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={handleAddToCart}
-                                className="w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 flex items-center justify-center gap-2 rounded-sm"
+                                className="hidden lg:flex w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
@@ -670,15 +670,14 @@ export function ProductPageClient(
                                 </>}
                             </button>
                             <button
-                                className="w-full py-4 bg-transparent text-[#E8B4B8] text-[13px] tracking-[0.15em] uppercase transition-all duration-300 flex items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
+                                className="hidden lg:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[13px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
                                 style={{
                                     border: "1px solid #E8B4B8"
                                 }}
-                                onClick={handleBuyNow}>{t("buyNow" as TranslationKeys)}
-                                                                                                                                              </button>
+                                onClick={handleBuyNow}>{t("buyNow" as TranslationKeys)}</button>
                             {}
                             <div
-                                className="flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
+                                className="hidden lg:flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
                                 <span>{t("leadTimeShort" as TranslationKeys)}</span>
                                 <span className="mx-1">·</span>
                                 <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
@@ -1331,6 +1330,34 @@ export function ProductPageClient(
                     </Link>
                 </div>
             </div>}
+            {/* Mobile sticky bottom CTA */}
+            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-md border-t border-[#1A1A1A] px-4 py-3 flex items-center gap-3">
+                <div className="flex-1 min-w-0">
+                    <p className="font-serif text-[20px] font-light text-[#F5F0EB]/80 leading-tight">{displayPrice}</p>
+                    <p className="text-[10px] text-[#8A8580]/60 tracking-[0.06em] mt-0.5">
+                        {t("leadTimeShort" as TranslationKeys)} · {t("freeWhiteGloveShort" as TranslationKeys)}
+                    </p>
+                </div>
+                <button
+                    onClick={handleAddToCart}
+                    className="flex-shrink-0 px-5 py-3.5 text-[#0A0A0A] font-medium text-[12px] tracking-[0.15em] uppercase transition-all duration-300 rounded-sm"
+                    style={{
+                        background: addedToCart ? "#111" : "#E8B4B8",
+                        border: addedToCart ? "1px solid #E8B4B8" : "none",
+                        minHeight: 48
+                    }}>
+                    {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : t("addToCart")}
+                </button>
+                <button
+                    onClick={handleBuyNow}
+                    className="flex-shrink-0 px-5 py-3.5 bg-transparent text-[#E8B4B8] text-[12px] tracking-[0.15em] uppercase transition-all duration-300 rounded-sm hover:bg-[#E8B4B8]/8"
+                    style={{
+                        border: "1px solid #E8B4B8",
+                        minHeight: 48
+                    }}>
+                    {t("buyNow" as TranslationKeys)}
+                </button>
+            </div>
         </>
     );
 }
