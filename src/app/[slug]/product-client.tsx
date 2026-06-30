@@ -983,16 +983,16 @@ export function ProductPageClient(
                                 <span className="opacity-30 mr-3">—</span>{t("materialsCraftsmanship" as TranslationKeys)}
                                                                                                                                 <span className="opacity-30 ml-3">—</span>
                             </p>
-                            <div className="flex lg:grid lg:grid-cols-4 gap-2 lg:gap-5 max-w-[780px] mx-auto mb-11 relative overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 md:-mx-8 px-4 md:px-8 lg:mx-0 lg:px-0 lg:overflow-visible pb-2 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5 max-w-[780px] mx-auto mb-11 relative">
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:pb-5 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full shrink-0 lg:mx-auto lg:mb-3 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -1044,18 +1044,18 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].descKey as TranslationKeys)}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].descKey as TranslationKeys)}</p>
                                 </div>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:pb-5 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full shrink-0 lg:mx-auto lg:mb-3 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -1073,18 +1073,18 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].descKey as TranslationKeys)}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].descKey as TranslationKeys)}</p>
                                 </div>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:pb-5 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full shrink-0 lg:mx-auto lg:mb-3 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -1112,18 +1112,18 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].descKey as TranslationKeys)}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].descKey as TranslationKeys)}</p>
                                 </div>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:pb-5 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full shrink-0 lg:mx-auto lg:mb-3 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -1160,8 +1160,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].descKey as TranslationKeys)}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].titleKey as TranslationKeys)}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].descKey as TranslationKeys)}</p>
                                 </div>
                             </div>
                         </div>
