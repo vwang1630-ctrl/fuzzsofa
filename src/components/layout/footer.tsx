@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
+import type { TranslationKeys } from "@/lib/i18n";
 
 export function Footer() {
   const { t, isRtl } = useLanguage();
@@ -12,7 +13,7 @@ export function Footer() {
         {/* Brand + Manufacturing Entity */}
         <div>
           <h3 className="font-serif text-lg tracking-[0.08em] text-[#F5F0EB] mb-1">Fuzz Sofa Studio</h3>
-          <p className="text-[12px] tracking-[0.08em] text-[#8A8580] mb-4">An independent furniture brand operated by Fudehao. Serving furniture clients since 2015. Made-to-order in collaboration with manufacturing partners in Shanghai, China.</p>
+          <p className="text-[12px] tracking-[0.08em] text-[#8A8580] mb-4">{t("footerBrandDesc" as TranslationKeys)}</p>
           <p className="text-xs text-[#8A8580] mb-1">
             <a href="mailto:support@fuzzsofa.com" className="hover:text-[#E8B4B8] transition-colors">support@fuzzsofa.com</a>
           </p>
@@ -52,9 +53,9 @@ export function Footer() {
         <div>
           <h4 className="text-xs font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("explore")}</h4>
           <ul className="space-y-3">
-            <li><Link href="/about" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">About the Studio</Link></li>
-            <li><Link href="/studio" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Studio</Link></li>
-            <li><Link href="/workshop" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Workshop</Link></li>
+            <li><Link href="/about" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("aboutTheStudio" as TranslationKeys)}</Link></li>
+            <li><Link href="/studio" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("studio" as TranslationKeys)}</Link></li>
+            <li><Link href="/workshop" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("workshop" as TranslationKeys)}</Link></li>
             <li><Link href="/luxury-villa-interior" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("luxuryVillaScene")}</Link></li>
             <li><Link href="/boutique-hotel-lobby" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("boutiqueHotelScene")}</Link></li>
             <li><Link href="/contact" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link></li>
@@ -65,8 +66,8 @@ export function Footer() {
         <div>
           <h4 className="text-xs font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("support")}</h4>
           <ul className="space-y-3">
-            <li><Link href="/shipping-policy" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Shipping Policy</Link></li>
-            <li><Link href="/refund-policy" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Refund Policy</Link></li>
+            <li><Link href="/shipping-policy" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("shippingPolicy" as TranslationKeys)}</Link></li>
+            <li><Link href="/refund-policy" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("refundPolicy" as TranslationKeys)}</Link></li>
             <li><Link href="/warranty" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("warranty")}</Link></li>
             <li><Link href="/privacy" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("privacy")}</Link></li>
           </ul>

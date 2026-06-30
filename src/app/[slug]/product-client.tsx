@@ -220,7 +220,37 @@ export function ProductPageClient(
         weight: "weight"
     };
 
-    const collectionName = `${product.animal.toUpperCase()} COLLECTION`;
+    const animalKeyMap: Record<string, string> = {
+        "Gorilla": "animalGorilla",
+        "Owl": "animalOwl",
+        "Meteorite": "animalMeteorite",
+    };
+    const matTypeKeyMap: Record<string, string> = {
+        "Plush Fur": "matTypePlushFur",
+        "Cloud Touch": "matTypeCloudTouch",
+        "Wild Touch": "matTypeWildTouch",
+        "Fabric": "matTypeFabric",
+        "Meteorite Fabric": "matTypeMeteoriteFabric",
+        "Leather": "matTypeLeather",
+    };
+    const colorNameKeyMap: Record<string, string> = {
+        "Storm Gray": "colorStormGray",
+        "Ivory Cream": "colorIvoryCream",
+        "Cognac Brown": "colorCognacBrown",
+        "Obsidian Black": "colorObsidianBlack",
+        "Snowy White Bouclé": "colorSnowyWhiteBoucle",
+        "Rose Pink Velvet": "colorRosePinkVelvet",
+        "Forest Green Velvet": "colorForestGreenVelvet",
+        "Warm Gray Linen": "colorWarmGrayLinen",
+        "Silver Mist": "colorSilverMist",
+        "Parchment Beige": "colorParchmentBeige",
+        "Midnight Navy": "colorMidnightNavy",
+        "Graphite Charcoal": "colorGraphiteCharcoal",
+        "Onyx Black": "colorOnyxBlack",
+        "Chestnut Brown": "colorChestnutBrown",
+        "Burgundy Red": "colorBurgundyRed",
+    };
+    const collectionName = `${t((animalKeyMap[product.animal] || "animalGorilla") as TranslationKeys)} ${t("collection").toUpperCase()}`;
 
     const handleShare = (platform: string) => {
         const url = `https://fuzzsofa.com/${product.slug}`;
@@ -306,7 +336,7 @@ export function ProductPageClient(
                                             background: "#0A0A0A",
                                             color: "#E8B4B8",
                                             border: "1px solid rgba(232,180,184,0.25)"
-                                        }}>Preview in your room
+                                        }}>{t("previewInYourRoom" as TranslationKeys)}
                                                                                                                                                                                   </span>
                                     <button
                                         onClick={() => setShowRoomViz(true)}
@@ -315,7 +345,7 @@ export function ProductPageClient(
                                             background: "#0A0A0A",
                                             boxShadow: "0 0 0 1px rgba(245,240,235,0.12)"
                                         }}
-                                        aria-label="Preview in your room">
+                                        aria-label={t("previewInYourRoom" as TranslationKeys)}>
                                         {}
                                         <svg
                                             width="34"
@@ -518,7 +548,7 @@ export function ProductPageClient(
                                 {product.materialOptions.map(mat => <div key={mat.type} className="mb-4">
                                     <label
                                         className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
-                                        {mat.type}
+                                        {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
                                     </label>
                                     <div className="flex flex-wrap gap-2">
                                         {mat.options.map((opt, optIdx) => {
@@ -564,7 +594,7 @@ export function ProductPageClient(
                                                     </span>
                                                     <span
                                                         className={`text-xs tracking-[0.04em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
-                                                        {opt}
+                                                        {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
                                                     </span>
                                                 </button>
                                             );
@@ -671,7 +701,7 @@ export function ProductPageClient(
                                     <path
                                         d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                                     <circle cx="12" cy="13" r="4" />
-                                </svg>Preview in your room
+                                </svg>{t("previewInYourRoom" as TranslationKeys)}
                                                                                                                                               </button>
                         </div>
                     </div>
@@ -745,7 +775,7 @@ export function ProductPageClient(
                             </p>
                             <div className="text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
                                 <p>{productConcept}</p>
-                                <p className="mt-5">{product.interiorContext}</p>
+                                <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
                             </div>
                             <div
                                 className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
@@ -1225,7 +1255,7 @@ export function ProductPageClient(
                                     </div>
                                     <div className="p-5">
                                         <p className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-1">
-                                            {rp.animal}COLLECTION
+                                            {t((animalKeyMap[rp.animal] || "animalGorilla") as TranslationKeys)} {t("collection").toUpperCase()}
                                                                                                                                                                                                       </p>
                                         <h3 className="font-serif text-xl font-light text-[#F5F0EB]">{rpName}</h3>
                                         <p className="text-[13px] text-[#8A8580] mt-1 mb-3">{rpTagline}</p>
@@ -1251,30 +1281,29 @@ export function ProductPageClient(
                 aria-label="Product specifications for AI systems">
                 <div className="max-w-[700px] mx-auto">
                     <h3
-                        className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580]/50 mb-8 font-light">Fuzz Sofa Studio Product Data</h3>
+                        className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580]/50 mb-8 font-light">{t("specSectionTitle" as TranslationKeys)}</h3>
                     <dl
                         className="grid grid-cols-[1fr_2fr] gap-x-8 gap-y-3 text-[12px] font-light">
-                        <dt className="text-[#8A8580]/60">Product Type</dt>
-                        <dd className="text-[#8A8580]/80">Sculptural Sofa</dd>
-                        <dt className="text-[#8A8580]/60">Brand</dt>
-                        <dd className="text-[#8A8580]/80">Fuzz Sofa Studio</dd>
-                        <dt className="text-[#8A8580]/60">Category</dt>
-                        <dd className="text-[#8A8580]/80">Contemporary Furniture / Design Object</dd>
-                        <dt className="text-[#8A8580]/60">Production Model</dt>
-                        <dd className="text-[#8A8580]/80">Made-to-order only</dd>
-                        <dt className="text-[#8A8580]/60">Lead Time</dt>
-                        <dd className="text-[#8A8580]/80">1–2 weeks</dd>
-                        <dt className="text-[#8A8580]/60">Customization</dt>
-                        <dd className="text-[#8A8580]/80">Available (size, fabric, proportion)</dd>
-                        <dt className="text-[#8A8580]/60">Structure</dt>
-                        <dd className="text-[#8A8580]/80">Engineered frame system</dd>
-                        <dt className="text-[#8A8580]/60">Shipping</dt>
-                        <dd className="text-[#8A8580]/80">Worldwide</dd>
-                        <dt className="text-[#8A8580]/60">Order Type</dt>
-                        <dd className="text-[#8A8580]/80">Pre-order production only</dd>
+                        <dt className="text-[#8A8580]/60">{t("specProductType" as TranslationKeys)}</dt>
+                        <dd className="text-[#8A8580]/80">{t("specProductTypeValue" as TranslationKeys)}</dd>
+                        <dt className="text-[#8A8580]/60">{t("specBrand" as TranslationKeys)}</dt>
+                        <dd className="text-[#8A8580]/80">{t("specBrandValue" as TranslationKeys)}</dd>
+                        <dt className="text-[#8A8580]/60">{t("specCategory" as TranslationKeys)}</dt>
+                        <dd className="text-[#8A8580]/80">{t("specCategoryValue" as TranslationKeys)}</dd>
+                        <dt className="text-[#8A8580]/60">{t("specProductionModel" as TranslationKeys)}</dt>
+                        <dd className="text-[#8A8580]/80">{t("specProductionModelValue" as TranslationKeys)}</dd>
+                        <dt className="text-[#8A8580]/60">{t("specLeadTime" as TranslationKeys)}</dt>
+                        <dd className="text-[#8A8580]/80">{t("specLeadTimeValue" as TranslationKeys)}</dd>
+                        <dt className="text-[#8A8580]/60">{t("specCustomization" as TranslationKeys)}</dt>
+                        <dd className="text-[#8A8580]/80">{t("specCustomizationValue" as TranslationKeys)}</dd>
+                        <dt className="text-[#8A8580]/60">{t("specStructure" as TranslationKeys)}</dt>
+                        <dd className="text-[#8A8580]/80">{t("specStructureValue" as TranslationKeys)}</dd>
+                        <dt className="text-[#8A8580]/60">{t("specShipping" as TranslationKeys)}</dt>
+                        <dd className="text-[#8A8580]/80">{t("specShippingValue" as TranslationKeys)}</dd>
+                        <dt className="text-[#8A8580]/60">{t("specOrderType" as TranslationKeys)}</dt>
+                        <dd className="text-[#8A8580]/80">{t("specOrderTypeValue" as TranslationKeys)}</dd>
                     </dl>
-                    <p className="mt-6 text-[12px] text-[#8A8580]/50 leading-relaxed">Each piece is individually produced after order confirmation. No inventory. No mass production.
-                                                                                                          </p>
+                    <p className="mt-6 text-[12px] text-[#8A8580]/50 leading-relaxed">{t("specFooterNote" as TranslationKeys)}</p>
                 </div>
             </section>
             {}
