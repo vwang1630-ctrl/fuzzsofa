@@ -604,37 +604,35 @@ export function ProductPageClient(
                         {}
                         <div className="flex flex-col">
                             {/* Color / Material selector — placed right after gallery for luxury UX flow */}
-                            {product.materialOptions && product.materialOptions.length > 0 && <div className="lg:mb-4">
-                                {product.materialOptions.map(mat => <div key={mat.type} className="mb-4 lg:mb-5">
-                                    <label
-                                        className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase block mb-3">
-                                        {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
-                                        <span className="hidden lg:inline"> — </span>
-                                        <span className="hidden lg:inline text-[#F5F0EB]/40 normal-case tracking-[0.02em]">{t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}</span>
+                            {product.materialOptions && product.materialOptions.length > 0 && (() => {
+                                // Flatten all colors from all material types into a single array
+                                const allColors: { matType: string; opt: string; colorHex: string; globalIdx: number }[] = [];
+                                let runningIdx = 0;
+                                for (const mat of product.materialOptions) {
+                                    for (let i = 0; i < mat.options.length; i++) {
+                                        allColors.push({ matType: mat.type, opt: mat.options[i], colorHex: mat.colors[i], globalIdx: runningIdx });
+                                        runningIdx++;
+                                    }
+                                }
+                                const selectedColor = allColors.find(c => c.matType === materialType && c.opt === materialOption);
+                                return (<div className="lg:mb-4">
+                                    <label className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase block mb-3">
+                                        {selectedColor ? t((colorNameKeyMap[selectedColor.opt] || "matTypeFabric") as TranslationKeys) : ""}
                                     </label>
-                                    {/* Mobile: single-row color circles with text below */}
-                                    <div className="flex gap-4 lg:hidden overflow-x-auto scrollbar-hide pb-1">
-                                        {mat.options.map((opt, optIdx) => {
-                                            const colorHex = mat.colors[optIdx];
-                                            const isSelected = materialType === mat.type && materialOption === opt;
-                                            let globalIdx = optIdx;
-                                            if (product.materialOptions) {
-                                                globalIdx = 0;
-                                                for (const m of product.materialOptions) {
-                                                    if (m.type === mat.type) { globalIdx += optIdx; break; }
-                                                    globalIdx += m.options.length;
-                                                }
-                                            }
-                                            const swatchImage = galleryImages[globalIdx];
-                                            const colorKey = colorNameKeyMap[opt] || opt;
+                                    {/* Mobile: single-row color circles */}
+                                    <div className="flex gap-5 lg:hidden overflow-x-auto scrollbar-hide pb-1 justify-center">
+                                        {allColors.map(c => {
+                                            const isSelected = materialType === c.matType && materialOption === c.opt;
+                                            const swatchImage = galleryImages[c.globalIdx];
+                                            const colorKey = colorNameKeyMap[c.opt] || c.opt;
                                             return (
                                                 <button
-                                                    key={opt}
-                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); setActiveImage(globalIdx); }}
+                                                    key={c.opt}
+                                                    onClick={() => { setMaterialType(c.matType); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }}
                                                     className="flex flex-col items-center gap-1.5 transition-all duration-200 flex-shrink-0"
                                                 >
-                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-8 h-8 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-8 h-8 ring-1 ring-[#333]"}`}>
-                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={32} height={32} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-9 h-9 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-8 h-8 ring-1 ring-[#333]"}`}>
+                                                        {swatchImage ? <img src={swatchImage.src} alt={c.opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.colorHex }} />}
                                                     </span>
                                                     <span className={`text-[9px] tracking-[0.02em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]/80" : "text-[#8A8580]/50"}`}>{t(colorKey as TranslationKeys).split(" ").pop()}</span>
                                                 </button>
@@ -642,37 +640,28 @@ export function ProductPageClient(
                                         })}
                                     </div>
                                     {/* Desktop: full color selector with text names */}
-                                    <div className="hidden lg:flex flex-wrap gap-2">
-                                        {mat.options.map((opt, optIdx) => {
-                                            const colorHex = mat.colors[optIdx];
-                                            const isSelected = materialType === mat.type && materialOption === opt;
-                                            let globalIdx = optIdx;
-                                            if (product.materialOptions) {
-                                                globalIdx = 0;
-                                                for (const m of product.materialOptions) {
-                                                    if (m.type === mat.type) { globalIdx += optIdx; break; }
-                                                    globalIdx += m.options.length;
-                                                }
-                                            }
-                                            const swatchImage = galleryImages[globalIdx];
+                                    <div className="hidden lg:flex flex-wrap gap-3">
+                                        {allColors.map(c => {
+                                            const isSelected = materialType === c.matType && materialOption === c.opt;
+                                            const swatchImage = galleryImages[c.globalIdx];
                                             return (
                                                 <button
-                                                    key={opt}
-                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); setActiveImage(globalIdx); }}
+                                                    key={c.opt}
+                                                    onClick={() => { setMaterialType(c.matType); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }}
                                                     className="flex items-center gap-2 transition-all duration-300 group">
                                                     <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
-                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={32} height={32} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                        {swatchImage ? <img src={swatchImage.src} alt={c.opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.colorHex }} />}
                                                     </span>
                                                     <span className={`text-xs tracking-[0.04em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
-                                                        {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
+                                                        {t((colorNameKeyMap[c.opt] || "matTypeFabric") as TranslationKeys)}
                                                     </span>
                                                 </button>
                                             );
                                         })}
                                     </div>
-                                </div>)}
-                                <div className="h-px bg-white/[0.04] mt-2 lg:mt-3 mb-5 lg:mb-4" />
-                            </div>}
+                                    <div className="h-px bg-white/[0.04] mt-4 lg:mt-5 mb-5 lg:mb-4" />
+                                </div>);
+                            })()}
                             {}
                             <p className="text-[10px] lg:text-[11px] text-[#8A8580]/60 tracking-[0.25em] uppercase mb-2 lg:mb-3">
                                 {collectionName}
