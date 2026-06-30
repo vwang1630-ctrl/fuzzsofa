@@ -109,30 +109,31 @@ export default function HomePage() {
       />
 
       {/* ─── 1. HERO ─── */}
-      <section className="relative w-full overflow-hidden" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
+      <section className="relative w-full overflow-hidden" style={{ aspectRatio: '3/4', maxHeight: '82vh' }}>
         <Link href={sceneConfig.keys.href} className="block absolute inset-0 z-0" aria-label={t(sceneConfig.keys.title)}>
           <HeroSlideshow current={heroScene} />
         </Link>
-        <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
+        <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay} hidden md:block`} />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/30 to-[#0A0A0A]/20 md:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15 hidden md:block" />
 
-        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[8%] flex flex-col justify-end md:justify-start">
-          <p className="tracking-[0.35em] uppercase mb-3 text-[12px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
+        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-10 lg:px-16 h-full flex flex-col justify-end pb-[12%] md:pb-[6%] md:pt-[8%] md:justify-start">
+          <p className="tracking-[0.35em] uppercase mb-2 md:mb-3 text-[10px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
             Fuzz Sofa Studio
           </p>
-          <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
+          <h1 className="font-light leading-[1.08] tracking-[0.02em] mb-3 md:mb-5 animate-fade-in-delay-1 text-[2rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
             {t(sceneConfig.keys.title)}
           </h1>
-          <p className="font-light text-sm md:text-[15px] lg:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
+          <p className="font-light text-[12px] md:text-[15px] lg:text-base max-w-[380px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
             Made-to-order, delivered in 1–2 weeks
           </p>
-          <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
+          <div className="mt-4 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
             <button
               onClick={() => {
                 const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
                 window.dispatchEvent(event);
               }}
-              className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[12px] tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer"
+              className="group inline-flex items-center gap-2.5 px-4 md:px-5 py-2.5 border text-[11px] md:text-[12px] tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer"
               style={{ borderColor: sceneConfig.accentColor + '50', color: sceneConfig.accentColor + 'CC', backgroundColor: sceneConfig.accentColor + '0A' }}
               onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '80'; e.currentTarget.style.color = sceneConfig.accentColor; }}
               onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '50'; e.currentTarget.style.color = sceneConfig.accentColor + 'CC'; }}
@@ -153,16 +154,16 @@ export default function HomePage() {
       </section>
 
       {/* ─── 2. TRUST BAR ─── */}
-      <section className="bg-[#090909] py-8 md:py-10">
-        <div className="max-w-[1200px] mx-auto px-6 flex flex-wrap items-center justify-center gap-8 md:gap-16 text-center">
+      <section className="bg-[#090909] py-5 md:py-10 border-y border-white/[0.03]">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-6 flex flex-wrap items-center justify-center gap-4 md:gap-16 text-center">
           {[
-            { icon: '✦', label: 'Studio-Crafted Furniture' },
-            { icon: '◆', label: 'Made-to-Order Quality Guarantee' },
+            { icon: '✦', label: 'Studio-Crafted' },
+            { icon: '◆', label: 'Quality Guarantee' },
             { icon: '◉', label: '1–2 Week Delivery' },
           ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2.5">
-              <span className="text-[#E8B4B8] text-[12px]">{item.icon}</span>
-              <span className="text-[12px] tracking-[0.08em] text-[#8A8580]">{item.label}</span>
+            <div key={item.label} className="flex items-center gap-1.5">
+              <span className="text-[#E8B4B8] text-[10px]">{item.icon}</span>
+              <span className="text-[10px] md:text-[12px] tracking-[0.08em] text-[#8A8580]">{item.label}</span>
             </div>
           ))}
         </div>
@@ -172,14 +173,15 @@ export default function HomePage() {
 
 
       {/* ─── 4. FEATURED WORKS ─── */}
-      <section id="featured-works" className="bg-[#090909] py-20 md:py-24">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className="mb-12 flex items-end justify-between">
+      <section id="featured-works" className="bg-[#090909] py-12 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-6">
+          <div className="mb-8 md:mb-12 flex items-end justify-between">
             <div>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
+              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-2">Collection</p>
+              <h2 className="font-serif text-2xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
                 Featured Works
               </h2>
-              <p className="mt-2 text-sm text-[#8A8580]">Each piece made individually after order confirmation</p>
+              <p className="mt-2 text-[12px] md:text-sm text-[#8A8580]">Each piece made individually after order confirmation</p>
             </div>
             <Link href="/#featured-works" className="hidden md:flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 group/coll">
               <span>Explore Collection</span>
@@ -187,12 +189,12 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
             {products.map((product) => (
               <Link
                 key={product.slug}
                 href={`/${product.slug}`}
-                className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
+                className="group relative overflow-hidden border-0 md:border md:border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
               >
                 <div className="aspect-square relative overflow-hidden">
                   <img
@@ -200,16 +202,24 @@ export default function HomePage() {
                     alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent" />
+                  {/* Mobile: text overlay on image */}
+                  <div className="absolute bottom-0 left-0 right-0 p-3 md:hidden">
+                    <h3 className="font-serif text-[14px] font-light text-[#F5F0EB] leading-tight">
+                      {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
+                    </h3>
+                    <p className="mt-1 text-[11px] text-[#F5F0EB]/70">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
+                  </div>
                 </div>
-                <div className="p-5">
+                {/* Desktop: text below image */}
+                <div className="hidden md:block p-5">
                   <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                     {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                   </h3>
                   <p className="mt-1 text-xs text-[#8A8580]">{t(slugToPrefix[product.slug] + "Tagline" as TranslationKeys)}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <p className="text-sm text-[#F5F0EB]/60">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
-                    <p className="text-[12px] tracking-[0.08em] text-[#8A8580]/70">Made to order (1–2 weeks)</p>
+                    <p className="text-[12px] tracking-[0.08em] text-[#8A8580]/70">Made to order</p>
                   </div>
                 </div>
               </Link>
@@ -221,34 +231,39 @@ export default function HomePage() {
 
 
       {/* ─── INTERIOR WORLDS ─── */}
-      <section className="bg-[#090909] py-20 md:py-24">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className="flex items-baseline justify-between mb-12">
+      <section className="bg-[#090909] py-12 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-6">
+          <div className="flex items-baseline justify-between mb-8 md:mb-12">
             <div>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">{t("interiorWorldsTitle")}</h2>
-              <p className="mt-2 text-sm text-[#8A8580]">{t("interiorWorldsSubtitle")}</p>
+              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-2">Spaces</p>
+              <h2 className="font-serif text-2xl md:text-4xl font-light text-[#F5F0EB]">{t("interiorWorldsTitle")}</h2>
+              <p className="mt-2 text-[12px] md:text-sm text-[#8A8580]">{t("interiorWorldsSubtitle")}</p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-5">
             {[
               { href: "/luxury-villa-interior", title: t("luxuryVillas"), accent: "from-[#1A1510] to-[#0A0A0A]", label: t("luxuryVillaScene") },
               { href: "/boutique-hotel-lobby", title: t("boutiqueHotels"), accent: "from-[#101518] to-[#0A0A0A]", label: t("boutiqueHotelScene") },
               { href: "/statement-furniture", title: t("contemporaryHomes"), accent: "from-[#151015] to-[#0A0A0A]", label: t("statementFurnitureScene") },
               { href: "/meteorite-ring-sofa", title: t("sculpturalTrend"), accent: "from-[#0A0A1A] to-[#0A0A0A]", label: t("sculpturalTrendScene"), image: "/products/meteorite-ring-sofa/sculptural-trend.png" },
             ].map((interior) => (
-              <Link key={interior.href} href={interior.href} className="group relative overflow-hidden border border-[#1A1A1A] hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300">
-                <div className={`h-56 bg-gradient-to-b ${interior.accent} relative`}>
+              <Link key={interior.href} href={interior.href} className="group relative overflow-hidden border-0 md:border md:border-[#1A1A1A] hover:border-[#E8B4B8]/40 hover:-translate-y-0.5 md:hover:-translate-y-1 transition-all duration-300">
+                <div className={`h-44 md:h-56 bg-gradient-to-b ${interior.accent} relative`}>
                   {"image" in interior && interior.image ? (
                     <>
                       <img src={interior.image} alt={interior.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
-                      <div className="absolute bottom-0 right-0 w-[30%] h-[15%] bg-gradient-to-tl from-[#0A0A0A] to-transparent" />
                     </>
                   ) : (
                     <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500" style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }} />
                   )}
+                  {/* Mobile: title overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 md:hidden">
+                    <h3 className="font-serif text-lg text-[#F5F0EB]">{interior.title}</h3>
+                  </div>
                 </div>
-                <div className="p-6">
+                {/* Desktop: title below image */}
+                <div className="hidden md:block p-6">
                   <h3 className="font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">{interior.title}</h3>
                 </div>
               </Link>
@@ -258,18 +273,21 @@ export default function HomePage() {
       </section>
 
       {/* ─── JOURNAL ─── */}
-      <section className="bg-[#050505] py-20 md:py-24">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className="flex items-baseline justify-between mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#F5F0EB]">{t("journalTitle")}</h2>
-            <Link href="/journal" className="text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">{t("articles")} &rarr;</Link>
+      <section className="bg-[#050505] py-12 md:py-24">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-6">
+          <div className="flex items-baseline justify-between mb-8 md:mb-12">
+            <div>
+              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-2">Editorial</p>
+              <h2 className="font-serif text-2xl md:text-4xl font-light text-[#F5F0EB]">{t("journalTitle")}</h2>
+            </div>
+            <Link href="/journal" className="text-[11px] md:text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors tracking-[0.1em] uppercase">{t("articles")} &rarr;</Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
             {latestArticles.map((article) => (
-              <Link key={article.slug} href={`/journal/${article.slug}`} className="group border-l-2 border-[#1A1A1A] pl-6 py-2 hover:border-[#E8B4B8] transition-colors duration-300">
-                <p className="text-xs text-[#8A8580] tracking-[0.1em] uppercase">{article.category}</p>
-                <h3 className="mt-3 font-serif text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">{article.title}</h3>
-                <p className="mt-2 text-sm text-[#8A8580] line-clamp-2">{article.excerpt}</p>
+              <Link key={article.slug} href={`/journal/${article.slug}`} className="group border-l border-[#1A1A1A] hover:border-[#E8B4B8] transition-colors duration-300 pl-4 md:pl-6 py-2">
+                <p className="text-[10px] md:text-xs text-[#8A8580] tracking-[0.1em] uppercase">{article.category}</p>
+                <h3 className="mt-2 md:mt-3 font-serif text-base md:text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">{article.title}</h3>
+                <p className="mt-1.5 md:mt-2 text-[12px] md:text-sm text-[#8A8580] line-clamp-2">{article.excerpt}</p>
               </Link>
             ))}
           </div>

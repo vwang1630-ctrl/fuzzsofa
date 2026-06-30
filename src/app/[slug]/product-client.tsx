@@ -486,8 +486,8 @@ export function ProductPageClient(
                                         <span className="hidden lg:inline"> — </span>
                                         <span className="hidden lg:inline text-[#F5F0EB]/40 normal-case tracking-[0.02em]">{t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}</span>
                                     </label>
-                                    {/* Mobile: color circles only, selected name shown in label */}
-                                    <div className="flex lg:hidden gap-3 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1">
+                                    {/* Mobile: 3-per-row grid of color circles */}
+                                    <div className="grid grid-cols-3 gap-3 lg:hidden">
                                         {mat.options.map((opt, optIdx) => {
                                             const colorHex = mat.colors[optIdx];
                                             const isSelected = materialType === mat.type && materialOption === opt;
@@ -505,12 +505,16 @@ export function ProductPageClient(
                                                 <button
                                                     key={opt}
                                                     onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); }}
-                                                    className="flex flex-col items-center gap-1.5 flex-shrink-0 group"
+                                                    className="flex items-center gap-2.5 py-2 px-2.5 rounded-sm transition-all duration-200"
+                                                    style={{
+                                                        background: isSelected ? "rgba(232,180,184,0.08)" : "transparent",
+                                                        border: isSelected ? "1px solid rgba(232,180,184,0.3)" : "1px solid transparent"
+                                                    }}
                                                 >
-                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-10 h-10 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-9 h-9 ring-1 ring-[#333] group-hover:ring-[#555]"}`}>
-                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden flex-shrink-0 ${isSelected ? "w-7 h-7 ring-1 ring-[#E8B4B8]" : "w-7 h-7 ring-1 ring-[#333]"}`}>
+                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={28} height={28} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
                                                     </span>
-                                                    {isSelected && <span className="text-[10px] text-[#F5F0EB]/60 tracking-[0.04em] whitespace-nowrap">{t(colorKey as TranslationKeys)}</span>}
+                                                    <span className={`text-[10px] tracking-[0.03em] truncate ${isSelected ? "text-[#F5F0EB]/80" : "text-[#8A8580]/60"}`}>{t(colorKey as TranslationKeys)}</span>
                                                 </button>
                                             );
                                         })}
@@ -665,7 +669,7 @@ export function ProductPageClient(
                             </div>
                             {}
                             <p
-                                className="font-serif text-[22px] md:text-[26px] lg:text-[28px] font-light text-[#F5F0EB] mt-3 tracking-[0.02em]">
+                                className="hidden lg:block font-serif text-[26px] lg:text-[28px] font-light text-[#F5F0EB] mt-3 tracking-[0.02em]">
                                 {displayPrice}
                             </p>
                             {}
@@ -746,10 +750,10 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={() => setShowRoomViz(true)}
-                                className="mt-4 text-[11px] text-[#8A8580]/50 tracking-[0.08em] uppercase hover:text-[#E8B4B8] transition-colors duration-300 flex items-center gap-2">
+                                className="mt-5 w-full lg:w-auto lg:mt-4 flex items-center justify-center gap-2.5 py-3 lg:py-0 text-[11px] tracking-[0.15em] uppercase transition-all duration-300 rounded-sm lg:rounded-none hover:text-[#E8B4B8] border border-[#333] lg:border-0 text-[#8A8580]/70 hover:border-[#E8B4B8]/40 active:scale-[0.98] lg:active:scale-100">
                                 <svg
-                                    width="14"
-                                    height="14"
+                                    width="16"
+                                    height="16"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     stroke="currentColor"
@@ -757,10 +761,11 @@ export function ProductPageClient(
                                     strokeLinecap="round"
                                     strokeLinejoin="round">
                                     <path
-                                        d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                                    <circle cx="12" cy="13" r="4" />
-                                </svg>{t("previewInYourRoom" as TranslationKeys)}
-                                                                                                                                              </button>
+                                        d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                    <polyline points="9 22 9 12 15 12 15 22" />
+                                </svg>
+                                {t("previewInYourRoom" as TranslationKeys)}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -840,7 +845,7 @@ export function ProductPageClient(
                                 <div
                                     className="relative bg-[#1A1918] overflow-hidden lg:rounded-sm"
                                     style={{
-                                        border: "1px solid rgba(255,255,255,0.08)"
+                                        border: "1px solid rgba(255,255,255,0.04)"
                                     }}>
                                     {}
                                     <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10 hidden lg:block">
@@ -954,7 +959,7 @@ export function ProductPageClient(
                             <div className="flex lg:grid lg:grid-cols-4 gap-2 lg:gap-4 max-w-[780px] mx-auto mb-11 relative overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 lg:mx-0 lg:px-0 lg:overflow-visible pb-2 lg:pb-0">
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
@@ -980,7 +985,7 @@ export function ProductPageClient(
                                 </div>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
@@ -1011,7 +1016,7 @@ export function ProductPageClient(
                                 </div>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
@@ -1052,7 +1057,7 @@ export function ProductPageClient(
                                 </div>
                                 {}
                                 <div
-                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
+                                    className="flex-shrink-0 w-[72vw] lg:w-auto flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 lg:border lg:border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm snap-start">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
