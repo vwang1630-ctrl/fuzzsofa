@@ -624,21 +624,24 @@ export function ProductPageClient(
                                         runningIdx++;
                                     }
                                 }
+                                const selectedColor = allColors.find(c => c.matType === materialType && c.opt === materialOption);
                                 return (<div className="lg:mb-4">
-                                    {/* Mobile: single-row color circles — no text, pure color */}
+                                    {/* Mobile: single-row color circles */}
                                     <div className="flex gap-9 lg:hidden overflow-x-auto scrollbar-hide py-2 justify-center">
                                         {allColors.map(c => {
                                             const isSelected = materialType === c.matType && materialOption === c.opt;
                                             const swatchImage = galleryImages[c.globalIdx];
+                                            const colorKey = colorNameKeyMap[c.opt] || c.opt;
                                             return (
                                                 <button
                                                     key={c.opt}
                                                     onClick={() => { setMaterialType(c.matType); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }}
-                                                    className="flex-shrink-0 transition-all duration-200"
+                                                    className="flex flex-col items-center gap-2 transition-all duration-200 flex-shrink-0"
                                                 >
-                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-[52px] h-[52px] ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-12 h-12 ring-1 ring-white/[0.08]"}`}>
-                                                        {swatchImage ? <img src={swatchImage.src} alt={c.opt} width={52} height={52} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.colorHex }} />}
+                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-16 h-16 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-14 h-14 ring-1 ring-[#333]"}`}>
+                                                        {swatchImage ? <img src={swatchImage.src} alt={c.opt} width={64} height={64} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.colorHex }} />}
                                                     </span>
+                                                    <span className={`text-[9px] tracking-[0.02em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]/80" : "text-[#8A8580]/50"}`}>{t(colorKey as TranslationKeys).split(" ").pop()}</span>
                                                 </button>
                                             );
                                         })}
@@ -687,22 +690,22 @@ export function ProductPageClient(
                             {}
                             <div className="hidden lg:block h-px bg-white/[0.04] my-5" />
                             {}
-                            {product.specifications && <div className="mb-5 lg:mb-6">
+                            {product.specifications && <div className="mb-6">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <label className="text-[10px] lg:text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
+                                    <label className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
                                     <button
                                         onClick={() => setUseCm(!useCm)}
-                                        className="text-[9px] lg:text-[10px] tracking-[0.15em] uppercase text-[#8A8580]/50 hover:text-[#E8B4B8] transition-colors border border-white/[0.06] px-1.5 lg:px-2 py-0.5 rounded-sm">
+                                        className="text-[10px] tracking-[0.15em] uppercase text-[#8A8580]/50 hover:text-[#E8B4B8] transition-colors border border-white/[0.06] px-2 py-0.5 rounded-sm">
                                         {useCm ? "IN" : "CM"}
                                     </button>
                                 </div>
-                                <p className="text-[12px] lg:text-[13px] text-[#F5F0EB]/50 tracking-[0.02em]">
+                                <p className="text-[13px] text-[#F5F0EB]/50 tracking-[0.02em]">
                                     {(() => {
                                         const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
                                         return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`;
                                     })()}
                                 </p>
-                                <p className="text-[11px] lg:text-[12px] text-[#F5F0EB]/30 mt-1">
+                                <p className="text-[12px] text-[#F5F0EB]/30 mt-1">
                                     {t("seatHeightLabel" as TranslationKeys)}{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}
                                 </p>
                             </div>}
@@ -730,7 +733,7 @@ export function ProductPageClient(
                                 </div>
                             </div>}
                             {}
-                            <div className="h-px bg-white/[0.04] mb-5 lg:mb-6" />
+                            <div className="h-px bg-[#333] mb-5" />
                             {}
                             {/* Desktop: Single prominent CTA + subtle secondary */}
                             <button
@@ -1370,31 +1373,36 @@ export function ProductPageClient(
                     </Link>
                 </div>
             </div>}
-            {/* Mobile Sticky CTA — Two-layer luxury bar */}
-            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]">
-                {/* Top row: product info + preview room */}
-                <div className="px-5 pt-3 pb-2 flex items-center justify-between border-b border-white/[0.04]">
+            {/* Mobile Sticky CTA — Integrated product info + action bar */}
+            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A] border-t border-white/[0.06]">
+                <div className="px-5 pt-3 pb-1 flex items-center gap-4">
+                    {/* Left: Product info */}
                     <div className="flex-1 min-w-0">
-                        <h2 className="font-serif text-[15px] font-light text-[#F5F0EB] leading-tight truncate">{productName}</h2>
-                        <p className="font-serif text-[13px] font-light text-[#8A8580] mt-0.5 tracking-wide">{displayPrice}</p>
+                        <p className="text-[9px] text-[#8A8580]/60 tracking-[0.2em] uppercase truncate">{collectionName}</p>
+                        <h2 className="font-serif text-[16px] font-light text-[#F5F0EB] leading-tight truncate">{productName}</h2>
+                        <p className="font-serif text-[14px] font-light text-[#8A8580] mt-0.5">{displayPrice}</p>
                     </div>
-                    <button
-                        onClick={() => setShowRoomViz(true)}
-                        className="ml-4 flex items-center justify-center w-10 h-10 rounded-full border border-white/[0.08] hover:border-[#E8B4B8]/50 transition-colors"
-                        aria-label={t("previewInYourRoom" as TranslationKeys)}>
-                        <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
-                            <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.15" />
-                            <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
-                            <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#8A8580" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        </svg>
-                    </button>
+                    {/* Right: Action buttons */}
+                    <div className="flex flex-col items-end gap-1.5 shrink-0">
+                        <button
+                            onClick={() => setShowRoomViz(true)}
+                            className="flex items-center gap-1 text-[#8A8580]/60 hover:text-[#E8B4B8] transition-colors"
+                            aria-label={t("previewInYourRoom" as TranslationKeys)}>
+                            <svg width="14" height="14" viewBox="0 0 32 32" fill="none">
+                                <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
+                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                            </svg>
+                            <span className="text-[8px] tracking-[0.1em] uppercase">{t("previewInYourRoom" as TranslationKeys)}</span>
+                        </button>
+                        <button
+                            onClick={addedToCart ? handleBuyNow : handleAddToCart}
+                            className="px-8 py-2.5 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[11px] tracking-[0.2em] uppercase transition-all duration-300 active:scale-[0.97]"
+                            style={{ minHeight: 44 }}>
+                            {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
+                        </button>
+                    </div>
                 </div>
-                {/* Bottom row: full-bleed CTA */}
-                <button
-                    onClick={addedToCart ? handleBuyNow : handleAddToCart}
-                    className="w-full py-4 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[12px] tracking-[0.25em] uppercase transition-all duration-300 active:scale-[0.98]">
-                    {addedToCart ? t("buyNow" as TranslationKeys) : t("addToCart")}
-                </button>
             </div>
         </>
     );
