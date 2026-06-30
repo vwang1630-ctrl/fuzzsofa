@@ -63,6 +63,10 @@
   will-change: transform;
 }
 
+.sticky-cta {
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+}
+
 body {
   background: var(--black);
   color: var(--off-white);
