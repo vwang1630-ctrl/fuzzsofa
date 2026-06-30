@@ -616,9 +616,6 @@ export function ProductPageClient(
                                 }
                                 const selectedColor = allColors.find(c => c.matType === materialType && c.opt === materialOption);
                                 return (<div className="lg:mb-4">
-                                    <label className="text-[11px] text-[#8A8580]/70 tracking-[0.2em] uppercase block mb-3">
-                                        {selectedColor ? t((colorNameKeyMap[selectedColor.opt] || "matTypeFabric") as TranslationKeys) : ""}
-                                    </label>
                                     {/* Mobile: single-row color circles */}
                                     <div className="flex gap-5 lg:hidden overflow-x-auto scrollbar-hide pb-1 justify-center">
                                         {allColors.map(c => {
