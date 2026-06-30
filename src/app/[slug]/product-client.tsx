@@ -346,7 +346,7 @@ export function ProductPageClient(
             <section className="bg-[#0A0A0A]">
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 lg:pt-8 pb-8 lg:pb-12">
                     {/* Mobile Gallery — swipeable, full-bleed */}
-                    <div className="lg:hidden mx-0 mt-0">
+                    <div className="lg:hidden -mx-4 md:-mx-8 -mt-4 lg:-mt-8">
                         <div
                             ref={mobileGalleryRef}
                             className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
@@ -377,7 +377,7 @@ export function ProductPageClient(
                         </div>
                         {/* Mobile color selector — single row large circles */}
                         {product.materialOptions && product.materialOptions.length > 0 && (
-                            <div className="px-4 pt-3 pb-3">
+                            <div className="px-4 py-4">
                                 <div className="flex items-center justify-center gap-9 overflow-x-auto scrollbar-hide py-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                                     {(() => {
                                         const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
