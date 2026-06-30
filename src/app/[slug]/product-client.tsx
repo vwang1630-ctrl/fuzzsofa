@@ -624,7 +624,6 @@ export function ProductPageClient(
                                         runningIdx++;
                                     }
                                 }
-                                const selectedColor = allColors.find(c => c.matType === materialType && c.opt === materialOption);
                                 return (<div className="lg:mb-4">
                                     {/* Mobile: single-row color circles — no text, pure color */}
                                     <div className="flex gap-6 lg:hidden overflow-x-auto scrollbar-hide py-2 justify-center">
