@@ -366,11 +366,78 @@ export function ProductPageClient(
                             </div>
                         ))}
                     </div>
-                    {/* Image counter — minimal, top-right */}
-                    <div className="absolute top-2.5 right-3 z-10">
-                        <span className="text-[10px] text-[#F5F0EB]/40 tracking-[0.08em] font-light">{activeImage + 1}<span className="text-[#F5F0EB]/20">/{galleryImages.length}</span></span>
+                    {/* Share + Wishlist floating on image */}
+                    <div className="absolute top-2.5 right-3 z-10 flex items-center gap-2">
+                        <div className="relative" ref={shareMenuRef}>
+                            <button
+                                onClick={() => setShowShareMenu(!showShareMenu)}
+                                className="group flex items-center justify-center w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
+                                aria-label="Share">
+                                <svg
+                                    className="transition-transform duration-300 group-hover:scale-110"
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#F5F0EB"
+                                    strokeWidth="1.5">
+                                    <circle cx="18" cy="5" r="3" />
+                                    <circle cx="6" cy="12" r="3" />
+                                    <circle cx="18" cy="19" r="3" />
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                </svg>
+                            </button>
+                            {showShareMenu && <div
+                                className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
+                                style={{
+                                    background: "#0A0A0A",
+                                    border: "1px solid rgba(232,180,184,0.25)",
+                                    boxShadow: "0 4px 16px rgba(0,0,0,0.6)"
+                                }}>
+                                {[{
+                                    name: "Pinterest",
+                                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="10" /></svg>
+                                }, {
+                                    name: "Facebook",
+                                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
+                                }, {
+                                    name: "Instagram",
+                                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" /></svg>
+                                }, {
+                                    name: "YouTube",
+                                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" /><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8" /></svg>
+                                }].map(platform => <button
+                                    key={platform.name}
+                                    onClick={() => handleShare(platform.name)}
+                                    className="flex items-center justify-center w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
+                                    title={platform.name}>
+                                    {platform.icon}
+                                </button>)}
+                            </div>}
+                        </div>
+                        <button
+                            onClick={() => setSaved(!saved)}
+                            className="group flex items-center justify-center w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
+                            aria-label="Save">
+                            <svg
+                                className="transition-transform duration-300 group-hover:scale-110"
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill={saved ? "#E8B4B8" : "none"}
+                                stroke={saved ? "#E8B4B8" : "#F5F0EB"}
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                        </button>
                     </div>
-                    {}
+                    {/* Image counter — centered below image */}
+                    <div className="flex justify-center pt-3 pb-1">
+                        <span className="text-[11px] text-[#F5F0EB]/30 tracking-[0.15em] font-light">{activeImage + 1}<span className="text-[#F5F0EB]/15"> / {galleryImages.length}</span></span>
+                    </div>
                 </div>
 
                 <div className="max-w-[1200px] mx-auto px-5 lg:px-8 pt-5 lg:pt-12 pb-8 lg:pb-12">
@@ -388,6 +455,74 @@ export function ProductPageClient(
                                         {product.animal.charAt(0)}
                                     </span>
                                 </div>}
+                                {/* Share + Wishlist floating on desktop gallery image */}
+                                <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+                                    <div className="relative" ref={shareMenuRef}>
+                                        <button
+                                            onClick={() => setShowShareMenu(!showShareMenu)}
+                                            className="group flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
+                                            aria-label="Share">
+                                            <svg
+                                                className="transition-transform duration-300 group-hover:scale-110"
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="#F5F0EB"
+                                                strokeWidth="1.5">
+                                                <circle cx="18" cy="5" r="3" />
+                                                <circle cx="6" cy="12" r="3" />
+                                                <circle cx="18" cy="19" r="3" />
+                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                            </svg>
+                                        </button>
+                                        {showShareMenu && <div
+                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
+                                            style={{
+                                                background: "#0A0A0A",
+                                                border: "1px solid rgba(232,180,184,0.25)",
+                                                boxShadow: "0 4px 16px rgba(0,0,0,0.6)"
+                                            }}>
+                                            {[{
+                                                name: "Pinterest",
+                                                icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="10" /></svg>
+                                            }, {
+                                                name: "Facebook",
+                                                icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
+                                            }, {
+                                                name: "Instagram",
+                                                icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" /></svg>
+                                            }, {
+                                                name: "YouTube",
+                                                icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" /><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8" /></svg>
+                                            }].map(platform => <button
+                                                key={platform.name}
+                                                onClick={() => handleShare(platform.name)}
+                                                className="flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
+                                                title={platform.name}>
+                                                {platform.icon}
+                                            </button>)}
+                                        </div>}
+                                    </div>
+                                    <button
+                                        onClick={() => setSaved(!saved)}
+                                        className="group flex items-center justify-center w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm hover:bg-[#E8B4B8]/20 transition-all duration-300"
+                                        aria-label="Save">
+                                        <svg
+                                            className="transition-transform duration-300 group-hover:scale-110"
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill={saved ? "#E8B4B8" : "none"}
+                                            stroke={saved ? "#E8B4B8" : "#F5F0EB"}
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round">
+                                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                        </svg>
+                                    </button>
+                                </div>
                                 {}
                                 <div className="absolute bottom-5 right-5 z-10 group/room flex items-center">
                                     {}
@@ -556,117 +691,10 @@ export function ProductPageClient(
                                 {collectionName}
                             </p>
                             {}
-                            <div className="flex items-start justify-between gap-3">
-                                <h1
-                                    className="font-serif text-[26px] lg:text-[34px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em]">
-                                    {productName}
-                                </h1>
-                                <div className="flex items-center gap-2 mt-1 flex-shrink-0">
-                                    {}
-                                    <div className="relative" ref={shareMenuRef}>
-                                        <button
-                                            onClick={() => setShowShareMenu(!showShareMenu)}
-                                            className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300"
-                                            aria-label="Share">
-                                            <svg
-                                                className="transition-transform duration-300 group-hover:scale-110"
-                                                width="16"
-                                                height="16"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="#E8B4B8"
-                                                strokeWidth="1.5">
-                                                <circle cx="18" cy="5" r="3" />
-                                                <circle cx="6" cy="12" r="3" />
-                                                <circle cx="18" cy="19" r="3" />
-                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                                            </svg>
-                                        </button>
-                                        {showShareMenu && <div
-                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
-                                            style={{
-                                                background: "#0A0A0A",
-                                                border: "1px solid rgba(232,180,184,0.25)",
-                                                boxShadow: "0 4px 16px rgba(0,0,0,0.6)"
-                                            }}>
-                                            {[{
-                                                name: "Pinterest",
-
-                                                icon: <svg
-                                                    width="14"
-                                                    height="14"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="#E8B4B8"
-                                                    strokeWidth="1.5"><path
-                                                        d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round" /><circle cx="12" cy="12" r="10" /></svg>
-                                            }, {
-                                                name: "Facebook",
-
-                                                icon: <svg
-                                                    width="14"
-                                                    height="14"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="#E8B4B8"
-                                                    strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
-                                            }, {
-                                                name: "Instagram",
-
-                                                icon: <svg
-                                                    width="14"
-                                                    height="14"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="#E8B4B8"
-                                                    strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" /></svg>
-                                            }, {
-                                                name: "YouTube",
-
-                                                icon: <svg
-                                                    width="14"
-                                                    height="14"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="#E8B4B8"
-                                                    strokeWidth="1.5"><path
-                                                        d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" /><polygon
-                                                        points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"
-                                                        fill="none"
-                                                        stroke="#E8B4B8" /></svg>
-                                            }].map(platform => <button
-                                                key={platform.name}
-                                                onClick={() => handleShare(platform.name)}
-                                                className="flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300"
-                                                title={platform.name}>
-                                                {platform.icon}
-                                            </button>)}
-                                        </div>}
-                                    </div>
-                                    {}
-                                    <button
-                                        onClick={() => setSaved(!saved)}
-                                        className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300"
-                                        aria-label="Save">
-                                        <svg
-                                            className="transition-transform duration-300 group-hover:scale-110"
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill={saved ? "#E8B4B8" : "none"}
-                                            stroke="#E8B4B8"
-                                            strokeWidth="1.5"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round">
-                                            <path
-                                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
+                            <h1
+                                className="font-serif text-[26px] lg:text-[34px] font-light text-[#F5F0EB] leading-[1.05] tracking-[0.02em]">
+                                {productName}
+                            </h1>
                             {}
                             <p
                                 className="hidden lg:block font-serif text-[26px] lg:text-[28px] font-light text-[#F5F0EB] mt-3 tracking-[0.02em]">
