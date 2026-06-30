@@ -627,7 +627,7 @@ export function ProductPageClient(
                                 const selectedColor = allColors.find(c => c.matType === materialType && c.opt === materialOption);
                                 return (<div className="lg:mb-4">
                                     {/* Mobile: single-row color circles */}
-                                    <div className="flex gap-4 lg:hidden overflow-x-auto scrollbar-hide py-2 justify-center">
+                                    <div className="flex gap-9 lg:hidden overflow-x-auto scrollbar-hide py-2 justify-center">
                                         {allColors.map(c => {
                                             const isSelected = materialType === c.matType && materialOption === c.opt;
                                             const swatchImage = galleryImages[c.globalIdx];
