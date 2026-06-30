@@ -288,13 +288,13 @@ export const products: Product[] = [
     slug: "meteorite-ring-sofa",
     name: "Meteorite Ring Sofa",
     animal: "Meteorite",
-    tagline: "Cosmic Impact, Grounded Comfort",
+    tagline: "Sculptural Seating, Born from the Cosmos",
     description:
-      "The Meteorite Ring Sofa captures the raw beauty of a celestial body frozen at the moment of impact. Its distinctive ring silhouette and crater-textured surface create a seating experience that is both sculptural and deeply comfortable — a conversation piece that transforms any space into a gallery of cosmic wonder.",
+      "The Meteorite Ring Sofa captures the raw beauty of a celestial body frozen at the moment of impact. Its distinctive ring silhouette and crater-textured surface create a seating experience that is both sculptural and deeply comfortable — a conversation piece that transforms any space into a gallery of cosmic wonder. A sculptural circular sofa inspired by celestial forms, featuring a galvanized steel tube frame, high-density shaped foam, and a 360-degree conversation-friendly design.",
     concept:
-      "A meteorite strikes the earth not with destruction but with transformation — the energy of the cosmos made tangible. The Meteorite Ring Sofa embodies this moment of cosmic impact. Its ring form evokes the crater left by a celestial visitor, while the textured surface recalls the fusion crust of a real meteorite — rough, organic, and utterly unique. The circular embrace of the ring creates a natural gathering space, an intimate orbit where conversation flows like gravity. This is furniture that reminds you the universe is both vast and personal.",
+      "Inspired by celestial bodies and orbital forms, the Meteorite Ring Sofa is more than a place to sit — it is a sculptural statement. Its circular 360-degree design naturally encourages conversation and connection, making it an ideal centerpiece for open-plan homes, creative studios, and boutique hospitality spaces.",
     interiorContext:
-      "The Meteorite Ring Sofa's circular form makes it a natural centerpiece for open-plan living spaces, creative studios, and boutique hospitality environments. Its compact footprint fits surprisingly well in urban apartments, while its 360-degree design invites conversation from every angle. Best placed where it can be viewed in the round — center of room, near floor-to-ceiling windows, or as a room divider in open spaces.",
+      "Whether positioned beside floor-to-ceiling windows or placed at the center of a room, it transforms everyday living into a more artistic experience.",
     priceRange: {
       americas: [3500, 3500],
       europe: [3500, 3500],
@@ -310,10 +310,10 @@ export const products: Product[] = [
       capacity: "1-seater, up to 150 kg",
     },
     materials: [
-      "Solid hardwood frame (FSC-certified)",
-      "High-density foam with down feather wrap",
-      "Meteorite-textured premium fabric",
-      "Sculpted matte details",
+      "Galvanized steel tube frame",
+      "High-density shaped foam core",
+      "Meteorite-textured premium upholstery",
+      "Integrated sculpted metal base",
     ],
     materialOptions: [
       {

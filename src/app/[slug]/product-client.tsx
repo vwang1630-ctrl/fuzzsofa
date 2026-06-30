@@ -47,6 +47,21 @@ export function ProductPageClient(
         "silverback-sofa": "/products/silverback/story-sketch.jpg"
     };
 
+    const materialsCardsMap: Record<string, Array<{title: string; description: string; icon: string}>> = {
+        "meteorite-ring-sofa": [
+            { title: "GALVANIZED STEEL TUBE FRAME", description: "Precision-welded galvanized steel tube framework engineered for exceptional stability and long-term durability while maintaining the sofa's sculptural form.", icon: "frame" },
+            { title: "HIGH-DENSITY SHAPED FOAM", description: "High-density shaped foam designed to maintain its form and provide consistent support, preserving comfort through years of everyday use.", icon: "cushion" },
+            { title: "UPHOLSTERY", description: "Cloud Touch and Wild Touch fabrics create a tactile experience that feels both contemporary and inviting.", icon: "fabric" },
+            { title: "INTEGRATED METAL BASE", description: "A matte-finished metal base that seamlessly continues the sofa's orbital and monolithic silhouette.", icon: "base" },
+        ],
+        "owl-sofa": [
+            { title: "STEEL FRAME", description: "Hand-welded steel core provides a foundation of exceptional strength and lasting stability for years of daily use.", icon: "frame" },
+            { title: "CUSHION CORE", description: "High-density foam with a down feather wrap delivers cloud-like comfort that holds its shape over time.", icon: "cushion" },
+            { title: "UPHOLSTERY", description: "Cloud Touch and Wild Touch fabrics create a tactile experience that feels both contemporary and inviting.", icon: "fabric" },
+            { title: "WALNUT FEET", description: "FSC-certified solid walnut with a hand-brushed matte finish, grounding each piece in natural elegance.", icon: "base" },
+        ],
+    };
+
     const madeBgMap: Record<string, string> = {
         "owl-sofa": "/products/owl/made-bg.webp",
         "meteorite-ring-sofa": "/products/meteorite-ring/made-bg.webp"
@@ -75,16 +90,16 @@ export function ProductPageClient(
 
         "meteorite-ring-sofa": [{
             image: "/products/meteorite-ring/spaces/space-1.webp",
-            title: t("luxuryVillas" as TranslationKeys) || "Luxury Villas",
-            desc: "Open-plan living with sculptural presence"
+            title: "INTERSTELLAR LOUNGE",
+            desc: "A living room that feels like an observation deck among the stars — but with better coffee and better company."
         }, {
             image: "/products/meteorite-ring/spaces/space-2.webp",
-            title: t("privateLibraries" as TranslationKeys) || "Private Libraries",
-            desc: "Intimate reading spaces with character"
+            title: "DUNE RETREAT",
+            desc: "Quiet, contemplative, and warm enough for a rainy afternoon read."
         }, {
             image: "/products/meteorite-ring/spaces/space-3.webp",
-            title: t("boutiqueHotels" as TranslationKeys) || "Boutique Hotels",
-            desc: "Statement pieces in curated lobbies"
+            title: "GALACTIC SALON",
+            desc: "A sculptural gathering place designed for long conversations and memorable evenings."
         }]
     };
 
@@ -723,9 +738,14 @@ export function ProductPageClient(
                             </div>
                             <div
                                 className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
-                                <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg
+                                <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
+                                    {product.slug === "meteorite-ring-sofa" ? (
+                                        <>Tested Load Capacity: Up to {product.specifications.capacity}kg</>
+                                    ) : (
+                                        <>≈ {product.specifications.weight}kg <span className="opacity-40">·</span>含包装 ≈ 60 kg <span className="opacity-40">·</span>承重 {product.specifications.capacity}kg</>
+                                    )}
                                                                     </p>
-                                <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">* Handcrafted — dimensions may vary ±1–3cm. Weight varies slightly by fabric batch. All figures are approximate.
+                                <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">* Handcrafted product. Dimensions may vary by ±1–3 cm. Weight varies slightly by fabric batch.
                                                                     </p>
                             </div>
                         </div>
@@ -886,8 +906,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">Steel Frame</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">Hand-welded steel core, FSC-certified walnut</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].title}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].description}</p>
                                 </div>
                                 {}
                                 <div
@@ -915,8 +935,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">Cushion Core</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">High-density foam with down feather wrap</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].title}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].description}</p>
                                 </div>
                                 {}
                                 <div
@@ -954,8 +974,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">Upholstery</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">Cloud Touch & Wild Touch fabric</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].title}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].description}</p>
                                 </div>
                                 {}
                                 <div
@@ -1002,8 +1022,8 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">Brass Feet</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">Solid brass with brushed matte finish</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].title}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{(materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].description}</p>
                                 </div>
                             </div>
                         </div>
