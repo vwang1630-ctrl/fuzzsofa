@@ -312,8 +312,8 @@ export function ProductPageClient(
                 }} />
             {}
             <section className="bg-[#0A0A0A]">
-                <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-8 md:pt-12 pb-12">
-                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:gap-12">
+                <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 lg:gap-12">
                         {}
                         <div className="flex flex-col">
                             {}
@@ -417,13 +417,13 @@ export function ProductPageClient(
                         {}
                         <div className="flex flex-col">
                             {}
-                            <p className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase mb-3">
+                            <p className="text-[11px] lg:text-[12px] text-[#8A8580] tracking-[0.2em] uppercase mb-2 lg:mb-3">
                                 {collectionName}
                             </p>
                             {}
                             <div className="flex items-start justify-between gap-3">
                                 <h1
-                                    className="font-serif text-[28px] md:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
+                                    className="font-serif text-[24px] md:text-[28px] lg:text-[32px] font-light text-[#F5F0EB] leading-[1.1] tracking-[0.02em]">
                                     {productName}
                                 </h1>
                                 <div className="flex items-center gap-2 mt-1 flex-shrink-0">
@@ -534,11 +534,11 @@ export function ProductPageClient(
                             </div>
                             {}
                             <p
-                                className="font-serif text-[24px] md:text-[28px] font-light text-[#F5F0EB]/70 mt-1">
+                                className="font-serif text-[20px] md:text-[24px] lg:text-[28px] font-light text-[#F5F0EB]/70 mt-1">
                                 {displayPrice}
                             </p>
                             {}
-                            <p className="text-[15px] text-[#8A8580] leading-[1.7] mt-3">
+                            <p className="text-[13px] lg:text-[15px] text-[#8A8580] leading-[1.7] mt-3">
                                 {productTagline}
                             </p>
                             {}
@@ -710,19 +710,19 @@ export function ProductPageClient(
             <section className="bg-[#0F0E0E]">
                 <div className="max-w-[1200px] mx-auto px-6 py-6">
                     {}
-                    <div className="mb-6">
+                    <div className="mb-4 lg:mb-6">
                         <p
-                            className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3 flex items-center gap-3">
+                            className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2 lg:mb-3 flex items-center gap-3">
                             <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys)}
                         </p>
                         <h2
-                            className="font-serif text-2xl md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
+                            className="font-serif text-xl lg:text-2xl xl:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
                             {t("seeItInRealSpaces" as TranslationKeys)}
                         </h2>
                     </div>
                     {}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer">
+                    <div className="flex lg:grid lg:grid-cols-3 gap-4 lg:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 lg:mx-0 lg:px-0 pb-2 lg:pb-0">
+                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[85vw] lg:w-auto snap-start">
                             {}
                             <div className="relative aspect-[2/1] bg-[#111] overflow-hidden mb-4">
                                 {space.image ? <img
@@ -757,59 +757,42 @@ export function ProductPageClient(
                         <div
                             className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                     </div>
-                    <div
-                        className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
+                    {}
+                    <div className="mt-12">
+                        <p
+                            className="text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 flex items-center gap-3">
+                            <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
+                        </p>
+                        <h3
+                            className="font-serif text-[28px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-3">
+                            {productName}
+                        </h3>
+                        <p className="text-[18px] md:text-[20px] text-[#E8B4B8]/50 italic mb-5 font-serif">
+                            {productTagline}
+                        </p>
                         {}
-                        <div className="flex-1">
-                            <p
-                                className="text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 flex items-center gap-3">
-                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
-                                                            </p>
-                            <h3
-                                className="font-serif text-[36px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-3">
-                                {productName}
-                            </h3>
-                            <p className="text-[20px] text-[#E8B4B8]/50 italic mb-5 font-serif">
-                                {productTagline}
-                            </p>
-                            <div className="text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
-                                <p>{productConcept}</p>
-                                <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
-                            </div>
-                            <div
-                                className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
-                                <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
-                                    {product.slug === "meteorite-ring-sofa" ? (
-                                        <>{t("testedLoadCapacity" as TranslationKeys)}</>
-                                    ) : (
-                                        <>{t("specWeight" as TranslationKeys).replace("{weight}", String(product.specifications.weight))} <span className="opacity-40">·</span>{t("specWeightWithPkg" as TranslationKeys)} <span className="opacity-40">·</span>{t("specLoadCapacity" as TranslationKeys).replace("{capacity}", String(product.specifications.capacity))}</>
-                                    )}
-                                                                    </p>
-                                <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">{t("specDisclaimer" as TranslationKeys)}
-                                                                    </p>
-                            </div>
-                        </div>
-                        {}
-                        <div className="w-[220px] lg:w-[260px] shrink-0">
-                            <div className="flex flex-col items-center">
+                        <div className="flex flex-col lg:flex-row gap-4 lg:gap-10 items-start">
+                            {}
+                            <div className="w-full lg:w-[300px] xl:w-[340px] shrink-0 order-1 lg:order-2 mb-2 lg:mb-0">
                                 <div
-                                    className="relative bg-[#1A1918] rounded-sm overflow-hidden w-full"
+                                    className="relative bg-[#1A1918] rounded-sm overflow-hidden"
                                     style={{
                                         border: "1px solid rgba(255,255,255,0.08)"
                                     }}>
-                                    <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10">
+                                    {}
+                                    <div className="absolute top-3 left-3 w-[20px] h-[20px] z-10 hidden lg:block">
                                         <div className="absolute top-0 left-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute top-0 left-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
-                                    <div className="absolute top-3 right-3 w-[20px] h-[20px] z-10">
+                                    <div className="absolute top-3 right-3 w-[20px] h-[20px] z-10 hidden lg:block">
                                         <div className="absolute top-0 right-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute top-0 right-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
-                                    <div className="absolute bottom-3 left-3 w-[20px] h-[20px] z-10">
+                                    <div className="absolute bottom-3 left-3 w-[20px] h-[20px] z-10 hidden lg:block">
                                         <div className="absolute bottom-0 left-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute bottom-0 left-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
-                                    <div className="absolute bottom-3 right-3 w-[20px] h-[20px] z-10">
+                                    <div className="absolute bottom-3 right-3 w-[20px] h-[20px] z-10 hidden lg:block">
                                         <div className="absolute bottom-0 right-0 w-[20px] h-px bg-[#E8B4B8]/20" />
                                         <div className="absolute bottom-0 right-0 w-px h-[20px] bg-[#E8B4B8]/20" />
                                     </div>
@@ -819,33 +802,53 @@ export function ProductPageClient(
                                         width={500}
                                         height={500}
                                         className="w-full h-auto block opacity-70 brightness-[0.85] contrast-[0.9]" />
+                                    {}
+                                    <div
+                                        className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1A1918] via-[#1A1918]/80 to-transparent pt-8 pb-3 px-3 lg:px-4">
+                                        <div className="flex items-end justify-between gap-2">
+                                            <div className="flex gap-3 lg:gap-4">
+                                                <div className="text-center">
+                                                    <span className="block text-[13px] lg:text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsW" as TranslationKeys)}</span>
+                                                    <span className="text-[10px] lg:text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
+                                                </div>
+                                                <div className="text-center">
+                                                    <span className="block text-[13px] lg:text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsD" as TranslationKeys)}</span>
+                                                    <span className="text-[10px] lg:text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
+                                                </div>
+                                                <div className="text-center">
+                                                    <span className="block text-[13px] lg:text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsH" as TranslationKeys)}</span>
+                                                    <span className="text-[10px] lg:text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
+                                                </div>
+                                                <div className="text-center">
+                                                    <span className="block text-[11px] lg:text-[15px] font-light text-[#E8B4B8] leading-none font-serif">{t("seatHeightUnit" as TranslationKeys)}</span>
+                                                    <span className="text-[10px] lg:text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
+                                                </div>
+                                            </div>
+                                            <button
+                                                onClick={() => setUseCm(!useCm)}
+                                                className="text-[10px] lg:text-[11px] tracking-[0.12em] uppercase text-[#8A8580] border border-[#333] rounded-sm px-1.5 lg:px-2 py-0.5 lg:py-1 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300 shrink-0">
+                                                {useCm ? "IN" : "CM"}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flex items-center justify-center gap-6 mt-3">
-                                    <div className="text-center">
-                                        <span
-                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsW" as TranslationKeys)}</span>
-                                        <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.width}cm` : `${(Number(product.specifications.width) / 2.54).toFixed(1)}"`}</span>
-                                    </div>
-                                    <div className="text-center">
-                                        <span
-                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsD" as TranslationKeys)}</span>
-                                        <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.depth}cm` : `${(Number(product.specifications.depth) / 2.54).toFixed(1)}"`}</span>
-                                    </div>
-                                    <div className="text-center">
-                                        <span
-                                            className="block text-[18px] font-light text-[#E8B4B8] leading-none font-serif">{t("dimensionsH" as TranslationKeys)}</span>
-                                        <span className="text-[12px] font-light text-[#8A8580]">{useCm ? `${product.specifications.height}cm` : `${(Number(product.specifications.height) / 2.54).toFixed(1)}"`}</span>
-                                    </div>
-                                    <div className="text-center">
-                                        <span
-                                            className="block text-[15px] font-light text-[#E8B4B8] leading-none font-serif">{t("seatHeightUnit" as TranslationKeys)}</span>
-                                        <span className="text-[12px] font-light text-[#8A8580] font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
-                                    </div>
-                                    <button
-                                        onClick={() => setUseCm(!useCm)}
-                                        className="ml-1 text-[12px] tracking-[0.12em] uppercase text-[#8A8580] border border-[#333] rounded-sm px-2.5 py-1 hover:border-[#E8B4B8] hover:text-[#E8B4B8] transition-colors duration-300">
-                                        {useCm ? "IN" : "CM"}
-                                    </button>
+                            </div>
+                            {}
+                            <div className="flex-1 order-2 lg:order-1">
+                                <div className="text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
+                                    <p>{productConcept}</p>
+                                    <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
+                                </div>
+                                <div
+                                    className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
+                                    <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
+                                        {product.slug === "meteorite-ring-sofa" ? (
+                                            <>{t("testedLoadCapacity" as TranslationKeys)}</>
+                                        ) : (
+                                            <>{t("specWeight" as TranslationKeys).replace("{weight}", String(product.specifications.weight))} <span className="opacity-40">·</span>{t("specWeightWithPkg" as TranslationKeys)} <span className="opacity-40">·</span>{t("specLoadCapacity" as TranslationKeys).replace("{capacity}", String(product.specifications.capacity))}</>
+                                        )}
+                                    </p>
+                                    <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">{t("specDisclaimer" as TranslationKeys)}</p>
                                 </div>
                             </div>
                         </div>
@@ -885,79 +888,42 @@ export function ProductPageClient(
                                 <span className="opacity-30 mr-3">—</span>{t("materialsCraftsmanship" as TranslationKeys)}
                                                                                                                                 <span className="opacity-30 ml-3">—</span>
                             </p>
-                            <div className="grid grid-cols-4 gap-5 max-w-[780px] mx-auto mb-11 relative">
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4 max-w-[780px] mx-auto mb-11 relative">
                                 {}
                                 <div
-                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
+                                    className="flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
                                         }}>
                                         <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]">
-                                            <rect
-                                                x="3"
-                                                y="3"
-                                                width="18"
-                                                height="18"
-                                                rx="2"
-                                                fill="none"
-                                                stroke="#E8B4B8"
-                                                strokeWidth="1.2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round" />
-                                            <line
-                                                x1="3"
-                                                y1="9"
-                                                x2="21"
-                                                y2="9"
-                                                stroke="#E8B4B8"
-                                                strokeWidth="1.2"
-                                                strokeLinecap="round" />
-                                            <line
-                                                x1="3"
-                                                y1="15"
-                                                x2="21"
-                                                y2="15"
-                                                stroke="#E8B4B8"
-                                                strokeWidth="1.2"
-                                                strokeLinecap="round" />
-                                            <line
-                                                x1="9"
-                                                y1="3"
-                                                x2="9"
-                                                y2="21"
-                                                stroke="#E8B4B8"
-                                                strokeWidth="1.2"
-                                                strokeLinecap="round" />
-                                            <line
-                                                x1="15"
-                                                y1="3"
-                                                x2="15"
-                                                y2="21"
-                                                stroke="#E8B4B8"
-                                                strokeWidth="1.2"
-                                                strokeLinecap="round" />
+                                            <rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                                            <line x1="3" y1="9" x2="21" y2="9" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                            <line x1="3" y1="15" x2="21" y2="15" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                            <line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
+                                            <line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" />
                                         </svg>
                                     </div>
-                                    <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].descKey as TranslationKeys)}</p>
+                                    <div className="flex-1 min-w-0">
+                                        <h4 className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].titleKey as TranslationKeys)}</h4>
+                                        <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].descKey as TranslationKeys)}</p>
+                                    </div>
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
+                                    className="flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -974,19 +940,21 @@ export function ProductPageClient(
                                             <circle cx="12" cy="12" r="1" fill="#E8B4B8" />
                                         </svg>
                                     </div>
-                                    <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].descKey as TranslationKeys)}</p>
+                                    <div className="flex-1 min-w-0">
+                                        <h4
+                                            className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].titleKey as TranslationKeys)}</h4>
+                                        <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].descKey as TranslationKeys)}</p>
+                                    </div>
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
+                                    className="flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -1013,19 +981,21 @@ export function ProductPageClient(
                                                 strokeLinecap="round" />
                                         </svg>
                                     </div>
-                                    <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].descKey as TranslationKeys)}</p>
+                                    <div className="flex-1 min-w-0">
+                                        <h4
+                                            className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].titleKey as TranslationKeys)}</h4>
+                                        <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].descKey as TranslationKeys)}</p>
+                                    </div>
                                 </div>
                                 {}
                                 <div
-                                    className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
+                                    className="flex lg:flex-col items-start lg:items-center gap-3 lg:gap-0 py-4 lg:py-6 px-4 lg:px-3 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
                                     <div
                                         className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
                                         className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-[#E8B4B8]/15" />
                                     <div
-                                        className="w-10 h-10 rounded-full mx-auto mb-3 flex items-center justify-center"
+                                        className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center"
                                         style={{
                                             background: "rgba(232,180,184,0.1)",
                                             border: "1px solid rgba(232,180,184,0.22)"
@@ -1061,9 +1031,11 @@ export function ProductPageClient(
                                                 strokeLinejoin="round" />
                                         </svg>
                                     </div>
-                                    <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].descKey as TranslationKeys)}</p>
+                                    <div className="flex-1 min-w-0">
+                                        <h4
+                                            className="text-[11px] lg:text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1 lg:mb-[6px] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].titleKey as TranslationKeys)}</h4>
+                                        <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] lg:text-center">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].descKey as TranslationKeys)}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1081,7 +1053,7 @@ export function ProductPageClient(
                     <div
                         className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
-                <div className="relative max-w-[700px] mx-auto px-6 py-[140px] text-center">
+                <div className="relative max-w-[700px] mx-auto px-6 py-20 lg:py-[140px] text-center">
                     <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
                         {t("freeWhiteGlove")}
                     </p>
@@ -1331,32 +1303,38 @@ export function ProductPageClient(
                 </div>
             </div>}
             {/* Mobile sticky bottom CTA */}
-            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-md border-t border-[#1A1A1A] px-4 py-3 flex items-center gap-3">
-                <div className="flex-1 min-w-0">
-                    <p className="font-serif text-[20px] font-light text-[#F5F0EB]/80 leading-tight">{displayPrice}</p>
-                    <p className="text-[10px] text-[#8A8580]/60 tracking-[0.06em] mt-0.5">
-                        {t("leadTimeShort" as TranslationKeys)} · {t("freeWhiteGloveShort" as TranslationKeys)}
-                    </p>
+            {/* Mobile Sticky CTA */}
+            <div className="lg:hidden sticky-cta fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A] border-t border-[#1A1A1A]">
+                <div className="px-4 py-2.5 flex items-center gap-2.5">
+                    {/* Price Info */}
+                    <div className="flex-1 min-w-0">
+                        <p className="font-serif text-[18px] font-light text-[#F5F0EB] leading-tight">{displayPrice}</p>
+                        <p className="text-[9px] text-[#8A8580]/50 tracking-[0.1em] uppercase mt-0.5">
+                            {t("leadTimeShort" as TranslationKeys)} · {t("freeWhiteGloveShort" as TranslationKeys)}
+                        </p>
+                    </div>
+                    {/* Add to Cart - Icon */}
+                    <button
+                        onClick={handleAddToCart}
+                        className="flex-shrink-0 w-11 h-11 flex items-center justify-center transition-all duration-300 rounded-sm"
+                        style={{
+                            background: addedToCart ? "#E8B4B8" : "transparent",
+                            border: addedToCart ? "none" : "1px solid #333",
+                        }}>
+                        {addedToCart ? (
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                        ) : (
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                        )}
+                    </button>
+                    {/* Buy Now - Primary CTA */}
+                    <button
+                        onClick={handleBuyNow}
+                        className="flex-shrink-0 px-5 py-2.5 bg-[#E8B4B8] text-[#0A0A0A] font-medium text-[11px] tracking-[0.15em] uppercase transition-all duration-300 rounded-sm active:scale-[0.97]"
+                        style={{ minHeight: 44 }}>
+                        {t("buyNow" as TranslationKeys)}
+                    </button>
                 </div>
-                <button
-                    onClick={handleAddToCart}
-                    className="flex-shrink-0 px-5 py-3.5 text-[#0A0A0A] font-medium text-[12px] tracking-[0.15em] uppercase transition-all duration-300 rounded-sm"
-                    style={{
-                        background: addedToCart ? "#111" : "#E8B4B8",
-                        border: addedToCart ? "1px solid #E8B4B8" : "none",
-                        minHeight: 48
-                    }}>
-                    {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : t("addToCart")}
-                </button>
-                <button
-                    onClick={handleBuyNow}
-                    className="flex-shrink-0 px-5 py-3.5 bg-transparent text-[#E8B4B8] text-[12px] tracking-[0.15em] uppercase transition-all duration-300 rounded-sm hover:bg-[#E8B4B8]/8"
-                    style={{
-                        border: "1px solid #E8B4B8",
-                        minHeight: 48
-                    }}>
-                    {t("buyNow" as TranslationKeys)}
-                </button>
             </div>
         </>
     );
