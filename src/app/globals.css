@@ -325,3 +325,29 @@ img {
     padding-bottom: 110px; /* prevent sticky CTA overlap */
   }
 }
+
+/* ─── Tablet (768px–1024px) adaptive ─── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    padding: 0 32px;
+  }
+
+  .hero-grid {
+    gap: 36px;
+    align-items: flex-start;
+  }
+
+  .hero-carousel,
+  .hero-info {
+    max-width: 520px;
+  }
+
+  .feature-grid,
+  .material-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lifestyle-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
