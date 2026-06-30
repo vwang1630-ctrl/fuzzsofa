@@ -356,16 +356,7 @@ export function ProductPageClient(
                             </div>
                         ))}
                     </div>
-                    {/* Thin progress bar — Instagram Stories style */}
-                    <div className="absolute top-0 left-0 right-0 flex gap-1 px-3 pt-2.5 z-10">
-                        {galleryImages.map((_, idx) => (
-                            <div key={idx} className="flex-1 h-[2px] rounded-full overflow-hidden bg-white/15">
-                                <div
-                                    className={`h-full rounded-full transition-all duration-500 ease-out ${activeImage >= idx ? "bg-[#F5F0EB]" : "bg-transparent"}`}
-                                />
-                            </div>
-                        ))}
-                    </div>
+
                     {/* Share + Wishlist floating on image */}
                     <div className="absolute top-2.5 right-3 z-10 flex items-center gap-2">
                         <div className="relative" ref={shareMenuRef}>
@@ -434,9 +425,9 @@ export function ProductPageClient(
                             </svg>
                         </button>
                     </div>
-                    {/* Image counter — centered below image */}
-                    <div className="flex justify-center pt-3 pb-1">
-                        <span className="text-[11px] text-[#F5F0EB]/30 tracking-[0.15em] font-light">{activeImage + 1}<span className="text-[#F5F0EB]/15"> / {galleryImages.length}</span></span>
+                    {/* Image counter — inside image, bottom center */}
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10">
+                        <span className="text-[11px] text-white/40 tracking-[0.15em] font-light drop-shadow-lg">{activeImage + 1}<span className="text-white/20"> / {galleryImages.length}</span></span>
                     </div>
                 </div>
 
@@ -478,11 +469,11 @@ export function ProductPageClient(
                                             </svg>
                                         </button>
                                         {showShareMenu && <div
-                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
+                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 py-2 px-3 z-50"
                                             style={{
-                                                background: "#0A0A0A",
-                                                border: "1px solid rgba(232,180,184,0.25)",
-                                                boxShadow: "0 4px 16px rgba(0,0,0,0.6)"
+                                                background: "rgba(10,10,10,0.85)",
+                                                backdropFilter: "blur(12px)",
+                                                boxShadow: "0 4px 16px rgba(0,0,0,0.4)"
                                             }}>
                                             {[{
                                                 name: "Pinterest",
@@ -621,8 +612,8 @@ export function ProductPageClient(
                                         <span className="hidden lg:inline"> — </span>
                                         <span className="hidden lg:inline text-[#F5F0EB]/40 normal-case tracking-[0.02em]">{t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}</span>
                                     </label>
-                                    {/* Mobile: 3-per-row grid of color circles */}
-                                    <div className="grid grid-cols-3 gap-3 lg:hidden">
+                                    {/* Mobile: single-row color circles with text below */}
+                                    <div className="flex gap-4 lg:hidden overflow-x-auto scrollbar-hide pb-1">
                                         {mat.options.map((opt, optIdx) => {
                                             const colorHex = mat.colors[optIdx];
                                             const isSelected = materialType === mat.type && materialOption === opt;
@@ -639,17 +630,13 @@ export function ProductPageClient(
                                             return (
                                                 <button
                                                     key={opt}
-                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); }}
-                                                    className="flex items-center gap-2.5 py-2 px-2.5 rounded-sm transition-all duration-200"
-                                                    style={{
-                                                        background: isSelected ? "rgba(232,180,184,0.08)" : "transparent",
-                                                        border: isSelected ? "1px solid rgba(232,180,184,0.3)" : "1px solid transparent"
-                                                    }}
+                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); setActiveImage(globalIdx); }}
+                                                    className="flex flex-col items-center gap-1.5 transition-all duration-200 flex-shrink-0"
                                                 >
-                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden flex-shrink-0 ${isSelected ? "w-7 h-7 ring-1 ring-[#E8B4B8]" : "w-7 h-7 ring-1 ring-[#333]"}`}>
-                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={28} height={28} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                    <span className={`rounded-full transition-all duration-300 overflow-hidden ${isSelected ? "w-8 h-8 ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "w-8 h-8 ring-1 ring-[#333]"}`}>
+                                                        {swatchImage ? <img src={swatchImage.src} alt={opt} width={32} height={32} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
                                                     </span>
-                                                    <span className={`text-[10px] tracking-[0.03em] truncate ${isSelected ? "text-[#F5F0EB]/80" : "text-[#8A8580]/60"}`}>{t(colorKey as TranslationKeys)}</span>
+                                                    <span className={`text-[9px] tracking-[0.02em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]/80" : "text-[#8A8580]/50"}`}>{t(colorKey as TranslationKeys).split(" ").pop()}</span>
                                                 </button>
                                             );
                                         })}
@@ -671,7 +658,7 @@ export function ProductPageClient(
                                             return (
                                                 <button
                                                     key={opt}
-                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); }}
+                                                    onClick={() => { setMaterialType(mat.type); setMaterialOption(opt); setActiveImage(globalIdx); }}
                                                     className="flex items-center gap-2 transition-all duration-300 group">
                                                     <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
                                                         {swatchImage ? <img src={swatchImage.src} alt={opt} width={32} height={32} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
@@ -775,22 +762,14 @@ export function ProductPageClient(
                                 <span className="text-[#8A8580]/20">|</span>
                                 <span>{t("madeToOrderShort" as TranslationKeys)}</span>
                             </div>
-                            {}
+                            {/* Desktop: Preview in Room */}
                             <button
                                 onClick={() => setShowRoomViz(true)}
-                                className="mt-5 w-full lg:w-auto lg:mt-4 flex items-center justify-center gap-2.5 py-3 lg:py-0 text-[11px] tracking-[0.15em] uppercase transition-all duration-300 rounded-sm lg:rounded-none hover:text-[#E8B4B8] border border-[#333] lg:border-0 text-[#8A8580]/70 hover:border-[#E8B4B8]/40 active:scale-[0.98] lg:active:scale-100">
-                                <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round">
-                                    <path
-                                        d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                                    <polyline points="9 22 9 12 15 12 15 22" />
+                                className="hidden lg:flex items-center gap-2 mt-4 text-[11px] tracking-[0.15em] uppercase transition-all duration-300 text-[#8A8580]/70 hover:text-[#E8B4B8]">
+                                <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+                                    <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
+                                    <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                                    <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                                 </svg>
                                 {t("previewInYourRoom" as TranslationKeys)}
                             </button>
@@ -1405,7 +1384,17 @@ export function ProductPageClient(
                         {/* Price line */}
                         <div className="flex items-baseline justify-between">
                             <span className="font-serif text-[18px] font-light text-[#F5F0EB]">{displayPrice}</span>
-                            <span className="text-[10px] text-[#8A8580]/60 tracking-[0.08em]">{t("leadTimeShort" as TranslationKeys)} · {t("freeWhiteGloveShort" as TranslationKeys)}</span>
+                            <button
+                                onClick={() => setShowRoomViz(true)}
+                                className="flex items-center gap-1 text-[#8A8580]/60 hover:text-[#E8B4B8] transition-colors"
+                                aria-label={t("previewInYourRoom" as TranslationKeys)}>
+                                <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+                                    <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.3" />
+                                    <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                                    <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                                </svg>
+                                <span className="text-[9px] tracking-[0.1em] uppercase">{t("previewInYourRoom" as TranslationKeys)}</span>
+                            </button>
                         </div>
                         {/* Single full-width CTA */}
                         <button
