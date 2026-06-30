@@ -351,3 +351,33 @@ img {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ─── Desktop (1024px+) adaptive ─── */
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 48px;
+    max-width: 1100px;
+  }
+
+  .hero-grid {
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero-carousel,
+  .hero-info {
+    max-width: 520px;
+  }
+
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .material-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
