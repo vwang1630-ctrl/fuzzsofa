@@ -348,7 +348,16 @@ export function ProductPageClient(
             <section className="bg-[#0A0A0A]">
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 lg:pt-8 pb-8 lg:pb-12">
                     {/* Mobile Gallery — swipeable, full-bleed */}
-                    <div className="lg:hidden -mx-4 md:-mx-8">
+                    <div className="lg:hidden -mx-4 md:-mx-8 relative">
+                        {/* Fixed Share & Wishlist overlay — always visible */}
+                        <div className="absolute top-3 right-4 flex items-center gap-2 z-20">
+                            <button onClick={() => setShowShareMenu(!showShareMenu)} className="flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A]/50 backdrop-blur-md border border-white/10 transition-all duration-300" aria-label="Share">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
+                            </button>
+                            <button onClick={() => setSaved(!saved)} className="flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A]/50 backdrop-blur-md border border-white/10 transition-all duration-300" aria-label="Save">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke={saved ? "#E8B4B8" : "#F5F0EB"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                            </button>
+                        </div>
                         <div
                             ref={mobileGalleryRef}
                             className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
@@ -362,25 +371,16 @@ export function ProductPageClient(
                                         {img.src ? <img src={img.src} alt={productName} className="w-full h-full object-cover" /> : <div className="absolute inset-0 flex items-center justify-center"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
                                         {/* Gradient top for button readability */}
                                         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#0A0A0A]/40 to-transparent pointer-events-none" />
-                                        {/* Share & Wishlist overlay — mobile only */}
-                                        {idx === activeImage && <div className="absolute top-3 right-4 flex items-center gap-2 z-10">
-                                            <button onClick={() => setShowShareMenu(!showShareMenu)} className="flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A]/50 backdrop-blur-md border border-white/10 transition-all duration-300" aria-label="Share">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
-                                            </button>
-                                            <button onClick={() => setSaved(!saved)} className="flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A]/50 backdrop-blur-md border border-white/10 transition-all duration-300" aria-label="Save">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke={saved ? "#E8B4B8" : "#F5F0EB"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
-                                            </button>
-                                        </div>}
                                         {/* Bottom gradient for counter */}
                                         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#0A0A0A]/30 to-transparent pointer-events-none" />
-                                        {/* Image counter — mobile only */}
-                                        {galleryImages.length > 1 && <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
-                                            <span className="text-[11px] tracking-[0.2em] text-white/60 font-light">{activeImage + 1}<span className="text-white/30 mx-0.5">/</span>{galleryImages.length}</span>
-                                        </div>}
                                     </div>
                                 </div>
                             ))}
                         </div>
+                        {/* Fixed Image counter overlay */}
+                        {galleryImages.length > 1 && <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
+                            <span className="text-[11px] tracking-[0.2em] text-white/60 font-light">{activeImage + 1}<span className="text-white/30 mx-0.5">/</span>{galleryImages.length}</span>
+                        </div>}
                         {/* Instagram Stories-style progress bar */}
                         {galleryImages.length > 1 && <div className="flex gap-1 px-4 pt-3 pb-1">
                             {galleryImages.map((_, idx) => (
