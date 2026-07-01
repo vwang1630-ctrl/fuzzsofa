@@ -1512,28 +1512,30 @@ export function ProductPageClient(
                 <CosmicInspiration lang={lang} />
             )}
             {/* Mobile Sticky CTA */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-lg border-t border-white/[0.04]" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
-                <div className="px-4 py-3 flex items-center gap-3">
-                    <div className="min-w-0 flex-1">
-                        <p className="font-serif text-[16px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
-                        <p className="text-[13px] text-[#8A8580] mt-0.5">{displayPrice}</p>
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#E8B4B8]/20" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "linear-gradient(to top, #0A0A0A 60%, #0A0A0A/0)" }}>
+                <div className="bg-[#111] px-5 pt-4 pb-4">
+                    <div className="flex items-baseline justify-between gap-3 mb-3">
+                        <p className="font-serif text-[18px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
+                        <p className="font-serif text-[18px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</p>
                     </div>
-                    <button
-                        onClick={() => setShowRoomViz(true)}
-                        className="flex items-center justify-center w-11 h-11 rounded-full border border-white/10 flex-shrink-0 active:scale-95 transition-transform"
-                        aria-label="Preview in room">
-                        <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
-                            <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.2" />
-                            <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
-                            <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        </svg>
-                    </button>
-                    <button
-                        onClick={handleBuyNow}
-                        className="flex-shrink-0 px-6 py-3 text-[#0A0A0A] text-[12px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
-                        style={{ background: "#E8B4B8" }}>
-                        {t("buyNow" as TranslationKeys)}
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => setShowRoomViz(true)}
+                            className="flex items-center justify-center w-12 h-12 rounded-full border border-[#333] flex-shrink-0 active:scale-95 transition-all hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8"
+                            aria-label="Preview in room">
+                            <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+                                <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.2" />
+                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                            </svg>
+                        </button>
+                        <button
+                            onClick={handleBuyNow}
+                            className="flex-1 py-3.5 text-[#0A0A0A] text-[13px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform text-center"
+                            style={{ background: "#E8B4B8" }}>
+                            {t("buyNow" as TranslationKeys)}
+                        </button>
+                    </div>
                 </div>
             </div>
             {}
