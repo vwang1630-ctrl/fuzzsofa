@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
+import CosmicInspiration from "@/components/cosmic-inspiration";
 import type { Product } from "@/lib/products";
 import { getProduct, getPrice, formatPrice } from "@/lib/products";
 import { productJsonLd, faqJsonLd, breadcrumbJsonLd, itemPageJsonLd } from "@/lib/seo";
@@ -26,7 +27,8 @@ export function ProductPageClient(
     } = useCart();
 
     const {
-        t
+        t,
+        locale: lang
     } = useLanguage();
 
     const router = useRouter();
@@ -1503,6 +1505,10 @@ export function ProductPageClient(
                     <p className="mt-6 text-[12px] text-[#8A8580]/50 leading-relaxed">{t("specFooterNote" as TranslationKeys)}</p>
                 </div>
             </section>
+            {/* Cosmic Inspiration - only for meteorite product */}
+            {product.slug === 'meteorite-ring-sofa' && (
+                <CosmicInspiration lang={lang} />
+            )}
             {/* Mobile Sticky CTA */}
             <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-lg border-t border-white/[0.04]" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
                 <div className="px-4 py-3 flex items-center gap-3">
