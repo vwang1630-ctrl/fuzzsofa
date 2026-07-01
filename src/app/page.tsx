@@ -117,14 +117,14 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-[#0A0A0A]/10 md:hidden" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15 hidden md:block" />
 
-        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-10 lg:px-16 h-full flex flex-col justify-end pb-[15%] md:pb-[6%] md:pt-[8%] md:justify-start">
-          <p className="tracking-[0.35em] uppercase mb-2 md:mb-3 text-[9px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
+        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-10 lg:px-16 h-full flex flex-col justify-end pb-[12%] md:pb-[6%] md:pt-[8%] md:justify-start">
+          <p className="tracking-[0.3em] uppercase mb-1.5 md:mb-3 text-[8px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
             Fuzz Sofa Studio
           </p>
-          <h1 className="font-light leading-[1.1] tracking-[0.02em] mb-2 md:mb-5 animate-fade-in-delay-1 text-[1.75rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
+          <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-1.5 md:mb-4 animate-fade-in-delay-1 text-[1.5rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
             {t(sceneConfig.keys.title)}
           </h1>
-          <p className="font-light text-[11px] md:text-[15px] lg:text-base max-w-[320px] md:max-w-[380px] leading-[1.7] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '70' }}>
+          <p className="font-light text-[10px] md:text-[15px] lg:text-base max-w-[280px] md:max-w-[380px] leading-[1.6] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '60' }}>
             Made-to-order, delivered in 1–2 weeks
           </p>
           <div className="mt-4 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
@@ -138,7 +138,14 @@ export default function HomePage() {
               onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '80'; e.currentTarget.style.color = sceneConfig.accentColor; }}
               onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '50'; e.currentTarget.style.color = sceneConfig.accentColor + 'CC'; }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
+              <svg width="18" height="18" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 17L16 4L30 17V28H2V17Z" fill={sceneConfig.accentColor} fillOpacity="0.9" />
+                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke={sceneConfig.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                <path d="M9.5 20C9.5 18 11 16.5 13 16.5H19C21 16.5 22.5 18 22.5 20" stroke={sceneConfig.accentColor} strokeWidth="1.3" strokeLinecap="round" fill="none" strokeOpacity="0.8" />
+                <path d="M12 14V13C12 12.4 12.4 12 13 12H19C19.6 12 20 12.4 20 13V14" stroke={sceneConfig.accentColor} strokeWidth="1.1" strokeLinecap="round" fill="none" strokeOpacity="0.55" />
+                <path d="M24 5L24.8 7L27 7.8L24.8 8.6L24 10.6L23.2 8.6L21 7.8L23.2 7Z" fill={sceneConfig.accentColor} fillOpacity="0.95" />
+              </svg>
               {t(sceneConfig.keys.aiCta as TranslationKeys)}
             </button>
           </div>
