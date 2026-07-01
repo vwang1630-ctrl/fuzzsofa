@@ -380,8 +380,8 @@ export function ProductPageClient(
                             onTouchEnd={handleTouchEnd}>
                             {galleryImages.map((img, idx) => (
                                 <div key={img.id} className="w-full flex-shrink-0 snap-center">
-                                    <div className="relative w-full aspect-[4/5] overflow-hidden">
-                                        {img.src ? <img src={img.src} alt={productName} className="w-full h-full object-cover" /> : <div className="absolute inset-0 flex items-center justify-center"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
+                                    <div className="relative w-full overflow-hidden">
+                                        {img.src ? <img src={img.src} alt={productName} className="w-full object-cover max-h-[75vh]" /> : <div className="flex items-center justify-center py-20"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
                                         {/* Gradient top for button readability */}
                                         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#0A0A0A]/40 to-transparent pointer-events-none" />
                                     </div>
@@ -397,7 +397,7 @@ export function ProductPageClient(
 
                         {/* Mobile color selector — single row large circles */}
                         {product.materialOptions && product.materialOptions.length > 0 && (
-                            <div className="px-4 pt-2 pb-3">
+                            <div className="px-4 pt-1 pb-2">
                                 <div className="flex items-center justify-center gap-6 overflow-x-auto scrollbar-hide py-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                                     {(() => {
                                         const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
@@ -427,7 +427,7 @@ export function ProductPageClient(
                     </div>
 
                     {/* Mobile info panel — title+price row, features, details */}
-                    <div className="lg:hidden px-4 pt-3 pb-6 bg-[#111]">
+                    <div className="lg:hidden px-4 pt-2 pb-4 bg-[#111]">
                         {/* Series label */}
                         <p className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase mb-2">{collectionName}</p>
                         {/* Tagline */}
