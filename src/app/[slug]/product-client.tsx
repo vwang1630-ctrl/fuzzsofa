@@ -389,7 +389,7 @@ export function ProductPageClient(
                             ))}
                         </div>
                         {/* Dots indicator */}
-                        {galleryImages.length > 1 && <div className="flex items-center justify-center gap-2 pt-3 pb-1">
+                        {galleryImages.length > 1 && <div className="flex items-center justify-center gap-2 pt-1 pb-0">
                             {galleryImages.map((_, idx) => (
                                 <span key={idx} className={`block rounded-full transition-all duration-300 ${idx === activeImage ? "w-5 h-[6px] bg-[#E8B4B8]" : "w-[6px] h-[6px] bg-white/20"}`} />
                             ))}
@@ -397,7 +397,7 @@ export function ProductPageClient(
 
                         {/* Mobile color selector — single row large circles */}
                         {product.materialOptions && product.materialOptions.length > 0 && (
-                            <div className="px-4 pt-5 pb-3">
+                            <div className="px-4 pt-2 pb-3">
                                 <div className="flex items-center justify-center gap-6 overflow-x-auto scrollbar-hide py-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                                     {(() => {
                                         const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
@@ -427,7 +427,7 @@ export function ProductPageClient(
                     </div>
 
                     {/* Mobile info panel — title+price row, features, details */}
-                    <div className="lg:hidden px-4 pt-5 pb-6">
+                    <div className="lg:hidden px-4 pt-3 pb-6 bg-[#111]">
                         {/* Series label */}
                         <p className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase mb-2">{collectionName}</p>
                         {/* Tagline */}
