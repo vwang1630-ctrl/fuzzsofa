@@ -426,14 +426,10 @@ export function ProductPageClient(
                         )}
                     </div>
 
-                    {/* Mobile info panel — product name, price, tagline */}
+                    {/* Mobile info panel — tagline only (name + price in sticky CTA) */}
                     <div className="lg:hidden px-4 pt-5 pb-4">
                         <p className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase mb-2">{collectionName}</p>
-                        <div className="flex items-baseline justify-between gap-3">
-                            <h1 className="font-serif text-[26px] font-light text-[#F5F0EB] leading-[1.15] tracking-[0.02em]">{productName}</h1>
-                            <p className="font-serif text-[22px] font-light text-[#F5F0EB] flex-shrink-0">{displayPrice}</p>
-                        </div>
-                        <p className="text-[14px] text-[#8A8580] leading-[1.7] mt-2">{productTagline}</p>
+                        <p className="text-[14px] text-[#8A8580] leading-[1.7]">{productTagline}</p>
                         {/* Mobile dimensions & materials summary */}
                         {product.specifications && <div className="mt-4 pt-4 border-t border-white/[0.06]">
                             <div className="flex items-center justify-between mb-1.5">
