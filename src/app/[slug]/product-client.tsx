@@ -380,7 +380,7 @@ export function ProductPageClient(
                             onTouchEnd={handleTouchEnd}>
                             {galleryImages.map((img, idx) => (
                                 <div key={img.id} className="w-full flex-shrink-0 snap-center">
-                                    <div className="relative w-full aspect-[4/5] bg-[#111] overflow-hidden">
+                                    <div className="relative w-full aspect-[4/5] overflow-hidden">
                                         {img.src ? <img src={img.src} alt={productName} className="w-full h-full object-cover" /> : <div className="absolute inset-0 flex items-center justify-center"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
                                         {/* Gradient top for button readability */}
                                         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#0A0A0A]/40 to-transparent pointer-events-none" />
@@ -430,11 +430,6 @@ export function ProductPageClient(
                     <div className="lg:hidden px-4 pt-5 pb-6">
                         {/* Series label */}
                         <p className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase mb-2">{collectionName}</p>
-                        {/* Title + Price same row */}
-                        <div className="flex items-baseline justify-between gap-4 mb-3">
-                            <h1 className="text-[20px] font-light tracking-[0.04em] text-[#F5F0EB] font-serif leading-tight">{productName}</h1>
-                            <span className="text-[18px] font-light tracking-[0.02em] text-[#E8B4B8] flex-shrink-0">{displayPrice}</span>
-                        </div>
                         {/* Tagline */}
                         <p className="text-[13px] text-[#8A8580] leading-[1.7] mb-6">{productTagline}</p>
                         {/* Feature cards */}
