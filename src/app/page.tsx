@@ -114,37 +114,36 @@ export default function HomePage() {
           <HeroSlideshow current={heroScene} />
         </Link>
         <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay} hidden md:block`} />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/15 to-transparent md:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-[#0A0A0A]/10 to-transparent md:hidden" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15 hidden md:block" />
 
-        {/* Mobile Hero Content */}
-        <div className="relative z-10 w-full h-full flex flex-col justify-end pb-[22%] px-5 md:hidden">
-          <p className="tracking-[0.25em] uppercase mb-2.5 text-[9px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
+        {/* Mobile Hero Content — editorial layout */}
+        <div className="relative z-10 w-full h-full flex flex-col items-center justify-end pb-[10%] px-6 md:hidden">
+          <p className="tracking-[0.3em] uppercase mb-3 text-[8px] animate-fade-in text-[#E8B4B8]/70" style={{ fontFamily: 'var(--font-serif)' }}>
             Fuzz Sofa Studio
           </p>
-          <h1 className="font-light leading-[1.1] tracking-[0.03em] mb-3 animate-fade-in-delay-1 text-[1.75rem] max-w-[280px]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
+          <h1 className="font-light leading-[1.05] tracking-[0.05em] mb-4 animate-fade-in-delay-1 text-[1.5rem] text-center max-w-[300px]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
             {t(sceneConfig.keys.title)}
           </h1>
-          <p className="font-light text-[11px] max-w-[220px] leading-[1.7] animate-fade-in-delay-2 mb-5" style={{ color: sceneConfig.textColor, opacity: 0.5 }}>
+          <div className="w-8 h-px bg-[#E8B4B8]/40 mb-4 animate-fade-in-delay-2" />
+          <p className="font-light text-[10px] max-w-[200px] leading-[1.8] text-center animate-fade-in-delay-2 mb-6 text-[#F5F0EB]/60">
             Made-to-order, delivered in 1–2 weeks
           </p>
-          <div className="animate-fade-in-delay-3">
-            <button
-              onClick={() => {
-                const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
-                window.dispatchEvent(event);
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 border border-[#E8B4B8]/30 text-[10px] tracking-[0.18em] uppercase text-[#E8B4B8]/80 transition-all duration-300 cursor-pointer hover:bg-[#E8B4B8]/10 hover:border-[#E8B4B8]/60 hover:text-[#E8B4B8]"
-            >
-              <svg width="14" height="14" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.9" />
-                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
-                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                <path d="M24 5L24.8 7L27 7.8L24.8 8.6L24 10.6L23.2 8.6L21 7.8L23.2 7Z" fill="#E8B4B8" fillOpacity="0.95" />
-              </svg>
-              {t(sceneConfig.keys.aiCta as TranslationKeys)}
-            </button>
-          </div>
+          <button
+            onClick={() => {
+              const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
+              window.dispatchEvent(event);
+            }}
+            className="animate-fade-in-delay-3 inline-flex items-center gap-2 px-5 py-2 border border-[#E8B4B8]/25 text-[9px] tracking-[0.2em] uppercase text-[#E8B4B8]/70 transition-all duration-300 cursor-pointer hover:bg-[#E8B4B8]/10 hover:border-[#E8B4B8]/50 hover:text-[#E8B4B8]"
+          >
+            <svg width="12" height="12" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.9" />
+              <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+              <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              <path d="M24 5L24.8 7L27 7.8L24.8 8.6L24 10.6L23.2 8.6L21 7.8L23.2 7Z" fill="#E8B4B8" fillOpacity="0.95" />
+            </svg>
+            {t(sceneConfig.keys.aiCta as TranslationKeys)}
+          </button>
         </div>
 
         {/* Desktop Hero Content */}
