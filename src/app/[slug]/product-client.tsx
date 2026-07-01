@@ -348,20 +348,20 @@ export function ProductPageClient(
             <section className="bg-[#0A0A0A]">
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
                     {/* Mobile Gallery — swipeable, full-bleed */}
-                    <div className="lg:hidden -mx-4 md:-mx-8 relative">
+                    <div className="lg:hidden relative">
                         {/* Fixed Share & Wishlist overlay */}
-                        <div className="absolute top-3 right-4 flex items-center gap-2 z-20">
+                        <div className="absolute top-3 right-3 flex items-center gap-1.5 z-20">
                             <div className="relative">
-                                <button onClick={() => setShowShareMenu(!showShareMenu)} className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300" aria-label="Share">
-                                    <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
+                                <button onClick={() => setShowShareMenu(!showShareMenu)} className="group flex items-center justify-center w-9 h-9 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 transition-all duration-300" aria-label="Share">
+                                    <svg className="transition-transform duration-300 group-hover:scale-110" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
                                 </button>
                                 {showShareMenu && <div
-                                    className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
+                                    className="absolute right-0 top-full mt-1.5 flex items-center gap-1 rounded-sm py-1.5 px-2 z-50"
                                     style={{ background: "#0A0A0A", border: "1px solid rgba(232,180,184,0.25)", boxShadow: "0 4px 16px rgba(0,0,0,0.6)" }}>
-                                    {[{name:"Pinterest",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="10"/></svg>},{name:"Facebook",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>},{name:"Instagram",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>},{name:"YouTube",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8"/></svg>}].map(platform => <button
+                                    {[{name:"Pinterest",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="10"/></svg>},{name:"Facebook",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>},{name:"Instagram",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>},{name:"YouTube",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8"/></svg>}].map(platform => <button
                                         key={platform.name}
                                         onClick={() => handleShare(platform.name)}
-                                        className="flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300"
+                                        className="flex items-center justify-center w-8 h-8 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 transition-all duration-300"
                                         title={platform.name}>
                                         {platform.icon}
                                     </button>)}
@@ -395,8 +395,8 @@ export function ProductPageClient(
 
                         {/* Mobile color selector — compact row */}
                         {product.materialOptions && product.materialOptions.length > 0 && (
-                            <div className="px-4 pt-1 pb-3">
-                                <div className="flex items-center justify-center gap-5 overflow-x-auto scrollbar-hide py-1" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                            <div className="px-4 pt-0.5 pb-2">
+                                <div className="flex items-center justify-center gap-4 overflow-x-auto scrollbar-hide py-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                                     {(() => {
                                         const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
                                         let gIdx = 0;
@@ -410,11 +410,11 @@ export function ProductPageClient(
                                             const isActive = materialType === c.type && materialOption === c.opt;
                                             const swatchImg = galleryImages[c.globalIdx];
                                             return (
-                                                <button key={`${c.type}-${c.opt}`} onClick={() => { setMaterialType(c.type); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-1">
-                                                    <span className={`w-10 h-10 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isActive ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
-                                                        {swatchImg ? <img src={swatchImg.src} alt={c.opt} width={40} height={40} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.hex }} />}
+                                                <button key={`${c.type}-${c.opt}`} onClick={() => { setMaterialType(c.type); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-0.5">
+                                                    <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isActive ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
+                                                        {swatchImg ? <img src={swatchImg.src} alt={c.opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.hex }} />}
                                                     </span>
-                                                    <span className={`text-[9px] tracking-[0.04em] max-w-[48px] truncate ${isActive ? "text-[#F5F0EB]" : "text-[#8A8580]"}`}>{t((colorNameKeyMap[c.opt] || "matTypeFabric") as TranslationKeys)}</span>
+                                                    <span className={`text-[8px] tracking-[0.03em] max-w-[40px] truncate ${isActive ? "text-[#F5F0EB]" : "text-[#8A8580]"}`}>{t((colorNameKeyMap[c.opt] || "matTypeFabric") as TranslationKeys)}</span>
                                                 </button>
                                             );
                                         });
@@ -425,18 +425,18 @@ export function ProductPageClient(
                     </div>
 
                     {/* Mobile info panel — title+price, features, details */}
-                    <div className="lg:hidden px-4 pt-4 pb-6 bg-[#111]">
+                    <div className="lg:hidden px-4 pt-2.5 pb-4 bg-[#111]">
                         {/* Collection label */}
-                        <p className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase mb-2">{collectionName}</p>
+                        <p className="text-[9px] text-[#8A8580] tracking-[0.25em] uppercase mb-1.5">{collectionName}</p>
                         {/* Title + Price row */}
-                        <div className="flex items-start justify-between gap-3 mb-4">
-                            <h1 className="font-serif text-[20px] font-light text-[#F5F0EB] leading-[1.2] tracking-[0.02em]">{productName}</h1>
-                            <span className="font-serif text-[18px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</span>
+                        <div className="flex items-baseline justify-between gap-2 mb-2">
+                            <h1 className="font-serif text-[18px] font-light text-[#F5F0EB] leading-[1.15] tracking-[0.02em]">{productName}</h1>
+                            <span className="font-serif text-[16px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</span>
                         </div>
                         {/* Tagline */}
-                        <p className="text-[12px] text-[#8A8580] leading-[1.7] mb-5">{productTagline}</p>
+                        <p className="text-[11px] text-[#8A8580] leading-[1.5] mb-3">{productTagline}</p>
                         {/* Feature cards */}
-                        <div className="space-y-3 mb-5">
+                        <div className="space-y-2 mb-3">
                             {(() => {
                                 const featureData: Record<string, Array<{titleKey: string; descKey: string; fallbackTitle: string; fallbackDesc: string}>> = {
                                     "gorilla-sofa": [
@@ -471,40 +471,40 @@ export function ProductPageClient(
                                 };
                                 const feats = featureData[product.slug] || [];
                                 return feats.map((feat, i) => (
-                                    <div key={i} className="flex items-start gap-2.5">
-                                        <span className="text-[#E8B4B8] text-[12px] mt-0.5 flex-shrink-0">✦</span>
+                                    <div key={i} className="flex items-start gap-2">
+                                        <span className="text-[#E8B4B8] text-[10px] mt-0.5 flex-shrink-0">✦</span>
                                         <div>
-                                            <h4 className="text-[12px] text-[#F5F0EB] tracking-[0.04em] font-light mb-0.5">{t(feat.titleKey as TranslationKeys) || feat.fallbackTitle}</h4>
-                                            <p className="text-[11px] text-[#8A8580] leading-[1.6]">{t(feat.descKey as TranslationKeys) || feat.fallbackDesc}</p>
+                                            <h4 className="text-[11px] text-[#F5F0EB] tracking-[0.04em] font-light leading-[1.3]">{(() => { const v = t(feat.titleKey as TranslationKeys); return v === feat.titleKey ? feat.fallbackTitle : v; })()}</h4>
+                                            <p className="text-[10px] text-[#8A8580] leading-[1.5]">{(() => { const v = t(feat.descKey as TranslationKeys); return v === feat.descKey ? feat.fallbackDesc : v; })()}</p>
                                         </div>
                                     </div>
                                 ));
                             })()}
                         </div>
                         {/* Dimensions */}
-                        {product.specifications && <div className="pt-4 border-t border-white/[0.06]">
-                            <div className="flex items-center justify-between mb-1">
-                                <label className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
-                                <button onClick={() => setUseCm(!useCm)} className="text-[10px] tracking-[0.12em] uppercase text-[#8A8580] border border-white/10 px-2 py-0.5 rounded-sm">{useCm ? "IN" : "CM"}</button>
+                        {product.specifications && <div className="pt-2.5 border-t border-white/[0.06]">
+                            <div className="flex items-center justify-between mb-0.5">
+                                <label className="text-[9px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
+                                <button onClick={() => setUseCm(!useCm)} className="text-[9px] tracking-[0.12em] uppercase text-[#8A8580] border border-white/10 px-1.5 py-0.5 rounded-sm">{useCm ? "IN" : "CM"}</button>
                             </div>
-                            <p className="text-[11px] text-[#F5F0EB]/50 tracking-[0.02em]">
+                            <p className="text-[10px] text-[#F5F0EB]/50 tracking-[0.02em]">
                                 {(() => { const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`; return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`; })()}
                             </p>
                         </div>}
                         {/* Materials */}
-                        {product.materials && product.materials.length > 0 && <div className="mt-3 pt-3 border-t border-white/[0.06]">
-                            <label className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase block mb-1">{t("materialsLabel" as TranslationKeys)}</label>
-                            <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+                        {product.materials && product.materials.length > 0 && <div className="mt-2 pt-2 border-t border-white/[0.06]">
+                            <label className="text-[9px] text-[#8A8580] tracking-[0.2em] uppercase block mb-0.5">{t("materialsLabel" as TranslationKeys)}</label>
+                            <div className="flex flex-wrap gap-x-2 gap-y-0.5">
                                 {product.materials.map((mat, i) => {
                                     const matKeyMap: Record<string, string[]> = { "gorilla-sofa": ["gorillaMat1", "gorillaMat2", "gorillaMat3", "gorillaMat4"], "owl-sofa": ["owlMat1", "owlMat2", "owlMat3", "owlMat4"], "silverback-sofa": ["silverbackMat1", "silverbackMat2"], "meteorite-ring-sofa": ["meteorMat1", "meteorMat2", "meteorMat3", "meteorMat4"], "muscle-gorilla-sofa": ["muscleGorillaMat1", "muscleGorillaMat2", "muscleGorillaMat3", "muscleGorillaMat4"] };
                                     const keys = matKeyMap[product.slug];
                                     const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
-                                    return <span key={i} className="text-[11px] text-[#F5F0EB]/40">{i18nMat}{i < product.materials.length - 1 && <span className="mx-1.5 text-[#8A8580]/30">·</span>}</span>;
+                                    return <span key={i} className="text-[10px] text-[#F5F0EB]/40">{i18nMat}{i < product.materials.length - 1 && <span className="mx-1 text-[#8A8580]/30">·</span>}</span>;
                                 })}
                             </div>
                         </div>}
                         {/* Delivery info */}
-                        <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center gap-2.5 text-[10px] text-[#8A8580]/60">
+                        <div className="mt-2 pt-2 border-t border-white/[0.06] flex items-center gap-2 text-[9px] text-[#8A8580]/60">
                             <span>{t("leadTimeShort" as TranslationKeys)}</span>
                             <span className="text-white/10">·</span>
                             <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
@@ -908,23 +908,23 @@ export function ProductPageClient(
             </section>
             {}
             <section className="bg-[#0F0E0E]">
-                <div className="max-w-[1200px] mx-auto px-5 md:px-6 py-5 md:py-6">
+                <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-3 md:py-6">
                     {}
-                    <div className="mb-4 md:mb-6">
+                    <div className="mb-3 md:mb-6">
                         <p
-                            className="text-[10px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2 md:mb-3 flex items-center gap-3">
-                            <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys)}
+                            className="text-[9px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 md:mb-3 flex items-center gap-2">
+                            <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys)}
                         </p>
                         <h2
-                            className="font-serif text-xl md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
+                            className="font-serif text-lg md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
                             {t("seeItInRealSpaces" as TranslationKeys)}
                         </h2>
                     </div>
                     {}
-                    <div className="flex md:grid md:grid-cols-3 gap-3 md:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0 pb-2 md:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[82vw] md:w-auto snap-start">
+                    <div className="flex md:grid md:grid-cols-3 gap-2.5 md:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 md:mx-0 md:px-0 pb-1 md:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[80vw] md:w-auto snap-start">
                             {}
-                            <div className="relative aspect-[4/3] md:aspect-[2/1] bg-[#111] overflow-hidden mb-3 md:mb-4 rounded-sm">
+                            <div className="relative aspect-[4/3] md:aspect-[2/1] bg-[#111] overflow-hidden mb-2 md:mb-4 rounded-sm">
                                 {space.image ? <img
                                     src={space.image}
                                     alt={`${productName} in ${space.title}`}
@@ -957,27 +957,27 @@ export function ProductPageClient(
                     </div>
                     {}
                     {}
-                    <div className="mt-8 md:mt-12 mb-2 relative">
+                    <div className="mt-5 md:mt-12 mb-2 relative">
                         <div className="w-full h-px bg-white/[0.03]" />
                         <div
                             className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                     </div>
                     <div
-                        className="mt-6 md:mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
+                        className="mt-4 md:mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
                         {}
                         <div className="flex-1">
                             <p
-                                className="text-[10px] md:text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-2 md:mb-3 flex items-center gap-3">
-                                <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
+                                className="text-[9px] md:text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-1.5 md:mb-3 flex items-center gap-2">
+                                <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
                                                             </p>
                             <h3
-                                className="font-serif text-[28px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-2 md:mb-3">
+                                className="font-serif text-[22px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-1.5 md:mb-3">
                                 {productName}
                             </h3>
-                            <p className="text-[16px] md:text-[20px] text-[#E8B4B8]/50 italic mb-4 md:mb-5 font-serif">
+                            <p className="text-[14px] md:text-[20px] text-[#E8B4B8]/50 italic mb-3 md:mb-5 font-serif">
                                 {productTagline}
                             </p>
-                            <div className="text-[13px] md:text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
+                            <div className="text-[12px] md:text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
                                 <p>{productConcept}</p>
                                 <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
                             </div>
@@ -1076,12 +1076,12 @@ export function ProductPageClient(
                             <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/30 to-transparent" />
                         </div>
                         {}
-                        <div className="px-5 py-6 bg-[#090909]">
-                            <p className="font-serif text-[18px] font-light text-[#F5F0EB] leading-[1.2] text-center mb-4">
+                        <div className="px-4 py-3 bg-[#090909]">
+                            <p className="font-serif text-[14px] font-light text-[#F5F0EB] leading-[1.2] text-center mb-2">
                                 <span className="opacity-20 mr-2">—</span>{t("materialsCraftsmanship" as TranslationKeys)}<span className="opacity-20 ml-2">—</span>
                             </p>
                             <div
-                                className="flex gap-2.5 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-5 px-5 pb-1" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-5 px-5 pb-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                                 {(() => {
                                     const cards = materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"];
                                     return cards.map((card: { titleKey: string; descKey: string; icon: string }, idx: number) => (
@@ -1335,8 +1335,8 @@ export function ProductPageClient(
                     <div
                         className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
-                <div className="relative max-w-[700px] mx-auto px-6 py-16 md:py-[140px] text-center">
-                    <p className="text-[10px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4 md:mb-5">
+                <div className="relative max-w-[700px] mx-auto px-5 py-10 md:py-[140px] text-center">
+                    <p className="text-[9px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2.5 md:mb-5">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
@@ -1474,15 +1474,15 @@ export function ProductPageClient(
             </section>
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
-                <div className="max-w-[1200px] mx-auto px-6 py-8 md:py-12">
-                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2">
+                <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-5 md:py-12">
+                    <p className="text-[9px] md:text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 md:mb-2">
                         {t("youMayAlsoLike" as TranslationKeys)}
                     </p>
                     <h2
-                        className="font-serif text-xl md:text-3xl font-light text-[#F5F0EB] mb-5 md:mb-8">
+                        className="font-serif text-lg md:text-3xl font-light text-[#F5F0EB] mb-3 md:mb-8">
                         {t("relatedProducts")}
                     </h2>
-                    <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0 pb-2 sm:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                    <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 sm:mx-0 sm:px-0 pb-1 sm:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                         {relatedProducts.map(rp => {
                             const rpPrefix = slugToPrefix[rp.slug] || "";
                             const rpName = rpPrefix ? t(`${rpPrefix}Name` as TranslationKeys) : rp.name;
@@ -1494,7 +1494,7 @@ export function ProductPageClient(
                                 <Link
                                     key={rp.slug}
                                     href={`/${rp.slug}`}
-                                    className="group transition-all duration-300 hover:-translate-y-0.5 flex-shrink-0 w-[55vw] sm:w-auto snap-start">
+                                    className="group transition-all duration-300 hover:-translate-y-0.5 flex-shrink-0 w-[50vw] sm:w-auto snap-start">
                                     <div
                                         className="aspect-[4/5] sm:aspect-square bg-gradient-to-b from-[#111] to-[#080808] relative overflow-hidden rounded-sm sm:rounded-none">
                                         {rpImages[0] ? <img
@@ -1506,13 +1506,13 @@ export function ProductPageClient(
                                             </span>
                                         </div>}
                                     </div>
-                                    <div className="pt-2.5 pb-1 sm:p-5">
-                                        <p className="text-[9px] sm:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5 sm:mb-1">
+                                    <div className="pt-2 pb-0.5 sm:p-5">
+                                        <p className="text-[8px] sm:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5 sm:mb-1">
                                             {t((animalKeyMap[rp.animal] || "animalGorilla") as TranslationKeys)} {t("collection").toUpperCase()}
                                         </p>
-                                        <h3 className="font-serif text-[15px] sm:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
-                                        <p className="text-[11px] sm:text-[13px] text-[#8A8580] mt-0.5 sm:mt-1 mb-1 sm:mb-3 line-clamp-1">{rpTagline}</p>
-                                        <p className="font-serif text-[14px] sm:text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
+                                        <h3 className="font-serif text-[13px] sm:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
+                                        <p className="text-[10px] sm:text-[13px] text-[#8A8580] mt-0.5 sm:mt-1 mb-0.5 sm:mb-3 line-clamp-1">{rpTagline}</p>
+                                        <p className="font-serif text-[12px] sm:text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
                                     </div>
                                 </Link>
                             );
@@ -1564,20 +1564,20 @@ export function ProductPageClient(
                 <CosmicInspiration lang={lang} />
             )}
             {/* Mobile Sticky CTA — left text + right glow button */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#E8B4B8]/15" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "#0A0A0A" }}>
-                <div className="px-4 pt-3 pb-3 flex items-center justify-between gap-3">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "#0A0A0A" }}>
+                <div className="px-4 pt-2.5 pb-2.5 flex items-center justify-between gap-3">
                     <div className="min-w-0">
-                        <p className="text-[13px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
-                        <p className="text-[15px] font-light text-[#E8B4B8] mt-0.5">{displayPrice}</p>
+                        <p className="text-[12px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
+                        <p className="text-[14px] font-light text-[#E8B4B8] mt-0.5">{displayPrice}</p>
                     </div>
                     <div className="relative flex-shrink-0">
-                        <div className="absolute -inset-1 rounded-full opacity-35 pointer-events-none" style={{ background: "radial-gradient(circle, #E8B4B8 0%, transparent 70%)", filter: "blur(6px)" }} />
+                        <div className="absolute -inset-1 rounded-full opacity-30 pointer-events-none" style={{ background: "radial-gradient(circle, #E8B4B8 0%, transparent 70%)", filter: "blur(6px)" }} />
                         <button
                             onClick={handleBuyNow}
-                            className="relative flex items-center gap-2 px-6 py-2.5 text-[#0A0A0A] text-[12px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
+                            className="relative flex items-center gap-1.5 px-5 py-2 text-[#0A0A0A] text-[11px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
                             style={{ background: "#E8B4B8" }}>
                             {t("buyNow" as TranslationKeys)}
-                            <svg aria-hidden="true" viewBox="0 0 10 10" width="10" height="10" fill="none">
+                            <svg aria-hidden="true" viewBox="0 0 10 10" width="9" height="9" fill="none">
                                 <path d="M0 5h7" stroke="currentColor" strokeWidth="1.2" />
                                 <path d="M1 1l4 4-4 4" stroke="currentColor" strokeWidth="1.2" />
                             </svg>

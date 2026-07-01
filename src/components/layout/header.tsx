@@ -73,7 +73,7 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerSolid ? 'bg-[#0A0A0A]/95 backdrop-blur-[8px] border-b border-[#1A1A1A]' : 'bg-transparent border-b border-transparent'}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerSolid ? 'bg-[#0A0A0A]/95 backdrop-blur-[8px] border-b border-transparent md:border-[#1A1A1A]' : 'bg-transparent border-b border-transparent'}`}
       dir={isRtl ? "rtl" : "ltr"}
     >
       <div className="max-w-[1200px] mx-auto px-6 h-[60px] flex items-center justify-between">
