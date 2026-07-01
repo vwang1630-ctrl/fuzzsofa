@@ -110,14 +110,13 @@ export default function HomePage() {
 
       {/* ─── 1. HERO ─── */}
       <section className="relative w-full overflow-hidden">
-        {/* Mobile Hero — editorial layout, image as hero */}
+        {/* ── Mobile Hero (aspect 3/4, editorial overlay) ── */}
         <div className="md:hidden relative aspect-[3/4]">
           <Link href={sceneConfig.keys.href} className="block absolute inset-0" aria-label={t(sceneConfig.keys.title)}>
             <HeroSlideshow current={heroScene} />
           </Link>
-          {/* Soft bottom gradient for text readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 pt-16">
+          <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 pt-16 z-20">
             <p className="text-[10px] tracking-[0.3em] uppercase mb-3 text-[#E8B4B8]/70" style={{ fontFamily: 'var(--font-serif)' }}>
               Fuzz Sofa Studio
             </p>
@@ -144,66 +143,66 @@ export default function HomePage() {
             </button>
           </div>
         </div>
-        {/* Desktop */}
-        <div className="hidden md:block" style={{ minHeight: '65vh', maxHeight: '85vh' }}>
+
+        {/* ── Desktop Hero (exact 021a54d version) ── */}
+        <div className="hidden md:block relative" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
           <Link href={sceneConfig.keys.href} className="block absolute inset-0 z-0" aria-label={t(sceneConfig.keys.title)}>
             <HeroSlideshow current={heroScene} />
           </Link>
           <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
-          <p className="tracking-[0.3em] uppercase mb-3 text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
-            Fuzz Sofa Studio
-          </p>
-          <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 animate-fade-in-delay-1 text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
-            {t(sceneConfig.keys.title)}
-          </h1>
-          <p className="font-light text-[15px] lg:text-base max-w-[380px] leading-[1.6] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '60' }}>
-            Made-to-order, delivered in 1–2 weeks
-          </p>
-          <div className="mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
-            <button
-              onClick={() => {
-                const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
-                window.dispatchEvent(event);
-              }}
-              className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[12px] tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer"
-              style={{ borderColor: sceneConfig.accentColor + '50', color: sceneConfig.accentColor + 'CC', backgroundColor: sceneConfig.accentColor + '0A' }}
-              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '80'; e.currentTarget.style.color = sceneConfig.accentColor; }}
-              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '50'; e.currentTarget.style.color = sceneConfig.accentColor + 'CC'; }}
-            >
-              <svg width="18" height="18" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 17L16 4L30 17V28H2V17Z" fill={sceneConfig.accentColor} fillOpacity="0.9" />
-                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
-                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke={sceneConfig.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                <path d="M9.5 20C9.5 18 11 16.5 13 16.5H19C21 16.5 22.5 18 22.5 20" stroke={sceneConfig.accentColor} strokeWidth="1.3" strokeLinecap="round" fill="none" strokeOpacity="0.8" />
-                <path d="M12 14V13C12 12.4 12.4 12 13 12H19C19.6 12 20 12.4 20 13V14" stroke={sceneConfig.accentColor} strokeWidth="1.1" strokeLinecap="round" fill="none" strokeOpacity="0.55" />
-                <path d="M24 5L24.8 7L27 7.8L24.8 8.6L24 10.6L23.2 8.6L21 7.8L23.2 7Z" fill={sceneConfig.accentColor} fillOpacity="0.95" />
-              </svg>
-              {t(sceneConfig.keys.aiCta as TranslationKeys)}
-            </button>
-          </div>
-        </div>
 
-        {heroScenes.length > 1 && (
-          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3">
-            {heroScenes.map((scene, idx) => (
-              <button key={scene.src} onClick={() => setHeroScene(idx)} className="w-8 h-px transition-all duration-500" style={{ backgroundColor: idx === heroScene ? sceneConfig.accentColor : sceneConfig.textColor + '30' }} aria-label={`Scene ${idx + 1}`} />
-            ))}
+          <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[8%] flex flex-col justify-end md:justify-start">
+            <p className="tracking-[0.35em] uppercase mb-3 text-[12px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
+              Fuzz Sofa Studio
+            </p>
+            <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
+              {t(sceneConfig.keys.title)}
+            </h1>
+            <p className="font-light text-sm md:text-[15px] lg:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
+              Made-to-order, delivered in 1–2 weeks
+            </p>
+            <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
+              <button
+                onClick={() => {
+                  const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
+                  window.dispatchEvent(event);
+                }}
+                className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[12px] tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer"
+                style={{ borderColor: sceneConfig.accentColor + '50', color: sceneConfig.accentColor + 'CC', backgroundColor: sceneConfig.accentColor + '0A' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '80'; e.currentTarget.style.color = sceneConfig.accentColor; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '50'; e.currentTarget.style.color = sceneConfig.accentColor + 'CC'; }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
+                {t(sceneConfig.keys.aiCta as TranslationKeys)}
+              </button>
+            </div>
           </div>
-        )}
+
+          {heroScenes.length > 1 && (
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3">
+              {heroScenes.map((scene, idx) => (
+                <button key={scene.src} onClick={() => setHeroScene(idx)} className="w-8 h-px transition-all duration-500" style={{ backgroundColor: idx === heroScene ? sceneConfig.accentColor : sceneConfig.textColor + '30' }} aria-label={`Scene ${idx + 1}`} />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
 
       {/* ─── 2. TRUST BAR ─── */}
-      <section className="bg-[#090909] py-6 md:py-10 border-y border-white/[0.03]">
+      <section className="bg-[#090909] py-6 md:py-10 border-y border-white/[0.03] md:border-0">
         <div className="max-w-[1200px] mx-auto px-5 md:px-6 flex flex-wrap items-center justify-center gap-5 md:gap-16 text-center">
           {[
-            { icon: '✦', label: 'Studio-Crafted' },
-            { icon: '◆', label: 'Quality Guarantee' },
-            { icon: '◉', label: '1–2 Week Delivery' },
+            { icon: '✦', label: 'Studio-Crafted', labelDesktop: 'Studio-Crafted Furniture' },
+            { icon: '◆', label: 'Quality Guarantee', labelDesktop: 'Made-to-Order Quality Guarantee' },
+            { icon: '◉', label: '1–2 Week Delivery', labelDesktop: '1–2 Week Delivery' },
           ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2">
-              <span className="text-[#E8B4B8] text-[11px]">{item.icon}</span>
-              <span className="text-[11px] md:text-[12px] tracking-[0.1em] text-[#8A8580]">{item.label}</span>
+            <div key={item.label} className="flex items-center gap-2 md:gap-2.5">
+              <span className="text-[#E8B4B8] text-[11px] md:text-[12px]">{item.icon}</span>
+              <span className="text-[11px] md:text-[12px] tracking-[0.1em] md:tracking-[0.08em] text-[#8A8580]">
+                <span className="md:hidden">{item.label}</span>
+                <span className="hidden md:inline">{item.labelDesktop}</span>
+              </span>
             </div>
           ))}
         </div>
@@ -217,7 +216,7 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
           <div className="mb-6 md:mb-12 flex items-end justify-between">
             <div>
-              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Collection</p>
+              <p className="md:hidden text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Collection</p>
               <h2 className="font-serif text-xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
                 Featured Works
               </h2>
@@ -252,19 +251,23 @@ export default function HomePage() {
                     <p className="mt-1 text-[12px] text-[#8A8580] tracking-[0.04em]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
                   </div>
                 </div>
-                {/* Desktop: text overlay on image */}
+                {/* Desktop: original 021a54d layout */}
                 <div className="hidden md:block aspect-square relative overflow-hidden">
                   <img
                     src={(product.images ?? [])[0] ?? ''}
                     alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="font-serif text-xl font-light text-[#F5F0EB] leading-tight group-hover:text-[#E8B4B8] transition-colors duration-300">
+                    <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                       {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     </h3>
-                    <p className="mt-1 text-[13px] text-[#8A8580]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
+                    <p className="mt-1 text-xs text-[#8A8580]">{t(slugToPrefix[product.slug] + "Tagline" as TranslationKeys)}</p>
+                    <div className="mt-3 flex items-center justify-between">
+                      <p className="text-sm text-[#F5F0EB]/60">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
+                      <p className="text-[12px] tracking-[0.08em] text-[#8A8580]/70">Made to order (1–2 weeks)</p>
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -280,7 +283,7 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
           <div className="flex items-baseline justify-between mb-6 md:mb-12">
             <div>
-              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Spaces</p>
+              <p className="md:hidden text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Spaces</p>
               <h2 className="font-serif text-xl md:text-4xl font-light text-[#F5F0EB]">{t("interiorWorldsTitle")}</h2>
               <p className="mt-1.5 md:mt-2 text-[11px] md:text-sm text-[#8A8580]">{t("interiorWorldsSubtitle")}</p>
             </div>
@@ -298,6 +301,7 @@ export default function HomePage() {
                     <>
                       <img src={interior.image} alt={interior.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
+                      <div className="hidden md:block absolute bottom-0 right-0 w-[30%] h-[15%] bg-gradient-to-tl from-[#0A0A0A] to-transparent" />
                     </>
                   ) : (
                     <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500" style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }} />
@@ -322,14 +326,14 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
           <div className="flex items-baseline justify-between mb-6 md:mb-12">
             <div>
-              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Editorial</p>
+              <p className="md:hidden text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Editorial</p>
               <h2 className="font-serif text-xl md:text-4xl font-light text-[#F5F0EB]">{t("journalTitle")}</h2>
             </div>
-            <Link href="/journal" className="text-[10px] md:text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors tracking-[0.1em] uppercase">{t("articles")} &rarr;</Link>
+            <Link href="/journal" className="text-[10px] md:text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">{t("articles")} &rarr;</Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
             {latestArticles.map((article) => (
-              <Link key={article.slug} href={`/journal/${article.slug}`} className="group border-l border-[#1A1A1A] hover:border-[#E8B4B8] transition-colors duration-300 pl-4 md:pl-6 py-2">
+              <Link key={article.slug} href={`/journal/${article.slug}`} className="group border-l md:border-l-2 border-[#1A1A1A] hover:border-[#E8B4B8] transition-colors duration-300 pl-4 md:pl-6 py-2">
                 <p className="text-[10px] md:text-xs text-[#8A8580] tracking-[0.1em] uppercase">{article.category}</p>
                 <h3 className="mt-2 md:mt-3 font-serif text-[15px] md:text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">{article.title}</h3>
                 <p className="mt-1.5 md:mt-2 text-[11px] md:text-sm text-[#8A8580] line-clamp-2">{article.excerpt}</p>

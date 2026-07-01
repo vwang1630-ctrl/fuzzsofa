@@ -346,7 +346,7 @@ export function ProductPageClient(
                 }} />
             {}
             <section className="bg-[#0A0A0A]">
-                <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 lg:pt-8 pb-8 lg:pb-12">
+                <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
                     {/* Mobile Gallery — swipeable, full-bleed */}
                     <div className="lg:hidden -mx-4 md:-mx-8 relative">
                         {/* Fixed Share & Wishlist overlay */}
@@ -921,10 +921,10 @@ export function ProductPageClient(
                         </h2>
                     </div>
                     {}
-                    <div className="flex lg:grid lg:grid-cols-3 gap-3 lg:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[82vw] lg:w-auto snap-start">
+                    <div className="flex md:grid md:grid-cols-3 gap-3 md:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0 pb-2 md:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[82vw] md:w-auto snap-start">
                             {}
-                            <div className="relative aspect-[4/3] lg:aspect-[2/1] bg-[#111] overflow-hidden mb-3 lg:mb-4 rounded-sm">
+                            <div className="relative aspect-[4/3] md:aspect-[2/1] bg-[#111] overflow-hidden mb-3 md:mb-4 rounded-sm">
                                 {space.image ? <img
                                     src={space.image}
                                     alt={`${productName} in ${space.title}`}
@@ -937,14 +937,14 @@ export function ProductPageClient(
                                 <div
                                     className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
                                 {/* Mobile: title overlay on image */}
-                                <div className="absolute bottom-0 left-0 right-0 p-3 lg:hidden">
+                                <div className="absolute bottom-0 left-0 right-0 p-3 md:hidden">
                                     <p className="text-[10px] tracking-[0.15em] uppercase text-[#F5F0EB]/60">
                                         {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
                                     </p>
                                 </div>
                             </div>
                             {/* Desktop: title & description below image */}
-                            <div className="hidden lg:block">
+                            <div className="hidden md:block">
                             <p
                                 className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
                                 {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
@@ -1336,21 +1336,21 @@ export function ProductPageClient(
                         className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
                 <div className="relative max-w-[700px] mx-auto px-6 py-16 md:py-[140px] text-center">
-                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4">
+                    <p className="text-[10px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4 md:mb-5">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
-                        className="font-serif text-xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-4">
+                        className="font-serif text-xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-4 md:mb-6">
                         {t("deliveredWorldwide" as TranslationKeys)}
                     </h2>
-                    <p className="text-[#8A8580] leading-[1.8] text-[13px] md:text-[15px] mb-8">
+                    <p className="text-[#8A8580] leading-[1.8] text-[13px] md:text-[15px] mb-8 md:mb-10">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
                     <div
-                        className="flex lg:grid lg:grid-cols-4 gap-5 lg:gap-8 max-w-[700px] mx-auto overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 lg:mx-0 lg:px-0 pb-1 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] lg:w-auto snap-start">
+                        className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 max-w-[700px] mx-auto overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 pb-1 md:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
                             <div
-                                className="w-9 h-9 rounded-full flex items-center justify-center"
+                                className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center"
                                 style={{
                                     background: "rgba(232,180,184,0.08)",
                                     border: "1px solid rgba(232,180,184,0.18)"
@@ -1382,7 +1382,7 @@ export function ProductPageClient(
                             <span
                                 className="text-[11px] text-[#8A8580] tracking-[0.1em] uppercase text-center leading-[1.4]">{t("handcraftedShort" as TranslationKeys)}</span>
                         </div>
-                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] lg:w-auto snap-start">
+                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
                             <div
                                 className="w-10 h-10 rounded-full flex items-center justify-center"
                                 style={{
@@ -1411,7 +1411,7 @@ export function ProductPageClient(
                             <span
                                 className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("leadTimeShort" as TranslationKeys)}</span>
                         </div>
-                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] lg:w-auto snap-start">
+                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
                             <div
                                 className="w-10 h-10 rounded-full flex items-center justify-center"
                                 style={{
@@ -1431,7 +1431,7 @@ export function ProductPageClient(
                             <span
                                 className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("madeToOrderShort" as TranslationKeys)}</span>
                         </div>
-                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] lg:w-auto snap-start">
+                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
                             <div
                                 className="w-10 h-10 rounded-full flex items-center justify-center"
                                 style={{
@@ -1482,7 +1482,7 @@ export function ProductPageClient(
                         className="font-serif text-xl md:text-3xl font-light text-[#F5F0EB] mb-5 md:mb-8">
                         {t("relatedProducts")}
                     </h2>
-                    <div className="flex lg:grid lg:grid-cols-3 gap-3 lg:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                    <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0 pb-2 sm:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                         {relatedProducts.map(rp => {
                             const rpPrefix = slugToPrefix[rp.slug] || "";
                             const rpName = rpPrefix ? t(`${rpPrefix}Name` as TranslationKeys) : rp.name;
@@ -1494,9 +1494,9 @@ export function ProductPageClient(
                                 <Link
                                     key={rp.slug}
                                     href={`/${rp.slug}`}
-                                    className="group transition-all duration-300 hover:-translate-y-0.5 flex-shrink-0 w-[55vw] lg:w-auto snap-start">
+                                    className="group transition-all duration-300 hover:-translate-y-0.5 flex-shrink-0 w-[55vw] sm:w-auto snap-start">
                                     <div
-                                        className="aspect-[4/5] lg:aspect-square bg-gradient-to-b from-[#111] to-[#080808] relative overflow-hidden rounded-sm lg:rounded-none">
+                                        className="aspect-[4/5] sm:aspect-square bg-gradient-to-b from-[#111] to-[#080808] relative overflow-hidden rounded-sm sm:rounded-none">
                                         {rpImages[0] ? <img
                                             src={rpImages[0]}
                                             alt={rpName}
@@ -1506,13 +1506,13 @@ export function ProductPageClient(
                                             </span>
                                         </div>}
                                     </div>
-                                    <div className="pt-2.5 pb-1 lg:p-5">
-                                        <p className="text-[9px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5">
+                                    <div className="pt-2.5 pb-1 sm:p-5">
+                                        <p className="text-[9px] sm:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5 sm:mb-1">
                                             {t((animalKeyMap[rp.animal] || "animalGorilla") as TranslationKeys)} {t("collection").toUpperCase()}
                                         </p>
-                                        <h3 className="font-serif text-[15px] lg:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
-                                        <p className="text-[11px] lg:text-[13px] text-[#8A8580] mt-0.5 lg:mt-1 mb-1 lg:mb-3 line-clamp-1">{rpTagline}</p>
-                                        <p className="font-serif text-[14px] lg:text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
+                                        <h3 className="font-serif text-[15px] sm:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
+                                        <p className="text-[11px] sm:text-[13px] text-[#8A8580] mt-0.5 sm:mt-1 mb-1 sm:mb-3 line-clamp-1">{rpTagline}</p>
+                                        <p className="font-serif text-[14px] sm:text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
                                     </div>
                                 </Link>
                             );
