@@ -286,31 +286,38 @@ export function ProductPageClient(
     };
     const collectionName = `${t((animalKeyMap[product.animal] || "animalGorilla") as TranslationKeys)} ${t("collection").toUpperCase()}`;
 
-    const handleShare = (platform: string) => {
+    const handleShare = (platform?: string) => {
         const url = `https://fuzzsofa.com/${product.slug}`;
         const text = `${productName} — Fuzz Sofa`;
 
-        switch (platform) {
-        case "Pinterest":
-            window.open(
-                `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(text)}`,
-                "_blank"
-            );
+        // On mobile, if no specific platform, try native Web Share API first
+        if (!platform && typeof navigator !== "undefined" && navigator.share) {
+            navigator.share({ title: `${productName} — Fuzz Sofa`, text, url }).catch(() => {});
+            setShowShareMenu(false);
+            return;
+        }
 
-            break;
-        case "Facebook":
-            window.open(
-                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-                "_blank"
-            );
-
-            break;
-        case "Instagram":
-            window.open(`https://instagram.com/fuzzsofa`, "_blank");
-            break;
-        case "YouTube":
-            window.open(`https://youtube.com/@fuzzsofa`, "_blank");
-            break;
+        if (platform) {
+            switch (platform) {
+            case "Pinterest":
+                window.open(
+                    `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(text)}`,
+                    "_blank"
+                );
+                break;
+            case "Facebook":
+                window.open(
+                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                    "_blank"
+                );
+                break;
+            case "Instagram":
+                window.open(`https://instagram.com/fuzzsofa`, "_blank");
+                break;
+            case "YouTube":
+                window.open(`https://youtube.com/@fuzzsofa`, "_blank");
+                break;
+            }
         }
 
         setShowShareMenu(false);
@@ -356,15 +363,21 @@ export function ProductPageClient(
                                     <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
                                 </button>
                                 {showShareMenu && <div
-                                    className="absolute right-0 top-full mt-2 flex items-center gap-1.5 rounded-full py-2 px-3.5 z-50"
+                                    className="absolute right-0 top-full mt-2 flex items-center gap-2 rounded-full py-2.5 px-4 z-50"
                                     style={{ background: "rgba(26,26,26,0.85)", backdropFilter: "blur(12px)", border: "1px solid rgba(232,180,184,0.2)", boxShadow: "0 8px 24px rgba(0,0,0,0.5)" }}>
-                                    {[{name:"Pinterest",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="10"/></svg>},{name:"Facebook",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>},{name:"Instagram",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>},{name:"YouTube",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8"/></svg>}].map(platform => <button
+                                    {[{name:"Pinterest",icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="10"/></svg>},{name:"Facebook",icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>},{name:"Instagram",icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>},{name:"YouTube",icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8"/></svg>}].map(platform => <button
                                         key={platform.name}
                                         onClick={() => handleShare(platform.name)}
-                                        className="flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300"
+                                        className="flex items-center justify-center w-9 h-9 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300 active:scale-95"
                                         title={platform.name}>
                                         {platform.icon}
                                     </button>)}
+                                    {"share" in navigator && <button
+                                        onClick={() => handleShare()}
+                                        className="flex items-center justify-center w-9 h-9 rounded-full border border-[#E8B4B8]/30 hover:bg-[#E8B4B8]/8 transition-all duration-300 active:scale-95"
+                                        title="More">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                    </button>}
                                 </div>}
                             </div>
                             <button onClick={() => setSaved(!saved)} className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300" aria-label="Save">
