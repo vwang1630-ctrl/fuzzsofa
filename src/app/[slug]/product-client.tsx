@@ -381,15 +381,7 @@ export function ProductPageClient(
                         {galleryImages.length > 1 && <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
                             <span className="text-[11px] tracking-[0.2em] text-white/60 font-light">{activeImage + 1}<span className="text-white/30 mx-0.5">/</span>{galleryImages.length}</span>
                         </div>}
-                        {/* Arrow navigation */}
-                        {galleryImages.length > 1 && <>
-                            <button onClick={() => { const prev = (activeImage - 1 + galleryImages.length) % galleryImages.length; setActiveImage(prev); const el = mobileGalleryRef.current?.children[prev] as HTMLElement; el?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); }} className="absolute left-3 top-1/2 -translate-y-1/2 z-20 transition-opacity duration-200 active:opacity-60" aria-label="Previous">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
-                            </button>
-                            <button onClick={() => { const next = (activeImage + 1) % galleryImages.length; setActiveImage(next); const el = mobileGalleryRef.current?.children[next] as HTMLElement; el?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); }} className="absolute right-3 top-1/2 -translate-y-1/2 z-20 transition-opacity duration-200 active:opacity-60" aria-label="Next">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
-                            </button>
-                        </>}
+
                         {/* Mobile color selector — single row large circles */}
                         {product.materialOptions && product.materialOptions.length > 0 && (
                             <div className="px-4 pt-5 pb-3">
