@@ -209,24 +209,13 @@ export default function HomePage() {
                     alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/40 to-transparent md:bg-gradient-to-t md:from-[#0A0A0A] md:via-[#0A0A0A]/20 md:to-transparent" />
                   {/* Mobile: text overlay on image */}
-                  <div className="absolute bottom-0 left-0 right-0 p-3 md:hidden">
-                    <h3 className="font-serif text-[13px] font-light text-[#F5F0EB] leading-tight">
+                  <div className="p-3 md:p-5">
+                    <h3 className="font-serif text-[13px] md:text-xl font-light text-[#F5F0EB] leading-tight md:leading-normal group-hover:text-[#E8B4B8] transition-colors duration-300">
                       {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     </h3>
-                    <p className="mt-0.5 text-[11px] text-[#F5F0EB]/50">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
-                  </div>
-                </div>
-                {/* Desktop: text below image */}
-                <div className="hidden md:block p-5">
-                  <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
-                    {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
-                  </h3>
-                  <p className="mt-1 text-xs text-[#8A8580]">{t(slugToPrefix[product.slug] + "Tagline" as TranslationKeys)}</p>
-                  <div className="mt-3 flex items-center justify-between">
-                    <p className="text-sm text-[#F5F0EB]/60">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
-                    <p className="text-[12px] tracking-[0.08em] text-[#8A8580]/70">Made to order</p>
+                    <p className="mt-0.5 md:mt-1 text-[11px] md:text-[13px] text-[#8A8580]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
                   </div>
                 </div>
               </Link>
