@@ -234,19 +234,35 @@ export default function HomePage() {
                 href={`/${product.slug}`}
                 className="group relative overflow-hidden border-0 md:border md:border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
               >
-                <div className="aspect-square relative overflow-hidden">
+                {/* Mobile: image + text below */}
+                <div className="md:hidden">
+                  <div className="aspect-square overflow-hidden">
+                    <img
+                      src={(product.images ?? [])[0] ?? ''}
+                      alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                  <div className="pt-2.5 pb-1">
+                    <h3 className="font-serif text-[12px] font-light text-[#F5F0EB] leading-tight tracking-[0.02em] group-hover:text-[#E8B4B8] transition-colors duration-300">
+                      {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
+                    </h3>
+                    <p className="mt-1 text-[11px] text-[#8A8580] tracking-[0.05em]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
+                  </div>
+                </div>
+                {/* Desktop: text overlay on image */}
+                <div className="hidden md:block aspect-square relative overflow-hidden">
                   <img
                     src={(product.images ?? [])[0] ?? ''}
                     alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/40 to-transparent md:bg-gradient-to-t md:from-[#0A0A0A] md:via-[#0A0A0A]/20 md:to-transparent" />
-                  {/* Mobile: text overlay on image */}
-                  <div className="p-3 md:p-5">
-                    <h3 className="font-serif text-[13px] md:text-xl font-light text-[#F5F0EB] leading-tight md:leading-normal group-hover:text-[#E8B4B8] transition-colors duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h3 className="font-serif text-xl font-light text-[#F5F0EB] leading-tight group-hover:text-[#E8B4B8] transition-colors duration-300">
                       {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     </h3>
-                    <p className="mt-0.5 md:mt-1 text-[11px] md:text-[13px] text-[#8A8580]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
+                    <p className="mt-1 text-[13px] text-[#8A8580]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
                   </div>
                 </div>
               </Link>
