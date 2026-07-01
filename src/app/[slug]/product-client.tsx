@@ -351,11 +351,11 @@ export function ProductPageClient(
                     <div className="lg:hidden -mx-4 md:-mx-8 relative">
                         {/* Fixed Share & Wishlist overlay — always visible */}
                         <div className="absolute top-3 right-4 flex items-center gap-2 z-20">
-                            <button onClick={() => setShowShareMenu(!showShareMenu)} className="flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A]/50 backdrop-blur-md border border-white/10 transition-all duration-300" aria-label="Share">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
+                            <button onClick={() => setShowShareMenu(!showShareMenu)} className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300" aria-label="Share">
+                                <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
                             </button>
-                            <button onClick={() => setSaved(!saved)} className="flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A]/50 backdrop-blur-md border border-white/10 transition-all duration-300" aria-label="Save">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke={saved ? "#E8B4B8" : "#F5F0EB"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                            <button onClick={() => setSaved(!saved)} className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300" aria-label="Save">
+                                <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
                             </button>
                         </div>
                         <div
