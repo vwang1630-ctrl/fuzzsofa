@@ -110,21 +110,21 @@ export default function HomePage() {
 
       {/* ─── 1. HERO ─── */}
       <section className="relative w-full overflow-hidden">
-        {/* Mobile: image fills natural height */}
+        {/* Mobile Hero — editorial layout, image as hero */}
         <div className="md:hidden relative aspect-[3/4]">
           <Link href={sceneConfig.keys.href} className="block absolute inset-0" aria-label={t(sceneConfig.keys.title)}>
             <HeroSlideshow current={heroScene} />
           </Link>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-[#0A0A0A]/10 to-transparent pointer-events-none" />
-          {/* Mobile text — tight to bottom, no extra spacing */}
-          <div className="absolute bottom-0 left-0 right-0 px-5 pb-6 pt-12">
-            <p className="tracking-[0.25em] uppercase mb-1 text-[8px]" style={{ fontFamily: 'var(--font-serif)', color: '#E8B4B8A0' }}>
+          {/* Soft bottom gradient for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 pt-16">
+            <p className="text-[10px] tracking-[0.3em] uppercase mb-3 text-[#E8B4B8]/70" style={{ fontFamily: 'var(--font-serif)' }}>
               Fuzz Sofa Studio
             </p>
-            <h1 className="font-light leading-tight tracking-[0.03em] mb-1.5 text-[1.25rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
+            <h1 className="text-[1.5rem] font-light leading-[1.15] tracking-[0.02em] mb-3 max-w-[280px]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
               {t(sceneConfig.keys.title)}
             </h1>
-            <p className="font-light text-[9px] leading-[1.4] mb-2.5" style={{ color: sceneConfig.textColor + '70' }}>
+            <p className="text-[11px] font-light leading-[1.5] mb-5 max-w-[260px]" style={{ color: sceneConfig.textColor, opacity: 0.5 }}>
               Made-to-order, delivered in 1–2 weeks
             </p>
             <button
@@ -132,9 +132,9 @@ export default function HomePage() {
                 const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
                 window.dispatchEvent(event);
               }}
-              className="inline-flex items-center gap-1 px-2.5 py-1 border border-[#E8B4B8]/20 text-[7px] tracking-[0.15em] uppercase text-[#E8B4B8]/60 transition-all duration-300 cursor-pointer hover:bg-[#E8B4B8]/10 hover:border-[#E8B4B8]/40"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-[#E8B4B8]/25 text-[9px] tracking-[0.18em] uppercase text-[#E8B4B8]/70 transition-all duration-300 cursor-pointer hover:bg-[#E8B4B8]/10 hover:border-[#E8B4B8]/45 active:scale-[0.97]"
             >
-              <svg width="11" height="11" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="13" height="13" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.9" />
                 <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
                 <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
@@ -194,16 +194,16 @@ export default function HomePage() {
       </section>
 
       {/* ─── 2. TRUST BAR ─── */}
-      <section className="bg-[#090909] py-5 md:py-10 border-y border-white/[0.03]">
-        <div className="max-w-[1200px] mx-auto px-5 md:px-6 flex flex-wrap items-center justify-center gap-4 md:gap-16 text-center">
+      <section className="bg-[#090909] py-6 md:py-10 border-y border-white/[0.03]">
+        <div className="max-w-[1200px] mx-auto px-5 md:px-6 flex flex-wrap items-center justify-center gap-5 md:gap-16 text-center">
           {[
             { icon: '✦', label: 'Studio-Crafted' },
             { icon: '◆', label: 'Quality Guarantee' },
             { icon: '◉', label: '1–2 Week Delivery' },
           ].map((item) => (
-            <div key={item.label} className="flex items-center gap-1.5">
-              <span className="text-[#E8B4B8] text-[10px]">{item.icon}</span>
-              <span className="text-[10px] md:text-[12px] tracking-[0.08em] text-[#8A8580]">{item.label}</span>
+            <div key={item.label} className="flex items-center gap-2">
+              <span className="text-[#E8B4B8] text-[11px]">{item.icon}</span>
+              <span className="text-[11px] md:text-[12px] tracking-[0.1em] text-[#8A8580]">{item.label}</span>
             </div>
           ))}
         </div>
@@ -213,15 +213,15 @@ export default function HomePage() {
 
 
       {/* ─── 4. FEATURED WORKS ─── */}
-      <section id="featured-works" className="bg-[#090909] py-12 md:py-24">
+      <section id="featured-works" className="bg-[#090909] py-10 md:py-24">
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
-          <div className="mb-8 md:mb-12 flex items-end justify-between">
+          <div className="mb-6 md:mb-12 flex items-end justify-between">
             <div>
-              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-2">Collection</p>
-              <h2 className="font-serif text-2xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
+              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Collection</p>
+              <h2 className="font-serif text-xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
                 Featured Works
               </h2>
-              <p className="mt-2 text-[12px] md:text-sm text-[#8A8580]">Each piece made individually after order confirmation</p>
+              <p className="mt-1.5 md:mt-2 text-[11px] md:text-sm text-[#8A8580]">Each piece made individually after order confirmation</p>
             </div>
             <Link href="/#featured-works" className="hidden md:flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 group/coll">
               <span>Explore Collection</span>
@@ -236,7 +236,7 @@ export default function HomePage() {
                 href={`/${product.slug}`}
                 className="group relative overflow-hidden border-0 md:border md:border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
               >
-                {/* Mobile: image + text below */}
+                {/* Mobile: image + text below with breathing room */}
                 <div className="md:hidden">
                   <div className="aspect-square overflow-hidden">
                     <img
@@ -245,11 +245,11 @@ export default function HomePage() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   </div>
-                  <div className="pt-2.5 pb-1">
-                    <h3 className="font-serif text-[12px] font-light text-[#F5F0EB] leading-tight tracking-[0.02em] group-hover:text-[#E8B4B8] transition-colors duration-300">
+                  <div className="pt-3 pb-2">
+                    <h3 className="font-serif text-[13px] font-light text-[#F5F0EB] leading-snug tracking-[0.02em] group-hover:text-[#E8B4B8] transition-colors duration-300">
                       {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     </h3>
-                    <p className="mt-1 text-[11px] text-[#8A8580] tracking-[0.05em]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
+                    <p className="mt-1 text-[12px] text-[#8A8580] tracking-[0.04em]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
                   </div>
                 </div>
                 {/* Desktop: text overlay on image */}
@@ -276,13 +276,13 @@ export default function HomePage() {
 
 
       {/* ─── INTERIOR WORLDS ─── */}
-      <section className="bg-[#090909] py-12 md:py-24">
+      <section className="bg-[#090909] py-10 md:py-24">
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
-          <div className="flex items-baseline justify-between mb-8 md:mb-12">
+          <div className="flex items-baseline justify-between mb-6 md:mb-12">
             <div>
-              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-2">Spaces</p>
-              <h2 className="font-serif text-2xl md:text-4xl font-light text-[#F5F0EB]">{t("interiorWorldsTitle")}</h2>
-              <p className="mt-2 text-[12px] md:text-sm text-[#8A8580]">{t("interiorWorldsSubtitle")}</p>
+              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Spaces</p>
+              <h2 className="font-serif text-xl md:text-4xl font-light text-[#F5F0EB]">{t("interiorWorldsTitle")}</h2>
+              <p className="mt-1.5 md:mt-2 text-[11px] md:text-sm text-[#8A8580]">{t("interiorWorldsSubtitle")}</p>
             </div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-5">
@@ -293,7 +293,7 @@ export default function HomePage() {
               { href: "/meteorite-ring-sofa", title: t("sculpturalTrend"), accent: "from-[#0A0A1A] to-[#0A0A0A]", label: t("sculpturalTrendScene"), image: "/products/meteorite-ring-sofa/sculptural-trend.png" },
             ].map((interior) => (
               <Link key={interior.href} href={interior.href} className="group relative overflow-hidden border-0 md:border md:border-[#1A1A1A] hover:border-[#E8B4B8]/40 hover:-translate-y-0.5 md:hover:-translate-y-1 transition-all duration-300">
-                <div className={`h-44 md:h-56 bg-gradient-to-b ${interior.accent} relative`}>
+                <div className={`h-36 md:h-56 bg-gradient-to-b ${interior.accent} relative`}>
                   {"image" in interior && interior.image ? (
                     <>
                       <img src={interior.image} alt={interior.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
@@ -304,7 +304,7 @@ export default function HomePage() {
                   )}
                   {/* Mobile: title overlay */}
                   <div className="absolute bottom-0 left-0 right-0 p-3 md:hidden">
-                    <h3 className="font-serif text-[15px] text-[#F5F0EB]">{interior.title}</h3>
+                    <h3 className="font-serif text-[13px] text-[#F5F0EB] leading-snug">{interior.title}</h3>
                   </div>
                 </div>
                 {/* Desktop: title below image */}
@@ -318,21 +318,21 @@ export default function HomePage() {
       </section>
 
       {/* ─── JOURNAL ─── */}
-      <section className="bg-[#050505] py-12 md:py-24">
+      <section className="bg-[#050505] py-10 md:py-24">
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
-          <div className="flex items-baseline justify-between mb-8 md:mb-12">
+          <div className="flex items-baseline justify-between mb-6 md:mb-12">
             <div>
-              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-2">Editorial</p>
-              <h2 className="font-serif text-2xl md:text-4xl font-light text-[#F5F0EB]">{t("journalTitle")}</h2>
+              <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Editorial</p>
+              <h2 className="font-serif text-xl md:text-4xl font-light text-[#F5F0EB]">{t("journalTitle")}</h2>
             </div>
-            <Link href="/journal" className="text-[11px] md:text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors tracking-[0.1em] uppercase">{t("articles")} &rarr;</Link>
+            <Link href="/journal" className="text-[10px] md:text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors tracking-[0.1em] uppercase">{t("articles")} &rarr;</Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
             {latestArticles.map((article) => (
               <Link key={article.slug} href={`/journal/${article.slug}`} className="group border-l border-[#1A1A1A] hover:border-[#E8B4B8] transition-colors duration-300 pl-4 md:pl-6 py-2">
                 <p className="text-[10px] md:text-xs text-[#8A8580] tracking-[0.1em] uppercase">{article.category}</p>
-                <h3 className="mt-2 md:mt-3 font-serif text-base md:text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">{article.title}</h3>
-                <p className="mt-1.5 md:mt-2 text-[12px] md:text-sm text-[#8A8580] line-clamp-2">{article.excerpt}</p>
+                <h3 className="mt-2 md:mt-3 font-serif text-[15px] md:text-xl text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">{article.title}</h3>
+                <p className="mt-1.5 md:mt-2 text-[11px] md:text-sm text-[#8A8580] line-clamp-2">{article.excerpt}</p>
               </Link>
             ))}
           </div>

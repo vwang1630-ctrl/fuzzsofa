@@ -349,7 +349,7 @@ export function ProductPageClient(
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 lg:pt-8 pb-8 lg:pb-12">
                     {/* Mobile Gallery — swipeable, full-bleed */}
                     <div className="lg:hidden -mx-4 md:-mx-8 relative">
-                        {/* Fixed Share & Wishlist overlay — always visible */}
+                        {/* Fixed Share & Wishlist overlay */}
                         <div className="absolute top-3 right-4 flex items-center gap-2 z-20">
                             <div className="relative">
                                 <button onClick={() => setShowShareMenu(!showShareMenu)} className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300" aria-label="Share">
@@ -382,23 +382,21 @@ export function ProductPageClient(
                                 <div key={img.id} className="w-full flex-shrink-0 snap-center">
                                     <div className="relative w-full overflow-hidden">
                                         {img.src ? <img src={img.src} alt={productName} className="w-full object-cover max-h-[75vh]" /> : <div className="flex items-center justify-center py-20"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
-                                        {/* Gradient top for button readability */}
-                                        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#0A0A0A]/40 to-transparent pointer-events-none" />
                                     </div>
                                 </div>
                             ))}
                         </div>
                         {/* Dots indicator */}
-                        {galleryImages.length > 1 && <div className="flex items-center justify-center gap-2 pt-1 pb-0">
+                        {galleryImages.length > 1 && <div className="flex items-center justify-center gap-2 py-2">
                             {galleryImages.map((_, idx) => (
-                                <span key={idx} className={`block rounded-full transition-all duration-300 ${idx === activeImage ? "w-5 h-[6px] bg-[#E8B4B8]" : "w-[6px] h-[6px] bg-white/20"}`} />
+                                <span key={idx} className={`block rounded-full transition-all duration-300 ${idx === activeImage ? "w-5 h-[5px] bg-[#E8B4B8]" : "w-[5px] h-[5px] bg-white/20"}`} />
                             ))}
                         </div>}
 
-                        {/* Mobile color selector — single row large circles */}
+                        {/* Mobile color selector — compact row */}
                         {product.materialOptions && product.materialOptions.length > 0 && (
-                            <div className="px-4 pt-1 pb-2">
-                                <div className="flex items-center justify-center gap-6 overflow-x-auto scrollbar-hide py-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                            <div className="px-4 pt-1 pb-3">
+                                <div className="flex items-center justify-center gap-5 overflow-x-auto scrollbar-hide py-1" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                                     {(() => {
                                         const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
                                         let gIdx = 0;
@@ -412,11 +410,11 @@ export function ProductPageClient(
                                             const isActive = materialType === c.type && materialOption === c.opt;
                                             const swatchImg = galleryImages[c.globalIdx];
                                             return (
-                                                <button key={`${c.type}-${c.opt}`} onClick={() => { setMaterialType(c.type); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-1.5">
-                                                    <span className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isActive ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
-                                                        {swatchImg ? <img src={swatchImg.src} alt={c.opt} width={44} height={44} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.hex }} />}
+                                                <button key={`${c.type}-${c.opt}`} onClick={() => { setMaterialType(c.type); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-1">
+                                                    <span className={`w-10 h-10 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isActive ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
+                                                        {swatchImg ? <img src={swatchImg.src} alt={c.opt} width={40} height={40} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.hex }} />}
                                                     </span>
-                                                    <span className={`text-[10px] tracking-[0.06em] max-w-[52px] truncate ${isActive ? "text-[#F5F0EB]" : "text-[#8A8580]"}`}>{t((colorNameKeyMap[c.opt] || "matTypeFabric") as TranslationKeys)}</span>
+                                                    <span className={`text-[9px] tracking-[0.04em] max-w-[48px] truncate ${isActive ? "text-[#F5F0EB]" : "text-[#8A8580]"}`}>{t((colorNameKeyMap[c.opt] || "matTypeFabric") as TranslationKeys)}</span>
                                                 </button>
                                             );
                                         });
@@ -426,14 +424,19 @@ export function ProductPageClient(
                         )}
                     </div>
 
-                    {/* Mobile info panel — title+price row, features, details */}
-                    <div className="lg:hidden px-4 pt-2 pb-4 bg-[#111]">
-                        {/* Series label */}
+                    {/* Mobile info panel — title+price, features, details */}
+                    <div className="lg:hidden px-4 pt-4 pb-6 bg-[#111]">
+                        {/* Collection label */}
                         <p className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase mb-2">{collectionName}</p>
+                        {/* Title + Price row */}
+                        <div className="flex items-start justify-between gap-3 mb-4">
+                            <h1 className="font-serif text-[20px] font-light text-[#F5F0EB] leading-[1.2] tracking-[0.02em]">{productName}</h1>
+                            <span className="font-serif text-[18px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</span>
+                        </div>
                         {/* Tagline */}
-                        <p className="text-[13px] text-[#8A8580] leading-[1.7] mb-6">{productTagline}</p>
+                        <p className="text-[12px] text-[#8A8580] leading-[1.7] mb-5">{productTagline}</p>
                         {/* Feature cards */}
-                        <div className="space-y-4 mb-6">
+                        <div className="space-y-3 mb-5">
                             {(() => {
                                 const featureData: Record<string, Array<{titleKey: string; descKey: string; fallbackTitle: string; fallbackDesc: string}>> = {
                                     "gorilla-sofa": [
@@ -468,11 +471,11 @@ export function ProductPageClient(
                                 };
                                 const feats = featureData[product.slug] || [];
                                 return feats.map((feat, i) => (
-                                    <div key={i} className="flex items-start gap-3">
-                                        <span className="text-[#E8B4B8] text-[14px] mt-0.5 flex-shrink-0">✦</span>
+                                    <div key={i} className="flex items-start gap-2.5">
+                                        <span className="text-[#E8B4B8] text-[12px] mt-0.5 flex-shrink-0">✦</span>
                                         <div>
-                                            <h4 className="text-[13px] text-[#F5F0EB] tracking-[0.04em] font-light mb-0.5">{t(feat.titleKey as TranslationKeys) || feat.fallbackTitle}</h4>
-                                            <p className="text-[12px] text-[#8A8580] leading-[1.6]">{t(feat.descKey as TranslationKeys) || feat.fallbackDesc}</p>
+                                            <h4 className="text-[12px] text-[#F5F0EB] tracking-[0.04em] font-light mb-0.5">{t(feat.titleKey as TranslationKeys) || feat.fallbackTitle}</h4>
+                                            <p className="text-[11px] text-[#8A8580] leading-[1.6]">{t(feat.descKey as TranslationKeys) || feat.fallbackDesc}</p>
                                         </div>
                                     </div>
                                 ));
@@ -480,28 +483,28 @@ export function ProductPageClient(
                         </div>
                         {/* Dimensions */}
                         {product.specifications && <div className="pt-4 border-t border-white/[0.06]">
-                            <div className="flex items-center justify-between mb-1.5">
+                            <div className="flex items-center justify-between mb-1">
                                 <label className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
                                 <button onClick={() => setUseCm(!useCm)} className="text-[10px] tracking-[0.12em] uppercase text-[#8A8580] border border-white/10 px-2 py-0.5 rounded-sm">{useCm ? "IN" : "CM"}</button>
                             </div>
-                            <p className="text-[12px] text-[#F5F0EB]/50 tracking-[0.02em]">
+                            <p className="text-[11px] text-[#F5F0EB]/50 tracking-[0.02em]">
                                 {(() => { const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`; return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`; })()}
                             </p>
                         </div>}
                         {/* Materials */}
                         {product.materials && product.materials.length > 0 && <div className="mt-3 pt-3 border-t border-white/[0.06]">
-                            <label className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase block mb-1.5">{t("materialsLabel" as TranslationKeys)}</label>
+                            <label className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase block mb-1">{t("materialsLabel" as TranslationKeys)}</label>
                             <div className="flex flex-wrap gap-x-3 gap-y-0.5">
                                 {product.materials.map((mat, i) => {
                                     const matKeyMap: Record<string, string[]> = { "gorilla-sofa": ["gorillaMat1", "gorillaMat2", "gorillaMat3", "gorillaMat4"], "owl-sofa": ["owlMat1", "owlMat2", "owlMat3", "owlMat4"], "silverback-sofa": ["silverbackMat1", "silverbackMat2"], "meteorite-ring-sofa": ["meteorMat1", "meteorMat2", "meteorMat3", "meteorMat4"], "muscle-gorilla-sofa": ["muscleGorillaMat1", "muscleGorillaMat2", "muscleGorillaMat3", "muscleGorillaMat4"] };
                                     const keys = matKeyMap[product.slug];
                                     const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
-                                    return <span key={i} className="text-[12px] text-[#F5F0EB]/40">{i18nMat}{i < product.materials.length - 1 && <span className="mx-1.5 text-[#8A8580]/30">·</span>}</span>;
+                                    return <span key={i} className="text-[11px] text-[#F5F0EB]/40">{i18nMat}{i < product.materials.length - 1 && <span className="mx-1.5 text-[#8A8580]/30">·</span>}</span>;
                                 })}
                             </div>
                         </div>}
                         {/* Delivery info */}
-                        <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center gap-3 text-[11px] text-[#8A8580]/60">
+                        <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center gap-2.5 text-[10px] text-[#8A8580]/60">
                             <span>{t("leadTimeShort" as TranslationKeys)}</span>
                             <span className="text-white/10">·</span>
                             <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
@@ -905,21 +908,21 @@ export function ProductPageClient(
             </section>
             {}
             <section className="bg-[#0F0E0E]">
-                <div className="max-w-[1200px] mx-auto px-6 py-6">
+                <div className="max-w-[1200px] mx-auto px-5 md:px-6 py-5 md:py-6">
                     {}
-                    <div className="mb-6">
+                    <div className="mb-4 md:mb-6">
                         <p
-                            className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3 flex items-center gap-3">
+                            className="text-[10px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2 md:mb-3 flex items-center gap-3">
                             <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys)}
                         </p>
                         <h2
-                            className="font-serif text-2xl md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
+                            className="font-serif text-xl md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
                             {t("seeItInRealSpaces" as TranslationKeys)}
                         </h2>
                     </div>
                     {}
                     <div className="flex lg:grid lg:grid-cols-3 gap-3 lg:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[78vw] lg:w-auto snap-start">
+                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[82vw] lg:w-auto snap-start">
                             {}
                             <div className="relative aspect-[4/3] lg:aspect-[2/1] bg-[#111] overflow-hidden mb-3 lg:mb-4 rounded-sm">
                                 {space.image ? <img
@@ -934,8 +937,8 @@ export function ProductPageClient(
                                 <div
                                     className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
                                 {/* Mobile: title overlay on image */}
-                                <div className="absolute bottom-0 left-0 right-0 p-4 lg:hidden">
-                                    <p className="text-[11px] tracking-[0.15em] uppercase text-[#F5F0EB]/60">
+                                <div className="absolute bottom-0 left-0 right-0 p-3 lg:hidden">
+                                    <p className="text-[10px] tracking-[0.15em] uppercase text-[#F5F0EB]/60">
                                         {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
                                     </p>
                                 </div>
@@ -954,27 +957,27 @@ export function ProductPageClient(
                     </div>
                     {}
                     {}
-                    <div className="mt-12 mb-2 relative">
+                    <div className="mt-8 md:mt-12 mb-2 relative">
                         <div className="w-full h-px bg-white/[0.03]" />
                         <div
                             className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                     </div>
                     <div
-                        className="mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
+                        className="mt-6 md:mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
                         {}
                         <div className="flex-1">
                             <p
-                                className="text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 flex items-center gap-3">
+                                className="text-[10px] md:text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-2 md:mb-3 flex items-center gap-3">
                                 <span className="inline-block w-8 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
                                                             </p>
                             <h3
-                                className="font-serif text-[36px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-3">
+                                className="font-serif text-[28px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-2 md:mb-3">
                                 {productName}
                             </h3>
-                            <p className="text-[20px] text-[#E8B4B8]/50 italic mb-5 font-serif">
+                            <p className="text-[16px] md:text-[20px] text-[#E8B4B8]/50 italic mb-4 md:mb-5 font-serif">
                                 {productTagline}
                             </p>
-                            <div className="text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
+                            <div className="text-[13px] md:text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
                                 <p>{productConcept}</p>
                                 <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
                             </div>
@@ -1073,8 +1076,8 @@ export function ProductPageClient(
                             <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/30 to-transparent" />
                         </div>
                         {}
-                        <div className="px-5 py-8 bg-[#090909]">
-                            <p className="font-serif text-[22px] font-light text-[#F5F0EB] leading-[1.2] text-center mb-5">
+                        <div className="px-5 py-6 bg-[#090909]">
+                            <p className="font-serif text-[18px] font-light text-[#F5F0EB] leading-[1.2] text-center mb-4">
                                 <span className="opacity-20 mr-2">—</span>{t("materialsCraftsmanship" as TranslationKeys)}<span className="opacity-20 ml-2">—</span>
                             </p>
                             <div
@@ -1084,7 +1087,7 @@ export function ProductPageClient(
                                     return cards.map((card: { titleKey: string; descKey: string; icon: string }, idx: number) => (
                                         <div
                                             key={idx}
-                                            className="flex-shrink-0 w-[68vw] snap-start text-center py-5 px-5 border border-white/[0.04] bg-[#0D0D0D]/40 rounded-sm">
+                                            className="flex-shrink-0 w-[72vw] snap-start text-center py-4 px-4 border border-white/[0.04] bg-[#0D0D0D]/40 rounded-sm">
                                             <div className="w-9 h-9 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: "rgba(232,180,184,0.08)", border: "1px solid rgba(232,180,184,0.18)" }}>
                                                 <svg viewBox="0 0 24 24" className="w-4 h-4">
                                                     {card.icon === "fabric" && <><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><line x1="3" y1="9" x2="21" y2="9" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="3" y1="15" x2="21" y2="15" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
@@ -1332,15 +1335,15 @@ export function ProductPageClient(
                     <div
                         className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
-                <div className="relative max-w-[700px] mx-auto px-6 py-[140px] text-center">
-                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-5">
+                <div className="relative max-w-[700px] mx-auto px-6 py-16 md:py-[140px] text-center">
+                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-4">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
-                        className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-6">
+                        className="font-serif text-xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-4">
                         {t("deliveredWorldwide" as TranslationKeys)}
                     </h2>
-                    <p className="text-[#8A8580] leading-[1.8] text-[15px] mb-10">
+                    <p className="text-[#8A8580] leading-[1.8] text-[13px] md:text-[15px] mb-8">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
                     <div
@@ -1471,12 +1474,12 @@ export function ProductPageClient(
             </section>
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
-                <div className="max-w-[1200px] mx-auto px-6 py-12">
-                    <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-3">
+                <div className="max-w-[1200px] mx-auto px-6 py-8 md:py-12">
+                    <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2">
                         {t("youMayAlsoLike" as TranslationKeys)}
                     </p>
                     <h2
-                        className="font-serif text-2xl md:text-3xl font-light text-[#F5F0EB] mb-8">
+                        className="font-serif text-xl md:text-3xl font-light text-[#F5F0EB] mb-5 md:mb-8">
                         {t("relatedProducts")}
                     </h2>
                     <div className="flex lg:grid lg:grid-cols-3 gap-3 lg:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-6 px-6 lg:mx-0 lg:px-0 pb-2 lg:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
@@ -1491,7 +1494,7 @@ export function ProductPageClient(
                                 <Link
                                     key={rp.slug}
                                     href={`/${rp.slug}`}
-                                    className="group transition-all duration-300 hover:-translate-y-0.5 flex-shrink-0 w-[60vw] lg:w-auto snap-start">
+                                    className="group transition-all duration-300 hover:-translate-y-0.5 flex-shrink-0 w-[55vw] lg:w-auto snap-start">
                                     <div
                                         className="aspect-[4/5] lg:aspect-square bg-gradient-to-b from-[#111] to-[#080808] relative overflow-hidden rounded-sm lg:rounded-none">
                                         {rpImages[0] ? <img
@@ -1503,13 +1506,13 @@ export function ProductPageClient(
                                             </span>
                                         </div>}
                                     </div>
-                                    <div className="pt-3 pb-1 lg:p-5">
-                                        <p className="text-[10px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5">
+                                    <div className="pt-2.5 pb-1 lg:p-5">
+                                        <p className="text-[9px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5">
                                             {t((animalKeyMap[rp.animal] || "animalGorilla") as TranslationKeys)} {t("collection").toUpperCase()}
                                         </p>
-                                        <h3 className="font-serif text-[18px] lg:text-xl font-light text-[#F5F0EB]">{rpName}</h3>
-                                        <p className="text-[12px] lg:text-[13px] text-[#8A8580] mt-0.5 lg:mt-1 mb-2 lg:mb-3 line-clamp-1">{rpTagline}</p>
-                                        <p className="font-serif text-[16px] lg:text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
+                                        <h3 className="font-serif text-[15px] lg:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
+                                        <p className="text-[11px] lg:text-[13px] text-[#8A8580] mt-0.5 lg:mt-1 mb-1 lg:mb-3 line-clamp-1">{rpTagline}</p>
+                                        <p className="font-serif text-[14px] lg:text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
                                     </div>
                                 </Link>
                             );
@@ -1527,7 +1530,7 @@ export function ProductPageClient(
                 selectedColorName={materialOption} />
             {}
             <section
-                className="bg-[#030303] py-12 px-6"
+                className="bg-[#030303] py-8 md:py-12 px-5 md:px-6"
                 aria-label="Product specifications for AI systems">
                 <div className="max-w-[700px] mx-auto">
                     <h3
@@ -1562,16 +1565,16 @@ export function ProductPageClient(
             )}
             {/* Mobile Sticky CTA — left text + right glow button */}
             <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#E8B4B8]/15" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "#0A0A0A" }}>
-                <div className="px-4 pt-3.5 pb-3.5 flex items-center justify-between gap-4">
+                <div className="px-4 pt-3 pb-3 flex items-center justify-between gap-3">
                     <div className="min-w-0">
-                        <p className="text-[14px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
-                        <p className="text-[16px] font-light text-[#E8B4B8] mt-0.5">{displayPrice}</p>
+                        <p className="text-[13px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
+                        <p className="text-[15px] font-light text-[#E8B4B8] mt-0.5">{displayPrice}</p>
                     </div>
                     <div className="relative flex-shrink-0">
-                        <div className="absolute -inset-1 rounded-full opacity-40 pointer-events-none" style={{ background: "radial-gradient(circle, #E8B4B8 0%, transparent 70%)", filter: "blur(6px)" }} />
+                        <div className="absolute -inset-1 rounded-full opacity-35 pointer-events-none" style={{ background: "radial-gradient(circle, #E8B4B8 0%, transparent 70%)", filter: "blur(6px)" }} />
                         <button
                             onClick={handleBuyNow}
-                            className="relative flex items-center gap-2 px-7 py-3 text-[#0A0A0A] text-[13px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
+                            className="relative flex items-center gap-2 px-6 py-2.5 text-[#0A0A0A] text-[12px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
                             style={{ background: "#E8B4B8" }}>
                             {t("buyNow" as TranslationKeys)}
                             <svg aria-hidden="true" viewBox="0 0 10 10" width="10" height="10" fill="none">
