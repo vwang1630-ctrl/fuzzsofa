@@ -1524,29 +1524,35 @@ export function ProductPageClient(
             {product.slug === 'meteorite-ring-sofa' && (
                 <CosmicInspiration lang={lang} />
             )}
-            {/* Mobile Sticky CTA */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#E8B4B8]/20" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "linear-gradient(to top, #0A0A0A 60%, #0A0A0A/0)" }}>
-                <div className="bg-[#111] px-5 pt-4 pb-4">
+            {/* Mobile Sticky CTA - Uiverse glow style */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40" style={{ background: "#000000" }}>
+                <div className="px-4 pt-3 pb-4" style={{ paddingBottom: "calc(16px + env(safe-area-inset-bottom, 0px))" }}>
                     <div className="flex items-baseline justify-between gap-3 mb-3">
                         <p className="font-serif text-[18px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
                         <p className="font-serif text-[18px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</p>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="relative flex items-center gap-3">
+                        {/* Glow layer */}
+                        <div className="absolute inset-0 rounded-[999px] opacity-60 transition-opacity duration-300 pointer-events-none" style={{ background: "#E8C8CD", filter: "blur(10px)" }} />
                         <button
                             onClick={() => setShowRoomViz(true)}
-                            className="flex items-center justify-center w-12 h-12 rounded-full border border-[#333] flex-shrink-0 active:scale-95 transition-all hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8"
+                            className="relative z-10 flex items-center justify-center w-12 h-12 rounded-full border border-[#E8C8CD]/30 bg-black/60 flex-shrink-0 active:scale-95 transition-all hover:border-[#E8C8CD]/50"
                             aria-label="Preview in room">
                             <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
                                 <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.2" />
-                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
+                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#000" />
                                 <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                             </svg>
                         </button>
                         <button
                             onClick={handleBuyNow}
-                            className="flex-1 py-3.5 text-[#0A0A0A] text-[13px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform text-center"
-                            style={{ background: "#E8B4B8" }}>
+                            className="relative z-10 flex-1 py-[18px] text-black text-[18px] font-semibold rounded-[999px] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
+                            style={{ background: "#E8C8CD" }}>
                             {t("buyNow" as TranslationKeys)}
+                            <svg aria-hidden="true" viewBox="0 0 10 10" height="10" width="10" fill="none" className="mt-[2px]">
+                                <path d="M0 5h7" stroke="#000" strokeWidth="2" className="transition-opacity duration-200 opacity-0 group-hover:opacity-100" />
+                                <path d="M1 1l4 4-4 4" stroke="#000" strokeWidth="2" className="transition-transform duration-200 group-hover:translate-x-[3px]" />
+                            </svg>
                         </button>
                     </div>
                 </div>
