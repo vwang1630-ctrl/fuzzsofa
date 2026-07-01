@@ -363,7 +363,7 @@ export function ProductPageClient(
                                         {/* Gradient top for button readability */}
                                         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#0A0A0A]/40 to-transparent pointer-events-none" />
                                         {/* Share & Wishlist overlay — mobile only */}
-                                        {idx === activeImage && <div className="absolute top-5 right-5 flex items-center gap-2.5 z-10">
+                                        {idx === activeImage && <div className="absolute top-3 right-4 flex items-center gap-2 z-10">
                                             <button onClick={() => setShowShareMenu(!showShareMenu)} className="flex items-center justify-center w-9 h-9 rounded-full bg-[#0A0A0A]/50 backdrop-blur-md border border-white/10 transition-all duration-300" aria-label="Share">
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5F0EB" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
                                             </button>
