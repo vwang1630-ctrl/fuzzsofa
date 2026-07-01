@@ -380,19 +380,19 @@ export function ProductPageClient(
                             onTouchEnd={handleTouchEnd}>
                             {galleryImages.map((img, idx) => (
                                 <div key={img.id} className="w-full flex-shrink-0 snap-center">
-                                    <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
+                                    <div className="relative w-full aspect-[4/5] bg-[#111] overflow-hidden">
                                         {img.src ? <img src={img.src} alt={productName} className="w-full h-full object-cover" /> : <div className="absolute inset-0 flex items-center justify-center"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
                                         {/* Gradient top for button readability */}
                                         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#0A0A0A]/40 to-transparent pointer-events-none" />
-                                        {/* Bottom gradient for counter */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#0A0A0A]/30 to-transparent pointer-events-none" />
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        {/* Fixed Image counter overlay */}
-                        {galleryImages.length > 1 && <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
-                            <span className="text-[11px] tracking-[0.2em] text-white/60 font-light">{activeImage + 1}<span className="text-white/30 mx-0.5">/</span>{galleryImages.length}</span>
+                        {/* Dots indicator */}
+                        {galleryImages.length > 1 && <div className="flex items-center justify-center gap-2 pt-3 pb-1">
+                            {galleryImages.map((_, idx) => (
+                                <span key={idx} className={`block rounded-full transition-all duration-300 ${idx === activeImage ? "w-5 h-[6px] bg-[#E8B4B8]" : "w-[6px] h-[6px] bg-white/20"}`} />
+                            ))}
                         </div>}
 
                         {/* Mobile color selector — single row large circles */}
@@ -426,12 +426,65 @@ export function ProductPageClient(
                         )}
                     </div>
 
-                    {/* Mobile info panel — tagline only (name + price in sticky CTA) */}
-                    <div className="lg:hidden px-4 pt-5 pb-4">
+                    {/* Mobile info panel — title+price row, features, details */}
+                    <div className="lg:hidden px-4 pt-5 pb-6">
+                        {/* Series label */}
                         <p className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase mb-2">{collectionName}</p>
-                        <p className="text-[14px] text-[#8A8580] leading-[1.7]">{productTagline}</p>
-                        {/* Mobile dimensions & materials summary */}
-                        {product.specifications && <div className="mt-4 pt-4 border-t border-white/[0.06]">
+                        {/* Title + Price same row */}
+                        <div className="flex items-baseline justify-between gap-4 mb-3">
+                            <h1 className="text-[20px] font-light tracking-[0.04em] text-[#F5F0EB] font-serif leading-tight">{productName}</h1>
+                            <span className="text-[18px] font-light tracking-[0.02em] text-[#E8B4B8] flex-shrink-0">{displayPrice}</span>
+                        </div>
+                        {/* Tagline */}
+                        <p className="text-[13px] text-[#8A8580] leading-[1.7] mb-6">{productTagline}</p>
+                        {/* Feature cards */}
+                        <div className="space-y-4 mb-6">
+                            {(() => {
+                                const featureData: Record<string, Array<{titleKey: string; descKey: string; fallbackTitle: string; fallbackDesc: string}>> = {
+                                    "gorilla-sofa": [
+                                        {titleKey:"gorillaFeat1",descKey:"gorillaFeat1Desc",fallbackTitle:"Comfort Support Structure",fallbackDesc:"Ergonomic curved support for long-hour comfortable seating"},
+                                        {titleKey:"gorillaFeat2",descKey:"gorillaFeat2Desc",fallbackTitle:"High Density Shaped Foam",fallbackDesc:"Custom molded foam, no deformation after years of use"},
+                                        {titleKey:"gorillaFeat3",descKey:"gorillaFeat3Desc",fallbackTitle:"Galvanized Steel Frame",fallbackDesc:"Rust-proof solid metal internal support structure"},
+                                        {titleKey:"gorillaFeat4",descKey:"gorillaFeat4Desc",fallbackTitle:"Matches Luxury Living Rooms",fallbackDesc:"Sculptural design fits villa, hotel & minimalist space"},
+                                    ],
+                                    "owl-sofa": [
+                                        {titleKey:"owlFeat1",descKey:"owlFeat1Desc",fallbackTitle:"Owl-Inspired Ergonomic Curve",fallbackDesc:"Wrap-around backrest inspired by owl wings for full support"},
+                                        {titleKey:"owlFeat2",descKey:"owlFeat2Desc",fallbackTitle:"Premium Velvet Upholstery",fallbackDesc:"Stain-resistant velvet with rich texture and color depth"},
+                                        {titleKey:"owlFeat3",descKey:"owlFeat3Desc",fallbackTitle:"Solid Wood Base",fallbackDesc:"Natural walnut wood legs with anti-scratch pads"},
+                                        {titleKey:"owlFeat4",descKey:"owlFeat4Desc",fallbackTitle:"Modular Design",fallbackDesc:"Configurable left/right orientation for any room layout"},
+                                    ],
+                                    "silverback-sofa": [
+                                        {titleKey:"silverbackFeat1",descKey:"silverbackFeat1Desc",fallbackTitle:"Dominant Presence",fallbackDesc:"Oversized sculptural silhouette commands any space"},
+                                        {titleKey:"silverbackFeat2",descKey:"silverbackFeat2Desc",fallbackTitle:"Reinforced Steel Core",fallbackDesc:"Commercial-grade frame for heavy-duty long-term use"},
+                                    ],
+                                    "meteorite-ring-sofa": [
+                                        {titleKey:"meteorFeat1",descKey:"meteorFeat1Desc",fallbackTitle:"Comfort Support Structure",fallbackDesc:"Ergonomic curved support for long-hour comfortable seating"},
+                                        {titleKey:"meteorFeat2",descKey:"meteorFeat2Desc",fallbackTitle:"High Density Shaped Foam",fallbackDesc:"Custom molded foam, no deformation after years of use"},
+                                        {titleKey:"meteorFeat3",descKey:"meteorFeat3Desc",fallbackTitle:"Galvanized Steel Frame",fallbackDesc:"Rust-proof solid metal internal support structure"},
+                                        {titleKey:"meteorFeat4",descKey:"meteorFeat4Desc",fallbackTitle:"Matches Luxury Living Rooms",fallbackDesc:"Sculptural design fits villa, hotel & minimalist space"},
+                                        {titleKey:"meteorFeat5",descKey:"meteorFeat5Desc",fallbackTitle:"Long-Term Anti-Collapse",fallbackDesc:"Multi-layer filling structure to avoid sinking & sagging"},
+                                    ],
+                                    "muscle-gorilla-sofa": [
+                                        {titleKey:"muscleGorillaFeat1",descKey:"muscleGorillaFeat1Desc",fallbackTitle:"Power Ergonomics",fallbackDesc:"Dynamic lumbar support inspired by gorilla posture"},
+                                        {titleKey:"muscleGorillaFeat2",descKey:"muscleGorillaFeat2Desc",fallbackTitle:"High-Density Memory Foam",fallbackDesc:"Pressure-responsive foam for personalized comfort"},
+                                        {titleKey:"muscleGorillaFeat3",descKey:"muscleGorillaFeat3Desc",fallbackTitle:"Carbon Steel Skeleton",fallbackDesc:"Ultra-strong frame with 10-year structural warranty"},
+                                        {titleKey:"muscleGorillaFeat4",descKey:"muscleGorillaFeat4Desc",fallbackTitle:"Statement Sculpture",fallbackDesc:"Museum-worthy design that transforms any interior"},
+                                    ],
+                                };
+                                const feats = featureData[product.slug] || [];
+                                return feats.map((feat, i) => (
+                                    <div key={i} className="flex items-start gap-3">
+                                        <span className="text-[#E8B4B8] text-[14px] mt-0.5 flex-shrink-0">✦</span>
+                                        <div>
+                                            <h4 className="text-[13px] text-[#F5F0EB] tracking-[0.04em] font-light mb-0.5">{t(feat.titleKey as TranslationKeys) || feat.fallbackTitle}</h4>
+                                            <p className="text-[12px] text-[#8A8580] leading-[1.6]">{t(feat.descKey as TranslationKeys) || feat.fallbackDesc}</p>
+                                        </div>
+                                    </div>
+                                ));
+                            })()}
+                        </div>
+                        {/* Dimensions */}
+                        {product.specifications && <div className="pt-4 border-t border-white/[0.06]">
                             <div className="flex items-center justify-between mb-1.5">
                                 <label className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
                                 <button onClick={() => setUseCm(!useCm)} className="text-[10px] tracking-[0.12em] uppercase text-[#8A8580] border border-white/10 px-2 py-0.5 rounded-sm">{useCm ? "IN" : "CM"}</button>
@@ -440,6 +493,7 @@ export function ProductPageClient(
                                 {(() => { const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`; return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`; })()}
                             </p>
                         </div>}
+                        {/* Materials */}
                         {product.materials && product.materials.length > 0 && <div className="mt-3 pt-3 border-t border-white/[0.06]">
                             <label className="text-[10px] text-[#8A8580] tracking-[0.2em] uppercase block mb-1.5">{t("materialsLabel" as TranslationKeys)}</label>
                             <div className="flex flex-wrap gap-x-3 gap-y-0.5">
@@ -451,7 +505,7 @@ export function ProductPageClient(
                                 })}
                             </div>
                         </div>}
-                        {/* Mobile delivery info */}
+                        {/* Delivery info */}
                         <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center gap-3 text-[11px] text-[#8A8580]/60">
                             <span>{t("leadTimeShort" as TranslationKeys)}</span>
                             <span className="text-white/10">·</span>
@@ -1511,29 +1565,24 @@ export function ProductPageClient(
             {product.slug === 'meteorite-ring-sofa' && (
                 <CosmicInspiration lang={lang} />
             )}
-            {/* Mobile Sticky CTA */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#E8B4B8]/20" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "linear-gradient(to top, #0A0A0A 60%, #0A0A0A/0)" }}>
-                <div className="bg-[#111] px-5 pt-4 pb-4">
-                    <div className="flex items-baseline justify-between gap-3 mb-3">
-                        <p className="font-serif text-[18px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
-                        <p className="font-serif text-[18px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</p>
+            {/* Mobile Sticky CTA — left text + right glow button */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-[#E8B4B8]/15" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "#0A0A0A" }}>
+                <div className="px-4 pt-3.5 pb-3.5 flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                        <p className="text-[14px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
+                        <p className="text-[16px] font-light text-[#E8B4B8] mt-0.5">{displayPrice}</p>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => setShowRoomViz(true)}
-                            className="flex items-center justify-center w-12 h-12 rounded-full border border-[#333] flex-shrink-0 active:scale-95 transition-all hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8"
-                            aria-label="Preview in room">
-                            <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
-                                <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" fillOpacity="0.2" />
-                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z" fill="#0A0A0A" />
-                                <path d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                            </svg>
-                        </button>
+                    <div className="relative flex-shrink-0">
+                        <div className="absolute -inset-1 rounded-full opacity-40 pointer-events-none" style={{ background: "radial-gradient(circle, #E8B4B8 0%, transparent 70%)", filter: "blur(6px)" }} />
                         <button
                             onClick={handleBuyNow}
-                            className="flex-1 py-3.5 text-[#0A0A0A] text-[13px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform text-center"
+                            className="relative flex items-center gap-2 px-7 py-3 text-[#0A0A0A] text-[13px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
                             style={{ background: "#E8B4B8" }}>
                             {t("buyNow" as TranslationKeys)}
+                            <svg aria-hidden="true" viewBox="0 0 10 10" width="10" height="10" fill="none">
+                                <path d="M0 5h7" stroke="currentColor" strokeWidth="1.2" />
+                                <path d="M1 1l4 4-4 4" stroke="currentColor" strokeWidth="1.2" />
+                            </svg>
                         </button>
                     </div>
                 </div>
