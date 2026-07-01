@@ -356,8 +356,8 @@ export function ProductPageClient(
                                     <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
                                 </button>
                                 {showShareMenu && <div
-                                    className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
-                                    style={{ background: "#0A0A0A", border: "1px solid rgba(232,180,184,0.25)", boxShadow: "0 4px 16px rgba(0,0,0,0.6)" }}>
+                                    className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-lg py-2.5 px-3.5 z-50"
+                                    style={{ background: "#1A1A1A", border: "1px solid rgba(232,180,184,0.25)", boxShadow: "0 4px 16px rgba(0,0,0,0.6)" }}>
                                     {[{name:"Pinterest",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="10"/></svg>},{name:"Facebook",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>},{name:"Instagram",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>},{name:"YouTube",icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8"/></svg>}].map(platform => <button
                                         key={platform.name}
                                         onClick={() => handleShare(platform.name)}
@@ -596,9 +596,9 @@ export function ProductPageClient(
                                             </svg>
                                         </button>
                                         {showShareMenu && <div
-                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-sm py-2 px-3 z-50"
+                                            className="absolute right-0 top-full mt-2 flex items-center gap-1 rounded-lg py-2.5 px-3.5 z-50"
                                             style={{
-                                                background: "#0A0A0A",
+                                                background: "#1A1A1A",
                                                 border: "1px solid rgba(232,180,184,0.25)",
                                                 boxShadow: "0 4px 16px rgba(0,0,0,0.6)"
                                             }}>
