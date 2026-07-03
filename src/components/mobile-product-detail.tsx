@@ -39,15 +39,41 @@ const LANGUAGES = [
   { code: 'vi', label: 'Tiếng Việt' },
 ];
 
-// Map spec keys to translatable labels
-const SPEC_LABELS: Record<string, { key: string; fallback: string }> = {
-  width: { key: 'width', fallback: '宽度' },
-  height: { key: 'height', fallback: '高度' },
-  depth: { key: 'depth', fallback: '深度' },
-  seatHeight: { key: 'seatHeight', fallback: '座高' },
-  weight: { key: 'weight', fallback: '重量' },
-  capacity: { key: 'capacity', fallback: '承重' },
+// Map spec keys to labels
+const SPEC_LABELS: Record<string, string> = {
+  width: '宽度',
+  height: '高度',
+  depth: '深度',
+  seatHeight: '座高',
+  weight: '重量',
+  capacity: '承重',
 };
+
+// Translation fallback map — t() returns the key itself if not found, so we use these directly
+const FALLBACKS: Record<string, string> = {
+  cart: '购物车',
+  color: '颜色',
+  storyTitle: '设计故事',
+  sketchTag: '手稿 · 概念设计',
+  handmadeNote: '* 手工制作 · 尺寸可能存在 ±1-3cm 差异 · 重量因面料批次略有浮动',
+  dimensions: '尺寸',
+  craftTitle: '材质与工艺',
+  sceneTitle: '实景灵感',
+  exploreMore: '发现更多',
+  viewAll: '查看全部',
+  shareCopy: '复制链接',
+  shareSave: '保存图片',
+  previewInYourSpace: '预览',
+  buyNow: '购买',
+};
+
+// Helper: t() returns key itself when not translated, so compare against key
+function txt(t: (key: string) => string, key: string): string {
+  const val = t(key);
+  // If t returns the key itself (untranslated), use fallback
+  if (val === key) return FALLBACKS[key] || key;
+  return val;
+}
 
 export default function MobileProductDetail({
   product,
@@ -116,7 +142,7 @@ export default function MobileProductDetail({
   const specRows = Object.entries(product.specifications || {}).map(([key, value]) => {
     const cmVal = parseFloat(value);
     return {
-      label: SPEC_LABELS[key]?.fallback || key,
+      label: SPEC_LABELS[key] || key,
       cmValue: key === 'weight' || key === 'capacity' ? value : `${value} cm`,
       inValue: key === 'weight' || key === 'capacity' ? value : isNaN(cmVal) ? value : `${(cmVal / 2.54).toFixed(1)} in`,
       isConvertible: key !== 'weight' && key !== 'capacity',
@@ -172,7 +198,7 @@ export default function MobileProductDetail({
 
           <div className="right">
             <span className="cart-link" onClick={() => router.push('/cart')}>
-              {t('cart') || '购物车'} ({cartCount})
+              {txt(t, 'cart')} ({cartCount})
             </span>
             <button onClick={() => router.push('/search')}>
               <svg className="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><line x1="16" y1="16" x2="22" y2="22" /></svg>
@@ -192,12 +218,6 @@ export default function MobileProductDetail({
         >
           <img src={productImages[currentImage]} alt={product.name} />
 
-          <div className="float-ai">
-            <button>
-              <svg className="icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></svg>
-            </button>
-          </div>
-
           <div className="share-dropdown">
             <button className="share-toggle" onClick={() => setShareOpen(!shareOpen)} aria-label="Share">
               <svg viewBox="0 0 24 24">
@@ -211,11 +231,11 @@ export default function MobileProductDetail({
             <div className={`share-menu${shareOpen ? ' open' : ''}`}>
               <button className="menu-item" onClick={handleShareCopy}>
                 <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
-                <span>{t('shareCopy') || '复制链接'}</span>
+                <span>{txt(t, 'shareCopy')}</span>
               </button>
               <button className="menu-item" onClick={handleShareSave}>
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
-                <span>{t('shareSave') || '保存图片'}</span>
+                <span>{txt(t, 'shareSave')}</span>
               </button>
               <div className="menu-divider" />
               <button className="menu-item" onClick={() => { setShareOpen(false); }}>
@@ -235,11 +255,10 @@ export default function MobileProductDetail({
           <div className={`share-backdrop${shareOpen ? ' open' : ''}`} onClick={() => setShareOpen(false)} />
 
           <div className="float-actions">
-            <button onClick={() => setIsFav(!isFav)}>
-              <svg className="icon" viewBox="0 0 24 24" style={isFav ? { fill: '#E8B4B8', stroke: '#E8B4B8' } : {}}><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+            <button className={isFav ? 'faved' : ''} onClick={() => setIsFav(!isFav)}>
+              <svg className="icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
             </button>
           </div>
-
           <div className="image-indicator">
             {productImages.map((_, idx) => (
               <span key={idx} className={idx === currentImage ? 'active' : ''}>
@@ -252,7 +271,7 @@ export default function MobileProductDetail({
         {/* ===== 颜色选择器 ===== */}
         {colors.length > 0 && (
           <div className="color-selector">
-            <span className="label">{t('color') || '颜色'}</span>
+            <span className="label">{txt(t, 'color')}</span>
             <div className="options">
               {colors.map((colorOpt, idx) => (
                 <button
@@ -295,17 +314,17 @@ export default function MobileProductDetail({
         {/* ===== THE STORY ===== */}
         {storyImages.length > 0 && (
           <div className="story">
-            <div className="section-label">{t('storyTitle') || '设计故事'}</div>
+            <div className="section-label">{txt(t, 'storyTitle')}</div>
             <div className="story-grid">
               <div className="story-image">
                 <img src={storyImages[0]} alt="Design sketch" loading="lazy" />
-                <span className="sketch-tag">✧ {t('sketchTag') || '手稿 · 概念设计'}</span>
+                <span className="sketch-tag">✧ {txt(t, 'sketchTag')}</span>
               </div>
               <div className="story-text">
                 <div className="title">{product.name} <span className="light">✦</span></div>
                 <p>{product.concept}</p>
                 <p className="spec-note">
-                  <span>{t('handmadeNote') || '* 手工制作 · 尺寸可能存在 ±1-3cm 差异 · 重量因面料批次略有浮动'}</span>
+                  <span>{txt(t, 'handmadeNote')}</span>
                 </p>
               </div>
             </div>
@@ -316,7 +335,7 @@ export default function MobileProductDetail({
         {specRows.length > 0 && (
           <>
             <div className="specs-header">
-              <span className="label">{t('dimensions') || '尺寸'}</span>
+              <span className="label">{txt(t, 'dimensions')}</span>
               <div className="unit-toggle">
                 <button
                   className={unit === 'cm' ? 'active' : ''}
@@ -346,7 +365,7 @@ export default function MobileProductDetail({
         {/* ===== 材质 ===== */}
         {craftData.length > 0 && (
           <div className="craft">
-            <div className="section-label">{t('craftTitle') || '材质与工艺'}</div>
+            <div className="section-label">{txt(t, 'craftTitle')}</div>
             <div className="craft-list">
               {craftData.map((item, idx) => (
                 <div className="craft-item" key={idx}>
@@ -362,13 +381,13 @@ export default function MobileProductDetail({
         {/* ===== 场景 ===== */}
         {spaceImages.length > 0 && (
           <div className="inspiration">
-            <div className="section-label">{t('sceneTitle') || '实景灵感'}</div>
+            <div className="section-label">{txt(t, 'sceneTitle')}</div>
             <div className="scene-scroll">
               {spaceImages.map((img, idx) => (
                 <div className="scene-card" key={idx}>
                   <img src={img} alt="" loading="lazy" />
-                  <div className="label">{idx === 0 ? (t('scene1Label') || '星际 lounge') : idx === 1 ? (t('scene2Label') || '沙丘静修') : (t('scene3Label') || '银河沙龙')}</div>
-                  <div className="sub">{idx === 0 ? (t('scene1Sub') || '星空下的起居室') : idx === 1 ? (t('scene2Sub') || '静谧 · 沉思 · 温暖') : (t('scene3Sub') || '长谈之地')}</div>
+                  <div className="label">{idx === 0 ? '星际 lounge' : idx === 1 ? '沙丘静修' : '银河沙龙'}</div>
+                  <div className="sub">{idx === 0 ? '星空下的起居室' : idx === 1 ? '静谧 · 沉思 · 温暖' : '长谈之地'}</div>
                 </div>
               ))}
             </div>
@@ -379,8 +398,8 @@ export default function MobileProductDetail({
         {relatedProducts.length > 0 && (
           <div className="explore-more">
             <div className="explore-header">
-              <span className="explore-label">{t('exploreMore') || '发现更多'}</span>
-              <span className="explore-view-all" onClick={() => router.push('/')}>{t('viewAll') || '查看全部'} →</span>
+              <span className="explore-label">{txt(t, 'exploreMore')}</span>
+              <span className="explore-view-all" onClick={() => router.push('/')}>{txt(t, 'viewAll')} →</span>
             </div>
             <div className="explore-scroll">
               {relatedProducts.map((item) => (
@@ -413,12 +432,12 @@ export default function MobileProductDetail({
               <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
               <line x1="12" y1="22.08" x2="12" y2="12" />
             </svg>
-            <span className="ai-label">AI {t('preview') || '预览'}</span>
+            <span className="ai-label">AI 预览</span>
           </button>
         </div>
         <div className="row-bottom">
           <span className="price">{price} <small>{currencyLabel}</small></span>
-          <button className="btn-buy" onClick={onBuyNow}>{t('buyNow') || '购买'}</button>
+          <button className="btn-buy" onClick={onBuyNow}>购买</button>
         </div>
       </div>
     </>
