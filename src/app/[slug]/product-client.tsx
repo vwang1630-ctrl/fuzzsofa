@@ -414,30 +414,14 @@ export function ProductPageClient(
                 product={product}
                 region={region}
                 productImages={images}
-                storyImages={storySketchMap[product.slug] ? [storySketchMap[product.slug]] : []}
-                spaceImages={(spaceImagesMap[product.slug] || []).map(s => s.image)}
+                storyImage={storySketchMap[product.slug] || ''}
+                spaceImages={spaceImagesMap[product.slug] || []}
                 featureData={mobileFeatureDataMap[product.slug] || []}
                 craftData={mobileCraftDataMap[product.slug] || []}
-                relatedProducts={relatedProducts.map(rp => ({
-                    slug: rp.slug,
-                    name: rp.name,
-                    image: rp.images?.[0] || `/products/${rp.slug}/hero.jpg`,
-                    price: formatPrice(getPrice(rp, region), region),
-                    desc: rp.tagline || '',
-                }))}
                 locale={lang}
-                selectedMaterial={product.materialOptions?.findIndex(m => m.type === materialType) ?? 0}
-                onMaterialChange={(idx: number) => {
-                    const mat = product.materialOptions?.[idx];
-                    if (mat) {
-                        setMaterialType(mat.type);
-                        setMaterialOption(mat.options?.[0] || '');
-                    }
-                }}
-                onAddToCart={handleAddToCart}
-                onBuyNow={handleBuyNow}
-                t={t as (key: string) => string}
                 cartCount={0}
+                onAddToCart={handleAddToCart}
+                t={t as (key: string) => string}
             />
             <section className="bg-[#0A0A0A]">
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
