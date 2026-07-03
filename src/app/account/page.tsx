@@ -15,28 +15,30 @@ import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
 
 interface OrderItem {
   id: string;
-  product_slug: string;
-  product_name: string;
-  color_name: string | null;
-  color_hex: string | null;
+  productSlug: string;
+  productName: string;
+  colorName: string | null;
+  colorHex: string | null;
   quantity: number;
-  unit_price: number;
+  unitPrice: number;
   subtotal: number;
-  image_url: string | null;
+  imageUrl: string | null;
+  fabric?: string;
+  size?: string;
 }
 
 interface Order {
   id: string;
-  order_number: string;
+  orderNumber: string;
   status: string;
-  payment_status: string;
-  payment_method: string | null;
+  paymentStatus: string;
+  paymentMethod: string | null;
   total: number;
-  shipping_fee: number;
+  shippingFee: number;
   subtotal: number;
-  created_at: string;
+  createdAt: string;
   items: OrderItem[];
-  tracking_number: string | null;
+  trackingNumber: string | null;
   carrier: string | null;
   estimated_delivery: string | null;
   latest_shipping_event: string | null;
@@ -64,7 +66,11 @@ interface Address {
 /* ------------------------------------------------------------------ */
 
 const formatDate = (d: string) => {
-  try { return new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }); }
+  try {
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    return date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+  }
   catch { return d; }
 };
 
@@ -156,6 +162,7 @@ export default function AccountPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [selectedOrders, setSelectedOrders] = useState<Set<string>>(new Set());
+  const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
   /* ---- Tab-based order grouping ---- */
   type OrderTab = "all" | "pending" | "production" | "shipped" | "cancelled";
   const [orderTab, setOrderTab] = useState<OrderTab>("all");
@@ -424,18 +431,18 @@ export default function AccountPage() {
     const payData = {
       orderIds: [order.id],
       items: order.items.map(it => ({
-        productSlug: it.product_slug,
-        productName: it.product_name,
-        colorName: it.color_name,
-        colorHex: it.color_hex,
+        productSlug: it.productSlug,
+        productName: it.productName,
+        colorName: it.colorName,
+        colorHex: it.colorHex,
         quantity: it.quantity,
-        unitPrice: it.unit_price,
+        unitPrice: it.unitPrice,
         subtotal: it.subtotal,
-        imageUrl: it.image_url,
+        imageUrl: it.imageUrl,
       })),
       total: order.total,
       subtotal: order.subtotal,
-      shippingFee: order.shipping_fee,
+      shippingFee: order.shippingFee,
     };
     sessionStorage.setItem("payExistingOrders", JSON.stringify(payData));
     router.push("/payment");
@@ -443,20 +450,20 @@ export default function AccountPage() {
 
   // Batch pay selected orders
   const handleBatchPay = () => {
-    const selected = orders.filter(o => selectedOrders.has(o.id) && o.payment_status === "pending");
+    const selected = orders.filter(o => selectedOrders.has(o.id) && o.paymentStatus === "pending");
     if (selected.length === 0) return;
     const total = selected.reduce((s, o) => s + o.total, 0);
     const subtotal = selected.reduce((s, o) => s + o.subtotal, 0);
-    const shippingFee = selected.reduce((s, o) => s + o.shipping_fee, 0);
+    const shippingFee = selected.reduce((s, o) => s + o.shippingFee, 0);
     const items = selected.flatMap(o => o.items.map(it => ({
-      productSlug: it.product_slug,
-      productName: it.product_name,
-      colorName: it.color_name,
-      colorHex: it.color_hex,
+      productSlug: it.productSlug,
+      productName: it.productName,
+      colorName: it.colorName,
+      colorHex: it.colorHex,
       quantity: it.quantity,
-      unitPrice: it.unit_price,
+      unitPrice: it.unitPrice,
       subtotal: it.subtotal,
-      imageUrl: it.image_url,
+      imageUrl: it.imageUrl,
     })));
     const payData = {
       orderIds: selected.map(o => o.id),
@@ -486,10 +493,10 @@ export default function AccountPage() {
     : orderTab === "shipped"
     ? orders.filter(o => o.status === "shipped" || o.status === "delivered")
     : orderTab === "cancelled"
-    ? orders.filter(o => o.status === "cancelled" || o.payment_status === "failed")
+    ? orders.filter(o => o.status === "cancelled" || o.paymentStatus === "failed")
     : orders;
 
-  const hasSelectedPending = orders.filter(o => selectedOrders.has(o.id) && o.payment_status === "pending").length > 0;
+  const hasSelectedPending = orders.filter(o => selectedOrders.has(o.id) && o.paymentStatus === "pending").length > 0;
 
   if (!mounted) return null;
 
@@ -540,7 +547,7 @@ export default function AccountPage() {
               { key: "pending" as OrderTab, label: <><span className="lg:hidden">{t("orderTabPendingShort")}</span><span className="hidden lg:inline">{t("orderTabPending")}</span></>, count: orders.filter(o => o.status === "pending").length },
               { key: "production" as OrderTab, label: <><span className="lg:hidden">{t("orderTabProductionShort")}</span><span className="hidden lg:inline">{t("orderTabProduction")}</span></>, count: orders.filter(o => o.status === "confirmed" || o.status === "processing").length },
               { key: "shipped" as OrderTab, label: <><span className="lg:hidden">{t("orderTabShippedShort")}</span><span className="hidden lg:inline">{t("orderTabShipped")}</span></>, count: orders.filter(o => o.status === "shipped" || o.status === "delivered").length },
-              { key: "cancelled" as OrderTab, label: <><span className="lg:hidden">{t("orderTabCancelledShort")}</span><span className="hidden lg:inline">{t("orderTabCancelled")}</span></>, count: orders.filter(o => o.status === "cancelled" || o.payment_status === "failed").length },
+              { key: "cancelled" as OrderTab, label: <><span className="lg:hidden">{t("orderTabCancelledShort")}</span><span className="hidden lg:inline">{t("orderTabCancelled")}</span></>, count: orders.filter(o => o.status === "cancelled" || o.paymentStatus === "failed").length },
             ]).map(tab => (
               <button
                 key={tab.key}
@@ -570,7 +577,7 @@ export default function AccountPage() {
                 onClick={handleBatchPay}
                 className="px-4 py-2 text-xs tracking-wider uppercase border border-[#E8B4B8] text-[#E8B4B8] hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all"
               >
-                {t("accountPaySelected")} ({orders.filter(o => selectedOrders.has(o.id) && o.payment_status === "pending").length})
+                {t("accountPaySelected")} ({orders.filter(o => selectedOrders.has(o.id) && o.paymentStatus === "pending").length})
               </button>
             </div>
           )}
@@ -589,10 +596,14 @@ export default function AccountPage() {
                   key={order.id}
                   className="bg-[#111111] border border-[#1A1A1A] hover:border-[#333] transition-all"
                 >
-                  {/* Order Header */}
-                  <div className="flex items-center justify-between px-5 py-4 border-b border-[#1A1A1A]">
-                    <div className="flex items-center gap-4">
-                      {order.payment_status === "pending" && (
+                  {/* Order Header - clickable to expand details */}
+                  <button
+                    type="button"
+                    onClick={() => setExpandedOrderId(expandedOrderId === order.id ? null : order.id)}
+                    className="w-full flex items-center justify-between px-5 py-4 border-b border-[#1A1A1A] text-left"
+                  >
+                    <div className="flex items-center gap-4" onClick={e => e.stopPropagation()}>
+                      {order.paymentStatus === "pending" && (
                         <input
                           type="checkbox"
                           checked={selectedOrders.has(order.id)}
@@ -601,13 +612,13 @@ export default function AccountPage() {
                         />
                       )}
                       <div>
-                        <Link href={`/orders/${order.id}`} className="text-[#F5F0EB] text-sm hover:text-[#E8B4B8] transition-colors">
-                          {order.order_number}
+                        <Link href={`/orders/${order.id}`} className="text-[#F5F0EB] text-sm hover:text-[#E8B4B8] transition-colors" onClick={e => e.stopPropagation()}>
+                          {order.orderNumber}
                         </Link>
-                        <p className="text-xs text-[#8A8580] mt-1">{formatDate(order.created_at)}</p>
+                        <p className="text-xs text-[#8A8580] mt-1">{formatDate(order.createdAt)}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4" onClick={e => e.stopPropagation()}>
                       <button
                         onClick={() => {
                           const statusToTab: Record<string, OrderTab> = {
@@ -618,7 +629,7 @@ export default function AccountPage() {
                             delivered: 'shipped',
                             cancelled: 'cancelled',
                           };
-                          const paymentFailedTab = order.payment_status === 'failed' ? 'cancelled' as OrderTab : null;
+                          const paymentFailedTab = order.paymentStatus === 'failed' ? 'cancelled' as OrderTab : null;
                           setOrderTab(paymentFailedTab || statusToTab[order.status] || 'all');
                         }}
                         className={`text-[12px] tracking-widest uppercase px-2.5 py-1 rounded hover:opacity-70 transition-opacity cursor-pointer border ${statusColor(order.status)}`}
@@ -640,19 +651,26 @@ export default function AccountPage() {
                         );
                       })()}
                       <span className="text-[#F5F0EB] text-sm">{formatPrice(order.total)}</span>
+                      {/* Expand/collapse chevron */}
+                      <svg
+                        className={`w-4 h-4 text-[#8A8580] transition-transform duration-200 ${expandedOrderId === order.id ? 'rotate-180' : ''}`}
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
                     </div>
-                  </div>
+                  </button>
 
                   {/* Order Items Preview */}
                   <div className="px-5 py-3">
                     <div className="flex items-center gap-4">
                       {order.items.slice(0, 3).map(item => (
                         <div key={item.id} className="w-12 h-12 bg-[#1A1A1A] flex-shrink-0 overflow-hidden">
-                          {item.image_url ? (
-                            <img src={item.image_url} alt={item.product_name} className="w-full h-full object-cover" />
+                          {item.imageUrl ? (
+                            <img src={item.imageUrl} alt={item.productName} className="w-full h-full object-cover" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-[#333] text-xs">
-                              {(item.product_name || "?").charAt(0)}
+                              {(item.productName || "?").charAt(0)}
                             </div>
                           )}
                         </div>
@@ -665,11 +683,11 @@ export default function AccountPage() {
                       </span>
                     </div>
                     {/* Tracking number + EDD for shipped orders */}
-                    {(order.tracking_number || order.estimated_delivery) && (
+                    {(order.trackingNumber || order.estimated_delivery) && (
                       <div className="flex items-center gap-4 mt-2 pt-2 border-t border-[#1A1A1A]">
-                        {order.tracking_number && (
+                        {order.trackingNumber && (
                           <Link href={`/orders/${order.id}`} className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">
-                            {t("trackingNumber")}: {order.tracking_number}
+                            {t("trackingNumber")}: {order.trackingNumber}
                           </Link>
                         )}
                         {order.estimated_delivery && formatEDD(order.estimated_delivery) && (
@@ -715,6 +733,74 @@ export default function AccountPage() {
                       <Link href={`/orders/${order.id}`} className="text-xs text-[#E8B4B8] hover:underline">
                         {t("accountViewTrackingInfo")}
                       </Link>
+                    </div>
+                  )}
+
+                  {/* Expandable Order Detail Panel */}
+                  {expandedOrderId === order.id && order.items && order.items.length > 0 && (
+                    <div className="border-t border-[#1A1A1A]">
+                      {order.items.map((item: OrderItem, idx: number) => (
+                        <div key={item.id || idx} className="px-5 py-4 flex gap-4 border-b border-[#1A1A1A] last:border-b-0">
+                          {/* Product Image */}
+                          <div className="w-20 h-20 flex-shrink-0 bg-[#111] rounded overflow-hidden">
+                            {item.imageUrl ? (
+                              <img src={item.imageUrl} alt={item.productName || ''} className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-[#8A8580]">
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                          {/* Product Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2">
+                              {item.productSlug ? (
+                                <Link href={`/${item.productSlug}`} className="text-sm text-[#F5F0EB] hover:text-[#E8B4B8] transition-colors truncate">
+                                  {item.productName || item.productSlug}
+                                </Link>
+                              ) : (
+                                <p className="text-sm text-[#F5F0EB] truncate">{item.productName || '—'}</p>
+                              )}
+                              <span className="text-sm text-[#F5F0EB] flex-shrink-0">{formatPrice(item.unitPrice * item.quantity)}</span>
+                            </div>
+                            {/* Detail row: color / qty */}
+                            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-xs text-[#8A8580]">
+                              {item.colorName && (
+                                <span className="flex items-center gap-1.5">
+                                  <span className="inline-block w-3 h-3 rounded-full border border-[#333] flex-shrink-0" style={{ backgroundColor: item.colorHex || '#666' }} />
+                                  {item.colorName}
+                                </span>
+                              )}
+                              <span>{t("orderDetailQty") || 'Qty'}: {item.quantity}</span>
+                            </div>
+                            {/* Unit price */}
+                            {item.quantity > 1 && (
+                              <p className="text-[10px] text-[#8A8580] mt-1">
+                                {formatPrice(item.unitPrice)} × {item.quantity}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                      {/* Order Summary */}
+                      <div className="px-5 py-3 bg-[#0A0A0A]">
+                        <div className="flex justify-between text-xs text-[#8A8580] mb-1">
+                          <span>{t("orderDetailSubtotal") || 'Subtotal'}</span>
+                          <span>{formatPrice(order.subtotal || order.total)}</span>
+                        </div>
+                        {(order.shippingFee !== undefined && order.shippingFee !== null) && (
+                          <div className="flex justify-between text-xs text-[#8A8580] mb-1">
+                            <span>{t("orderDetailShipping") || 'Shipping'}</span>
+                            <span>{order.shippingFee === 0 ? (t("orderDetailFreeShipping") || 'Free') : formatPrice(order.shippingFee)}</span>
+                          </div>
+                        )}
+                        <div className="flex justify-between text-sm text-[#F5F0EB] pt-2 border-t border-[#1A1A1A]">
+                          <span>{t("orderDetailTotal") || 'Total'}</span>
+                          <span>{formatPrice(order.total)}</span>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
