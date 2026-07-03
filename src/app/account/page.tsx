@@ -36,13 +36,23 @@ interface Order {
   total: number;
   shippingFee: number;
   subtotal: number;
+  currency: string;
   createdAt: string;
   items: OrderItem[];
   trackingNumber: string | null;
   carrier: string | null;
-  estimated_delivery: string | null;
-  latest_shipping_event: string | null;
-  shipping_method: string | null;
+  estimatedDelivery: string | null;
+  latestShippingEvent: string | null;
+  shippingMethod: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  phone: string | null;
+  addressLine1: string | null;
+  addressLine2: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: string | null;
+  country: string | null;
 }
 
 interface Address {
@@ -107,6 +117,21 @@ const paymentStatusLabel = (s: string, t: (key: TranslationKeys) => string): str
     failed: "orderPaymentFailed",
   };
   return m[s] ? t(m[s]) : s;
+};
+
+const getPaymentStatusComponent = (s: string, tFn: (key: TranslationKeys) => string) => {
+  const colorMap: Record<string, string> = {
+    pending: "text-[#E8B4B8]",
+    pending_payment: "text-[#E8B4B8]",
+    paid: "text-green-400",
+    refunded: "text-[#8A8580]",
+    failed: "text-red-400",
+  };
+  return (
+    <span className={`text-xs ${colorMap[s] || 'text-[#F5F0EB]'}`}>
+      {paymentStatusLabel(s, tFn)}
+    </span>
+  );
 };
 
 /* Logistics badge: maps latest_shipping_event → color + label key */
@@ -638,7 +663,7 @@ export default function AccountPage() {
                       </button>
                       {/* Logistics badge - clickable to shipping tab */}
                       {(() => {
-                        const badge = logisticsBadge(order.latest_shipping_event, t);
+                        const badge = logisticsBadge(order.latestShippingEvent, t);
                         if (!badge) return null;
                         return (
                           <button
@@ -683,16 +708,16 @@ export default function AccountPage() {
                       </span>
                     </div>
                     {/* Tracking number + EDD for shipped orders */}
-                    {(order.trackingNumber || order.estimated_delivery) && (
+                    {(order.trackingNumber || order.estimatedDelivery) && (
                       <div className="flex items-center gap-4 mt-2 pt-2 border-t border-[#1A1A1A]">
                         {order.trackingNumber && (
                           <Link href={`/orders/${order.id}`} className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">
                             {t("trackingNumber")}: {order.trackingNumber}
                           </Link>
                         )}
-                        {order.estimated_delivery && formatEDD(order.estimated_delivery) && (
+                        {order.estimatedDelivery && formatEDD(order.estimatedDelivery) && (
                           <span className="text-xs text-[#8A8580] ml-auto">
-                            {t("shippingEstDelivery")}: {formatEDD(order.estimated_delivery)}
+                            {t("shippingEstDelivery")}: {formatEDD(order.estimatedDelivery)}
                           </span>
                         )}
                       </div>
@@ -737,68 +762,164 @@ export default function AccountPage() {
                   )}
 
                   {/* Expandable Order Detail Panel */}
-                  {expandedOrderId === order.id && order.items && order.items.length > 0 && (
+                  {expandedOrderId === order.id && (
                     <div className="border-t border-[#1A1A1A]">
-                      {order.items.map((item: OrderItem, idx: number) => (
-                        <div key={item.id || idx} className="px-5 py-4 flex gap-4 border-b border-[#1A1A1A] last:border-b-0">
-                          {/* Product Image */}
-                          <div className="w-20 h-20 flex-shrink-0 bg-[#111] rounded overflow-hidden">
-                            {item.imageUrl ? (
-                              <img src={item.imageUrl} alt={item.productName || ''} className="w-full h-full object-cover" />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center text-[#8A8580]">
-                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                                </svg>
+                      {/* ── Order Info Header ── */}
+                      <div className="px-5 py-3 bg-[#0D0D0D] border-b border-[#1A1A1A]">
+                        <div className="grid grid-cols-2 gap-y-2 text-xs">
+                          <div>
+                            <span className="text-[#8A8580]">{t("orderDetailOrderNo") || 'Order No.'}</span>
+                            <p className="text-[#F5F0EB] mt-0.5 font-mono tracking-wide">{order.orderNumber || order.id.slice(0, 8)}</p>
+                          </div>
+                          <div>
+                            <span className="text-[#8A8580]">{t("orderDetailOrderTime") || 'Order Time'}</span>
+                            <p className="text-[#F5F0EB] mt-0.5">{formatDate(order.createdAt)}</p>
+                          </div>
+                          {order.paymentMethod && (
+                            <div>
+                              <span className="text-[#8A8580]">{t("orderDetailPayMethod") || 'Payment'}</span>
+                              <p className="text-[#F5F0EB] mt-0.5">{order.paymentMethod}</p>
+                            </div>
+                          )}
+                          <div>
+                            <span className="text-[#8A8580]">{t("orderDetailPayStatus") || 'Payment Status'}</span>
+                            <p className="mt-0.5">{getPaymentStatusComponent(order.paymentStatus, t)}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* ── Product List ── */}
+                      {order.items && order.items.length > 0 && (
+                        <div>
+                          {order.items.map((item: OrderItem, idx: number) => (
+                            <div key={item.id || idx} className="px-5 py-4 flex gap-4 border-b border-[#1A1A1A] last:border-b-0">
+                              {/* Product Image */}
+                              <div className="w-[72px] h-[72px] lg:hidden flex-shrink-0 bg-[#111] rounded overflow-hidden">
+                                {item.imageUrl ? (
+                                  <img src={item.imageUrl} alt={item.productName || ''} className="w-full h-full object-cover" />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-[#8A8580]">
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                    </svg>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="w-[88px] h-[88px] hidden lg:block flex-shrink-0 bg-[#111] rounded overflow-hidden">
+                                {item.imageUrl ? (
+                                  <img src={item.imageUrl} alt={item.productName || ''} className="w-full h-full object-cover" />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-[#8A8580]">
+                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                    </svg>
+                                  </div>
+                                )}
+                              </div>
+                              {/* Product Info */}
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-start justify-between gap-2">
+                                  {item.productSlug ? (
+                                    <Link href={`/${item.productSlug}`} className="text-sm text-[#F5F0EB] hover:text-[#E8B4B8] transition-colors truncate leading-snug">
+                                      {item.productName || item.productSlug}
+                                    </Link>
+                                  ) : (
+                                    <p className="text-sm text-[#F5F0EB] truncate leading-snug">{item.productName || '—'}</p>
+                                  )}
+                                </div>
+                                {/* SKU / Model */}
+                                {item.productSlug && (
+                                  <p className="text-[10px] text-[#8A8580] mt-1 font-mono tracking-wider uppercase">
+                                    {t("orderDetailModel") || 'Model'}: {item.productSlug.replace(/-/g, ' ')}
+                                  </p>
+                                )}
+                                {/* Color swatch + name */}
+                                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs text-[#8A8580]">
+                                  {item.colorName && (
+                                    <span className="flex items-center gap-1.5">
+                                      <span className="inline-block w-3 h-3 rounded-full border border-[#333] flex-shrink-0" style={{ backgroundColor: item.colorHex || '#666' }} />
+                                      {item.colorName}
+                                    </span>
+                                  )}
+                                  {item.fabric && (
+                                    <span>{t("orderDetailFabric") || 'Fabric'}: {item.fabric}</span>
+                                  )}
+                                  {item.size && (
+                                    <span>{t("orderDetailSize") || 'Size'}: {item.size}</span>
+                                  )}
+                                  <span>{t("orderDetailQty") || 'Qty'}: {item.quantity}</span>
+                                </div>
+                                {/* Price */}
+                                <div className="flex items-baseline justify-between mt-2">
+                                  <span className="text-[10px] text-[#8A8580]">
+                                    {formatPrice(item.unitPrice)} × {item.quantity}
+                                  </span>
+                                  <span className="text-sm text-[#F5F0EB]">{formatPrice(item.unitPrice * item.quantity)}</span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* ── Shipping / Delivery Info ── */}
+                      {(order.shippingMethod || order.carrier || order.trackingNumber) && (
+                        <div className="px-5 py-3 bg-[#0D0D0D] border-t border-[#1A1A1A]">
+                          <p className="text-[10px] tracking-[0.15em] uppercase text-[#8A8580] mb-2">{t("orderDetailShippingInfo") || 'Shipping Info'}</p>
+                          <div className="grid grid-cols-2 gap-y-2 text-xs">
+                            {order.shippingMethod && (
+                              <div>
+                                <span className="text-[#8A8580]">{t("orderDetailShippingMethod") || 'Method'}</span>
+                                <p className="text-[#F5F0EB] mt-0.5">{order.shippingMethod}</p>
+                              </div>
+                            )}
+                            {order.carrier && (
+                              <div>
+                                <span className="text-[#8A8580]">{t("orderDetailCarrier") || 'Carrier'}</span>
+                                <p className="text-[#F5F0EB] mt-0.5">{order.carrier}</p>
+                              </div>
+                            )}
+                            {order.trackingNumber && (
+                              <div className="col-span-2">
+                                <span className="text-[#8A8580]">{t("orderDetailTrackingNumber") || 'Tracking No.'}</span>
+                                <p className="text-[#F5F0EB] mt-0.5 font-mono tracking-wide">{order.trackingNumber}</p>
                               </div>
                             )}
                           </div>
-                          {/* Product Info */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2">
-                              {item.productSlug ? (
-                                <Link href={`/${item.productSlug}`} className="text-sm text-[#F5F0EB] hover:text-[#E8B4B8] transition-colors truncate">
-                                  {item.productName || item.productSlug}
-                                </Link>
-                              ) : (
-                                <p className="text-sm text-[#F5F0EB] truncate">{item.productName || '—'}</p>
-                              )}
-                              <span className="text-sm text-[#F5F0EB] flex-shrink-0">{formatPrice(item.unitPrice * item.quantity)}</span>
-                            </div>
-                            {/* Detail row: color / qty */}
-                            <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-xs text-[#8A8580]">
-                              {item.colorName && (
-                                <span className="flex items-center gap-1.5">
-                                  <span className="inline-block w-3 h-3 rounded-full border border-[#333] flex-shrink-0" style={{ backgroundColor: item.colorHex || '#666' }} />
-                                  {item.colorName}
-                                </span>
-                              )}
-                              <span>{t("orderDetailQty") || 'Qty'}: {item.quantity}</span>
-                            </div>
-                            {/* Unit price */}
-                            {item.quantity > 1 && (
-                              <p className="text-[10px] text-[#8A8580] mt-1">
-                                {formatPrice(item.unitPrice)} × {item.quantity}
-                              </p>
-                            )}
-                          </div>
                         </div>
-                      ))}
-                      {/* Order Summary */}
-                      <div className="px-5 py-3 bg-[#0A0A0A]">
-                        <div className="flex justify-between text-xs text-[#8A8580] mb-1">
+                      )}
+
+                      {/* ── Shipping Address ── */}
+                      {(order.addressLine1 || order.city) && (
+                        <div className="px-5 py-3 bg-[#0D0D0D] border-t border-[#1A1A1A]">
+                          <p className="text-[10px] tracking-[0.15em] uppercase text-[#8A8580] mb-2">{t("orderDetailShippingAddress") || 'Ship To'}</p>
+                          <p className="text-xs text-[#F5F0EB] leading-relaxed">
+                            {order.firstName && <span>{order.firstName} {order.lastName}</span>}
+                            {order.phone && <span className="text-[#8A8580] ml-2">{order.phone}</span>}
+                          </p>
+                          <p className="text-xs text-[#8A8580] mt-1 leading-relaxed">
+                            {order.addressLine1}{order.addressLine2 ? `, ${order.addressLine2}` : ''}<br />
+                            {[order.city, order.state, order.zipCode].filter(Boolean).join(', ')}
+                            {order.country && <><br />{order.country}</>}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* ── Order Summary ── */}
+                      <div className="px-5 py-3 bg-[#0A0A0A] border-t border-[#1A1A1A]">
+                        <div className="flex justify-between text-xs text-[#8A8580] mb-1.5">
                           <span>{t("orderDetailSubtotal") || 'Subtotal'}</span>
                           <span>{formatPrice(order.subtotal || order.total)}</span>
                         </div>
                         {(order.shippingFee !== undefined && order.shippingFee !== null) && (
-                          <div className="flex justify-between text-xs text-[#8A8580] mb-1">
+                          <div className="flex justify-between text-xs text-[#8A8580] mb-1.5">
                             <span>{t("orderDetailShipping") || 'Shipping'}</span>
                             <span>{order.shippingFee === 0 ? (t("orderDetailFreeShipping") || 'Free') : formatPrice(order.shippingFee)}</span>
                           </div>
                         )}
                         <div className="flex justify-between text-sm text-[#F5F0EB] pt-2 border-t border-[#1A1A1A]">
-                          <span>{t("orderDetailTotal") || 'Total'}</span>
-                          <span>{formatPrice(order.total)}</span>
+                          <span className="font-medium">{t("orderDetailTotal") || 'Total'}</span>
+                          <span className="font-medium">{formatPrice(order.total)}</span>
                         </div>
                       </div>
                     </div>
