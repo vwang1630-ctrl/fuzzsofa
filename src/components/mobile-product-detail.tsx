@@ -135,6 +135,12 @@ export default function MobileProductDetail({
     return () => { document.body.style.overflow = ''; };
   }, [langOpen, shareOpen]);
 
+  // Add body class to hide global header on mobile product pages
+  useEffect(() => {
+    document.body.classList.add('has-mobile-pdp');
+    return () => { document.body.classList.remove('has-mobile-pdp'); };
+  }, []);
+
   return (
     <>
       <div className="container lg:hidden">

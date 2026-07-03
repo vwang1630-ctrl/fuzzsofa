@@ -409,37 +409,37 @@ export function ProductPageClient(
                     __html: JSON.stringify(itemPageJsonLd(product))
                 }} />
             {}
+            {/* Mobile Product Detail — independent, outside desktop layout */}
+            <MobileProductDetail
+                product={product}
+                region={region}
+                productImages={images}
+                storyImages={storySketchMap[product.slug] ? [storySketchMap[product.slug]] : []}
+                spaceImages={(spaceImagesMap[product.slug] || []).map(s => s.image)}
+                featureData={mobileFeatureDataMap[product.slug] || []}
+                craftData={mobileCraftDataMap[product.slug] || []}
+                relatedProducts={relatedProducts.map(rp => ({
+                    slug: rp.slug,
+                    name: rp.name,
+                    image: rp.images?.[0] || `/products/${rp.slug}/hero.jpg`,
+                    price: formatPrice(getPrice(rp, region), region),
+                    desc: rp.tagline || '',
+                }))}
+                locale={lang}
+                selectedMaterial={product.materialOptions?.findIndex(m => m.type === materialType) ?? 0}
+                onMaterialChange={(idx: number) => {
+                    const mat = product.materialOptions?.[idx];
+                    if (mat) {
+                        setMaterialType(mat.type);
+                        setMaterialOption(mat.options?.[0] || '');
+                    }
+                }}
+                onAddToCart={handleAddToCart}
+                onBuyNow={handleBuyNow}
+                t={t as (key: string) => string}
+                cartCount={0}
+            />
             <section className="bg-[#0A0A0A]">
-                {/* Mobile Product Detail — independent from desktop layout */}
-                <MobileProductDetail
-                    product={product}
-                    region={region}
-                    productImages={images}
-                    storyImages={storySketchMap[product.slug] ? [storySketchMap[product.slug]] : []}
-                    spaceImages={(spaceImagesMap[product.slug] || []).map(s => s.image)}
-                    featureData={mobileFeatureDataMap[product.slug] || []}
-                    craftData={mobileCraftDataMap[product.slug] || []}
-                    relatedProducts={relatedProducts.map(rp => ({
-                        slug: rp.slug,
-                        name: rp.name,
-                        image: rp.images?.[0] || `/products/${rp.slug}/hero.jpg`,
-                        price: formatPrice(getPrice(rp, region), region),
-                        desc: rp.tagline || '',
-                    }))}
-                    locale={lang}
-                    selectedMaterial={product.materialOptions?.findIndex(m => m.type === materialType) ?? 0}
-                    onMaterialChange={(idx: number) => {
-                        const mat = product.materialOptions?.[idx];
-                        if (mat) {
-                            setMaterialType(mat.type);
-                            setMaterialOption(mat.options?.[0] || '');
-                        }
-                    }}
-                    onAddToCart={handleAddToCart}
-                    onBuyNow={handleBuyNow}
-                    t={t as (key: string) => string}
-                    cartCount={0}
-                />
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:gap-12">
                         {/* Desktop gallery column — hidden on mobile */}

@@ -1226,3 +1226,13 @@ img {
     border-color: rgba(232,180,184,0.15);
   }
 }
+
+/* Hide global header on mobile product pages (template has its own masthead) */
+@media (max-width: 1023px) {
+  body.has-mobile-pdp header.fixed {
+    display: none !important;
+  }
+  body.has-mobile-pdp main {
+    padding-top: 0 !important;
+  }
+}
