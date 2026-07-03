@@ -50,6 +50,69 @@ export function ProductPageClient(
         "silverback-sofa": "/products/silverback/story-sketch.jpg"
     };
 
+    // Mobile feature rows (01/02/03)
+    const mobileFeatureDataMap: Record<string, Array<{ titleKey: string; fallbackTitle: string; descKey: string; fallbackDesc: string }>> = {
+        "meteorite-ring-sofa": [
+            { titleKey: "mFeat1Title", fallbackTitle: "360° 对话", descKey: "mFeat1Desc", fallbackDesc: "环形围坐，促进交流" },
+            { titleKey: "mFeat2Title", fallbackTitle: "承重 150kg", descKey: "mFeat2Desc", fallbackDesc: "航空级坚固骨架" },
+            { titleKey: "mFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mFeat3Desc", fallbackDesc: "纯手工匠心制作" },
+        ],
+        "owl-sofa": [
+            { titleKey: "mOwlFeat1Title", fallbackTitle: "沉浸包裹", descKey: "mOwlFeat1Desc", fallbackDesc: "仿生弧形，静谧空间" },
+            { titleKey: "mOwlFeat2Title", fallbackTitle: "承重 150kg", descKey: "mOwlFeat2Desc", fallbackDesc: "航空级坚固骨架" },
+            { titleKey: "mOwlFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mOwlFeat3Desc", fallbackDesc: "纯手工匠心制作" },
+        ],
+        "gorilla-sofa": [
+            { titleKey: "mGorFeat1Title", fallbackTitle: "力量美学", descKey: "mGorFeat1Desc", fallbackDesc: "粗犷线条，野性张力" },
+            { titleKey: "mGorFeat2Title", fallbackTitle: "承重 200kg", descKey: "mGorFeat2Desc", fallbackDesc: "钢骨架支撑" },
+            { titleKey: "mGorFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mGorFeat3Desc", fallbackDesc: "纯手工匠心制作" },
+        ],
+        "muscle-gorilla-sofa": [
+            { titleKey: "mMuscFeat1Title", fallbackTitle: "肌肉线条", descKey: "mMuscFeat1Desc", fallbackDesc: "雕塑感轮廓" },
+            { titleKey: "mMuscFeat2Title", fallbackTitle: "承重 200kg", descKey: "mMuscFeat2Desc", fallbackDesc: "钢骨架支撑" },
+            { titleKey: "mMuscFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mMuscFeat3Desc", fallbackDesc: "纯手工匠心制作" },
+        ],
+        "silverback-sofa": [
+            { titleKey: "mSilvFeat1Title", fallbackTitle: "银背力量", descKey: "mSilvFeat1Desc", fallbackDesc: "领袖气质，沉稳大气" },
+            { titleKey: "mSilvFeat2Title", fallbackTitle: "承重 200kg", descKey: "mSilvFeat2Desc", fallbackDesc: "钢骨架支撑" },
+            { titleKey: "mSilvFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mSilvFeat3Desc", fallbackDesc: "纯手工匠心制作" },
+        ],
+    };
+
+    // Mobile craft data
+    const mobileCraftDataMap: Record<string, Array<{ name: string; detail: string }>> = {
+        "meteorite-ring-sofa": [
+            { name: "镀锌钢框架", detail: "精密焊接" },
+            { name: "高密度海绵", detail: "定制模具成型" },
+            { name: "云触感面料", detail: "现代质感" },
+            { name: "一体式金属底座", detail: "哑光饰面" },
+        ],
+        "owl-sofa": [
+            { name: "镀锌钢框架", detail: "精密焊接" },
+            { name: "高密度海绵", detail: "定制模具成型" },
+            { name: "天鹅绒面料", detail: "柔软亲肤" },
+            { name: "胡桃木腿", detail: "天然木纹" },
+        ],
+        "gorilla-sofa": [
+            { name: "钢框架", detail: "电镀处理" },
+            { name: "高回弹海绵", detail: "定制模具成型" },
+            { name: "仿毛绒面料", detail: "粗犷质感" },
+            { name: "金属底座", detail: "哑光饰面" },
+        ],
+        "muscle-gorilla-sofa": [
+            { name: "加强钢框架", detail: "电镀处理" },
+            { name: "高回弹海绵", detail: "定制模具成型" },
+            { name: "仿毛绒面料", detail: "粗犷质感" },
+            { name: "金属底座", detail: "哑光饰面" },
+        ],
+        "silverback-sofa": [
+            { name: "加强钢框架", detail: "电镀处理" },
+            { name: "高回弹海绵", detail: "定制模具成型" },
+            { name: "头层牛皮", detail: "手工缝制" },
+            { name: "金属底座", detail: "哑光饰面" },
+        ],
+    };
+
     const materialsCardsMap: Record<string, Array<{titleKey: string; descKey: string; icon: string}>> = {
         "meteorite-ring-sofa": [
             { titleKey: "meteorGalvanizedSteelTitle", descKey: "meteorGalvanizedSteelDesc", icon: "frame" },
@@ -347,20 +410,37 @@ export function ProductPageClient(
                 }} />
             {}
             <section className="bg-[#0A0A0A]">
+                {/* Mobile Product Detail — independent from desktop layout */}
+                <MobileProductDetail
+                    product={product}
+                    region={region}
+                    productImages={images}
+                    storyImages={storySketchMap[product.slug] ? [storySketchMap[product.slug]] : []}
+                    spaceImages={(spaceImagesMap[product.slug] || []).map(s => s.image)}
+                    featureData={mobileFeatureDataMap[product.slug] || []}
+                    craftData={mobileCraftDataMap[product.slug] || []}
+                    relatedProducts={relatedProducts.map(rp => ({
+                        slug: rp.slug,
+                        name: rp.name,
+                        image: rp.images?.[0] || `/products/${rp.slug}/hero.jpg`,
+                        price: formatPrice(getPrice(rp, region), region),
+                        desc: rp.tagline || '',
+                    }))}
+                    locale={lang}
+                    selectedMaterial={product.materialOptions?.findIndex(m => m.type === materialType) ?? 0}
+                    onMaterialChange={(idx: number) => {
+                        const mat = product.materialOptions?.[idx];
+                        if (mat) {
+                            setMaterialType(mat.type);
+                            setMaterialOption(mat.options?.[0] || '');
+                        }
+                    }}
+                    onAddToCart={handleAddToCart}
+                    onBuyNow={handleBuyNow}
+                    t={t as (key: string) => string}
+                    cartCount={0}
+                />
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
-                    {/* Mobile Product Detail — new template */}
-                    <MobileProductDetail
-                        product={product}
-                        region={region}
-                        productImages={productImages}
-                        relatedProducts={relatedProducts}
-                        spaceImages={spaceImages}
-                        storySketchMap={storySketchMap}
-                        materialsCardsMap={materialsCardsMap}
-                        colorNameKeyMap={colorNameKeyMap}
-                        onBuyNow={handleBuyNow}
-                        onAddToCart={handleAddToCart}
-                    />
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:gap-12">
                         {/* Desktop gallery column — hidden on mobile */}
                         <div className="hidden lg:flex flex-col">

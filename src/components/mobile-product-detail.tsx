@@ -1,581 +1,420 @@
-"use client";
+'use client';
 
-import { useState, useRef, useCallback, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Product, getPrice, formatPrice, type Region } from "@/lib/products";
-import { useLanguage } from "@/lib/language-context";
-import type { TranslationKeys } from "@/lib/i18n";
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import type { Product, Region } from '@/lib/products';
+import { formatPrice, getPrice } from '@/lib/products';
 
 interface MobileProductDetailProps {
   product: Product;
+  productImages: string[];
+  storyImages: string[];
+  spaceImages: string[];
+  featureData: { titleKey: string; fallbackTitle: string; descKey: string; fallbackDesc: string }[];
+  craftData: { name: string; detail: string }[];
+  relatedProducts: { slug: string; name: string; image: string; price: string; desc: string }[];
+  locale: string;
   region: Region;
-  productImages: Record<string, string[]>;
-  relatedProducts: Product[];
-  spaceImages: { image: string; titleKey?: string; title?: string; descKey: string }[];
-  storySketchMap: Record<string, string>;
-  materialsCardsMap: Record<string, { titleKey: string; descKey: string; icon: string }[]>;
-  colorNameKeyMap: Record<string, string>;
-  onBuyNow: () => void;
+  selectedMaterial: number;
+  onMaterialChange: (idx: number) => void;
   onAddToCart: () => void;
+  onBuyNow: () => void;
+  t: (key: string) => string;
+  cartCount: number;
 }
+
+const LANGUAGES = [
+  { code: 'zh', label: '中文' },
+  { code: 'en', label: 'English' },
+  { code: 'ja', label: '日本語' },
+  { code: 'ko', label: '한국어' },
+  { code: 'fr', label: 'Français' },
+  { code: 'de', label: 'Deutsch' },
+  { code: 'es', label: 'Español' },
+  { code: 'pt', label: 'Português' },
+  { code: 'it', label: 'Italiano' },
+  { code: 'ru', label: 'Русский' },
+  { code: 'ar', label: 'العربية' },
+  { code: 'th', label: 'ไทย' },
+  { code: 'vi', label: 'Tiếng Việt' },
+];
+
+// Map spec keys to translatable labels
+const SPEC_LABELS: Record<string, { key: string; fallback: string }> = {
+  width: { key: 'width', fallback: '宽度' },
+  height: { key: 'height', fallback: '高度' },
+  depth: { key: 'depth', fallback: '深度' },
+  seatHeight: { key: 'seatHeight', fallback: '座高' },
+  weight: { key: 'weight', fallback: '重量' },
+  capacity: { key: 'capacity', fallback: '承重' },
+};
 
 export default function MobileProductDetail({
   product,
-  region,
   productImages,
-  relatedProducts,
+  storyImages,
   spaceImages,
-  storySketchMap,
-  materialsCardsMap,
-  colorNameKeyMap,
-  onBuyNow,
+  featureData,
+  craftData,
+  relatedProducts,
+  locale,
+  region,
+  selectedMaterial,
+  onMaterialChange,
   onAddToCart,
+  onBuyNow,
+  t,
+  cartCount,
 }: MobileProductDetailProps) {
-  const { t } = useLanguage();
-  const images = productImages[product.slug] || product.images || [];
-  const displayPrice = formatPrice(getPrice(product, region), region);
-  const sketchSrc = storySketchMap[product.slug];
-  const materialCards = materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"] || [];
-
-  /* ── i18n helpers ── */
-  const slugToPrefix: Record<string, string> = {
-    "gorilla-sofa": "gorillaSofa",
-    "silverback-sofa": "silverbackSofa",
-    "owl-sofa": "owlChair",
-    "meteorite-ring-sofa": "meteoriteRingSofa",
-    "muscle-gorilla-sofa": "muscleGorillaSofa"
-  };
-  const prefix = slugToPrefix[product.slug] || "";
-  const productName = prefix ? t(`${prefix}Name` as TranslationKeys) : product.name;
-  const productTagline = prefix ? t(`${prefix}Tagline` as TranslationKeys) : product.tagline;
-  const productConcept = prefix ? t(`${prefix}Concept` as TranslationKeys) : product.concept;
-
-  const animalKeyMap: Record<string, string> = {
-    gorilla: "animalGorilla", silverback: "animalSilverback", owl: "animalOwl",
-    "meteorite ring": "animalMeteoriteRing", "muscle gorilla": "animalMuscleGorilla"
-  };
-  const collectionName = `${t((animalKeyMap[product.animal] || "animalGorilla") as TranslationKeys)} ${t("collection").toUpperCase()}`;
-
-  /* Feature data matching existing product-client.tsx structure */
-  const featureData: Record<string, { titleKey: string; descKey: string; fallbackTitle: string; fallbackDesc: string }[]> = {
-    "gorilla-sofa": [
-      { titleKey: "gorillaFeat1", descKey: "gorillaFeat1Desc", fallbackTitle: "Comfort Support Structure", fallbackDesc: "Ergonomic curved support for long-hour comfortable seating" },
-      { titleKey: "gorillaFeat2", descKey: "gorillaFeat2Desc", fallbackTitle: "High Density Shaped Foam", fallbackDesc: "Custom molded foam, no deformation after years of use" },
-      { titleKey: "gorillaFeat3", descKey: "gorillaFeat3Desc", fallbackTitle: "Galvanized Steel Frame", fallbackDesc: "Rust-proof solid metal internal support structure" },
-      { titleKey: "gorillaFeat4", descKey: "gorillaFeat4Desc", fallbackTitle: "Matches Luxury Living Rooms", fallbackDesc: "Sculptural design fits villa, hotel & minimalist space" },
-    ],
-    "owl-sofa": [
-      { titleKey: "owlFeat1", descKey: "owlFeat1Desc", fallbackTitle: "Owl-Inspired Ergonomic Curve", fallbackDesc: "Wrap-around backrest inspired by owl wings for full support" },
-      { titleKey: "owlFeat2", descKey: "owlFeat2Desc", fallbackTitle: "Premium Velvet Upholstery", fallbackDesc: "Stain-resistant velvet with rich texture and color depth" },
-      { titleKey: "owlFeat3", descKey: "owlFeat3Desc", fallbackTitle: "Solid Wood Base", fallbackDesc: "Natural walnut wood legs with anti-scratch pads" },
-      { titleKey: "owlFeat4", descKey: "owlFeat4Desc", fallbackTitle: "Modular Design", fallbackDesc: "Configurable left/right orientation for any room layout" },
-    ],
-    "silverback-sofa": [
-      { titleKey: "silverbackFeat1", descKey: "silverbackFeat1Desc", fallbackTitle: "Dominant Presence", fallbackDesc: "Oversized sculptural silhouette commands any space" },
-      { titleKey: "silverbackFeat2", descKey: "silverbackFeat2Desc", fallbackTitle: "Reinforced Steel Core", fallbackDesc: "Commercial-grade frame for heavy-duty long-term use" },
-    ],
-    "meteorite-ring-sofa": [
-      { titleKey: "meteorFeat1", descKey: "meteorFeat1Desc", fallbackTitle: "Comfort Support Structure", fallbackDesc: "Ergonomic curved support for long-hour comfortable seating" },
-      { titleKey: "meteorFeat2", descKey: "meteorFeat2Desc", fallbackTitle: "High Density Shaped Foam", fallbackDesc: "Custom molded foam, no deformation after years of use" },
-      { titleKey: "meteorFeat3", descKey: "meteorFeat3Desc", fallbackTitle: "Galvanized Steel Frame", fallbackDesc: "Rust-proof solid metal internal support structure" },
-      { titleKey: "meteorFeat4", descKey: "meteorFeat4Desc", fallbackTitle: "Matches Luxury Living Rooms", fallbackDesc: "Sculptural design fits villa, hotel & minimalist space" },
-      { titleKey: "meteorFeat5", descKey: "meteorFeat5Desc", fallbackTitle: "Long-Term Anti-Collapse", fallbackDesc: "Multi-layer filling structure to avoid sinking & sagging" },
-    ],
-    "muscle-gorilla-sofa": [
-      { titleKey: "muscleGorillaFeat1", descKey: "muscleGorillaFeat1Desc", fallbackTitle: "Power Ergonomics", fallbackDesc: "Dynamic lumbar support inspired by gorilla posture" },
-      { titleKey: "muscleGorillaFeat2", descKey: "muscleGorillaFeat2Desc", fallbackTitle: "High-Density Memory Foam", fallbackDesc: "Pressure-responsive foam for personalized comfort" },
-      { titleKey: "muscleGorillaFeat3", descKey: "muscleGorillaFeat3Desc", fallbackTitle: "Carbon Steel Skeleton", fallbackDesc: "Ultra-strong frame with 10-year structural warranty" },
-      { titleKey: "muscleGorillaFeat4", descKey: "muscleGorillaFeat4Desc", fallbackTitle: "Statement Sculpture", fallbackDesc: "Museum-worthy design that transforms any interior" },
-    ],
-  };
-  const feats = featureData[product.slug] || [];
-
-  /* ── state ── */
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [showShare, setShowShare] = useState(false);
+  const router = useRouter();
+  const [currentImage, setCurrentImage] = useState(0);
+  const [langOpen, setLangOpen] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   const [isFav, setIsFav] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(0);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [showCm, setShowCm] = useState(true);
-
-  /* ── color data ── */
-  const allColors: { type: string; opt: string; hex: string; globalIdx: number }[] = [];
-  if (product.materialOptions) {
-    let gIdx = 0;
-    product.materialOptions.forEach(m => {
-      m.options.forEach((opt, i) => {
-        allColors.push({ type: m.type, opt, hex: m.colors[i], globalIdx: gIdx++ });
-      });
-    });
-  }
-
-  /* ── gallery swipe ── */
-  const galleryRef = useRef<HTMLDivElement>(null);
+  const [unit, setUnit] = useState<'cm' | 'in'>('cm');
   const touchStartX = useRef(0);
-  const handleTouchStart = useCallback((e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; }, []);
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      setActiveIdx(prev => {
-        const next = diff > 0 ? Math.min(prev + 1, images.length - 1) : Math.max(prev - 1, 0);
-        return next;
-      });
-    }
-  }, [images.length]);
+  const touchEndX = useRef(0);
 
-  /* ── scroll gallery to active image ── */
-  useEffect(() => {
-    if (galleryRef.current) {
-      const scrollEl = galleryRef.current;
-      const target = scrollEl.children[activeIdx] as HTMLElement;
-      if (target) {
-        scrollEl.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
+  const colors = product.materialOptions || [];
+  const currentLang = LANGUAGES.find((l) => l.code === locale) || LANGUAGES[0];
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentImage < productImages.length - 1) {
+        setCurrentImage((prev) => prev + 1);
+      } else if (diff < 0 && currentImage > 0) {
+        setCurrentImage((prev) => prev - 1);
       }
     }
-  }, [activeIdx]);
+  }, [currentImage, productImages.length]);
 
-  /* ── specs formatting ── */
-  const specs = product.specifications;
-  const fmtSpec = (val: string) => showCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
-  const specItems = [
-    { label: "W", value: fmtSpec(specs.width) },
-    { label: "D", value: fmtSpec(specs.depth) },
-    { label: "H", value: fmtSpec(specs.height) },
-    { label: "Seat H", value: fmtSpec(specs.seatHeight) },
-  ];
+  const handleShareCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+    } catch { /* ignore */ }
+    setShareOpen(false);
+  }, []);
 
-  /* ── share handler ── */
-  const handleShare = (platform: string) => {
-    const url = `https://fuzzsofa.com/${product.slug}`;
-    const text = `${productName} — Fuzz Sofa`;
-    switch (platform) {
-      case "Pinterest":
-        window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(text)}`, "_blank");
-        break;
-      case "Facebook":
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
-        break;
-      case "Instagram":
-        window.open(`https://www.instagram.com/`, "_blank");
-        break;
-      case "YouTube":
-        window.open(`https://www.youtube.com/`, "_blank");
-        break;
+  const handleShareSave = useCallback(() => {
+    const link = document.createElement('a');
+    link.href = productImages[currentImage];
+    link.download = `${product.slug}-image.jpg`;
+    link.click();
+    setShareOpen(false);
+  }, [productImages, currentImage, product.slug]);
+
+  // Convert specifications object to array
+  const specRows = Object.entries(product.specifications || {}).map(([key, value]) => {
+    const cmVal = parseFloat(value);
+    return {
+      label: SPEC_LABELS[key]?.fallback || key,
+      cmValue: key === 'weight' || key === 'capacity' ? value : `${value} cm`,
+      inValue: key === 'weight' || key === 'capacity' ? value : isNaN(cmVal) ? value : `${(cmVal / 2.54).toFixed(1)} in`,
+      isConvertible: key !== 'weight' && key !== 'capacity',
+    };
+  });
+
+  const price = formatPrice(getPrice(product, region), region);
+  const currencyLabel = region === 'europe' ? 'EUR' : 'USD';
+
+  useEffect(() => {
+    if (langOpen || shareOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
-    setShowShare(false);
-  };
+    return () => { document.body.style.overflow = ''; };
+  }, [langOpen, shareOpen]);
 
   return (
-    <div className="lg:hidden" style={{ maxWidth: 430, margin: "0 auto", position: "relative" }}>
+    <>
+      <div className="container lg:hidden">
+        {/* ===== 顶部导航 ===== */}
+        <div className="masthead">
+          <span className="brand">FUZZ SOFA <em>studio</em></span>
 
-      {/* ═══════ Hero Image / Gallery ═══════ */}
-      <div
-        className="relative overflow-hidden"
-        style={{
-          width: "calc(100% + 40px)",
-          marginLeft: -20,
-          marginRight: -20,
-          aspectRatio: "1/1",
-          background: "#0A0A0A",
-          touchAction: "pan-y",
-          cursor: "grab",
-          marginBottom: 24,
-        }}
-      >
+          <div className="lang-dropdown">
+            <div className="toggle" onClick={() => setLangOpen(!langOpen)}>
+              <span>{currentLang.label}</span>
+              <span className={`arrow${langOpen ? ' open' : ''}`}>▾</span>
+            </div>
+            <div className={`menu${langOpen ? ' open' : ''}`}>
+              {LANGUAGES.map((lang) => (
+                <button
+                  key={lang.code}
+                  className={`menu-item${lang.code === locale ? ' active' : ''}`}
+                  onClick={() => {
+                    setLangOpen(false);
+                    router.push(`/${lang.code === 'en' ? '' : lang.code}/${product.slug}`);
+                  }}
+                >
+                  {lang.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className={`lang-backdrop${langOpen ? ' open' : ''}`} onClick={() => setLangOpen(false)} />
+
+          <div className="right">
+            <span className="cart-link" onClick={() => router.push('/cart')}>
+              {t('cart') || '购物车'} ({cartCount})
+            </span>
+            <button onClick={() => router.push('/search')}>
+              <svg className="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><line x1="16" y1="16" x2="22" y2="22" /></svg>
+            </button>
+            <div className="avatar" onClick={() => router.push('/account')}>
+              <svg className="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== 图片区 ===== */}
         <div
-          ref={galleryRef}
-          className="flex overflow-x-auto snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+          className="hero-image"
           onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {images.map((src, i) => (
-            <div key={i} className="flex-shrink-0 w-full snap-center" style={{ aspectRatio: "1/1" }}>
-              <Image src={src} alt={`${productName} ${i + 1}`} width={430} height={430} className="w-full h-full object-cover" draggable={false} />
-            </div>
-          ))}
-        </div>
+          <img src={productImages[currentImage]} alt={product.name} />
 
-        {/* Float AI button */}
-        <div className="absolute top-4 left-5 z-10">
-          <button
-            className="flex items-center justify-center rounded-full"
-            style={{ width: 40, height: 40, background: "rgba(10,10,10,0.5)", backdropFilter: "blur(6px)", border: "0.5px solid rgba(232,180,184,0.2)" }}
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 21L12 3l9 18" /><path d="M7.5 13.5h9" /><circle cx="12" cy="8" r="1.5" strokeDasharray="2 2" />
-            </svg>
-          </button>
-        </div>
+          <div className="float-ai">
+            <button>
+              <svg className="icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></svg>
+            </button>
+          </div>
 
-        {/* Float share + heart */}
-        <div className="absolute top-4 right-5 z-10 flex gap-2">
-          <div className="relative">
-            <button
-              onClick={() => setShowShare(!showShare)}
-              className="flex items-center justify-center rounded-full"
-              style={{ width: 40, height: 40, background: "rgba(10,10,10,0.5)", backdropFilter: "blur(6px)", border: "0.5px solid rgba(255,255,255,0.06)" }}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+          <div className="share-dropdown">
+            <button className="share-toggle" onClick={() => setShareOpen(!shareOpen)} aria-label="Share">
+              <svg viewBox="0 0 24 24">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
               </svg>
             </button>
-            {showShare && (
-              <div
-                className="absolute right-0 flex flex-col gap-1"
-                style={{ top: 48, background: "#181818", border: "0.5px solid rgba(255,255,255,0.06)", padding: "4px 0", boxShadow: "0 12px 40px rgba(0,0,0,0.6)", minWidth: 120, zIndex: 50 }}
-              >
-                {[{name:"Pinterest",icon:"M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4"},{name:"Facebook",icon:"M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"},{name:"Instagram",icon:"M2 2h20v20H2z M12 7a5 5 0 100 10 5 5 0 000-10z"},{name:"YouTube",icon:"M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"}].map(p => (
-                  <button key={p.name} onClick={() => handleShare(p.name)} className="block w-full text-left px-4 py-2 text-[13px] text-[#8A8580] hover:text-[#F5F0EB] hover:bg-[rgba(232,180,184,0.06)] transition-colors">{p.name}</button>
-                ))}
-              </div>
-            )}
+            <div className={`share-menu${shareOpen ? ' open' : ''}`}>
+              <button className="menu-item" onClick={handleShareCopy}>
+                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                <span>{t('shareCopy') || '复制链接'}</span>
+              </button>
+              <button className="menu-item" onClick={handleShareSave}>
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
+                <span>{t('shareSave') || '保存图片'}</span>
+              </button>
+              <div className="menu-divider" />
+              <button className="menu-item" onClick={() => { setShareOpen(false); }}>
+                <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+                <span>Facebook</span>
+              </button>
+              <button className="menu-item" onClick={() => { setShareOpen(false); }}>
+                <svg viewBox="0 0 24 24"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" /></svg>
+                <span>Twitter / X</span>
+              </button>
+              <button className="menu-item" onClick={() => { setShareOpen(false); }}>
+                <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 7L2 7" /></svg>
+                <span>Email</span>
+              </button>
+            </div>
           </div>
-          <button
-            onClick={() => setIsFav(!isFav)}
-            className="flex items-center justify-center rounded-full"
-            style={{ width: 40, height: 40, background: "rgba(10,10,10,0.5)", backdropFilter: "blur(6px)", border: "0.5px solid rgba(255,255,255,0.06)" }}
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill={isFav ? "#E8B4B8" : "none"} stroke={isFav ? "#E8B4B8" : "#8A8580"} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-          </button>
+          <div className={`share-backdrop${shareOpen ? ' open' : ''}`} onClick={() => setShareOpen(false)} />
+
+          <div className="float-actions">
+            <button onClick={() => setIsFav(!isFav)}>
+              <svg className="icon" viewBox="0 0 24 24" style={isFav ? { fill: '#E8B4B8', stroke: '#E8B4B8' } : {}}><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+            </button>
+          </div>
+
+          <div className="image-indicator">
+            {productImages.map((_, idx) => (
+              <span key={idx} className={idx === currentImage ? 'active' : ''}>
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+            ))}
+          </div>
         </div>
 
-        {/* Image indicator */}
-        <div
-          className="absolute bottom-4 right-5 z-10"
-          style={{ fontSize: 11, letterSpacing: "0.08em", color: "rgba(245,240,235,0.4)", fontFeatureSettings: '"tnum"' }}
-        >
-          {String(activeIdx + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
-        </div>
-      </div>
+        {/* ===== 颜色选择器 ===== */}
+        {colors.length > 0 && (
+          <div className="color-selector">
+            <span className="label">{t('color') || '颜色'}</span>
+            <div className="options">
+              {colors.map((colorOpt, idx) => (
+                <button
+                  key={idx}
+                  className={`color-btn${idx === selectedMaterial ? ' active' : ''}`}
+                  onClick={() => onMaterialChange(idx)}
+                >
+                  <span className="swatch-wrap">
+                    <span
+                      className="swatch"
+                      style={{ background: colorOpt.colors?.[0] || '#888' }}
+                    />
+                    <span className="check" />
+                  </span>
+                  <span className="label-text">{colorOpt.options?.[0] || colorOpt.type}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
-      {/* ═══════ Product Info ═══════ */}
-      <div style={{ marginBottom: 20 }}>
-        <p className="text-[10px] tracking-[0.2em] uppercase" style={{ color: "#6A6560", marginBottom: 8 }}>
-          {collectionName}
-        </p>
-        <div className="flex items-baseline justify-between">
-          <h1
-            className="font-medium tracking-[0.03em]"
-            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 24, color: "#F5F0EB" }}
-          >
-            {productName}
-          </h1>
-          <span
-            className="font-normal"
-            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 22, color: "#E8B4B8", letterSpacing: "0.02em" }}
-          >
-            {displayPrice}
-          </span>
+        {/* ===== 卖点 ===== */}
+        {featureData.length > 0 && (
+          <div className="features">
+            {featureData.map((feat, idx) => (
+              <div className="feature-row" key={idx}>
+                <span className="num">{String(idx + 1).padStart(2, '0')}</span>
+                <span className="label">{feat.fallbackTitle}</span>
+                <span className="desc">{feat.fallbackDesc}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ===== 描述 ===== */}
+        <div className="description">
+          <p>{product.description}</p>
         </div>
-        {productTagline && (
-          <p className="text-[11px] tracking-[0.08em]" style={{ color: "#8A8580", marginTop: 6 }}>{productTagline}</p>
+
+        {/* ===== THE STORY ===== */}
+        {storyImages.length > 0 && (
+          <div className="story">
+            <div className="section-label">{t('storyTitle') || '设计故事'}</div>
+            <div className="story-grid">
+              <div className="story-image">
+                <img src={storyImages[0]} alt="Design sketch" loading="lazy" />
+                <span className="sketch-tag">✧ {t('sketchTag') || '手稿 · 概念设计'}</span>
+              </div>
+              <div className="story-text">
+                <div className="title">{product.name} <span className="light">✦</span></div>
+                <p>{product.concept}</p>
+                <p className="spec-note">
+                  <span>{t('handmadeNote') || '* 手工制作 · 尺寸可能存在 ±1-3cm 差异 · 重量因面料批次略有浮动'}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ===== 规格 ===== */}
+        {specRows.length > 0 && (
+          <>
+            <div className="specs-header">
+              <span className="label">{t('dimensions') || '尺寸'}</span>
+              <div className="unit-toggle">
+                <button
+                  className={unit === 'cm' ? 'active' : ''}
+                  onClick={() => setUnit('cm')}
+                >
+                  cm
+                </button>
+                <button
+                  className={unit === 'in' ? 'active' : ''}
+                  onClick={() => setUnit('in')}
+                >
+                  in
+                </button>
+              </div>
+            </div>
+            <div className="specs">
+              {specRows.map((spec, idx) => (
+                <div className="spec-item" key={idx}>
+                  <span className="l">{spec.label}</span>
+                  <span className="v">{unit === 'cm' || !spec.isConvertible ? spec.cmValue : spec.inValue}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* ===== 材质 ===== */}
+        {craftData.length > 0 && (
+          <div className="craft">
+            <div className="section-label">{t('craftTitle') || '材质与工艺'}</div>
+            <div className="craft-list">
+              {craftData.map((item, idx) => (
+                <div className="craft-item" key={idx}>
+                  <span className="line" />
+                  <span className="name">{item.name}</span>
+                  <span className="detail">{item.detail}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ===== 场景 ===== */}
+        {spaceImages.length > 0 && (
+          <div className="inspiration">
+            <div className="section-label">{t('sceneTitle') || '实景灵感'}</div>
+            <div className="scene-scroll">
+              {spaceImages.map((img, idx) => (
+                <div className="scene-card" key={idx}>
+                  <img src={img} alt="" loading="lazy" />
+                  <div className="label">{idx === 0 ? (t('scene1Label') || '星际 lounge') : idx === 1 ? (t('scene2Label') || '沙丘静修') : (t('scene3Label') || '银河沙龙')}</div>
+                  <div className="sub">{idx === 0 ? (t('scene1Sub') || '星空下的起居室') : idx === 1 ? (t('scene2Sub') || '静谧 · 沉思 · 温暖') : (t('scene3Sub') || '长谈之地')}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ===== 发现更多 ===== */}
+        {relatedProducts.length > 0 && (
+          <div className="explore-more">
+            <div className="explore-header">
+              <span className="explore-label">{t('exploreMore') || '发现更多'}</span>
+              <span className="explore-view-all" onClick={() => router.push('/')}>{t('viewAll') || '查看全部'} →</span>
+            </div>
+            <div className="explore-scroll">
+              {relatedProducts.map((item) => (
+                <div className="explore-card" key={item.slug} onClick={() => router.push(`/${item.slug}`)}>
+                  <div className="explore-card-image">
+                    <img src={item.image} alt={item.name} loading="lazy" />
+                  </div>
+                  <div className="explore-card-info">
+                    <div className="explore-card-name">{item.name}</div>
+                    <div className="explore-card-desc">{item.desc}</div>
+                    <div className="explore-card-price">{item.price}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
 
-      {/* ═══════ Features ═══════ */}
-      {feats.length > 0 && (
-        <div style={{ marginBottom: 28, borderTop: "0.5px solid rgba(255,255,255,0.04)", paddingTop: 20 }}>
-          {feats.map((feat, i) => {
-            const titleVal = t(feat.titleKey as TranslationKeys);
-            const descVal = t(feat.descKey as TranslationKeys);
-            const title = titleVal === feat.titleKey ? feat.fallbackTitle : titleVal;
-            const desc = descVal === feat.descKey ? feat.fallbackDesc : descVal;
-            return (
-              <div key={i} className="flex gap-3 items-start" style={{ marginBottom: i < feats.length - 1 ? 14 : 0 }}>
-                <span
-                  className="flex-shrink-0 font-normal"
-                  style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 13, color: "#6A6560", letterSpacing: "0.04em", width: 20, textAlign: "right" }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <p className="text-[12px] tracking-[0.04em]" style={{ color: "#F5F0EB", fontWeight: 400 }}>{title}</p>
-                  <p className="text-[11px] leading-relaxed" style={{ color: "#8A8580", marginTop: 2 }}>{desc}</p>
-                </div>
-              </div>
-            );
-          })}
+      {/* ===== 底部 CTA ===== */}
+      <div className="bottom-cta lg:hidden">
+        <div className="row-top">
+          <div className="product-id">
+            <span className="brand">FUZZ SOFA</span>
+            <span className="name">{product.name} <span className="light">✦</span></span>
+          </div>
+          <button className="btn-ai-clean">
+            <svg className="icon" viewBox="0 0 24 24">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" />
+            </svg>
+            <span className="ai-label">AI {t('preview') || '预览'}</span>
+          </button>
         </div>
-      )}
-
-      {/* ═══════ Color Selector ═══════ */}
-      {allColors.length > 0 && (
-        <div style={{ marginBottom: 28, borderTop: "0.5px solid rgba(255,255,255,0.04)", paddingTop: 20 }}>
-          <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "#6A6560", marginBottom: 12 }}>
-            COLOR · {t((colorNameKeyMap[allColors[selectedColor]?.opt] || "matTypeFabric") as TranslationKeys)}
-          </p>
-          <div className="flex gap-3 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-            {allColors.map((c, i) => {
-              const isActive = i === selectedColor;
-              const colorLabel = t((colorNameKeyMap[c.opt] || "matTypeFabric") as TranslationKeys);
-              return (
-                <button
-                  key={`${c.type}-${c.opt}`}
-                  onClick={() => setSelectedColor(i)}
-                  className="flex-shrink-0 flex flex-col items-center gap-1.5"
-                >
-                  <div
-                    className="rounded-full transition-all duration-200"
-                    style={{
-                      width: isActive ? 36 : 28,
-                      height: isActive ? 36 : 28,
-                      background: c.hex,
-                      border: isActive ? "2px solid #E8B4B8" : "1px solid rgba(255,255,255,0.08)",
-                      boxShadow: isActive ? "0 0 0 3px rgba(232,180,184,0.15)" : "none",
-                    }}
-                  />
-                  <span className="text-[8px] tracking-[0.04em] max-w-[48px] truncate" style={{ color: isActive ? "#F5F0EB" : "#6A6560" }}>
-                    {colorLabel}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* ═══════ Description ═══════ */}
-      {product.description && (
-        <div style={{ marginBottom: 28, borderTop: "0.5px solid rgba(255,255,255,0.04)", paddingTop: 20 }}>
-          <p className="text-[13px] leading-[1.75]" style={{ color: "#F5F0EB", opacity: 0.7 }}>
-            {product.description}
-          </p>
-          {productConcept && (
-            <p className="text-[12px] leading-[1.75] mt-3" style={{ color: "#E8B4B8", opacity: 0.6, fontStyle: "italic" }}>
-              {productConcept}
-            </p>
-          )}
-        </div>
-      )}
-
-      {/* ═══════ Story / Sketch ═══════ */}
-      {sketchSrc && (
-        <div style={{ marginBottom: 28, borderTop: "0.5px solid rgba(255,255,255,0.04)", paddingTop: 20 }}>
-          <div className="flex gap-4">
-            <div className="flex-shrink-0 relative" style={{ width: "45%" }}>
-              <Image src={sketchSrc} alt="Story sketch" width={180} height={240} className="w-full object-cover" style={{ aspectRatio: "3/4" }} />
-              <span
-                className="absolute top-2 left-2 text-[8px] tracking-[0.2em] uppercase px-2 py-0.5"
-                style={{ background: "rgba(10,10,10,0.7)", color: "#6A6560", border: "0.5px solid rgba(255,255,255,0.06)" }}
-              >
-                SKETCH
-              </span>
-            </div>
-            <div className="flex-1 flex flex-col justify-center">
-              <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "#6A6560", marginBottom: 8 }}>STORY</p>
-              <p
-                className="text-[18px] font-light leading-snug tracking-[0.03em]"
-                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: "#F5F0EB" }}
-              >
-                {productConcept || productTagline}
-              </p>
-              <p className="text-[11px] leading-relaxed mt-3" style={{ color: "#8A8580" }}>
-                {product.interiorContext}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ═══════ Specs / Dimensions ═══════ */}
-      {product.specifications && (
-        <div style={{ marginBottom: 28, borderTop: "0.5px solid rgba(255,255,255,0.04)", paddingTop: 20 }}>
-          <div className="flex items-baseline justify-between mb-3">
-            <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "#6A6560" }}>DIMENSIONS</p>
-            <button
-              onClick={() => setShowCm(!showCm)}
-              className="text-[9px] tracking-[0.1em] uppercase px-2 py-0.5"
-              style={{ color: "#6A6560", border: "0.5px solid rgba(255,255,255,0.06)" }}
-            >
-              {showCm ? "CM" : "IN"}
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-            {specItems.map((s, i) => (
-              <div key={i} className="flex justify-between" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.04)", paddingBottom: 8 }}>
-                <span className="text-[11px] tracking-[0.04em]" style={{ color: "#6A6560" }}>{s.label}</span>
-                <span className="text-[11px]" style={{ color: "#F5F0EB", fontFeatureSettings: '"tnum"' }}>{s.value}</span>
-              </div>
-            ))}
-          </div>
-          <p className="text-[10px] mt-2" style={{ color: "#6A6560" }}>Manual measurement error ±1–3cm</p>
-        </div>
-      )}
-
-      {/* ═══════ Craft / Materials ═══════ */}
-      {materialCards.length > 0 && (
-        <div style={{ marginBottom: 28, borderTop: "0.5px solid rgba(255,255,255,0.04)", paddingTop: 20 }}>
-          <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "#6A6560", marginBottom: 12 }}>CRAFTSMANSHIP</p>
-          <div className="flex flex-col">
-            {materialCards.map((mat, i) => {
-              const matTitle = t(mat.titleKey as TranslationKeys);
-              const matDesc = t(mat.descKey as TranslationKeys);
-              return (
-                <div
-                  key={i}
-                  className="flex items-start gap-3 py-3"
-                  style={{ borderBottom: i < materialCards.length - 1 ? "0.5px solid rgba(255,255,255,0.04)" : "none" }}
-                >
-                  <span className="flex-shrink-0" style={{ width: 1, height: 28, background: "rgba(232,180,184,0.2)", marginTop: 2 }} />
-                  <div>
-                    <p className="text-[12px] tracking-[0.04em]" style={{ color: "#F5F0EB" }}>{matTitle}</p>
-                    <p className="text-[11px] leading-relaxed mt-0.5" style={{ color: "#8A8580" }}>{matDesc}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* ═══════ Scene Inspiration ═══════ */}
-      {spaceImages.length > 0 && (
-        <div style={{ marginBottom: 28, borderTop: "0.5px solid rgba(255,255,255,0.04)", paddingTop: 20 }}>
-          <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "#6A6560", marginBottom: 12 }}>INTERIOR LIFESTYLE</p>
-          <div className="flex gap-3 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-            {spaceImages.map((space, i) => (
-              <div key={i} className="flex-shrink-0 overflow-hidden" style={{ width: "78vw" }}>
-                <Image src={space.image} alt={`Interior scene ${i + 1}`} width={600} height={400} className="w-full object-cover" style={{ aspectRatio: "3/2" }} />
-                {space.titleKey && (
-                  <p className="text-[10px] tracking-[0.08em] mt-1.5" style={{ color: "#8A8580" }}>
-                    {t(space.titleKey as TranslationKeys)}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ═══════ FAQ ═══════ */}
-      {product.faq.length > 0 && (
-        <div style={{ marginBottom: 28, borderTop: "0.5px solid rgba(255,255,255,0.04)", paddingTop: 20 }}>
-          <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "#6A6560", marginBottom: 12 }}>FAQ</p>
-          <div className="flex flex-col">
-            {product.faq.map((item, i) => (
-              <div key={i} style={{ borderBottom: i < product.faq.length - 1 ? "0.5px solid rgba(255,255,255,0.04)" : "none" }}>
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between py-3 text-left"
-                >
-                  <span className="text-[12px] tracking-[0.04em]" style={{ color: "#F5F0EB" }}>{item.question}</span>
-                  <span
-                    className="flex-shrink-0 ml-3 transition-transform duration-200"
-                    style={{ color: "#6A6560", transform: openFaq === i ? "rotate(45deg)" : "rotate(0deg)", fontSize: 16 }}
-                  >
-                    +
-                  </span>
-                </button>
-                {openFaq === i && (
-                  <p className="text-[11px] leading-relaxed pb-3" style={{ color: "#8A8580" }}>{item.answer}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ═══════ Explore More / Related Products ═══════ */}
-      {relatedProducts.length > 0 && (
-        <div style={{ borderTop: "0.5px solid rgba(255,255,255,0.04)", paddingTop: 20 }}>
-          <p className="text-[10px] tracking-[0.15em] uppercase" style={{ color: "#6A6560", marginBottom: 12 }}>EXPLORE MORE</p>
-          <div className="flex gap-3 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-            {relatedProducts.map((rp) => {
-              const rpImages = productImages[rp.slug] || [];
-              const rpPrice = formatPrice(getPrice(rp, region), region);
-              const rpPrefix = slugToPrefix[rp.slug] || "";
-              const rpName = rpPrefix ? t(`${rpPrefix}Name` as TranslationKeys) : rp.name;
-              return (
-                <Link key={rp.slug} href={`/${rp.slug}`} className="flex-shrink-0 group" style={{ width: "50vw" }}>
-                  <div className="relative overflow-hidden" style={{ aspectRatio: "1/1" }}>
-                    <Image
-                      src={rpImages[0] || "/products/placeholder.webp"}
-                      alt={rpName}
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                    />
-                  </div>
-                  <p className="text-[13px] tracking-[0.03em] mt-2" style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: "#F5F0EB" }}>
-                    {rpName}
-                  </p>
-                  <p className="text-[12px]" style={{ color: "#8A8580" }}>{rpPrice}</p>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* ═══════ Bottom CTA ═══════ */}
-      <div
-        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden"
-        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "#0A0A0A", borderTop: "0.5px solid rgba(255,255,255,0.04)" }}
-      >
-        <div style={{ padding: "12px 20px" }}>
-          {/* Row Top: Brand + Name + AI */}
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-baseline gap-2.5 min-w-0 flex-1">
-              <span
-                className="font-serif text-[13px] font-normal tracking-[0.15em] flex-shrink-0"
-                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: "#6A6560" }}
-              >
-                FUZZ
-              </span>
-              <span
-                className="font-serif text-[22px] font-medium tracking-[0.03em] truncate"
-                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: "#F5F0EB" }}
-              >
-                {productName}
-              </span>
-            </div>
-            <button className="flex items-center gap-1.5 flex-shrink-0 text-[#E8B4B8]">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 21L12 3l9 18" /><path d="M7.5 13.5h9" /><circle cx="12" cy="8" r="1.5" strokeDasharray="2 2" />
-              </svg>
-              <span className="text-[12px] font-light tracking-[0.04em]">AI</span>
-            </button>
-          </div>
-
-          {/* Row Bottom: Price + Buy */}
-          <div className="flex items-center justify-between">
-            <span
-              className="font-serif text-[28px] font-normal tracking-[0.02em]"
-              style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: "#F5F0EB" }}
-            >
-              {displayPrice}
-              <small
-                className="font-serif text-[14px] font-light ml-1.5"
-                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", color: "#6A6560" }}
-              >
-                USD
-              </small>
-            </span>
-            <button
-              onClick={onBuyNow}
-              className="relative transition-all duration-300"
-              style={{
-                background: "rgba(232,180,184,0.06)",
-                border: "1.5px solid rgba(232,180,184,0.35)",
-                padding: "14px 42px",
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: 17,
-                fontWeight: 500,
-                letterSpacing: "0.18em",
-                color: "#E8B4B8",
-                minHeight: 54,
-                boxShadow: "0 0 30px rgba(232,180,184,0.02), inset 0 0 40px rgba(232,180,184,0.015)",
-              }}
-            >
-              BUY NOW
-            </button>
-          </div>
+        <div className="row-bottom">
+          <span className="price">{price} <small>{currencyLabel}</small></span>
+          <button className="btn-buy" onClick={onBuyNow}>{t('buyNow') || '购买'}</button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
