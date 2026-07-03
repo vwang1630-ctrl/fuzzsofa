@@ -11,7 +11,6 @@ import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
 import RoomVisualizationModal from "@/components/room-visualization-modal";
-import MobileProductDetail from "@/components/mobile-product-detail";
 
 interface Props {
     product: Product;
@@ -48,69 +47,6 @@ export function ProductPageClient(
         "gorilla-sofa": "/products/gorilla/story-sketch.jpg",
         "muscle-gorilla-sofa": "/products/muscle-gorilla/story-sketch.png",
         "silverback-sofa": "/products/silverback/story-sketch.jpg"
-    };
-
-    // Mobile feature rows (01/02/03)
-    const mobileFeatureDataMap: Record<string, Array<{ titleKey: string; fallbackTitle: string; descKey: string; fallbackDesc: string }>> = {
-        "meteorite-ring-sofa": [
-            { titleKey: "mFeat1Title", fallbackTitle: "360° 对话", descKey: "mFeat1Desc", fallbackDesc: "环形围坐，促进交流" },
-            { titleKey: "mFeat2Title", fallbackTitle: "承重 150kg", descKey: "mFeat2Desc", fallbackDesc: "航空级坚固骨架" },
-            { titleKey: "mFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mFeat3Desc", fallbackDesc: "纯手工匠心制作" },
-        ],
-        "owl-sofa": [
-            { titleKey: "mOwlFeat1Title", fallbackTitle: "沉浸包裹", descKey: "mOwlFeat1Desc", fallbackDesc: "仿生弧形，静谧空间" },
-            { titleKey: "mOwlFeat2Title", fallbackTitle: "承重 150kg", descKey: "mOwlFeat2Desc", fallbackDesc: "航空级坚固骨架" },
-            { titleKey: "mOwlFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mOwlFeat3Desc", fallbackDesc: "纯手工匠心制作" },
-        ],
-        "gorilla-sofa": [
-            { titleKey: "mGorFeat1Title", fallbackTitle: "力量美学", descKey: "mGorFeat1Desc", fallbackDesc: "粗犷线条，野性张力" },
-            { titleKey: "mGorFeat2Title", fallbackTitle: "承重 200kg", descKey: "mGorFeat2Desc", fallbackDesc: "钢骨架支撑" },
-            { titleKey: "mGorFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mGorFeat3Desc", fallbackDesc: "纯手工匠心制作" },
-        ],
-        "muscle-gorilla-sofa": [
-            { titleKey: "mMuscFeat1Title", fallbackTitle: "肌肉线条", descKey: "mMuscFeat1Desc", fallbackDesc: "雕塑感轮廓" },
-            { titleKey: "mMuscFeat2Title", fallbackTitle: "承重 200kg", descKey: "mMuscFeat2Desc", fallbackDesc: "钢骨架支撑" },
-            { titleKey: "mMuscFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mMuscFeat3Desc", fallbackDesc: "纯手工匠心制作" },
-        ],
-        "silverback-sofa": [
-            { titleKey: "mSilvFeat1Title", fallbackTitle: "银背力量", descKey: "mSilvFeat1Desc", fallbackDesc: "领袖气质，沉稳大气" },
-            { titleKey: "mSilvFeat2Title", fallbackTitle: "承重 200kg", descKey: "mSilvFeat2Desc", fallbackDesc: "钢骨架支撑" },
-            { titleKey: "mSilvFeat3Title", fallbackTitle: "1–2 周定制", descKey: "mSilvFeat3Desc", fallbackDesc: "纯手工匠心制作" },
-        ],
-    };
-
-    // Mobile craft data
-    const mobileCraftDataMap: Record<string, Array<{ name: string; detail: string }>> = {
-        "meteorite-ring-sofa": [
-            { name: "镀锌钢框架", detail: "精密焊接" },
-            { name: "高密度海绵", detail: "定制模具成型" },
-            { name: "云触感面料", detail: "现代质感" },
-            { name: "一体式金属底座", detail: "哑光饰面" },
-        ],
-        "owl-sofa": [
-            { name: "镀锌钢框架", detail: "精密焊接" },
-            { name: "高密度海绵", detail: "定制模具成型" },
-            { name: "天鹅绒面料", detail: "柔软亲肤" },
-            { name: "胡桃木腿", detail: "天然木纹" },
-        ],
-        "gorilla-sofa": [
-            { name: "钢框架", detail: "电镀处理" },
-            { name: "高回弹海绵", detail: "定制模具成型" },
-            { name: "仿毛绒面料", detail: "粗犷质感" },
-            { name: "金属底座", detail: "哑光饰面" },
-        ],
-        "muscle-gorilla-sofa": [
-            { name: "加强钢框架", detail: "电镀处理" },
-            { name: "高回弹海绵", detail: "定制模具成型" },
-            { name: "仿毛绒面料", detail: "粗犷质感" },
-            { name: "金属底座", detail: "哑光饰面" },
-        ],
-        "silverback-sofa": [
-            { name: "加强钢框架", detail: "电镀处理" },
-            { name: "高回弹海绵", detail: "定制模具成型" },
-            { name: "头层牛皮", detail: "手工缝制" },
-            { name: "金属底座", detail: "哑光饰面" },
-        ],
     };
 
     const materialsCardsMap: Record<string, Array<{titleKey: string; descKey: string; icon: string}>> = {
@@ -409,22 +345,173 @@ export function ProductPageClient(
                     __html: JSON.stringify(itemPageJsonLd(product))
                 }} />
             {}
-            {/* Mobile Product Detail — independent, outside desktop layout */}
-            <MobileProductDetail
-                product={product}
-                region={region}
-                productImages={images}
-                storyImage={storySketchMap[product.slug] || ''}
-                spaceImages={spaceImagesMap[product.slug] || []}
-                featureData={mobileFeatureDataMap[product.slug] || []}
-                craftData={mobileCraftDataMap[product.slug] || []}
-                locale={lang}
-                cartCount={0}
-                onAddToCart={handleAddToCart}
-                t={t as (key: string) => string}
-            />
             <section className="bg-[#0A0A0A]">
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
+                    {/* Mobile Gallery — swipeable, full-bleed */}
+                    <div className="lg:hidden relative">
+                        {/* Fixed Share & Wishlist overlay */}
+                        <div className="absolute top-3 right-3 flex items-center gap-1.5 z-20">
+                            <div className="relative">
+                                <button onClick={() => setShowShareMenu(!showShareMenu)} className="group flex items-center justify-center w-9 h-9 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 transition-all duration-300" aria-label="Share">
+                                    <svg className="transition-transform duration-300 group-hover:scale-110" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
+                                </button>
+                                {showShareMenu && <div
+                                    className="absolute right-0 top-full mt-1.5 flex items-center gap-1 rounded-sm py-1.5 px-2 z-50"
+                                    style={{ background: "#0A0A0A", border: "1px solid rgba(232,180,184,0.25)", boxShadow: "0 4px 16px rgba(0,0,0,0.6)" }}>
+                                    {[{name:"Pinterest",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="10"/></svg>},{name:"Facebook",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>},{name:"Instagram",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>},{name:"YouTube",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8"/></svg>}].map(platform => <button
+                                        key={platform.name}
+                                        onClick={() => handleShare(platform.name)}
+                                        className="flex items-center justify-center w-8 h-8 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 transition-all duration-300"
+                                        title={platform.name}>
+                                        {platform.icon}
+                                    </button>)}
+                                </div>}
+                            </div>
+                            <button onClick={() => setSaved(!saved)} className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300" aria-label="Save">
+                                <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                            </button>
+                        </div>
+                        <div
+                            ref={mobileGalleryRef}
+                            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+                            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}>
+                            {galleryImages.map((img, idx) => (
+                                <div key={img.id} className="w-full flex-shrink-0 snap-center">
+                                    <div className="relative w-full overflow-hidden">
+                                        {img.src ? <img src={img.src} alt={productName} className="w-full object-cover max-h-[75vh]" /> : <div className="flex items-center justify-center py-20"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        {/* Dots indicator */}
+                        {galleryImages.length > 1 && <div className="flex items-center justify-center gap-2 py-2">
+                            {galleryImages.map((_, idx) => (
+                                <span key={idx} className={`block rounded-full transition-all duration-300 ${idx === activeImage ? "w-5 h-[5px] bg-[#E8B4B8]" : "w-[5px] h-[5px] bg-white/20"}`} />
+                            ))}
+                        </div>}
+
+                        {/* Mobile color selector — compact row */}
+                        {product.materialOptions && product.materialOptions.length > 0 && (
+                            <div className="px-4 pt-0.5 pb-2">
+                                <div className="flex items-center justify-center gap-4 overflow-x-auto scrollbar-hide py-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                    {(() => {
+                                        const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
+                                        let gIdx = 0;
+                                        for (const m of product.materialOptions) {
+                                            for (let i = 0; i < m.options.length; i++) {
+                                                allColors.push({ type: m.type, opt: m.options[i], hex: m.colors[i], globalIdx: gIdx });
+                                                gIdx++;
+                                            }
+                                        }
+                                        return allColors.map((c) => {
+                                            const isActive = materialType === c.type && materialOption === c.opt;
+                                            const swatchImg = galleryImages[c.globalIdx];
+                                            return (
+                                                <button key={`${c.type}-${c.opt}`} onClick={() => { setMaterialType(c.type); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-0.5">
+                                                    <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isActive ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
+                                                        {swatchImg ? <img src={swatchImg.src} alt={c.opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.hex }} />}
+                                                    </span>
+                                                    <span className={`text-[8px] tracking-[0.03em] max-w-[40px] truncate ${isActive ? "text-[#F5F0EB]" : "text-[#8A8580]"}`}>{t((colorNameKeyMap[c.opt] || "matTypeFabric") as TranslationKeys)}</span>
+                                                </button>
+                                            );
+                                        });
+                                    })()}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Mobile info panel — title+price, features, details */}
+                    <div className="lg:hidden px-4 pt-2.5 pb-4 bg-[#111]">
+                        {/* Collection label */}
+                        <p className="text-[9px] text-[#8A8580] tracking-[0.25em] uppercase mb-1.5">{collectionName}</p>
+                        {/* Title + Price row */}
+                        <div className="flex items-baseline justify-between gap-2 mb-2">
+                            <h1 className="font-serif text-[18px] font-light text-[#F5F0EB] leading-[1.15] tracking-[0.02em]">{productName}</h1>
+                            <span className="font-serif text-[16px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</span>
+                        </div>
+                        {/* Tagline */}
+                        <p className="text-[11px] text-[#8A8580] leading-[1.5] mb-3">{productTagline}</p>
+                        {/* Feature cards */}
+                        <div className="space-y-2 mb-3">
+                            {(() => {
+                                const featureData: Record<string, Array<{titleKey: string; descKey: string; fallbackTitle: string; fallbackDesc: string}>> = {
+                                    "gorilla-sofa": [
+                                        {titleKey:"gorillaFeat1",descKey:"gorillaFeat1Desc",fallbackTitle:"Comfort Support Structure",fallbackDesc:"Ergonomic curved support for long-hour comfortable seating"},
+                                        {titleKey:"gorillaFeat2",descKey:"gorillaFeat2Desc",fallbackTitle:"High Density Shaped Foam",fallbackDesc:"Custom molded foam, no deformation after years of use"},
+                                        {titleKey:"gorillaFeat3",descKey:"gorillaFeat3Desc",fallbackTitle:"Galvanized Steel Frame",fallbackDesc:"Rust-proof solid metal internal support structure"},
+                                        {titleKey:"gorillaFeat4",descKey:"gorillaFeat4Desc",fallbackTitle:"Matches Luxury Living Rooms",fallbackDesc:"Sculptural design fits villa, hotel & minimalist space"},
+                                    ],
+                                    "owl-sofa": [
+                                        {titleKey:"owlFeat1",descKey:"owlFeat1Desc",fallbackTitle:"Owl-Inspired Ergonomic Curve",fallbackDesc:"Wrap-around backrest inspired by owl wings for full support"},
+                                        {titleKey:"owlFeat2",descKey:"owlFeat2Desc",fallbackTitle:"Premium Velvet Upholstery",fallbackDesc:"Stain-resistant velvet with rich texture and color depth"},
+                                        {titleKey:"owlFeat3",descKey:"owlFeat3Desc",fallbackTitle:"Solid Wood Base",fallbackDesc:"Natural walnut wood legs with anti-scratch pads"},
+                                        {titleKey:"owlFeat4",descKey:"owlFeat4Desc",fallbackTitle:"Modular Design",fallbackDesc:"Configurable left/right orientation for any room layout"},
+                                    ],
+                                    "silverback-sofa": [
+                                        {titleKey:"silverbackFeat1",descKey:"silverbackFeat1Desc",fallbackTitle:"Dominant Presence",fallbackDesc:"Oversized sculptural silhouette commands any space"},
+                                        {titleKey:"silverbackFeat2",descKey:"silverbackFeat2Desc",fallbackTitle:"Reinforced Steel Core",fallbackDesc:"Commercial-grade frame for heavy-duty long-term use"},
+                                    ],
+                                    "meteorite-ring-sofa": [
+                                        {titleKey:"meteorFeat1",descKey:"meteorFeat1Desc",fallbackTitle:"Comfort Support Structure",fallbackDesc:"Ergonomic curved support for long-hour comfortable seating"},
+                                        {titleKey:"meteorFeat2",descKey:"meteorFeat2Desc",fallbackTitle:"High Density Shaped Foam",fallbackDesc:"Custom molded foam, no deformation after years of use"},
+                                        {titleKey:"meteorFeat3",descKey:"meteorFeat3Desc",fallbackTitle:"Galvanized Steel Frame",fallbackDesc:"Rust-proof solid metal internal support structure"},
+                                        {titleKey:"meteorFeat4",descKey:"meteorFeat4Desc",fallbackTitle:"Matches Luxury Living Rooms",fallbackDesc:"Sculptural design fits villa, hotel & minimalist space"},
+                                        {titleKey:"meteorFeat5",descKey:"meteorFeat5Desc",fallbackTitle:"Long-Term Anti-Collapse",fallbackDesc:"Multi-layer filling structure to avoid sinking & sagging"},
+                                    ],
+                                    "muscle-gorilla-sofa": [
+                                        {titleKey:"muscleGorillaFeat1",descKey:"muscleGorillaFeat1Desc",fallbackTitle:"Power Ergonomics",fallbackDesc:"Dynamic lumbar support inspired by gorilla posture"},
+                                        {titleKey:"muscleGorillaFeat2",descKey:"muscleGorillaFeat2Desc",fallbackTitle:"High-Density Memory Foam",fallbackDesc:"Pressure-responsive foam for personalized comfort"},
+                                        {titleKey:"muscleGorillaFeat3",descKey:"muscleGorillaFeat3Desc",fallbackTitle:"Carbon Steel Skeleton",fallbackDesc:"Ultra-strong frame with 10-year structural warranty"},
+                                        {titleKey:"muscleGorillaFeat4",descKey:"muscleGorillaFeat4Desc",fallbackTitle:"Statement Sculpture",fallbackDesc:"Museum-worthy design that transforms any interior"},
+                                    ],
+                                };
+                                const feats = featureData[product.slug] || [];
+                                return feats.map((feat, i) => (
+                                    <div key={i} className="flex items-start gap-2">
+                                        <span className="text-[#E8B4B8] text-[10px] mt-0.5 flex-shrink-0">✦</span>
+                                        <div>
+                                            <h4 className="text-[11px] text-[#F5F0EB] tracking-[0.04em] font-light leading-[1.3]">{(() => { const v = t(feat.titleKey as TranslationKeys); return v === feat.titleKey ? feat.fallbackTitle : v; })()}</h4>
+                                            <p className="text-[10px] text-[#8A8580] leading-[1.5]">{(() => { const v = t(feat.descKey as TranslationKeys); return v === feat.descKey ? feat.fallbackDesc : v; })()}</p>
+                                        </div>
+                                    </div>
+                                ));
+                            })()}
+                        </div>
+                        {/* Dimensions */}
+                        {product.specifications && <div className="pt-2.5 border-t border-white/[0.06]">
+                            <div className="flex items-center justify-between mb-0.5">
+                                <label className="text-[9px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
+                                <button onClick={() => setUseCm(!useCm)} className="text-[9px] tracking-[0.12em] uppercase text-[#8A8580] border border-white/10 px-1.5 py-0.5 rounded-sm">{useCm ? "IN" : "CM"}</button>
+                            </div>
+                            <p className="text-[10px] text-[#F5F0EB]/50 tracking-[0.02em]">
+                                {(() => { const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`; return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`; })()}
+                            </p>
+                        </div>}
+                        {/* Materials */}
+                        {product.materials && product.materials.length > 0 && <div className="mt-2 pt-2 border-t border-white/[0.06]">
+                            <label className="text-[9px] text-[#8A8580] tracking-[0.2em] uppercase block mb-0.5">{t("materialsLabel" as TranslationKeys)}</label>
+                            <div className="flex flex-wrap gap-x-2 gap-y-0.5">
+                                {product.materials.map((mat, i) => {
+                                    const matKeyMap: Record<string, string[]> = { "gorilla-sofa": ["gorillaMat1", "gorillaMat2", "gorillaMat3", "gorillaMat4"], "owl-sofa": ["owlMat1", "owlMat2", "owlMat3", "owlMat4"], "silverback-sofa": ["silverbackMat1", "silverbackMat2"], "meteorite-ring-sofa": ["meteorMat1", "meteorMat2", "meteorMat3", "meteorMat4"], "muscle-gorilla-sofa": ["muscleGorillaMat1", "muscleGorillaMat2", "muscleGorillaMat3", "muscleGorillaMat4"] };
+                                    const keys = matKeyMap[product.slug];
+                                    const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
+                                    return <span key={i} className="text-[10px] text-[#F5F0EB]/40">{i18nMat}{i < product.materials.length - 1 && <span className="mx-1 text-[#8A8580]/30">·</span>}</span>;
+                                })}
+                            </div>
+                        </div>}
+                        {/* Delivery info */}
+                        <div className="mt-2 pt-2 border-t border-white/[0.06] flex items-center gap-2 text-[9px] text-[#8A8580]/60">
+                            <span>{t("leadTimeShort" as TranslationKeys)}</span>
+                            <span className="text-white/10">·</span>
+                            <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
+                            <span className="text-white/10">·</span>
+                            <span>{t("madeToOrderShort" as TranslationKeys)}</span>
+                        </div>
+                    </div>
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:gap-12">
                         {/* Desktop gallery column — hidden on mobile */}
                         <div className="hidden lg:flex flex-col">
@@ -969,6 +1056,54 @@ export function ProductPageClient(
                         </div>
                     </div>
                     {}
+                    <div className="lg:hidden">
+                        {}
+                        <div className="relative w-full aspect-[4/3] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                            {madeBg ? <img
+                                src={madeBg}
+                                alt={`${productName} craftsmanship`}
+                                className="w-full h-full object-cover opacity-60" /> : galleryImages.length >= 4 && galleryImages[3]?.src ? <img
+                                src={galleryImages[3].src}
+                                alt={`${productName} craftsmanship`}
+                                className="w-full h-full object-cover opacity-60" /> : galleryImages[0]?.src ? <img
+                                src={galleryImages[0].src}
+                                alt={`${productName} craftsmanship`}
+                                className="w-full h-full object-cover opacity-50" /> : <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="font-serif text-[20rem] text-[#F5F0EB]/[0.03] select-none">
+                                    {product.animal.charAt(0)}
+                                </span>
+                            </div>}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/30 to-transparent" />
+                        </div>
+                        {}
+                        <div className="px-4 py-3 bg-[#090909]">
+                            <p className="font-serif text-[14px] font-light text-[#F5F0EB] leading-[1.2] text-center mb-2">
+                                <span className="opacity-20 mr-2">—</span>{t("materialsCraftsmanship" as TranslationKeys)}<span className="opacity-20 ml-2">—</span>
+                            </p>
+                            <div
+                                className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-5 px-5 pb-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                {(() => {
+                                    const cards = materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"];
+                                    return cards.map((card: { titleKey: string; descKey: string; icon: string }, idx: number) => (
+                                        <div
+                                            key={idx}
+                                            className="flex-shrink-0 w-[72vw] snap-start text-center py-4 px-4 border border-white/[0.04] bg-[#0D0D0D]/40 rounded-sm">
+                                            <div className="w-9 h-9 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: "rgba(232,180,184,0.08)", border: "1px solid rgba(232,180,184,0.18)" }}>
+                                                <svg viewBox="0 0 24 24" className="w-4 h-4">
+                                                    {card.icon === "fabric" && <><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><line x1="3" y1="9" x2="21" y2="9" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="3" y1="15" x2="21" y2="15" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
+                                                    {card.icon === "frame" && <><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
+                                                    {card.icon === "cushion" && <><path d="M3 3h18v18H3z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 9h18" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><path d="M9 3v18" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
+                                                    {card.icon === "detail" && <><path d="M2 20 L6 20 L6 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M22 20 L18 20 L18 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M6 16 L18 16 L18 4 L6 4 Z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></>}
+                                                </svg>
+                                            </div>
+                                            <h4 className="text-[11px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1">{t(card.titleKey as TranslationKeys)}</h4>
+                                            <p className="text-[11px] font-light text-[#8A8580] leading-[1.6]">{t(card.descKey as TranslationKeys)}</p>
+                                        </div>
+                                    ));
+                                })()}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
             <section className="bg-[#090909]">
@@ -1428,7 +1563,28 @@ export function ProductPageClient(
             {product.slug === 'meteorite-ring-sofa' && (
                 <CosmicInspiration lang={lang} />
             )}
-            {/* Mobile Sticky CTA now handled by MobileProductDetail component */}
+            {/* Mobile Sticky CTA — left text + right glow button */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "#0A0A0A" }}>
+                <div className="px-4 pt-2.5 pb-2.5 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                        <p className="text-[12px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
+                        <p className="text-[14px] font-light text-[#E8B4B8] mt-0.5">{displayPrice}</p>
+                    </div>
+                    <div className="relative flex-shrink-0">
+                        <div className="absolute -inset-1 rounded-full opacity-30 pointer-events-none" style={{ background: "radial-gradient(circle, #E8B4B8 0%, transparent 70%)", filter: "blur(6px)" }} />
+                        <button
+                            onClick={handleBuyNow}
+                            className="relative flex items-center gap-1.5 px-5 py-2 text-[#0A0A0A] text-[11px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
+                            style={{ background: "#E8B4B8" }}>
+                            {t("buyNow" as TranslationKeys)}
+                            <svg aria-hidden="true" viewBox="0 0 10 10" width="9" height="9" fill="none">
+                                <path d="M0 5h7" stroke="currentColor" strokeWidth="1.2" />
+                                <path d="M1 1l4 4-4 4" stroke="currentColor" strokeWidth="1.2" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
             {}
             {addedToCart && <div className="fixed bottom-6 right-6 z-50 animate-[slideUp_0.3s_ease-out]">
                 <div
