@@ -148,7 +148,7 @@ const statusColor = (s: string) => {
     pending: "text-[#8A8580]",
     confirmed: "text-[#E8B4B8]",
     processing: "text-yellow-400",
-    shipped: "text-blue-400",
+    shipped: "text-[#E8B4B8]",
     delivered: "text-green-400",
     cancelled: "text-red-400",
   };
@@ -174,7 +174,7 @@ const badgeColorClass = (eventType: string | null): string => {
   if (eventType === "shippingDelivered") return "bg-green-500/20 text-green-400";
   if (["shippingLocalSorting", "shippingLocalDispatched", "shippingOutForDelivery"].includes(eventType)) return "bg-green-500/20 text-green-400";
   if (["shippingArrivedDest", "shippingImportDeclared", "shippingTaxPaid", "shippingImportCleared"].includes(eventType)) return "bg-orange-500/20 text-orange-400";
-  if (["shippingExportDeclared", "shippingExportCleared", "shippingInTransitIntl", "shippingTransitHub"].includes(eventType)) return "bg-blue-500/20 text-blue-400";
+  if (["shippingExportDeclared", "shippingExportCleared", "shippingInTransitIntl", "shippingTransitHub"].includes(eventType)) return "bg-[#E8B4B8]/20 text-[#E8B4B8]";
   return "bg-[#8A8580]/20 text-[#8A8580]";
 };
 
@@ -205,7 +205,7 @@ function TimelineNode({
         isException
           ? "border-red-500 bg-red-500/30"
           : isCurrent
-          ? "border-blue-400 bg-blue-400 ring-4 ring-blue-400/20"
+          ? "border-[#E8B4B8] bg-[#E8B4B8] ring-4 ring-[#E8B4B8]/20"
           : isCompleted
           ? "border-[#E8B4B8] bg-[#E8B4B8]"
           : "border-[#333] bg-transparent"
@@ -219,7 +219,7 @@ function TimelineNode({
           <span className="text-red-400 text-[8px] font-bold">!</span>
         )}
         {isCurrent && (
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+          <div className="w-1.5 h-1.5 rounded-full bg-[#E8B4B8] animate-pulse" />
         )}
       </div>
 
@@ -252,10 +252,38 @@ function TimelineNode({
 
 function RouteDiagram({ t, currentPhase }: { t: (key: TranslationKeys) => string; currentPhase: number }) {
   const phases = [
-    { label: "shippingRouteChina", icon: "🏭" },
-    { label: "shippingRouteTransit", icon: "✈️" },
-    { label: "shippingRouteDestination", icon: "🏛️" },
-    { label: "shippingRouteDelivery", icon: "🚚" },
+    {
+      label: "shippingRouteChina",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 21h18" /><path d="M5 21V7l7-4 7 4v14" /><path d="M9 21v-4h6v4" /><path d="M9 11h.01" /><path d="M15 11h.01" />
+        </svg>
+      ),
+    },
+    {
+      label: "shippingRouteTransit",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
+        </svg>
+      ),
+    },
+    {
+      label: "shippingRouteDestination",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 21h18" /><path d="M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16" /><path d="M9 7h1" /><path d="M14 7h1" /><path d="M9 11h1" /><path d="M14 11h1" /><path d="M9 15h1" /><path d="M14 15h1" />
+        </svg>
+      ),
+    },
+    {
+      label: "shippingRouteDelivery",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M1 3h15v13H1z" /><path d="M16 8h4l3 3v5h-7V8z" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
+        </svg>
+      ),
+    },
   ];
 
   return (
@@ -265,7 +293,9 @@ function RouteDiagram({ t, currentPhase }: { t: (key: TranslationKeys) => string
           <div className={`flex flex-col items-center gap-1 px-2 py-1.5 rounded ${
             i <= currentPhase ? "bg-[#E8B4B8]/10" : "bg-[#1A1A1A]"
           }`}>
-            <span className="text-lg">{phase.icon}</span>
+            <span className={`inline-flex ${i <= currentPhase ? "text-[#F5F0EB]" : "text-[#333]"}`}>
+              {phase.icon}
+            </span>
             <span className={`text-[12px] tracking-wide ${
               i <= currentPhase ? "text-[#F5F0EB]" : "text-[#333]"
             }`}>
