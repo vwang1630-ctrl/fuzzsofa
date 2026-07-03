@@ -53,7 +53,22 @@ export async function GET(
         latestEvent: order.latest_shipping_event,
         shippingMethod: order.shipping_method,
       },
-      events: events || [],
+      events: (events || []).map((evt: Record<string, unknown>) => ({
+        id: evt.id,
+        eventType: evt.event_type,
+        eventTitle: evt.event_title,
+        eventDescription: evt.event_description,
+        location: evt.location,
+        happenedAt: evt.happened_at,
+        isCurrent: evt.is_current,
+        isException: evt.is_exception,
+        carrier: evt.carrier,
+        trackingNumber: evt.tracking_number,
+        flightVessel: evt.flight_vessel,
+        estimatedArrival: evt.estimated_arrival,
+        status: evt.status,
+        description: evt.description,
+      })),
     });
   } catch (err) {
     console.error('Shipping API error:', err);

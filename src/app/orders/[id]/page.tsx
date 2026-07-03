@@ -14,29 +14,29 @@ import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
 
 interface OrderItem {
   id: string;
-  product_slug: string;
-  product_name: string;
-  color_name: string | null;
-  color_hex: string | null;
+  productSlug: string;
+  productName: string;
+  colorName: string | null;
+  colorHex: string | null;
   quantity: number;
-  unit_price: number;
+  unitPrice: number;
   subtotal: number;
-  image_url: string | null;
+  imageUrl: string | null;
 }
 
 interface ShippingEvent {
   id: string;
-  event_type: string;
-  event_title: string | null;
-  event_description: string | null;
+  eventType: string;
+  eventTitle: string | null;
+  eventDescription: string | null;
   location: string | null;
-  happened_at: string;
-  is_current: boolean;
-  is_exception: boolean;
+  happenedAt: string;
+  isCurrent: boolean;
+  isException: boolean;
   carrier: string | null;
-  tracking_number: string | null;
-  flight_vessel: string | null;
-  estimated_arrival: string | null;
+  trackingNumber: string | null;
+  flightVessel: string | null;
+  estimatedArrival: string | null;
   // Old schema fields
   status: string;
   description: string | null;
@@ -44,31 +44,31 @@ interface ShippingEvent {
 
 interface OrderDetail {
   id: string;
-  order_number: string;
+  orderNumber: string;
   status: string;
-  payment_status: string;
-  payment_method: string | null;
+  paymentStatus: string;
+  paymentMethod: string | null;
   total: number;
-  shipping_fee: number;
+  shippingFee: number;
   subtotal: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string | null;
   country: string;
-  address_line: string;
-  address_line2: string | null;
+  addressLine1: string;
+  addressLine2: string | null;
   city: string;
   state: string | null;
-  zip_code: string | null;
+  zipCode: string | null;
   carrier: string | null;
-  tracking_number: string | null;
-  estimated_delivery: string | null;
-  latest_shipping_event: string | null;
-  shipping_method: string | null;
-  created_at: string;
+  trackingNumber: string | null;
+  estimatedDelivery: string | null;
+  latestShippingEvent: string | null;
+  shippingMethod: string | null;
+  createdAt: string;
   items: OrderItem[];
-  shipping_events: ShippingEvent[];
+  shippingEvents: ShippingEvent[];
 }
 
 /* ------------------------------------------------------------------ */
@@ -116,13 +116,19 @@ const EVENT_PHASES: { phase: string; events: string[] }[] = [
 /* ------------------------------------------------------------------ */
 
 const formatDate = (d: string) => {
-  try { return new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }); }
-  catch { return d; }
+  try {
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    return date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+  } catch { return d; }
 };
 
 const formatDateTime = (d: string) => {
-  try { return new Date(d).toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }); }
-  catch { return d; }
+  try {
+    const date = new Date(d);
+    if (isNaN(date.getTime())) return d;
+    return date.toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+  } catch { return d; }
 };
 
 const statusLabel = (s: string, t: (key: TranslationKeys) => string): string => {
@@ -189,8 +195,8 @@ function TimelineNode({
   isException: boolean;
   t: (key: TranslationKeys) => string;
 }) {
-  const eventType = event.event_type || event.status;
-  const title = event.event_description || event.description || (eventType ? t(eventType as TranslationKeys) : eventType);
+  const eventType = event.eventType || event.status;
+  const title = event.eventDescription || event.description || (eventType ? t(eventType as TranslationKeys) : eventType);
 
   return (
     <div className="relative pl-8 pb-6 last:pb-0">
@@ -228,11 +234,11 @@ function TimelineNode({
           </p>
         )}
         <p className={`text-xs mt-0.5 ${isCurrent || isCompleted ? "text-[#8A8580]" : "text-[#333]"}`}>
-          {formatDateTime(event.happened_at)}
+          {formatDateTime(event.happenedAt)}
         </p>
-        {event.flight_vessel && (
+        {event.flightVessel && (
           <p className="text-xs text-[#8A8580] mt-0.5">
-            {event.flight_vessel}
+            {event.flightVessel}
           </p>
         )}
       </div>
@@ -310,7 +316,7 @@ export default function OrderDetailPage() {
       const res = await fetch(`/api/orders/${orderId}`, { headers });
       if (res.ok) {
         const data = await res.json();
-        setOrder(data);
+        setOrder(data.order || data);
       }
 
       // Also fetch shipping events
@@ -331,7 +337,7 @@ export default function OrderDetailPage() {
   }, [orderId, fetchOrder]);
 
   const handleCopyTracking = async () => {
-    const tn = order?.tracking_number || shippingEvents[0]?.tracking_number;
+    const tn = order?.trackingNumber || shippingEvents[0]?.trackingNumber;
     if (!tn) return;
     try {
       await navigator.clipboard.writeText(tn);
@@ -345,18 +351,18 @@ export default function OrderDetailPage() {
     const payData = {
       orderIds: [order.id],
       items: (order.items || []).map(it => ({
-        productSlug: it.product_slug,
-        productName: it.product_name,
-        colorName: it.color_name,
-        colorHex: it.color_hex,
+        productSlug: it.productSlug,
+        productName: it.productName,
+        colorName: it.colorName,
+        colorHex: it.colorHex,
         quantity: it.quantity,
-        unitPrice: it.unit_price,
+        unitPrice: it.unitPrice,
         subtotal: it.subtotal,
-        imageUrl: it.image_url,
+        imageUrl: it.imageUrl,
       })),
       total: order.total,
       subtotal: order.subtotal,
-      shippingFee: order.shipping_fee,
+      shippingFee: order.shippingFee,
     };
     sessionStorage.setItem("payExistingOrders", JSON.stringify(payData));
     router.push("/payment");
@@ -413,8 +419,8 @@ export default function OrderDetailPage() {
   };
 
   // Determine current phase for route diagram
-  const latestEvent = shippingEvents.find(e => e.is_current) || shippingEvents[shippingEvents.length - 1];
-  const latestEventType = latestEvent?.event_type || latestEvent?.status;
+  const latestEvent = shippingEvents.find(e => e.isCurrent) || shippingEvents[shippingEvents.length - 1];
+  const latestEventType = latestEvent?.eventType || latestEvent?.status;
   const currentPhaseIdx = (() => {
     if (!latestEventType) return -1;
     for (let pi = 0; pi < EVENT_PHASES.length; pi++) {
@@ -424,13 +430,13 @@ export default function OrderDetailPage() {
   })();
 
   // Get active events (non-exception, sorted)
-  const activeEvents = shippingEvents.filter(e => !EXCEPTION_EVENTS.has(e.event_type || e.status));
-  const exceptionEvents = shippingEvents.filter(e => EXCEPTION_EVENTS.has(e.event_type || e.status));
+  const activeEvents = shippingEvents.filter(e => !EXCEPTION_EVENTS.has(e.eventType || e.status));
+  const exceptionEvents = shippingEvents.filter(e => EXCEPTION_EVENTS.has(e.eventType || e.status));
   const hasException = exceptionEvents.length > 0;
 
   // Determine which future events to show
   const latestActiveEvent = activeEvents[activeEvents.length - 1];
-  const latestActiveEventType = latestActiveEvent?.event_type || latestActiveEvent?.status;
+  const latestActiveEventType = latestActiveEvent?.eventType || latestActiveEvent?.status;
   const latestActiveIdx = SHIPPING_EVENT_ORDER.indexOf(latestActiveEventType || "");
 
   // Build the full timeline: past events + future placeholders
@@ -438,7 +444,7 @@ export default function OrderDetailPage() {
 
   // Add actual events
   for (const evt of activeEvents) {
-    allTimelineEvents.push({ event: evt, eventType: evt.event_type || evt.status, isFuture: false });
+    allTimelineEvents.push({ event: evt, eventType: evt.eventType || evt.status, isFuture: false });
   }
 
   // Add future placeholder events (only show next few)
@@ -450,9 +456,9 @@ export default function OrderDetailPage() {
   }
 
   // Find the tracking number and carrier
-  const trackingNumber = order?.tracking_number || shippingEvents[0]?.tracking_number;
+  const trackingNumber = order?.trackingNumber || shippingEvents[0]?.trackingNumber;
   const carrier = order?.carrier || shippingEvents[0]?.carrier;
-  const estimatedDelivery = order?.estimated_delivery;
+  const estimatedDelivery = order?.estimatedDelivery;
 
   if (loading) {
     return (
@@ -503,7 +509,7 @@ export default function OrderDetailPage() {
         <div className="flex items-start justify-between mb-4">
           <div>
             <h1 className="font-serif text-2xl text-[#F5F0EB] tracking-wide">{t("orderDetails")}</h1>
-            <p className="text-sm text-[#8A8580] mt-1">{order.order_number} · {formatDate(order.created_at)}</p>
+            <p className="text-sm text-[#8A8580] mt-1">{order.orderNumber} · {formatDate(order.createdAt)}</p>
           </div>
           <span className={`text-xs uppercase tracking-wider px-3 py-1 ${badgeColorClass(latestEventType)}`}>
             {t(shippingBadgeKey(latestEventType))}
@@ -557,7 +563,7 @@ export default function OrderDetailPage() {
         {/* Left Column */}
         <div className="space-y-10">
           {/* Pending Payment: Pay Now */}
-          {order.payment_status === "pending" && order.status !== "cancelled" && (
+          {order.paymentStatus === "pending" && order.status !== "cancelled" && (
             <section className="bg-[#111111] border border-yellow-500/30 p-5">
               <p className="text-yellow-400 text-sm mb-4">{t("orderAwaitingPayment")}</p>
               <div className="flex gap-3">
@@ -615,9 +621,9 @@ export default function OrderDetailPage() {
                   }
 
                   const evt = item.event!;
-                  const isCurrent = evt.is_current || (i === activeEvents.length - 1 && !evt.is_exception);
-                  const isCompleted = !isCurrent && !evt.is_exception;
-                  const isException = evt.is_exception || EXCEPTION_EVENTS.has(evt.event_type || evt.status);
+                  const isCurrent = evt.isCurrent || (i === activeEvents.length - 1 && !evt.isException);
+                  const isCompleted = !isCurrent && !evt.isException;
+                  const isException = evt.isException || EXCEPTION_EVENTS.has(evt.eventType || evt.status);
 
                   return (
                     <TimelineNode
@@ -674,20 +680,20 @@ export default function OrderDetailPage() {
               {(order.items || []).map((item) => (
                 <div key={item.id} className="flex items-center gap-4 bg-[#111111] border border-[#1A1A1A] p-4">
                   <div className="w-14 h-14 flex-shrink-0 bg-[#1A1A1A] overflow-hidden">
-                    {item.image_url ? (
-                      <img src={item.image_url} alt={item.product_name} className="w-full h-full object-cover" />
+                    {item.imageUrl ? (
+                      <img src={item.imageUrl} alt={item.productName} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-[#333] text-lg">
-                        {(item.product_name || "?").charAt(0)}
+                        {(item.productName || "?").charAt(0)}
                       </div>
                     )}
                   </div>
                   <div className="flex-1">
-                    <Link href={`/${item.product_slug}`} className="text-[#F5F0EB] text-sm hover:text-[#E8B4B8] transition-colors">
-                      {item.product_name}
+                    <Link href={`/${item.productSlug}`} className="text-[#F5F0EB] text-sm hover:text-[#E8B4B8] transition-colors">
+                      {item.productName}
                     </Link>
                     <p className="text-xs text-[#8A8580] mt-0.5">
-                      {item.color_name || t("defaultColor")} × {item.quantity}
+                      {item.colorName || t("defaultColor")} × {item.quantity}
                     </p>
                   </div>
                   <p className="text-[#F5F0EB] text-sm">{formatPrice(item.subtotal)}</p>
@@ -709,7 +715,7 @@ export default function OrderDetailPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-[#8A8580]">{t("shipping")}</span>
-                <span className="text-[#F5F0EB]">{order.shipping_fee === 0 ? t("freeShipping") : formatPrice(order.shipping_fee)}</span>
+                <span className="text-[#F5F0EB]">{order.shippingFee === 0 ? t("freeShipping") : formatPrice(order.shippingFee)}</span>
               </div>
               <div className="border-t border-[#1A1A1A] pt-2 flex justify-between">
                 <span className="text-[#F5F0EB]">{t("total")}</span>
@@ -717,7 +723,7 @@ export default function OrderDetailPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-[#8A8580]">{t("payment")}</span>
-                <span className="text-[#F5F0EB]">{order.payment_status === "paid" ? t("orderPaymentPaid") : t("orderPaymentUnpaid")}</span>
+                <span className="text-[#F5F0EB]">{order.paymentStatus === "paid" ? t("orderPaymentPaid") : t("orderPaymentUnpaid")}</span>
               </div>
             </div>
           </div>
@@ -725,12 +731,12 @@ export default function OrderDetailPage() {
           {/* Shipping Address */}
           <div className="bg-[#111111] border border-[#1A1A1A] p-5">
             <h3 className="text-xs text-[#8A8580] tracking-[0.1em] uppercase mb-3">{t("shippingAddress")}</h3>
-            <p className="text-[#F5F0EB] text-sm">{order.first_name} {order.last_name}</p>
+            <p className="text-[#F5F0EB] text-sm">{order.firstName} {order.lastName}</p>
             <p className="text-[#F5F0EB] text-sm">{order.email}</p>
             {order.phone && <p className="text-[#8A8580] text-sm">{order.phone}</p>}
             <p className="text-[#8A8580] text-sm">
-              {order.address_line}{order.address_line2 ? `, ${order.address_line2}` : ""}<br />
-              {order.city}, {order.state || ""} {order.zip_code || ""}<br />
+              {order.addressLine1}{order.addressLine2 ? `, ${order.addressLine2}` : ""}<br />
+              {order.city}, {order.state || ""} {order.zipCode || ""}<br />
               {order.country}
             </p>
           </div>
