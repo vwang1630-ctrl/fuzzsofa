@@ -624,14 +624,17 @@ export default function AccountPage() {
                     key={order.id}
                     className="border border-[#1a1a1a] rounded-lg p-4 sm:p-5 hover:border-[#333] transition-colors duration-300"
                   >
-                    {/* Header row: Order No + Status + Date */}
+                    {/* Header row: Order No + View Details + Date */}
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-[#F5F0EB] text-xs sm:text-sm font-light tracking-wider">{order.orderNumber}</span>
-                          <span className="inline-block px-2 py-0.5 text-[9px] sm:text-[10px] tracking-wider rounded bg-[#c98b96]/20 text-[#c98b96] border border-[#c98b96]/30">
-                            {statusLabel(order.status, t)}
-                          </span>
+                          <Link
+                            href={`/order/detail?orderNo=${order.orderNumber}`}
+                            className="text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#c98b96] border border-[#c98b96]/40 px-3 py-1 rounded hover:bg-[#c98b96] hover:text-[#0A0A0A] transition-all duration-300"
+                          >
+                            {t("viewDetails")}
+                          </Link>
                         </div>
                         <p className="text-[#8A8580] text-[10px] sm:text-xs mt-1 tracking-wide">{formatDate(order.createdAt)}</p>
                       </div>
@@ -658,14 +661,11 @@ export default function AccountPage() {
                       </div>
                     </div>
 
-                    {/* View Details button */}
+                    {/* Status tag */}
                     <div className="flex justify-end">
-                      <Link
-                        href={`/order/detail?orderNo=${order.orderNumber}`}
-                        className="text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#c98b96] border border-[#c98b96]/40 px-3 py-1.5 rounded hover:bg-[#c98b96] hover:text-[#0A0A0A] transition-all duration-300"
-                      >
-                        {t("viewDetails")}
-                      </Link>
+                      <span className="inline-block px-2 py-0.5 text-[9px] sm:text-[10px] tracking-wider rounded bg-[#c98b96]/20 text-[#c98b96] border border-[#c98b96]/30">
+                        {statusLabel(order.status, t)}
+                      </span>
                     </div>
                   </div>
                 );
