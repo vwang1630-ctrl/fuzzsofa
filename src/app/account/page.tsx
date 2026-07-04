@@ -638,34 +638,34 @@ export default function AccountPage() {
                     </div>
 
                     {/* Product thumbnail row */}
-                    <div className="flex items-center gap-3 mb-3">
+                    <div className="flex items-center gap-3">
                       {mainItem?.imageUrl && (
                         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded overflow-hidden bg-[#111] flex-shrink-0 border border-[#1a1a1a]">
                           <img src={mainItem.imageUrl} alt={mainItem.productName} className="w-full h-full object-cover" />
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-[#F5F0EB] text-xs sm:text-sm font-light truncate">{mainItem?.productName || "—"}</p>
-                        <p className="text-[#8A8580] text-[10px] sm:text-xs mt-0.5">
-                          {totalQty > 1 ? `× ${totalQty}` : ""}
-                        </p>
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[#F5F0EB] text-xs sm:text-sm font-light truncate">{mainItem?.productName || "—"}</p>
+                            <p className="text-[#8A8580] text-[10px] sm:text-xs mt-0.5">
+                              {totalQty > 1 ? `× ${totalQty}` : ""}
+                            </p>
+                          </div>
+                          <Link
+                            href={`/order/detail?orderNo=${order.orderNumber}`}
+                            className="text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#c98b96] border border-[#c98b96]/40 px-3 py-1.5 rounded hover:bg-[#c98b96] hover:text-[#0A0A0A] transition-all duration-300 flex-shrink-0"
+                          >
+                            {t("viewDetails")}
+                          </Link>
+                        </div>
+                        <div className="mt-2">
+                          <p className="text-[#F5F0EB] text-sm sm:text-base font-light">{formatPrice(order.total)}</p>
+                          <p className="text-[#8A8580] text-[9px] sm:text-[10px] mt-0.5">
+                            {paymentStatusLabel(order.paymentStatus, t)} · {order.paymentMethod || "PayPal"}
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-right flex-shrink-0">
-                        <p className="text-[#F5F0EB] text-sm sm:text-base font-light">{formatPrice(order.total)}</p>
-                        <p className="text-[#8A8580] text-[9px] sm:text-[10px] mt-0.5">
-                          {paymentStatusLabel(order.paymentStatus, t)} · {order.paymentMethod || "PayPal"}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* View Details button */}
-                    <div className="flex justify-end">
-                      <Link
-                        href={`/order/detail?orderNo=${order.orderNumber}`}
-                        className="text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#c98b96] border border-[#c98b96]/40 px-3 py-1.5 rounded hover:bg-[#c98b96] hover:text-[#0A0A0A] transition-all duration-300"
-                      >
-                        {t("viewDetails")}
-                      </Link>
                     </div>
                   </div>
                 );
