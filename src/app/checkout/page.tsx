@@ -277,7 +277,7 @@ export default function CheckoutPage() {
       <h1 className="font-serif text-3xl font-light text-[#F5F0EB] mb-12 tracking-wide">{t("checkoutTitle")}</h1>
 
       <form onSubmit={handleContinueToPayment}>
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_380px] gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_380px] gap-12">
           {/* Left Column - Form */}
           <div className="space-y-10">
             {/* Shipping Address */}
@@ -287,7 +287,7 @@ export default function CheckoutPage() {
               </h2>
               <div className="space-y-4">
                 {/* Name row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
                       {t("checkoutFirstName")} *
@@ -315,7 +315,7 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* Email + Phone row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
                       {t("checkoutEmail")} *
@@ -390,7 +390,7 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* City + State + ZIP row */}
-                <div className="grid grid-cols-2 md:grid-cols-[2fr_1fr_1fr] gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-[2fr_1fr_1fr] gap-4">
                   <div>
                     <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-2">
                       {t("checkoutCity")} *
@@ -450,7 +450,7 @@ export default function CheckoutPage() {
               <h2 className="font-serif text-xl font-light text-[#F5F0EB] mb-6 tracking-wide">
                 {t("checkoutShippingMethod")}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <button
                   type="button"
                   onClick={() => setShippingMethod("standard")}
@@ -486,7 +486,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Right Column - Order Summary (sticky) */}
-          <div className="md:sticky md:top-24 md:self-start">
+          <div className="sm:sticky sm:top-24 sm:self-start">
             <div className="bg-[#111111] border border-[#1A1A1A] p-6">
               <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">{t("checkoutOrderSummary")}</h2>
 

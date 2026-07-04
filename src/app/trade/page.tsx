@@ -24,7 +24,7 @@ export default function TradePage() {
         {/* Who we work with */}
         <div>
           <h2 className="font-serif text-2xl font-light text-[#F5F0EB] mb-6">{t("whoWeWorkWith")}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-[#111111] border border-[#1A1A1A] p-6 text-center">
               <p className="text-[#F5F0EB] text-sm tracking-[0.05em]">{t("hospitality")}</p>
               <p className="text-[#8A8580] text-xs mt-2">{t("hotelsResorts")}</p>

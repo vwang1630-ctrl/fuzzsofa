@@ -115,7 +115,7 @@ export default function StudioClient() {
       <section className="py-[140px] px-6">
         <div className="max-w-[700px] mx-auto">
           <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-6 font-light">Studio Capabilities</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
             <div>
               <p className="font-serif text-[2rem] font-light text-[#F5F0EB] mb-1">10+</p>
               <p className="text-[12px] tracking-[0.1em] uppercase text-[#8A8580] font-light">Years Production</p>

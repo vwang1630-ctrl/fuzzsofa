@@ -23,7 +23,7 @@ export default function WarrantyPage() {
         {/* Coverage */}
         <div>
           <h2 className="font-serif text-2xl font-light text-[#F5F0EB] mb-6">{t("warrantyCoverage")}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-[#111111] border border-[#1A1A1A] p-6">
               <p className="text-[#E8B4B8] font-serif text-lg mb-2">{t("frameStructure")}</p>
               <p className="text-[#8A8580] text-sm">{t("frameStructureDesc")}</p>

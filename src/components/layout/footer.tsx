@@ -9,7 +9,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-[#1A1A1A] bg-[#050505]" dir={isRtl ? "rtl" : "ltr"}>
-      <div className="max-w-[1200px] mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div className="max-w-[1200px] mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-4 gap-12">
         {/* Brand + Manufacturing Entity */}
         <div>
           <h3 className="font-serif text-lg tracking-[0.08em] text-[#F5F0EB] mb-1">Fuzz Sofa Studio</h3>
@@ -76,7 +76,7 @@ export function Footer() {
 
       {/* Payment Trust Bar */}
       <div className="border-t border-[#1A1A1A] px-6 py-5">
-        <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[12px] tracking-[0.08em] text-[#8A8580]/50">
             Payments are securely processed by international payment providers.
           </p>
@@ -91,7 +91,7 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-[#1A1A1A] px-6 py-5">
-        <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
+        <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
           <p className="text-[12px] font-light text-[#8A8580]/50 tracking-[0.03em]">
             &copy; {new Date().getFullYear()} Fuzz Sofa Studio. All rights reserved.
           </p>

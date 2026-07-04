@@ -38,7 +38,7 @@ export function AboutContent() {
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-[#1A1A1A] pt-12">
+        <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8 border-t border-[#1A1A1A] pt-12">
           {[
             { label: t("shanghaiWorkshop"), value: "Shanghai" },
             { label: "2022", value: "2022" },

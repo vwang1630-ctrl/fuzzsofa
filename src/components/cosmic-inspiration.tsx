@@ -97,7 +97,7 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
     <section className="py-16 md:py-24 px-6 md:px-8">
       <div className="max-w-[1200px] mx-auto">
         {/* Section Header */}
-        <div className="flex items-start justify-between mb-8 md:mb-12">
+        <div className="flex items-start justify-between mb-8 sm:mb-12">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="w-4 h-4 text-[#E8B4B8]" />
@@ -125,7 +125,7 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
 
         {/* AI Summary */}
         {data?.summary && (
-          <div className="mb-8 md:mb-12 max-w-[700px]">
+          <div className="mb-8 sm:mb-12 max-w-[700px]">
             <p className="text-[14px] md:text-[15px] font-light leading-[1.7] text-[#8A8580]">
               {data.summary}
             </p>
@@ -147,7 +147,7 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
           <>
             {/* Images Row */}
             {data.images.length > 0 && (
-              <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-4 mb-8 md:mb-12 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible">
+              <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-4 mb-8 sm:mb-12 md:grid sm:grid-cols-3 md:gap-4 sm:overflow-visible">
                 {data.images.map((img, i) => (
                   <div
                     key={i}
@@ -198,7 +198,7 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                   {data.results.slice(0, 6).map((result, i) => (
                     <a
                       key={i}

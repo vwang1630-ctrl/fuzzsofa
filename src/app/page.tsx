@@ -111,7 +111,7 @@ export default function HomePage() {
       {/* ─── 1. HERO ─── */}
       <section className="relative w-full overflow-hidden">
         {/* ── Mobile Hero (aspect 3/4, editorial overlay) ── */}
-        <div className="md:hidden relative aspect-[3/4]">
+        <div className="sm:hidden relative aspect-[3/4]">
           <Link href={sceneConfig.keys.href} className="block absolute inset-0" aria-label={t(sceneConfig.keys.title)}>
             <HeroSlideshow current={heroScene} />
           </Link>
@@ -145,7 +145,7 @@ export default function HomePage() {
         </div>
 
         {/* ── Desktop Hero (exact 021a54d version) ── */}
-        <div className="hidden md:block relative aspect-[16/9] xl:aspect-[16/7]" style={{ maxHeight: '82vh' }}>
+        <div className="hidden sm:block relative aspect-[16/9] xl:aspect-[16/7]" style={{ maxHeight: '82vh' }}>
           <Link href={sceneConfig.keys.href} className="block absolute inset-0 z-0" aria-label={t(sceneConfig.keys.title)}>
             <HeroSlideshow current={heroScene} />
           </Link>
@@ -200,8 +200,8 @@ export default function HomePage() {
             <div key={item.label} className="flex items-center gap-2 md:gap-2.5">
               <span className="text-[#E8B4B8] text-[11px] md:text-[12px]">{item.icon}</span>
               <span className="text-[11px] md:text-[12px] tracking-[0.1em] md:tracking-[0.08em] text-[#8A8580]">
-                <span className="md:hidden">{item.label}</span>
-                <span className="hidden md:inline">{item.labelDesktop}</span>
+                <span className="sm:hidden">{item.label}</span>
+                <span className="hidden sm:inline">{item.labelDesktop}</span>
               </span>
             </div>
           ))}
@@ -216,13 +216,13 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
           <div className="mb-6 md:mb-12 flex items-end justify-between">
             <div>
-              <p className="md:hidden text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Collection</p>
+              <p className="sm:hidden text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Collection</p>
               <h2 className="font-serif text-xl md:text-4xl font-light text-[#F5F0EB] tracking-[0.02em]">
                 Featured Works
               </h2>
               <p className="mt-1.5 md:mt-2 text-[11px] md:text-sm text-[#8A8580]">Each piece made individually after order confirmation</p>
             </div>
-            <Link href="/#featured-works" className="hidden md:flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 group/coll">
+            <Link href="/#featured-works" className="hidden sm:flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#8A8580] hover:text-[#E8B4B8] transition-colors duration-300 group/coll">
               <span>Explore Collection</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="group-hover/coll:translate-x-1 transition-transform duration-300"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
@@ -236,7 +236,7 @@ export default function HomePage() {
                 className="group relative overflow-hidden border-0 md:border md:border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
               >
                 {/* Mobile: image + text below with breathing room */}
-                <div className="md:hidden">
+                <div className="sm:hidden">
                   <div className="aspect-square overflow-hidden">
                     <img
                       src={(product.images ?? [])[0] ?? ''}
@@ -252,7 +252,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 {/* Desktop: image + text below */}
-                <div className="hidden md:block">
+                <div className="hidden sm:block">
                   <div className="aspect-square overflow-hidden">
                     <img
                       src={(product.images ?? [])[0] ?? ''}
@@ -284,7 +284,7 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
           <div className="flex items-baseline justify-between mb-6 md:mb-12">
             <div>
-              <p className="md:hidden text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Spaces</p>
+              <p className="sm:hidden text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Spaces</p>
               <h2 className="font-serif text-xl md:text-4xl font-light text-[#F5F0EB]">{t("interiorWorldsTitle")}</h2>
               <p className="mt-1.5 md:mt-2 text-[11px] md:text-sm text-[#8A8580]">{t("interiorWorldsSubtitle")}</p>
             </div>
@@ -320,7 +320,7 @@ export default function HomePage() {
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
           <div className="flex items-baseline justify-between mb-6 md:mb-12">
             <div>
-              <p className="md:hidden text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Editorial</p>
+              <p className="sm:hidden text-[10px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Editorial</p>
               <h2 className="font-serif text-xl md:text-4xl font-light text-[#F5F0EB]">{t("journalTitle")}</h2>
             </div>
             <Link href="/journal" className="text-[10px] md:text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">{t("articles")} &rarr;</Link>

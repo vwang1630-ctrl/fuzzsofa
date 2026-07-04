@@ -21,7 +21,7 @@ export default function AboutClient() {
       {/* Section 1: Studio Identity */}
       <section className="py-20 px-6 bg-[#080808]">
         <div className="max-w-[900px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-16 items-center">
             <div>
               <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-4">Studio Identity</p>
               <h2 className="font-serif text-2xl font-light tracking-[0.02em] mb-6">Between Design and Production</h2>
@@ -52,7 +52,7 @@ export default function AboutClient() {
             With over a decade of experience, we collaborate with manufacturing partners in Shanghai
             to handle the full production process — from structural engineering to final upholstery.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
             {[
               "Custom Sofa Production",
               "Upholstery Craft",
@@ -86,7 +86,7 @@ export default function AboutClient() {
 
       {/* Stats */}
       <section className="py-20 px-6 bg-[#050505]">
-        <div className="max-w-[900px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="max-w-[900px] mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
           {[
             ["10+", "Years Serving Clients"],
             ["1000+", "Custom Pieces Created"],

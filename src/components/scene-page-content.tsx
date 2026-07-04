@@ -70,7 +70,7 @@ export function ScenePageContent({
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
             {t("recommendedPieces")}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-3 gap-6">
             {recommendedProducts.map((product) => (
               <Link
                 key={product.slug}

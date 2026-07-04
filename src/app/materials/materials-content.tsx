@@ -26,7 +26,7 @@ export function MaterialsContent() {
         <div className="mb-20">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-2">{t("cloudTouch")}</h2>
           <p className="text-sm text-[#8A8580] mb-10">{t("cloudTouchDesc")}</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {[
               {
                 name: "Bouclé",
@@ -89,7 +89,7 @@ export function MaterialsContent() {
         <div className="mb-20">
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-2">{t("leatherTouch")}</h2>
           <p className="text-sm text-[#8A8580] mb-10">{t("leatherTouchDesc")}</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {[
               {
                 name: "Aniline Leather",

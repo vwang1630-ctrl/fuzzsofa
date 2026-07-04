@@ -83,7 +83,7 @@ export function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6 text-xs font-light tracking-[0.1em] uppercase">
+        <nav className="hidden sm:flex items-center gap-6 text-xs font-light tracking-[0.1em] uppercase">
           <Link href="/animal-sofa-collection" className={`${isProductPage ? 'text-white/60' : 'text-[#8A8580]'} hover:text-[#E8B4B8] transition-colors duration-300`}>
             {t("collection")}
           </Link>
@@ -101,7 +101,7 @@ export function Header() {
         {/* Right side controls */}
         <div className="flex items-center gap-3">
           {/* Region indicator - auto detected */}
-          <span className={`hidden md:flex items-center gap-1 text-xs tracking-[0.05em] ${headerSolid ? 'text-[#555]' : 'text-white/40'}`}>
+          <span className={`hidden sm:flex items-center gap-1 text-xs tracking-[0.05em] ${headerSolid ? 'text-[#555]' : 'text-white/40'}`}>
             {region === "europe" ? "EUR" : "USD"} / {region === "americas" ? "Americas" : region === "europe" ? "Europe" : region === "middle_east" ? "Middle East" : "SE Asia"}
           </span>
 
@@ -132,7 +132,7 @@ export function Header() {
           </div>
 
           {/* User / Account */}
-          <div ref={userMenuRef} className="relative hidden md:block">
+          <div ref={userMenuRef} className="relative hidden sm:block">
             {user ? (
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -203,7 +203,7 @@ export function Header() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`md:hidden transition-colors ${headerSolid ? 'text-[#8A8580] hover:text-[#E8B4B8]' : 'text-white/50 hover:text-white'}`}
+            className={`sm:hidden transition-colors ${headerSolid ? 'text-[#8A8580] hover:text-[#E8B4B8]' : 'text-white/50 hover:text-white'}`}
             aria-label="Toggle menu"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -223,7 +223,7 @@ export function Header() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="md:hidden bg-[#0A0A0A] border-t border-[#1A1A1A] px-6 py-4 flex flex-col gap-4 text-xs font-light tracking-[0.1em] uppercase">
+        <nav className="sm:hidden bg-[#0A0A0A] border-t border-[#1A1A1A] px-6 py-4 flex flex-col gap-4 text-xs font-light tracking-[0.1em] uppercase">
           <Link href="/animal-sofa-collection" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("collection")}</Link>
           <Link href="/luxury-villa-interior" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("interiorWorlds")}</Link>
           <Link href="/about" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("about")}</Link>

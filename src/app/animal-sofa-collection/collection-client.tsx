@@ -60,12 +60,12 @@ export function CollectionClient() {
 
       {/* Products — 5 products, flat display, no filters */}
       <section className="max-w-6xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {products.filter((p) => p.images && p.images.length > 0).map((product, idx) => (
             <Link
               key={product.slug}
               href={`/${product.slug}`}
-              className={`group bg-[#111111] border border-[#1A1A1A] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300 ${idx === 0 ? 'md:col-span-2' : ''}`}
+              className={`group bg-[#111111] border border-[#1A1A1A] overflow-hidden hover:border-[#E8B4B8]/40 hover:-translate-y-1 transition-all duration-300 ${idx === 0 ? 'sm:col-span-2' : ''}`}
             >
               <div className={`${idx === 0 ? 'aspect-[2/1]' : 'aspect-square'} bg-gradient-to-b from-[#1A1A1A] to-[#0F0F0F] flex items-center justify-center relative overflow-hidden`}>
                 {product.images && product.images.length > 0 ? (
