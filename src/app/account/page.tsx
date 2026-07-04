@@ -792,7 +792,7 @@ export default function AccountPage() {
                               {locale === "zh" ? "商品" : "Item"} {idx + 1}: {editingOrder.items?.[idx]?.productName || ""}
                             </p>
                             {availableColors.length > 0 ? (
-                              <div className="flex flex-wrap gap-2">
+                              <div className="flex flex-wrap gap-3">
                                 {availableColors.map((color) => {
                                   const isSelected = item.colorName === color.name;
                                   return (
@@ -804,17 +804,25 @@ export default function AccountPage() {
                                         newItems[idx] = { ...newItems[idx], colorName: color.name, colorHex: color.hex };
                                         setEditItems(newItems);
                                       }}
-                                      className={`flex items-center gap-2 px-3 py-1.5 border transition-all text-xs ${
-                                        isSelected
-                                          ? "border-[#E8B4B8] bg-[#E8B4B8]/10 text-[#F5F0EB]"
-                                          : "border-[#333] text-[#8A8580] hover:border-[#E8B4B8]/50 hover:text-[#F5F0EB]"
-                                      }`}
+                                      className="flex items-center gap-2 transition-all duration-300 group"
                                     >
                                       <span
-                                        className="w-4 h-4 rounded-full border border-[#333] flex-shrink-0"
+                                        className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 ${
+                                          isSelected
+                                            ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]"
+                                            : "border border-[#333] group-hover:border-[#555]"
+                                        }`}
                                         style={{ backgroundColor: color.hex }}
                                       />
-                                      <span className="tracking-wide">{color.name}</span>
+                                      <span
+                                        className={`text-xs tracking-[0.04em] whitespace-nowrap ${
+                                          isSelected
+                                            ? "text-[#F5F0EB]"
+                                            : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"
+                                        }`}
+                                      >
+                                        {color.name}
+                                      </span>
                                     </button>
                                   );
                                 })}
