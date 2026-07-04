@@ -187,7 +187,7 @@ export default function AccountPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [selectedOrders, setSelectedOrders] = useState<Set<string>>(new Set());
-  const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
+
   /* ---- Tab-based order grouping ---- */
   type OrderTab = "all" | "pending" | "production" | "shipped" | "cancelled";
   const [orderTab, setOrderTab] = useState<OrderTab>("all");
@@ -615,323 +615,65 @@ export default function AccountPage() {
           ) : tabFilteredOrders.length === 0 ? (
             <div className="text-center py-20 text-[#8A8580]">{t("accountNoOrders")}</div>
           ) : (
-            <div className="space-y-4">
-              {tabFilteredOrders.map(order => (
-                <div
-                  key={order.id}
-                  className="bg-[#111111] border border-[#1A1A1A] hover:border-[#333] transition-all"
-                >
-                  {/* Order Header - clickable to expand details */}
-                  <button
-                    type="button"
-                    onClick={() => setExpandedOrderId(expandedOrderId === order.id ? null : order.id)}
-                    className="w-full flex items-center justify-between px-5 py-4 border-b border-[#1A1A1A] text-left"
+            <div className="space-y-3 sm:space-y-4">
+              {tabFilteredOrders.map(order => {
+                const mainItem = order.items?.[0];
+                const totalQty = order.items?.reduce((sum: number, it: OrderItem) => sum + it.quantity, 0) || 0;
+                return (
+                  <div
+                    key={order.id}
+                    className="border border-[#1a1a1a] rounded-lg p-4 sm:p-5 hover:border-[#333] transition-colors duration-300"
                   >
-                    <div className="flex items-center gap-4" onClick={e => e.stopPropagation()}>
-                      {order.paymentStatus === "pending" && (
-                        <input
-                          type="checkbox"
-                          checked={selectedOrders.has(order.id)}
-                          onChange={() => toggleOrder(order.id)}
-                          className="w-4 h-4 accent-[#E8B4B8]"
-                        />
-                      )}
-                      <div>
-                        <Link href={`/orders/${order.id}`} className="text-[#F5F0EB] text-sm hover:text-[#E8B4B8] transition-colors" onClick={e => e.stopPropagation()}>
-                          {order.orderNumber}
-                        </Link>
-                        <p className="text-xs text-[#8A8580] mt-1">{formatDate(order.createdAt)}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4" onClick={e => e.stopPropagation()}>
-                      <button
-                        onClick={() => {
-                          const statusToTab: Record<string, OrderTab> = {
-                            pending: 'pending',
-                            confirmed: 'production',
-                            processing: 'production',
-                            shipped: 'shipped',
-                            delivered: 'shipped',
-                            cancelled: 'cancelled',
-                          };
-                          const paymentFailedTab = order.paymentStatus === 'failed' ? 'cancelled' as OrderTab : null;
-                          setOrderTab(paymentFailedTab || statusToTab[order.status] || 'all');
-                        }}
-                        className={`text-[12px] tracking-widest uppercase px-2.5 py-1 rounded hover:opacity-70 transition-opacity cursor-pointer border ${statusColor(order.status)}`}
-                      >
-                        {statusLabel(order.status, t)}
-                      </button>
-                      {/* Logistics badge - clickable to shipping tab */}
-                      {(() => {
-                        const badge = logisticsBadge(order.latestShippingEvent, t);
-                        if (!badge) return null;
-                        return (
-                          <button
-                            key="logistics-badge"
-                            onClick={() => setOrderTab('shipped')}
-                            className={`text-[12px] tracking-wider uppercase px-2 py-0.5 rounded hover:opacity-80 transition-opacity ${badge.color}`}
-                          >
-                            {badge.label}
-                          </button>
-                        );
-                      })()}
-                      <span className="text-[#F5F0EB] text-sm">{formatPrice(order.total)}</span>
-                      {/* Expand/collapse chevron */}
-                      <svg
-                        className={`w-4 h-4 text-[#8A8580] transition-transform duration-200 ${expandedOrderId === order.id ? 'rotate-180' : ''}`}
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
-                  </button>
-
-                  {/* Order Items Preview */}
-                  <div className="px-5 py-3">
-                    <div className="flex items-center gap-4">
-                      {order.items.slice(0, 3).map(item => (
-                        <div key={item.id} className="w-12 h-12 bg-[#1A1A1A] flex-shrink-0 overflow-hidden">
-                          {item.imageUrl ? (
-                            <img src={item.imageUrl} alt={item.productName} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-[#333] text-xs">
-                              {(item.productName || "?").charAt(0)}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                      {order.items.length > 3 && (
-                        <span className="text-xs text-[#8A8580]">{t("moreItems").replace("{n}", String(order.items.length - 3))}</span>
-                      )}
-                      <span className="text-xs text-[#8A8580] ml-auto">
-                        {t("itemCount").replace("{n}", String(order.items.length))}
-                      </span>
-                    </div>
-                    {/* Tracking number + EDD for shipped orders */}
-                    {(order.trackingNumber || order.estimatedDelivery) && (
-                      <div className="flex items-center gap-4 mt-2 pt-2 border-t border-[#1A1A1A]">
-                        {order.trackingNumber && (
-                          <Link href={`/orders/${order.id}`} className="text-xs text-[#8A8580] hover:text-[#E8B4B8] transition-colors">
-                            {t("trackingNumber")}: {order.trackingNumber}
-                          </Link>
-                        )}
-                        {order.estimatedDelivery && formatEDD(order.estimatedDelivery) && (
-                          <span className="text-xs text-[#8A8580] ml-auto">
-                            {t("shippingEstDelivery")}: {formatEDD(order.estimatedDelivery)}
+                    {/* Header row: Order No + Status + Date */}
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-[#F5F0EB] text-xs sm:text-sm font-light tracking-wider">{order.orderNumber}</span>
+                          <span className="inline-block px-2 py-0.5 text-[9px] sm:text-[10px] tracking-wider rounded bg-[#c98b96]/20 text-[#c98b96] border border-[#c98b96]/30">
+                            {statusLabel(order.status, t)}
                           </span>
-                        )}
+                        </div>
+                        <p className="text-[#8A8580] text-[10px] sm:text-xs mt-1 tracking-wide">{formatDate(order.createdAt)}</p>
                       </div>
-                    )}
-                  </div>
-
-                  {/* Actions for pending orders */}
-                  {order.status === "pending" && (
-                    <div className="flex items-center gap-3 px-5 py-3 border-t border-[#1A1A1A]">
-                      <button
-                        onClick={() => handlePayOrder(order)}
-                        className="px-4 py-2 text-xs tracking-wider uppercase border border-[#E8B4B8] text-[#E8B4B8] hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all"
-                      >
-                        {t("accountPayNow")}
-                      </button>
-                      <button
-                        onClick={() => handleDeleteOrder(order.id)}
-                        disabled={deleting === order.id}
-                        className="px-4 py-2 text-xs tracking-wider uppercase border border-[#333] text-[#8A8580] hover:border-red-400 hover:text-red-400 transition-all disabled:opacity-50"
-                      >
-                        {deleting === order.id ? t("accountDeleting") : t("accountDelete")}
-                      </button>
                     </div>
-                  )}
 
-                  {/* Status info for production orders (confirmed + processing merged) */}
-                  {(order.status === "confirmed" || order.status === "processing") && (
-                    <div className="px-5 py-3 border-t border-[#1A1A1A]">
-                      <p className="text-xs text-[#E8B4B8]">
-                        {t("accountInProductionDesc")}
-                      </p>
+                    {/* Product thumbnail row */}
+                    <div className="flex items-center gap-3 mb-3">
+                      {mainItem?.imageUrl && (
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded overflow-hidden bg-[#111] flex-shrink-0 border border-[#1a1a1a]">
+                          <img src={mainItem.imageUrl} alt={mainItem.productName} className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[#F5F0EB] text-xs sm:text-sm font-light truncate">{mainItem?.productName || "—"}</p>
+                        <p className="text-[#8A8580] text-[10px] sm:text-xs mt-0.5">
+                          {totalQty > 1 ? `× ${totalQty}` : ""}
+                        </p>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <p className="text-[#F5F0EB] text-sm sm:text-base font-light">{formatPrice(order.total)}</p>
+                        <p className="text-[#8A8580] text-[9px] sm:text-[10px] mt-0.5">
+                          {paymentStatusLabel(order.paymentStatus, t)} · {order.paymentMethod || "PayPal"}
+                        </p>
+                      </div>
                     </div>
-                  )}
 
-                  {/* Status info for shipped/delivered orders */}
-                  {(order.status === "shipped" || order.status === "delivered") && (
-                    <div className="px-5 py-3 border-t border-[#1A1A1A]">
-                      <Link href={`/orders/${order.id}`} className="text-xs text-[#E8B4B8] hover:underline">
-                        {t("accountViewTrackingInfo")}
+                    {/* View Details button */}
+                    <div className="flex justify-end">
+                      <Link
+                        href={`/order/detail?orderNo=${order.orderNumber}`}
+                        className="text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#c98b96] border border-[#c98b96]/40 px-3 py-1.5 rounded hover:bg-[#c98b96] hover:text-[#0A0A0A] transition-all duration-300"
+                      >
+                        {t("viewDetails")}
                       </Link>
                     </div>
-                  )}
-
-                  {/* Expandable Order Detail Panel */}
-                  {expandedOrderId === order.id && (
-                    <div className="border-t border-[#1A1A1A]">
-                      {/* ── Order Info Header ── */}
-                      <div className="px-5 py-3 bg-[#0D0D0D] border-b border-[#1A1A1A]">
-                        <div className="grid grid-cols-2 gap-y-2 text-xs">
-                          <div>
-                            <span className="text-[#8A8580]">{t("orderDetailOrderNo") || 'Order No.'}</span>
-                            <p className="text-[#F5F0EB] mt-0.5 font-mono tracking-wide">{order.orderNumber || order.id.slice(0, 8)}</p>
-                          </div>
-                          <div>
-                            <span className="text-[#8A8580]">{t("orderDetailOrderTime") || 'Order Time'}</span>
-                            <p className="text-[#F5F0EB] mt-0.5">{formatDate(order.createdAt)}</p>
-                          </div>
-                          {order.paymentMethod && (
-                            <div>
-                              <span className="text-[#8A8580]">{t("orderDetailPayMethod") || 'Payment'}</span>
-                              <p className="text-[#F5F0EB] mt-0.5">{order.paymentMethod}</p>
-                            </div>
-                          )}
-                          <div>
-                            <span className="text-[#8A8580]">{t("orderDetailPayStatus") || 'Payment Status'}</span>
-                            <p className="mt-0.5">{getPaymentStatusComponent(order.paymentStatus, t)}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* ── Product List ── */}
-                      {order.items && order.items.length > 0 && (
-                        <div>
-                          {order.items.map((item: OrderItem, idx: number) => (
-                            <div key={item.id || idx} className="px-5 py-4 flex gap-4 border-b border-[#1A1A1A] last:border-b-0">
-                              {/* Product Image */}
-                              <div className="w-[72px] h-[72px] sm:hidden flex-shrink-0 bg-[#111] rounded overflow-hidden">
-                                {item.imageUrl ? (
-                                  <img src={item.imageUrl} alt={item.productName || ''} className="w-full h-full object-cover" />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center text-[#8A8580]">
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                                    </svg>
-                                  </div>
-                                )}
-                              </div>
-                              <div className="w-[88px] h-[88px] hidden sm:block flex-shrink-0 bg-[#111] rounded overflow-hidden">
-                                {item.imageUrl ? (
-                                  <img src={item.imageUrl} alt={item.productName || ''} className="w-full h-full object-cover" />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center text-[#8A8580]">
-                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                                    </svg>
-                                  </div>
-                                )}
-                              </div>
-                              {/* Product Info */}
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-start justify-between gap-2">
-                                  {item.productSlug ? (
-                                    <Link href={`/${item.productSlug}`} className="text-sm text-[#F5F0EB] hover:text-[#E8B4B8] transition-colors truncate leading-snug">
-                                      {item.productName || item.productSlug}
-                                    </Link>
-                                  ) : (
-                                    <p className="text-sm text-[#F5F0EB] truncate leading-snug">{item.productName || '—'}</p>
-                                  )}
-                                </div>
-                                {/* SKU / Model */}
-                                {item.productSlug && (
-                                  <p className="text-[10px] text-[#8A8580] mt-1 font-mono tracking-wider uppercase">
-                                    {t("orderDetailModel") || 'Model'}: {item.productSlug.replace(/-/g, ' ')}
-                                  </p>
-                                )}
-                                {/* Color swatch + name */}
-                                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs text-[#8A8580]">
-                                  {item.colorName && (
-                                    <span className="flex items-center gap-1.5">
-                                      <span className="inline-block w-3 h-3 rounded-full border border-[#333] flex-shrink-0" style={{ backgroundColor: item.colorHex || '#666' }} />
-                                      {item.colorName}
-                                    </span>
-                                  )}
-                                  {item.fabric && (
-                                    <span>{t("orderDetailFabric") || 'Fabric'}: {item.fabric}</span>
-                                  )}
-                                  {item.size && (
-                                    <span>{t("orderDetailSize") || 'Size'}: {item.size}</span>
-                                  )}
-                                  <span>{t("orderDetailQty") || 'Qty'}: {item.quantity}</span>
-                                </div>
-                                {/* Price */}
-                                <div className="flex items-baseline justify-between mt-2">
-                                  <span className="text-[10px] text-[#8A8580]">
-                                    {formatPrice(item.unitPrice)} × {item.quantity}
-                                  </span>
-                                  <span className="text-sm text-[#F5F0EB]">{formatPrice(item.unitPrice * item.quantity)}</span>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* ── Shipping / Delivery Info ── */}
-                      {(order.shippingMethod || order.carrier || order.trackingNumber) && (
-                        <div className="px-5 py-3 bg-[#0D0D0D] border-t border-[#1A1A1A]">
-                          <p className="text-[10px] tracking-[0.15em] uppercase text-[#8A8580] mb-2">{t("orderDetailShippingInfo") || 'Shipping Info'}</p>
-                          <div className="grid grid-cols-2 gap-y-2 text-xs">
-                            {order.shippingMethod && (
-                              <div>
-                                <span className="text-[#8A8580]">{t("orderDetailShippingMethod") || 'Method'}</span>
-                                <p className="text-[#F5F0EB] mt-0.5">{order.shippingMethod}</p>
-                              </div>
-                            )}
-                            {order.carrier && (
-                              <div>
-                                <span className="text-[#8A8580]">{t("orderDetailCarrier") || 'Carrier'}</span>
-                                <p className="text-[#F5F0EB] mt-0.5">{order.carrier}</p>
-                              </div>
-                            )}
-                            {order.trackingNumber && (
-                              <div className="col-span-2">
-                                <span className="text-[#8A8580]">{t("orderDetailTrackingNumber") || 'Tracking No.'}</span>
-                                <p className="text-[#F5F0EB] mt-0.5 font-mono tracking-wide">{order.trackingNumber}</p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* ── Shipping Address ── */}
-                      {(order.addressLine1 || order.city) && (
-                        <div className="px-5 py-3 bg-[#0D0D0D] border-t border-[#1A1A1A]">
-                          <p className="text-[10px] tracking-[0.15em] uppercase text-[#8A8580] mb-2">{t("orderDetailShippingAddress") || 'Ship To'}</p>
-                          <p className="text-xs text-[#F5F0EB] leading-relaxed">
-                            {order.firstName && <span>{order.firstName} {order.lastName}</span>}
-                            {order.phone && <span className="text-[#8A8580] ml-2">{order.phone}</span>}
-                          </p>
-                          <p className="text-xs text-[#8A8580] mt-1 leading-relaxed">
-                            {order.addressLine1}{order.addressLine2 ? `, ${order.addressLine2}` : ''}<br />
-                            {[order.city, order.state, order.zipCode].filter(Boolean).join(', ')}
-                            {order.country && <><br />{order.country}</>}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* ── Order Summary ── */}
-                      <div className="px-5 py-3 bg-[#0A0A0A] border-t border-[#1A1A1A]">
-                        <div className="flex justify-between text-xs text-[#8A8580] mb-1.5">
-                          <span>{t("orderDetailSubtotal") || 'Subtotal'}</span>
-                          <span>{formatPrice(order.subtotal || order.total)}</span>
-                        </div>
-                        {(order.shippingFee !== undefined && order.shippingFee !== null) && (
-                          <div className="flex justify-between text-xs text-[#8A8580] mb-1.5">
-                            <span>{t("orderDetailShipping") || 'Shipping'}</span>
-                            <span>{order.shippingFee === 0 ? (t("orderDetailFreeShipping") || 'Free') : formatPrice(order.shippingFee)}</span>
-                          </div>
-                        )}
-                        <div className="flex justify-between text-sm text-[#F5F0EB] pt-2 border-t border-[#1A1A1A]">
-                          <span className="font-medium">{t("orderDetailTotal") || 'Total'}</span>
-                          <span className="font-medium">{formatPrice(order.total)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
       )}
-
-      {/* ==================== ADDRESSES TAB ==================== */}
       {tab === "addresses" && (
         <div>
           <div className="flex items-center justify-between mb-6">
