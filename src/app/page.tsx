@@ -21,7 +21,7 @@ const heroScenes = [
   {
     src: "/hero-scene-1.jpg",
     alt: "Gorilla sofa in cinematic billionaire library interior",
-    objectPosition: "center 22%",
+    objectPosition: "center 20%",
     keys: {
       subtitle: "heroSubtitle" as const,
       title: "heroTitle" as const,
@@ -38,7 +38,7 @@ const heroScenes = [
   {
     src: "/hero-scene-2.jpg",
     alt: "Pink owl chair in dark punk concrete interior with neon lighting",
-    objectPosition: "center 28%",
+    objectPosition: "center 25%",
     keys: {
       subtitle: "hero2Subtitle" as const,
       title: "hero2Title" as const,
@@ -148,14 +148,14 @@ export default function HomePage() {
         </div>
 
         {/* ── Desktop Hero (exact 021a54d version) ── */}
-        <div className="hidden sm:block relative aspect-[16/9] xl:aspect-[16/7]" style={{ maxHeight: '82vh' }}>
+        <div className="hidden sm:block relative aspect-[16/10] lg:aspect-[16/9] xl:aspect-[16/8]" style={{ maxHeight: '90vh' }}>
           <Link href={sceneConfig.keys.href} className="block absolute inset-0 z-0" aria-label={t(sceneConfig.keys.title)}>
             <HeroSlideshow current={heroScene} />
           </Link>
           <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
-          <div className="relative z-10 w-full h-full flex flex-col justify-center items-start px-8 md:px-16 lg:px-24 xl:pl-[38%]">
+          <div className="relative z-10 w-full h-full flex flex-col justify-center items-start px-8 md:px-16 lg:px-20 xl:px-24">
             <div className="max-w-[460px]">
               <p className="tracking-[0.35em] uppercase mb-3 text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
                 Fuzz Sofa Studio
