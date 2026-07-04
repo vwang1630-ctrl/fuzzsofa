@@ -12,6 +12,7 @@ export function VillaInteriorContent({ products }: { products: Product[] }) {
       heroLabel={t("villaHeroLabel")}
       heroTitle={t("villaHeroTitle")}
       heroSubtitle={t("villaHeroSubtitle")}
+      heroImage="/scenes/luxury-villa-hero.png"
       accent="from-[#181510] to-[#0A0A0A]"
       whyThisSpaceContent={
         <p className="text-lg text-[#F5F0EB]/70 leading-relaxed">

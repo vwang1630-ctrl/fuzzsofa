@@ -17,6 +17,7 @@ interface ScenePageContentProps {
   heroLabel: string;
   heroTitle: string;
   heroSubtitle: string;
+  heroImage?: string;
   whyThisSpaceContent: React.ReactNode;
   recommendedProducts: Product[];
   designPrinciplesContent: React.ReactNode;
@@ -28,6 +29,7 @@ export function ScenePageContent({
   heroLabel,
   heroTitle,
   heroSubtitle,
+  heroImage,
   whyThisSpaceContent,
   recommendedProducts,
   designPrinciplesContent,
@@ -40,8 +42,18 @@ export function ScenePageContent({
     <>
       {/* Hero */}
       <section className="relative">
-        <div className={`aspect-[16/9] sm:aspect-[21/9] bg-gradient-to-b ${accent} relative overflow-hidden`}>
-          <div className="absolute inset-0 opacity-10" style={{ background: "radial-gradient(ellipse at 30% 60%, #E8B4B8, transparent 50%)" }} />
+        <div className={`aspect-[16/9] sm:aspect-[21/9] relative overflow-hidden`}>
+          {heroImage ? (
+            <>
+              <img src={heroImage} alt={heroTitle} className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-[#0A0A0A]/30 to-transparent" />
+            </>
+          ) : (
+            <>
+              <div className={`absolute inset-0 bg-gradient-to-b ${accent}`} />
+              <div className="absolute inset-0 opacity-10" style={{ background: "radial-gradient(ellipse at 30% 60%, #E8B4B8, transparent 50%)" }} />
+            </>
+          )}
           <div className="absolute inset-0 flex items-end">
             <div className="w-full max-w-7xl mx-auto px-6 pb-8 sm:pb-10">
               <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-1">{heroLabel}</p>
