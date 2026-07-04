@@ -145,7 +145,7 @@ export default function HomePage() {
         </div>
 
         {/* ── Desktop Hero (exact 021a54d version) ── */}
-        <div className="hidden md:block relative" style={{ aspectRatio: '16/7', maxHeight: '82vh' }}>
+        <div className="hidden md:block relative aspect-[16/9] xl:aspect-[16/7]" style={{ maxHeight: '82vh' }}>
           <Link href={sceneConfig.keys.href} className="block absolute inset-0 z-0" aria-label={t(sceneConfig.keys.title)}>
             <HeroSlideshow current={heroScene} />
           </Link>
@@ -156,7 +156,7 @@ export default function HomePage() {
             <p className="tracking-[0.35em] uppercase mb-3 text-[12px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
               Fuzz Sofa Studio
             </p>
-            <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.8rem] md:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
+            <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.8rem] md:text-[3rem] xl:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
               {t(sceneConfig.keys.title)}
             </h1>
             <p className="font-light text-sm md:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
