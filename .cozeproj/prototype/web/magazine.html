@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 字体 -->
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/google-all-fonts.css" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #E8B4B8;
+      --color-primary-container:    #3D2A2E;
+      --color-on-primary:           #0A0A0A;
+      /* === 背景 / 表面 === */
+      --color-background:                 #0A0A0A;
+      --color-surface-container-lowest:   #0E0E0E;
+      --color-surface:                    #111111;
+      --color-surface-container:          #1A1A1A;
+      --color-surface-container-high:     #1F1F1F;
+      --color-surface-container-highest:  #252525;
+      /* === 文字 === */
+      --color-on-surface:           #F5F0EB;
+      --color-on-surface-variant:   #8A8580;
+      /* === 功能色 === */
+      --color-success:  #22c55e;
+      --color-error:    #ef4444;
+      --color-warning:  #f59e0b;
+      /* === 边框 === */
+      --color-outline:          #333333;
+      --color-outline-variant:  #1A1A1A;
+      /* === 圆角（最大8px，保持锐利几何感） === */
+      --radius-sm:   0.125rem;
+      --radius-md:   0.25rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.5rem;
+      --radius-2xl:  0.5rem;
+      --radius-full: 9999px;
+      /* === 阴影（纯黑阴影） === */
+      --shadow-card:   0 2px 8px rgba(0,0,0,0.3);
+      --shadow-float:  0 10px 25px rgba(0,0,0,0.4);
+      --shadow-dialog: 0 25px 50px rgba(0,0,0,0.5);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+      --font-serif: "Cormorant Garamond", Georgia, serif;
+    }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23111111"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%238A8580" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+
+  <style>
+    /* Fade-in 动画 */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-in {
+      animation: fadeInUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    }
+    .animate-delay-100 { animation-delay: 0.1s; }
+    .animate-delay-200 { animation-delay: 0.2s; }
+    .animate-delay-300 { animation-delay: 0.3s; }
+    .animate-delay-400 { animation-delay: 0.4s; }
+    .animate-delay-500 { animation-delay: 0.5s; }
+  </style>
+</head>
+
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- @nav:start 导航组件 -->
+  <header class="fixed top-0 left-0 right-0 z-40 h-[60px] flex items-center justify-between px-6 bg-background/80 backdrop-blur-[8px] border-b border-outline-variant/30">
+    <div class="max-w-7xl w-full mx-auto flex items-center justify-between">
+      <a href="magazine.html" class="font-serif text-xl tracking-[0.1em] text-on-surface">FUZZ SOFA</a>
+      <nav class="flex items-center gap-8">
+        <a href="magazine.html" class="text-sm tracking-[0.1em] text-primary uppercase" aria-current="page">Magazine</a>
+        <a href="#" class="text-sm tracking-[0.1em] text-on-surface-variant uppercase hover:text-on-surface transition-colors">Collection</a>
+        <a href="#" class="text-sm tracking-[0.1em] text-on-surface-variant uppercase hover:text-on-surface transition-colors">Scenes</a>
+        <a href="#" class="text-sm tracking-[0.1em] text-on-surface-variant uppercase hover:text-on-surface transition-colors">Account</a>
+      </nav>
+    </div>
+  </header>
+  <!-- @nav:end 导航组件 -->
+
+  <main class="max-w-7xl mx-auto pt-[60px]">
+    <!-- @main-content:start -->
+
+    <!-- Hero 区域 -->
+    <section id="hero-section" class="relative h-[85vh] min-h-[600px] overflow-hidden">
+      <!-- 全出血背景图 -->
+      <img 
+        src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1920&q=80" 
+        alt="高端室内空间，Fuzz Sofa置于一间采光良好的现代客厅" 
+        data-category="建筑城市"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <!-- 从底部到上的渐变遮罩 -->
+      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
+      
+      <!-- 内容层 -->
+      <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-12 lg:p-16">
+        <!-- 左下角章节编号 -->
+        <span class="font-serif font-light text-[5rem] md:text-[6rem] lg:text-[7rem] leading-none text-on-surface/20 absolute bottom-8 left-6 md:left-12 lg:left-16">01</span>
+        
+        <!-- 右侧编辑标题和描述 -->
+        <div class="max-w-xl ml-auto md:ml-0 md:pl-[30%] lg:pl-[40%] animate-fade-in">
+          <h1 class="font-serif font-light text-3xl md:text-4xl lg:text-5xl tracking-[0.05em] text-on-surface mb-4">
+            The Art of Stillness
+          </h1>
+          <p class="font-sans font-light text-sm md:text-base text-on-surface-variant tracking-wide mb-8 max-w-md leading-relaxed">
+            In a world of constant motion, we explore the beauty of静止 — where silence becomes a design language.
+          </p>
+          
+          <!-- Read More 按钮 -->
+          <a href="magazine-detail.html" id="btn-hero-readmore" class="inline-flex items-center gap-3 px-6 py-3 border border-on-surface/60 text-on-surface text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:bg-primary hover:border-primary hover:text-on-primary">
+            <span>Read More</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Editorial Picks 区域 -->
+    <section id="editorial-section" class="py-16 md:py-24 px-6 md:px-12 lg:px-16">
+      <!-- 标题 -->
+      <div class="mb-10 animate-fade-in">
+        <h2 class="font-serif font-light text-2xl md:text-3xl tracking-[0.1em] text-on-surface uppercase">Editorial</h2>
+      </div>
+      
+      <!-- 杂志网格布局 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Feature Card - 大卡片 -->
+        <!-- 列表-文章1 -->
+        <article id="editorial-card-1" class="group relative h-[400px] md:h-[400px] md:col-span-2 rounded overflow-hidden cursor-pointer animate-fade-in animate-delay-100">
+          <img 
+            src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=80" 
+            alt="现代客厅设计，灰色沙发配暖色调装饰" 
+            data-category="建筑城市"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <!-- 底部渐变遮罩 -->
+          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+          
+          <!-- 章节编号 -->
+          <span class="absolute top-6 left-6 font-serif font-light text-[4rem] leading-none text-on-surface/20">02</span>
+          
+          <!-- 社交分享图标（hover显示） -->
+          <div class="absolute top-6 right-6 flex gap-2 opacity-0 translate-y-[-8px] transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+            <button class="p-2 bg-surface/80 backdrop-blur rounded hover:bg-primary hover:text-on-primary transition-colors" title="分享到Twitter">
+              <i data-lucide="twitter" class="w-4 h-4"></i>
+            </button>
+            <button class="p-2 bg-surface/80 backdrop-blur rounded hover:bg-primary hover:text-on-primary transition-colors" title="分享到Instagram">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </button>
+            <button class="p-2 bg-surface/80 backdrop-blur rounded hover:bg-primary hover:text-on-primary transition-colors" title="复制链接">
+              <i data-lucide="link" class="w-4 h-4"></i>
+            </button>
+          </div>
+          
+          <!-- 内容 -->
+          <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+            <h3 class="font-serif font-light text-2xl md:text-3xl tracking-[0.05em] text-on-surface mb-3">
+              Material Matters
+            </h3>
+            <p class="font-sans font-light text-sm text-on-surface-variant max-w-lg leading-relaxed">
+              Exploring the tactile experience of premium textiles — how texture shapes our perception of comfort and luxury in contemporary living spaces.
+            </p>
+          </div>
+          
+          <!-- hover效果：translateY -->
+          <style>
+            #editorial-card-1:hover { transform: translateY(-4px); }
+            #editorial-card-1 { transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1); }
+          </style>
+        </article>
+        
+        <!-- 小卡片1 -->
+        <!-- 列表-文章2 -->
+        <article id="editorial-card-2" class="group relative h-[300px] rounded overflow-hidden cursor-pointer animate-fade-in animate-delay-200">
+          <img 
+            src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80" 
+            alt="极简卧室设计，柔和光线营造宁静氛围" 
+            data-category="建筑城市"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <!-- 底部渐变遮罩 -->
+          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+          
+          <!-- 章节编号 -->
+          <span class="absolute top-4 left-4 font-serif font-light text-[3rem] leading-none text-on-surface/20">03</span>
+          
+          <!-- 社交分享图标（hover显示） -->
+          <div class="absolute top-4 right-4 flex gap-2 opacity-0 translate-y-[-8px] transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+            <button class="p-2 bg-surface/80 backdrop-blur rounded hover:bg-primary hover:text-on-primary transition-colors" title="分享">
+              <i data-lucide="share-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+          
+          <!-- 内容 -->
+          <div class="absolute bottom-0 left-0 right-0 p-5">
+            <h3 class="font-serif font-light text-xl md:text-2xl tracking-[0.05em] text-on-surface mb-2">
+              Light & Shadow
+            </h3>
+            <p class="font-sans font-light text-xs text-on-surface-variant leading-relaxed">
+              The interplay of natural light transforms ordinary spaces into sanctuaries of calm.
+            </p>
+          </div>
+          
+          <!-- hover效果：translateY -->
+          <style>
+            #editorial-card-2:hover { transform: translateY(-4px); }
+            #editorial-card-2 { transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1); }
+          </style>
+        </article>
+        
+        <!-- 小卡片2 -->
+        <!-- 列表-文章3 -->
+        <article id="editorial-card-3" class="group relative h-[300px] rounded overflow-hidden cursor-pointer animate-fade-in animate-delay-300">
+          <img 
+            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80" 
+            alt="手工编织装饰细节，展现匠人精神" 
+            data-category="建筑城市"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <!-- 底部渐变遮罩 -->
+          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+          
+          <!-- 章节编号 -->
+          <span class="absolute top-4 left-4 font-serif font-light text-[3rem] leading-none text-on-surface/20">04</span>
+          
+          <!-- 社交分享图标（hover显示） -->
+          <div class="absolute top-4 right-4 flex gap-2 opacity-0 translate-y-[-8px] transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+            <button class="p-2 bg-surface/80 backdrop-blur rounded hover:bg-primary hover:text-on-primary transition-colors" title="分享">
+              <i data-lucide="share-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+          
+          <!-- 内容 -->
+          <div class="absolute bottom-0 left-0 right-0 p-5">
+            <h3 class="font-serif font-light text-xl md:text-2xl tracking-[0.05em] text-on-surface mb-2">
+              Craft & Heritage
+            </h3>
+            <p class="font-sans font-light text-xs text-on-surface-variant leading-relaxed">
+              Celebrating the artisans who preserve traditional techniques in modern furniture making.
+            </p>
+          </div>
+          
+          <!-- hover效果：translateY -->
+          <style>
+            #editorial-card-3:hover { transform: translateY(-4px); }
+            #editorial-card-3 { transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1); }
+          </style>
+        </article>
+      </div>
+    </section>
+
+    <!-- Your Space 用户空间区域 -->
+    <section id="your-space-section" class="py-16 md:py-24 px-6 md:px-12 lg:px-16 bg-surface-container-lowest">
+      <!-- 标题 -->
+      <div class="mb-10 animate-fade-in">
+        <h2 class="font-serif font-light text-2xl md:text-3xl tracking-[0.1em] text-on-surface uppercase mb-2">Your Space</h2>
+        <p class="font-sans font-light text-sm text-on-surface-variant tracking-wide">Share your Fuzz Sofa moment</p>
+      </div>
+      
+      <!-- 用户图片网格 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <!-- 用户图片1 -->
+        <!-- 列表-用户分享1 -->
+        <div id="user-space-1" class="group relative aspect-[4/3] rounded overflow-hidden cursor-pointer animate-fade-in animate-delay-100">
+          <img 
+            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=600&q=80" 
+            alt="北欧风格客厅，白色沙发配绿植" 
+            data-category="建筑城市"
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <!-- 底部半透明遮罩条 -->
+          <div class="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-background/90 to-transparent">
+            <div class="flex items-center justify-between">
+              <span class="font-sans text-xs text-on-surface tracking-wide">@home_lover</span>
+              <div class="flex items-center gap-1 text-on-surface-variant">
+                <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                <span class="font-sans text-xs">128</span>
+              </div>
+            </div>
+          </div>
+          <!-- 右上角分享按钮 -->
+          <button class="absolute top-3 right-3 p-2 bg-surface/70 backdrop-blur rounded opacity-0 group-hover:opacity-100 transition-opacity" title="分享">
+            <i data-lucide="share-2" class="w-4 h-4 text-on-surface"></i>
+          </button>
+        </div>
+        
+        <!-- 用户图片2 -->
+        <!-- 列表-用户分享2 -->
+        <div id="user-space-2" class="group relative aspect-[4/3] rounded overflow-hidden cursor-pointer animate-fade-in animate-delay-200">
+          <img 
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" 
+            alt="现代简约客厅，大面积落地窗采光" 
+            data-category="建筑城市"
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <!-- 底部半透明遮罩条 -->
+          <div class="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-background/90 to-transparent">
+            <div class="flex items-center justify-between">
+              <span class="font-sans text-xs text-on-surface tracking-wide">@minimalist_life</span>
+              <div class="flex items-center gap-1 text-on-surface-variant">
+                <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                <span class="font-sans text-xs">256</span>
+              </div>
+            </div>
+          </div>
+          <!-- 右上角分享按钮 -->
+          <button class="absolute top-3 right-3 p-2 bg-surface/70 backdrop-blur rounded opacity-0 group-hover:opacity-100 transition-opacity" title="分享">
+            <i data-lucide="share-2" class="w-4 h-4 text-on-surface"></i>
+          </button>
+        </div>
+        
+        <!-- 用户图片3 -->
+        <!-- 列表-用户分享3 -->
+        <div id="user-space-3" class="group relative aspect-[4/3] rounded overflow-hidden cursor-pointer animate-fade-in animate-delay-300">
+          <img 
+            src="https://images.unsplash.com/photo-1616137466211-f939a420be84?w=600&q=80" 
+            alt="温馨卧室角落，毛绒沙发配柔软毯子" 
+            data-category="建筑城市"
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <!-- 底部半透明遮罩条 -->
+          <div class="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-background/90 to-transparent">
+            <div class="flex items-center justify-between">
+              <span class="font-sans text-xs text-on-surface tracking-wide">@cozy_corner</span>
+              <div class="flex items-center gap-1 text-on-surface-variant">
+                <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                <span class="font-sans text-xs">89</span>
+              </div>
+            </div>
+          </div>
+          <!-- 右上角分享按钮 -->
+          <button class="absolute top-3 right-3 p-2 bg-surface/70 backdrop-blur rounded opacity-0 group-hover:opacity-100 transition-opacity" title="分享">
+            <i data-lucide="share-2" class="w-4 h-4 text-on-surface"></i>
+          </button>
+        </div>
+        
+        <!-- 用户图片4 -->
+        <!-- 列表-用户分享4 -->
+        <div id="user-space-4" class="group relative aspect-[4/3] rounded overflow-hidden cursor-pointer animate-fade-in animate-delay-100">
+          <img 
+            src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80" 
+            alt="工业风格客厅，皮质沙发配金属装饰" 
+            data-category="建筑城市"
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <!-- 底部半透明遮罩条 -->
+          <div class="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-background/90 to-transparent">
+            <div class="flex items-center justify-between">
+              <span class="font-sans text-xs text-on-surface tracking-wide">@urban_dreamer</span>
+              <div class="flex items-center gap-1 text-on-surface-variant">
+                <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                <span class="font-sans text-xs">342</span>
+              </div>
+            </div>
+          </div>
+          <!-- 右上角分享按钮 -->
+          <button class="absolute top-3 right-3 p-2 bg-surface/70 backdrop-blur rounded opacity-0 group-hover:opacity-100 transition-opacity" title="分享">
+            <i data-lucide="share-2" class="w-4 h-4 text-on-surface"></i>
+          </button>
+        </div>
+        
+        <!-- 用户图片5 -->
+        <!-- 列表-用户分享5 -->
+        <div id="user-space-5" class="group relative aspect-[4/3] rounded overflow-hidden cursor-pointer animate-fade-in animate-delay-200">
+          <img 
+            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" 
+            alt="阳光充足的书房，布艺沙发配书架" 
+            data-category="建筑城市"
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <!-- 底部半透明遮罩条 -->
+          <div class="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-background/90 to-transparent">
+            <div class="flex items-center justify-between">
+              <span class="font-sans text-xs text-on-surface tracking-wide">@book_nook</span>
+              <div class="flex items-center gap-1 text-on-surface-variant">
+                <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                <span class="font-sans text-xs">167</span>
+              </div>
+            </div>
+          </div>
+          <!-- 右上角分享按钮 -->
+          <button class="absolute top-3 right-3 p-2 bg-surface/70 backdrop-blur rounded opacity-0 group-hover:opacity-100 transition-opacity" title="分享">
+            <i data-lucide="share-2" class="w-4 h-4 text-on-surface"></i>
+          </button>
+        </div>
+        
+        <!-- 用户图片6 -->
+        <!-- 列表-用户分享6 -->
+        <div id="user-space-6" class="group relative aspect-[4/3] rounded overflow-hidden cursor-pointer animate-fade-in animate-delay-300">
+          <img 
+            src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80" 
+            alt="精致公寓客厅，中性色调配艺术品" 
+            data-category="建筑城市"
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <!-- 底部半透明遮罩条 -->
+          <div class="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-background/90 to-transparent">
+            <div class="flex items-center justify-between">
+              <span class="font-sans text-xs text-on-surface tracking-wide">@artful_living</span>
+              <div class="flex items-center gap-1 text-on-surface-variant">
+                <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                <span class="font-sans text-xs">201</span>
+              </div>
+            </div>
+          </div>
+          <!-- 右上角分享按钮 -->
+          <button class="absolute top-3 right-3 p-2 bg-surface/70 backdrop-blur rounded opacity-0 group-hover:opacity-100 transition-opacity" title="分享">
+            <i data-lucide="share-2" class="w-4 h-4 text-on-surface"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 上传CTA区域 -->
+    <section id="upload-cta-section" class="py-16 md:py-20 px-6 md:px-12 lg:px-16 bg-surface">
+      <div class="text-center animate-fade-in">
+        <p class="font-sans font-light text-base md:text-lg text-on-surface tracking-wide mb-6">
+          Have a Fuzz Sofa at home? Share your space.
+        </p>
+        <button id="btn-upload-space" class="inline-flex items-center gap-2 px-6 py-3 border border-on-surface/60 text-on-surface text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:bg-primary hover:border-primary hover:text-on-primary">
+          <i data-lucide="upload" class="w-4 h-4"></i>
+          <span>Upload Your Space</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 上传提示弹窗 -->
+    <div id="upload-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 hidden">
+      <div class="bg-surface rounded max-w-md w-full p-8 shadow-dialog">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="font-serif font-light text-xl tracking-[0.05em] text-on-surface">Upload Your Space</h3>
+          <button id="btn-close-modal" class="p-1 text-on-surface-variant hover:text-on-surface transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <div class="border-2 border-dashed border-outline-variant rounded p-8 text-center mb-6">
+          <i data-lucide="image-plus" class="w-10 h-10 text-on-surface-variant mx-auto mb-3"></i>
+          <p class="font-sans text-sm text-on-surface-variant">Drag and drop your image here, or click to browse</p>
+          <p class="font-sans text-xs text-on-surface-variant/60 mt-2">Supports JPG, PNG up to 10MB</p>
+        </div>
+        <div class="space-y-3">
+          <input type="text" placeholder="@your_username" class="w-full bg-surface-container border-none rounded px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors" />
+          <button id="btn-submit-upload" class="w-full bg-primary text-on-primary px-4 py-2.5 rounded text-sm font-medium tracking-wide hover:opacity-90 active:scale-[0.98] transition-all">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- @main-content:end -->
+  </main>
+
+  <script>
+    $(function() {
+      lucide.createIcons();
+      
+      // 上传按钮点击 - 打开弹窗
+      $('#btn-upload-space').on('click', function() {
+        $('#upload-modal').removeClass('hidden');
+        $('body').addClass('overflow-hidden');
+      });
+      
+      // 关闭弹窗
+      $('#btn-close-modal').on('click', function() {
+        $('#upload-modal').addClass('hidden');
+        $('body').removeClass('overflow-hidden');
+      });
+      
+      // 点击遮罩关闭弹窗
+      $('#upload-modal').on('click', function(e) {
+        if (e.target === this) {
+          $(this).addClass('hidden');
+          $('body').removeClass('overflow-hidden');
+        }
+      });
+      
+      // 提交按钮点击
+      // 后续应实现：
+      // 1. 验证用户名输入
+      // 2. 检查是否选择了图片
+      // 3. 上传图片到服务器
+      // 4. 上传成功后关闭弹窗并显示成功提示
+      // 5. 刷新用户空间区域展示新上传的图片
+      $('#btn-submit-upload').on('click', function() {
+        const username = $('#upload-modal input[type="text"]').val();
+        console.log('上传提交 - 用户名:', username);
+        console.log('需要调用上传接口实现图片上传功能');
+        // 演示：关闭弹窗
+        $('#upload-modal').addClass('hidden');
+        $('body').removeClass('overflow-hidden');
+      });
+      
+      // 社交分享按钮点击
+      // 后续应实现：
+      // 1. Twitter分享：打开Twitter分享链接，URL为当前页面URL
+      // 2. Instagram分享：提示用户保存图片后分享到Instagram
+      // 3. 复制链接：将当前页面URL复制到剪贴板，显示成功提示
+      $('#editorial-card-1').on('click', 'button[title="分享到Twitter"]', function(e) {
+        e.stopPropagation();
+        console.log('分享到Twitter');
+      });
+      
+      $('#editorial-card-1').on('click', 'button[title="分享到Instagram"]', function(e) {
+        e.stopPropagation();
+        console.log('分享到Instagram');
+      });
+      
+      $('#editorial-card-1').on('click', 'button[title="复制链接"]', function(e) {
+        e.stopPropagation();
+        console.log('复制链接');
+        // 演示：复制当前URL到剪贴板
+        navigator.clipboard.writeText(window.location.href).then(function() {
+          console.log('链接已复制到剪贴板');
+        });
+      });
+      
+      // Editorial卡片点击 - 跳转到详情页
+      // 传递文章ID参数
+      $('#editorial-card-1').on('click', function(e) {
+        // 如果点击的是分享按钮，不跳转
+        if ($(e.target).closest('button').length) return;
+        window.location.href = 'magazine-detail.html?id=1';
+      });
+      
+      $('#editorial-card-2').on('click', function() {
+        window.location.href = 'magazine-detail.html?id=2';
+      });
+      
+      $('#editorial-card-3').on('click', function() {
+        window.location.href = 'magazine-detail.html?id=3';
+      });
+      
+      // 用户空间图片分享按钮
+      $('#your-space-section').on('click', 'button[title="分享"]', function(e) {
+        e.stopPropagation();
+        console.log('分享用户空间图片');
+      });
+    });
+  </script>
+</body>
+
+</html>

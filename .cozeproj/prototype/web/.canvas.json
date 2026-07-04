@@ -3,41 +3,17 @@
     {
       "type": "html",
       "options": {
-        "path": ".cozeproj/prototype/web/cart.html"
+        "path": ".cozeproj/prototype/web/magazine.html"
       },
-      "title": "Shopping Cart",
+      "title": "Magazine Space",
       "size": "web"
     },
     {
       "type": "html",
       "options": {
-        "path": ".cozeproj/prototype/web/checkout.html"
+        "path": ".cozeproj/prototype/web/magazine-detail.html"
       },
-      "title": "Checkout",
-      "size": "web"
-    },
-    {
-      "type": "html",
-      "options": {
-        "path": ".cozeproj/prototype/web/order-confirmed.html"
-      },
-      "title": "Order Confirmed",
-      "size": "web"
-    },
-    {
-      "type": "html",
-      "options": {
-        "path": ".cozeproj/prototype/web/account.html"
-      },
-      "title": "My Account",
-      "size": "web"
-    },
-    {
-      "type": "html",
-      "options": {
-        "path": ".cozeproj/prototype/web/order-detail.html"
-      },
-      "title": "Order Detail",
+      "title": "Article Detail",
       "size": "web"
     }
   ]

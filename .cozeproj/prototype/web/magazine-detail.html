@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 字体 -->
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/google-all-fonts.css" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #E8B4B8;
+      --color-primary-container:    #3D2A2E;
+      --color-on-primary:           #0A0A0A;
+      /* === 背景 / 表面 === */
+      --color-background:                 #0A0A0A;
+      --color-surface-container-lowest:   #0E0E0E;
+      --color-surface:                    #111111;
+      --color-surface-container:          #1A1A1A;
+      --color-surface-container-high:     #1F1F1F;
+      --color-surface-container-highest:  #252525;
+      /* === 文字 === */
+      --color-on-surface:           #F5F0EB;
+      --color-on-surface-variant:   #8A8580;
+      /* === 功能色 === */
+      --color-success:  #22c55e;
+      --color-error:    #ef4444;
+      --color-warning:  #f59e0b;
+      /* === 边框 === */
+      --color-outline:          #333333;
+      --color-outline-variant:  #1A1A1A;
+      /* === 圆角（最大8px，保持锐利几何感） === */
+      --radius-sm:   0.125rem;
+      --radius-md:   0.25rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.5rem;
+      --radius-2xl:  0.5rem;
+      --radius-full: 9999px;
+      /* === 阴影（纯黑阴影） === */
+      --shadow-card:   0 2px 8px rgba(0,0,0,0.3);
+      --shadow-float:  0 10px 25px rgba(0,0,0,0.4);
+      --shadow-dialog: 0 25px 50px rgba(0,0,0,0.5);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+      --font-serif: "Cormorant Garamond", Georgia, serif;
+    }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23111111"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%238A8580" font-family="system-ui,sans-serif" dominant-bbaseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+
+  <style>
+    /* fade-in 动画 */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    }
+    
+    /* drop-cap 首字母大写 */
+    .drop-cap::first-letter {
+      float: left;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 3rem;
+      line-height: 1;
+      font-weight: 300;
+      margin-right: 0.5rem;
+      color: #F5F0EB;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- @nav:start 导航组件 -->
+  <header class="fixed top-0 left-0 right-0 z-40 h-[60px] flex items-center justify-between px-6 bg-background/80 backdrop-blur-[8px] border-b border-outline-variant/30">
+    <div class="max-w-7xl w-full mx-auto flex items-center justify-between">
+      <a href="magazine.html" class="font-serif text-xl tracking-[0.1em] text-on-surface">FUZZ SOFA</a>
+      <nav class="flex items-center gap-8">
+        <a href="magazine.html" class="text-sm tracking-[0.1em] text-primary uppercase" aria-current="page">Magazine</a>
+        <a href="#" class="text-sm tracking-[0.1em] text-on-surface-variant uppercase hover:text-on-surface transition-colors">Collection</a>
+        <a href="#" class="text-sm tracking-[0.1em] text-on-surface-variant uppercase hover:text-on-surface transition-colors">Scenes</a>
+        <a href="#" class="text-sm tracking-[0.1em] text-on-surface-variant uppercase hover:text-on-surface transition-colors">Account</a>
+      </nav>
+    </div>
+  </header>
+  <!-- @nav:end 导航组件 -->
+
+  <!-- @main-content:start -->
+  
+  <!-- 返回链接 -->
+  <div class="max-w-3xl mx-auto pt-[76px] px-6 animate-fade-in">
+    <a href="magazine.html" id="back-link" class="inline-flex items-center gap-2 text-sm tracking-[0.1em] text-on-surface-variant hover:text-primary transition-colors">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      <span class="uppercase">Back to Magazine</span>
+    </a>
+  </div>
+
+  <!-- Hero 全出血区域 -->
+  <section id="hero-section" class="relative h-[60vh] mt-4 overflow-hidden animate-fade-in" style="animation-delay: 0.1s;">
+    <img 
+      src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1920&q=80" 
+      alt="高端室内场景展示动物雕塑家具" 
+      data-category="建筑城市"
+      class="w-full h-full object-cover"
+    />
+    <!-- 底部渐变遮罩 -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent"></div>
+    
+    <!-- Hero 内容 -->
+    <div class="absolute bottom-0 left-0 right-0 p-6 md:p-12">
+      <div class="max-w-3xl mx-auto">
+        <!-- 章节编号 -->
+        <span class="font-serif text-[5rem] md:text-[6rem] font-light tracking-[0.05em] text-on-surface/20 leading-none">03</span>
+        
+        <!-- 标题 -->
+        <h1 class="font-serif text-2xl md:text-3xl font-light tracking-[0.05em] text-on-surface mt-[-1.5rem] md:mt-[-2rem] relative z-10">
+          The Art of Living with Animal Sculptures
+        </h1>
+        
+        <!-- 副标题/编辑语 -->
+        <p class="font-sans text-sm md:text-base font-light tracking-[0.1em] text-on-surface-variant mt-4 uppercase">
+          Where furniture meets fine art — a curated journey through spaces that breathe
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 文章正文区域 -->
+  <article class="max-w-3xl mx-auto px-6 py-16">
+    
+    <!-- 第一段（带 drop-cap） -->
+    <p class="font-sans font-light leading-relaxed text-on-surface/80 text-base md:text-lg drop-cap mb-8 animate-fade-in" style="animation-delay: 0.2s;">
+      In the realm of contemporary interior design, a quiet revolution is taking place. Designers and collectors alike are embracing sculptural furniture pieces that blur the boundary between functional objects and fine art. Among these, animal-inspired furniture has emerged as a particularly compelling category, offering both the practical comfort we expect from our living spaces and the aesthetic pleasure of curated sculpture.
+    </p>
+
+    <!-- 第二段 -->
+    <p class="font-sans font-light leading-relaxed text-on-surface/80 text-base md:text-lg mb-12 animate-fade-in" style="animation-delay: 0.3s;">
+      The appeal lies in the unexpected. A sofa that echoes the graceful curve of an owl's wing, a chair that captures the noble silhouette of a deer—these pieces invite conversation and contemplation. They transform a living room from a mere collection of furniture into a gallery of personal expression, where each piece tells its own story while contributing to the narrative of the whole.
+    </p>
+
+    <!-- 中间大图（带产品标记） -->
+    <figure class="relative mb-12 animate-fade-in" style="animation-delay: 0.4s;">
+      <img 
+        src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80" 
+        alt="现代客厅场景展示动物主题家具" 
+        data-category="建筑城市"
+        class="w-full rounded"
+      />
+      
+      <!-- 产品标记 1 -->
+      <div id="product-tag-1" class="absolute top-[30%] left-[25%] group cursor-pointer">
+        <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+        <div class="absolute left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div class="bg-surface-container-high px-3 py-1.5 rounded whitespace-nowrap">
+            <span class="text-sm font-light tracking-[0.1em] text-on-surface">Owl Sofa · Snowy White</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 产品标记 2 -->
+      <div id="product-tag-2" class="absolute top-[55%] left-[60%] group cursor-pointer">
+        <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+        <div class="absolute left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div class="bg-surface-container-high px-3 py-1.5 rounded whitespace-nowrap">
+            <span class="text-sm font-light tracking-[0.1em] text-on-surface">Deer Lounge Chair · Natural Oak</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 产品标记 3 -->
+      <div id="product-tag-3" class="absolute top-[75%] left-[35%] group cursor-pointer">
+        <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+        <div class="absolute left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div class="bg-surface-container-high px-3 py-1.5 rounded whitespace-nowrap">
+            <span class="text-sm font-light tracking-[0.1em] text-on-surface">Hare Side Table · Walnut</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 图片说明 -->
+      <figcaption class="mt-3 text-xs tracking-[0.1em] text-on-surface-variant uppercase">
+        The living space of a Copenhagen apartment, featuring sculptural pieces from the Autumn Collection
+      </figcaption>
+    </figure>
+
+    <!-- 第三段 -->
+    <p class="font-sans font-light leading-relaxed text-on-surface/80 text-base md:text-lg mb-8 animate-fade-in" style="animation-delay: 0.5s;">
+      What distinguishes these pieces from mere novelty is the rigor of their design. Each curve, each proportion has been considered with the same attention an architect brings to a building. The result is furniture that feels inevitable, as if it could not have been designed any other way—yet also surprising, revealing new details with each encounter.
+    </p>
+
+    <!-- 第四段 -->
+    <p class="font-sans font-light leading-relaxed text-on-surface/80 text-base md:text-lg mb-16 animate-fade-in" style="animation-delay: 0.6s;">
+      For those considering such pieces for their own spaces, the key is restraint. One or two sculptural elements can anchor a room; too many, and the space becomes a museum rather than a home. The goal is to create moments of discovery—pieces that reveal themselves slowly, that reward the second glance as much as the first.
+    </p>
+
+  </article>
+
+  <!-- 互动栏 -->
+  <aside id="interaction-bar" class="max-w-3xl mx-auto px-6 pb-16 animate-fade-in" style="animation-delay: 0.7s;">
+    <div class="flex items-center gap-6 py-4 border-t border-b border-outline-variant/30">
+      <!-- Like 按钮 -->
+      <button id="btn-like" class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group">
+        <i data-lucide="heart" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+        <span id="like-count" class="text-sm font-light tracking-[0.1em]">128</span>
+      </button>
+
+      <!-- Share 按钮 -->
+      <div class="relative">
+        <button id="btn-share" class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group">
+          <i data-lucide="share-2" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+          <span class="text-sm font-light tracking-[0.1em]">Share</span>
+        </button>
+        <!-- 分享选项下拉 -->
+        <div id="share-dropdown" class="absolute bottom-full left-0 mb-2 bg-surface-container-high rounded shadow-float opacity-0 invisible transition-all duration-300 min-w-[140px]">
+          <button id="share-twitter" class="w-full px-4 py-2.5 text-left text-sm font-light tracking-[0.1em] text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+            <i data-lucide="twitter" class="w-4 h-4"></i>
+            Twitter
+          </button>
+          <button id="share-instagram" class="w-full px-4 py-2.5 text-left text-sm font-light tracking-[0.1em] text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+            <i data-lucide="instagram" class="w-4 h-4"></i>
+            Instagram
+          </button>
+          <button id="share-copy" class="w-full px-4 py-2.5 text-left text-sm font-light tracking-[0.1em] text-on-surface hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+            <i data-lucide="link" class="w-4 h-4"></i>
+            Copy Link
+          </button>
+        </div>
+      </div>
+
+      <!-- Bookmark 按钮 -->
+      <button id="btn-bookmark" class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group">
+        <i data-lucide="bookmark" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+        <span class="text-sm font-light tracking-[0.1em]">Save</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- 相关文章区域 -->
+  <section id="related-section" class="max-w-3xl mx-auto px-6 pb-20 animate-fade-in" style="animation-delay: 0.8s;">
+    <h2 class="font-serif text-xl md:text-2xl font-light tracking-[0.05em] text-on-surface mb-8">
+      Related Stories
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- 相关文章 1 -->
+      <a href="magazine-detail.html" id="related-item-1" class="group block">
+        <div class="aspect-[4/3] overflow-hidden rounded mb-4">
+          <img 
+            src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&q=80" 
+            alt="极简主义客厅设计" 
+            data-category="建筑城市"
+            class="w-full h-full object-cover group-hover:translate-y-[-4px] transition-transform duration-300"
+          />
+        </div>
+        <h3 class="font-serif text-base font-light tracking-[0.05em] text-on-surface group-hover:text-primary transition-colors">
+          The Poetry of Minimal Spaces
+        </h3>
+        <p class="text-xs tracking-[0.1em] text-on-surface-variant uppercase mt-2">
+          March 2024
+        </p>
+      </a>
+
+      <!-- 相关文章 2 -->
+      <a href="magazine-detail.html" id="related-item-2" class="group block">
+        <div class="aspect-[4/3] overflow-hidden rounded mb-4">
+          <img 
+            src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80" 
+            alt="现代家居配饰展示" 
+            data-category="建筑城市"
+            class="w-full h-full object-cover group-hover:translate-y-[-4px] transition-transform duration-300"
+          />
+        </div>
+        <h3 class="font-serif text-base font-light tracking-[0.05em] text-on-surface group-hover:text-primary transition-colors">
+          Curated Quiet: The Art of Display
+        </h3>
+        <p class="text-xs tracking-[0.1em] text-on-surface-variant uppercase mt-2">
+          February 2024
+        </p>
+      </a>
+
+      <!-- 相关文章 3 -->
+      <a href="magazine-detail.html" id="related-item-3" class="group block">
+        <div class="aspect-[4/3] overflow-hidden rounded mb-4">
+          <img 
+            src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80" 
+            alt="北欧风格室内设计" 
+            data-category="建筑城市"
+            class="w-full h-full object-cover group-hover:translate-y-[-4px] transition-transform duration-300"
+          />
+        </div>
+        <h3 class="font-serif text-base font-light tracking-[0.05em] text-on-surface group-hover:text-primary transition-colors">
+          Nordic Narratives in Wood
+        </h3>
+        <p class="text-xs tracking-[0.1em] text-on-surface-variant uppercase mt-2">
+          January 2024
+        </p>
+      </a>
+    </div>
+  </section>
+
+  <!-- @main-content:end -->
+
+  <script>lucide.createIcons();</script>
+  
+  <script>
+    $(function() {
+      // 初始化 Lucide 图标
+      lucide.createIcons();
+
+      // ========== Like 按钮交互 ==========
+      let isLiked = false;
+      let likeCount = 128;
+      
+      $('#btn-like').on('click', function() {
+        isLiked = !isLiked;
+        likeCount = isLiked ? likeCount + 1 : likeCount - 1;
+        
+        $(this).toggleClass('text-primary', isLiked);
+        $(this).toggleClass('text-on-surface-variant', !isLiked);
+        $('#like-count').text(likeCount);
+        
+        // 更新图标
+        const iconEl = $(this).find('i').first();
+        if (isLiked) {
+          iconEl.attr('data-lucide', 'heart');
+        }
+        lucide.createIcons();
+      });
+
+      // ========== Share 按钮下拉交互 ==========
+      $('#btn-share').on('click', function(e) {
+        e.stopPropagation();
+        const dropdown = $('#share-dropdown');
+        const isVisible = dropdown.hasClass('opacity-100');
+        
+        if (isVisible) {
+          dropdown.removeClass('opacity-100 visible').addClass('opacity-0 invisible');
+        } else {
+          dropdown.removeClass('opacity-0 invisible').addClass('opacity-100 visible');
+        }
+      });
+
+      // 点击外部关闭下拉
+      $(document).on('click', function() {
+        $('#share-dropdown').removeClass('opacity-100 visible').addClass('opacity-0 invisible');
+      });
+
+      // 分享选项点击
+      $('#share-twitter').on('click', function() {
+        console.log('分享到 Twitter');
+        // 后续应实现：打开 Twitter 分享窗口，预填文章标题和链接
+      });
+
+      $('#share-instagram').on('click', function() {
+        console.log('分享到 Instagram');
+        // 后续应实现：提示用户复制链接后在 Instagram 中粘贴分享
+      });
+
+      $('#share-copy').on('click', function() {
+        console.log('复制链接');
+        // 后续应实现：
+        // 1. 使用 navigator.clipboard.writeText() 复制当前页面 URL
+        // 2. 显示 "Link copied" 提示
+        alert('Link copied to clipboard');
+      });
+
+      // ========== Bookmark 按钮交互 ==========
+      let isBookmarked = false;
+      
+      $('#btn-bookmark').on('click', function() {
+        isBookmarked = !isBookmarked;
+        $(this).toggleClass('text-primary', isBookmarked);
+        $(this).toggleClass('text-on-surface-variant', !isBookmarked);
+        
+        // 更新图标
+        lucide.createIcons();
+      });
+
+      // ========== 产品标记点击交互 ==========
+      // 产品标记点击行为：
+      // 1. 点击标签显示产品名称（hover已实现）
+      // 2. 后续应实现：点击后跳转到对应产品详情页或弹出产品快捷预览
+      $('#product-tag-1').on('click', function() {
+        console.log('查看产品: Owl Sofa · Snowy White');
+        // 后续应实现：跳转到产品详情页或弹出产品预览
+      });
+
+      $('#product-tag-2').on('click', function() {
+        console.log('查看产品: Deer Lounge Chair · Natural Oak');
+        // 后续应实现：跳转到产品详情页或弹出产品预览
+      });
+
+      $('#product-tag-3').on('click', function() {
+        console.log('查看产品: Hare Side Table · Walnut');
+        // 后续应实现：跳转到产品详情页或弹出产品预览
+      });
+    });
+  </script>
+</body>
+
+</html>
