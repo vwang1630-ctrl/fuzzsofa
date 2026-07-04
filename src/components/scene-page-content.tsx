@@ -42,11 +42,11 @@ export function ScenePageContent({
     <>
       {/* Hero */}
       <section className="relative">
-        <div className={`aspect-[16/9] sm:aspect-[21/9] relative overflow-hidden`}>
+        <div className="aspect-[16/9] sm:aspect-[21/9] relative overflow-hidden">
           {heroImage ? (
             <>
               <img src={heroImage} alt={heroTitle} className="absolute inset-0 w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-[#0A0A0A]/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
             </>
           ) : (
             <>
@@ -55,12 +55,12 @@ export function ScenePageContent({
             </>
           )}
           <div className="absolute inset-0 flex items-end">
-            <div className="w-full max-w-7xl mx-auto px-6 pb-8 sm:pb-10">
-              <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-1">{heroLabel}</p>
-              <h1 className="font-serif text-2xl sm:text-3xl font-light text-[#F5F0EB]">
+            <div className="w-full max-w-5xl mx-auto px-6 pb-10 sm:pb-14">
+              <p className="text-[10px] text-[#E8B4B8]/70 tracking-[0.2em] uppercase mb-3">{heroLabel}</p>
+              <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-[#F5F0EB] tracking-wide leading-tight">
                 {heroTitle}
               </h1>
-              <p className="mt-2 text-sm text-[#F5F0EB]/50 font-light max-w-2xl">
+              <p className="mt-3 text-sm sm:text-base text-[#F5F0EB]/45 font-light max-w-xl leading-relaxed">
                 {heroSubtitle}
               </p>
             </div>
@@ -69,20 +69,20 @@ export function ScenePageContent({
       </section>
 
       {/* Why This Space */}
-      <section className="max-w-7xl mx-auto px-6 pb-16">
-        <h2 className="font-serif text-xl sm:text-2xl font-light text-[#F5F0EB] mb-6">{t("whyThisSpace")}</h2>
-        <div className="max-w-3xl">
+      <section className="max-w-5xl mx-auto px-6 pt-16 pb-20">
+        <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-8">{t("whyThisSpace")}</p>
+        <div className="max-w-2xl">
           {whyThisSpaceContent}
         </div>
       </section>
 
       {/* Recommended Pieces */}
       <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-10">
             {t("recommendedPieces")}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-3 gap-6">
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {recommendedProducts.map((product) => (
               <Link
                 key={product.slug}
@@ -115,16 +115,16 @@ export function ScenePageContent({
 
       {/* Design Principles */}
       <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">{t("designPrinciples")}</h2>
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-10">{t("designPrinciples")}</p>
           {designPrinciplesContent}
         </div>
       </section>
 
       {/* Related Scenes */}
       <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-7xl mx-auto px-6 py-20">
-          <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">{t("relatedScenes")}</h2>
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-8">{t("relatedScenes")}</p>
           <div className="flex flex-wrap gap-3">
             {relatedScenes.map((scene) => (
               <Link

@@ -14,14 +14,16 @@ export function BoutiqueHotelContent({ products }: { products: Product[] }) {
       heroSubtitle={t("hotelHeroSubtitle")}
       accent="from-[#151015] to-[#0A0A0A]"
       whyThisSpaceContent={
-        <p className="text-lg text-[#F5F0EB]/70 leading-relaxed">
-          {t("hotelWhyContent")}
-        </p>
+        <div className="space-y-5">
+          <p className="text-base text-[#F5F0EB]/70 leading-[1.8]">
+            {t("hotelWhyContent")}
+          </p>
+        </div>
       }
       recommendedProducts={products}
       designPrinciplesContent={
-        <div className="max-w-3xl">
-          <p className="text-[#F5F0EB]/70 leading-relaxed">
+        <div className="max-w-2xl space-y-6">
+          <p className="text-base text-[#F5F0EB]/70 leading-[1.8]">
             {t("hotelDesignPrinciples")}
           </p>
         </div>
