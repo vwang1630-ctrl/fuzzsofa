@@ -43,12 +43,12 @@ export function ScenePageContent({
         <div className={`aspect-square md:aspect-[21/7] bg-gradient-to-b ${accent} relative overflow-hidden`}>
           <div className="absolute inset-0 opacity-10" style={{ background: "radial-gradient(ellipse at 30% 60%, #E8B4B8, transparent 50%)" }} />
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent">
-            <div className="max-w-7xl mx-auto px-6 pb-8 pt-24">
-              <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-2">{heroLabel}</p>
-              <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
+            <div className="max-w-7xl mx-auto px-6 pb-6 pt-12 sm:pt-16">
+              <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-1">{heroLabel}</p>
+              <h1 className="font-serif text-2xl sm:text-3xl font-light text-[#F5F0EB]">
                 {heroTitle}
               </h1>
-              <p className="mt-3 text-lg text-[#F5F0EB]/50 font-light max-w-2xl">
+              <p className="mt-2 text-sm text-[#F5F0EB]/50 font-light max-w-2xl">
                 {heroSubtitle}
               </p>
             </div>
@@ -57,8 +57,8 @@ export function ScenePageContent({
       </section>
 
       {/* Why This Space */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-8">{t("whyThisSpace")}</h2>
+      <section className="max-w-7xl mx-auto px-6 pb-16">
+        <h2 className="font-serif text-xl sm:text-2xl font-light text-[#F5F0EB] mb-6">{t("whyThisSpace")}</h2>
         <div className="max-w-3xl">
           {whyThisSpaceContent}
         </div>
