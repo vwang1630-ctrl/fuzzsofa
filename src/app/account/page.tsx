@@ -46,6 +46,7 @@ interface Order {
   shippingMethod: string | null;
   firstName: string | null;
   lastName: string | null;
+  email: string | null;
   phone: string | null;
   addressLine1: string | null;
   addressLine2: string | null;
@@ -180,7 +181,7 @@ type Tab = "orders" | "addresses" | "payment" | "favorites";
 
 export default function AccountPage() {
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const { region } = useCart();
 
   const [tab, setTab] = useState<Tab>("orders");
@@ -239,6 +240,14 @@ export default function AccountPage() {
   // Auth
   const [sessionToken, setSessionToken] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
+  const [editSaving, setEditSaving] = useState(false);
+  const [editForm, setEditForm] = useState({
+    firstName: "", lastName: "", email: "", phone: "",
+    country: "", addressLine1: "", addressLine2: "",
+    city: "", state: "", zipCode: "",
+  });
+  const [editItems, setEditItems] = useState<Array<{ id: string; colorName: string; colorHex: string; productSlug: string }>>([]);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -451,6 +460,61 @@ export default function AccountPage() {
     finally { setDeleting(null); }
   };
 
+  // Open edit order modal
+  const openEditOrder = (order: Order) => {
+    setEditingOrder(order);
+    setEditForm({
+      firstName: order.firstName || "",
+      lastName: order.lastName || "",
+      email: order.email || "",
+      phone: order.phone || "",
+      country: order.country || "",
+      addressLine1: order.addressLine1 || "",
+      addressLine2: order.addressLine2 || "",
+      city: order.city || "",
+      state: order.state || "",
+      zipCode: order.zipCode || "",
+    });
+    setEditItems(order.items.map(it => ({
+      id: it.id,
+      colorName: it.colorName || "",
+      colorHex: it.colorHex || "",
+      productSlug: it.productSlug || "",
+    })));
+  };
+
+  // Save edited order
+  const saveEditOrder = async () => {
+    if (!editingOrder) return;
+    setEditSaving(true);
+    try {
+      const res = await fetch(`/api/orders/${editingOrder.id}`, {
+        method: "PATCH",
+        headers: { ...authHeaders(), "Content-Type": "application/json" },
+        body: JSON.stringify({
+          address: editForm,
+          items: editItems,
+        }),
+      });
+      if (res.ok) {
+        // Refresh orders list
+        const ordersRes = await fetch("/api/orders", { headers: authHeaders() });
+        if (ordersRes.ok) {
+          const data = await ordersRes.json();
+          setOrders(data.orders || data || []);
+        }
+        setEditingOrder(null);
+      } else {
+        alert(t("editOrderError"));
+      }
+    } catch (err) {
+      console.error("Edit order failed:", err);
+      alert(t("editOrderError"));
+    } finally {
+      setEditSaving(false);
+    }
+  };
+
   // Pay single order
   const handlePayOrder = (order: Order) => {
     const payData = {
@@ -631,7 +695,7 @@ export default function AccountPage() {
                     key={order.id}
                     className={`border border-[#1a1a1a] rounded-lg p-4 sm:p-5 hover:border-[#333] transition-colors duration-300 ${isCancelled ? "opacity-50" : ""}`}
                   >
-                    {/* Header row: Order No + View Details */}
+                    {/* Header row: Order No + View Details + Edit */}
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
@@ -642,6 +706,14 @@ export default function AccountPage() {
                           >
                             {t("viewDetails")}
                           </Link>
+                          {(order.status === "pending" || order.paymentStatus === "pending_payment" || order.paymentStatus === "pending") && (
+                            <button
+                              onClick={() => openEditOrder(order)}
+                              className="text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#F5F0EB] border border-[#333] px-3 py-1 rounded hover:border-[#c98b96] hover:text-[#c98b96] transition-all duration-300"
+                            >
+                              {t("editOrder")}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -677,6 +749,211 @@ export default function AccountPage() {
                   </div>
                 );
               })}
+            </div>
+          )}
+          {/* Edit Order Modal */}
+          {editingOrder && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setEditingOrder(null)}>
+              <div
+                className="bg-[#0A0A0A] border border-[#1A1A1A] w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="p-6 sm:p-8">
+                  <h3 className="font-serif text-xl text-[#F5F0EB] mb-2">{t("editOrderTitle")}</h3>
+                  <p className="text-[#8A8580] text-xs tracking-wide mb-6">{editingOrder.orderNumber}</p>
+
+                  {/* Color / Style Section */}
+                  <div className="mb-8">
+                    <h4 className="text-sm text-[#F5F0EB] tracking-[0.1em] uppercase mb-4">{t("editOrderColor")}</h4>
+                    <div className="space-y-4">
+                      {editItems.map((item, idx) => (
+                        <div key={item.id} className="border border-[#1A1A1A] rounded-lg p-4">
+                          <p className="text-xs text-[#8A8580] mb-2 tracking-wide">
+                            {locale === "zh" ? "商品" : "Item"} {idx + 1}: {editingOrder.items?.[idx]?.productName || ""}
+                          </p>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-xs text-[#8A8580] tracking-wide">{t("editOrderSelectColor")}:</span>
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="color"
+                                value={item.colorHex || "#000000"}
+                                onChange={e => {
+                                  const newItems = [...editItems];
+                                  newItems[idx] = { ...newItems[idx], colorHex: e.target.value };
+                                  setEditItems(newItems);
+                                }}
+                                className="w-8 h-8 rounded border border-[#333] cursor-pointer bg-transparent"
+                              />
+                              <input
+                                type="text"
+                                value={item.colorName}
+                                onChange={e => {
+                                  const newItems = [...editItems];
+                                  newItems[idx] = { ...newItems[idx], colorName: e.target.value };
+                                  setEditItems(newItems);
+                                }}
+                                placeholder="Color name"
+                                className="bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-1.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors w-40"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Shipping Address Section */}
+                  <div className="mb-8">
+                    <h4 className="text-sm text-[#F5F0EB] tracking-[0.1em] uppercase mb-4">{t("editOrderAddress")}</h4>
+                    <div className="space-y-4">
+                      {/* Name Row */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                            {t("editOrderFirstName")} <span className="text-[#E8B4B8]">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={editForm.firstName}
+                            onChange={e => setEditForm(p => ({ ...p, firstName: e.target.value }))}
+                            className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                            {t("editOrderLastName")} <span className="text-[#E8B4B8]">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={editForm.lastName}
+                            onChange={e => setEditForm(p => ({ ...p, lastName: e.target.value }))}
+                            className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Email & Phone */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                            {t("editOrderEmail")}
+                          </label>
+                          <input
+                            type="email"
+                            value={editForm.email}
+                            onChange={e => setEditForm(p => ({ ...p, email: e.target.value }))}
+                            className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                            {t("editOrderPhone")}
+                          </label>
+                          <input
+                            type="tel"
+                            value={editForm.phone}
+                            onChange={e => setEditForm(p => ({ ...p, phone: e.target.value }))}
+                            className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Country */}
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("editOrderCountry")} <span className="text-[#E8B4B8]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={editForm.country}
+                          onChange={e => setEditForm(p => ({ ...p, country: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors placeholder:text-[#8A8580]/40"
+                        />
+                      </div>
+
+                      {/* Address Line 1 */}
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("editOrderAddressLine1")} <span className="text-[#E8B4B8]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={editForm.addressLine1}
+                          onChange={e => setEditForm(p => ({ ...p, addressLine1: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                        />
+                      </div>
+
+                      {/* Address Line 2 */}
+                      <div>
+                        <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                          {t("editOrderAddressLine2")}
+                        </label>
+                        <input
+                          type="text"
+                          value={editForm.addressLine2}
+                          onChange={e => setEditForm(p => ({ ...p, addressLine2: e.target.value }))}
+                          className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                        />
+                      </div>
+
+                      {/* City + State + Zip */}
+                      <div className="grid grid-cols-3 gap-3">
+                        <div>
+                          <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                            {t("editOrderCity")} <span className="text-[#E8B4B8]">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={editForm.city}
+                            onChange={e => setEditForm(p => ({ ...p, city: e.target.value }))}
+                            className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                            {t("editOrderState")}
+                          </label>
+                          <input
+                            type="text"
+                            value={editForm.state}
+                            onChange={e => setEditForm(p => ({ ...p, state: e.target.value }))}
+                            className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-[#8A8580] tracking-[0.1em] uppercase block mb-1.5">
+                            {t("editOrderZipCode")} <span className="text-[#E8B4B8]">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={editForm.zipCode}
+                            onChange={e => setEditForm(p => ({ ...p, zipCode: e.target.value }))}
+                            className="w-full bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-2.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={saveEditOrder}
+                      disabled={editSaving}
+                      className="flex-1 bg-[#c98b96] text-[#0A0A0A] py-3 text-sm tracking-[0.1em] uppercase font-medium hover:bg-[#b87a85] transition-all disabled:opacity-50"
+                    >
+                      {editSaving ? "..." : t("editOrderSave")}
+                    </button>
+                    <button
+                      onClick={() => setEditingOrder(null)}
+                      className="flex-1 border border-[#333] text-[#8A8580] py-3 text-sm tracking-[0.1em] uppercase hover:border-[#E8B4B8]/50 hover:text-[#F5F0EB] transition-all"
+                    >
+                      {t("editOrderCancel")}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
