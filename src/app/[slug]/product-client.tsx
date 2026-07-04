@@ -261,8 +261,8 @@ export function ProductPageClient(
     };
     const matTypeKeyMap: Record<string, string> = {
         "Plush Fur": "matTypePlushFur",
-        "Cloud Touch": "matTypeCloudTouch",
-        "Wild Touch": "matTypeWildTouch",
+        "Bouclé": "matTypeBoucle",
+        "Velvet": "matTypeVelvet",
         "Fabric": "matTypeFabric",
         "Meteorite Fabric": "matTypeMeteoriteFabric",
         "Leather": "matTypeLeather",
@@ -273,8 +273,9 @@ export function ProductPageClient(
         "Cognac Brown": "colorCognacBrown",
         "Obsidian Black": "colorObsidianBlack",
         "Snowy White Bouclé": "colorSnowyWhiteBoucle",
-        "Rose Pink Velvet": "colorRosePinkVelvet",
+        "Rose Pink Bouclé": "colorRosePinkBoucle",
         "Forest Green Velvet": "colorForestGreenVelvet",
+        "Warm Gray Linen Velvet": "colorWarmGrayLinenVelvet",
         "Warm Gray Linen": "colorWarmGrayLinen",
         "Silver Mist": "colorSilverMist",
         "Parchment Beige": "colorParchmentBeige",
@@ -393,33 +394,96 @@ export function ProductPageClient(
                             ))}
                         </div>}
 
-                        {/* Mobile color selector — compact row */}
+                        {/* Mobile color selector — dual-layer for multi-fabric, single-layer for single */}
                         {product.materialOptions && product.materialOptions.length > 0 && (
                             <div className="px-4 pt-0.5 pb-2">
-                                <div className="flex items-center justify-center gap-4 overflow-x-auto scrollbar-hide py-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                                    {(() => {
-                                        const allColors: Array<{ type: string; opt: string; hex: string; globalIdx: number }> = [];
-                                        let gIdx = 0;
-                                        for (const m of product.materialOptions) {
-                                            for (let i = 0; i < m.options.length; i++) {
-                                                allColors.push({ type: m.type, opt: m.options[i], hex: m.colors[i], globalIdx: gIdx });
-                                                gIdx++;
-                                            }
-                                        }
-                                        return allColors.map((c) => {
-                                            const isActive = materialType === c.type && materialOption === c.opt;
-                                            const swatchImg = galleryImages[c.globalIdx];
-                                            return (
-                                                <button key={`${c.type}-${c.opt}`} onClick={() => { setMaterialType(c.type); setMaterialOption(c.opt); setActiveImage(c.globalIdx); }} className="flex flex-col items-center gap-0.5">
-                                                    <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isActive ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
-                                                        {swatchImg ? <img src={swatchImg.src} alt={c.opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: c.hex }} />}
-                                                    </span>
-                                                    <span className={`text-[8px] tracking-[0.03em] max-w-[40px] truncate ${isActive ? "text-[#F5F0EB]" : "text-[#8A8580]"}`}>{t((colorNameKeyMap[c.opt] || "matTypeFabric") as TranslationKeys)}</span>
-                                                </button>
-                                            );
-                                        });
-                                    })()}
-                                </div>
+                                {product.materialOptions.length > 1 ? (<>
+                                    {/* Layer 1: Fabric type - horizontal scrollable */}
+                                    <div className="mb-2">
+                                        <p className="text-[9px] text-[#8A8580] tracking-[0.2em] uppercase mb-1.5 text-center">{t("matTypeFabricType" as TranslationKeys)}</p>
+                                        <div className="flex items-center justify-center gap-4 overflow-x-auto scrollbar-hide py-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                            {product.materialOptions.map(mat => {
+                                                const matSwatchIdx = (() => {
+                                                    let idx = 0;
+                                                    for (const m of product.materialOptions!) {
+                                                        if (m.type === mat.type) return idx;
+                                                        idx += m.options.length;
+                                                    }
+                                                    return 0;
+                                                })();
+                                                const swatchImg = galleryImages[matSwatchIdx];
+                                                const isMatSel = materialType === mat.type;
+                                                return (
+                                                    <button key={mat.type} onClick={() => { setMaterialType(mat.type); setMaterialOption(mat.options[0]); setActiveImage(matSwatchIdx); }}
+                                                        className="flex flex-col items-center gap-0.5">
+                                                        <span className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isMatSel ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
+                                                            {swatchImg ? <img src={swatchImg.src} alt={mat.type} width={44} height={44} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: mat.colors[0] }} />}
+                                                        </span>
+                                                        <span className={`text-[8px] tracking-[0.03em] max-w-[56px] truncate ${isMatSel ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>{t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}</span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                    {/* Layer 2: Colors for selected fabric */}
+                                    {product.materialOptions.find(m => m.type === materialType) && <div className="mb-1">
+                                        <p className="text-[9px] text-[#8A8580] tracking-[0.2em] uppercase mb-1.5 text-center">{t("matTypeFabricColor" as TranslationKeys)}</p>
+                                        <div className="flex items-center justify-center gap-4 overflow-x-auto scrollbar-hide py-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                            {product.materialOptions.find(m => m.type === materialType)!.options.map((opt, optIdx) => {
+                                                const colorHex = product.materialOptions!.find(m => m.type === materialType)!.colors[optIdx];
+                                                const isSelected = materialOption === opt;
+                                                let globalIdx = optIdx;
+                                                for (const m of product.materialOptions!) {
+                                                    if (m.type === materialType) { globalIdx += optIdx; break; }
+                                                    globalIdx += m.options.length;
+                                                }
+                                                const swatchImg = galleryImages[globalIdx];
+                                                return (
+                                                    <button key={opt} onClick={() => { setMaterialOption(opt); setActiveImage(globalIdx); }}
+                                                        className="flex flex-col items-center gap-0.5">
+                                                        <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
+                                                            {swatchImg ? <img src={swatchImg.src} alt={opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                        </span>
+                                                        <span className={`text-[8px] tracking-[0.03em] max-w-[56px] truncate ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>{t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}</span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>}
+                                    {/* Mobile hint */}
+                                    <p className={`text-[9px] tracking-[0.04em] text-center mt-1 ${materialOption ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>
+                                        {materialOption
+                                            ? `${t("currentSelection" as TranslationKeys)}${t((matTypeKeyMap[materialType] || "matTypeFabric") as TranslationKeys)} · ${t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}`
+                                            : t("pleaseSelectColor" as TranslationKeys)}
+                                    </p>
+                                </>) : (<>
+                                    {/* Single-layer for single-fabric (gorilla = leather) */}
+                                    <div className="mb-1">
+                                        <p className="text-[9px] text-[#8A8580] tracking-[0.2em] uppercase mb-1.5 text-center">{t((matTypeKeyMap[product.materialOptions[0].type] || "matTypeFabric") as TranslationKeys)}</p>
+                                        <div className="flex items-center justify-center gap-4 overflow-x-auto scrollbar-hide py-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                            {(product.materialOptions?.[0]?.options ?? []).map((opt, optIdx) => {
+                                                const colorHex = product.materialOptions?.[0]?.colors[optIdx] ?? '#333';
+                                                const isSelected = materialOption === opt;
+                                                const swatchImg = galleryImages[optIdx];
+                                                return (
+                                                    <button key={opt} onClick={() => { setMaterialType(product.materialOptions![0].type); setMaterialOption(opt); setActiveImage(optIdx); }}
+                                                        className="flex flex-col items-center gap-0.5">
+                                                        <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
+                                                            {swatchImg ? <img src={swatchImg.src} alt={opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                        </span>
+                                                        <span className={`text-[8px] tracking-[0.03em] max-w-[56px] truncate ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>{t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}</span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                    {/* Mobile hint */}
+                                    <p className={`text-[9px] tracking-[0.04em] text-center mt-1 ${materialOption ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>
+                                        {materialOption
+                                            ? `${t("currentSelection" as TranslationKeys)}${t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}`
+                                            : t("pleaseSelectColor" as TranslationKeys)}
+                                    </p>
+                                </>)}
                             </div>
                         )}
                     </div>
@@ -744,62 +808,117 @@ export function ProductPageClient(
                             <div className="h-px bg-[#333] my-5 hidden sm:block" />
                             {}
                             {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5 hidden sm:block">
-                                {product.materialOptions.map(mat => <div key={mat.type} className="mb-4">
-                                    <label
-                                        className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
-                                        {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
-                                    </label>
-                                    <div className="flex flex-wrap gap-2">
-                                        {mat.options.map((opt, optIdx) => {
-                                            const colorHex = mat.colors[optIdx];
-                                            const isSelected = materialType === mat.type && materialOption === opt;
-                                            let globalIdx = optIdx;
-
-                                            if (product.materialOptions) {
-                                                globalIdx = 0;
-
-                                                for (const m of product.materialOptions) {
-                                                    if (m.type === mat.type) {
-                                                        globalIdx += optIdx;
-                                                        break;
+                                {/* Dual-layer for multi-fabric products, single-layer for single-fabric */}
+                                {product.materialOptions.length > 1 ? (<>
+                                    {/* Layer 1: Fabric type selection */}
+                                    <div className="mb-4">
+                                        <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
+                                            {t("matTypeFabricType" as TranslationKeys)}
+                                        </label>
+                                        <div className="flex flex-wrap gap-3">
+                                            {product.materialOptions.map(mat => {
+                                                const matSwatchIdx = (() => {
+                                                    let idx = 0;
+                                                    for (const m of product.materialOptions!) {
+                                                        if (m.type === mat.type) return idx;
+                                                        idx += m.options.length;
                                                     }
-
+                                                    return 0;
+                                                })();
+                                                const swatchImage = galleryImages[matSwatchIdx];
+                                                const isMatSelected = materialType === mat.type;
+                                                return (
+                                                    <button
+                                                        key={mat.type}
+                                                        onClick={() => {
+                                                            setMaterialType(mat.type);
+                                                            const firstOpt = mat.options[0];
+                                                            setMaterialOption(firstOpt);
+                                                            setActiveImage(matSwatchIdx);
+                                                        }}
+                                                        className="flex items-center gap-2 transition-all duration-300 group">
+                                                        <span className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isMatSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
+                                                            {swatchImage ? <img src={swatchImage.src} alt={mat.type} width={44} height={44} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: mat.colors[0] }} />}
+                                                        </span>
+                                                        <span className={`text-xs tracking-[0.04em] whitespace-nowrap ${isMatSelected ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
+                                                            {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
+                                                        </span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                    {/* Layer 2: Color selection for selected fabric */}
+                                    {product.materialOptions.find(m => m.type === materialType) && <div className="mb-4">
+                                        <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
+                                            {t("matTypeFabricColor" as TranslationKeys)}
+                                        </label>
+                                        <div className="flex flex-wrap gap-3">
+                                            {product.materialOptions.find(m => m.type === materialType)!.options.map((opt, optIdx) => {
+                                                const colorHex = product.materialOptions!.find(m => m.type === materialType)!.colors[optIdx];
+                                                const isSelected = materialOption === opt;
+                                                let globalIdx = optIdx;
+                                                for (const m of product.materialOptions!) {
+                                                    if (m.type === materialType) { globalIdx += optIdx; break; }
                                                     globalIdx += m.options.length;
                                                 }
-                                            }
-
-                                            const swatchImage = galleryImages[globalIdx];
-
-                                            return (
-                                                <button
-                                                    key={opt}
-                                                    onClick={() => {
-                                                        setMaterialType(mat.type);
-                                                        setMaterialOption(opt);
-                                                    }}
-                                                    className="flex items-center gap-2 transition-all duration-300 group">
-                                                    <span
-                                                        className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
-                                                        {swatchImage ? <img
-                                                            src={swatchImage.src}
-                                                            alt={opt}
-                                                            width={32}
-                                                            height={32}
-                                                            className="w-full h-full object-cover" /> : <span
-                                                            className="w-full h-full block"
-                                                            style={{
-                                                                backgroundColor: colorHex
-                                                            }} />}
-                                                    </span>
-                                                    <span
-                                                        className={`text-xs tracking-[0.04em] whitespace-nowrap ${isSelected ? "text-[#F5F0EB]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
-                                                        {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
-                                                    </span>
-                                                </button>
-                                            );
-                                        })}
+                                                const swatchImage = galleryImages[globalIdx];
+                                                return (
+                                                    <button key={opt} onClick={() => { setMaterialOption(opt); setActiveImage(globalIdx); }}
+                                                        className="flex items-center gap-2 transition-all duration-300 group">
+                                                        <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
+                                                            {swatchImage ? <img src={swatchImage.src} alt={opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                        </span>
+                                                        <span className={`text-xs tracking-[0.04em] whitespace-nowrap ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
+                                                            {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
+                                                        </span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>}
+                                    {/* Real-time hint bar */}
+                                    <div className="mb-3">
+                                        <span className={`text-xs tracking-[0.04em] ${materialOption ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>
+                                            {materialOption
+                                                ? `${t("currentSelection" as TranslationKeys)}${t((matTypeKeyMap[materialType] || "matTypeFabric") as TranslationKeys)} · ${t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}`
+                                                : t("pleaseSelectColor" as TranslationKeys)}
+                                        </span>
                                     </div>
-                                </div>)}
+                                </>) : (<>
+                                    {/* Single-layer for single-fabric products (e.g. gorilla sofa = leather only) */}
+                                    <div className="mb-4">
+                                        <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
+                                            {t((matTypeKeyMap[product.materialOptions[0].type] || "matTypeFabric") as TranslationKeys)}
+                                        </label>
+                                        <div className="flex flex-wrap gap-3">
+                                            {(product.materialOptions?.[0]?.options ?? []).map((opt, optIdx) => {
+                                                const colorHex = product.materialOptions?.[0]?.colors[optIdx] ?? '#333';
+                                                const isSelected = materialOption === opt;
+                                                const swatchImage = galleryImages[optIdx];
+                                                return (
+                                                    <button key={opt} onClick={() => { setMaterialType(product.materialOptions![0].type); setMaterialOption(opt); setActiveImage(optIdx); }}
+                                                        className="flex items-center gap-2 transition-all duration-300 group">
+                                                        <span className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
+                                                            {swatchImage ? <img src={swatchImage.src} alt={opt} width={36} height={36} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                        </span>
+                                                        <span className={`text-xs tracking-[0.04em] whitespace-nowrap ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
+                                                            {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
+                                                        </span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                    {/* Real-time hint bar */}
+                                    <div className="mb-3">
+                                        <span className={`text-xs tracking-[0.04em] ${materialOption ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>
+                                            {materialOption
+                                                ? `${t("currentSelection" as TranslationKeys)}${t((colorNameKeyMap[materialOption] || "matTypeFabric") as TranslationKeys)}`
+                                                : t("pleaseSelectColor" as TranslationKeys)}
+                                        </span>
+                                    </div>
+                                </>)}
                             </div>}
                             {}
                             <div className="h-px bg-[#333] mb-5" />
@@ -821,7 +940,7 @@ export function ProductPageClient(
                                 </p>
                             </div>}
                             {}
-                            {product.materials && product.materials.length > 0 && <div className="mb-5">
+                            {product.materials && product.materials.length > 0 && product.materialOptions && product.materialOptions.length <= 1 && <div className="mb-5">
                                 <label
                                     className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">{t("materialsLabel" as TranslationKeys)}
                                                                                                                                                                   </label>

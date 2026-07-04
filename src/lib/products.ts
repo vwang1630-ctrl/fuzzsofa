@@ -99,7 +99,7 @@ export const products: Product[] = [
       {
         question: "What is the difference between fabric and leather options?",
         answer:
-          "Both options use the same solid hardwood frame and cushioning system. Cloud Touch and Wild Touch fabrics offer warmer textures ideal for residential settings. Leather Touch develops a rich patina over time and is recommended for both residential and commercial use. Price varies by material selection.",
+          "Both options use the same solid hardwood frame and cushioning system. Bouclé fabric offers a warm, textured feel ideal for residential settings. Velvet fabric provides a smooth, luxurious drape. Leather Touch develops a rich patina over time and is recommended for both residential and commercial use. Price varies by material selection.",
       },
       {
         question: "How is the Gorilla Sofa delivered?",
@@ -151,39 +151,32 @@ export const products: Product[] = [
     materials: [
       "Solid hardwood frame (FSC-certified walnut)",
       "High-density foam with down feather wrap",
-      "Cloud Touch & Wild Touch fabric upholstery",
+      "Bouclé & Velvet fabric upholstery",
       "Solid brass feet with brushed finish",
     ],
     materialOptions: [
       {
-        type: "Cloud Touch",
+        type: "Bouclé",
         options: [
           "Snowy White Bouclé",
-          "Rose Pink Velvet",
+          "Rose Pink Bouclé",
         ],
         colors: ["#F0EBE0", "#E8B4B8"],
       },
       {
-        type: "Wild Touch",
+        type: "Velvet",
         options: [
           "Forest Green Velvet",
-          "Warm Gray Linen",
+          "Warm Gray Linen Velvet",
         ],
         colors: ["#5A7A5A", "#8A8580"],
-      },
-      {
-        type: "Fur Touch",
-        options: [
-          "Dusty Pink Fur",
-        ],
-        colors: ["#D4A0A0"],
       },
     ],
     faq: [
       {
         question: "Is the Owl Chair available in leather?",
         answer:
-          "The Owl Chair is available in three fabric lines: Cloud Touch (Snowy White Bouclé, Rose Pink Velvet), Wild Touch (Forest Green Velvet, Warm Gray Linen), and Fur Touch (Dusty Pink Fur) — five colors in total. The curved backrest and wing-like proportions are best expressed in fabric, which drapes naturally over the organic form. Leather options may be available for bespoke orders — contact our design team to discuss.",
+          "The Owl Chair is available in two fabric lines: Bouclé (Snowy White Bouclé, Rose Pink Bouclé) and Velvet (Forest Green Velvet, Warm Gray Linen Velvet) — four colors in total. The curved backrest and wing-like proportions are best expressed in fabric, which drapes naturally over the organic form. Leather options may be available for bespoke orders — contact our design team to discuss.",
       },
       {
         question: "Can the Owl Chair be used as a dining chair?",

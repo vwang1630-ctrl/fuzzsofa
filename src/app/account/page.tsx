@@ -493,8 +493,8 @@ export default function AccountPage() {
       "muscle-gorilla-sofa": ["/products/muscle-gorilla-sofa/main.jpg","/products/muscle-gorilla-sofa/scene-2.jpg","/products/muscle-gorilla-sofa/scene-4.jpg","/products/muscle-gorilla-sofa/scene-5.jpg"],
     };
     const matTypeKeyMap: Record<string, string> = {
-      "Plush Fur": "matTypePlushFur", "Cloud Touch": "matTypeCloudTouch",
-      "Wild Touch": "matTypeWildTouch", "Fabric": "matTypeFabric",
+      "Plush Fur": "matTypePlushFur", "Bouclé": "matTypeBoucle",
+      "Velvet": "matTypeVelvet", "Fabric": "matTypeFabric",
       "Meteorite Fabric": "matTypeMeteoriteFabric", "Leather": "matTypeLeather",
     };
     slugs.forEach(slug => {
