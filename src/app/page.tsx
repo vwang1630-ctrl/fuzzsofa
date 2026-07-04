@@ -21,7 +21,7 @@ const heroScenes = [
   {
     src: "/hero-scene-1.jpg",
     alt: "Gorilla sofa in cinematic billionaire library interior",
-    objectPosition: "center 30%",
+    objectPosition: "center 22%",
     keys: {
       subtitle: "heroSubtitle" as const,
       title: "heroTitle" as const,
@@ -38,7 +38,7 @@ const heroScenes = [
   {
     src: "/hero-scene-2.jpg",
     alt: "Pink owl chair in dark punk concrete interior with neon lighting",
-    objectPosition: "center 35%",
+    objectPosition: "center 28%",
     keys: {
       subtitle: "hero2Subtitle" as const,
       title: "hero2Title" as const,
@@ -155,7 +155,7 @@ export default function HomePage() {
           <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
-          <div className="relative z-10 w-full h-full flex flex-col justify-center items-start px-8 md:px-16 lg:px-24 xl:px-32">
+          <div className="relative z-10 w-full h-full flex flex-col justify-center items-start px-8 md:px-16 lg:px-24 xl:pl-[38%]">
             <div className="max-w-[460px]">
               <p className="tracking-[0.35em] uppercase mb-3 text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
                 Fuzz Sofa Studio
