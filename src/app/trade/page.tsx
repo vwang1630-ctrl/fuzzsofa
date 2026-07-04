@@ -8,19 +8,19 @@ export default function TradePage() {
 
   return (
     <section className="relative">
-      <div className="py-20 md:py-32 bg-[#0A0A0A]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xs text-[#8A8580] tracking-[0.2em] uppercase mb-4">{t("support")}</p>
-          <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
+      <div className="pt-8 pb-4 sm:pt-12 sm:pb-6 bg-[#0A0A0A]">
+        <div className="max-w-4xl mx-auto px-6">
+          <p className="text-xs text-[#8A8580] tracking-[0.2em] uppercase mb-2">{t("support")}</p>
+          <h1 className="font-serif text-2xl sm:text-3xl font-light text-[#F5F0EB]">
             {t("tradeTitle")}
           </h1>
-          <p className="mt-6 text-lg text-[#8A8580] font-light max-w-2xl mx-auto">
+          <p className="mt-2 text-sm text-[#8A8580] font-light max-w-2xl">
             {t("tradeSubtitle")}
           </p>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-6 py-20 space-y-16">
+      <div className="max-w-3xl mx-auto px-6 pb-16 space-y-16">
         {/* Who we work with */}
         <div>
           <h2 className="font-serif text-2xl font-light text-[#F5F0EB] mb-6">{t("whoWeWorkWith")}</h2>
