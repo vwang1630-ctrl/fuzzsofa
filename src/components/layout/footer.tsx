@@ -9,7 +9,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-[#1A1A1A] bg-[#050505]" dir={isRtl ? "rtl" : "ltr"}>
-      <div className="max-w-[1200px] mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-[1200px] mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
         {/* Brand + Manufacturing Entity */}
         <div>
           <h3 className="font-serif text-lg tracking-[0.08em] text-[#F5F0EB] mb-1">Fuzz Sofa Studio</h3>

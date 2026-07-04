@@ -589,7 +589,7 @@ export default function OrderDetailPage() {
       </div>
 
       {/* =========== TWO COLUMN LAYOUT =========== */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_340px] gap-10">
         {/* Left Column */}
         <div className="space-y-10">
           {/* Pending Payment: Pay Now */}

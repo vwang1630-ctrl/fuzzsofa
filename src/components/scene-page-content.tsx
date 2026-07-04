@@ -40,7 +40,7 @@ export function ScenePageContent({
     <>
       {/* Hero */}
       <section className="relative">
-        <div className={`aspect-square md:aspect-[21/9] lg:aspect-[21/7] bg-gradient-to-b ${accent} relative overflow-hidden`}>
+        <div className={`aspect-square md:aspect-[21/7] bg-gradient-to-b ${accent} relative overflow-hidden`}>
           <div className="absolute inset-0 opacity-10" style={{ background: "radial-gradient(ellipse at 30% 60%, #E8B4B8, transparent 50%)" }} />
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent">
             <div className="max-w-7xl mx-auto px-6 pb-8 pt-24">
@@ -70,7 +70,7 @@ export function ScenePageContent({
           <h2 className="font-serif text-3xl font-light text-[#F5F0EB] mb-10">
             {t("recommendedPieces")}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {recommendedProducts.map((product) => (
               <Link
                 key={product.slug}

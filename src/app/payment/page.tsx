@@ -351,9 +351,9 @@ function PaymentPageInner() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Left: Payment methods + card form */}
-          <div className="lg:col-span-3 space-y-8">
+          <div className="md:col-span-3 space-y-8">
             {/* Payment Method Selection */}
             <div>
               <h2 className="text-sm text-[#8A8580] tracking-[0.15em] uppercase mb-4">
@@ -554,7 +554,7 @@ function PaymentPageInner() {
           </div>
 
           {/* Right: Order Summary */}
-          <div className="lg:col-span-2">
+          <div className="md:col-span-2">
             <div className="bg-[#111111] border border-[#1A1A1A] p-6 sticky top-24">
               <h2 className="text-sm text-[#8A8580] tracking-[0.15em] uppercase mb-4">
                 {t("paymentOrderSummary")}

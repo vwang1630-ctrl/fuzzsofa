@@ -543,21 +543,21 @@ export default function AccountPage() {
       <h1 className="font-serif text-3xl text-[#F5F0EB] tracking-wide mb-10">{t("accountTitle")}</h1>
 
       {/* Tabs */}
-      <div className="flex gap-4 lg:gap-8 border-b border-[#1A1A1A] mb-10 overflow-x-auto scrollbar-hide">
+      <div className="flex gap-4 md:gap-8 border-b border-[#1A1A1A] mb-10 overflow-x-auto scrollbar-hide">
         {(["orders", "addresses", "payment", "favorites"] as Tab[]).map(tabKey => (
           <button
             key={tabKey}
             onClick={() => setTab(tabKey)}
-            className={`pb-3 text-xs lg:text-sm tracking-[0.1em] uppercase transition-colors whitespace-nowrap flex-shrink-0 ${
+            className={`pb-3 text-xs md:text-sm tracking-[0.1em] uppercase transition-colors whitespace-nowrap flex-shrink-0 ${
               tab === tabKey
                 ? "text-[#F5F0EB] border-b-2 border-[#E8B4B8]"
                 : "text-[#8A8580] hover:text-[#F5F0EB]"
             }`}
           >
-            {tabKey === "orders" && <><span className="lg:hidden">{t("accountTabOrdersShort")}</span><span className="hidden lg:inline">{t("accountMyOrders")}</span></>}
-            {tabKey === "addresses" && <><span className="lg:hidden">{t("accountTabAddressesShort")}</span><span className="hidden lg:inline">{t("accountMyAddresses")}</span></>}
-            {tabKey === "payment" && <><span className="lg:hidden">{t("accountTabPaymentShort")}</span><span className="hidden lg:inline">{t("accountPaymentSettings")}</span></>}
-            {tabKey === "favorites" && <><span className="lg:hidden">{t("accountTabFavoritesShort")}</span><span className="hidden lg:inline">{t("myFavorites")}</span></>}
+            {tabKey === "orders" && <><span className="md:hidden">{t("accountTabOrdersShort")}</span><span className="hidden md:inline">{t("accountMyOrders")}</span></>}
+            {tabKey === "addresses" && <><span className="md:hidden">{t("accountTabAddressesShort")}</span><span className="hidden md:inline">{t("accountMyAddresses")}</span></>}
+            {tabKey === "payment" && <><span className="md:hidden">{t("accountTabPaymentShort")}</span><span className="hidden md:inline">{t("accountPaymentSettings")}</span></>}
+            {tabKey === "favorites" && <><span className="md:hidden">{t("accountTabFavoritesShort")}</span><span className="hidden md:inline">{t("myFavorites")}</span></>}
           </button>
         ))}
       </div>
@@ -566,18 +566,18 @@ export default function AccountPage() {
       {tab === "orders" && (
         <div>
           {/* Order Sub-tabs */}
-          <div className="flex gap-4 lg:gap-6 border-b border-[#1A1A1A] mb-6 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-4 md:gap-6 border-b border-[#1A1A1A] mb-6 overflow-x-auto scrollbar-hide">
             {([
-              { key: "all" as OrderTab, label: <><span className="lg:hidden">{t("orderTabAllShort")}</span><span className="hidden lg:inline">{t("orderTabAll")}</span></>, count: orders.length },
-              { key: "pending" as OrderTab, label: <><span className="lg:hidden">{t("orderTabPendingShort")}</span><span className="hidden lg:inline">{t("orderTabPending")}</span></>, count: orders.filter(o => o.status === "pending").length },
-              { key: "production" as OrderTab, label: <><span className="lg:hidden">{t("orderTabProductionShort")}</span><span className="hidden lg:inline">{t("orderTabProduction")}</span></>, count: orders.filter(o => o.status === "confirmed" || o.status === "processing").length },
-              { key: "shipped" as OrderTab, label: <><span className="lg:hidden">{t("orderTabShippedShort")}</span><span className="hidden lg:inline">{t("orderTabShipped")}</span></>, count: orders.filter(o => o.status === "shipped" || o.status === "delivered").length },
-              { key: "cancelled" as OrderTab, label: <><span className="lg:hidden">{t("orderTabCancelledShort")}</span><span className="hidden lg:inline">{t("orderTabCancelled")}</span></>, count: orders.filter(o => o.status === "cancelled" || o.paymentStatus === "failed").length },
+              { key: "all" as OrderTab, label: <><span className="md:hidden">{t("orderTabAllShort")}</span><span className="hidden md:inline">{t("orderTabAll")}</span></>, count: orders.length },
+              { key: "pending" as OrderTab, label: <><span className="md:hidden">{t("orderTabPendingShort")}</span><span className="hidden md:inline">{t("orderTabPending")}</span></>, count: orders.filter(o => o.status === "pending").length },
+              { key: "production" as OrderTab, label: <><span className="md:hidden">{t("orderTabProductionShort")}</span><span className="hidden md:inline">{t("orderTabProduction")}</span></>, count: orders.filter(o => o.status === "confirmed" || o.status === "processing").length },
+              { key: "shipped" as OrderTab, label: <><span className="md:hidden">{t("orderTabShippedShort")}</span><span className="hidden md:inline">{t("orderTabShipped")}</span></>, count: orders.filter(o => o.status === "shipped" || o.status === "delivered").length },
+              { key: "cancelled" as OrderTab, label: <><span className="md:hidden">{t("orderTabCancelledShort")}</span><span className="hidden md:inline">{t("orderTabCancelled")}</span></>, count: orders.filter(o => o.status === "cancelled" || o.paymentStatus === "failed").length },
             ]).map(tab => (
               <button
                 key={tab.key}
                 onClick={() => setOrderTab(tab.key)}
-                className={`pb-3 text-xs lg:text-sm tracking-[0.1em] uppercase transition-colors flex flex-col items-center lg:flex-row lg:items-center lg:gap-2 whitespace-nowrap flex-shrink-0 ${
+                className={`pb-3 text-xs md:text-sm tracking-[0.1em] uppercase transition-colors flex flex-col items-center md:flex-row md:items-center md:gap-2 whitespace-nowrap flex-shrink-0 ${
                   orderTab === tab.key
                     ? "text-[#F5F0EB] border-b-2 border-[#E8B4B8]"
                     : "text-[#8A8580] hover:text-[#F5F0EB]"
@@ -794,7 +794,7 @@ export default function AccountPage() {
                           {order.items.map((item: OrderItem, idx: number) => (
                             <div key={item.id || idx} className="px-5 py-4 flex gap-4 border-b border-[#1A1A1A] last:border-b-0">
                               {/* Product Image */}
-                              <div className="w-[72px] h-[72px] lg:hidden flex-shrink-0 bg-[#111] rounded overflow-hidden">
+                              <div className="w-[72px] h-[72px] md:hidden flex-shrink-0 bg-[#111] rounded overflow-hidden">
                                 {item.imageUrl ? (
                                   <img src={item.imageUrl} alt={item.productName || ''} className="w-full h-full object-cover" />
                                 ) : (
@@ -805,7 +805,7 @@ export default function AccountPage() {
                                   </div>
                                 )}
                               </div>
-                              <div className="w-[88px] h-[88px] hidden lg:block flex-shrink-0 bg-[#111] rounded overflow-hidden">
+                              <div className="w-[88px] h-[88px] hidden md:block flex-shrink-0 bg-[#111] rounded overflow-hidden">
                                 {item.imageUrl ? (
                                   <img src={item.imageUrl} alt={item.productName || ''} className="w-full h-full object-cover" />
                                 ) : (
@@ -1230,7 +1230,7 @@ export default function AccountPage() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {favorites.filter(fav => getProduct(fav.product_slug)).map(fav => {
                 const prod = getProduct(fav.product_slug)!;
                 const slugToPrefix: Record<string, string> = {

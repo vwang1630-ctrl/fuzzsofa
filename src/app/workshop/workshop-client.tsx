@@ -21,7 +21,7 @@ export default function WorkshopClient() {
       <section className="py-20 px-6 bg-[#080808]">
         <div className="max-w-[1000px] mx-auto">
           <p className="text-[12px] tracking-[0.2em] uppercase text-[#8A8580] mb-4 text-center">Capabilities</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
             {[
               {
                 title: "Frame Construction",

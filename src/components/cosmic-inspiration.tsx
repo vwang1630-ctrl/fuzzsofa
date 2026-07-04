@@ -94,10 +94,10 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
   const isZh = lang === 'zh';
 
   return (
-    <section className="py-16 lg:py-24 px-6 lg:px-8">
+    <section className="py-16 md:py-24 px-6 md:px-8">
       <div className="max-w-[1200px] mx-auto">
         {/* Section Header */}
-        <div className="flex items-start justify-between mb-8 lg:mb-12">
+        <div className="flex items-start justify-between mb-8 md:mb-12">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="w-4 h-4 text-[#E8B4B8]" />
@@ -105,7 +105,7 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
                 {isZh ? '宇宙灵感' : 'COSMIC INSPIRATION'}
               </span>
             </div>
-            <h2 className="text-2xl lg:text-[2.5rem] font-light tracking-[0.05em] text-[#F5F0EB] leading-[1.1]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+            <h2 className="text-2xl md:text-[2.5rem] font-light tracking-[0.05em] text-[#F5F0EB] leading-[1.1]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
               {isZh ? '来自星空的故事' : 'Stories From The Cosmos'}
             </h2>
           </div>
@@ -125,8 +125,8 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
 
         {/* AI Summary */}
         {data?.summary && (
-          <div className="mb-8 lg:mb-12 max-w-[700px]">
-            <p className="text-[14px] lg:text-[15px] font-light leading-[1.7] text-[#8A8580]">
+          <div className="mb-8 md:mb-12 max-w-[700px]">
+            <p className="text-[14px] md:text-[15px] font-light leading-[1.7] text-[#8A8580]">
               {data.summary}
             </p>
           </div>
@@ -147,11 +147,11 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
           <>
             {/* Images Row */}
             {data.images.length > 0 && (
-              <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-4 mb-8 lg:mb-12 lg:grid lg:grid-cols-3 lg:gap-4 lg:overflow-visible">
+              <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-4 mb-8 md:mb-12 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible">
                 {data.images.map((img, i) => (
                   <div
                     key={i}
-                    className="flex-shrink-0 w-[70vw] lg:w-auto rounded-lg overflow-hidden relative group"
+                    className="flex-shrink-0 w-[70vw] md:w-auto rounded-lg overflow-hidden relative group"
                   >
                     <div className="aspect-[4/3] bg-[#111] relative overflow-hidden">
                       {img.imageUrl ? (
@@ -169,8 +169,8 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
                       {/* Gradient overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-transparent to-transparent" />
                       {img.title && (
-                        <div className="absolute bottom-0 left-0 right-0 p-3 lg:p-4">
-                          <p className="text-[11px] lg:text-[12px] font-light tracking-[0.05em] text-[#F5F0EB]/80 line-clamp-2">
+                        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                          <p className="text-[11px] md:text-[12px] font-light tracking-[0.05em] text-[#F5F0EB]/80 line-clamp-2">
                             {img.title}
                           </p>
                         </div>
@@ -198,21 +198,21 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                   {data.results.slice(0, 6).map((result, i) => (
                     <a
                       key={i}
                       href={result.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group block p-4 lg:p-5 bg-[#111] border border-white/5 rounded-lg hover:border-[#E8B4B8]/20 transition-all duration-300"
+                      className="group block p-4 md:p-5 bg-[#111] border border-white/5 rounded-lg hover:border-[#E8B4B8]/20 transition-all duration-300"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-[13px] lg:text-[14px] font-light text-[#F5F0EB] leading-[1.4] line-clamp-2 mb-2 group-hover:text-[#E8B4B8] transition-colors duration-300">
+                          <h4 className="text-[13px] md:text-[14px] font-light text-[#F5F0EB] leading-[1.4] line-clamp-2 mb-2 group-hover:text-[#E8B4B8] transition-colors duration-300">
                             {result.title}
                           </h4>
-                          <p className="text-[11px] lg:text-[12px] font-light text-[#8A8580] leading-[1.5] line-clamp-2">
+                          <p className="text-[11px] md:text-[12px] font-light text-[#8A8580] leading-[1.5] line-clamp-2">
                             {result.snippet}
                           </p>
                         </div>
@@ -238,7 +238,7 @@ export default function CosmicInspiration({ lang }: CosmicInspirationProps) {
                 </div>
 
                 {/* Explore More Link */}
-                <div className="mt-6 lg:mt-8">
+                <div className="mt-6 md:mt-8">
                   <a
                     href="https://www.reddit.com/r/space/"
                     target="_blank"

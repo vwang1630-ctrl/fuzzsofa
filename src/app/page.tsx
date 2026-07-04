@@ -152,14 +152,14 @@ export default function HomePage() {
           <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
-          <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 pb-[6%] pt-[8%] flex flex-col justify-end md:justify-start">
+          <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-16 pb-[6%] pt-[8%] flex flex-col justify-end md:justify-start">
             <p className="tracking-[0.35em] uppercase mb-3 text-[12px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
               Fuzz Sofa Studio
             </p>
-            <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.8rem] md:text-[3.8rem] lg:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
+            <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.8rem] md:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
               {t(sceneConfig.keys.title)}
             </h1>
-            <p className="font-light text-sm md:text-[15px] lg:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
+            <p className="font-light text-sm md:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
               Made-to-order, delivered in 1–2 weeks
             </p>
             <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
@@ -228,7 +228,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
             {products.map((product) => (
               <Link
                 key={product.slug}

@@ -348,7 +348,7 @@ export function ProductPageClient(
             <section className="bg-[#0A0A0A]">
                 <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
                     {/* Mobile Gallery — swipeable, full-bleed */}
-                    <div className="lg:hidden relative">
+                    <div className="md:hidden relative">
                         {/* Fixed Share & Wishlist overlay */}
                         <div className="absolute top-3 right-3 flex items-center gap-1.5 z-20">
                             <div className="relative">
@@ -425,7 +425,7 @@ export function ProductPageClient(
                     </div>
 
                     {/* Mobile info panel — title+price, features, details */}
-                    <div className="lg:hidden px-4 pt-2.5 pb-4 bg-[#111]">
+                    <div className="md:hidden px-4 pt-2.5 pb-4 bg-[#111]">
                         {/* Collection label */}
                         <p className="text-[9px] text-[#8A8580] tracking-[0.25em] uppercase mb-1.5">{collectionName}</p>
                         {/* Title + Price row */}
@@ -512,9 +512,9 @@ export function ProductPageClient(
                             <span>{t("madeToOrderShort" as TranslationKeys)}</span>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:gap-12">
+                    <div className="grid grid-cols-1 md:grid-cols-[1fr_400px] gap-8 md:gap-12">
                         {/* Desktop gallery column — hidden on mobile */}
-                        <div className="hidden lg:flex flex-col">
+                        <div className="hidden md:flex flex-col">
                             {}
                             <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
                                 {galleryImages[activeImage]?.src ? <img
@@ -614,7 +614,7 @@ export function ProductPageClient(
                             </div>}
                         </div>
                         {}
-                        <div className="flex flex-col hidden lg:flex">
+                        <div className="flex flex-col hidden md:flex">
                             {}
                             <p className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase mb-3">
                                 {collectionName}
@@ -733,17 +733,17 @@ export function ProductPageClient(
                             </div>
                             {}
                             <p
-                                className="font-serif text-[24px] md:text-[28px] font-light text-[#F5F0EB]/70 mt-1 hidden lg:block">
+                                className="font-serif text-[24px] md:text-[28px] font-light text-[#F5F0EB]/70 mt-1 hidden md:block">
                                 {displayPrice}
                             </p>
                             {}
-                            <p className="text-[15px] text-[#8A8580] leading-[1.7] mt-3 hidden lg:block">
+                            <p className="text-[15px] text-[#8A8580] leading-[1.7] mt-3 hidden md:block">
                                 {productTagline}
                             </p>
                             {}
-                            <div className="h-px bg-[#333] my-5 hidden lg:block" />
+                            <div className="h-px bg-[#333] my-5 hidden md:block" />
                             {}
-                            {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5 hidden lg:block">
+                            {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5 hidden md:block">
                                 {product.materialOptions.map(mat => <div key={mat.type} className="mb-4">
                                     <label
                                         className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
@@ -848,7 +848,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={handleAddToCart}
-                                className="hidden lg:flex w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
+                                className="hidden md:flex w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
@@ -869,7 +869,7 @@ export function ProductPageClient(
                                 </>}
                             </button>
                             <button
-                                className="hidden lg:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[13px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
+                                className="hidden md:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[13px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
                                 style={{
                                     border: "1px solid #E8B4B8"
                                 }}
@@ -877,7 +877,7 @@ export function ProductPageClient(
                                                                                                                                               </button>
                             {}
                             <div
-                                className="hidden lg:flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
+                                className="hidden md:flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
                                 <span>{t("leadTimeShort" as TranslationKeys)}</span>
                                 <span className="mx-1">·</span>
                                 <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
@@ -887,7 +887,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={() => setShowRoomViz(true)}
-                                className="hidden lg:flex mt-3 text-[12px] text-[#8A8580]/70 tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 items-center gap-1.5">
+                                className="hidden md:flex mt-3 text-[12px] text-[#8A8580]/70 tracking-[0.04em] hover:text-[#E8B4B8] transition-colors duration-300 items-center gap-1.5">
                                 <svg
                                     width="14"
                                     height="14"
@@ -916,7 +916,7 @@ export function ProductPageClient(
                             <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys)}
                         </p>
                         <h2
-                            className="font-serif text-lg md:text-3xl lg:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
+                            className="font-serif text-lg md:text-[2.2rem] font-light text-[#F5F0EB] leading-[1.15]">
                             {t("seeItInRealSpaces" as TranslationKeys)}
                         </h2>
                     </div>
@@ -963,7 +963,7 @@ export function ProductPageClient(
                             className="absolute inset-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
                     </div>
                     <div
-                        className="mt-4 md:mt-12 flex flex-col lg:flex-row items-start lg:items-end gap-4">
+                        className="mt-4 md:mt-12 flex flex-col md:flex-row items-start md:items-end gap-4">
                         {}
                         <div className="flex-1">
                             <p
@@ -995,7 +995,7 @@ export function ProductPageClient(
                             </div>
                         </div>
                         {}
-                        <div className="w-[220px] lg:w-[260px] shrink-0">
+                        <div className="w-[220px] md:w-[260px] shrink-0">
                             <div className="flex flex-col items-center">
                                 <div
                                     className="relative bg-[#1A1918] rounded-sm overflow-hidden w-full"
@@ -1023,7 +1023,7 @@ export function ProductPageClient(
                                         alt="Product Sketch"
                                         width={500}
                                         height={500}
-                                        className="mx-auto h-auto block opacity-70 brightness-[0.85] contrast-[0.9] lg:w-full" />
+                                        className="mx-auto h-auto block opacity-70 brightness-[0.85] contrast-[0.9] md:w-full" />
                                 </div>
                                 <div className="flex items-center justify-center gap-6 mt-3">
                                     <div className="text-center">
@@ -1056,7 +1056,7 @@ export function ProductPageClient(
                         </div>
                     </div>
                     {}
-                    <div className="lg:hidden">
+                    <div className="md:hidden">
                         {}
                         <div className="relative w-full aspect-[4/3] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
                             {madeBg ? <img
@@ -1110,7 +1110,7 @@ export function ProductPageClient(
                 <div className="max-w-[1600px] mx-auto">
                     {}
                     <div
-                        className="relative w-full aspect-[3/1] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden hidden lg:block">
+                        className="relative w-full aspect-[3/1] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden hidden md:block">
                         {madeBg ? <img
                             src={madeBg}
                             alt={`${productName} craftsmanship`}
@@ -1130,16 +1130,16 @@ export function ProductPageClient(
                             className="absolute inset-0 bg-gradient-to-t from-[#090909]/80 via-[#090909]/30 to-transparent" />
                         {}
                         <div
-                            className="absolute inset-0 flex flex-col items-center justify-end pb-10 lg:pb-14 px-6"
+                            className="absolute inset-0 flex flex-col items-center justify-end pb-10 md:pb-14 px-6"
                             style={{
                                 backgroundColor: "#0A0A0A"
                             }}>
                             <p
-                                className="font-serif text-2xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
+                                className="font-serif text-2xl md:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
                                 <span className="opacity-30 mr-3">—</span>{t("materialsCraftsmanship" as TranslationKeys)}
                                                                                                                                 <span className="opacity-30 ml-3">—</span>
                             </p>
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5 max-w-[780px] mx-auto mb-11 relative">
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 max-w-[780px] mx-auto mb-11 relative">
                                 {}
                                 <div
                                     className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
@@ -1340,14 +1340,14 @@ export function ProductPageClient(
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
-                        className="font-serif text-xl md:text-3xl lg:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-4 md:mb-6">
+                        className="font-serif text-xl md:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-4 md:mb-6">
                         {t("deliveredWorldwide" as TranslationKeys)}
                     </h2>
                     <p className="text-[#8A8580] leading-[1.8] text-[13px] md:text-[15px] mb-8 md:mb-10">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
                     <div
-                        className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 max-w-[700px] mx-auto overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 pb-1 md:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                        className="flex md:grid md:grid-cols-4 gap-4 md:gap-8 max-w-[700px] mx-auto overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0 pb-1 md:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                         <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
                             <div
                                 className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center"
@@ -1482,7 +1482,7 @@ export function ProductPageClient(
                         className="font-serif text-lg md:text-3xl font-light text-[#F5F0EB] mb-3 md:mb-8">
                         {t("relatedProducts")}
                     </h2>
-                    <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 sm:mx-0 sm:px-0 pb-1 sm:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                    <div className="flex sm:grid sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 sm:mx-0 sm:px-0 pb-1 sm:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                         {relatedProducts.map(rp => {
                             const rpPrefix = slugToPrefix[rp.slug] || "";
                             const rpName = rpPrefix ? t(`${rpPrefix}Name` as TranslationKeys) : rp.name;
@@ -1564,7 +1564,7 @@ export function ProductPageClient(
                 <CosmicInspiration lang={lang} />
             )}
             {/* Mobile Sticky CTA — left text + right glow button */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "#0A0A0A" }}>
+            <div className="md:hidden fixed bottom-0 left-0 right-0 z-40" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "#0A0A0A" }}>
                 <div className="px-4 pt-2.5 pb-2.5 flex items-center justify-between gap-3">
                     <div className="min-w-0">
                         <p className="text-[12px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>

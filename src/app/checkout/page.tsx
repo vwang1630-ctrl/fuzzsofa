@@ -277,7 +277,7 @@ export default function CheckoutPage() {
       <h1 className="font-serif text-3xl font-light text-[#F5F0EB] mb-12 tracking-wide">{t("checkoutTitle")}</h1>
 
       <form onSubmit={handleContinueToPayment}>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_380px] gap-12">
           {/* Left Column - Form */}
           <div className="space-y-10">
             {/* Shipping Address */}
@@ -486,7 +486,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Right Column - Order Summary (sticky) */}
-          <div className="lg:sticky lg:top-24 lg:self-start">
+          <div className="md:sticky md:top-24 md:self-start">
             <div className="bg-[#111111] border border-[#1A1A1A] p-6">
               <h2 className="font-serif text-xl text-[#F5F0EB] mb-6">{t("checkoutOrderSummary")}</h2>
 
