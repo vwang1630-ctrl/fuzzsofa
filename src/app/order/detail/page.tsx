@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import { formatPrice } from "@/lib/products";
+import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -149,11 +150,30 @@ export default function OrderDetailPage() {
   const [loading, setLoading] = useState(true);
   const [specsOpen, setSpecsOpen] = useState(false);
   const [ddpOpen, setDdpOpen] = useState(false);
+  const [sessionToken, setSessionToken] = useState<string | null>(null);
+
+  // Get session token
+  useEffect(() => {
+    async function getSession() {
+      try {
+        const supabase = await getSupabaseBrowserClientWithRetry();
+        const { data: { session } } = await supabase.auth.getSession();
+        setSessionToken(session?.access_token ?? null);
+      } catch { /* not logged in */ }
+    }
+    getSession();
+  }, []);
+
+  const authHeaders = useCallback(() => {
+    const h: Record<string, string> = { "Content-Type": "application/json" };
+    if (sessionToken) h["x-session"] = sessionToken;
+    return h;
+  }, [sessionToken]);
 
   const fetchOrder = useCallback(async () => {
-    if (!orderNo) return;
+    if (!orderNo || !sessionToken) return;
     try {
-      const res = await fetch("/api/orders");
+      const res = await fetch("/api/orders", { headers: authHeaders() });
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       const orders: Order[] = data.orders || data;
@@ -164,7 +184,7 @@ export default function OrderDetailPage() {
     } finally {
       setLoading(false);
     }
-  }, [orderNo]);
+  }, [orderNo, sessionToken, authHeaders]);
 
   useEffect(() => { fetchOrder(); }, [fetchOrder]);
 
@@ -179,10 +199,21 @@ export default function OrderDetailPage() {
   if (!order) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center gap-4">
-        <p className="text-[#8A8580] text-sm">Order not found</p>
-        <Link href="/account" className="text-[#c98b96] text-xs tracking-wider uppercase hover:underline">
-          {t("backToOrders") || "← Back to My Orders"}
-        </Link>
+        {!sessionToken ? (
+          <>
+            <p className="text-[#8A8580] text-sm">Please log in to view order details</p>
+            <Link href="/account" className="text-[#c98b96] text-xs tracking-wider uppercase border border-[#c98b96]/40 px-4 py-2 rounded hover:bg-[#c98b96] hover:text-[#0A0A0A] transition-all duration-300">
+              {t("backToOrders") || "← Back to My Orders"}
+            </Link>
+          </>
+        ) : (
+          <>
+            <p className="text-[#8A8580] text-sm">Order not found</p>
+            <Link href="/account" className="text-[#c98b96] text-xs tracking-wider uppercase hover:underline">
+              {t("backToOrders") || "← Back to My Orders"}
+            </Link>
+          </>
+        )}
       </div>
     );
   }
