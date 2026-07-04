@@ -152,8 +152,8 @@ export default function HomePage() {
           <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
-          <div className="relative z-10 w-full h-full flex flex-col justify-center px-8 md:px-16 lg:px-28 xl:px-36">
-            <div className="max-w-[560px]">
+          <div className="relative z-10 w-full h-full flex flex-col justify-center items-center px-6 md:px-8">
+            <div className="max-w-[560px] text-center">
               <p className="tracking-[0.35em] uppercase mb-3 text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
                 Fuzz Sofa Studio
               </p>
@@ -163,7 +163,7 @@ export default function HomePage() {
               <p className="font-light text-sm md:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
                 Made-to-order, delivered in 1–2 weeks
               </p>
-              <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
+              <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-center gap-3">
                 <button
                   onClick={() => {
                     const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
