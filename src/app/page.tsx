@@ -60,7 +60,7 @@ function HeroSlideshow({ current }: { current: number }) {
           key={scene.src}
           src={scene.src}
           alt={scene.alt}
-          className={`absolute inset-0 w-full h-full object-cover object-[center_35%] transition-opacity duration-[2000ms] ${
+          className={`absolute inset-0 w-full h-full object-cover object-[55%_40%] transition-opacity duration-[2000ms] ${
             idx === current ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -152,18 +152,18 @@ export default function HomePage() {
           <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
-          <div className="relative z-10 w-full h-full flex flex-col justify-center items-center px-6 md:px-8">
-            <div className="max-w-[560px] text-center">
+          <div className="relative z-10 w-full h-full flex flex-col justify-center items-start px-8 md:px-16 lg:px-24 xl:px-32">
+            <div className="max-w-[460px]">
               <p className="tracking-[0.35em] uppercase mb-3 text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
                 Fuzz Sofa Studio
               </p>
               <h1 className="font-light leading-[1.08] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.2rem] md:text-[2.8rem] xl:text-[3.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
                 {t(sceneConfig.keys.title)}
               </h1>
-              <p className="font-light text-sm md:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
+              <p className="font-light text-sm md:text-base max-w-[380px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
                 Made-to-order, delivered in 1–2 weeks
               </p>
-              <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-center gap-3">
+              <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
                 <button
                   onClick={() => {
                     const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
