@@ -98,12 +98,12 @@ const statusLabel = (s: string, t: (key: TranslationKeys) => string): string => 
 
 const statusColor = (s: string) => {
   const m: Record<string, string> = {
-    pending: "text-[#8A8580] border-[#8A8580]/30 bg-[#8A8580]/10",
-    confirmed: "text-[#E8B4B8] border-[#E8B4B8]/30 bg-[#E8B4B8]/10",
-    processing: "text-[#E8B4B8] border-[#E8B4B8]/30 bg-[#E8B4B8]/10",
-    shipped: "text-blue-400 border-blue-400/30 bg-blue-400/10",
-    delivered: "text-green-400 border-green-400/30 bg-green-400/10",
-    cancelled: "text-red-400 border-red-400/30 bg-red-400/10",
+    pending: "text-[#e8a050] border-[#e8a050]/30 bg-[#e8a050]/10",
+    confirmed: "text-[#c98b96] border-[#c98b96]/30 bg-[#c98b96]/10",
+    processing: "text-[#c98b96] border-[#c98b96]/30 bg-[#c98b96]/10",
+    shipped: "text-[#7eb8e0] border-[#7eb8e0]/30 bg-[#7eb8e0]/10",
+    delivered: "text-[#a8a8a8] border-[#a8a8a8]/30 bg-[#a8a8a8]/10",
+    cancelled: "text-[#555] border-[#555]/30 bg-[#555]/10",
   };
   return m[s] || "text-[#8A8580] border-[#8A8580]/30 bg-[#8A8580]/10";
 };
@@ -189,15 +189,15 @@ export default function AccountPage() {
   const [selectedOrders, setSelectedOrders] = useState<Set<string>>(new Set());
 
   /* ---- Tab-based order grouping ---- */
-  type OrderTab = "all" | "pending" | "production" | "shipped" | "cancelled";
+  type OrderTab = "all" | "pending" | "production" | "shipped" | "delivered";
   const [orderTab, setOrderTab] = useState<OrderTab>("all");
 
   const orderTabs: { key: OrderTab; labelKey: TranslationKeys; statuses: string[] }[] = [
-    { key: "all", labelKey: "accountAll", statuses: [] },
+    { key: "all", labelKey: "orderTabAll", statuses: [] },
     { key: "pending", labelKey: "orderTabPending", statuses: ["pending"] },
     { key: "production", labelKey: "orderTabProduction", statuses: ["confirmed", "processing"] },
-    { key: "shipped", labelKey: "orderTabShipped", statuses: ["shipped", "delivered"] },
-    { key: "cancelled", labelKey: "orderTabCancelled", statuses: ["cancelled"] },
+    { key: "shipped", labelKey: "orderTabShipped", statuses: ["shipped"] },
+    { key: "delivered", labelKey: "orderTabDelivered", statuses: ["delivered"] },
   ];
 
   const tabOrders = orderTab === "all"
@@ -516,10 +516,15 @@ export default function AccountPage() {
     : orderTab === "production"
     ? orders.filter(o => o.status === "confirmed" || o.status === "processing")
     : orderTab === "shipped"
-    ? orders.filter(o => o.status === "shipped" || o.status === "delivered")
-    : orderTab === "cancelled"
-    ? orders.filter(o => o.status === "cancelled" || o.paymentStatus === "failed")
-    : orders;
+    ? orders.filter(o => o.status === "shipped")
+    : orderTab === "delivered"
+    ? orders.filter(o => o.status === "delivered")
+    : // "all" tab: active orders first, cancelled at bottom
+    [...orders].sort((a, b) => {
+      const aCancelled = a.status === "cancelled" || a.paymentStatus === "failed" ? 1 : 0;
+      const bCancelled = b.status === "cancelled" || b.paymentStatus === "failed" ? 1 : 0;
+      return aCancelled - bCancelled;
+    });
 
   const hasSelectedPending = orders.filter(o => selectedOrders.has(o.id) && o.paymentStatus === "pending").length > 0;
 
@@ -566,27 +571,28 @@ export default function AccountPage() {
       {tab === "orders" && (
         <div>
           {/* Order Sub-tabs */}
-          <div className="flex gap-4 md:gap-6 border-b border-[#1A1A1A] mb-6 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-8 border-b border-[#1A1A1A] mb-6">
             {([
-              { key: "all" as OrderTab, label: <><span className="sm:hidden">{t("orderTabAllShort")}</span><span className="hidden sm:inline">{t("orderTabAll")}</span></>, count: orders.length },
-              { key: "pending" as OrderTab, label: <><span className="sm:hidden">{t("orderTabPendingShort")}</span><span className="hidden sm:inline">{t("orderTabPending")}</span></>, count: orders.filter(o => o.status === "pending").length },
-              { key: "production" as OrderTab, label: <><span className="sm:hidden">{t("orderTabProductionShort")}</span><span className="hidden sm:inline">{t("orderTabProduction")}</span></>, count: orders.filter(o => o.status === "confirmed" || o.status === "processing").length },
-              { key: "shipped" as OrderTab, label: <><span className="sm:hidden">{t("orderTabShippedShort")}</span><span className="hidden sm:inline">{t("orderTabShipped")}</span></>, count: orders.filter(o => o.status === "shipped" || o.status === "delivered").length },
-              { key: "cancelled" as OrderTab, label: <><span className="sm:hidden">{t("orderTabCancelledShort")}</span><span className="hidden sm:inline">{t("orderTabCancelled")}</span></>, count: orders.filter(o => o.status === "cancelled" || o.paymentStatus === "failed").length },
+              { key: "all" as OrderTab, labelKey: "orderTabAll" as TranslationKeys, shortKey: "orderTabAllShort" as TranslationKeys, count: orders.length },
+              { key: "pending" as OrderTab, labelKey: "orderTabPending" as TranslationKeys, shortKey: "orderTabPendingShort" as TranslationKeys, count: orders.filter(o => o.status === "pending").length },
+              { key: "production" as OrderTab, labelKey: "orderTabProduction" as TranslationKeys, shortKey: "orderTabProductionShort" as TranslationKeys, count: orders.filter(o => o.status === "confirmed" || o.status === "processing").length },
+              { key: "shipped" as OrderTab, labelKey: "orderTabShipped" as TranslationKeys, shortKey: "orderTabShippedShort" as TranslationKeys, count: orders.filter(o => o.status === "shipped").length },
+              { key: "delivered" as OrderTab, labelKey: "orderTabDelivered" as TranslationKeys, shortKey: "orderTabDeliveredShort" as TranslationKeys, count: orders.filter(o => o.status === "delivered").length },
             ]).map(tab => (
               <button
                 key={tab.key}
                 onClick={() => setOrderTab(tab.key)}
-                className={`pb-3 text-xs md:text-sm tracking-[0.1em] uppercase transition-colors flex flex-col items-center sm:flex-row md:items-center md:gap-2 whitespace-nowrap flex-shrink-0 ${
+                className={`pb-3 text-sm tracking-[0.1em] uppercase transition-colors flex items-center gap-2 whitespace-nowrap ${
                   orderTab === tab.key
-                    ? "text-[#F5F0EB] border-b-2 border-[#E8B4B8]"
-                    : "text-[#8A8580] hover:text-[#F5F0EB]"
+                    ? "text-[#c98b96] border-b-2 border-[#c98b96]"
+                    : "text-[#a8a8a8] hover:text-[#F5F0EB]"
                 }`}
               >
-                <span>{tab.label}</span>
+                <span className="sm:hidden">{t(tab.shortKey)}</span>
+                <span className="hidden sm:inline">{t(tab.labelKey)}</span>
                 {tab.count > 0 && (
-                  <span className={`text-[12px] px-1.5 py-0.5 rounded-full ${
-                    orderTab === tab.key ? "bg-[#E8B4B8] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#8A8580]"
+                  <span className={`text-[11px] min-w-[20px] h-5 px-1.5 flex items-center justify-center rounded-full ${
+                    orderTab === tab.key ? "bg-[#c98b96] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#a8a8a8]"
                   }`}>
                     {tab.count}
                   </span>
@@ -619,10 +625,11 @@ export default function AccountPage() {
               {tabFilteredOrders.map(order => {
                 const mainItem = order.items?.[0];
                 const totalQty = order.items?.reduce((sum: number, it: OrderItem) => sum + it.quantity, 0) || 0;
+                const isCancelled = order.status === "cancelled" || order.paymentStatus === "failed";
                 return (
                   <div
                     key={order.id}
-                    className="border border-[#1a1a1a] rounded-lg p-4 sm:p-5 hover:border-[#333] transition-colors duration-300"
+                    className={`border border-[#1a1a1a] rounded-lg p-4 sm:p-5 hover:border-[#333] transition-colors duration-300 ${isCancelled ? "opacity-50" : ""}`}
                   >
                     {/* Header row: Order No + View Details */}
                     <div className="flex items-start justify-between gap-3 mb-3">
@@ -642,7 +649,7 @@ export default function AccountPage() {
                     {/* Date + Status row */}
                     <div className="flex items-center justify-between mb-3">
                       <p className="text-[#8A8580] text-[10px] sm:text-xs tracking-wide">{formatDate(order.createdAt)}</p>
-                      <span className="inline-block px-2 py-0.5 text-[9px] sm:text-[10px] tracking-wider rounded bg-[#c98b96]/20 text-[#c98b96] border border-[#c98b96]/30">
+                      <span className={`inline-block px-2 py-0.5 text-[9px] sm:text-[10px] tracking-wider rounded border ${statusColor(order.status)}`}>
                         {statusLabel(order.status, t)}
                       </span>
                     </div>
