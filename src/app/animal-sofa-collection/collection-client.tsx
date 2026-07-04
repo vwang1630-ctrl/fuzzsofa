@@ -43,15 +43,15 @@ export function CollectionClient() {
 
       {/* Hero */}
       <section className="relative">
-        <div className="py-20 md:py-32 text-center bg-[#0A0A0A]">
+        <div className="pt-8 pb-4 sm:pt-12 sm:pb-6 bg-[#0A0A0A]">
           <div className="max-w-4xl mx-auto px-6">
-            <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-4">
+            <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-3">
               Featured Works
             </p>
-            <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
+            <h1 className="font-serif text-2xl sm:text-3xl font-light text-[#F5F0EB]">
               {t("animalCollectionTitle")}
             </h1>
-            <p className="mt-6 text-lg text-[#F5F0EB]/50 font-light max-w-2xl mx-auto">
+            <p className="mt-2 text-sm text-[#F5F0EB]/50 font-light max-w-2xl">
               Each piece is made individually after order confirmation.
             </p>
           </div>
@@ -59,7 +59,7 @@ export function CollectionClient() {
       </section>
 
       {/* Products — 5 products, flat display, no filters */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
+      <section className="max-w-6xl mx-auto px-6 pb-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {products.filter((p) => p.images && p.images.length > 0).map((product, idx) => (
             <Link
