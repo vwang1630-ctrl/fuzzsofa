@@ -21,6 +21,7 @@ const heroScenes = [
   {
     src: "/hero-scene-1.jpg",
     alt: "Gorilla sofa in cinematic billionaire library interior",
+    objectPosition: "center 30%",
     keys: {
       subtitle: "heroSubtitle" as const,
       title: "heroTitle" as const,
@@ -37,6 +38,7 @@ const heroScenes = [
   {
     src: "/hero-scene-2.jpg",
     alt: "Pink owl chair in dark punk concrete interior with neon lighting",
+    objectPosition: "center 35%",
     keys: {
       subtitle: "hero2Subtitle" as const,
       title: "hero2Title" as const,
@@ -60,7 +62,8 @@ function HeroSlideshow({ current }: { current: number }) {
           key={scene.src}
           src={scene.src}
           alt={scene.alt}
-          className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-[2000ms] ${
+          style={{ objectPosition: scene.objectPosition }}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${
             idx === current ? "opacity-100" : "opacity-0"
           }`}
         />
