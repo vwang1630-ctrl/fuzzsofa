@@ -60,7 +60,7 @@ function HeroSlideshow({ current }: { current: number }) {
           key={scene.src}
           src={scene.src}
           alt={scene.alt}
-          className={`absolute inset-0 w-full h-full object-cover object-[55%_40%] transition-opacity duration-[2000ms] ${
+          className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-[2000ms] ${
             idx === current ? "opacity-100" : "opacity-0"
           }`}
         />
