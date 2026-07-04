@@ -155,7 +155,7 @@ export default function HomePage() {
           <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
-          <div className="relative z-10 w-full h-full flex flex-col justify-center items-start px-8 md:px-16 lg:px-20 xl:px-24">
+          <div className="relative z-10 w-full h-full flex flex-col justify-center items-start pl-[8%] md:pl-[20%] lg:pl-[28%] xl:pl-[34%]">
             <div className="max-w-[460px]">
               <p className="tracking-[0.35em] uppercase mb-3 text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
                 Fuzz Sofa Studio
