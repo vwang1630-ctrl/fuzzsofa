@@ -20,18 +20,18 @@ export default function ContactPage() {
 
   return (
     <section className="relative">
-      <div className="py-20 md:py-32 bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
+      <div className="pt-8 pb-4 sm:pt-12 sm:pb-6">
+        <div className="max-w-5xl mx-auto px-6">
+          <h1 className="font-serif text-2xl sm:text-3xl font-light text-[#F5F0EB]">
             {t("contact")}
           </h1>
-          <p className="mt-6 text-lg text-[#F5F0EB]/50 font-light max-w-2xl mx-auto">
+          <p className="mt-2 text-sm text-[#F5F0EB]/50 font-light">
             {t("contactSubtitle")}
           </p>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 py-20">
+      <div className="max-w-5xl mx-auto px-6 pb-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-16">
           {/* Form */}
           <div>
