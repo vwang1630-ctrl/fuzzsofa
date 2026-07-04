@@ -248,6 +248,7 @@ export default function AccountPage() {
     city: "", state: "", zipCode: "",
   });
   const [editItems, setEditItems] = useState<Array<{ id: string; colorName: string; colorHex: string; productSlug: string }>>([]);
+  const [editProductColors, setEditProductColors] = useState<Record<string, { name: string; hex: string }[]>>({});
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -481,6 +482,23 @@ export default function AccountPage() {
       colorHex: it.colorHex || "",
       productSlug: it.productSlug || "",
     })));
+    // Load available colors for each product in the order
+    const colorsMap: Record<string, { name: string; hex: string }[]> = {};
+    const slugs = new Set(order.items.map(it => it.productSlug || ""));
+    slugs.forEach(slug => {
+      if (!slug) return;
+      const product = getProduct(slug);
+      if (product?.materialOptions) {
+        const allColors: { name: string; hex: string }[] = [];
+        product.materialOptions.forEach(opt => {
+          opt.options.forEach((name, i) => {
+            allColors.push({ name: `${opt.type} - ${name}`, hex: opt.colors[i] || "#666" });
+          });
+        });
+        colorsMap[slug] = allColors;
+      }
+    });
+    setEditProductColors(colorsMap);
   };
 
   // Save edited order
@@ -766,39 +784,47 @@ export default function AccountPage() {
                   <div className="mb-8">
                     <h4 className="text-sm text-[#F5F0EB] tracking-[0.1em] uppercase mb-4">{t("editOrderColor")}</h4>
                     <div className="space-y-4">
-                      {editItems.map((item, idx) => (
-                        <div key={item.id} className="border border-[#1A1A1A] rounded-lg p-4">
-                          <p className="text-xs text-[#8A8580] mb-2 tracking-wide">
-                            {locale === "zh" ? "商品" : "Item"} {idx + 1}: {editingOrder.items?.[idx]?.productName || ""}
-                          </p>
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-xs text-[#8A8580] tracking-wide">{t("editOrderSelectColor")}:</span>
-                            <div className="flex items-center gap-2">
-                              <input
-                                type="color"
-                                value={item.colorHex || "#000000"}
-                                onChange={e => {
-                                  const newItems = [...editItems];
-                                  newItems[idx] = { ...newItems[idx], colorHex: e.target.value };
-                                  setEditItems(newItems);
-                                }}
-                                className="w-8 h-8 rounded border border-[#333] cursor-pointer bg-transparent"
-                              />
-                              <input
-                                type="text"
-                                value={item.colorName}
-                                onChange={e => {
-                                  const newItems = [...editItems];
-                                  newItems[idx] = { ...newItems[idx], colorName: e.target.value };
-                                  setEditItems(newItems);
-                                }}
-                                placeholder="Color name"
-                                className="bg-[#111111] border border-[#1A1A1A] text-[#F5F0EB] text-sm px-3 py-1.5 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors w-40"
-                              />
-                            </div>
+                      {editItems.map((item, idx) => {
+                        const availableColors = editProductColors[item.productSlug] || [];
+                        return (
+                          <div key={item.id} className="border border-[#1A1A1A] rounded-lg p-4">
+                            <p className="text-xs text-[#8A8580] mb-3 tracking-wide">
+                              {locale === "zh" ? "商品" : "Item"} {idx + 1}: {editingOrder.items?.[idx]?.productName || ""}
+                            </p>
+                            {availableColors.length > 0 ? (
+                              <div className="flex flex-wrap gap-2">
+                                {availableColors.map((color) => {
+                                  const isSelected = item.colorName === color.name;
+                                  return (
+                                    <button
+                                      key={color.name}
+                                      type="button"
+                                      onClick={() => {
+                                        const newItems = [...editItems];
+                                        newItems[idx] = { ...newItems[idx], colorName: color.name, colorHex: color.hex };
+                                        setEditItems(newItems);
+                                      }}
+                                      className={`flex items-center gap-2 px-3 py-1.5 border transition-all text-xs ${
+                                        isSelected
+                                          ? "border-[#E8B4B8] bg-[#E8B4B8]/10 text-[#F5F0EB]"
+                                          : "border-[#333] text-[#8A8580] hover:border-[#E8B4B8]/50 hover:text-[#F5F0EB]"
+                                      }`}
+                                    >
+                                      <span
+                                        className="w-4 h-4 rounded-full border border-[#333] flex-shrink-0"
+                                        style={{ backgroundColor: color.hex }}
+                                      />
+                                      <span className="tracking-wide">{color.name}</span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            ) : (
+                              <p className="text-xs text-[#8A8580]">{item.colorName}</p>
+                            )}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
 
