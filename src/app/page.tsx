@@ -251,15 +251,16 @@ export default function HomePage() {
                     <p className="mt-1 text-[12px] text-[#8A8580] tracking-[0.04em]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
                   </div>
                 </div>
-                {/* Desktop: original 021a54d layout */}
-                <div className="hidden md:block aspect-square relative overflow-hidden">
-                  <img
-                    src={(product.images ?? [])[0] ?? ''}
-                    alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-[#0A0A0A]/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                {/* Desktop: image + text below */}
+                <div className="hidden md:block">
+                  <div className="aspect-square overflow-hidden">
+                    <img
+                      src={(product.images ?? [])[0] ?? ''}
+                      alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                  <div className="pt-4 pb-2">
                     <h3 className="font-serif text-xl font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                       {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     </h3>
