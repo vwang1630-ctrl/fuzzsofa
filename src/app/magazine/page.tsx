@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { MagazinePageClient } from "./magazine-client";
 
 export const metadata: Metadata = {
-  title: "Interior World — Fuzz Sofa Studio",
+  title: "Fuzz Sofa World",
   description:
-    "Explore the world of sculptural furniture through curated editorials, artisan stories, and community spaces. Interior World for those who see furniture as art.",
+    "Explore the world of sculptural furniture through curated editorials, artisan stories, and community spaces. Fuzz Sofa World for those who see furniture as art.",
   openGraph: {
-    title: "Interior World — Fuzz Sofa Studio",
+    title: "Fuzz Sofa World",
     description:
       "Curated editorials, artisan stories, and community spaces for sculptural furniture lovers.",
   },
