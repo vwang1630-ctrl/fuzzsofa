@@ -298,9 +298,9 @@ export default function HomePage() {
             ].map((interior) => (
               <Link key={interior.href} href={interior.href} className="group relative overflow-hidden border-0 md:border md:border-[#1A1A1A] hover:border-[#E8B4B8]/40 hover:-translate-y-0.5 md:hover:-translate-y-1 transition-all duration-300">
                 <div className="overflow-hidden">
-                  <div className={`h-36 md:h-56 bg-gradient-to-b ${interior.accent} relative`}>
+                  <div className={`h-36 md:h-56 bg-gradient-to-b ${interior.accent} relative overflow-hidden`}>
                     {"image" in interior && interior.image ? (
-                      <img src={interior.image} alt={interior.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
+                      <img src={interior.image} alt={interior.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
                     ) : (
                       <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500" style={{ background: "radial-gradient(ellipse at center, #E8B4B8, transparent)" }} />
                     )}

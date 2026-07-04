@@ -380,8 +380,8 @@ export function ProductPageClient(
                             onTouchEnd={handleTouchEnd}>
                             {galleryImages.map((img, idx) => (
                                 <div key={img.id} className="w-full flex-shrink-0 snap-center">
-                                    <div className="relative w-full overflow-hidden">
-                                        {img.src ? <img src={img.src} alt={productName} className="w-full object-cover max-h-[75vh]" /> : <div className="flex items-center justify-center py-20"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
+                                    <div className="relative w-full aspect-square overflow-hidden">
+                                        {img.src ? <img src={img.src} alt={productName} className="absolute inset-0 w-full h-full object-cover" /> : <div className="flex items-center justify-center py-20"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
                                     </div>
                                 </div>
                             ))}
