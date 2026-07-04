@@ -8,18 +8,18 @@ export function AboutContent() {
 
   return (
     <section className="relative">
-      <div className="py-20 md:py-32 bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="font-serif text-4xl md:text-6xl font-light text-[#F5F0EB]">
+      <div className="pt-8 pb-4 sm:pt-12 sm:pb-6 sm:py-20 md:py-32 bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6 text-center">
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light text-[#F5F0EB]">
             {t("about")}
           </h1>
-          <p className="mt-6 text-lg text-[#E8B4B8]/60 font-light tracking-[0.1em] uppercase text-sm">
+          <p className="mt-3 sm:mt-6 text-xs sm:text-sm md:text-lg text-[#E8B4B8]/60 font-light tracking-[0.1em] uppercase">
             {t("fromShanghai")}
           </p>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-6 py-20">
+      <div className="max-w-3xl mx-auto px-5 sm:px-6 py-12 sm:py-20">
         <div className="space-y-8">
           <p className="text-[#F5F0EB]/70 leading-relaxed text-lg">
             {t("aboutP1")}

@@ -154,7 +154,7 @@ export function MagazinePageClient() {
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
       {/* Hero Section */}
-      <section className="relative h-[85vh] min-h-[600px] overflow-hidden">
+      <section className="relative h-[70vh] sm:h-[80vh] md:h-[85vh] min-h-[480px] sm:min-h-[600px] overflow-hidden">
         <Image
           src={heroArticle.heroImage}
           alt="High-end interior space featuring Fuzz Sofa in a modern living room"
@@ -167,46 +167,46 @@ export function MagazinePageClient() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
 
         {/* Content */}
-        <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-12 lg:p-16">
+        <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 md:p-12 lg:p-16">
           {/* Chapter number */}
-          <span className="font-serif font-light text-[5rem] md:text-[6rem] lg:text-[7rem] leading-none text-[#F5F0EB]/20 absolute bottom-8 left-6 md:left-12 lg:left-16">
+          <span className="font-serif font-light text-[3.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] leading-none text-[#F5F0EB]/20 absolute bottom-5 sm:bottom-8 left-5 sm:left-6 md:left-12 lg:left-16">
             {heroArticle.chapterNumber}
           </span>
 
           {/* Title and description */}
-          <div className="max-w-xl ml-auto md:ml-0 md:pl-[30%] lg:pl-[40%] animate-fade-in">
-            <h1 className="font-serif font-light text-3xl md:text-4xl lg:text-5xl tracking-[0.05em] text-[#F5F0EB] mb-4">
+          <div className="max-w-xl md:ml-0 md:pl-[30%] lg:pl-[40%] animate-fade-in">
+            <h1 className="font-serif font-light text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[0.05em] text-[#F5F0EB] mb-3 sm:mb-4">
               {heroArticle.title}
             </h1>
-            <p className="font-sans font-light text-sm md:text-base text-[#8A8580] tracking-wide mb-8 max-w-md leading-relaxed">
+            <p className="font-sans font-light text-xs sm:text-sm md:text-base text-[#8A8580] tracking-wide mb-6 sm:mb-8 max-w-md leading-relaxed">
               {heroArticle.subtitle}
             </p>
 
             {/* Read More button */}
             <Link
               href={`/magazine/${heroArticle.slug}`}
-              className="inline-flex items-center gap-3 px-6 py-3 border border-[#F5F0EB]/60 text-[#F5F0EB] text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A]"
+              className="inline-flex items-center gap-3 px-5 sm:px-6 py-2.5 sm:py-3 border border-[#F5F0EB]/60 text-[#F5F0EB] text-xs sm:text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A]"
             >
               <span>Read More</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* Editorial Picks */}
-      <section className="py-16 md:py-24 px-6 md:px-12 lg:px-16 max-w-[1200px] mx-auto">
-        <div className="mb-10 animate-fade-in">
-          <h2 className="font-serif font-light text-2xl md:text-3xl tracking-[0.1em] text-[#F5F0EB] uppercase">
+      <section className="py-12 sm:py-16 md:py-24 px-5 sm:px-6 md:px-12 lg:px-16 max-w-[1200px] mx-auto">
+        <div className="mb-6 sm:mb-10 animate-fade-in">
+          <h2 className="font-serif font-light text-xl sm:text-2xl md:text-3xl tracking-[0.1em] text-[#F5F0EB] uppercase">
             Editorial
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {/* Feature card */}
           <Link
             href={`/magazine/${editorialArticles[0].slug}`}
-            className="group relative h-[400px] md:col-span-2 rounded overflow-hidden cursor-pointer animate-fade-in animate-fade-in-delay-1"
+            className="group relative h-[280px] sm:h-[350px] md:h-[400px] md:col-span-2 rounded overflow-hidden cursor-pointer animate-fade-in animate-fade-in-delay-1"
           >
             <Image
               src={editorialArticles[0].heroImage}
@@ -217,11 +217,11 @@ export function MagazinePageClient() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
 
-            <span className="absolute top-6 left-6 font-serif font-light text-[4rem] leading-none text-[#F5F0EB]/20">
+            <span className="absolute top-4 left-4 sm:top-6 sm:left-6 font-serif font-light text-[3rem] sm:text-[4rem] leading-none text-[#F5F0EB]/20">
               {editorialArticles[0].chapterNumber}
             </span>
 
-            <div className="absolute top-6 right-6 flex gap-2 opacity-0 -translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+            <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex gap-2 opacity-0 -translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
               <button
                 className="p-2 bg-[#111111]/80 backdrop-blur rounded hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-colors"
                 title="Share"
@@ -247,7 +247,7 @@ export function MagazinePageClient() {
             <Link
               key={article.slug}
               href={`/magazine/${article.slug}`}
-              className="group relative h-[300px] rounded overflow-hidden cursor-pointer animate-fade-in animate-fade-in-delay-2"
+              className="group relative h-[250px] sm:h-[300px] rounded overflow-hidden cursor-pointer animate-fade-in animate-fade-in-delay-2"
             >
               <Image
                 src={article.heroImage}
@@ -298,7 +298,7 @@ export function MagazinePageClient() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
             {userSpacePosts.map((post, i) => (
               <div
                 key={post.id}
@@ -315,11 +315,11 @@ export function MagazinePageClient() {
                   alt={post.alt}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 768px) 50vw, 33vw"
                 />
-                <div className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-[#0A0A0A]/90 to-transparent">
+                <div className="absolute bottom-0 left-0 right-0 px-3 py-2 sm:px-4 sm:py-3 bg-gradient-to-t from-[#0A0A0A]/90 to-transparent">
                   <div className="flex items-center justify-between">
-                    <span className="font-sans text-xs text-[#F5F0EB] tracking-wide">
+                    <span className="font-sans text-[10px] sm:text-xs text-[#F5F0EB] tracking-wide">
                       {post.username}
                     </span>
                     <div className="flex items-center gap-1 text-[#8A8580]">
@@ -341,20 +341,20 @@ export function MagazinePageClient() {
       </section>
 
       {/* AI Synthesis CTA */}
-      <section className="py-16 md:py-20 px-6 md:px-12 lg:px-16 bg-[#111111]">
+      <section className="py-12 sm:py-16 md:py-20 px-5 sm:px-6 md:px-12 lg:px-16 bg-[#111111]">
         <div className="text-center animate-fade-in max-w-2xl mx-auto">
-          <Sparkles className="w-8 h-8 text-[#E8B4B8] mx-auto mb-4" />
-          <p className="font-sans font-light text-base md:text-lg text-[#F5F0EB] tracking-wide mb-2">
+          <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-[#E8B4B8] mx-auto mb-3 sm:mb-4" />
+          <p className="font-sans font-light text-sm sm:text-base md:text-lg text-[#F5F0EB] tracking-wide mb-2">
             Imagine Fuzz Sofa in your space.
           </p>
-          <p className="font-sans font-light text-sm text-[#8A8580] tracking-wide mb-8">
+          <p className="font-sans font-light text-xs sm:text-sm text-[#8A8580] tracking-wide mb-6 sm:mb-8">
             Describe your room, upload a photo, and let AI create the vision.
           </p>
           <button
             onClick={() => setAiModalOpen(true)}
-            className="inline-flex items-center gap-2 px-6 py-3 border border-[#F5F0EB]/60 text-[#F5F0EB] text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A]"
+            className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 border border-[#F5F0EB]/60 text-[#F5F0EB] text-xs sm:text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:bg-[#E8B4B8] hover:border-[#E8B4B8] hover:text-[#0A0A0A]"
           >
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>AI Space Visualizer</span>
           </button>
         </div>

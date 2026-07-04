@@ -31,8 +31,8 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 pb-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-16">
+      <div className="max-w-5xl mx-auto px-5 sm:px-6 pb-12 sm:pb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 sm:gap-16">
           {/* Form */}
           <div>
             {submitted ? (

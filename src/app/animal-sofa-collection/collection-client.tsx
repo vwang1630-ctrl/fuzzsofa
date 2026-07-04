@@ -44,7 +44,7 @@ export function CollectionClient() {
       {/* Hero */}
       <section className="relative">
         <div className="pt-8 pb-4 sm:pt-12 sm:pb-6 bg-[#0A0A0A]">
-          <div className="max-w-4xl mx-auto px-6">
+          <div className="max-w-4xl mx-auto px-5 sm:px-6">
             <p className="text-xs text-[#E8B4B8]/60 tracking-[0.15em] uppercase mb-3">
               Featured Works
             </p>
@@ -59,7 +59,7 @@ export function CollectionClient() {
       </section>
 
       {/* Products — 5 products, flat display, no filters */}
-      <section className="max-w-6xl mx-auto px-6 pb-16">
+      <section className="max-w-6xl mx-auto px-5 sm:px-6 pb-12 sm:pb-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {products.filter((p) => p.images && p.images.length > 0).map((product, idx) => (
             <Link

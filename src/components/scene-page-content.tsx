@@ -55,12 +55,12 @@ export function ScenePageContent({
             </>
           )}
           <div className="absolute inset-0 flex items-end">
-            <div className="w-full max-w-5xl mx-auto px-6 pb-10 sm:pb-14">
-              <p className="text-[10px] text-[#E8B4B8]/70 tracking-[0.2em] uppercase mb-3">{heroLabel}</p>
-              <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-[#F5F0EB] tracking-wide leading-tight">
+            <div className="w-full max-w-5xl mx-auto px-5 sm:px-6 pb-8 sm:pb-10 md:pb-14">
+              <p className="text-[10px] text-[#E8B4B8]/70 tracking-[0.2em] uppercase mb-2 sm:mb-3">{heroLabel}</p>
+              <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-light text-[#F5F0EB] tracking-wide leading-tight">
                 {heroTitle}
               </h1>
-              <p className="mt-3 text-sm sm:text-base text-[#F5F0EB]/45 font-light max-w-xl leading-relaxed">
+              <p className="mt-2 sm:mt-3 text-xs sm:text-sm md:text-base text-[#F5F0EB]/45 font-light max-w-xl leading-relaxed">
                 {heroSubtitle}
               </p>
             </div>
@@ -69,8 +69,8 @@ export function ScenePageContent({
       </section>
 
       {/* Why This Space */}
-      <section className="max-w-5xl mx-auto px-6 pt-16 pb-20">
-        <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-8">{t("whyThisSpace")}</p>
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 pt-12 sm:pt-16 pb-14 sm:pb-20">
+        <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-6 sm:mb-8">{t("whyThisSpace")}</p>
         <div className="max-w-2xl">
           {whyThisSpaceContent}
         </div>
@@ -78,8 +78,8 @@ export function ScenePageContent({
 
       {/* Recommended Pieces */}
       <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-5xl mx-auto px-6 py-20">
-          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-10">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 py-14 sm:py-20">
+          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-8 sm:mb-10">
             {t("recommendedPieces")}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -115,16 +115,16 @@ export function ScenePageContent({
 
       {/* Design Principles */}
       <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-5xl mx-auto px-6 py-20">
-          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-10">{t("designPrinciples")}</p>
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 py-14 sm:py-20">
+          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-8 sm:mb-10">{t("designPrinciples")}</p>
           {designPrinciplesContent}
         </div>
       </section>
 
       {/* Related Scenes */}
       <section className="border-t border-[#1A1A1A]">
-        <div className="max-w-5xl mx-auto px-6 py-20">
-          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-8">{t("relatedScenes")}</p>
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 py-14 sm:py-20">
+          <p className="text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-6 sm:mb-8">{t("relatedScenes")}</p>
           <div className="flex flex-wrap gap-3">
             {relatedScenes.map((scene) => (
               <Link

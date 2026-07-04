@@ -40,18 +40,18 @@ export function ArticleDetailClient({ article }: Props) {
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
       {/* Back link */}
-      <div className="max-w-3xl mx-auto pt-[76px] px-6 animate-fade-in">
+      <div className="max-w-3xl mx-auto pt-[76px] px-5 sm:px-6 animate-fade-in">
         <Link
           href="/magazine"
-          className="inline-flex items-center gap-2 text-sm tracking-[0.1em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors uppercase"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm tracking-[0.1em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors uppercase"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           <span>Back to Fuzz Sofa World</span>
         </Link>
       </div>
 
       {/* Hero */}
-      <section className="relative h-[60vh] mt-4 overflow-hidden animate-fade-in animate-fade-in-delay-1">
+      <section className="relative h-[45vh] sm:h-[55vh] md:h-[60vh] mt-3 sm:mt-4 overflow-hidden animate-fade-in animate-fade-in-delay-1">
         <Image
           src={article.heroImage}
           alt={article.title}
@@ -62,15 +62,15 @@ export function ArticleDetailClient({ article }: Props) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
+        <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 md:p-12">
           <div className="max-w-3xl mx-auto">
-            <span className="font-serif text-[5rem] md:text-[6rem] font-light tracking-[0.05em] text-[#F5F0EB]/20 leading-none">
+            <span className="font-serif text-[3rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-light tracking-[0.05em] text-[#F5F0EB]/20 leading-none">
               {article.chapterNumber}
             </span>
-            <h1 className="font-serif text-2xl md:text-3xl font-light tracking-[0.05em] text-[#F5F0EB] -mt-6 md:-mt-8 relative z-10">
+            <h1 className="font-serif text-xl sm:text-2xl md:text-3xl font-light tracking-[0.05em] text-[#F5F0EB] -mt-4 sm:-mt-6 md:-mt-8 relative z-10">
               {article.title}
             </h1>
-            <p className="font-sans text-sm md:text-base font-light tracking-[0.1em] text-[#8A8580] mt-4 uppercase">
+            <p className="font-sans text-xs sm:text-sm md:text-base font-light tracking-[0.1em] text-[#8A8580] mt-3 sm:mt-4 uppercase">
               {article.subtitle}
             </p>
           </div>
@@ -78,13 +78,13 @@ export function ArticleDetailClient({ article }: Props) {
       </section>
 
       {/* Article body */}
-      <article className="max-w-3xl mx-auto px-6 py-16">
+      <article className="max-w-3xl mx-auto px-5 sm:px-6 py-10 sm:py-16">
         {article.body.map((block, idx) => {
           if (block.type === "paragraph") {
             return (
               <p
                 key={idx}
-                className={`font-sans font-light leading-relaxed text-[#F5F0EB]/80 text-base md:text-lg mb-8 animate-fade-in ${
+                className={`font-sans font-light leading-[1.8] text-[#F5F0EB]/80 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 animate-fade-in ${
                   idx === 0 ? "drop-cap" : ""
                 }`}
                 style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
@@ -98,7 +98,7 @@ export function ArticleDetailClient({ article }: Props) {
             return (
               <figure
                 key={idx}
-                className="relative mb-12 animate-fade-in"
+                className="relative mb-8 sm:mb-12 animate-fade-in"
                 style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
               >
                 <div className="relative w-full aspect-[16/10] rounded overflow-hidden">
@@ -142,10 +142,10 @@ export function ArticleDetailClient({ article }: Props) {
             return (
               <blockquote
                 key={idx}
-                className="border-l-2 border-[#E8B4B8] pl-6 my-12 animate-fade-in"
+                className="border-l-2 border-[#E8B4B8] pl-4 sm:pl-6 my-8 sm:my-12 animate-fade-in"
                 style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
               >
-                <p className="font-serif text-xl md:text-2xl font-light tracking-[0.05em] text-[#F5F0EB] italic">
+                <p className="font-serif text-lg sm:text-xl md:text-2xl font-light tracking-[0.05em] text-[#F5F0EB] italic">
                   {block.content}
                 </p>
               </blockquote>
@@ -157,8 +157,8 @@ export function ArticleDetailClient({ article }: Props) {
       </article>
 
       {/* Interaction bar */}
-      <aside className="max-w-3xl mx-auto px-6 pb-16 animate-fade-in animate-fade-in-delay-3">
-        <div className="flex items-center gap-6 py-4 border-t border-b border-[#1A1A1A]/30">
+      <aside className="max-w-3xl mx-auto px-5 sm:px-6 pb-10 sm:pb-16 animate-fade-in animate-fade-in-delay-3">
+        <div className="flex items-center gap-4 sm:gap-6 py-3 sm:py-4 border-t border-b border-[#1A1A1A]/30">
           {/* Like */}
           <button
             onClick={handleLike}
@@ -231,12 +231,12 @@ export function ArticleDetailClient({ article }: Props) {
 
       {/* Related Stories */}
       {relatedArticles.length > 0 && (
-        <section className="max-w-3xl mx-auto px-6 pb-20 animate-fade-in animate-fade-in-delay-3">
-          <h2 className="font-serif text-xl md:text-2xl font-light tracking-[0.05em] text-[#F5F0EB] mb-8">
+        <section className="max-w-3xl mx-auto px-5 sm:px-6 pb-12 sm:pb-20 animate-fade-in animate-fade-in-delay-3">
+          <h2 className="font-serif text-lg sm:text-xl md:text-2xl font-light tracking-[0.05em] text-[#F5F0EB] mb-6 sm:mb-8">
             Related Stories
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {relatedArticles.map((related) => (
               <Link
                 key={related.slug}

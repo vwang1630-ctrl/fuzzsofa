@@ -8,7 +8,7 @@ export default function WarrantyPage() {
   return (
     <section className="relative">
       <div className="pt-8 pb-4 sm:pt-12 sm:pb-6 bg-[#0A0A0A]">
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6">
           <p className="text-xs text-[#8A8580] tracking-[0.2em] uppercase mb-2">{t("support")}</p>
           <h1 className="font-serif text-2xl sm:text-3xl font-light text-[#F5F0EB]">
             {t("warrantyTitle")}
@@ -19,7 +19,7 @@ export default function WarrantyPage() {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-6 pb-16 space-y-16">
+      <div className="max-w-3xl mx-auto px-5 sm:px-6 pb-12 sm:pb-16 space-y-12 sm:space-y-16">
         {/* Coverage */}
         <div>
           <h2 className="font-serif text-2xl font-light text-[#F5F0EB] mb-6">{t("warrantyCoverage")}</h2>
