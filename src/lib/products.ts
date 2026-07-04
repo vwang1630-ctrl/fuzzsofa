@@ -156,27 +156,43 @@ export const products: Product[] = [
     ],
     materialOptions: [
       {
-        type: "Bouclé",
+        type: "Leather",
         options: [
-          "Snowy White Bouclé",
-          "Rose Pink Bouclé",
+          "Agate Black Leather",
+          "Chestnut Brown Leather",
+        ],
+        colors: ["#1A1A1A", "#6B3A2A"],
+      },
+      {
+        type: "Plush",
+        options: [
+          "Snowy White Plush",
+          "Rose Pink Plush",
         ],
         colors: ["#F0EBE0", "#E8B4B8"],
+      },
+      {
+        type: "Linen",
+        options: [
+          "Warm Gray Linen",
+          "Oatmeal Linen",
+        ],
+        colors: ["#8A8580", "#C4B9A4"],
       },
       {
         type: "Velvet",
         options: [
           "Forest Green Velvet",
-          "Warm Gray Linen Velvet",
+          "Burgundy Velvet",
         ],
-        colors: ["#5A7A5A", "#8A8580"],
+        colors: ["#5A7A5A", "#722F37"],
       },
     ],
     faq: [
       {
         question: "Is the Owl Chair available in leather?",
         answer:
-          "The Owl Chair is available in two fabric lines: Bouclé (Snowy White Bouclé, Rose Pink Bouclé) and Velvet (Forest Green Velvet, Warm Gray Linen Velvet) — four colors in total. The curved backrest and wing-like proportions are best expressed in fabric, which drapes naturally over the organic form. Leather options may be available for bespoke orders — contact our design team to discuss.",
+          "The Owl Chair is available in four material lines: Leather (Agate Black, Chestnut Brown), Plush (Snowy White, Rose Pink), Linen (Warm Gray, Oatmeal), and Velvet (Forest Green, Burgundy) — eight colors in total. Each material brings a unique tactile character to the chair's organic form.",
       },
       {
         question: "Can the Owl Chair be used as a dining chair?",

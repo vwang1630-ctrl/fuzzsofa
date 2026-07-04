@@ -60,7 +60,7 @@ function HeroSlideshow({ current }: { current: number }) {
           key={scene.src}
           src={scene.src}
           alt={scene.alt}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${
+          className={`absolute inset-0 w-full h-full object-cover object-[center_35%] transition-opacity duration-[2000ms] ${
             idx === current ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -152,30 +152,32 @@ export default function HomePage() {
           <div className={`absolute inset-0 bg-gradient-to-r ${sceneConfig.overlay}`} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/45 via-transparent to-[#0A0A0A]/15" />
 
-          <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-16 pb-[6%] pt-[8%] flex flex-col justify-end md:justify-start">
-            <p className="tracking-[0.35em] uppercase mb-3 text-[12px] md:text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
-              Fuzz Sofa Studio
-            </p>
-            <h1 className="font-light leading-[1.05] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.8rem] md:text-[3rem] xl:text-[4.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
-              {t(sceneConfig.keys.title)}
-            </h1>
-            <p className="font-light text-sm md:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
-              Made-to-order, delivered in 1–2 weeks
-            </p>
-            <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
-              <button
-                onClick={() => {
-                  const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
-                  window.dispatchEvent(event);
-                }}
-                className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[12px] tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer"
-                style={{ borderColor: sceneConfig.accentColor + '50', color: sceneConfig.accentColor + 'CC', backgroundColor: sceneConfig.accentColor + '0A' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '80'; e.currentTarget.style.color = sceneConfig.accentColor; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '50'; e.currentTarget.style.color = sceneConfig.accentColor + 'CC'; }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
-                {t(sceneConfig.keys.aiCta as TranslationKeys)}
-              </button>
+          <div className="relative z-10 w-full h-full flex flex-col justify-center px-8 md:px-16 lg:px-28 xl:px-36">
+            <div className="max-w-[560px]">
+              <p className="tracking-[0.35em] uppercase mb-3 text-[12px] animate-fade-in" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.accentColor }}>
+                Fuzz Sofa Studio
+              </p>
+              <h1 className="font-light leading-[1.08] tracking-[0.02em] mb-4 md:mb-5 animate-fade-in-delay-1 text-[2.2rem] md:text-[2.8rem] xl:text-[3.5rem]" style={{ fontFamily: 'var(--font-serif)', color: sceneConfig.textColor }}>
+                {t(sceneConfig.keys.title)}
+              </h1>
+              <p className="font-light text-sm md:text-base max-w-[420px] leading-[1.75] animate-fade-in-delay-2" style={{ color: sceneConfig.textColor + '80' }}>
+                Made-to-order, delivered in 1–2 weeks
+              </p>
+              <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
+                <button
+                  onClick={() => {
+                    const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
+                    window.dispatchEvent(event);
+                  }}
+                  className="group inline-flex items-center gap-2.5 px-5 py-2.5 border text-[12px] tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer"
+                  style={{ borderColor: sceneConfig.accentColor + '50', color: sceneConfig.accentColor + 'CC', backgroundColor: sceneConfig.accentColor + '0A' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '18'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '80'; e.currentTarget.style.color = sceneConfig.accentColor; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = sceneConfig.accentColor + '0A'; e.currentTarget.style.borderColor = sceneConfig.accentColor + '50'; e.currentTarget.style.color = sceneConfig.accentColor + 'CC'; }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
+                  {t(sceneConfig.keys.aiCta as TranslationKeys)}
+                </button>
+              </div>
             </div>
           </div>
 
@@ -190,7 +192,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 2. TRUST BAR ─── */}
-      <section className="bg-[#090909] py-6 md:py-10 border-y border-white/[0.03] md:border-0">
+      <section className="bg-[#090909] py-4 md:py-5 border-y border-white/[0.03] md:border-0">
         <div className="max-w-[1200px] mx-auto px-5 md:px-6 flex flex-wrap items-center justify-center gap-5 md:gap-16 text-center">
           {[
             { icon: '✦', label: 'Studio-Crafted', labelDesktop: 'Studio-Crafted Furniture' },
@@ -212,7 +214,7 @@ export default function HomePage() {
 
 
       {/* ─── 4. FEATURED WORKS ─── */}
-      <section id="featured-works" className="bg-[#090909] py-10 md:py-24">
+      <section id="featured-works" className="bg-[#090909] pt-8 md:pt-14 pb-10 md:pb-24">
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
           <div className="mb-6 md:mb-12 flex items-end justify-between">
             <div>
