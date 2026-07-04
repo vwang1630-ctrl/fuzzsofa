@@ -248,7 +248,7 @@ export default function AccountPage() {
     city: "", state: "", zipCode: "",
   });
   const [editItems, setEditItems] = useState<Array<{ id: string; colorName: string; colorHex: string; productSlug: string }>>([]);
-  const [editProductColors, setEditProductColors] = useState<Record<string, { name: string; hex: string }[]>>({});
+  const [editProductColors, setEditProductColors] = useState<Record<string, { name: string; hex: string; type: string; swatchImage: string }[]>>({});
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -482,17 +482,33 @@ export default function AccountPage() {
       colorHex: it.colorHex || "",
       productSlug: it.productSlug || "",
     })));
-    // Load available colors for each product in the order
-    const colorsMap: Record<string, { name: string; hex: string }[]> = {};
+    // Load available colors for each product in the order (with material type groups + swatch images)
+    const colorsMap: Record<string, { name: string; hex: string; type: string; swatchImage: string }[]> = {};
     const slugs = new Set(order.items.map(it => it.productSlug || ""));
+    const productImages: Record<string, string[]> = {
+      "owl-sofa": ["/products/owl/snowy-white.png","/products/owl/rose-pink.png","/products/owl/forest-green.png","/products/owl/warm-gray.png","/products/owl/dusty-pink-fur.png","/products/owl/lifestyle-square.webp"],
+      "gorilla-sofa": ["/products/gorilla-sofa/gray.jpg","/products/gorilla-sofa/cream.jpg","/products/gorilla-sofa/brown.jpg","/products/gorilla-sofa/black.jpg"],
+      "silverback-sofa": ["/products/silverback-sofa/gray.jpg","/products/silverback-sofa/beige.jpg","/products/silverback-sofa/navy.jpg","/products/silverback-sofa/charcoal.jpg"],
+      "meteorite-ring-sofa": ["/products/meteorite-ring-sofa/hero-1.webp","/products/meteorite-ring-sofa/main.jpg","/products/meteorite-ring-sofa/scene-2.jpg"],
+      "muscle-gorilla-sofa": ["/products/muscle-gorilla-sofa/main.jpg","/products/muscle-gorilla-sofa/scene-2.jpg","/products/muscle-gorilla-sofa/scene-4.jpg","/products/muscle-gorilla-sofa/scene-5.jpg"],
+    };
+    const matTypeKeyMap: Record<string, string> = {
+      "Plush Fur": "matTypePlushFur", "Cloud Touch": "matTypeCloudTouch",
+      "Wild Touch": "matTypeWildTouch", "Fabric": "matTypeFabric",
+      "Meteorite Fabric": "matTypeMeteoriteFabric", "Leather": "matTypeLeather",
+    };
     slugs.forEach(slug => {
       if (!slug) return;
       const product = getProduct(slug);
       if (product?.materialOptions) {
-        const allColors: { name: string; hex: string }[] = [];
+        const allColors: { name: string; hex: string; type: string; swatchImage: string }[] = [];
+        const images = productImages[slug] || [];
+        let globalIdx = 0;
         product.materialOptions.forEach(opt => {
           opt.options.forEach((name, i) => {
-            allColors.push({ name: `${opt.type} - ${name}`, hex: opt.colors[i] || "#666" });
+            const swatchImg = images[globalIdx] || "";
+            allColors.push({ name, hex: opt.colors[i] || "#666", type: matTypeKeyMap[opt.type] || "matTypeFabric", swatchImage: swatchImg });
+            globalIdx++;
           });
         });
         colorsMap[slug] = allColors;
@@ -786,46 +802,76 @@ export default function AccountPage() {
                     <div className="space-y-4">
                       {editItems.map((item, idx) => {
                         const availableColors = editProductColors[item.productSlug] || [];
+                        // Group colors by material type
+                        const typeGroups: Record<string, { name: string; hex: string; swatchImage: string }[]> = {};
+                        availableColors.forEach(c => {
+                          const typeKey = c.type || "matTypeFabric";
+                          if (!typeGroups[typeKey]) typeGroups[typeKey] = [];
+                          typeGroups[typeKey].push({ name: c.name, hex: c.hex, swatchImage: c.swatchImage });
+                        });
                         return (
                           <div key={item.id} className="border border-[#1A1A1A] rounded-lg p-4">
                             <p className="text-xs text-[#8A8580] mb-3 tracking-wide">
                               {locale === "zh" ? "商品" : "Item"} {idx + 1}: {editingOrder.items?.[idx]?.productName || ""}
                             </p>
                             {availableColors.length > 0 ? (
-                              <div className="flex flex-wrap gap-3">
-                                {availableColors.map((color) => {
-                                  const isSelected = item.colorName === color.name;
-                                  return (
-                                    <button
-                                      key={color.name}
-                                      type="button"
-                                      onClick={() => {
-                                        const newItems = [...editItems];
-                                        newItems[idx] = { ...newItems[idx], colorName: color.name, colorHex: color.hex };
-                                        setEditItems(newItems);
-                                      }}
-                                      className="flex items-center gap-2 transition-all duration-300 group"
-                                    >
-                                      <span
-                                        className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 ${
-                                          isSelected
-                                            ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]"
-                                            : "border border-[#333] group-hover:border-[#555]"
-                                        }`}
-                                        style={{ backgroundColor: color.hex }}
-                                      />
-                                      <span
-                                        className={`text-xs tracking-[0.04em] whitespace-nowrap ${
-                                          isSelected
-                                            ? "text-[#F5F0EB]"
-                                            : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"
-                                        }`}
-                                      >
-                                        {color.name}
-                                      </span>
-                                    </button>
-                                  );
-                                })}
+                              <div className="space-y-3">
+                                {Object.entries(typeGroups).map(([typeKey, colors]) => (
+                                  <div key={typeKey}>
+                                    <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
+                                      {t(typeKey as TranslationKeys)}
+                                    </label>
+                                    <div className="flex flex-wrap gap-2">
+                                      {colors.map((color) => {
+                                        const isSelected = item.colorName === color.name;
+                                        return (
+                                          <button
+                                            key={color.name}
+                                            type="button"
+                                            onClick={() => {
+                                              const newItems = [...editItems];
+                                              newItems[idx] = { ...newItems[idx], colorName: color.name, colorHex: color.hex };
+                                              setEditItems(newItems);
+                                            }}
+                                            className="flex items-center gap-2 transition-all duration-300 group"
+                                          >
+                                            <span
+                                              className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${
+                                                isSelected
+                                                  ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]"
+                                                  : "border border-[#333] group-hover:border-[#555]"
+                                              }`}
+                                            >
+                                              {color.swatchImage ? (
+                                                <img
+                                                  src={color.swatchImage}
+                                                  alt={color.name}
+                                                  width={36}
+                                                  height={36}
+                                                  className="w-full h-full object-cover"
+                                                />
+                                              ) : (
+                                                <span
+                                                  className="w-full h-full block"
+                                                  style={{ backgroundColor: color.hex }}
+                                                />
+                                              )}
+                                            </span>
+                                            <span
+                                              className={`text-xs tracking-[0.04em] whitespace-nowrap ${
+                                                isSelected
+                                                  ? "text-[#F5F0EB]"
+                                                  : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"
+                                              }`}
+                                            >
+                                              {color.name}
+                                            </span>
+                                          </button>
+                                        );
+                                      })}
+                                    </div>
+                                  </div>
+                                ))}
                               </div>
                             ) : (
                               <p className="text-xs text-[#8A8580]">{item.colorName}</p>
