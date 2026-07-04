@@ -235,7 +235,7 @@ export default function HomePage() {
               <Link
                 key={product.slug}
                 href={`/${product.slug}`}
-                className="group relative overflow-hidden border-0 md:border md:border-[#1A1A1A] hover:border-[#E8B4B8]/40 transition-all duration-300"
+                className="group relative overflow-hidden"
               >
                 {/* Mobile: image + text below with breathing room */}
                 <div className="sm:hidden">
