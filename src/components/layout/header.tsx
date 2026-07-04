@@ -13,7 +13,7 @@ import type { TranslationKeys } from "@/lib/i18n";
 
 export function Header() {
   const pathname = usePathname();
-  const isProductPage = pathname && /^\/[a-z]+-[a-z]+(-[a-z]+)*$/.test(pathname) && !pathname.startsWith('/journal') && !pathname.startsWith('/animal');
+  const isProductPage = pathname && /^\/[a-z]+-[a-z]+(-[a-z]+)*$/.test(pathname) && !pathname.startsWith('/journal') && !pathname.startsWith('/animal') && !pathname.startsWith('/magazine');
   const { totalItems } = useCart();
   const { locale, setLocale, region, t, isRtl } = useLanguage();
   const otherLocale = locale === 'en' ? 'zh' : 'en';
@@ -89,6 +89,9 @@ export function Header() {
           </Link>
           <Link href="/luxury-villa-interior" className={`${isProductPage ? 'text-white/60' : 'text-[#8A8580]'} hover:text-[#E8B4B8] transition-colors duration-300`}>
             {t("interiorWorlds")}
+          </Link>
+          <Link href="/magazine" className={`${isProductPage ? 'text-white/60' : 'text-[#8A8580]'} hover:text-[#E8B4B8] transition-colors duration-300`}>
+            Interior World
           </Link>
           <Link href="/about" className={`${isProductPage ? 'text-white/60' : 'text-[#8A8580]'} hover:text-[#E8B4B8] transition-colors duration-300`}>
             {t("about")}
@@ -226,6 +229,7 @@ export function Header() {
         <nav className="sm:hidden bg-[#0A0A0A] border-t border-[#1A1A1A] px-6 py-4 flex flex-col gap-4 text-xs font-light tracking-[0.1em] uppercase">
           <Link href="/animal-sofa-collection" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("collection")}</Link>
           <Link href="/luxury-villa-interior" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("interiorWorlds")}</Link>
+          <Link href="/magazine" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Interior World</Link>
           <Link href="/about" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("about")}</Link>
           <Link href="/contact" onClick={() => setMobileOpen(false)} className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link>
           {user ? (

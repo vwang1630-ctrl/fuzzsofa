@@ -307,6 +307,18 @@ img {
   gap: 2rem;
 }
 
+/* ─── Magazine drop-cap ─── */
+.drop-cap::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  line-height: 1;
+  padding-right: 0.5rem;
+  padding-top: 0.15rem;
+  color: var(--off-white);
+  font-weight: 300;
+}
+
 /* ─── RTL support ─── */
 [dir="rtl"] {
   text-align: right;
