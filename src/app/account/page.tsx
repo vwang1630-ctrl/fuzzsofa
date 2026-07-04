@@ -624,7 +624,7 @@ export default function AccountPage() {
                     key={order.id}
                     className="border border-[#1a1a1a] rounded-lg p-4 sm:p-5 hover:border-[#333] transition-colors duration-300"
                   >
-                    {/* Header row: Order No + View Details + Date */}
+                    {/* Header row: Order No + View Details */}
                     <div className="flex items-start justify-between gap-3 mb-3">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
@@ -636,12 +636,19 @@ export default function AccountPage() {
                             {t("viewDetails")}
                           </Link>
                         </div>
-                        <p className="text-[#8A8580] text-[10px] sm:text-xs mt-1 tracking-wide">{formatDate(order.createdAt)}</p>
                       </div>
                     </div>
 
+                    {/* Date + Status row */}
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-[#8A8580] text-[10px] sm:text-xs tracking-wide">{formatDate(order.createdAt)}</p>
+                      <span className="inline-block px-2 py-0.5 text-[9px] sm:text-[10px] tracking-wider rounded bg-[#c98b96]/20 text-[#c98b96] border border-[#c98b96]/30">
+                        {statusLabel(order.status, t)}
+                      </span>
+                    </div>
+
                     {/* Product thumbnail row */}
-                    <div className="flex items-center gap-3 mb-3">
+                    <div className="flex items-center gap-3">
                       {mainItem?.imageUrl && (
                         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded overflow-hidden bg-[#111] flex-shrink-0 border border-[#1a1a1a]">
                           <img src={mainItem.imageUrl} alt={mainItem.productName} className="w-full h-full object-cover" />
@@ -659,13 +666,6 @@ export default function AccountPage() {
                           {paymentStatusLabel(order.paymentStatus, t)} · {order.paymentMethod || "PayPal"}
                         </p>
                       </div>
-                    </div>
-
-                    {/* Status tag */}
-                    <div className="flex justify-end">
-                      <span className="inline-block px-2 py-0.5 text-[9px] sm:text-[10px] tracking-wider rounded bg-[#c98b96]/20 text-[#c98b96] border border-[#c98b96]/30">
-                        {statusLabel(order.status, t)}
-                      </span>
                     </div>
                   </div>
                 );
