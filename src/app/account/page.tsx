@@ -249,6 +249,7 @@ export default function AccountPage() {
   });
   const [editItems, setEditItems] = useState<Array<{ id: string; colorName: string; colorHex: string; productSlug: string }>>([]);
   const [editProductColors, setEditProductColors] = useState<Record<string, { name: string; hex: string; type: string; swatchImage: string }[]>>({});
+  const [editSelectedTypes, setEditSelectedTypes] = useState<Record<number, string>>({});
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -515,6 +516,19 @@ export default function AccountPage() {
       }
     });
     setEditProductColors(colorsMap);
+    // Initialize selected types: for each item, pick the type that matches its current colorName
+    const typesMap: Record<number, string> = {};
+    order.items.forEach((item, idx) => {
+      const slug = item.productSlug;
+      const allColors = colorsMap[slug] || [];
+      const matchedType = allColors.find(c => c.name === item.colorName)?.type;
+      if (matchedType) {
+        typesMap[idx] = matchedType;
+      } else if (allColors.length > 0) {
+        typesMap[idx] = allColors[0].type;
+      }
+    });
+    setEditSelectedTypes(typesMap);
   };
 
   // Save edited order
@@ -809,69 +823,109 @@ export default function AccountPage() {
                           if (!typeGroups[typeKey]) typeGroups[typeKey] = [];
                           typeGroups[typeKey].push({ name: c.name, hex: c.hex, swatchImage: c.swatchImage });
                         });
+                        const typeKeys = Object.keys(typeGroups);
+                        const selectedType = editSelectedTypes[idx] || typeKeys[0] || "";
+                        const colorsForType = typeGroups[selectedType] || [];
+                        // Find current selection
+                        const selectedItem = editingOrder.items?.[idx];
+                        // Chinese type name mapping
+                        const typeLabelMap: Record<string, string> = {
+                          "matTypeBoucle": "布克莱",
+                          "matTypeVelvet": "金丝绒",
+                          "matTypePlushFur": "毛绒",
+                          "matTypeLeather": "皮革",
+                          "matTypeFabric": "面料",
+                        };
                         return (
                           <div key={item.id} className="border border-[#1A1A1A] rounded-lg p-4">
                             <p className="text-xs text-[#8A8580] mb-3 tracking-wide">
-                              {locale === "zh" ? "商品" : "Item"} {idx + 1}: {editingOrder.items?.[idx]?.productName || ""}
+                              商品 {idx + 1}: {selectedItem?.productName || ""}
                             </p>
                             {availableColors.length > 0 ? (
-                              <div className="space-y-3">
-                                {Object.entries(typeGroups).map(([typeKey, colors]) => (
-                                  <div key={typeKey}>
-                                    <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">
-                                      {t(typeKey as TranslationKeys)}
-                                    </label>
-                                    <div className="flex flex-wrap gap-2">
-                                      {colors.map((color) => {
-                                        const isSelected = item.colorName === color.name;
-                                        return (
-                                          <button
-                                            key={color.name}
-                                            type="button"
-                                            onClick={() => {
-                                              const newItems = [...editItems];
-                                              newItems[idx] = { ...newItems[idx], colorName: color.name, colorHex: color.hex };
-                                              setEditItems(newItems);
-                                            }}
-                                            className="flex items-center gap-2 transition-all duration-300 group"
-                                          >
+                              <div className="space-y-4">
+                                {/* Row 1: Material type text buttons */}
+                                <div className="flex flex-wrap gap-3">
+                                  {typeKeys.map((typeKey) => (
+                                    <button
+                                      key={typeKey}
+                                      type="button"
+                                      onClick={() => {
+                                        setEditSelectedTypes(prev => ({ ...prev, [idx]: typeKey }));
+                                        // Auto select first color of new type
+                                        const newTypeColors = typeGroups[typeKey] || [];
+                                        if (newTypeColors.length > 0) {
+                                          const newItems = [...editItems];
+                                          newItems[idx] = { ...newItems[idx], colorName: newTypeColors[0].name, colorHex: newTypeColors[0].hex };
+                                          setEditItems(newItems);
+                                        }
+                                      }}
+                                      className={`text-xs tracking-[0.08em] px-4 py-2 transition-all duration-300 ${
+                                        selectedType === typeKey
+                                          ? "bg-[#E8B4B8]/15 text-[#E8B4B8] border border-[#E8B4B8]/50"
+                                          : "text-[#8A8580] border border-[#333] hover:border-[#555] hover:text-[#F5F0EB]/60"
+                                      }`}
+                                    >
+                                      {typeLabelMap[typeKey] || typeKey}
+                                    </button>
+                                  ))}
+                                </div>
+
+                                {/* Row 2: Circular product swatch thumbnails */}
+                                <div className="flex flex-wrap gap-4">
+                                  {colorsForType.map((color) => {
+                                    const isSelected = item.colorName === color.name;
+                                    return (
+                                      <button
+                                        key={color.name}
+                                        type="button"
+                                        onClick={() => {
+                                          const newItems = [...editItems];
+                                          newItems[idx] = { ...newItems[idx], colorName: color.name, colorHex: color.hex };
+                                          setEditItems(newItems);
+                                        }}
+                                        className="flex flex-col items-center gap-2 transition-all duration-300 group"
+                                      >
+                                        <span
+                                          className={`w-12 h-12 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${
+                                            isSelected
+                                              ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]"
+                                              : "border border-[#333] group-hover:border-[#555]"
+                                          }`}
+                                        >
+                                          {color.swatchImage ? (
+                                            <img
+                                              src={color.swatchImage}
+                                              alt={color.name}
+                                              width={48}
+                                              height={48}
+                                              className="w-full h-full object-cover"
+                                            />
+                                          ) : (
                                             <span
-                                              className={`w-9 h-9 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${
-                                                isSelected
-                                                  ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]"
-                                                  : "border border-[#333] group-hover:border-[#555]"
-                                              }`}
-                                            >
-                                              {color.swatchImage ? (
-                                                <img
-                                                  src={color.swatchImage}
-                                                  alt={color.name}
-                                                  width={36}
-                                                  height={36}
-                                                  className="w-full h-full object-cover"
-                                                />
-                                              ) : (
-                                                <span
-                                                  className="w-full h-full block"
-                                                  style={{ backgroundColor: color.hex }}
-                                                />
-                                              )}
-                                            </span>
-                                            <span
-                                              className={`text-xs tracking-[0.04em] whitespace-nowrap ${
-                                                isSelected
-                                                  ? "text-[#F5F0EB]"
-                                                  : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"
-                                              }`}
-                                            >
-                                              {color.name}
-                                            </span>
-                                          </button>
-                                        );
-                                      })}
-                                    </div>
-                                  </div>
-                                ))}
+                                              className="w-full h-full block"
+                                              style={{ backgroundColor: color.hex }}
+                                            />
+                                          )}
+                                        </span>
+                                        {/* Row 3: Color name text below thumbnail */}
+                                        <span
+                                          className={`text-xs tracking-[0.04em] text-center whitespace-nowrap ${
+                                            isSelected
+                                              ? "text-[#E8B4B8]"
+                                              : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"
+                                          }`}
+                                        >
+                                          {color.name}
+                                        </span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+
+                                {/* Current selection hint */}
+                                <p className="text-xs text-[#8A8580] mt-1">
+                                  当前选择：<span className="text-[#E8B4B8]">{typeLabelMap[selectedType] || selectedType} · {item.colorName}</span>
+                                </p>
                               </div>
                             ) : (
                               <p className="text-xs text-[#8A8580]">{item.colorName}</p>

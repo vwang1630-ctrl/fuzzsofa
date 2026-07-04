@@ -814,7 +814,8 @@ export function ProductPageClient(
                                         </div>
                                     );
                                 })()}
-                            </div>}
+                            </div>
+                            }
                             {}
                             <div className="h-px bg-[#333] mb-5" />
                             {}
