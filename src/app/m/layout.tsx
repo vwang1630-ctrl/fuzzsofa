@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useCart } from '@/lib/cart-context';
 import './sofaapp.css';
 
 export default function MobileLayout({
@@ -10,6 +11,7 @@ export default function MobileLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { totalItems } = useCart();
 
   const isHome = pathname === '/m';
   const isCollection = pathname === '/m/collection';
@@ -18,8 +20,10 @@ export default function MobileLayout({
 
   const isDetailPage = pathname.startsWith('/m/product/');
   const isLogDetail = pathname.match(/^\/m\/log\/\d+$/);
+  const isCartPage = pathname === '/m/cart';
+  const isCheckoutPage = pathname === '/m/checkout';
 
-  const showBottomNav = !isDetailPage && !isLogDetail;
+  const showBottomNav = !isDetailPage && !isLogDetail && !isCartPage && !isCheckoutPage;
 
   return (
     <div className="app">
@@ -28,8 +32,8 @@ export default function MobileLayout({
           FUZZ SOFA <em>studio</em>
         </Link>
         <div className="right">
-          <Link href="/m/product/meteorite" className="cart-link" id="cartLink">
-            购物车 (0)
+          <Link href="/m/cart" className="cart-link" id="cartLink">
+            购物车 ({totalItems})
           </Link>
           <Link href="/m/profile" className="avatar-btn" id="avatarBtn">
             FS

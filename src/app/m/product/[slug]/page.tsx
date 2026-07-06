@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { formatPrice } from '@/lib/products';
+import { useCart } from '@/lib/cart-context';
+import type { Product } from '@/lib/products';
 
 /* ---- Owl product data (single source from desktop) ---- */
 const OWL_DATA = {
@@ -12,7 +15,7 @@ const OWL_DATA = {
   brand: 'FUZZ SOFA',
   tagline: 'Wisdom and Watchfulness',
   description: 'The Owl Chair captures the alert, watchful essence of an owl at rest. Its compact scale and distinctive rounded backrest make it the most versatile piece in the Fuzz Sofa collection — a statement chair that transforms any corner into a place of contemplation and style.',
-  priceRange: { americas: [3500, 5200], europe: [3200, 4800], middle_east: [3400, 5100], se_asia: [2800, 4200] },
+  priceRange: { americas: [3500, 5200] as [number, number], europe: [3200, 4800] as [number, number], middle_east: [3400, 5100] as [number, number], se_asia: [2800, 4200] as [number, number] },
 
   /* Images – mapped to materialOptions order: Leather(2) → Plush(2) → Linen(2) → Velvet(2) */
   images: [
@@ -87,6 +90,9 @@ const OWL_DATA = {
 };
 
 export default function MobileProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const router = useRouter();
+  const { addItem, totalItems } = useCart();
+  
   /* Resolve slug from params — in Next.js 15+ params is a Promise */
   const [slug, setSlug] = useState<string>('');
   useEffect(() => { params.then(p => setSlug(p.slug)); }, [params]);
@@ -114,6 +120,7 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
   const [quantity, setQuantity] = useState(1);
   const [arSize, setArSize] = useState(80);
   const [arOpacity, setArOpacity] = useState(90);
+  const [showCartSuccess, setShowCartSuccess] = useState(false);
 
   /* For non-owl products, show placeholder — owl is the template */
   if (slug && slug !== 'owl-sofa' && slug !== 'owl') {
@@ -468,17 +475,66 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
             <button 
               className="panel-confirm-btn"
               onClick={() => {
+                const selectedColorData = OWL_DATA.colors.find(c => c.key === panelColor);
                 if (purchaseSource === 'cart') {
-                  alert(`已加入购物车：${OWL_DATA.name} × ${quantity}`);
+                  // Add to cart
+                  addItem({
+                    product: {
+                      slug: OWL_DATA.slug,
+                      name: OWL_DATA.name,
+                      priceRange: OWL_DATA.priceRange,
+                      images: OWL_DATA.images,
+                    },
+                    quantity: quantity,
+                    materialType: selectedMaterial,
+                    materialOption: selectedColorData?.label || panelColor,
+                    region: 'americas',
+                    selected: true,
+                  });
                   setShowPurchasePanel(false);
+                  setShowCartSuccess(true);
+                  // Auto close success popup after 3 seconds
+                  setTimeout(() => setShowCartSuccess(false), 3000);
                 } else {
-                  alert(`即将跳转结算：${OWL_DATA.name} × ${quantity}`);
+                  // Buy now - add to cart and go to checkout
+                  addItem({
+                    product: {
+                      slug: OWL_DATA.slug,
+                      name: OWL_DATA.name,
+                      priceRange: OWL_DATA.priceRange,
+                      images: OWL_DATA.images,
+                    },
+                    quantity: quantity,
+                    materialType: selectedMaterial,
+                    materialOption: selectedColorData?.label || panelColor,
+                    region: 'americas',
+                    selected: true,
+                  });
                   setShowPurchasePanel(false);
+                  router.push('/m/checkout');
                 }
               }}
             >
               {purchaseSource === 'cart' ? '确认加入购物车' : '确认购买'}
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Cart Success Popup */}
+      {showCartSuccess && (
+        <div className="cart-success-overlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowCartSuccess(false); }}>
+          <div className="cart-success-popup">
+            <div className="success-icon">
+              <svg viewBox="0 0 24 24" width="32" height="32" stroke="#E8B4B8" strokeWidth="2" fill="none">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <p className="success-text">{OWL_DATA.name} 已成功加入购物车</p>
+            <div className="success-buttons">
+              <button className="btn-view-cart" onClick={() => router.push('/m/cart')}>查看购物车</button>
+              <button className="btn-continue" onClick={() => setShowCartSuccess(false)}>继续浏览</button>
+            </div>
           </div>
         </div>
       )}

@@ -1,10 +1,23 @@
 "use client";
 
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
-import type { Product, Region } from "./products";
+import type { Region } from "./products";
+
+// Simplified product type for cart items
+export interface CartProduct {
+  slug: string;
+  name: string;
+  priceRange: {
+    americas: [number, number];
+    europe: [number, number];
+    middle_east: [number, number];
+    se_asia: [number, number];
+  };
+  images?: string[];
+}
 
 export interface CartItem {
-  product: Product;
+  product: CartProduct;
   quantity: number;
   materialType: string;
   materialOption: string;
@@ -30,7 +43,7 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 /** Get the unit price for a product in the given region (uses the low end of priceRange) */
-function getUnitPrice(product: Product, region: Region): number {
+function getUnitPrice(product: CartProduct, region: Region): number {
   const range = product.priceRange[region] || product.priceRange.americas;
   return range[0]; // Use the low end of the price range as the unit price
 }
