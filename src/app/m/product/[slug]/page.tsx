@@ -91,6 +91,15 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
   const [slug, setSlug] = useState<string>('');
   useEffect(() => { params.then(p => setSlug(p.slug)); }, [params]);
   
+  /* Material groups for two-level selector */
+  const MATERIAL_GROUPS = [
+    { key: 'Leather', label: '皮革' },
+    { key: 'Plush', label: '长毛绒' },
+    { key: 'Linen', label: '亚麻' },
+    { key: 'Velvet', label: '天鹅绒' },
+  ];
+  
+  const [selectedMaterial, setSelectedMaterial] = useState(MATERIAL_GROUPS[0].key);
   const [selectedColor, setSelectedColor] = useState(OWL_DATA.colors[0].key);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [unit, setUnit] = useState<'cm' | 'in'>('cm');
@@ -202,23 +211,51 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
-        {/* Color Selector */}
-        <div className="color-selector">
-          <span className="label">颜色</span>
-          <div className="options">
-            {OWL_DATA.colors.map((c) => (
-              <button
-                key={c.key}
-                className={`color-btn${selectedColor === c.key ? ' active' : ''}`}
-                onClick={() => handleColorSelect(c.key)}
-              >
-                <span className="swatch-wrap">
-                  <span className="swatch" style={{ backgroundColor: c.colorCode }} />
-                  <span className="check" />
-                </span>
-                <span className="label-text">{c.label}</span>
-              </button>
-            ))}
+        {/* Material & Color Selector - Two-level Structure */}
+        <div className="spec-selector">
+          {/* Material Tabs */}
+          <div className="material-tabs">
+            {MATERIAL_GROUPS.map((mg) => {
+              const hasColorsInGroup = OWL_DATA.colors.some(c => c.group === mg.key);
+              if (!hasColorsInGroup) return null;
+              return (
+                <button
+                  key={mg.key}
+                  className={`material-tab${selectedMaterial === mg.key ? ' active' : ''}`}
+                  onClick={() => {
+                    setSelectedMaterial(mg.key);
+                    // Auto-select first color in this material group
+                    const firstColorInGroup = OWL_DATA.colors.find(c => c.group === mg.key);
+                    if (firstColorInGroup) {
+                      setSelectedColor(firstColorInGroup.key);
+                      setCurrentImageIndex(firstColorInGroup.imageIndex);
+                    }
+                  }}
+                >
+                  {mg.label}
+                </button>
+              );
+            })}
+          </div>
+          
+          {/* Color Circles */}
+          <div className="color-circles">
+            {OWL_DATA.colors
+              .filter(c => c.group === selectedMaterial)
+              .map((c) => (
+                <button
+                  key={c.key}
+                  className={`color-circle${selectedColor === c.key ? ' selected' : ''}`}
+                  onClick={() => handleColorSelect(c.key)}
+                >
+                  <img 
+                    src={OWL_DATA.images[c.imageIndex]} 
+                    alt={c.label}
+                    className="circle-thumb"
+                  />
+                  {selectedColor === c.key && <span className="selected-dot" />}
+                </button>
+              ))}
           </div>
         </div>
 
