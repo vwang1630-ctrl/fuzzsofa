@@ -105,12 +105,14 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
   const [unit, setUnit] = useState<'cm' | 'in'>('cm');
   const [faved, setFaved] = useState(false);
   const [showShare, setShowShare] = useState(false);
-  const [showConfig, setShowConfig] = useState(false);
+  const [showPurchasePanel, setShowPurchasePanel] = useState(false);
+  const [purchaseSource, setPurchaseSource] = useState<'cart' | 'buy'>('cart');
   const [showConfirm, setShowConfirm] = useState(false);
-  const [showAI, setShowAI] = useState(false);
+  const [showAIOverlay, setShowAIOverlay] = useState(false);
   const [showAR, setShowAR] = useState(false);
-  const [configColor, setConfigColor] = useState(OWL_DATA.colors[0].key);
-  const [configFabric, setConfigFabric] = useState('cloud');
+  const [panelColor, setPanelColor] = useState(OWL_DATA.colors[0].key);
+  const [panelFabric, setPanelFabric] = useState('cloud');
+  const [quantity, setQuantity] = useState(1);
   const [arSize, setArSize] = useState(80);
   const [arOpacity, setArOpacity] = useState(90);
 
@@ -151,7 +153,7 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
         <div className="hero-image" id="detailHeroImage">
           <img src={OWL_DATA.images[currentImageIndex]} alt={OWL_DATA.name} id="detailMainImage" />
           <div className="float-ai">
-            <button id="detailTryARBtn" onClick={() => setShowAI(true)}>
+            <button id="detailTryARBtn" onClick={() => setShowAIOverlay(true)}>
               <svg className="icon" viewBox="0 0 24 24">
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                 <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
@@ -363,119 +365,169 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </div>
 
-      {/* Bottom CTA */}
-      <div className="bottom-cta">
-        <div className="row-top">
-          <div className="product-id">
-            <span className="brand">FUZZ SOFA</span>
-            <span className="name" id="detailBottomName">
-              {OWL_DATA.name} <span className="light">✦</span>
-            </span>
-          </div>
-          <button className="btn-ai-clean" id="detailPreviewBtn" onClick={() => setShowAI(true)}>
-            <svg className="icon" viewBox="0 0 24 24">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-              <line x1="12" y1="22.08" x2="12" y2="12" />
-            </svg>
-            <span className="ai-label">AI 预览</span>
-          </button>
+      {/* AI Trial Floating Button - Above bottom bar */}
+      <button 
+        className="ai-trial-float"
+        onClick={() => setShowAIOverlay(true)}
+      >
+        <svg className="icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+        <span>AI 试用</span>
+      </button>
+
+      {/* Bottom CTA - Redesigned */}
+      <div className="bottom-cta-new">
+        {/* Left: Price + Product Name */}
+        <div className="cta-info">
+          <div className="cta-price">${OWL_DATA.priceRange.americas[0].toLocaleString()} USD</div>
+          <div className="cta-name">{OWL_DATA.name}</div>
         </div>
-        <div className="row-bottom">
-          <span className="price">{formatPrice(OWL_DATA.priceRange.americas[0])} <small>USD</small></span>
-          <button className="btn-buy" id="detailBuyBtn" onClick={() => setShowConfig(true)}>购买</button>
+        {/* Right: Two Buttons */}
+        <div className="cta-actions">
+          <button 
+            className="btn-cart"
+            onClick={() => { setPurchaseSource('cart'); setShowPurchasePanel(true); }}
+          >
+            加入购物车
+          </button>
+          <button 
+            className="btn-buy-now"
+            onClick={() => { setPurchaseSource('buy'); setShowPurchasePanel(true); }}
+          >
+            立即购买
+          </button>
         </div>
       </div>
 
-      {/* Config Panel */}
-      {showConfig && (
-        <div className="panel-overlay open" id="configOverlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowConfig(false); }}>
-          <div className="panel config-panel">
-            <div className="handle" />
-            <div className="panel-title">定制配置</div>
-            <div className="panel-scroll">
-              <div className="config-group">
-                <span className="group-label">颜色</span>
-                <div className="options">
-                  {OWL_DATA.colors.map((c) => (
-                    <button key={c.key} className={`opt-color${configColor === c.key ? ' active' : ''}`} onClick={() => setConfigColor(c.key)}>
-                      <span className="swatch" style={{ backgroundColor: c.colorCode }} />{c.label}
+      {/* Purchase Panel - Half screen */}
+      {showPurchasePanel && (
+        <div className="purchase-panel-overlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowPurchasePanel(false); }}>
+          <div className="purchase-panel">
+            {/* Header */}
+            <div className="panel-header">
+              <span className="panel-title">现在购买</span>
+              <button className="panel-close" onClick={() => setShowPurchasePanel(false)}>×</button>
+            </div>
+            
+            {/* Thumbnail */}
+            <div className="panel-thumb">
+              <img 
+                src={OWL_DATA.images[OWL_DATA.colors.find(c => c.key === panelColor)?.imageIndex || 0]} 
+                alt={OWL_DATA.name}
+              />
+            </div>
+            
+            {/* Material Tabs */}
+            <div className="panel-materials">
+              {MATERIAL_GROUPS.map(group => (
+                <button
+                  key={group.key}
+                  className={`panel-material-tab ${MATERIAL_GROUPS.find(g => g.key === selectedMaterial)?.key === group.key ? 'active' : ''}`}
+                  onClick={() => {
+                    setSelectedMaterial(group.key);
+                    const firstColorInGroup = OWL_DATA.colors.find(c => c.group === group.key);
+                    if (firstColorInGroup) {
+                      setPanelColor(firstColorInGroup.key);
+                    }
+                  }}
+                >
+                  {group.label}
+                </button>
+              ))}
+            </div>
+            
+            {/* Color Circles */}
+            <div className="panel-colors">
+              {OWL_DATA.colors.filter(c => c.group === selectedMaterial).map(color => (
+                <button
+                  key={color.key}
+                  className={`panel-color-circle ${panelColor === color.key ? 'selected' : ''}`}
+                  onClick={() => setPanelColor(color.key)}
+                >
+                  <img src={OWL_DATA.images[color.imageIndex]} alt={color.label} className="circle-thumb" />
+                  {panelColor === color.key && <span className="selected-dot"></span>}
+                </button>
+              ))}
+            </div>
+            
+            {/* Fabric/Size Selection */}
+            <div className="panel-options">
+              <div className="option-row">
+                <span className="option-label">面料</span>
+                <div className="option-buttons">
+                  {['云朵绒', '丝光绒', '科技布'].map(f => (
+                    <button 
+                      key={f}
+                      className={`option-btn ${panelFabric === f ? 'active' : ''}`}
+                      onClick={() => setPanelFabric(f)}
+                    >
+                      {f}
                     </button>
                   ))}
                 </div>
               </div>
-              <div className="config-group">
-                <span className="group-label">面料</span>
-                <div className="options">
-                  {OWL_DATA.fabrics.map((f) => (
-                    <button key={f.key} className={`opt-btn${configFabric === f.key ? ' active' : ''}`} onClick={() => setConfigFabric(f.key)}>
-                      {f.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="config-group">
-                <span className="group-label">备注 (可选)</span>
-                <textarea placeholder="例如：尺寸微调、特殊面料要求…" />
+            </div>
+            
+            {/* Quantity */}
+            <div className="panel-quantity">
+              <span className="qty-label">数量</span>
+              <div className="qty-controls">
+                <button className="qty-btn" onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
+                <span className="qty-value">{quantity}</span>
+                <button className="qty-btn" onClick={() => setQuantity(quantity + 1)}>+</button>
               </div>
             </div>
-            <div className="panel-footer">
-              <div className="total">{formatPrice(OWL_DATA.priceRange.americas[0])} <small>USD</small></div>
-              <button className="btn-confirm" onClick={() => { setShowConfig(false); setShowConfirm(true); }}>确认配置</button>
+            
+            {/* Price Summary */}
+            <div className="panel-price-summary">
+              <span className="summary-label">合计</span>
+              <span className="summary-price">${(OWL_DATA.priceRange.americas[0] * quantity).toLocaleString()} USD</span>
             </div>
+            
+            {/* Confirm Button */}
+            <button 
+              className="panel-confirm-btn"
+              onClick={() => {
+                if (purchaseSource === 'cart') {
+                  alert(`已加入购物车：${OWL_DATA.name} × ${quantity}`);
+                  setShowPurchasePanel(false);
+                } else {
+                  alert(`即将跳转结算：${OWL_DATA.name} × ${quantity}`);
+                  setShowPurchasePanel(false);
+                }
+              }}
+            >
+              {purchaseSource === 'cart' ? '确认加入购物车' : '确认购买'}
+            </button>
           </div>
         </div>
       )}
 
-      {/* Confirm Panel */}
-      {showConfirm && (
-        <div className="panel-overlay open" id="confirmOverlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowConfirm(false); }}>
-          <div className="panel confirm-panel">
-            <div className="handle" />
-            <svg className="icon-check" viewBox="0 0 24 24">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-            <div className="title">已添加到购物车</div>
-            <div className="sub">您可以在购物车中查看或调整数量</div>
-            <div className="order-summary">
-              <div className="row"><span>商品</span><span className="val">{OWL_DATA.name}</span></div>
-              <div className="row"><span>颜色</span><span className="val">{OWL_DATA.colors.find(c => c.key === configColor)?.label}</span></div>
-              <div className="row"><span>面料</span><span className="val">{fabricMap[configFabric]}</span></div>
-              <div className="divider" />
-              <div className="row"><span>金额</span><span className="val">{formatPrice(OWL_DATA.priceRange.americas[0])} USD</span></div>
+      {/* AI Trial Overlay */}
+      {showAIOverlay && (
+        <div className="ai-overlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowAIOverlay(false); }}>
+          <div className="ai-content">
+            <button className="ai-close" onClick={() => setShowAIOverlay(false)}>×</button>
+            <div className="ai-header">
+              <h2>AI 试用体验</h2>
+              <p>将 {OWL_DATA.name} 放入您的空间</p>
             </div>
-            <div className="info-grid">
-              <div className="info-item"><span className="info-icon">⏱</span><span className="info-label">制作周期</span><span className="info-value">1-2 周</span></div>
-              <div className="info-item"><span className="info-icon">🔧</span><span className="info-label">手工定制</span><span className="info-value">每件独立</span></div>
-              <div className="info-item"><span className="info-icon">📦</span><span className="info-label">配送</span><span className="info-value">全球送达</span></div>
+            <div className="ai-preview">
+              <img src={OWL_DATA.images[0]} alt={OWL_DATA.name} />
+              <div className="ai-hint">点击相机按钮，拍摄您的空间</div>
             </div>
-            <div className="actions">
-              <button className="btn-secondary" onClick={() => setShowConfirm(false)}>继续浏览</button>
-              <button className="btn-primary" onClick={() => setShowConfirm(false)}>查看购物车</button>
+            <div className="ai-controls">
+              <button className="ai-camera-btn">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="1.5" fill="none">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+                拍摄空间
+              </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* AI Preview Panel */}
-      {showAI && (
-        <div className="ai-overlay open" id="detailAiOverlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowAI(false); }}>
-          <div className="ai-panel">
-            <div className="handle" />
-            <div className="panel-title">✨ AI 空间预览</div>
-            <div className="panel-sub">上传一张您房间的照片，AI 将把产品放入其中</div>
-            <div className="upload-area" id="detailUploadArea">
-              <svg className="upload-icon" viewBox="0 0 24 24">
-                <rect x="2" y="2" width="20" height="20" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
-              </svg>
-              <div className="upload-label">点击上传图片</div>
-              <div className="upload-hint">支持 JPG / PNG，建议 16:9 比例</div>
-            </div>
-            <div className="privacy-note">🔒 上传的图片仅用于本次预览，不会存储或分享</div>
-            <div className="product-placing">
-              <strong>{OWL_DATA.name}</strong> 将自动放置在空间中 <span className="sub">可调整大小和位置</span>
-            </div>
-            <button className="btn-primary" style={{ marginTop: 14 }} onClick={() => setShowAI(false)}>关闭</button>
           </div>
         </div>
       )}
