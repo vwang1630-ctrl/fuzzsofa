@@ -87,9 +87,10 @@ const OWL_DATA = {
 };
 
 export default function MobileProductPage({ params }: { params: Promise<{ slug: string }> }) {
-  /* Resolve slug — only owl-sofa is implemented as template for now */
+  /* Resolve slug from params — in Next.js 15+ params is a Promise */
   const [slug, setSlug] = useState<string>('');
   useEffect(() => { params.then(p => setSlug(p.slug)); }, [params]);
+  
   const [selectedColor, setSelectedColor] = useState(OWL_DATA.colors[0].key);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [unit, setUnit] = useState<'cm' | 'in'>('cm');
@@ -104,19 +105,8 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
   const [arSize, setArSize] = useState(80);
   const [arOpacity, setArOpacity] = useState(90);
 
-  /* Wait for slug to resolve */
-  if (!slug) {
-    return (
-      <div className="page active" id="pageDetail">
-        <div style={{ padding: '3rem 1.5rem', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <p style={{ color: '#8A8580', fontSize: 14, letterSpacing: '0.1em' }}>加载中...</p>
-        </div>
-      </div>
-    );
-  }
-
-  /* For non-owl products, show placeholder */
-  if (slug !== 'owl-sofa') {
+  /* For non-owl products, show placeholder — owl is the template */
+  if (slug && slug !== 'owl-sofa') {
     return (
       <div className="page active" id="pageDetail">
         <div className="container" style={{ padding: '3rem 1.5rem', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -126,6 +116,8 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
       </div>
     );
   }
+
+  /* Render owl template immediately — data is hardcoded, no loading needed */
 
   const currentColor = OWL_DATA.colors.find(c => c.key === selectedColor) || OWL_DATA.colors[0];
 
