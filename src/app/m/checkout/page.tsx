@@ -202,40 +202,38 @@ export default function MobileCheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-32">
+    <div className="min-h-screen bg-[#0A0A0A] pb-24">
       {/* Header */}
-      <div className="sticky top-0 bg-[#0A0A0A]/95 backdrop-blur-sm border-b border-[#1A1A1A] px-4 py-4">
-        <div className="flex items-center justify-between">
-          <button onClick={() => router.back()} className="text-[#8A8580] hover:text-[#F5F0EB]">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-          </button>
-          <h1 className="font-serif text-xl font-light text-[#F5F0EB] tracking-wide">结算</h1>
-          <span className="text-sm text-[#8A8580]">{selectedItems.length} 件</span>
-        </div>
+      <div className="sticky top-0 bg-[#0A0A0A]/95 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+        <button onClick={() => router.back()} className="w-10 h-10 flex items-center justify-center text-[#8A8580] rounded-full hover:bg-[#111111] active:bg-[#1A1A1A] transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <h1 className="text-base font-medium text-[#F5F0EB]">结算</h1>
+        <span className="text-xs text-[#8A8580]">{selectedItems.length} 件商品</span>
       </div>
 
       {/* Order Items Summary */}
-      <div className="px-4 py-4">
-        <h2 className="text-[#F5F0EB] font-medium mb-3">订单商品</h2>
-        <div className="bg-[#111111] rounded-lg p-4 border border-[#1A1A1A]">
+      <div className="px-4 py-6">
+        <h2 className="text-sm font-medium text-[#F5F0EB] mb-4">订单商品</h2>
+        <div className="bg-[#111111] rounded-xl p-4">
           {selectedItems.map((item) => {
             const imageSrc = slugToImage[item.product.slug] || "/products/owl-sofa/thumb.jpg";
             const unitPrice = getUnitPrice(item.product, region);
             
             return (
-              <div key={`${item.product.slug}-${item.materialOption}`} className="flex items-center gap-3 py-2">
-                <div className="w-12 h-12 rounded overflow-hidden bg-[#1A1A1A]">
-                  <Image src={imageSrc} alt={item.product.name} width={48} height={48} className="w-full h-full object-cover" />
+              <div key={`${item.product.slug}-${item.materialOption}`} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+                <div className="w-14 h-14 rounded-lg overflow-hidden bg-[#1A1A1A]">
+                  <Image src={imageSrc} alt={item.product.name} width={56} height={56} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[#F5F0EB] text-sm truncate">{item.product.name}</p>
-                  <p className="text-[#8A8580] text-xs">{item.materialType} · {item.materialOption}</p>
+                  <p className="text-sm font-medium text-[#F5F0EB] truncate">{item.product.name}</p>
+                  <p className="text-xs text-[#8A8580] mt-1">{item.materialType} · {item.materialOption}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[#F5F0EB] text-sm">×{item.quantity}</p>
-                  <p className="text-[#E8B4B8] text-sm">${formatPrice(unitPrice * item.quantity)}</p>
+                  <p className="text-xs text-[#8A8580]">×{item.quantity}</p>
+                  <p className="text-sm text-[#E8B4B8] font-medium mt-1">${formatPrice(unitPrice * item.quantity)}</p>
                 </div>
               </div>
             );
@@ -244,9 +242,9 @@ export default function MobileCheckoutPage() {
       </div>
 
       {/* Shipping Address */}
-      <div className="px-4 py-4">
-        <h2 className="text-[#F5F0EB] font-medium mb-3">收货地址</h2>
-        <div className="bg-[#111111] rounded-lg p-4 border border-[#1A1A1A] space-y-3">
+      <div className="px-4 py-6">
+        <h2 className="text-sm font-medium text-[#F5F0EB] mb-4">收货信息</h2>
+        <div className="space-y-3">
           {/* Name fields */}
           <div className="flex gap-3">
             <div className="flex-1">
@@ -255,9 +253,8 @@ export default function MobileCheckoutPage() {
                 placeholder="姓名"
                 value={addressForm.firstName}
                 onChange={(e) => setAddressForm({ ...addressForm, firstName: e.target.value })}
-                className={`w-full bg-[#0A0A0A] border ${formErrors.firstName ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} rounded px-3 py-2 text-[#F5F0EB] text-sm placeholder-[#8A8580] focus:border-[#E8B4B8] outline-none`}
+                className="w-full bg-[#111111] border-none rounded-xl px-4 py-3.5 text-sm text-[#F5F0EB] placeholder:text-[#8A8580]/50 focus:outline-none focus:ring-2 focus:ring-[#E8B4B8]/30 transition-colors"
               />
-              {formErrors.firstName && <p className="text-[#E8B4B8] text-xs mt-1">{formErrors.firstName}</p>}
             </div>
             <div className="flex-1">
               <input
@@ -265,55 +262,36 @@ export default function MobileCheckoutPage() {
                 placeholder="姓氏"
                 value={addressForm.lastName}
                 onChange={(e) => setAddressForm({ ...addressForm, lastName: e.target.value })}
-                className={`w-full bg-[#0A0A0A] border ${formErrors.lastName ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} rounded px-3 py-2 text-[#F5F0EB] text-sm placeholder-[#8A8580] focus:border-[#E8B4B8] outline-none`}
+                className="w-full bg-[#111111] border-none rounded-xl px-4 py-3.5 text-sm text-[#F5F0EB] placeholder:text-[#8A8580]/50 focus:outline-none focus:ring-2 focus:ring-[#E8B4B8]/30 transition-colors"
               />
-              {formErrors.lastName && <p className="text-[#E8B4B8] text-xs mt-1">{formErrors.lastName}</p>}
             </div>
           </div>
 
           {/* Email */}
-          <div>
-            <input
-              type="email"
-              placeholder="邮箱"
-              value={addressForm.email}
-              onChange={(e) => setAddressForm({ ...addressForm, email: e.target.value })}
-              className={`w-full bg-[#0A0A0A] border ${formErrors.email ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} rounded px-3 py-2 text-[#F5F0EB] text-sm placeholder-[#8A8580] focus:border-[#E8B4B8] outline-none`}
-            />
-            {formErrors.email && <p className="text-[#E8B4B8] text-xs mt-1">{formErrors.email}</p>}
-          </div>
+          <input
+            type="email"
+            placeholder="邮箱地址"
+            value={addressForm.email}
+            onChange={(e) => setAddressForm({ ...addressForm, email: e.target.value })}
+            className="w-full bg-[#111111] border-none rounded-xl px-4 py-3.5 text-sm text-[#F5F0EB] placeholder:text-[#8A8580]/50 focus:outline-none focus:ring-2 focus:ring-[#E8B4B8]/30 transition-colors"
+          />
 
           {/* Phone */}
-          <div>
-            <input
-              type="tel"
-              placeholder="电话"
-              value={addressForm.phone}
-              onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
-              className={`w-full bg-[#0A0A0A] border ${formErrors.phone ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} rounded px-3 py-2 text-[#F5F0EB] text-sm placeholder-[#8A8580] focus:border-[#E8B4B8] outline-none`}
-            />
-            {formErrors.phone && <p className="text-[#E8B4B8] text-xs mt-1">{formErrors.phone}</p>}
-          </div>
+          <input
+            type="tel"
+            placeholder="联系电话"
+            value={addressForm.phone}
+            onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
+            className="w-full bg-[#111111] border-none rounded-xl px-4 py-3.5 text-sm text-[#F5F0EB] placeholder:text-[#8A8580]/50 focus:outline-none focus:ring-2 focus:ring-[#E8B4B8]/30 transition-colors"
+          />
 
           {/* Address */}
-          <div>
-            <input
-              type="text"
-              placeholder="地址"
-              value={addressForm.addressLine1}
-              onChange={(e) => setAddressForm({ ...addressForm, addressLine1: e.target.value })}
-              className={`w-full bg-[#0A0A0A] border ${formErrors.addressLine1 ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} rounded px-3 py-2 text-[#F5F0EB] text-sm placeholder-[#8A8580] focus:border-[#E8B4B8] outline-none`}
-            />
-            {formErrors.addressLine1 && <p className="text-[#E8B4B8] text-xs mt-1">{formErrors.addressLine1}</p>}
-          </div>
-
-          {/* Address Line 2 (optional) */}
           <input
             type="text"
-            placeholder="地址行2（可选）"
-            value={addressForm.addressLine2}
-            onChange={(e) => setAddressForm({ ...addressForm, addressLine2: e.target.value })}
-            className="w-full bg-[#0A0A0A] border border-[#1A1A1A] rounded px-3 py-2 text-[#F5F0EB] text-sm placeholder-[#8A8580] focus:border-[#E8B4B8] outline-none"
+            placeholder="详细地址"
+            value={addressForm.addressLine1}
+            onChange={(e) => setAddressForm({ ...addressForm, addressLine1: e.target.value })}
+            className="w-full bg-[#111111] border-none rounded-xl px-4 py-3.5 text-sm text-[#F5F0EB] placeholder:text-[#8A8580]/50 focus:outline-none focus:ring-2 focus:ring-[#E8B4B8]/30 transition-colors"
           />
 
           {/* City, State, Zip */}
@@ -324,94 +302,68 @@ export default function MobileCheckoutPage() {
                 placeholder="城市"
                 value={addressForm.city}
                 onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
-                className={`w-full bg-[#0A0A0A] border ${formErrors.city ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} rounded px-3 py-2 text-[#F5F0EB] text-sm placeholder-[#8A8580] focus:border-[#E8B4B8] outline-none`}
+                className="w-full bg-[#111111] border-none rounded-xl px-4 py-3.5 text-sm text-[#F5F0EB] placeholder:text-[#8A8580]/50 focus:outline-none focus:ring-2 focus:ring-[#E8B4B8]/30 transition-colors"
               />
-              {formErrors.city && <p className="text-[#E8B4B8] text-xs mt-1">{formErrors.city}</p>}
             </div>
-            <div className="w-24">
+            <div className="w-28">
               <select
                 value={addressForm.state}
                 onChange={(e) => setAddressForm({ ...addressForm, state: e.target.value })}
-                className="w-full bg-[#0A0A0A] border border-[#1A1A1A] rounded px-3 py-2 text-[#F5F0EB] text-sm focus:border-[#E8B4B8] outline-none appearance-none"
+                className="w-full bg-[#111111] border-none rounded-xl px-4 py-3.5 text-sm text-[#F5F0EB] focus:outline-none focus:ring-2 focus:ring-[#E8B4B8]/30 appearance-none"
               >
                 <option value="">州/省</option>
                 {US_STATES.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
-            <div className="w-20">
-              <input
-                type="text"
-                placeholder="邮编"
-                value={addressForm.zipCode}
-                onChange={(e) => setAddressForm({ ...addressForm, zipCode: e.target.value })}
-                className={`w-full bg-[#0A0A0A] border ${formErrors.zipCode ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} rounded px-3 py-2 text-[#F5F0EB] text-sm placeholder-[#8A8580] focus:border-[#E8B4B8] outline-none`}
-              />
-              {formErrors.zipCode && <p className="text-[#E8B4B8] text-xs mt-1">{formErrors.zipCode}</p>}
-            </div>
           </div>
 
-          {/* Country */}
-          <select
-            value={addressForm.country}
-            onChange={(e) => setAddressForm({ ...addressForm, country: e.target.value })}
-            className="w-full bg-[#0A0A0A] border border-[#1A1A1A] rounded px-3 py-2 text-[#F5F0EB] text-sm focus:border-[#E8B4B8] outline-none appearance-none"
-          >
-            {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
-          </select>
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="邮政编码"
+                value={addressForm.zipCode}
+                onChange={(e) => setAddressForm({ ...addressForm, zipCode: e.target.value })}
+                className="w-full bg-[#111111] border-none rounded-xl px-4 py-3.5 text-sm text-[#F5F0EB] placeholder:text-[#8A8580]/50 focus:outline-none focus:ring-2 focus:ring-[#E8B4B8]/30 transition-colors"
+              />
+            </div>
+            <div className="flex-1">
+              <select
+                value={addressForm.country}
+                onChange={(e) => setAddressForm({ ...addressForm, country: e.target.value })}
+                className="w-full bg-[#111111] border-none rounded-xl px-4 py-3.5 text-sm text-[#F5F0EB] focus:outline-none focus:ring-2 focus:ring-[#E8B4B8]/30 appearance-none"
+              >
+                {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
+              </select>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Shipping Method */}
-      <div className="px-4 py-4">
-        <h2 className="text-[#F5F0EB] font-medium mb-3">配送方式</h2>
+      {/* Payment Method */}
+      <div className="px-4 py-6">
+        <h2 className="text-sm font-medium text-[#F5F0EB] mb-4">支付方式</h2>
         <div className="space-y-2">
-          <button
-            onClick={() => setShippingMethod("standard")}
-            className={`w-full bg-[#111111] rounded-lg p-4 border ${shippingMethod === "standard" ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} flex items-center justify-between`}
-          >
-            <div>
-              <p className="text-[#F5F0EB] text-sm">标准配送</p>
-              <p className="text-[#8A8580] text-xs">预计 7-14 天送达</p>
-            </div>
-            <p className="text-[#E8B4B8] text-sm">
-              {selectedTotal >= 10000 ? "免运费" : "$300"}
-            </p>
-          </button>
-          <button
-            onClick={() => setShippingMethod("express")}
-            className={`w-full bg-[#111111] rounded-lg p-4 border ${shippingMethod === "express" ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} flex items-center justify-between`}
-          >
-            <div>
-              <p className="text-[#F5F0EB] text-sm">快速配送</p>
-              <p className="text-[#8A8580] text-xs">预计 3-5 天送达</p>
-            </div>
-            <p className="text-[#E8B4B8] text-sm">$500</p>
-          </button>
-        </div>
-      </div>
-
- {/* Payment Method */}
-      <div className="px-4 py-4">
-        <h2 className="text-[#F5F0EB] font-medium mb-3">支付方式</h2>
-        <div className="flex flex-col gap-2">
           {/* Credit Card */}
           <button
             type="button"
             onClick={() => setPaymentMethod("creditcard")}
-            className={`bg-[#111111] rounded-lg p-4 border flex items-center justify-between transition-all ${
-              paymentMethod === "creditcard" ? "border-[#E8B4B8]" : "border-[#1A1A1A]"
+            className={`w-full bg-[#111111] rounded-xl p-4 flex items-center justify-between transition-all ${
+              paymentMethod === "creditcard" ? "ring-2 ring-[#E8B4B8]/30" : ""
             }`}
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-6 bg-[#1A1A1A] rounded flex items-center justify-center">
-                <span className="text-[#F5F0EB] text-xs font-bold">Stripe</span>
+              <div className="w-12 h-7 bg-[#1A1A1A] rounded flex items-center justify-center">
+                <span className="text-xs text-[#F5F0EB] font-medium">Stripe</span>
               </div>
-              <p className="text-[#F5F0EB] text-sm">信用卡支付</p>
+              <p className="text-sm text-[#F5F0EB]">信用卡支付</p>
             </div>
             {paymentMethod === "creditcard" && (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
+              <div className="w-5 h-5 rounded-full bg-[#E8B4B8] flex items-center justify-center">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
             )}
           </button>
 
@@ -419,20 +371,22 @@ export default function MobileCheckoutPage() {
           <button
             type="button"
             onClick={() => setPaymentMethod("paypal")}
-            className={`bg-[#111111] rounded-lg p-4 border flex items-center justify-between transition-all ${
-              paymentMethod === "paypal" ? "border-[#E8B4B8]" : "border-[#1A1A1A]"
+            className={`w-full bg-[#111111] rounded-xl p-4 flex items-center justify-between transition-all ${
+              paymentMethod === "paypal" ? "ring-2 ring-[#E8B4B8]/30" : ""
             }`}
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-6 bg-[#003087] rounded flex items-center justify-center">
-                <span className="text-white text-xs font-bold">PayPal</span>
+              <div className="w-12 h-7 bg-[#003087] rounded flex items-center justify-center">
+                <span className="text-xs text-white font-medium">PayPal</span>
               </div>
-              <p className="text-[#F5F0EB] text-sm">PayPal 账户支付</p>
+              <p className="text-sm text-[#F5F0EB]">PayPal 支付</p>
             </div>
             {paymentMethod === "paypal" && (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
+              <div className="w-5 h-5 rounded-full bg-[#E8B4B8] flex items-center justify-center">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
             )}
           </button>
 
@@ -440,55 +394,44 @@ export default function MobileCheckoutPage() {
           <button
             type="button"
             onClick={() => setPaymentMethod("bank")}
-            className={`bg-[#111111] rounded-lg p-4 border flex items-center justify-between transition-all ${
-              paymentMethod === "bank" ? "border-[#E8B4B8]" : "border-[#1A1A1A]"
+            className={`w-full bg-[#111111] rounded-xl p-4 flex items-center justify-between transition-all ${
+              paymentMethod === "bank" ? "ring-2 ring-[#E8B4B8]/30" : ""
             }`}
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-6 bg-[#1A1A1A] rounded flex items-center justify-center">
-                <span className="text-[#F5F0EB] text-xs">银行</span>
+              <div className="w-12 h-7 bg-[#1A1A1A] rounded flex items-center justify-center">
+                <span className="text-xs text-[#F5F0EB]">银行</span>
               </div>
-              <p className="text-[#F5F0EB] text-sm">银行转账</p>
+              <p className="text-sm text-[#F5F0EB]">银行转账</p>
             </div>
             {paymentMethod === "bank" && (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
+              <div className="w-5 h-5 rounded-full bg-[#E8B4B8] flex items-center justify-center">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
             )}
           </button>
         </div>
       </div>
 
-      {/* Bottom summary */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#111111] border-t border-[#1A1A1A] px-6 py-5">
-        <div className="space-y-3 mb-5">
-          <div className="flex justify-between text-base">
-            <span className="text-[#8A8580]">商品总价</span>
-            <span className="text-[#F5F0EB]">${formatPrice(selectedTotal)}</span>
-          </div>
-          <div className="flex justify-between text-base">
-            <span className="text-[#8A8580]">运费</span>
-            <span className="text-[#F5F0EB]">{shippingFee === 0 ? "免运费" : `$${formatPrice(shippingFee)}`}</span>
-          </div>
-          <div className="flex justify-between text-base">
-            <span className="text-[#F5F0EB] font-medium">应付总额</span>
-            <span className="text-[#E8B4B8] font-serif text-2xl">${formatPrice(totalWithShipping)}</span>
-          </div>
+      {/* Bottom summary - simplified */}
+      <div className="fixed bottom-0 left-0 right-0 bg-[#0A0A0A]/95 backdrop-blur-sm px-4 py-4 pb-[env(safe-area-inset-bottom)]">
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-sm text-[#8A8580]">应付总额</span>
+          <span className="text-xl font-medium text-[#E8B4B8]">${formatPrice(selectedTotal)}</span>
         </div>
         <button
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className={`w-full py-5 rounded text-base tracking-[0.1em] uppercase transition-all duration-300 ${
+          className={`w-full py-4 rounded-xl text-sm font-medium transition-all ${
             isSubmitting
-              ? "bg-[#1A1A1A] text-[#8A8580] cursor-wait"
-              : "bg-[#E8B4B8] text-[#0A0A0A] hover:bg-[#F5F0EB]"
+              ? "bg-[#1A1A1A] text-[#8A8580]"
+              : "bg-[#E8B4B8] text-[#0A0A0A] active:opacity-90"
           }`}
         >
-          {isSubmitting ? "提交中..." : "提交订单并支付"}
+          {isSubmitting ? "提交中..." : "提交订单"}
         </button>
-        <Link href="/m" className="block text-center text-[#8A8580] text-base mt-4 hover:text-[#F5F0EB]">
-          返回商品页
-        </Link>
       </div>
     </div>
   );
