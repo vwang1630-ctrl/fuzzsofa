@@ -1,218 +1,194 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCart, getUnitPrice } from "@/lib/cart-context";
-import { formatPrice } from "@/lib/products";
+import { useCart } from "@/lib/cart-context";
+import "@/sofaapp.css";
 
-const slugToImage: Record<string, string> = {
-  "bear-sofa": "/products/bear-sofa/thumb.jpg",
-  "lion-sofa": "/products/lion-sofa/thumb.jpg",
-  "tiger-sofa": "/products/tiger-sofa/thumb.jpg",
-  "gorilla-sofa": "/products/gorilla-sofa/thumb.jpg",
-  "owl-sofa": "/products/owl-sofa/thumb.jpg",
-  "silverback-sofa": "/products/silverback-sofa/thumb.jpg",
-  "meteorite-ring-sofa": "/products/meteorite-ring-sofa/thumb.jpg",
-  "muscle-gorilla-sofa": "/products/muscle-gorilla-sofa/thumb.jpg",
-};
-
-export default function MobileCartPage() {
+export default function CartPage() {
   const router = useRouter();
   const {
-    items, removeItem, updateQuantity, toggleSelect, toggleSelectAll,
-    selectedItems, selectedTotal, allSelected, region,
+    items,
+    updateQuantity,
+    removeItem,
+    clearCart,
+    toggleSelect,
+    toggleSelectAll,
+    totalItems,
+    selectedItems,
+    selectedTotal,
+    allSelected,
+    region,
   } = useCart();
-  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
-  // Empty cart state
-  if (items.length === 0) {
-    return (
-      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center px-6">
-        <div className="w-20 h-20 border border-[#1A1A1A] rounded-full flex items-center justify-center mb-6">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8A8580" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
-            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
-          </svg>
-        </div>
-        <h1 className="font-serif text-2xl font-light text-[#F5F0EB] mb-3 tracking-wide">购物车</h1>
-        <p className="text-[#8A8580] mb-8 text-sm">您的购物车是空的</p>
-        <Link
-          href="/m"
-          className="inline-flex items-center px-6 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
-        >
-          继续浏览
-        </Link>
-      </div>
-    );
-  }
+  // 商品图片映射
+  const slugToImage: Record<string, string> = {
+    "owl-sofa": "/products/owl/black-leather.png",
+    "owl": "/products/owl/black-leather.png",
+  };
 
-  const shippingFee = selectedTotal >= 10000 ? 0 : 300;
-  const totalWithShipping = selectedTotal + shippingFee;
+  // 获取单价
+  const getUnitPrice = (item: typeof items[0]) => {
+    const range = item.product.priceRange[region] || item.product.priceRange.americas;
+    return range[0];
+  };
+
+  // 跳转结算
+  const handleCheckout = () => {
+    if (selectedItems.length === 0) return;
+    // 将选中商品存入 sessionStorage
+    sessionStorage.setItem("checkoutItems", JSON.stringify(selectedItems));
+    router.push("/m/checkout");
+  };
+
+  // 返回首页
+  const handleBack = () => {
+    router.push("/m");
+  };
+
+  // 获取商品key
+  const getItemKey = (item: typeof items[0]) => `${item.product.slug}-${item.materialOption || "default"}`;
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-24">
-      {/* Header */}
-      <div className="sticky top-0 bg-[#0A0A0A]/95 backdrop-blur-sm border-b border-[#1A1A1A] px-4 py-4">
-        <div className="flex items-center justify-between">
-          <Link href="/m" className="text-[#8A8580] hover:text-[#F5F0EB]">
+    <div className="shop-page">
+      {/* 顶部导航栏 */}
+      <div className="shop-header">
+        <div className="shop-header-inner">
+          <button onClick={handleBack} className="shop-header-back">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
+              <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
-          </Link>
-          <h1 className="font-serif text-xl font-light text-[#F5F0EB] tracking-wide">购物车</h1>
-          <span className="text-sm text-[#8A8580]">{items.length} 件</span>
+          </button>
+          <h1 className="shop-header-title">购物车</h1>
+          <span style={{ color: "#8A8580", fontSize: "14px" }}>{totalItems}件</span>
         </div>
       </div>
 
-      {/* Select All */}
-      <div className="flex items-center gap-3 px-4 py-4 border-b border-[#1A1A1A]">
-        <button
-          onClick={() => toggleSelectAll(!allSelected)}
-          className={`w-5 h-5 rounded border flex items-center justify-center transition-all duration-300 ${
-            allSelected
-              ? "bg-[#E8B4B8] border-[#E8B4B8]"
-              : "border-[#333] hover:border-[#E8B4B8]"
-          }`}
-          aria-label={allSelected ? "取消全选" : "全选"}
-        >
-          {allSelected && (
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-          )}
-        </button>
-        <span className="text-sm text-[#8A8580]">{allSelected ? "取消全选" : "全选"}</span>
-      </div>
+      {/* 商品列表 */}
+      <section className="shop-section">
+        {/* 全选栏 */}
+        <div className="cart-select-row">
+          <div
+            className={`cart-checkbox ${allSelected ? "checked" : ""}`}
+            onClick={() => toggleSelectAll(!allSelected)}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+          >
+            {allSelected && (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            )}
+          </div>
+          <span style={{ marginLeft: "12px", color: "#8A8580", fontSize: "14px" }}>全选</span>
+        </div>
 
-      {/* Cart Items */}
-      <div className="px-4 py-4 space-y-4">
-        {items.map((item) => {
-          const imageSrc = slugToImage[item.product.slug] || "/products/owl-sofa/thumb.jpg";
-          const unitPrice = getUnitPrice(item.product, region);
-          const itemTotal = unitPrice * item.quantity;
-          const itemKey = `${item.product.slug}-${item.materialOption}`;
+        {/* 商品卡片列表 */}
+        {items.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "60px 0", color: "#8A8580" }}>
+            <p style={{ fontSize: "14px" }}>购物车是空的</p>
+            <Link href="/m" style={{ color: "#E8B4B8", fontSize: "14px", marginTop: "16px" }}>
+              去选购
+            </Link>
+          </div>
+        ) : (
+          items.map((item) => {
+            const key = getItemKey(item);
+            const imageSrc = slugToImage[item.product.slug] || "/products/owl/black-leather.png";
+            const unitPrice = getUnitPrice(item);
 
-          return (
-            <div key={itemKey} className="bg-[#111111] rounded-lg p-4 border border-[#1A1A1A]">
-              {/* Selection checkbox */}
-              <div className="flex items-start gap-3">
-                <button
+            return (
+              <div key={key} className="shop-item-card">
+                {/* 选择框 */}
+                <div
+                  className={`cart-checkbox ${item.selected ? "checked" : ""}`}
                   onClick={() => toggleSelect(item.product.slug, item.materialOption)}
-                  className={`w-5 h-5 rounded border flex items-center justify-center transition-all duration-300 mt-1 ${
-                    item.selected
-                      ? "bg-[#E8B4B8] border-[#E8B4B8]"
-                      : "border-[#333] hover:border-[#E8B4B8]"
-                  }`}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", alignSelf: "center" }}
                 >
                   {item.selected && (
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12"/>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3">
+                      <polyline points="20 6 9 17 4 12" />
                     </svg>
                   )}
-                </button>
-
-                {/* Product image */}
-                <div className="w-20 h-20 rounded overflow-hidden bg-[#1A1A1A]">
-                  <Image
-                    src={imageSrc}
-                    alt={item.product.name}
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-cover"
-                  />
                 </div>
 
-                {/* Product info */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-[#F5F0EB] font-medium text-sm truncate">{item.product.name}</h3>
-                  <p className="text-[#8A8580] text-xs mt-1">{item.materialType} · {item.materialOption}</p>
-                  <p className="text-[#E8B4B8] font-medium mt-2">${formatPrice(unitPrice)}</p>
+                {/* 缩略图 */}
+                <div className="shop-item-thumb">
+                  <img src={imageSrc} alt={item.product.name} />
                 </div>
 
-                {/* Delete button */}
-                {confirmDelete === itemKey ? (
-                  <div className="flex flex-col gap-1">
+                {/* 商品信息 */}
+                <div className="shop-item-info">
+                  <div className="shop-item-row1">
+                    <span className="shop-item-name">{item.product.name}</span>
+                    <span className="shop-item-qty">×{item.quantity}</span>
+                  </div>
+                  <div className="shop-item-spec">{item.materialOption || "标准款"}</div>
+
+                  {/* 数量控制 */}
+                  <div className="cart-qty-control" style={{ marginTop: "8px" }}>
                     <button
-                      onClick={() => {
-                        removeItem(item.product.slug, item.materialOption);
-                        setConfirmDelete(null);
-                      }}
-                      className="text-xs text-[#E8B4B8] px-2 py-1 border border-[#E8B4B8] rounded"
+                      className="cart-qty-btn"
+                      onClick={() => updateQuantity(item.product.slug, item.materialOption, Math.max(1, item.quantity - 1))}
                     >
-                      删除
+                      −
                     </button>
+                    <span className="cart-qty-num">{item.quantity}</span>
                     <button
-                      onClick={() => setConfirmDelete(null)}
-                      className="text-xs text-[#8A8580] px-2 py-1"
+                      className="cart-qty-btn"
+                      onClick={() => updateQuantity(item.product.slug, item.materialOption, item.quantity + 1)}
                     >
-                      取消
+                      +
                     </button>
                   </div>
-                ) : (
-                  <button
-                    onClick={() => setConfirmDelete(itemKey)}
-                    className="text-[#8A8580] hover:text-[#F5F0EB] p-1"
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
-                    </svg>
-                  </button>
-                )}
-              </div>
-
-              {/* Quantity controls */}
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-[#1A1A1A]">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => updateQuantity(item.product.slug, item.materialOption, item.quantity - 1)}
-                    className="w-8 h-8 rounded border border-[#333] flex items-center justify-center text-[#8A8580] hover:border-[#E8B4B8] hover:text-[#F5F0EB] transition-all"
-                  >
-                    −
-                  </button>
-                  <span className="text-[#F5F0EB] text-sm w-8 text-center">{item.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(item.product.slug, item.materialOption, item.quantity + 1)}
-                    className="w-8 h-8 rounded border border-[#333] flex items-center justify-center text-[#8A8580] hover:border-[#E8B4B8] hover:text-[#F5F0EB] transition-all"
-                  >
-                    +
-                  </button>
                 </div>
-                <p className="text-[#F5F0EB] font-medium">小计: ${formatPrice(itemTotal)}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
 
-      {/* Bottom summary */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#111111] border-t border-[#1A1A1A] px-4 py-4">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-[#8A8580] text-sm">已选 {selectedItems.length} 件</span>
-          <div className="text-right">
-            <p className="text-[#8A8580] text-xs">商品总价: ${formatPrice(selectedTotal)}</p>
-            <p className="text-[#8A8580] text-xs">运费: {shippingFee === 0 ? "免运费" : `$${formatPrice(shippingFee)}`}</p>
+                {/* 价格 */}
+                <div className="shop-item-price" style={{ alignSelf: "center" }}>
+                  <span className="shop-item-price-value">${(unitPrice * item.quantity).toLocaleString()}</span>
+                </div>
+
+                {/* 删除按钮 */}
+                <button
+                  onClick={() => removeItem(item.product.slug, item.materialOption)}
+                  style={{ alignSelf: "center", color: "#6A6560", background: "none", border: "none", marginLeft: "8px" }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                  </svg>
+                </button>
+              </div>
+            );
+          })
+        )}
+      </section>
+
+      {/* 费用明细 */}
+      {items.length > 0 && (
+        <section className="shop-section">
+          <div className="shop-fee-row">
+            <span className="shop-fee-label">商品小计</span>
+            <span className="shop-fee-value">${selectedTotal.toLocaleString()}</span>
           </div>
-        </div>
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-[#F5F0EB] font-medium">应付总额</span>
-          <span className="text-[#E8B4B8] font-serif text-xl">${formatPrice(totalWithShipping)}</span>
-        </div>
-        <button
-          onClick={() => {
-            if (selectedItems.length > 0) {
-              router.push("/m/checkout");
-            }
-          }}
-          disabled={selectedItems.length === 0}
-          className={`w-full py-4 rounded text-sm tracking-[0.1em] uppercase transition-all duration-300 ${
-            selectedItems.length > 0
-              ? "bg-[#E8B4B8] text-[#0A0A0A] hover:bg-[#F5F0EB]"
-              : "bg-[#1A1A1A] text-[#8A8580] cursor-not-allowed"
-          }`}
-        >
-          去结算 ({selectedItems.length})
+          <div className="shop-fee-row">
+            <span className="shop-fee-label">运费</span>
+            <span className={`shop-fee-value ${selectedTotal >= 10000 ? "shop-fee-free" : ""}`}>
+              {selectedTotal >= 10000 ? "免运费" : "$300"}
+            </span>
+          </div>
+          <div className="shop-fee-row">
+            <span className="shop-fee-total-label">总计</span>
+            <span className="shop-fee-total-value">
+              ${(selectedTotal + (selectedTotal >= 10000 ? 0 : 300)).toLocaleString()} USD
+            </span>
+          </div>
+        </section>
+      )}
+
+      {/* 底部结算按钮 */}
+      <div className="shop-bottom-bar">
+        <button className="shop-submit-btn" onClick={handleCheckout} disabled={selectedItems.length === 0}>
+          确认下单
         </button>
       </div>
     </div>
