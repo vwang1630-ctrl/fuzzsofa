@@ -408,37 +408,50 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
               />
             </div>
             
-            {/* Material Tabs */}
-            <div className="panel-materials">
-              {MATERIAL_GROUPS.map(group => (
-                <button
-                  key={group.key}
-                  className={`panel-material-tab ${MATERIAL_GROUPS.find(g => g.key === selectedMaterial)?.key === group.key ? 'active' : ''}`}
-                  onClick={() => {
-                    setSelectedMaterial(group.key);
-                    const firstColorInGroup = OWL_DATA.colors.find(c => c.group === group.key);
-                    if (firstColorInGroup) {
-                      setPanelColor(firstColorInGroup.key);
-                    }
-                  }}
-                >
-                  {group.label}
-                </button>
-              ))}
-            </div>
-            
-            {/* Color Circles */}
-            <div className="panel-colors">
-              {OWL_DATA.colors.filter(c => c.group === selectedMaterial).map(color => (
-                <button
-                  key={color.key}
-                  className={`panel-color-circle ${panelColor === color.key ? 'selected' : ''}`}
-                  onClick={() => setPanelColor(color.key)}
-                >
-                  <img src={OWL_DATA.images[color.imageIndex]} alt={color.label} className="circle-thumb" />
-                  {panelColor === color.key && <span className="selected-dot"></span>}
-                </button>
-              ))}
+            {/* Color Selector - Same as Page */}
+            <div className="spec-selector" style={{ marginTop: 16 }}>
+              {/* Material Tabs */}
+              <div className="material-tabs">
+                {MATERIAL_GROUPS.map((mg) => {
+                  const hasColorsInGroup = OWL_DATA.colors.some(c => c.group === mg.key);
+                  if (!hasColorsInGroup) return null;
+                  return (
+                    <button
+                      key={mg.key}
+                      className={`material-tab${selectedMaterial === mg.key ? ' active' : ''}`}
+                      onClick={() => {
+                        setSelectedMaterial(mg.key);
+                        const firstColorInGroup = OWL_DATA.colors.find(c => c.group === mg.key);
+                        if (firstColorInGroup) {
+                          setPanelColor(firstColorInGroup.key);
+                        }
+                      }}
+                    >
+                      {mg.label}
+                    </button>
+                  );
+                })}
+              </div>
+              
+              {/* Color Circles */}
+              <div className="color-circles">
+                {OWL_DATA.colors
+                  .filter(c => c.group === selectedMaterial)
+                  .map((c) => (
+                    <button
+                      key={c.key}
+                      className={`color-circle${panelColor === c.key ? ' selected' : ''}`}
+                      onClick={() => setPanelColor(c.key)}
+                    >
+                      <img 
+                        src={OWL_DATA.images[c.imageIndex]} 
+                        alt={c.label}
+                        className="circle-thumb"
+                      />
+                      {panelColor === c.key && <span className="selected-dot" />}
+                    </button>
+                  ))}
+              </div>
             </div>
             
             {/* Fabric/Size Selection */}
