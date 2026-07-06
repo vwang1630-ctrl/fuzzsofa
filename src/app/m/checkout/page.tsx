@@ -460,25 +460,25 @@ export default function MobileCheckoutPage() {
       </div>
 
       {/* Bottom summary */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#111111] border-t border-[#1A1A1A] px-4 py-4">
-        <div className="space-y-2 mb-4">
-          <div className="flex justify-between text-sm">
+      <div className="fixed bottom-0 left-0 right-0 bg-[#111111] border-t border-[#1A1A1A] px-6 py-5">
+        <div className="space-y-3 mb-5">
+          <div className="flex justify-between text-base">
             <span className="text-[#8A8580]">商品总价</span>
             <span className="text-[#F5F0EB]">${formatPrice(selectedTotal)}</span>
           </div>
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-base">
             <span className="text-[#8A8580]">运费</span>
             <span className="text-[#F5F0EB]">{shippingFee === 0 ? "免运费" : `$${formatPrice(shippingFee)}`}</span>
           </div>
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-base">
             <span className="text-[#F5F0EB] font-medium">应付总额</span>
-            <span className="text-[#E8B4B8] font-serif text-xl">${formatPrice(totalWithShipping)}</span>
+            <span className="text-[#E8B4B8] font-serif text-2xl">${formatPrice(totalWithShipping)}</span>
           </div>
         </div>
         <button
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className={`w-full py-4 rounded text-sm tracking-[0.1em] uppercase transition-all duration-300 ${
+          className={`w-full py-5 rounded text-base tracking-[0.1em] uppercase transition-all duration-300 ${
             isSubmitting
               ? "bg-[#1A1A1A] text-[#8A8580] cursor-wait"
               : "bg-[#E8B4B8] text-[#0A0A0A] hover:bg-[#F5F0EB]"
@@ -486,7 +486,7 @@ export default function MobileCheckoutPage() {
         >
           {isSubmitting ? "提交中..." : "提交订单并支付"}
         </button>
-        <Link href="/m" className="block text-center text-[#8A8580] text-sm mt-3 hover:text-[#F5F0EB]">
+        <Link href="/m" className="block text-center text-[#8A8580] text-base mt-4 hover:text-[#F5F0EB]">
           返回商品页
         </Link>
       </div>
