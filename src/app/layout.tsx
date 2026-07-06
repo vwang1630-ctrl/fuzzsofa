@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
+import { LayoutShell } from "@/components/layout/layout-shell";
 import { CartProvider } from "@/lib/cart-context";
 import { LanguageProvider } from "@/lib/language-context";
 import { FontPreload } from "@/components/font-preload";
@@ -91,9 +90,7 @@ export default function RootLayout({
             }}
           />
           <FontPreload />
-          <Header />
-          <main className="min-h-screen pt-[60px]">{children}</main>
-          <Footer />
+          <LayoutShell>{children}</LayoutShell>
         </CartProvider>
         </LanguageProvider>
         </SupabaseConfigProvider>
