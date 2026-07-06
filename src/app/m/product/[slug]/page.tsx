@@ -402,14 +402,6 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
               <button className="panel-close" onClick={() => setShowPurchasePanel(false)}>×</button>
             </div>
             
-            {/* Thumbnail */}
-            <div className="panel-thumb">
-              <img 
-                src={OWL_DATA.images[OWL_DATA.colors.find(c => c.key === panelColor)?.imageIndex || 0]} 
-                alt={OWL_DATA.name}
-              />
-            </div>
-            
             {/* Color Selector - Same as Page */}
             <div className="spec-selector" style={{ marginTop: 16 }}>
               {/* Material Tabs */}
