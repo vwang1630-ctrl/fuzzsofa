@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
 import type { CartItem } from "@/lib/cart-context";
-import "@/sofaapp.css";
+import "@/app/m/sofaapp.css";
 
 interface AddressForm {
   recipientName: string;

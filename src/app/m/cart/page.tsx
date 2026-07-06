@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
-import "@/sofaapp.css";
+import "@/app/m/sofaapp.css";
 
 export default function CartPage() {
   const router = useRouter();
