@@ -104,16 +104,15 @@ export default function CheckoutPage() {
   if (isSubmitted) {
     return (
       <div className="shop-page">
+        {/* 顶部导航栏 */}
         <div className="shop-header">
-          <div className="shop-header-inner">
-            <button onClick={handleClose} className="shop-header-back">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <h1 className="shop-header-title">订单成功</h1>
-            <span></span>
-          </div>
+          <button onClick={handleClose} className="shop-header-back">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <h1 className="shop-header-title">订单成功</h1>
+          <span></span>
         </div>
 
         <div style={{ padding: "60px 16px", textAlign: "center" }}>
@@ -135,18 +134,18 @@ export default function CheckoutPage() {
             </svg>
           </div>
 
-          <p style={{ color: "#F5F0EB", fontSize: "18px", marginBottom: "12px" }}>订单提交成功</p>
-          <p style={{ color: "#8A8580", fontSize: "14px", marginBottom: "24px" }}>订单号: {orderId}</p>
+          <p style={{ color: "#F5F0EB", fontSize: "18px", marginBottom: "12px", fontWeight: 300 }}>订单提交成功</p>
+          <p style={{ color: "#8A8580", fontSize: "14px", marginBottom: "24px", fontWeight: 300 }}>订单号: {orderId}</p>
 
           {/* 商品明细 */}
           <div style={{ borderTop: "1px solid #1A1A1A", paddingTop: "24px" }}>
-            <div style={{ fontSize: "12px", color: "#6A6560", marginBottom: "16px" }}>商品明细</div>
+            <div style={{ fontSize: "12px", color: "#6A6560", marginBottom: "16px", fontWeight: 300 }}>商品明细</div>
             {checkoutItems.map((item: CartItem) => (
               <div key={item.product.slug} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0" }}>
-                <span style={{ color: "#F5F0EB", fontSize: "14px" }}>
+                <span style={{ color: "#F5F0EB", fontSize: "14px", fontWeight: 300 }}>
                   {item.product.name} ×{item.quantity}
                 </span>
-                <span style={{ color: "#F5F0EB", fontSize: "14px" }}>
+                <span style={{ color: "#F5F0EB", fontSize: "14px", fontWeight: 300 }}>
                   ${(getUnitPrice(item) * item.quantity).toLocaleString()}
                 </span>
               </div>
@@ -168,20 +167,18 @@ export default function CheckoutPage() {
     <div className="shop-page">
       {/* 顶部导航栏 */}
       <div className="shop-header">
-        <div className="shop-header-inner">
-          <button onClick={handleBack} className="shop-header-back">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="shop-header-title">结算</h1>
-          <button onClick={handleClose} className="shop-header-close">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
+        <button onClick={handleBack} className="shop-header-back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h1 className="shop-header-title">结算</h1>
+        <button onClick={handleClose} className="shop-header-close">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
       </div>
 
       {/* 商品清单模块 */}
@@ -277,18 +274,21 @@ export default function CheckoutPage() {
       <section className="shop-section">
         <div className="shop-section-title">支付方式</div>
         <div className="shop-payment-row">
+          {/* 信用卡 */}
           <button
             className={`shop-payment-btn ${paymentMethod === "credit-card" ? "active" : ""}`}
             onClick={() => setPaymentMethod("credit-card")}
           >
             信用卡
           </button>
+          {/* PayPal */}
           <button
             className={`shop-payment-btn ${paymentMethod === "paypal" ? "active" : ""}`}
             onClick={() => setPaymentMethod("paypal")}
           >
             PayPal
           </button>
+          {/* 支付宝 */}
           <button
             className={`shop-payment-btn ${paymentMethod === "alipay" ? "active" : ""}`}
             onClick={() => setPaymentMethod("alipay")}
@@ -316,7 +316,7 @@ export default function CheckoutPage() {
         </div>
       </section>
 
-      {/* 底部结算按钮 */}
+      {/* 底部确认下单按钮 */}
       <div className="shop-bottom-bar">
         <button className="shop-submit-btn" onClick={handleSubmit}>
           确认下单

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
@@ -12,7 +12,6 @@ export default function CartPage() {
     items,
     updateQuantity,
     removeItem,
-    clearCart,
     toggleSelect,
     toggleSelectAll,
     totalItems,
@@ -37,7 +36,6 @@ export default function CartPage() {
   // 跳转结算
   const handleCheckout = () => {
     if (selectedItems.length === 0) return;
-    // 将选中商品存入 sessionStorage
     sessionStorage.setItem("checkoutItems", JSON.stringify(selectedItems));
     router.push("/m/checkout");
   };
@@ -54,15 +52,13 @@ export default function CartPage() {
     <div className="shop-page">
       {/* 顶部导航栏 */}
       <div className="shop-header">
-        <div className="shop-header-inner">
-          <button onClick={handleBack} className="shop-header-back">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="shop-header-title">购物车</h1>
-          <span style={{ color: "#8A8580", fontSize: "14px" }}>{totalItems}件</span>
-        </div>
+        <button onClick={handleBack} className="shop-header-back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h1 className="shop-header-title">购物车</h1>
+        <span style={{ color: "#8A8580", fontSize: "14px", fontWeight: 300 }}>{totalItems}件</span>
       </div>
 
       {/* 商品列表 */}
@@ -80,14 +76,14 @@ export default function CartPage() {
               </svg>
             )}
           </div>
-          <span style={{ marginLeft: "12px", color: "#8A8580", fontSize: "14px" }}>全选</span>
+          <span style={{ marginLeft: "12px", color: "#8A8580", fontSize: "14px", fontWeight: 300 }}>全选</span>
         </div>
 
         {/* 商品卡片列表 */}
         {items.length === 0 ? (
           <div style={{ textAlign: "center", padding: "60px 0", color: "#8A8580" }}>
-            <p style={{ fontSize: "14px" }}>购物车是空的</p>
-            <Link href="/m" style={{ color: "#E8B4B8", fontSize: "14px", marginTop: "16px" }}>
+            <p style={{ fontSize: "14px", fontWeight: 300 }}>购物车是空的</p>
+            <Link href="/m" style={{ color: "#E8B4B8", fontSize: "14px", marginTop: "16px", fontWeight: 300 }}>
               去选购
             </Link>
           </div>
@@ -167,13 +163,13 @@ export default function CartPage() {
       {items.length > 0 && (
         <section className="shop-section">
           <div className="shop-fee-row">
-            <span className="shop-fee-label">商品小计</span>
+            <span className="shop-fee-label">小计</span>
             <span className="shop-fee-value">${selectedTotal.toLocaleString()}</span>
           </div>
           <div className="shop-fee-row">
             <span className="shop-fee-label">运费</span>
             <span className={`shop-fee-value ${selectedTotal >= 10000 ? "shop-fee-free" : ""}`}>
-              {selectedTotal >= 10000 ? "免运费" : "$300"}
+              {selectedTotal >= 10000 ? "免费" : "$300"}
             </span>
           </div>
           <div className="shop-fee-row">
