@@ -365,40 +365,25 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </div>
 
-      {/* AI Trial Floating Button - Above bottom bar */}
-      <button 
-        className="ai-trial-float"
-        onClick={() => setShowAIOverlay(true)}
-      >
-        <svg className="icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none">
-          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-          <path d="M2 17l10 5 10-5"/>
-          <path d="M2 12l10 5 10-5"/>
-        </svg>
-        <span>AI 试用</span>
-      </button>
-
-      {/* Bottom CTA - Redesigned */}
-      <div className="bottom-cta-new">
-        {/* Left: Price + Product Name */}
-        <div className="cta-info">
-          <div className="cta-price">${OWL_DATA.priceRange.americas[0].toLocaleString()} USD</div>
-          <div className="cta-name">{OWL_DATA.name}</div>
+      {/* Bottom CTA - Original Structure */}
+      <div className="bottom-cta">
+        <div className="row-top">
+          <div className="product-id">
+            <span className="brand">FUZZ SOFA</span>
+            <span className="name">{OWL_DATA.name} <span className="light">✦</span></span>
+          </div>
+          <button className="btn-ai-clean" onClick={() => setShowAIOverlay(true)}>
+            <svg className="icon" viewBox="0 0 24 24">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+            <span className="ai-label">AI 预览</span>
+          </button>
         </div>
-        {/* Right: Two Buttons */}
-        <div className="cta-actions">
-          <button 
-            className="btn-cart"
-            onClick={() => { setPurchaseSource('cart'); setShowPurchasePanel(true); }}
-          >
-            加入购物车
-          </button>
-          <button 
-            className="btn-buy-now"
-            onClick={() => { setPurchaseSource('buy'); setShowPurchasePanel(true); }}
-          >
-            立即购买
-          </button>
+        <div className="row-bottom">
+          <span className="price">$3,500 <small>USD</small></span>
+          <button className="btn-buy" onClick={() => { setPurchaseSource('buy'); setShowPurchasePanel(true); }}>购买</button>
         </div>
       </div>
 
