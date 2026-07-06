@@ -4443,6 +4443,49 @@ textarea.form-control {
   border-color: #E8B4B8;
   color: #0A0A0A;
 }
+
+/* ===== NEW: 顶部导航栏AI按钮 ===== */
+#pageDetail .top-nav-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0 8px;
+  margin-bottom: 4px;
+}
+
+#pageDetail .top-nav-row .back-link {
+  font-size: 20px;
+  color: #8A8580;
+  text-decoration: none;
+  padding: 4px 8px;
+}
+
+#pageDetail .top-nav-row .nav-ai-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid #333;
+  color: #8A8580;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#pageDetail .top-nav-row .nav-ai-btn:hover {
+  border-color: #E8B4B8;
+  color: #E8B4B8;
+}
+
+#pageDetail .top-nav-row .nav-ai-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
 /* 四、极超大屏（> 1920px）—— 再放大 */
 @media (min-width: 1921px) {
   .app {
