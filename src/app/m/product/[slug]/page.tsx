@@ -202,14 +202,6 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
             </button>
           </div>
 
-          {/* Image Indicator */}
-          <div className="image-indicator" id="detailIndicator">
-            {OWL_DATA.images.map((_: string, i: number) => (
-              <span key={i} className={i === currentImageIndex ? 'active' : ''} onClick={() => setCurrentImageIndex(i)}>
-                {String(i + 1).padStart(2, '0')}
-              </span>
-            ))}
-          </div>
         </div>
 
         {/* Material & Color Selector - Two-level Structure */}
