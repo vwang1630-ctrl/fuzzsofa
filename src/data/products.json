@@ -5,7 +5,7 @@
     "animal": "Gorilla",
     "tagline": "Raw Power, Fabric or Leather",
     "description": "The Gorilla Sofa embodies raw, grounded power. Its massive, low-slung profile and broad armrests create an unmistakable impression of strength and stability. Available in both fabric and leather options, this is the definitive statement piece for interiors that celebrate bold, primal energy.",
-    "concept": "The gorilla sits with quiet, undeniable authority \u2014 every line of its massive frame speaks of grounded strength that needs no display. The Gorilla Sofa captures this essence in its low, broad silhouette. The thick, powerful armrests rise like shoulders; the deep, wide seat offers an embrace that feels primal and protective. This is furniture that anchors a room not through height but through sheer, unapologetic mass and presence.",
+    "concept": "The gorilla sits with quiet, undeniable authority — every line of its massive frame speaks of grounded strength that needs no display. The Gorilla Sofa captures this essence in its low, broad silhouette. The thick, powerful armrests rise like shoulders; the deep, wide seat offers an embrace that feels primal and protective. This is furniture that anchors a room not through height but through sheer, unapologetic mass and presence.",
     "interiorContext": "The Gorilla Sofa demands generous floor space and suits interiors that celebrate materiality and bold gestures. It excels in loft apartments with exposed concrete, contemporary villas with double-height spaces, and hotel lobbies where it serves as a gathering anchor. Its low profile makes it ideal for rooms with dramatic views, where it won't compete with the landscape.",
     "priceRange": {
       "americas": [
@@ -60,16 +60,17 @@
       "/products/gorilla-sofa/gray.jpg",
       "/products/gorilla-sofa/cream.jpg",
       "/products/gorilla-sofa/brown.jpg",
-      "/products/gorilla-sofa/black.jpg"
+      "/products/gorilla-sofa/black.jpg",
+      "/products/gorilla-sofa/featured-square.webp"
     ],
     "faq": [
       {
         "question": "Why does the Gorilla Sofa sit lower than other Fuzz Sofa models?",
-        "answer": "The low profile is intentional \u2014 it mirrors the gorilla's grounded, relaxed posture. This lower stance creates a more intimate seating experience and allows the piece to sit comfortably in rooms with dramatic views or art installations above eye level."
+        "answer": "The low profile is intentional — it mirrors the gorilla's grounded, relaxed posture. This lower stance creates a more intimate seating experience and allows the piece to sit comfortably in rooms with dramatic views or art installations above eye level."
       },
       {
         "question": "What is the difference between fabric and leather options?",
-        "answer": "Both options use the same solid hardwood frame and cushioning system. Boucl\u00e9 fabric offers a warm, textured feel ideal for residential settings. Velvet fabric provides a smooth, luxurious drape. Leather Touch develops a rich patina over time and is recommended for both residential and commercial use. Price varies by material selection."
+        "answer": "Both options use the same solid hardwood frame and cushioning system. Bouclé fabric offers a warm, textured feel ideal for residential settings. Velvet fabric provides a smooth, luxurious drape. Leather Touch develops a rich patina over time and is recommended for both residential and commercial use. Price varies by material selection."
       },
       {
         "question": "How is the Gorilla Sofa delivered?",
@@ -93,7 +94,7 @@
       "luxury-villa-interior",
       "statement-furniture"
     ],
-    "metaDescription": "Custom sculptural gorilla sofa by Fuzz Sofa Studio. A made-to-order statement piece for contemporary interiors. Available in fabric or leather. 1\u20132 weeks production. Worldwide shipping.",
+    "metaDescription": "Custom sculptural gorilla sofa by Fuzz Sofa Studio. A made-to-order statement piece for contemporary interiors. Available in fabric or leather. 1–2 weeks production. Worldwide shipping.",
     "trendingGeo": [
       "US",
       "EU",
@@ -106,60 +107,60 @@
     "mobileFeatures": [
       {
         "num": "01",
-        "label": "\u91ce\u6027\u5b58\u5728",
-        "desc": "\u7c97\u72b7\u529b\u91cf\uff0c\u91ce\u6027\u4f18\u96c5"
+        "label": "野性存在",
+        "desc": "粗犷力量，野性优雅"
       },
       {
         "num": "02",
-        "label": "\u627f\u91cd 400kg",
-        "desc": "\u822a\u7a7a\u7ea7\u575a\u56fa\u9aa8\u67b6"
+        "label": "承重 400kg",
+        "desc": "航空级坚固骨架"
       },
       {
         "num": "03",
-        "label": "1\u20132 \u5468\u5b9a\u5236",
-        "desc": "\u7eaf\u624b\u5de5\u5320\u5fc3\u5236\u4f5c"
+        "label": "1–2 周定制",
+        "desc": "纯手工匠心制作"
       }
     ],
     "mobileStory": {
       "title": "Gorilla Sofa",
       "text": [
-        "\u5927\u7329\u7329\u6c99\u53d1\u6e90\u4e8e\u5bf9<span class=\"highlight\">\u81ea\u7136\u529b\u91cf</span>\u7684\u89c2\u5bdf\u3002\u7c97\u72b7\u800c\u4e0d\u5931\u4f18\u96c5\uff0c\u5b83\u5c31\u50cf\u4e00\u4ef6\u6816\u606f\u5728\u5ba2\u5385\u4e2d\u7684\u96d5\u5851\u3002",
-        "\u6bcf\u4e00\u9053\u7ebf\u6761\u90fd\u7ecf\u8fc7\u624b\u5de5\u5851\u5f62\uff0c\u5728\u4e09\u7ef4\u7a7a\u95f4\u4e2d\u5bfb\u627e\u529b\u91cf\u4e0e\u8212\u9002\u7684\u5e73\u8861\u3002\u8fd9\u4e0d\u4ec5\u662f\u5bb6\u5177\uff0c\u66f4\u662f\u4e00\u5ea7\u53ef\u6816\u606f\u7684\u96d5\u5851\u3002"
+        "大猩猩沙发源于对<span class=\"highlight\">自然力量</span>的观察。粗犷而不失优雅，它就像一件栖息在客厅中的雕塑。",
+        "每一道线条都经过手工塑形，在三维空间中寻找力量与舒适的平衡。这不仅是家具，更是一座可栖息的雕塑。"
       ]
     },
     "mobileCrafts": [
       {
-        "name": "\u9540\u950c\u94a2\u6846\u67b6",
-        "detail": "\u7cbe\u5bc6\u710a\u63a5"
+        "name": "镀锌钢框架",
+        "detail": "精密焊接"
       },
       {
-        "name": "\u9ad8\u5bc6\u5ea6\u6d77\u7ef5",
-        "detail": "\u5b9a\u5236\u6a21\u5177\u6210\u578b"
+        "name": "高密度海绵",
+        "detail": "定制模具成型"
       },
       {
-        "name": "\u4e91\u89e6\u611f\u9762\u6599",
-        "detail": "\u73b0\u4ee3\u8d28\u611f"
+        "name": "云触感面料",
+        "detail": "现代质感"
       },
       {
-        "name": "\u4e00\u4f53\u5f0f\u91d1\u5c5e\u5e95\u5ea7",
-        "detail": "\u54d1\u5149\u9970\u9762"
+        "name": "一体式金属底座",
+        "detail": "哑光饰面"
       }
     ],
     "mobileScenes": [
       {
-        "image": "/products/gorilla-sofa/scene-1.jpg",
-        "label": "\u661f\u9645 lounge",
-        "sub": "\u661f\u7a7a\u4e0b\u7684\u8d77\u5c45\u5ba4"
+        "image": "/products/gorilla-sofa/gray.jpg",
+        "label": "星际 lounge",
+        "sub": "星空下的起居室"
       },
       {
-        "image": "/products/gorilla-sofa/scene-2.jpg",
-        "label": "\u6c99\u4e18\u9759\u4fee",
-        "sub": "\u9759\u8c27 \u00b7 \u6c89\u601d \u00b7 \u6e29\u6696"
+        "image": "/products/gorilla-sofa/cream.jpg",
+        "label": "沙丘静修",
+        "sub": "静谧 · 沉思 · 温暖"
       },
       {
-        "image": "/products/gorilla-sofa/scene-3.jpg",
-        "label": "\u94f6\u6cb3\u6c99\u9f99",
-        "sub": "\u957f\u8c08\u4e4b\u5730"
+        "image": "/products/gorilla-sofa/brown.jpg",
+        "label": "银河沙龙",
+        "sub": "长谈之地"
       }
     ]
   },
@@ -168,8 +169,8 @@
     "name": "Owl Chair",
     "animal": "Owl",
     "tagline": "Wisdom and Watchfulness",
-    "description": "The Owl Chair captures the alert, watchful essence of an owl at rest. Its compact scale and distinctive rounded backrest make it the most versatile piece in the Fuzz Sofa collection \u2014 a statement chair that transforms any corner into a place of contemplation and style.",
-    "concept": "The owl sits upright on its branch \u2014 alert, observant, perfectly composed. The Owl Chair translates this watchful quality into a compact statement seat. The rounded backrest encircles the sitter like folded wings, creating a sense of shelter and focus. The proportionally wide seat relative to the frame invites a drawn-up, contemplative posture. This is a chair for reading corners, study nooks, and intimate conversation \u2014 anywhere that rewards quiet attention.",
+    "description": "The Owl Chair captures the alert, watchful essence of an owl at rest. Its compact scale and distinctive rounded backrest make it the most versatile piece in the Fuzz Sofa collection — a statement chair that transforms any corner into a place of contemplation and style.",
+    "concept": "The owl sits upright on its branch — alert, observant, perfectly composed. The Owl Chair translates this watchful quality into a compact statement seat. The rounded backrest encircles the sitter like folded wings, creating a sense of shelter and focus. The proportionally wide seat relative to the frame invites a drawn-up, contemplative posture. This is a chair for reading corners, study nooks, and intimate conversation — anywhere that rewards quiet attention.",
     "interiorContext": "The Owl Chair's compact footprint makes it the most versatile piece in the collection. It excels in home libraries and reading nooks, bedroom seating areas, hotel room corners, and as accent seating in living rooms alongside larger Fuzz Sofa pieces. Its verticality makes it ideal for spaces where floor area is limited but vertical presence is welcome.",
     "priceRange": {
       "americas": [
@@ -200,7 +201,7 @@
     "materials": [
       "Solid hardwood frame (FSC-certified walnut)",
       "High-density foam with down feather wrap",
-      "Boucl\u00e9 & Velvet fabric upholstery",
+      "Bouclé & Velvet fabric upholstery",
       "Solid brass feet with brushed finish"
     ],
     "materialOptions": [
@@ -250,16 +251,19 @@
       }
     ],
     "images": [
+      "/products/owl/black-leather.png",
+      "/products/owl/dusty-pink-fur.png",
       "/products/owl/snowy-white.png",
-      "/products/owl/warm-gray.png",
       "/products/owl/rose-pink.png",
+      "/products/owl/warm-gray.png",
+      "/products/owl/warm-gray.png",
       "/products/owl/forest-green.png",
-      "/products/owl/dusty-pink-fur.png"
+      "/products/owl/rose-pink.png"
     ],
     "faq": [
       {
         "question": "Is the Owl Chair available in leather?",
-        "answer": "The Owl Chair is available in four material lines: Leather (Agate Black, Chestnut Brown), Plush (Snowy White, Rose Pink), Linen (Warm Gray, Oatmeal), and Velvet (Forest Green, Burgundy) \u2014 eight colors in total. Each material brings a unique tactile character to the chair's organic form."
+        "answer": "The Owl Chair is available in four material lines: Leather (Agate Black, Chestnut Brown), Plush (Snowy White, Rose Pink), Linen (Warm Gray, Oatmeal), and Velvet (Forest Green, Burgundy) — eight colors in total. Each material brings a unique tactile character to the chair's organic form."
       },
       {
         "question": "Can the Owl Chair be used as a dining chair?",
@@ -287,7 +291,7 @@
       "statement-furniture",
       "sculptural-furniture-trend"
     ],
-    "metaDescription": "Custom sculptural owl chair by Fuzz Sofa Studio. A made-to-order statement chair for modern interiors. Available in premium fabric. 1\u20132 weeks production. Worldwide shipping.",
+    "metaDescription": "Custom sculptural owl chair by Fuzz Sofa Studio. A made-to-order statement chair for modern interiors. Available in premium fabric. 1–2 weeks production. Worldwide shipping.",
     "hiddenInRegions": [
       "middle_east"
     ],
@@ -295,60 +299,60 @@
     "mobileFeatures": [
       {
         "num": "01",
-        "label": "\u9759\u9ed8\u667a\u6167",
-        "desc": "\u79c1\u5bc6\u5750\u5177\uff0c\u72ec\u5904\u65f6\u5149"
+        "label": "静默智慧",
+        "desc": "私密坐具，独处时光"
       },
       {
         "num": "02",
-        "label": "\u627f\u91cd 150kg",
-        "desc": "\u822a\u7a7a\u7ea7\u575a\u56fa\u9aa8\u67b6"
+        "label": "承重 150kg",
+        "desc": "航空级坚固骨架"
       },
       {
         "num": "03",
-        "label": "1\u20132 \u5468\u5b9a\u5236",
-        "desc": "\u7eaf\u624b\u5de5\u5320\u5fc3\u5236\u4f5c"
+        "label": "1–2 周定制",
+        "desc": "纯手工匠心制作"
       }
     ],
     "mobileStory": {
       "title": "Owl Chair",
       "text": [
-        "\u732b\u5934\u9e70\u6905\u6e90\u4e8e\u5bf9<span class=\"highlight\">\u9759\u8c27\u72ec\u5904</span>\u7684\u89c2\u5bdf\u3002\u5bbd\u5927\u7684\u9760\u80cc\u5982\u540c\u5c55\u5f00\u7684\u7fc5\u8180\uff0c\u56f4\u5408\u51fa\u4e00\u4e2a\u79c1\u5bc6\u7684\u9605\u8bfb\u89d2\u843d\u3002",
-        "\u6bcf\u4e00\u5904\u5f27\u5ea6\u90fd\u7ecf\u8fc7\u7cbe\u5fc3\u63a8\u6572\uff0c\u5728\u5305\u88f9\u611f\u4e0e\u5f00\u653e\u611f\u4e4b\u95f4\u627e\u5230\u5e73\u8861\u3002"
+        "猫头鹰椅源于对<span class=\"highlight\">静谧独处</span>的观察。宽大的靠背如同展开的翅膀，围合出一个私密的阅读角落。",
+        "每一处弧度都经过精心推敲，在包裹感与开放感之间找到平衡。"
       ]
     },
     "mobileCrafts": [
       {
-        "name": "\u9540\u950c\u94a2\u6846\u67b6",
-        "detail": "\u7cbe\u5bc6\u710a\u63a5"
+        "name": "镀锌钢框架",
+        "detail": "精密焊接"
       },
       {
-        "name": "\u9ad8\u5bc6\u5ea6\u6d77\u7ef5",
-        "detail": "\u5b9a\u5236\u6a21\u5177\u6210\u578b"
+        "name": "高密度海绵",
+        "detail": "定制模具成型"
       },
       {
-        "name": "\u4e91\u89e6\u611f\u9762\u6599",
-        "detail": "\u73b0\u4ee3\u8d28\u611f"
+        "name": "云触感面料",
+        "detail": "现代质感"
       },
       {
-        "name": "\u4e00\u4f53\u5f0f\u91d1\u5c5e\u5e95\u5ea7",
-        "detail": "\u54d1\u5149\u9970\u9762"
+        "name": "一体式金属底座",
+        "detail": "哑光饰面"
       }
     ],
     "mobileScenes": [
       {
-        "image": "/products/owl/scene-1.jpg",
-        "label": "\u661f\u9645 lounge",
-        "sub": "\u661f\u7a7a\u4e0b\u7684\u8d77\u5c45\u5ba4"
+        "image": "/products/owl/snowy-white.png",
+        "label": "静谧书房",
+        "sub": "阅读角的独处时光"
       },
       {
-        "image": "/products/owl/scene-2.jpg",
-        "label": "\u6c99\u4e18\u9759\u4fee",
-        "sub": "\u9759\u8c27 \u00b7 \u6c89\u601d \u00b7 \u6e29\u6696"
+        "image": "/products/owl/forest-green.png",
+        "label": "自然角落",
+        "sub": "森林绿 · 沉思 · 惬意"
       },
       {
-        "image": "/products/owl/scene-3.jpg",
-        "label": "\u94f6\u6cb3\u6c99\u9f99",
-        "sub": "\u957f\u8c08\u4e4b\u5730"
+        "image": "/products/owl/black-leather.png",
+        "label": "都会客厅",
+        "sub": "皮革质感 · 精致空间"
       }
     ]
   },
@@ -358,7 +362,7 @@
     "animal": "Gorilla",
     "tagline": "Upholstered Presence, Sculptural Authority",
     "description": "The Silverback Sofa reimagines the sculptural gorilla form in refined upholstery. Its tailored fabric silhouette brings architectural precision to the primal gorilla outline, creating a statement piece that bridges organic sculpture and contemporary furniture design.",
-    "concept": "The silverback gorilla commands through stillness \u2014 its presence felt before a single move. The Silverback Sofa captures this quality in structured upholstery: the broad chest becomes a generous seat, the powerful arms form inviting armrests, and the watchful face rises as a sculptural backrest. Wrapped in premium fabric rather than fur, this version speaks to interiors that value clean lines and tactile sophistication alongside organic form.",
+    "concept": "The silverback gorilla commands through stillness — its presence felt before a single move. The Silverback Sofa captures this quality in structured upholstery: the broad chest becomes a generous seat, the powerful arms form inviting armrests, and the watchful face rises as a sculptural backrest. Wrapped in premium fabric rather than fur, this version speaks to interiors that value clean lines and tactile sophistication alongside organic form.",
     "interiorContext": "The Silverback Sofa's tailored upholstery makes it the most versatile gorilla piece for contemporary interiors. It excels in minimalist living rooms where texture matters more than pattern, modern boutique hotel lobbies, architect-designed residential spaces, and professional design studios. Its fabric construction suits climate-controlled environments and spaces where a refined, non-pile surface is preferred.",
     "priceRange": {
       "americas": [
@@ -410,7 +414,7 @@
     "faq": [
       {
         "question": "What is the difference between the Silverback Sofa and Gorilla Sofa?",
-        "answer": "The Silverback Sofa features tailored fabric and velvet upholstery for a refined, structured aesthetic. The Gorilla Sofa uses plush fur upholstery for a tactile, organic feel. Both share the same sculptural gorilla form and dimensions \u2014 the choice is about material preference and interior style."
+        "answer": "The Silverback Sofa features tailored fabric and velvet upholstery for a refined, structured aesthetic. The Gorilla Sofa uses plush fur upholstery for a tactile, organic feel. Both share the same sculptural gorilla form and dimensions — the choice is about material preference and interior style."
       },
       {
         "question": "How is the Silverback Sofa delivered?",
@@ -434,65 +438,65 @@
       "luxury-villa-interior",
       "statement-furniture"
     ],
-    "metaDescription": "Custom sculptural silverback gorilla sofa by Fuzz Sofa Studio. A made-to-order upholstered sofa for contemporary interiors. Available in 4 colors. 1\u20132 weeks production. Worldwide shipping.",
+    "metaDescription": "Custom sculptural silverback gorilla sofa by Fuzz Sofa Studio. A made-to-order upholstered sofa for contemporary interiors. Available in 4 colors. 1–2 weeks production. Worldwide shipping.",
     "mobileShortKey": "silverback",
     "mobileFeatures": [
       {
         "num": "01",
-        "label": "\u96d5\u5851\u6743\u5a01",
-        "desc": "\u7cbe\u81f4\u8f6f\u5305\uff0c\u5efa\u7b51\u7ebf\u6761"
+        "label": "雕塑权威",
+        "desc": "精致软包，建筑线条"
       },
       {
         "num": "02",
-        "label": "\u627f\u91cd 300kg",
-        "desc": "\u822a\u7a7a\u7ea7\u575a\u56fa\u9aa8\u67b6"
+        "label": "承重 300kg",
+        "desc": "航空级坚固骨架"
       },
       {
         "num": "03",
-        "label": "1\u20132 \u5468\u5b9a\u5236",
-        "desc": "\u7eaf\u624b\u5de5\u5320\u5fc3\u5236\u4f5c"
+        "label": "1–2 周定制",
+        "desc": "纯手工匠心制作"
       }
     ],
     "mobileStory": {
       "title": "Silverback Sofa",
       "text": [
-        "\u94f6\u80cc\u6c99\u53d1\u6e90\u4e8e\u5bf9<span class=\"highlight\">\u9759\u9ed8\u6743\u5a01</span>\u7684\u89c2\u5bdf\u3002\u5b83\u4e0d\u6012\u81ea\u5a01\uff0c\u4ee5\u7ed3\u6784\u5316\u7684\u8f6f\u5305\u7ebf\u6761\u91cd\u65b0\u8be0\u91ca\u5927\u7329\u7329\u7684\u529b\u91cf\u3002",
-        "\u6bcf\u4e00\u5904\u88c1\u526a\u90fd\u7ecf\u8fc7\u7cbe\u5bc6\u8ba1\u7b97\uff0c\u5728\u6709\u673a\u96d5\u5851\u4e0e\u5f53\u4ee3\u5bb6\u5177\u4e4b\u95f4\u627e\u5230\u5bf9\u8bdd\u3002"
+        "银背沙发源于对<span class=\"highlight\">静默权威</span>的观察。它不怒自威，以结构化的软包线条重新诠释大猩猩的力量。",
+        "每一处裁剪都经过精密计算，在有机雕塑与当代家具之间找到对话。"
       ]
     },
     "mobileCrafts": [
       {
-        "name": "\u9540\u950c\u94a2\u6846\u67b6",
-        "detail": "\u7cbe\u5bc6\u710a\u63a5"
+        "name": "镀锌钢框架",
+        "detail": "精密焊接"
       },
       {
-        "name": "\u9ad8\u5bc6\u5ea6\u6d77\u7ef5",
-        "detail": "\u5b9a\u5236\u6a21\u5177\u6210\u578b"
+        "name": "高密度海绵",
+        "detail": "定制模具成型"
       },
       {
-        "name": "\u7cbe\u7eba\u9762\u6599",
-        "detail": "\u5efa\u7b51\u8d28\u611f"
+        "name": "精纺面料",
+        "detail": "建筑质感"
       },
       {
-        "name": "\u4e00\u4f53\u5f0f\u91d1\u5c5e\u5e95\u5ea7",
-        "detail": "\u54d1\u5149\u9970\u9762"
+        "name": "一体式金属底座",
+        "detail": "哑光饰面"
       }
     ],
     "mobileScenes": [
       {
         "image": "/products/silverback-sofa/scene-1.jpg",
-        "label": "\u6781\u7b80\u8d77\u5c45",
-        "sub": "\u7ebf\u6761\u4e0e\u7559\u767d"
+        "label": "极简起居",
+        "sub": "线条与留白"
       },
       {
         "image": "/products/silverback-sofa/scene-2.jpg",
-        "label": "\u6c99\u4e18\u9759\u4fee",
-        "sub": "\u9759\u8c27 \u00b7 \u6c89\u601d \u00b7 \u6e29\u6696"
+        "label": "沙丘静修",
+        "sub": "静谧 · 沉思 · 温暖"
       },
       {
         "image": "/products/silverback-sofa/scene-3.jpg",
-        "label": "\u94f6\u6cb3\u6c99\u9f99",
-        "sub": "\u957f\u8c08\u4e4b\u5730"
+        "label": "银河沙龙",
+        "sub": "长谈之地"
       }
     ]
   },
@@ -501,8 +505,8 @@
     "name": "Meteorite Ring Sofa",
     "animal": "Meteorite",
     "tagline": "Sculptural Seating, Born from the Cosmos",
-    "description": "The Meteorite Ring Sofa captures the raw beauty of a celestial body frozen at the moment of impact. Its distinctive ring silhouette and crater-textured surface create a seating experience that is both sculptural and deeply comfortable \u2014 a modern statement furniture piece that transforms any space into a gallery of cosmic wonder. A cosmos-inspired sculptural circular sofa featuring a galvanized steel tube frame, high-density shaped foam, and a 360-degree conversation sofa design for artistic living.",
-    "concept": "Inspired by celestial bodies and orbital forms, the Meteorite Ring Sofa is more than a place to sit \u2014 it is a sculptural statement. Its circular 360-degree design naturally encourages conversation and connection, making it an ideal centerpiece for open-plan homes, creative studios, and boutique hospitality spaces.",
+    "description": "The Meteorite Ring Sofa captures the raw beauty of a celestial body frozen at the moment of impact. Its distinctive ring silhouette and crater-textured surface create a seating experience that is both sculptural and deeply comfortable — a modern statement furniture piece that transforms any space into a gallery of cosmic wonder. A cosmos-inspired sculptural circular sofa featuring a galvanized steel tube frame, high-density shaped foam, and a 360-degree conversation sofa design for artistic living.",
+    "concept": "Inspired by celestial bodies and orbital forms, the Meteorite Ring Sofa is more than a place to sit — it is a sculptural statement. Its circular 360-degree design naturally encourages conversation and connection, making it an ideal centerpiece for open-plan homes, creative studios, and boutique hospitality spaces.",
     "interiorContext": "Whether positioned beside floor-to-ceiling windows or placed at the center of a room, it transforms everyday living into a more artistic experience.",
     "priceRange": {
       "americas": [
@@ -564,7 +568,7 @@
       },
       {
         "question": "How is the Meteorite Ring Sofa delivered?",
-        "answer": "All Fuzz Sofa pieces are delivered via our free white-glove service. The Meteorite Ring Sofa's compact size makes it one of the easiest pieces in the collection to deliver \u2014 it fits through standard doorways and elevators without special arrangements."
+        "answer": "All Fuzz Sofa pieces are delivered via our free white-glove service. The Meteorite Ring Sofa's compact size makes it one of the easiest pieces in the collection to deliver — it fits through standard doorways and elevators without special arrangements."
       },
       {
         "question": "What is the return policy?",
@@ -580,7 +584,7 @@
       "creative-studio",
       "urban-apartment"
     ],
-    "metaDescription": "A sculptural circular sofa inspired by celestial forms, featuring a galvanized steel tube frame, high-density shaped foam, and a 360\u00b0 conversation-friendly design for artistic living.",
+    "metaDescription": "A sculptural circular sofa inspired by celestial forms, featuring a galvanized steel tube frame, high-density shaped foam, and a 360° conversation-friendly design for artistic living.",
     "trendingGeo": [
       "americas",
       "europe"
@@ -589,60 +593,60 @@
     "mobileFeatures": [
       {
         "num": "01",
-        "label": "360\u00b0 \u5bf9\u8bdd",
-        "desc": "\u73af\u5f62\u56f4\u5750\uff0c\u4fc3\u8fdb\u4ea4\u6d41"
+        "label": "360° 对话",
+        "desc": "环形围坐，促进交流"
       },
       {
         "num": "02",
-        "label": "\u627f\u91cd 150kg",
-        "desc": "\u822a\u7a7a\u7ea7\u575a\u56fa\u9aa8\u67b6"
+        "label": "承重 150kg",
+        "desc": "航空级坚固骨架"
       },
       {
         "num": "03",
-        "label": "1\u20132 \u5468\u5b9a\u5236",
-        "desc": "\u7eaf\u624b\u5de5\u5320\u5fc3\u5236\u4f5c"
+        "label": "1–2 周定制",
+        "desc": "纯手工匠心制作"
       }
     ],
     "mobileStory": {
       "title": "Ring Sofa",
       "text": [
-        "\u73af\u5f62\u8bbe\u8ba1\u6e90\u4e8e\u5bf9<span class=\"highlight\">\u81ea\u7136\u5bf9\u8bdd</span>\u7684\u89c2\u5bdf\u3002\u6ca1\u6709\u8d77\u70b9\uff0c\u6ca1\u6709\u7ec8\u70b9\u2014\u2014\u5c31\u50cf\u4e00\u573a\u6c38\u4e0d\u505c\u6b47\u7684\u4ea4\u6d41\u3002",
-        "\u6bcf\u4e00\u9053\u5f27\u7ebf\u90fd\u7ecf\u8fc7\u624b\u5de5\u5851\u5f62\uff0c\u5728\u4e09\u7ef4\u7a7a\u95f4\u4e2d\u5bfb\u627e\u5e73\u8861\u3002\u8fd9\u4e0d\u4ec5\u662f\u5bb6\u5177\uff0c\u66f4\u662f\u4e00\u5ea7\u53ef\u6816\u606f\u7684\u96d5\u5851\u3002"
+        "环形设计源于对<span class=\"highlight\">自然对话</span>的观察。没有起点，没有终点——就像一场永不停歇的交流。",
+        "每一道弧线都经过手工塑形，在三维空间中寻找平衡。这不仅是家具，更是一座可栖息的雕塑。"
       ]
     },
     "mobileCrafts": [
       {
-        "name": "\u9540\u950c\u94a2\u6846\u67b6",
-        "detail": "\u7cbe\u5bc6\u710a\u63a5"
+        "name": "镀锌钢框架",
+        "detail": "精密焊接"
       },
       {
-        "name": "\u9ad8\u5bc6\u5ea6\u6d77\u7ef5",
-        "detail": "\u5b9a\u5236\u6a21\u5177\u6210\u578b"
+        "name": "高密度海绵",
+        "detail": "定制模具成型"
       },
       {
-        "name": "\u9668\u77f3\u7eb9\u7406\u9762\u6599",
-        "detail": "\u89e6\u611f\u72ec\u7279"
+        "name": "陨石纹理面料",
+        "detail": "触感独特"
       },
       {
-        "name": "\u4e00\u4f53\u5f0f\u91d1\u5c5e\u5e95\u5ea7",
-        "detail": "\u54d1\u5149\u9970\u9762"
+        "name": "一体式金属底座",
+        "detail": "哑光饰面"
       }
     ],
     "mobileScenes": [
       {
         "image": "/products/meteorite-ring-sofa/scene-1.jpg",
-        "label": "\u661f\u9645 lounge",
-        "sub": "\u661f\u7a7a\u4e0b\u7684\u8d77\u5c45\u5ba4"
+        "label": "星际 lounge",
+        "sub": "星空下的起居室"
       },
       {
         "image": "/products/meteorite-ring-sofa/scene-2.jpg",
-        "label": "\u6c99\u4e18\u9759\u4fee",
-        "sub": "\u9759\u8c27 \u00b7 \u6c89\u601d \u00b7 \u6e29\u6696"
+        "label": "沙丘静修",
+        "sub": "静谧 · 沉思 · 温暖"
       },
       {
         "image": "/products/meteorite-ring-sofa/scene-3.jpg",
-        "label": "\u94f6\u6cb3\u6c99\u9f99",
-        "sub": "\u957f\u8c08\u4e4b\u5730"
+        "label": "银河沙龙",
+        "sub": "长谈之地"
       }
     ]
   },
@@ -651,9 +655,9 @@
     "name": "Muscle Gorilla Sofa",
     "animal": "Gorilla",
     "tagline": "Raw Power, Refined Craft",
-    "description": "The Muscle Gorilla Sofa commands attention with its hyper-realistic sculpted form \u2014 every bicep, knuckle, and fur ridge rendered in polished leather. A furniture piece that refuses to be ignored, it transforms any room into a gallery of primal sophistication. Sit in the lap of strength.",
-    "concept": "Inspired by the raw musculature of a silverback gorilla in peak form, the Muscle Gorilla Sofa is a study in controlled power. Every surface has been sculpted to convey the tension of muscle beneath skin \u2014 the broad chest, the defined arms, the clenched fists. Yet for all its ferocity, the seating experience is pure comfort. The dichotomy between visual intensity and physical ease is the essence of this piece: a throne that earns its presence.",
-    "interiorContext": "The Muscle Gorilla Sofa demands a room with gravitas. Grand living rooms with high ceilings, luxury hotel lobbies, executive offices, or collector's penthouses \u2014 spaces where boldness is not just accepted but expected. Its 200cm width requires generous floor area, and its sculptural detail rewards close viewing. Best positioned as a centerpiece where it can be appreciated from multiple angles.",
+    "description": "The Muscle Gorilla Sofa commands attention with its hyper-realistic sculpted form — every bicep, knuckle, and fur ridge rendered in polished leather. A furniture piece that refuses to be ignored, it transforms any room into a gallery of primal sophistication. Sit in the lap of strength.",
+    "concept": "Inspired by the raw musculature of a silverback gorilla in peak form, the Muscle Gorilla Sofa is a study in controlled power. Every surface has been sculpted to convey the tension of muscle beneath skin — the broad chest, the defined arms, the clenched fists. Yet for all its ferocity, the seating experience is pure comfort. The dichotomy between visual intensity and physical ease is the essence of this piece: a throne that earns its presence.",
+    "interiorContext": "The Muscle Gorilla Sofa demands a room with gravitas. Grand living rooms with high ceilings, luxury hotel lobbies, executive offices, or collector's penthouses — spaces where boldness is not just accepted but expected. Its 200cm width requires generous floor area, and its sculptural detail rewards close viewing. Best positioned as a centerpiece where it can be appreciated from multiple angles.",
     "priceRange": {
       "americas": [
         9800,
@@ -713,7 +717,7 @@
     "faq": [
       {
         "question": "What makes the Muscle Gorilla Sofa different from the Gorilla Sofa?",
-        "answer": "The Muscle Gorilla Sofa features hyper-realistic sculpted musculature in premium leather, while the Gorilla Sofa has a softer, more abstract silhouette in plush fabric. The Muscle Gorilla is for those who want maximum visual impact \u2014 it's the more dramatic, more detailed statement piece."
+        "answer": "The Muscle Gorilla Sofa features hyper-realistic sculpted musculature in premium leather, while the Gorilla Sofa has a softer, more abstract silhouette in plush fabric. The Muscle Gorilla is for those who want maximum visual impact — it's the more dramatic, more detailed statement piece."
       },
       {
         "question": "Is the leather easy to maintain?",
@@ -737,7 +741,7 @@
       "luxury-villa-interior",
       "statement-furniture"
     ],
-    "metaDescription": "Custom sculptural gorilla sofa by Fuzz Sofa Studio. A made-to-order leather statement piece for contemporary interiors. Available in 4 colors. 1\u20132 weeks production. Worldwide shipping.",
+    "metaDescription": "Custom sculptural gorilla sofa by Fuzz Sofa Studio. A made-to-order leather statement piece for contemporary interiors. Available in 4 colors. 1–2 weeks production. Worldwide shipping.",
     "trendingGeo": [
       "americas",
       "middle_east",
@@ -747,60 +751,60 @@
     "mobileFeatures": [
       {
         "num": "01",
-        "label": "\u6781\u81f4\u529b\u91cf",
-        "desc": "\u8d85\u5199\u5b9e\u808c\u8089\u96d5\u5851"
+        "label": "极致力量",
+        "desc": "超写实肌肉雕塑"
       },
       {
         "num": "02",
-        "label": "\u627f\u91cd 340kg",
-        "desc": "\u822a\u7a7a\u7ea7\u575a\u56fa\u9aa8\u67b6"
+        "label": "承重 340kg",
+        "desc": "航空级坚固骨架"
       },
       {
         "num": "03",
-        "label": "1\u20132 \u5468\u5b9a\u5236",
-        "desc": "\u7eaf\u624b\u5de5\u5320\u5fc3\u5236\u4f5c"
+        "label": "1–2 周定制",
+        "desc": "纯手工匠心制作"
       }
     ],
     "mobileStory": {
       "title": "Muscle Gorilla Sofa",
       "text": [
-        "\u808c\u8089\u7329\u7329\u6c99\u53d1\u6e90\u4e8e\u5bf9<span class=\"highlight\">\u5dc5\u5cf0\u529b\u91cf</span>\u7684\u6781\u81f4\u8868\u8fbe\u3002\u6bcf\u4e00\u6761\u808c\u8089\u7ebf\u6761\u90fd\u7ecf\u8fc7\u8d85\u5199\u5b9e\u96d5\u5851\u3002",
-        "\u89c6\u89c9\u4e0a\u7684\u91ce\u6027\u4e0e\u89e6\u611f\u4e0a\u7684\u8212\u9002\u5f62\u6210\u5f20\u529b\u2014\u2014\u8fd9\u662f\u4e00\u4ef6\u6323\u8131\u6c89\u9ed8\u7684\u738b\u5ea7\u3002"
+        "肌肉猩猩沙发源于对<span class=\"highlight\">巅峰力量</span>的极致表达。每一条肌肉线条都经过超写实雕塑。",
+        "视觉上的野性与触感上的舒适形成张力——这是一件挣脱沉默的王座。"
       ]
     },
     "mobileCrafts": [
       {
-        "name": "\u9540\u950c\u94a2\u6846\u67b6",
-        "detail": "\u7cbe\u5bc6\u710a\u63a5"
+        "name": "镀锌钢框架",
+        "detail": "精密焊接"
       },
       {
-        "name": "\u9ad8\u5bc6\u5ea6\u6d77\u7ef5",
-        "detail": "\u96d5\u5851\u7b49\u9ad8\u7ebf\u6210\u578b"
+        "name": "高密度海绵",
+        "detail": "雕塑等高线成型"
       },
       {
-        "name": "\u9876\u7ea7\u76ae\u9769",
-        "detail": "\u624b\u5de5\u7f1d\u7ebf"
+        "name": "顶级皮革",
+        "detail": "手工缝线"
       },
       {
-        "name": "\u4e00\u4f53\u5f0f\u91d1\u5c5e\u5e95\u5ea7",
-        "detail": "\u54d1\u5149\u9970\u9762"
+        "name": "一体式金属底座",
+        "detail": "哑光饰面"
       }
     ],
     "mobileScenes": [
       {
         "image": "/products/muscle-gorilla-sofa/scene-1.jpg",
-        "label": "\u6743\u529b\u4e4b\u6bbf",
-        "sub": "\u6c14\u573a\u4e0e\u683c\u5c40"
+        "label": "权力之殿",
+        "sub": "气场与格局"
       },
       {
         "image": "/products/muscle-gorilla-sofa/scene-2.jpg",
-        "label": "\u6c99\u4e18\u9759\u4fee",
-        "sub": "\u9759\u8c27 \u00b7 \u6c89\u601d \u00b7 \u6e29\u6696"
+        "label": "沙丘静修",
+        "sub": "静谧 · 沉思 · 温暖"
       },
       {
         "image": "/products/muscle-gorilla-sofa/scene-3.jpg",
-        "label": "\u94f6\u6cb3\u6c99\u9f99",
-        "sub": "\u957f\u8c08\u4e4b\u5730"
+        "label": "银河沙龙",
+        "sub": "长谈之地"
       }
     ]
   }

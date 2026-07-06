@@ -29,7 +29,7 @@ interface ProductDetail {
   scenes: { image: string; label: string; sub: string }[];
   features: { num: string; label: string; desc: string }[];
   mobileShortKey: string;
-  colors: { key: string; label: string; image: string }[];
+  colors: { key: string; label: string; colorCode?: string; image: string }[];
   explore: { key: string; name: string; desc: string; price: string; image: string }[];
 }
 
@@ -129,21 +129,77 @@ export default function ProductDetailPage() {
         if (listRes.products) setAllProducts(listRes.products);
         if (detailRes.product) {
           const p = detailRes.product;
-          // Map colors from materialOptions
-          const colors = p.materialOptions?.[0]?.colors?.map((c: string, i: number) => {
-            const key = c.toLowerCase().includes('white') ? 'white' : c.toLowerCase().includes('gray') ? 'gray' : `color-${i}`;
-            return { key, label: c, image: p.images?.[i] || p.images?.[0] || '/products/placeholder.jpg' };
-          }) || [
-            { key: 'white', label: '雪山白', image: p.images?.[0] || '/products/placeholder.jpg' },
-            { key: 'gray', label: '太空灰', image: p.images?.[1] || p.images?.[0] || '/products/placeholder.jpg' },
-          ];
 
-          // Map features from product data
-          const features = p.features || [
+          // Map colors from ALL materialOptions (not just first)
+          const colors = (p.materialOptions || []).flatMap(
+            (mo: { type: string; options: string[]; colors: string[] }, moIdx: number) =>
+              (mo.options || []).map((opt: string, i: number) => {
+                const colorCode = mo.colors?.[i] || '';
+                const key = colorCode.toLowerCase().includes('white') || opt.toLowerCase().includes('white') || opt.toLowerCase().includes('snowy')
+                  ? 'white'
+                  : colorCode.toLowerCase().includes('gray') || opt.toLowerCase().includes('gray')
+                    ? 'gray'
+                    : colorCode.toLowerCase().includes('pink') || opt.toLowerCase().includes('pink') || opt.toLowerCase().includes('rose')
+                      ? 'pink'
+                      : colorCode.toLowerCase().includes('brown') || opt.toLowerCase().includes('brown') || opt.toLowerCase().includes('chestnut') || opt.toLowerCase().includes('cognac')
+                        ? 'brown'
+                        : colorCode.toLowerCase().includes('black') || opt.toLowerCase().includes('black') || opt.toLowerCase().includes('obsidian') || opt.toLowerCase().includes('agate')
+                          ? 'black'
+                          : colorCode.toLowerCase().includes('green') || opt.toLowerCase().includes('green') || opt.toLowerCase().includes('forest')
+                            ? 'green'
+                            : colorCode.toLowerCase().includes('burgundy') || opt.toLowerCase().includes('burgundy') || opt.toLowerCase().includes('red')
+                              ? 'red'
+                              : `color-${moIdx}-${i}`;
+                const imageIndex = moIdx * (mo.options?.length || 1) + i;
+                return {
+                  key,
+                  label: opt,
+                  colorCode,
+                  image: p.images?.[imageIndex] || p.images?.[0] || '/products/placeholder.jpg',
+                };
+              })
+          );
+          // Deduplicate by key, keep first
+          const seenKeys = new Set<string>();
+          const dedupedColors = colors.filter((c: { key: string }) => {
+            if (seenKeys.has(c.key)) return false;
+            seenKeys.add(c.key);
+            return true;
+          });
+
+          // Use mobileFeatures from JSON, fallback to generated
+          const features = p.mobileFeatures || [
             { num: '01', label: p.animal || '独特设计', desc: p.tagline || '' },
-            { num: '02', label: '承重 150kg', desc: '航空级坚固骨架' },
+            { num: '02', label: `承重 ${p.specifications?.capacity?.match(/\d+/)?.[0] || '150'}kg`, desc: '航空级坚固骨架' },
             { num: '03', label: '1–2 周定制', desc: '纯手工匠心制作' },
           ];
+
+          // Use mobileStory from JSON
+          const storyTitle = p.mobileStory?.title || p.name;
+          const storyText = p.mobileStory?.text || [p.concept || p.description || ''];
+
+          // Use mobileCrafts from JSON
+          const crafts = p.mobileCrafts || [
+            { name: '镀锌钢框架', detail: '精密焊接' },
+            { name: '高密度海绵', detail: '定制模具成型' },
+            { name: '云触感面料', detail: '现代质感' },
+            { name: '一体式金属底座', detail: '哑光饰面' },
+          ];
+
+          // Use mobileScenes from JSON, fallback to generated from images
+          const scenes = p.mobileScenes || (p.images || []).slice(0, 3).map((img: string, i: number) => ({
+            image: img,
+            label: ['实景空间', '灵感角落', '氛围搭配'][i] || '实景灵感',
+            sub: ['真实生活场景', '设计灵感来源', '完美搭配方案'][i] || '',
+          }));
+
+          // Map specs from specifications
+          const specs = [
+            { label: '宽度', cm: p.specifications?.width || '', inch: p.specifications?.width ? String(Math.round(Number(p.specifications.width) / 2.54 * 10) / 10) : '' },
+            { label: '深度', cm: p.specifications?.depth || '', inch: p.specifications?.depth ? String(Math.round(Number(p.specifications.depth) / 2.54 * 10) / 10) : '' },
+            { label: '高度', cm: p.specifications?.height || '', inch: p.specifications?.height ? String(Math.round(Number(p.specifications.height) / 2.54 * 10) / 10) : '' },
+            { label: '座高', cm: p.specifications?.seatHeight || '', inch: p.specifications?.seatHeight ? String(Math.round(Number(p.specifications.seatHeight) / 2.54 * 10) / 10) : '' },
+          ].filter(s => s.cm);
 
           // Map explore from other products
           const explore = (listRes.products || [])
@@ -157,19 +213,16 @@ export default function ProductDetailPage() {
               image: ep.images?.[0] || '/products/placeholder.jpg',
             }));
 
-          // Map scenes from product images
-          const scenes = (p.images || []).slice(0, 3).map((img: string, i: number) => ({
-            image: img,
-            label: ['实景空间', '灵感角落', '氛围搭配'][i] || '实景灵感',
-            sub: ['真实生活场景', '设计灵感来源', '完美搭配方案'][i] || '',
-          }));
-
           setProduct({
             ...p,
-            colors,
+            colors: dedupedColors,
             features,
+            storyTitle,
+            storyText,
+            crafts,
+            scenes,
+            specs,
             explore,
-            scenes: p.scenes || scenes,
             mobileShortKey: p.mobileShortKey || slugToKey[p.slug] || p.slug,
           });
         } else {
@@ -276,7 +329,7 @@ export default function ProductDetailPage() {
         <div className="color-selector">
           <span className="label">颜色</span>
           <div className="options">
-            {product.colors.map((c: { key: string; label: string }) => (
+            {product.colors.map((c: { key: string; label: string; colorCode?: string }) => (
               <button
                 key={c.key}
                 className={`color-btn${selectedColor === c.key ? ' active' : ''}`}
@@ -284,7 +337,10 @@ export default function ProductDetailPage() {
                 onClick={() => { setSelectedColor(c.key); setCurrentImageIndex(0); }}
               >
                 <span className="swatch-wrap">
-                  <span className={`swatch swatch-${c.key}`} />
+                  <span
+                    className="swatch"
+                    style={{ backgroundColor: c.colorCode || '#888' }}
+                  />
                   <span className="check" />
                 </span>
                 <span className="label-text">{c.label}</span>
