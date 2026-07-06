@@ -405,7 +405,6 @@ export default function MobileProductPage(
                                         const firstColorInGroup = OWL_DATA.colors.find(c => c.group === mg.key);
 
                                         if (firstColorInGroup) {
-                                            setSelectedColor(firstColorInGroup.key);
                                             setCurrentImageIndex(firstColorInGroup.imageIndex);
                                         }
                                     }}>
@@ -561,7 +560,6 @@ export default function MobileProductPage(
                 <div className="purchase-panel">
                     {}
                     <div className="panel-header">
-                        <span className="panel-title">现在购买</span>
                         <button className="panel-close" onClick={() => setShowPurchasePanel(false)}>×</button>
                     </div>
                     {}
@@ -669,9 +667,7 @@ export default function MobileProductPage(
                                 setShowPurchasePanel(false);
                                 router.push("/m/checkout");
                             }
-                        }}>
-                        加入购物车
-                    </button>
+                        }}>现在购买</button>
                 </div>
             </div>}
             {}
@@ -730,7 +726,7 @@ export default function MobileProductPage(
                                     d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                                 <circle cx="12" cy="13" r="4" />
                             </svg>拍摄空间
-                                          </button>
+                                                                                                  </button>
                     </div>
                 </div>
             </div>}
@@ -759,7 +755,7 @@ export default function MobileProductPage(
                     </div>
                     <div className="ar-product-label">
                         <strong>{OWL_DATA.name}</strong>· 拖拽调整位置
-                                    </div>
+                                                                                    </div>
                     <div className="ar-hint">👆 双指缩放 · 单指旋转 <span className="hint-sub">点击产品可切换角度</span>
                     </div>
                     <div className="ar-controls">
