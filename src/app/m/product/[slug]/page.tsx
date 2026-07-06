@@ -106,7 +106,7 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
   const [arOpacity, setArOpacity] = useState(90);
 
   /* For non-owl products, show placeholder — owl is the template */
-  if (slug && slug !== 'owl-sofa') {
+  if (slug && slug !== 'owl-sofa' && slug !== 'owl') {
     return (
       <div className="page active" id="pageDetail">
         <div className="container" style={{ padding: '3rem 1.5rem', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
