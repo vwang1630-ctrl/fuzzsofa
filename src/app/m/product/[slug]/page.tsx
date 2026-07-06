@@ -2,256 +2,141 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { formatPrice } from '@/lib/products';
 
-interface ProductDetail {
-  slug: string;
-  name: string;
-  animal: string;
-  tagline: string;
-  priceRange: {
-    americas: [number, number];
-    europe: [number, number];
-    middle_east: [number, number];
-    se_asia: [number, number];
-  };
-  images: string[];
-  materialOptions: {
-    type: string;
-    options: string[];
-    colors: string[];
-  }[];
-  description: string;
-  storyTitle: string;
-  storyText: string[];
-  specs: { label: string; cm: string; inch: string }[];
-  crafts: { name: string; detail: string }[];
-  scenes: { image: string; label: string; sub: string }[];
-  features: { num: string; label: string; desc: string }[];
-  mobileShortKey: string;
-  colors: { key: string; label: string; colorCode?: string; image: string }[];
-  explore: { key: string; name: string; desc: string; price: string; image: string }[];
-}
+/* ---- Owl product data (single source from desktop) ---- */
+const OWL_DATA = {
+  slug: 'owl-sofa',
+  name: 'Owl Chair',
+  animal: 'Owl',
+  brand: 'FUZZ SOFA',
+  tagline: 'Wisdom and Watchfulness',
+  description: 'The Owl Chair captures the alert, watchful essence of an owl at rest. Its compact scale and distinctive rounded backrest make it the most versatile piece in the Fuzz Sofa collection — a statement chair that transforms any corner into a place of contemplation and style.',
+  priceRange: { americas: [3500, 5200], europe: [3200, 4800], middle_east: [3400, 5100], se_asia: [2800, 4200] },
 
-// Fallback product if API fails
-const fallbackProduct: ProductDetail = {
-  slug: 'meteorite-ring-sofa',
-  name: 'Ring Sofa',
-  animal: 'Meteorite',
-  tagline: '环形围坐 · 对话氛围',
-  priceRange: { americas: [3500, 5000], europe: [3200, 4600], middle_east: [12800, 18300], se_asia: [112000, 160000] },
-  images: ['/products/meteorite-ring-sofa/hero-1.webp', '/products/meteorite-ring-sofa/hero-2.webp'],
-  materialOptions: [{ type: 'fabric', options: ['Cloud Touch', 'Wild Touch', 'Velvet'], colors: ['Snowy White', 'Space Gray'] }],
-  description: '其环形设计自然营造出 360° 的对话氛围，是开放空间、创意工作室与精品酒店的理想中心。',
-  storyTitle: 'Ring Sofa',
-  storyText: [
-    '环形设计源于对<span class="highlight">自然对话</span>的观察。没有起点，没有终点——就像一场永不停歇的交流。',
-    '每一道弧线都经过手工塑形，在三维空间中寻找平衡。这不仅是家具，更是一座可栖息的雕塑。',
+  /* Images – mapped to materialOptions order: Leather(2) → Plush(2) → Linen(2) → Velvet(2) */
+  images: [
+    '/products/owl/black-leather.png',
+    '/products/owl/dusty-pink-fur.png',
+    '/products/owl/snowy-white.png',
+    '/products/owl/rose-pink.png',
+    '/products/owl/warm-gray.png',
+    '/products/owl/warm-gray.png',
+    '/products/owl/forest-green.png',
+    '/products/owl/rose-pink.png',
   ],
-  specs: [
-    { label: '宽度', cm: '110', inch: '43.3' },
-    { label: '深度', cm: '80', inch: '31.5' },
-    { label: '高度', cm: '80', inch: '31.5' },
-    { label: '座高', cm: '42', inch: '16.5' },
-  ],
-  crafts: [
-    { name: '镀锌钢框架', detail: '精密焊接' },
-    { name: '高密度海绵', detail: '定制模具成型' },
-    { name: '云触感面料', detail: '现代质感' },
-    { name: '一体式金属底座', detail: '哑光饰面' },
-  ],
-  scenes: [
-    { image: '/products/meteorite-ring-sofa/hero-1.webp', label: '星际 lounge', sub: '星空下的起居室' },
-    { image: '/products/gorilla-sofa/gray.jpg', label: '沙丘静修', sub: '静谧 · 沉思 · 温暖' },
-    { image: '/products/owl/snowy-white.png', label: '银河沙龙', sub: '长谈之地' },
-  ],
-  features: [
-    { num: '01', label: '360° 对话', desc: '环形围坐，促进交流' },
-    { num: '02', label: '承重 150kg', desc: '航空级坚固骨架' },
-    { num: '03', label: '1–2 周定制', desc: '纯手工匠心制作' },
-  ],
-  mobileShortKey: 'meteorite',
+
+  /* Colors – flat list from all material groups */
   colors: [
-    { key: 'white', label: '雪山白', image: '/products/meteorite-ring-sofa/hero-1.webp' },
-    { key: 'gray', label: '太空灰', image: '/products/meteorite-ring-sofa/hero-2.webp' },
+    { key: 'agate-black', label: '玛瑙黑 · 皮革', colorCode: '#1A1A1A', imageIndex: 0, group: 'Leather' },
+    { key: 'chestnut', label: '栗棕 · 皮革', colorCode: '#6B3A2A', imageIndex: 1, group: 'Leather' },
+    { key: 'snowy-white', label: '雪山白 · 长毛绒', colorCode: '#F5F0EB', imageIndex: 2, group: 'Plush' },
+    { key: 'rose-pink', label: '玫瑰粉 · 长毛绒', colorCode: '#E8B4B8', imageIndex: 3, group: 'Plush' },
+    { key: 'warm-gray', label: '暖灰 · 亚麻', colorCode: '#8A8580', imageIndex: 4, group: 'Linen' },
+    { key: 'oatmeal', label: '燕麦色 · 亚麻', colorCode: '#C8BFA8', imageIndex: 5, group: 'Linen' },
+    { key: 'forest-green', label: '森林绿 · 天鹅绒', colorCode: '#2D5A3D', imageIndex: 6, group: 'Velvet' },
+    { key: 'burgundy', label: '勃艮第红 · 天鹅绒', colorCode: '#6B2D3E', imageIndex: 7, group: 'Velvet' },
   ],
-  explore: [],
+
+  /* Fabric options for config panel */
+  fabrics: [
+    { key: 'cloud', label: 'Cloud Touch' },
+    { key: 'wild', label: 'Wild Touch' },
+    { key: 'velvet', label: 'Velvet' },
+  ],
+
+  features: [
+    { num: '01', label: '守望之姿', desc: '圆润椅背如猫头鹰展翅，180° 环绕拥抱感' },
+    { num: '02', label: '精巧尺度', desc: '紧凑比例，任何角落都能成为沉思之地' },
+    { num: '03', label: '多面性格', desc: '8 种面料 × 4 种材质，从卧室到书房自由切换' },
+  ],
+
+  storyTitle: '猫头鹰的凝视',
+  storyText: [
+    '猫头鹰栖息在枝头 — 警觉、观察、完美自若。Owl Chair 将这份安静的力量转化为一把椅子的形态。',
+    '它的圆润椅背仿佛猫头鹰竖起的翅膀，在 180° 的弧度中创造出一种温和的围合感。坐下时，你会感到一种被凝视守护的安全感 — 仿佛有人在为你守望。',
+    '而它最迷人的特质是：无论放在哪个角落，它都能让那个角落变得特别。阅读角、窗边沉思、卧室的安静陪伴 — Owl Chair 从不抢戏，但总是不可或缺。',
+  ],
+
+  specs: [
+    { label: '宽度', cm: '88', inch: '34.6' },
+    { label: '深度', cm: '85', inch: '33.5' },
+    { label: '高度', cm: '92', inch: '36.2' },
+    { label: '座高', cm: '42', inch: '16.5' },
+    { label: '重量', cm: '28', inch: '61.7' },
+    { label: '承重', cm: '1 人', inch: '1 person' },
+  ],
+
+  crafts: [
+    { name: '高密度冷发泡', detail: '5 层渐进式填充，久坐不塌陷' },
+    { name: '实木内框', detail: '欧洲榉木框架，10 年结构质保' },
+    { name: '手工裁剪', detail: '每件面料独立裁剪，纹路对齐误差 < 2mm' },
+    { name: '可拆洗套', detail: '隐藏拉链设计，整套可机洗' },
+  ],
+
+  scenes: [
+    { image: '/products/owl/snowy-white.png', label: '静谧书房', sub: '阅读角的独处时光' },
+    { image: '/products/owl/forest-green.png', label: '自然角落', sub: '森林绿 · 沉思 · 惬意' },
+    { image: '/products/owl/black-leather.png', label: '都会客厅', sub: '皮革质感 · 精致空间' },
+  ],
+
+  explore: [
+    { key: 'gorilla-sofa', name: 'Gorilla Sofa', desc: 'Raw Power', price: '$7,800', image: '/products/gorilla-sofa/gray.jpg' },
+    { key: 'flamingo-sofa', name: 'Flamingo Sofa', desc: 'Graceful Elegance', price: '$5,600', image: '/products/gorilla-sofa/cream.jpg' },
+  ],
 };
 
-// Slug to mobileShortKey mapping
-const slugToKey: Record<string, string> = {
-  'gorilla-sofa': 'gorilla',
-  'owl': 'owl',
-  'meteorite-ring-sofa': 'meteorite',
-  'orbit-sofa': 'orbit',
-};
-
-// Also support direct key access
-const keyToSlug: Record<string, string> = {
-  gorilla: 'gorilla-sofa',
-  owl: 'owl',
-  meteorite: 'meteorite-ring-sofa',
-  orbit: 'orbit-sofa',
-};
-
-function formatPrice(priceRange: { americas: [number, number] }): string {
-  return `$${priceRange.americas[0].toLocaleString()}`;
-}
-
-export default function ProductDetailPage() {
-  const params = useParams();
-  const rawSlug = String(params.slug);
-
-  const [product, setProduct] = useState<ProductDetail | null>(null);
-  const [allProducts, setAllProducts] = useState<ProductDetail[]>([]);
-  const [loading, setLoading] = useState(true);
-
+export default function MobileProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  /* Resolve slug — only owl-sofa is implemented as template for now */
+  const [slug, setSlug] = useState<string>('');
+  useEffect(() => { params.then(p => setSlug(p.slug)); }, [params]);
+  const [selectedColor, setSelectedColor] = useState(OWL_DATA.colors[0].key);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState('white');
   const [unit, setUnit] = useState<'cm' | 'in'>('cm');
   const [faved, setFaved] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const [showConfig, setShowConfig] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [configColor, setConfigColor] = useState('white');
-  const [configFabric, setConfigFabric] = useState('cloud');
-  const [showShare, setShowShare] = useState(false);
   const [showAI, setShowAI] = useState(false);
   const [showAR, setShowAR] = useState(false);
+  const [configColor, setConfigColor] = useState(OWL_DATA.colors[0].key);
+  const [configFabric, setConfigFabric] = useState('cloud');
   const [arSize, setArSize] = useState(80);
   const [arOpacity, setArOpacity] = useState(90);
 
-  useEffect(() => {
-    Promise.all([
-      fetch('/api/products').then((r) => r.json()),
-      fetch(`/api/products/${rawSlug}`).then((r) => r.json()),
-    ])
-      .then(([listRes, detailRes]) => {
-        if (listRes.products) setAllProducts(listRes.products);
-        if (detailRes.product) {
-          const p = detailRes.product;
-
-          // Map colors from ALL materialOptions (not just first)
-          const colors = (p.materialOptions || []).flatMap(
-            (mo: { type: string; options: string[]; colors: string[] }, moIdx: number) =>
-              (mo.options || []).map((opt: string, i: number) => {
-                const colorCode = mo.colors?.[i] || '';
-                const key = colorCode.toLowerCase().includes('white') || opt.toLowerCase().includes('white') || opt.toLowerCase().includes('snowy')
-                  ? 'white'
-                  : colorCode.toLowerCase().includes('gray') || opt.toLowerCase().includes('gray')
-                    ? 'gray'
-                    : colorCode.toLowerCase().includes('pink') || opt.toLowerCase().includes('pink') || opt.toLowerCase().includes('rose')
-                      ? 'pink'
-                      : colorCode.toLowerCase().includes('brown') || opt.toLowerCase().includes('brown') || opt.toLowerCase().includes('chestnut') || opt.toLowerCase().includes('cognac')
-                        ? 'brown'
-                        : colorCode.toLowerCase().includes('black') || opt.toLowerCase().includes('black') || opt.toLowerCase().includes('obsidian') || opt.toLowerCase().includes('agate')
-                          ? 'black'
-                          : colorCode.toLowerCase().includes('green') || opt.toLowerCase().includes('green') || opt.toLowerCase().includes('forest')
-                            ? 'green'
-                            : colorCode.toLowerCase().includes('burgundy') || opt.toLowerCase().includes('burgundy') || opt.toLowerCase().includes('red')
-                              ? 'red'
-                              : `color-${moIdx}-${i}`;
-                const imageIndex = moIdx * (mo.options?.length || 1) + i;
-                return {
-                  key,
-                  label: opt,
-                  colorCode,
-                  image: p.images?.[imageIndex] || p.images?.[0] || '/products/placeholder.jpg',
-                };
-              })
-          );
-          // Deduplicate by key, keep first
-          const seenKeys = new Set<string>();
-          const dedupedColors = colors.filter((c: { key: string }) => {
-            if (seenKeys.has(c.key)) return false;
-            seenKeys.add(c.key);
-            return true;
-          });
-
-          // Use mobileFeatures from JSON, fallback to generated
-          const features = p.mobileFeatures || [
-            { num: '01', label: p.animal || '独特设计', desc: p.tagline || '' },
-            { num: '02', label: `承重 ${p.specifications?.capacity?.match(/\d+/)?.[0] || '150'}kg`, desc: '航空级坚固骨架' },
-            { num: '03', label: '1–2 周定制', desc: '纯手工匠心制作' },
-          ];
-
-          // Use mobileStory from JSON
-          const storyTitle = p.mobileStory?.title || p.name;
-          const storyText = p.mobileStory?.text || [p.concept || p.description || ''];
-
-          // Use mobileCrafts from JSON
-          const crafts = p.mobileCrafts || [
-            { name: '镀锌钢框架', detail: '精密焊接' },
-            { name: '高密度海绵', detail: '定制模具成型' },
-            { name: '云触感面料', detail: '现代质感' },
-            { name: '一体式金属底座', detail: '哑光饰面' },
-          ];
-
-          // Use mobileScenes from JSON, fallback to generated from images
-          const scenes = p.mobileScenes || (p.images || []).slice(0, 3).map((img: string, i: number) => ({
-            image: img,
-            label: ['实景空间', '灵感角落', '氛围搭配'][i] || '实景灵感',
-            sub: ['真实生活场景', '设计灵感来源', '完美搭配方案'][i] || '',
-          }));
-
-          // Map specs from specifications
-          const specs = [
-            { label: '宽度', cm: p.specifications?.width || '', inch: p.specifications?.width ? String(Math.round(Number(p.specifications.width) / 2.54 * 10) / 10) : '' },
-            { label: '深度', cm: p.specifications?.depth || '', inch: p.specifications?.depth ? String(Math.round(Number(p.specifications.depth) / 2.54 * 10) / 10) : '' },
-            { label: '高度', cm: p.specifications?.height || '', inch: p.specifications?.height ? String(Math.round(Number(p.specifications.height) / 2.54 * 10) / 10) : '' },
-            { label: '座高', cm: p.specifications?.seatHeight || '', inch: p.specifications?.seatHeight ? String(Math.round(Number(p.specifications.seatHeight) / 2.54 * 10) / 10) : '' },
-          ].filter(s => s.cm);
-
-          // Map explore from other products
-          const explore = (listRes.products || [])
-            .filter((ep: ProductDetail) => ep.slug !== p.slug)
-            .slice(0, 3)
-            .map((ep: ProductDetail) => ({
-              key: ep.mobileShortKey || slugToKey[ep.slug] || ep.slug,
-              name: ep.name,
-              desc: ep.tagline || '',
-              price: formatPrice(ep.priceRange),
-              image: ep.images?.[0] || '/products/placeholder.jpg',
-            }));
-
-          setProduct({
-            ...p,
-            colors: dedupedColors,
-            features,
-            storyTitle,
-            storyText,
-            crafts,
-            scenes,
-            specs,
-            explore,
-            mobileShortKey: p.mobileShortKey || slugToKey[p.slug] || p.slug,
-          });
-        } else {
-          setProduct(fallbackProduct);
-        }
-      })
-      .catch(() => {
-        setProduct(fallbackProduct);
-      })
-      .finally(() => setLoading(false));
-  }, [rawSlug]);
-
-  const colorMap: Record<string, string> = { white: '雪山白', gray: '太空灰' };
-  const fabricMap: Record<string, string> = { cloud: 'Cloud Touch', wild: 'Wild Touch', velvet: 'Velvet' };
-
-  if (loading || !product) {
+  /* Wait for slug to resolve */
+  if (!slug) {
     return (
       <div className="page active" id="pageDetail">
-        <div className="container" style={{ padding: '60px 20px', textAlign: 'center', color: '#8A8580' }}>
-          Loading...
+        <div style={{ padding: '3rem 1.5rem', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p style={{ color: '#8A8580', fontSize: 14, letterSpacing: '0.1em' }}>加载中...</p>
         </div>
       </div>
     );
   }
 
-  const currentImage =
-    selectedColor === 'white'
-      ? product.images[currentImageIndex] || product.images[0]
-      : product.colors.find((c) => c.key === selectedColor)?.image || product.images[0];
+  /* For non-owl products, show placeholder */
+  if (slug !== 'owl-sofa') {
+    return (
+      <div className="page active" id="pageDetail">
+        <div className="container" style={{ padding: '3rem 1.5rem', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <p style={{ color: '#8A8580', fontSize: 14, letterSpacing: '0.1em' }}>此产品移动端页面正在制作中</p>
+          <Link href="/m" style={{ color: '#E8B4B8', marginTop: 16, fontSize: 13, letterSpacing: '0.04em' }}>← 返回首页</Link>
+        </div>
+      </div>
+    );
+  }
+
+  const currentColor = OWL_DATA.colors.find(c => c.key === selectedColor) || OWL_DATA.colors[0];
+
+  /* When user picks a color, switch to that color's image */
+  const handleColorSelect = (colorKey: string) => {
+    setSelectedColor(colorKey);
+    const c = OWL_DATA.colors.find(cl => cl.key === colorKey);
+    if (c) setCurrentImageIndex(c.imageIndex);
+  };
+
+  const fabricMap: Record<string, string> = { cloud: 'Cloud Touch', wild: 'Wild Touch', velvet: 'Velvet' };
 
   return (
     <div className="page active" id="pageDetail">
@@ -263,7 +148,7 @@ export default function ProductDetailPage() {
 
         {/* Hero Image */}
         <div className="hero-image" id="detailHeroImage">
-          <img src={currentImage} alt={product.name} id="detailMainImage" />
+          <img src={OWL_DATA.images[currentImageIndex]} alt={OWL_DATA.name} id="detailMainImage" />
           <div className="float-ai">
             <button id="detailTryARBtn" onClick={() => setShowAI(true)}>
               <svg className="icon" viewBox="0 0 24 24">
@@ -284,20 +169,20 @@ export default function ProductDetailPage() {
             </button>
             {showShare && (
               <div className="share-menu open" id="detailShareMenu">
-                <button className="menu-item" data-action="copy" onClick={() => { navigator.clipboard?.writeText(window.location.href); setShowShare(false); }}>
+                <button className="menu-item" onClick={() => { navigator.clipboard?.writeText(window.location.href); setShowShare(false); }}>
                   <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
                   <span>复制链接</span>
                 </button>
                 <div className="menu-divider" />
-                <button className="menu-item" data-action="instagram" onClick={() => setShowShare(false)}>
+                <button className="menu-item" onClick={() => setShowShare(false)}>
                   <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
                   <span>Instagram</span>
                 </button>
-                <button className="menu-item" data-action="pinterest" onClick={() => setShowShare(false)}>
+                <button className="menu-item" onClick={() => setShowShare(false)}>
                   <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 3.85 2.14 7.2 5.27 8.94-.07-.75-.14-1.9.03-2.72.16-.74 1.04-4.4 1.04-4.4s-.26-.54-.26-1.33c0-1.25.72-2.18 1.62-2.18.77 0 1.14.58 1.14 1.27 0 .77-.49 1.93-.74 3.01-.21.9.45 1.64 1.34 1.64 1.61 0 2.85-1.7 2.85-4.14 0-2.16-1.55-3.68-3.77-3.68-2.57 0-4.07 1.93-4.07 3.92 0 .78.3 1.61.67 2.06.08.08.1.16.07.24-.07.29-.22.9-.25.92-.04.15-.12.18-.24.11-1.8-.83-2.92-3.43-2.92-5.52C7.52 6.8 10.47 4 14.05 4c3.03 0 5.38 2.16 5.38 5.04 0 3.01-1.9 5.43-4.53 5.43-.89 0-1.72-.46-2-1.01 0 0-.44 1.67-.55 2.08-.2.76-.74 1.73-1.1 2.31.82.25 1.7.4 2.62.4 5.52 0 10-4.48 10-10S17.52 2 12 2z" /></svg>
                   <span>Pinterest</span>
                 </button>
-                <button className="menu-item" data-action="facebook" onClick={() => setShowShare(false)}>
+                <button className="menu-item" onClick={() => setShowShare(false)}>
                   <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
                   <span>Facebook</span>
                 </button>
@@ -317,7 +202,7 @@ export default function ProductDetailPage() {
 
           {/* Image Indicator */}
           <div className="image-indicator" id="detailIndicator">
-            {product.images.map((_: string, i: number) => (
+            {OWL_DATA.images.map((_: string, i: number) => (
               <span key={i} className={i === currentImageIndex ? 'active' : ''} onClick={() => setCurrentImageIndex(i)}>
                 {String(i + 1).padStart(2, '0')}
               </span>
@@ -329,18 +214,14 @@ export default function ProductDetailPage() {
         <div className="color-selector">
           <span className="label">颜色</span>
           <div className="options">
-            {product.colors.map((c: { key: string; label: string; colorCode?: string }) => (
+            {OWL_DATA.colors.map((c) => (
               <button
                 key={c.key}
                 className={`color-btn${selectedColor === c.key ? ' active' : ''}`}
-                data-color={c.key}
-                onClick={() => { setSelectedColor(c.key); setCurrentImageIndex(0); }}
+                onClick={() => handleColorSelect(c.key)}
               >
                 <span className="swatch-wrap">
-                  <span
-                    className="swatch"
-                    style={{ backgroundColor: c.colorCode || '#888' }}
-                  />
+                  <span className="swatch" style={{ backgroundColor: c.colorCode }} />
                   <span className="check" />
                 </span>
                 <span className="label-text">{c.label}</span>
@@ -351,7 +232,7 @@ export default function ProductDetailPage() {
 
         {/* Features */}
         <div className="features">
-          {product.features.map((f: { num: string; label: string; desc: string }) => (
+          {OWL_DATA.features.map((f) => (
             <div key={f.num} className="feature-row">
               <span className="num">{f.num}</span>
               <span className="label">{f.label}</span>
@@ -362,7 +243,7 @@ export default function ProductDetailPage() {
 
         {/* Description */}
         <div className="description">
-          <p dangerouslySetInnerHTML={{ __html: product.description }} />
+          <p>{OWL_DATA.description}</p>
         </div>
 
         {/* Story */}
@@ -370,15 +251,15 @@ export default function ProductDetailPage() {
           <div className="section-label">设计故事</div>
           <div className="story-grid">
             <div className="story-image">
-              <img src={product.images?.[1] || product.images?.[0] || '/products/placeholder.jpg'} alt="Design sketch" loading="lazy" />
+              <img src={OWL_DATA.images[2]} alt="Design sketch" loading="lazy" />
               <span className="sketch-tag">✧ 手稿 · 概念设计</span>
             </div>
             <div className="story-text">
               <div className="title">
-                {product.storyTitle || product.name} <span className="light">✦</span>
+                {OWL_DATA.storyTitle} <span className="light">✦</span>
               </div>
-              {(product.storyText || []).map((t: string, i: number) => (
-                <p key={i} dangerouslySetInnerHTML={{ __html: t }} />
+              {OWL_DATA.storyText.map((t: string, i: number) => (
+                <p key={i}>{t}</p>
               ))}
               <p className="spec-note">* 手工制作 · 尺寸可能存在 ±1-3cm 差异 · 重量因面料批次略有浮动</p>
             </div>
@@ -394,7 +275,7 @@ export default function ProductDetailPage() {
           </div>
         </div>
         <div className="specs" id="detailSpecsContainer">
-          {product.specs.map((s: { label: string; cm: string; inch: string }) => (
+          {OWL_DATA.specs.map((s) => (
             <div key={s.label} className="spec-item">
               <span className="l">{s.label}</span>
               <span className="v">{unit === 'cm' ? `${s.cm} cm` : `${s.inch} in`}</span>
@@ -406,7 +287,7 @@ export default function ProductDetailPage() {
         <div className="craft">
           <div className="section-label">材质与工艺</div>
           <div className="craft-list">
-            {product.crafts.map((c: { name: string; detail: string }) => (
+            {OWL_DATA.crafts.map((c) => (
               <div key={c.name} className="craft-item">
                 <span className="line" />
                 <span className="name">{c.name}</span>
@@ -420,7 +301,7 @@ export default function ProductDetailPage() {
         <div className="inspiration">
           <div className="section-label">实景灵感</div>
           <div className="scene-scroll">
-            {product.scenes.map((s: { image: string; label: string; sub: string }, i: number) => (
+            {OWL_DATA.scenes.map((s, i) => (
               <div key={i} className="scene-card">
                 <img src={s.image} alt="" loading="lazy" />
                 <div className="label">{s.label}</div>
@@ -437,8 +318,8 @@ export default function ProductDetailPage() {
             <Link href="/m/collection" className="explore-view-all">查看全部 →</Link>
           </div>
           <div className="explore-scroll">
-            {product.explore.map((e: { key: string; name: string; desc: string; price: string; image: string }) => (
-              <Link key={e.key} href={`/m/product/${e.key}`} className="explore-card" data-product={e.key}>
+            {OWL_DATA.explore.map((e) => (
+              <Link key={e.key} href={`/m/product/${e.key}`} className="explore-card">
                 <div className="explore-card-image">
                   <img src={e.image} alt={e.name} loading="lazy" />
                 </div>
@@ -459,7 +340,7 @@ export default function ProductDetailPage() {
           <div className="product-id">
             <span className="brand">FUZZ SOFA</span>
             <span className="name" id="detailBottomName">
-              {product.name} <span className="light">✦</span>
+              {OWL_DATA.name} <span className="light">✦</span>
             </span>
           </div>
           <button className="btn-ai-clean" id="detailPreviewBtn" onClick={() => setShowAI(true)}>
@@ -472,7 +353,7 @@ export default function ProductDetailPage() {
           </button>
         </div>
         <div className="row-bottom">
-          <span className="price">{formatPrice(product.priceRange)} <small>USD</small></span>
+          <span className="price">{formatPrice(OWL_DATA.priceRange.americas[0])} <small>USD</small></span>
           <button className="btn-buy" id="detailBuyBtn" onClick={() => setShowConfig(true)}>购买</button>
         </div>
       </div>
@@ -487,9 +368,9 @@ export default function ProductDetailPage() {
               <div className="config-group">
                 <span className="group-label">颜色</span>
                 <div className="options">
-                  {product.colors.map((c: { key: string; label: string }) => (
+                  {OWL_DATA.colors.map((c) => (
                     <button key={c.key} className={`opt-color${configColor === c.key ? ' active' : ''}`} onClick={() => setConfigColor(c.key)}>
-                      <span className={`swatch swatch-${c.key}`} />{c.label}
+                      <span className="swatch" style={{ backgroundColor: c.colorCode }} />{c.label}
                     </button>
                   ))}
                 </div>
@@ -497,9 +378,9 @@ export default function ProductDetailPage() {
               <div className="config-group">
                 <span className="group-label">面料</span>
                 <div className="options">
-                  {['cloud', 'wild', 'velvet'].map((f: string) => (
-                    <button key={f} className={`opt-btn${configFabric === f ? ' active' : ''}`} onClick={() => setConfigFabric(f)}>
-                      {fabricMap[f]}
+                  {OWL_DATA.fabrics.map((f) => (
+                    <button key={f.key} className={`opt-btn${configFabric === f.key ? ' active' : ''}`} onClick={() => setConfigFabric(f.key)}>
+                      {f.label}
                     </button>
                   ))}
                 </div>
@@ -510,8 +391,8 @@ export default function ProductDetailPage() {
               </div>
             </div>
             <div className="panel-footer">
-              <div className="total">{formatPrice(product.priceRange)} <small>USD</small></div>
-              <button className="btn-confirm" id="confirmConfig" onClick={() => { setShowConfig(false); setShowConfirm(true); }}>确认配置</button>
+              <div className="total">{formatPrice(OWL_DATA.priceRange.americas[0])} <small>USD</small></div>
+              <button className="btn-confirm" onClick={() => { setShowConfig(false); setShowConfirm(true); }}>确认配置</button>
             </div>
           </div>
         </div>
@@ -528,11 +409,11 @@ export default function ProductDetailPage() {
             <div className="title">已添加到购物车</div>
             <div className="sub">您可以在购物车中查看或调整数量</div>
             <div className="order-summary">
-              <div className="row"><span>商品</span><span className="val">{product.name}</span></div>
-              <div className="row"><span>颜色</span><span className="val">{colorMap[configColor]}</span></div>
+              <div className="row"><span>商品</span><span className="val">{OWL_DATA.name}</span></div>
+              <div className="row"><span>颜色</span><span className="val">{OWL_DATA.colors.find(c => c.key === configColor)?.label}</span></div>
               <div className="row"><span>面料</span><span className="val">{fabricMap[configFabric]}</span></div>
               <div className="divider" />
-              <div className="row"><span>金额</span><span className="val">{formatPrice(product.priceRange)} USD</span></div>
+              <div className="row"><span>金额</span><span className="val">{formatPrice(OWL_DATA.priceRange.americas[0])} USD</span></div>
             </div>
             <div className="info-grid">
               <div className="info-item"><span className="info-icon">⏱</span><span className="info-label">制作周期</span><span className="info-value">1-2 周</span></div>
@@ -563,7 +444,7 @@ export default function ProductDetailPage() {
             </div>
             <div className="privacy-note">🔒 上传的图片仅用于本次预览，不会存储或分享</div>
             <div className="product-placing">
-              <strong>{product.name}</strong> 将自动放置在空间中 <span className="sub">可调整大小和位置</span>
+              <strong>{OWL_DATA.name}</strong> 将自动放置在空间中 <span className="sub">可调整大小和位置</span>
             </div>
             <button className="btn-primary" style={{ marginTop: 14 }} onClick={() => setShowAI(false)}>关闭</button>
           </div>
@@ -579,7 +460,7 @@ export default function ProductDetailPage() {
             <button className="ar-done" onClick={() => setShowAR(false)}>完成 ✓</button>
           </div>
           <div className="ar-scene">
-            <img src={product.images?.[0] || '/products/placeholder.jpg'} alt="Room" className="room-bg" id="detailRoomBg" />
+            <img src={OWL_DATA.images[0]} alt="Room" className="room-bg" id="detailRoomBg" />
             <div
               className="ar-product-overlay"
               id="detailArProduct"
@@ -588,10 +469,10 @@ export default function ProductDetailPage() {
                 opacity: 0.3 + (arOpacity / 100) * 0.7,
               }}
             >
-              <img src={product.images?.[0] || '/products/placeholder.jpg'} alt={product.name} />
+              <img src={OWL_DATA.images[0]} alt={OWL_DATA.name} />
             </div>
             <div className="ar-product-label">
-              <strong>{product.name}</strong> · 拖拽调整位置
+              <strong>{OWL_DATA.name}</strong> · 拖拽调整位置
             </div>
             <div className="ar-hint">
               👆 双指缩放 · 单指旋转 <span className="hint-sub">点击产品可切换角度</span>
