@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
-import { formatPrice, getProduct, type Product } from "@/lib/products";
+import { formatPrice, type Product } from "@/lib/products";
+import { useProducts } from "@/lib/use-products";
 import { useCart } from "@/lib/cart-context";
 import { getSupabaseBrowserClientWithRetry } from "@/lib/supabase-browser";
 
@@ -290,6 +291,9 @@ export default function AccountPage() {
     const {
         region
     } = useCart();
+
+    const allProducts = useProducts();
+    const getProductLocal = (slug: string): Product | undefined => allProducts.find(p => p.slug === slug);
 
     const [tab, setTab] = useState<Tab>("orders");
     const [orders, setOrders] = useState<Order[]>([]);
@@ -771,7 +775,7 @@ export default function AccountPage() {
             if (!slug)
                 return;
 
-            const product = getProduct(slug);
+            const product = getProductLocal(slug);
 
             if (product?.materialOptions) {
                 const allColors: {
@@ -1700,8 +1704,8 @@ export default function AccountPage() {
                         {t("animalCollection")}
                     </Link>
                 </div> : <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-3 gap-6">
-                    {favorites.filter(fav => getProduct(fav.product_slug)).map(fav => {
-                        const prod = getProduct(fav.product_slug)!;
+                    {favorites.filter(fav => getProductLocal(fav.product_slug)).map(fav => {
+                        const prod = getProductLocal(fav.product_slug)!;
 
                         const slugToPrefix: Record<string, string> = {
                             "gorilla-sofa": "gorillaSofa",

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { products, formatPrice, type Region } from "@/lib/products";
+import { formatPrice, type Region } from "@/lib/products";
+import { useProducts } from "@/lib/use-products";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
@@ -25,6 +26,7 @@ const productCardImages: Record<string, string> = {
 
 export function CollectionClient() {
   const { region } = useCart();
+  const products = useProducts();
   const { t } = useLanguage();
 
   return (

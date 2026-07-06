@@ -3,16 +3,39 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 
-const products: Record<string, { name: string; price: string; image: string }> = {
-  gorilla: { name: 'Gorilla Sofa', price: '$7,800', image: 'https://picsum.photos/seed/gorilla-sofa/400/400' },
-  owl: { name: 'Owl Chair', price: '$3,500', image: 'https://picsum.photos/seed/owl-chair/400/400' },
-  meteorite: { name: 'Ring Sofa', price: '$3,500', image: 'https://picsum.photos/seed/ringsofa/800/800' },
-  orbit: { name: 'Orbit Sofa', price: '$4,200', image: 'https://picsum.photos/seed/orbit-sofa/400/400' },
-};
+interface ProductSummary {
+  slug: string;
+  name: string;
+  animal: string;
+  tagline: string;
+  priceRange: {
+    americas: [number, number];
+    europe: [number, number];
+    middle_east: [number, number];
+    se_asia: [number, number];
+  };
+  images: string[];
+  materialOptions: {
+    type: string;
+    options: string[];
+    colors: string[];
+  }[];
+  mobileShortKey: string;
+}
 
-const heroSlides = [
+interface HeroSlide {
+  image: string;
+  alt: string;
+  tag: string;
+  title: string;
+  sub: string;
+  btnText: string;
+  href: string;
+}
+
+const heroSlides: HeroSlide[] = [
   {
-    image: 'https://picsum.photos/seed/hero1/800/1000',
+    image: '/hero-scene-1.jpg',
     alt: 'Fuzz Sofa Studio',
     tag: 'Fuzz Sofa Studio',
     title: 'Sit on Art',
@@ -21,7 +44,7 @@ const heroSlides = [
     href: '/m/collection',
   },
   {
-    image: 'https://picsum.photos/seed/hero2/800/1000',
+    image: '/hero-scene-2.jpg',
     alt: 'Craftsmanship',
     tag: 'Artisan Craft',
     title: 'Made by Hands',
@@ -30,7 +53,7 @@ const heroSlides = [
     href: '/m/collection',
   },
   {
-    image: 'https://picsum.photos/seed/hero3/800/1000',
+    image: '/products/meteorite-ring-sofa/hero-1.webp',
     alt: 'Interior',
     tag: 'Inspired Spaces',
     title: 'Live with Sculpture',
@@ -46,27 +69,41 @@ const logs = [
     title: '工坊手记：一件雕塑沙发的诞生',
     date: '2026-06-28',
     summary: '从一块海绵到最终成型的沙发，我们记录下每一道工序背后的思考与手感。',
-    image: 'https://picsum.photos/seed/log1/600/400',
+    image: '/products/meteorite-ring-sofa/hero-1.webp',
   },
   {
     id: 2,
     title: '与自然对话：环形设计的灵感来源',
     date: '2026-06-20',
     summary: '环形的围坐形式并非偶然，它源于对自然中圆形聚落形态的观察。',
-    image: 'https://picsum.photos/seed/log2/600/400',
+    image: '/products/owl/snowy-white.png',
   },
   {
     id: 3,
     title: '匠心工艺：从选材到成品',
     date: '2026-06-12',
     summary: '每一块海绵、每一根钢架都经过严格筛选，确保品质与耐久。',
-    image: 'https://picsum.photos/seed/log3/600/400',
+    image: '/products/gorilla-sofa/gray.jpg',
   },
 ];
+
+function formatMobilePrice(priceRange: { americas: [number, number] }): string {
+  return `$${priceRange.americas[0].toLocaleString()}`;
+}
 
 export default function MobileHomePage() {
   const [heroIndex, setHeroIndex] = useState(0);
   const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
+  const [productList, setProductList] = useState<ProductSummary[]>([]);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.products) setProductList(data.products);
+      })
+      .catch(() => {});
+  }, []);
 
   const nextHero = useCallback(() => {
     setHeroIndex((prev) => (prev + 1) % heroSlides.length);
@@ -155,14 +192,23 @@ export default function MobileHomePage() {
           </Link>
         </div>
         <div className="product-grid" id="productGrid">
-          {Object.entries(products).map(([key, p]) => (
-            <Link key={key} href={`/m/product/${key}`} className="product-card" data-product={key}>
+          {productList.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/m/product/${p.mobileShortKey || p.slug}`}
+              className="product-card"
+              data-product={p.mobileShortKey || p.slug}
+            >
               <div className="image-wrap">
-                <img src={p.image} alt={p.name} loading="lazy" />
+                <img
+                  src={p.images?.[0] || '/products/placeholder.jpg'}
+                  alt={p.name}
+                  loading="lazy"
+                />
               </div>
               <div className="info">
                 <div className="name">{p.name}</div>
-                <div className="price">{p.price}</div>
+                <div className="price">{formatMobilePrice(p.priceRange)}</div>
               </div>
             </Link>
           ))}

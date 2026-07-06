@@ -1,13 +1,37 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-const favorites = [
-  { key: 'gorilla', name: 'Gorilla Sofa', price: '$7,800', image: 'https://picsum.photos/seed/gorilla-sofa/400/400' },
-  { key: 'ringsofa', name: 'Ring Sofa', price: '$3,500', image: 'https://picsum.photos/seed/ringsofa/400/400' },
-];
+interface FavItem {
+  slug: string;
+  name: string;
+  priceRange: { americas: [number, number] };
+  images: string[];
+  mobileShortKey: string;
+}
+
+function formatPrice(priceRange: { americas: [number, number] }): string {
+  return `$${priceRange.americas[0].toLocaleString()}`;
+}
 
 export default function FavoritesPage() {
+  const [favorites, setFavorites] = useState<FavItem[]>([]);
+
+  useEffect(() => {
+    // For now, fetch all products as "favorites" placeholder
+    // In Phase 3, this will be replaced with user-specific favorites from Supabase
+    fetch('/api/products')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.products) {
+          // Show first 2 products as sample favorites
+          setFavorites(data.products.slice(0, 2));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="page page-favorites active" id="pageFavorites">
       <div className="page-header">
@@ -22,13 +46,13 @@ export default function FavoritesPage() {
       ) : (
         <div className="fav-grid" id="favGrid">
           {favorites.map((f) => (
-            <Link key={f.key} href={`/m/product/${f.key}`} className="product-card">
+            <Link key={f.slug} href={`/m/product/${f.mobileShortKey || f.slug}`} className="product-card">
               <div className="image-wrap">
-                <img src={f.image} alt={f.name} loading="lazy" />
+                <img src={f.images?.[0] || '/products/placeholder.jpg'} alt={f.name} loading="lazy" />
               </div>
               <div className="info">
                 <div className="name">{f.name}</div>
-                <div className="price">{f.price}</div>
+                <div className="price">{formatPrice(f.priceRange)}</div>
               </div>
             </Link>
           ))}

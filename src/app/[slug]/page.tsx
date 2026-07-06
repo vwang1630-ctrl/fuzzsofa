@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { products, getProduct, formatPrice, type Region } from "@/lib/products";
+import { getProducts, getProduct, formatPrice } from "@/lib/products-server";
+import type { Region } from "@/lib/products";
 import { productJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { ProductPageClient } from "./product-client";
 
@@ -9,7 +10,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+  return getProducts().map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
@@ -40,5 +41,11 @@ export default async function ProductPage({ params }: PageProps) {
   const product = getProduct(slug);
   if (!product) notFound();
 
-  return <ProductPageClient product={product} />;
+  // Get related products
+  const allProducts = getProducts();
+  const relatedProducts = allProducts.filter((p) =>
+    product!.relatedProducts.includes(p.slug)
+  );
+
+  return <ProductPageClient product={product} relatedProducts={relatedProducts} />;
 }

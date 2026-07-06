@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { breadcrumbJsonLd } from "@/lib/seo";
-import { products } from "@/lib/products";
+import { getProducts } from "@/lib/products-server";
 import { BoutiqueHotelContent } from "./boutique-hotel-content";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function BoutiqueHotelLobbyPage() {
-  const hotelProducts = products.filter((p) =>
+  const hotelProducts = getProducts().filter((p) =>
     p.relatedInteriors.includes("boutique-hotel-lobby")
   );
 

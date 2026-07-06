@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { products } from "@/lib/products";
+import type { Product } from "@/lib/products";
 import { journalArticles } from "@/lib/journal";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
@@ -79,6 +79,16 @@ export default function HomePage() {
   const sceneConfig = heroScenes[heroScene];
   const [aiRoomOpen, setAiRoomOpen] = useState(false);
   const [aiRoomProduct, setAiRoomProduct] = useState("");
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.products) setProducts(data.products);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {

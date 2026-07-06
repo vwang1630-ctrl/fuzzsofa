@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { products, formatPrice, type Region } from "@/lib/products";
+import { getProducts } from "@/lib/products-server";
+import { formatPrice, type Region } from "@/lib/products";
 import { breadcrumbJsonLd } from "@/lib/seo";
 import { CollectionClient } from "./collection-client";
 

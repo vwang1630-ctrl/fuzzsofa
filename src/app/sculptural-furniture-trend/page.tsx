@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { breadcrumbJsonLd } from "@/lib/seo";
-import { products } from "@/lib/products";
+import { getProducts } from "@/lib/products-server";
 import { SculpturalTrendContent } from "./sculptural-trend-content";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function SculpturalFurnitureTrendPage() {
-  const trendProducts = products.filter((p) =>
+  const trendProducts = getProducts().filter((p) =>
     p.relatedInteriors.includes("sculptural-furniture-trend")
   );
 

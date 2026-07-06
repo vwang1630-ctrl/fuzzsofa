@@ -1,234 +1,110 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
-const productsData: Record<string, {
+interface ProductDetail {
+  slug: string;
   name: string;
-  price: string;
-  priceNum: number;
-  image: string;
+  animal: string;
+  tagline: string;
+  priceRange: {
+    americas: [number, number];
+    europe: [number, number];
+    middle_east: [number, number];
+    se_asia: [number, number];
+  };
   images: string[];
-  colors: { key: string; label: string; image: string }[];
-  features: { num: string; label: string; desc: string }[];
+  materialOptions: {
+    type: string;
+    options: string[];
+    colors: string[];
+  }[];
   description: string;
-  story: { title: string; text: string[] };
+  storyTitle: string;
+  storyText: string[];
   specs: { label: string; cm: string; inch: string }[];
   crafts: { name: string; detail: string }[];
   scenes: { image: string; label: string; sub: string }[];
+  features: { num: string; label: string; desc: string }[];
+  mobileShortKey: string;
+  colors: { key: string; label: string; image: string }[];
   explore: { key: string; name: string; desc: string; price: string; image: string }[];
-}> = {
-  gorilla: {
-    name: 'Gorilla Sofa',
-    price: '$7,800',
-    priceNum: 7800,
-    image: 'https://picsum.photos/seed/gorilla-sofa/800/800',
-    images: [
-      'https://picsum.photos/seed/gorilla-sofa/800/800',
-      'https://picsum.photos/seed/gorilla-sofa2/800/800',
-      'https://picsum.photos/seed/gorilla-sofa3/800/800',
-    ],
-    colors: [
-      { key: 'white', label: '雪山白', image: 'https://picsum.photos/seed/gorilla-white/800/800' },
-      { key: 'gray', label: '太空灰', image: 'https://picsum.photos/seed/gorilla-gray/800/800' },
-    ],
-    features: [
-      { num: '01', label: '野性存在', desc: '粗犷力量，野性优雅' },
-      { num: '02', label: '承重 200kg', desc: '航空级坚固骨架' },
-      { num: '03', label: '1–2 周定制', desc: '纯手工匠心制作' },
-    ],
-    description:
-      '其雕塑形态灵感源自大猩猩的力量与优雅，是开放空间与个性居所的视觉焦点。',
-    story: {
-      title: 'Gorilla Sofa',
-      text: [
-        '大猩猩沙发源于对<span class="highlight">自然力量</span>的观察。粗犷而不失优雅，它就像一件栖息在客厅中的雕塑。',
-        '每一道线条都经过手工塑形，在三维空间中寻找力量与舒适的平衡。这不仅是家具，更是一座可栖息的雕塑。',
-      ],
-    },
-    specs: [
-      { label: '宽度', cm: '160', inch: '63.0' },
-      { label: '深度', cm: '110', inch: '43.3' },
-      { label: '高度', cm: '90', inch: '35.4' },
-      { label: '座高', cm: '42', inch: '16.5' },
-    ],
-    crafts: [
-      { name: '镀锌钢框架', detail: '精密焊接' },
-      { name: '高密度海绵', detail: '定制模具成型' },
-      { name: '云触感面料', detail: '现代质感' },
-      { name: '一体式金属底座', detail: '哑光饰面' },
-    ],
-    scenes: [
-      { image: 'https://picsum.photos/seed/scene1/400/300', label: '星际 lounge', sub: '星空下的起居室' },
-      { image: 'https://picsum.photos/seed/scene2/400/300', label: '沙丘静修', sub: '静谧 · 沉思 · 温暖' },
-      { image: 'https://picsum.photos/seed/scene3/400/300', label: '银河沙龙', sub: '长谈之地' },
-    ],
-    explore: [
-      { key: 'owl', name: 'Owl Chair', desc: '静默智慧 · 私密坐具', price: '$2,800', image: 'https://picsum.photos/seed/owl-chair/400/400' },
-      { key: 'orbit', name: 'Orbit Sofa', desc: '悬浮姿态 · 未来轮廓', price: '$4,200', image: 'https://picsum.photos/seed/orbit-sofa/400/400' },
-      { key: 'meteorite', name: 'Ring Sofa', desc: '环形围坐 · 对话氛围', price: '$3,500', image: 'https://picsum.photos/seed/ringsofa/400/400' },
-    ],
-  },
-  owl: {
-    name: 'Owl Chair',
-    price: '$3,500',
-    priceNum: 3500,
-    image: 'https://picsum.photos/seed/owl-chair/800/800',
-    images: [
-      'https://picsum.photos/seed/owl-chair/800/800',
-      'https://picsum.photos/seed/owl-chair2/800/800',
-      'https://picsum.photos/seed/owl-chair3/800/800',
-    ],
-    colors: [
-      { key: 'white', label: '雪山白', image: 'https://picsum.photos/seed/owl-white/800/800' },
-      { key: 'gray', label: '太空灰', image: 'https://picsum.photos/seed/owl-gray/800/800' },
-    ],
-    features: [
-      { num: '01', label: '静默智慧', desc: '私密坐具，独处时光' },
-      { num: '02', label: '承重 150kg', desc: '航空级坚固骨架' },
-      { num: '03', label: '1–2 周定制', desc: '纯手工匠心制作' },
-    ],
-    description:
-      '其设计灵感源自猫头鹰的智慧与静谧，为独处时光提供完美栖息。',
-    story: {
-      title: 'Owl Chair',
-      text: [
-        '猫头鹰椅源于对<span class="highlight">静谧独处</span>的观察。宽大的靠背如同展开的翅膀，围合出一个私密的阅读角落。',
-        '每一处弧度都经过精心推敲，在包裹感与开放感之间找到平衡。',
-      ],
-    },
-    specs: [
-      { label: '宽度', cm: '80', inch: '31.5' },
-      { label: '深度', cm: '85', inch: '33.5' },
-      { label: '高度', cm: '95', inch: '37.4' },
-      { label: '座高', cm: '42', inch: '16.5' },
-    ],
-    crafts: [
-      { name: '镀锌钢框架', detail: '精密焊接' },
-      { name: '高密度海绵', detail: '定制模具成型' },
-      { name: '云触感面料', detail: '现代质感' },
-      { name: '一体式金属底座', detail: '哑光饰面' },
-    ],
-    scenes: [
-      { image: 'https://picsum.photos/seed/scene1/400/300', label: '星际 lounge', sub: '星空下的起居室' },
-      { image: 'https://picsum.photos/seed/scene2/400/300', label: '沙丘静修', sub: '静谧 · 沉思 · 温暖' },
-      { image: 'https://picsum.photos/seed/scene3/400/300', label: '银河沙龙', sub: '长谈之地' },
-    ],
-    explore: [
-      { key: 'gorilla', name: 'Gorilla Sofa', desc: '粗犷力量 · 野性优雅', price: '$7,800', image: 'https://picsum.photos/seed/gorilla-sofa/400/400' },
-      { key: 'orbit', name: 'Orbit Sofa', desc: '悬浮姿态 · 未来轮廓', price: '$4,200', image: 'https://picsum.photos/seed/orbit-sofa/400/400' },
-      { key: 'meteorite', name: 'Ring Sofa', desc: '环形围坐 · 对话氛围', price: '$3,500', image: 'https://picsum.photos/seed/ringsofa/400/400' },
-    ],
-  },
-  meteorite: {
-    name: 'Ring Sofa',
-    price: '$3,500',
-    priceNum: 3500,
-    image: 'https://picsum.photos/seed/ringsofa/800/800',
-    images: [
-      'https://picsum.photos/seed/ringsofa/800/800',
-      'https://picsum.photos/seed/ringsofa2/800/800',
-      'https://picsum.photos/seed/ringsofa3/800/800',
-    ],
-    colors: [
-      { key: 'white', label: '雪山白', image: 'https://picsum.photos/seed/ringsofa-white/800/800' },
-      { key: 'gray', label: '太空灰', image: 'https://picsum.photos/seed/ringsofa-gray/800/800' },
-    ],
-    features: [
-      { num: '01', label: '360° 对话', desc: '环形围坐，促进交流' },
-      { num: '02', label: '承重 150kg', desc: '航空级坚固骨架' },
-      { num: '03', label: '1–2 周定制', desc: '纯手工匠心制作' },
-    ],
-    description:
-      '其环形设计自然营造出 <span class="highlight">360°</span> 的对话氛围，是开放空间、创意工作室与精品酒店的理想中心。',
-    story: {
-      title: 'Ring Sofa',
-      text: [
-        '环形设计源于对<span class="highlight">自然对话</span>的观察。没有起点，没有终点——就像一场永不停歇的交流。',
-        '每一道弧线都经过手工塑形，在三维空间中寻找平衡。这不仅是家具，更是一座可栖息的雕塑。',
-      ],
-    },
-    specs: [
-      { label: '宽度', cm: '110', inch: '43.3' },
-      { label: '深度', cm: '80', inch: '31.5' },
-      { label: '高度', cm: '80', inch: '31.5' },
-      { label: '座高', cm: '42', inch: '16.5' },
-    ],
-    crafts: [
-      { name: '镀锌钢框架', detail: '精密焊接' },
-      { name: '高密度海绵', detail: '定制模具成型' },
-      { name: '云触感面料', detail: '现代质感' },
-      { name: '一体式金属底座', detail: '哑光饰面' },
-    ],
-    scenes: [
-      { image: 'https://picsum.photos/seed/scene1/400/300', label: '星际 lounge', sub: '星空下的起居室' },
-      { image: 'https://picsum.photos/seed/scene2/400/300', label: '沙丘静修', sub: '静谧 · 沉思 · 温暖' },
-      { image: 'https://picsum.photos/seed/scene3/400/300', label: '银河沙龙', sub: '长谈之地' },
-    ],
-    explore: [
-      { key: 'owl', name: 'Owl Chair', desc: '静默智慧 · 私密坐具', price: '$2,800', image: 'https://picsum.photos/seed/owl-chair/400/400' },
-      { key: 'orbit', name: 'Orbit Sofa', desc: '悬浮姿态 · 未来轮廓', price: '$4,200', image: 'https://picsum.photos/seed/orbit-sofa/400/400' },
-      { key: 'gorilla', name: 'Gorilla Sofa', desc: '粗犷力量 · 野性优雅', price: '$7,800', image: 'https://picsum.photos/seed/gorilla-sofa/400/400' },
-    ],
-  },
-  orbit: {
-    name: 'Orbit Sofa',
-    price: '$4,200',
-    priceNum: 4200,
-    image: 'https://picsum.photos/seed/orbit-sofa/800/800',
-    images: [
-      'https://picsum.photos/seed/orbit-sofa/800/800',
-      'https://picsum.photos/seed/orbit-sofa2/800/800',
-      'https://picsum.photos/seed/orbit-sofa3/800/800',
-    ],
-    colors: [
-      { key: 'white', label: '雪山白', image: 'https://picsum.photos/seed/orbit-white/800/800' },
-      { key: 'gray', label: '太空灰', image: 'https://picsum.photos/seed/orbit-gray/800/800' },
-    ],
-    features: [
-      { num: '01', label: '悬浮姿态', desc: '未来轮廓，视觉焦点' },
-      { num: '02', label: '承重 180kg', desc: '航空级坚固骨架' },
-      { num: '03', label: '1–2 周定制', desc: '纯手工匠心制作' },
-    ],
-    description:
-      '其悬浮式设计营造出轻盈的未来感，为空间注入独特的视觉张力。',
-    story: {
-      title: 'Orbit Sofa',
-      text: [
-        '轨道沙发源于对<span class="highlight">失重悬浮</span>的想象。它仿佛漂浮在空间中，打破了传统家具的厚重感。',
-        '底座与座面之间的留白，不仅是视觉的巧思，更是对空间本质的思考。',
-      ],
-    },
-    specs: [
-      { label: '宽度', cm: '200', inch: '78.7' },
-      { label: '深度', cm: '90', inch: '35.4' },
-      { label: '高度', cm: '75', inch: '29.5' },
-      { label: '座高', cm: '42', inch: '16.5' },
-    ],
-    crafts: [
-      { name: '镀锌钢框架', detail: '精密焊接' },
-      { name: '高密度海绵', detail: '定制模具成型' },
-      { name: '云触感面料', detail: '现代质感' },
-      { name: '一体式金属底座', detail: '哑光饰面' },
-    ],
-    scenes: [
-      { image: 'https://picsum.photos/seed/scene1/400/300', label: '星际 lounge', sub: '星空下的起居室' },
-      { image: 'https://picsum.photos/seed/scene2/400/300', label: '沙丘静修', sub: '静谧 · 沉思 · 温暖' },
-      { image: 'https://picsum.photos/seed/scene3/400/300', label: '银河沙龙', sub: '长谈之地' },
-    ],
-    explore: [
-      { key: 'owl', name: 'Owl Chair', desc: '静默智慧 · 私密坐具', price: '$2,800', image: 'https://picsum.photos/seed/owl-chair/400/400' },
-      { key: 'gorilla', name: 'Gorilla Sofa', desc: '粗犷力量 · 野性优雅', price: '$7,800', image: 'https://picsum.photos/seed/gorilla-sofa/400/400' },
-      { key: 'meteorite', name: 'Ring Sofa', desc: '环形围坐 · 对话氛围', price: '$3,500', image: 'https://picsum.photos/seed/ringsofa/400/400' },
-    ],
-  },
+}
+
+// Fallback product if API fails
+const fallbackProduct: ProductDetail = {
+  slug: 'meteorite-ring-sofa',
+  name: 'Ring Sofa',
+  animal: 'Meteorite',
+  tagline: '环形围坐 · 对话氛围',
+  priceRange: { americas: [3500, 5000], europe: [3200, 4600], middle_east: [12800, 18300], se_asia: [112000, 160000] },
+  images: ['/products/meteorite-ring-sofa/hero-1.webp', '/products/meteorite-ring-sofa/hero-2.webp'],
+  materialOptions: [{ type: 'fabric', options: ['Cloud Touch', 'Wild Touch', 'Velvet'], colors: ['Snowy White', 'Space Gray'] }],
+  description: '其环形设计自然营造出 360° 的对话氛围，是开放空间、创意工作室与精品酒店的理想中心。',
+  storyTitle: 'Ring Sofa',
+  storyText: [
+    '环形设计源于对<span class="highlight">自然对话</span>的观察。没有起点，没有终点——就像一场永不停歇的交流。',
+    '每一道弧线都经过手工塑形，在三维空间中寻找平衡。这不仅是家具，更是一座可栖息的雕塑。',
+  ],
+  specs: [
+    { label: '宽度', cm: '110', inch: '43.3' },
+    { label: '深度', cm: '80', inch: '31.5' },
+    { label: '高度', cm: '80', inch: '31.5' },
+    { label: '座高', cm: '42', inch: '16.5' },
+  ],
+  crafts: [
+    { name: '镀锌钢框架', detail: '精密焊接' },
+    { name: '高密度海绵', detail: '定制模具成型' },
+    { name: '云触感面料', detail: '现代质感' },
+    { name: '一体式金属底座', detail: '哑光饰面' },
+  ],
+  scenes: [
+    { image: '/products/meteorite-ring-sofa/hero-1.webp', label: '星际 lounge', sub: '星空下的起居室' },
+    { image: '/products/gorilla-sofa/gray.jpg', label: '沙丘静修', sub: '静谧 · 沉思 · 温暖' },
+    { image: '/products/owl/snowy-white.png', label: '银河沙龙', sub: '长谈之地' },
+  ],
+  features: [
+    { num: '01', label: '360° 对话', desc: '环形围坐，促进交流' },
+    { num: '02', label: '承重 150kg', desc: '航空级坚固骨架' },
+    { num: '03', label: '1–2 周定制', desc: '纯手工匠心制作' },
+  ],
+  mobileShortKey: 'meteorite',
+  colors: [
+    { key: 'white', label: '雪山白', image: '/products/meteorite-ring-sofa/hero-1.webp' },
+    { key: 'gray', label: '太空灰', image: '/products/meteorite-ring-sofa/hero-2.webp' },
+  ],
+  explore: [],
 };
+
+// Slug to mobileShortKey mapping
+const slugToKey: Record<string, string> = {
+  'gorilla-sofa': 'gorilla',
+  'owl': 'owl',
+  'meteorite-ring-sofa': 'meteorite',
+  'orbit-sofa': 'orbit',
+};
+
+// Also support direct key access
+const keyToSlug: Record<string, string> = {
+  gorilla: 'gorilla-sofa',
+  owl: 'owl',
+  meteorite: 'meteorite-ring-sofa',
+  orbit: 'orbit-sofa',
+};
+
+function formatPrice(priceRange: { americas: [number, number] }): string {
+  return `$${priceRange.americas[0].toLocaleString()}`;
+}
 
 export default function ProductDetailPage() {
   const params = useParams();
-  const slug = String(params.slug);
-  const product = productsData[slug] || productsData.meteorite;
+  const rawSlug = String(params.slug);
+
+  const [product, setProduct] = useState<ProductDetail | null>(null);
+  const [allProducts, setAllProducts] = useState<ProductDetail[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState('white');
@@ -244,11 +120,85 @@ export default function ProductDetailPage() {
   const [arSize, setArSize] = useState(80);
   const [arOpacity, setArOpacity] = useState(90);
 
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/products').then((r) => r.json()),
+      fetch(`/api/products/${rawSlug}`).then((r) => r.json()),
+    ])
+      .then(([listRes, detailRes]) => {
+        if (listRes.products) setAllProducts(listRes.products);
+        if (detailRes.product) {
+          const p = detailRes.product;
+          // Map colors from materialOptions
+          const colors = p.materialOptions?.[0]?.colors?.map((c: string, i: number) => {
+            const key = c.toLowerCase().includes('white') ? 'white' : c.toLowerCase().includes('gray') ? 'gray' : `color-${i}`;
+            return { key, label: c, image: p.images?.[i] || p.images?.[0] || '/products/placeholder.jpg' };
+          }) || [
+            { key: 'white', label: '雪山白', image: p.images?.[0] || '/products/placeholder.jpg' },
+            { key: 'gray', label: '太空灰', image: p.images?.[1] || p.images?.[0] || '/products/placeholder.jpg' },
+          ];
+
+          // Map features from product data
+          const features = p.features || [
+            { num: '01', label: p.animal || '独特设计', desc: p.tagline || '' },
+            { num: '02', label: '承重 150kg', desc: '航空级坚固骨架' },
+            { num: '03', label: '1–2 周定制', desc: '纯手工匠心制作' },
+          ];
+
+          // Map explore from other products
+          const explore = (listRes.products || [])
+            .filter((ep: ProductDetail) => ep.slug !== p.slug)
+            .slice(0, 3)
+            .map((ep: ProductDetail) => ({
+              key: ep.mobileShortKey || slugToKey[ep.slug] || ep.slug,
+              name: ep.name,
+              desc: ep.tagline || '',
+              price: formatPrice(ep.priceRange),
+              image: ep.images?.[0] || '/products/placeholder.jpg',
+            }));
+
+          // Map scenes from product images
+          const scenes = (p.images || []).slice(0, 3).map((img: string, i: number) => ({
+            image: img,
+            label: ['实景空间', '灵感角落', '氛围搭配'][i] || '实景灵感',
+            sub: ['真实生活场景', '设计灵感来源', '完美搭配方案'][i] || '',
+          }));
+
+          setProduct({
+            ...p,
+            colors,
+            features,
+            explore,
+            scenes: p.scenes || scenes,
+            mobileShortKey: p.mobileShortKey || slugToKey[p.slug] || p.slug,
+          });
+        } else {
+          setProduct(fallbackProduct);
+        }
+      })
+      .catch(() => {
+        setProduct(fallbackProduct);
+      })
+      .finally(() => setLoading(false));
+  }, [rawSlug]);
+
   const colorMap: Record<string, string> = { white: '雪山白', gray: '太空灰' };
   const fabricMap: Record<string, string> = { cloud: 'Cloud Touch', wild: 'Wild Touch', velvet: 'Velvet' };
 
+  if (loading || !product) {
+    return (
+      <div className="page active" id="pageDetail">
+        <div className="container" style={{ padding: '60px 20px', textAlign: 'center', color: '#8A8580' }}>
+          Loading...
+        </div>
+      </div>
+    );
+  }
+
   const currentImage =
-    selectedColor === 'white' ? product.images[currentImageIndex] : product.colors.find((c) => c.key === selectedColor)?.image || product.images[0];
+    selectedColor === 'white'
+      ? product.images[currentImageIndex] || product.images[0]
+      : product.colors.find((c) => c.key === selectedColor)?.image || product.images[0];
 
   return (
     <div className="page active" id="pageDetail">
@@ -314,7 +264,7 @@ export default function ProductDetailPage() {
 
           {/* Image Indicator */}
           <div className="image-indicator" id="detailIndicator">
-            {product.images.map((_, i) => (
+            {product.images.map((_: string, i: number) => (
               <span key={i} className={i === currentImageIndex ? 'active' : ''} onClick={() => setCurrentImageIndex(i)}>
                 {String(i + 1).padStart(2, '0')}
               </span>
@@ -326,7 +276,7 @@ export default function ProductDetailPage() {
         <div className="color-selector">
           <span className="label">颜色</span>
           <div className="options">
-            {product.colors.map((c) => (
+            {product.colors.map((c: { key: string; label: string }) => (
               <button
                 key={c.key}
                 className={`color-btn${selectedColor === c.key ? ' active' : ''}`}
@@ -345,7 +295,7 @@ export default function ProductDetailPage() {
 
         {/* Features */}
         <div className="features">
-          {product.features.map((f) => (
+          {product.features.map((f: { num: string; label: string; desc: string }) => (
             <div key={f.num} className="feature-row">
               <span className="num">{f.num}</span>
               <span className="label">{f.label}</span>
@@ -364,14 +314,14 @@ export default function ProductDetailPage() {
           <div className="section-label">设计故事</div>
           <div className="story-grid">
             <div className="story-image">
-              <img src="https://picsum.photos/seed/sketch/800/600" alt="Design sketch" loading="lazy" />
+              <img src={product.images?.[1] || product.images?.[0] || '/products/placeholder.jpg'} alt="Design sketch" loading="lazy" />
               <span className="sketch-tag">✧ 手稿 · 概念设计</span>
             </div>
             <div className="story-text">
               <div className="title">
-                {product.story.title} <span className="light">✦</span>
+                {product.storyTitle || product.name} <span className="light">✦</span>
               </div>
-              {product.story.text.map((t, i) => (
+              {(product.storyText || []).map((t: string, i: number) => (
                 <p key={i} dangerouslySetInnerHTML={{ __html: t }} />
               ))}
               <p className="spec-note">* 手工制作 · 尺寸可能存在 ±1-3cm 差异 · 重量因面料批次略有浮动</p>
@@ -388,7 +338,7 @@ export default function ProductDetailPage() {
           </div>
         </div>
         <div className="specs" id="detailSpecsContainer">
-          {product.specs.map((s) => (
+          {product.specs.map((s: { label: string; cm: string; inch: string }) => (
             <div key={s.label} className="spec-item">
               <span className="l">{s.label}</span>
               <span className="v">{unit === 'cm' ? `${s.cm} cm` : `${s.inch} in`}</span>
@@ -400,7 +350,7 @@ export default function ProductDetailPage() {
         <div className="craft">
           <div className="section-label">材质与工艺</div>
           <div className="craft-list">
-            {product.crafts.map((c) => (
+            {product.crafts.map((c: { name: string; detail: string }) => (
               <div key={c.name} className="craft-item">
                 <span className="line" />
                 <span className="name">{c.name}</span>
@@ -414,7 +364,7 @@ export default function ProductDetailPage() {
         <div className="inspiration">
           <div className="section-label">实景灵感</div>
           <div className="scene-scroll">
-            {product.scenes.map((s, i) => (
+            {product.scenes.map((s: { image: string; label: string; sub: string }, i: number) => (
               <div key={i} className="scene-card">
                 <img src={s.image} alt="" loading="lazy" />
                 <div className="label">{s.label}</div>
@@ -431,7 +381,7 @@ export default function ProductDetailPage() {
             <Link href="/m/collection" className="explore-view-all">查看全部 →</Link>
           </div>
           <div className="explore-scroll">
-            {product.explore.map((e) => (
+            {product.explore.map((e: { key: string; name: string; desc: string; price: string; image: string }) => (
               <Link key={e.key} href={`/m/product/${e.key}`} className="explore-card" data-product={e.key}>
                 <div className="explore-card-image">
                   <img src={e.image} alt={e.name} loading="lazy" />
@@ -466,14 +416,14 @@ export default function ProductDetailPage() {
           </button>
         </div>
         <div className="row-bottom">
-          <span className="price">{product.price} <small>USD</small></span>
+          <span className="price">{formatPrice(product.priceRange)} <small>USD</small></span>
           <button className="btn-buy" id="detailBuyBtn" onClick={() => setShowConfig(true)}>购买</button>
         </div>
       </div>
 
       {/* Config Panel */}
       {showConfig && (
-        <div className="panel-overlay open" id="configOverlay" onClick={(e) => { if (e.target === e.currentTarget) setShowConfig(false); }}>
+        <div className="panel-overlay open" id="configOverlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowConfig(false); }}>
           <div className="panel config-panel">
             <div className="handle" />
             <div className="panel-title">定制配置</div>
@@ -481,7 +431,7 @@ export default function ProductDetailPage() {
               <div className="config-group">
                 <span className="group-label">颜色</span>
                 <div className="options">
-                  {product.colors.map((c) => (
+                  {product.colors.map((c: { key: string; label: string }) => (
                     <button key={c.key} className={`opt-color${configColor === c.key ? ' active' : ''}`} onClick={() => setConfigColor(c.key)}>
                       <span className={`swatch swatch-${c.key}`} />{c.label}
                     </button>
@@ -491,7 +441,7 @@ export default function ProductDetailPage() {
               <div className="config-group">
                 <span className="group-label">面料</span>
                 <div className="options">
-                  {['cloud', 'wild', 'velvet'].map((f) => (
+                  {['cloud', 'wild', 'velvet'].map((f: string) => (
                     <button key={f} className={`opt-btn${configFabric === f ? ' active' : ''}`} onClick={() => setConfigFabric(f)}>
                       {fabricMap[f]}
                     </button>
@@ -504,7 +454,7 @@ export default function ProductDetailPage() {
               </div>
             </div>
             <div className="panel-footer">
-              <div className="total">{product.price} <small>USD</small></div>
+              <div className="total">{formatPrice(product.priceRange)} <small>USD</small></div>
               <button className="btn-confirm" id="confirmConfig" onClick={() => { setShowConfig(false); setShowConfirm(true); }}>确认配置</button>
             </div>
           </div>
@@ -513,7 +463,7 @@ export default function ProductDetailPage() {
 
       {/* Confirm Panel */}
       {showConfirm && (
-        <div className="panel-overlay open" id="confirmOverlay" onClick={(e) => { if (e.target === e.currentTarget) setShowConfirm(false); }}>
+        <div className="panel-overlay open" id="confirmOverlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowConfirm(false); }}>
           <div className="panel confirm-panel">
             <div className="handle" />
             <svg className="icon-check" viewBox="0 0 24 24">
@@ -526,7 +476,7 @@ export default function ProductDetailPage() {
               <div className="row"><span>颜色</span><span className="val">{colorMap[configColor]}</span></div>
               <div className="row"><span>面料</span><span className="val">{fabricMap[configFabric]}</span></div>
               <div className="divider" />
-              <div className="row"><span>金额</span><span className="val">{product.price} USD</span></div>
+              <div className="row"><span>金额</span><span className="val">{formatPrice(product.priceRange)} USD</span></div>
             </div>
             <div className="info-grid">
               <div className="info-item"><span className="info-icon">⏱</span><span className="info-label">制作周期</span><span className="info-value">1-2 周</span></div>
@@ -543,7 +493,7 @@ export default function ProductDetailPage() {
 
       {/* AI Preview Panel */}
       {showAI && (
-        <div className="ai-overlay open" id="detailAiOverlay" onClick={(e) => { if (e.target === e.currentTarget) setShowAI(false); }}>
+        <div className="ai-overlay open" id="detailAiOverlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowAI(false); }}>
           <div className="ai-panel">
             <div className="handle" />
             <div className="panel-title">✨ AI 空间预览</div>
@@ -573,7 +523,7 @@ export default function ProductDetailPage() {
             <button className="ar-done" onClick={() => setShowAR(false)}>完成 ✓</button>
           </div>
           <div className="ar-scene">
-            <img src="https://picsum.photos/seed/room/800/1000" alt="Room" className="room-bg" id="detailRoomBg" />
+            <img src={product.images?.[0] || '/products/placeholder.jpg'} alt="Room" className="room-bg" id="detailRoomBg" />
             <div
               className="ar-product-overlay"
               id="detailArProduct"
@@ -582,7 +532,7 @@ export default function ProductDetailPage() {
                 opacity: 0.3 + (arOpacity / 100) * 0.7,
               }}
             >
-              <img src={product.image} alt={product.name} />
+              <img src={product.images?.[0] || '/products/placeholder.jpg'} alt={product.name} />
             </div>
             <div className="ar-product-label">
               <strong>{product.name}</strong> · 拖拽调整位置
@@ -600,7 +550,7 @@ export default function ProductDetailPage() {
                   min={40}
                   max={120}
                   value={arSize}
-                  onChange={(e) => setArSize(Number(e.target.value))}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setArSize(Number(e.target.value))}
                 />
               </div>
               <div className="control-item">
@@ -612,7 +562,7 @@ export default function ProductDetailPage() {
                   min={30}
                   max={100}
                   value={arOpacity}
-                  onChange={(e) => setArOpacity(Number(e.target.value))}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setArOpacity(Number(e.target.value))}
                 />
               </div>
             </div>

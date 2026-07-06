@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { breadcrumbJsonLd } from "@/lib/seo";
-import { products } from "@/lib/products";
+import { getProducts } from "@/lib/products-server";
 import { StatementFurnitureContent } from "./statement-furniture-content";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function StatementFurniturePage() {
-  const statementProducts = products.filter((p) =>
+  const statementProducts = getProducts().filter((p) =>
     p.relatedInteriors.includes("statement-furniture")
   );
 

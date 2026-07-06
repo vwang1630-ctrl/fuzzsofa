@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
-import { products } from "@/lib/products";
+import { getProducts } from "@/lib/products-server";
 import { journalArticles } from "@/lib/journal";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://fuzzsofa.com";
 
-  const productUrls = products.map((product) => ({
+  const productUrls = getProducts().map((product) => ({
     url: `${baseUrl}/${product.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,

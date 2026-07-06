@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import CosmicInspiration from "@/components/cosmic-inspiration";
 import type { Product } from "@/lib/products";
-import { getProduct, getPrice, formatPrice } from "@/lib/products";
+import { getPrice, formatPrice } from "@/lib/products";
 import { productJsonLd, faqJsonLd, breadcrumbJsonLd, itemPageJsonLd } from "@/lib/seo";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
@@ -14,11 +14,13 @@ import RoomVisualizationModal from "@/components/room-visualization-modal";
 
 interface Props {
     product: Product;
+    relatedProducts?: Product[];
 }
 
 export function ProductPageClient(
     {
-        product
+        product,
+        relatedProducts: relatedProductsProp = []
     }: Props
 ) {
     const {
@@ -166,7 +168,7 @@ export function ProductPageClient(
     };
 
     const currentMaterialOptions = product.materialOptions?.find(m => m.type === materialType);
-    const relatedProducts = product.relatedProducts.map(slug => getProduct(slug)).filter(Boolean) as Product[];
+    const relatedProducts = relatedProductsProp;
 
     const productImages: Record<string, string[]> = {
         "owl-sofa": [

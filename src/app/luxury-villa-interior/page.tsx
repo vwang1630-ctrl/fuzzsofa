@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { breadcrumbJsonLd } from "@/lib/seo";
-import { products } from "@/lib/products";
+import { getProducts } from "@/lib/products-server";
 import { ScenePageContent } from "@/components/scene-page-content";
 import { VillaInteriorContent } from "./villa-interior-content";
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function LuxuryVillaInteriorPage() {
-  const villaProducts = products.filter((p) =>
+  const villaProducts = getProducts().filter((p) =>
     p.relatedInteriors.includes("luxury-villa-interior")
   );
 
