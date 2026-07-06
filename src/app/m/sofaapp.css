@@ -4487,6 +4487,36 @@ textarea.form-control {
 }
 
 /* 四、极超大屏（> 1920px）—— 再放大 */
+
+/* ===== Bottom CTA AI按钮 ===== */
+#pageDetail .bottom-cta .btn-ai-cta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid #333;
+  color: #8A8580;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#pageDetail .bottom-cta .btn-ai-cta:hover {
+  border-color: #E8B4B8;
+  color: #E8B4B8;
+}
+
+#pageDetail .bottom-cta .btn-ai-cta svg {
+  opacity: 0.7;
+}
+
+#pageDetail .bottom-cta .btn-ai-cta:hover svg {
+  opacity: 1;
+}
 @media (min-width: 1921px) {
   .app {
     max-width: 720px;
