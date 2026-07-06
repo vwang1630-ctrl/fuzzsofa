@@ -4690,10 +4690,10 @@ textarea.form-control {
 }
 
 .shop-section-title {
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 13px;
+  font-weight: 300;
   color: #8A8580;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.04em;
   margin-bottom: 16px;
 }
 
@@ -4736,17 +4736,20 @@ textarea.form-control {
   color: #F5F0EB;
   font-size: 14px;
   font-weight: 300;
+  letter-spacing: 0.04em;
 }
 
 .shop-item-qty {
   color: #8A8580;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 300;
 }
 
 .shop-item-spec {
   color: #8A8580;
   font-size: 13px;
   font-weight: 300;
+  letter-spacing: 0.04em;
   margin-top: 4px;
 }
 
@@ -4759,6 +4762,7 @@ textarea.form-control {
   color: #F5F0EB;
   font-size: 14px;
   font-weight: 300;
+  letter-spacing: 0.04em;
 }
 
 /* 购物流程输入框 */
@@ -4766,11 +4770,12 @@ textarea.form-control {
   width: 100%;
   background-color: transparent;
   border: 1px solid #333;
-  border-radius: 8px;
-  padding: 14px 16px;
+  border-radius: 4px;
+  padding: 12px 14px;
   color: #F5F0EB;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 300;
+  letter-spacing: 0.04em;
   outline: none;
   transition: border-color 0.3s ease;
 }
@@ -4797,13 +4802,14 @@ textarea.form-control {
 
 .shop-payment-btn {
   flex: 1;
-  padding: 12px 0;
+  padding: 10px 0;
   background-color: transparent;
   border: 1px solid #333;
-  border-radius: 8px;
+  border-radius: 4px;
   color: #8A8580;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 300;
+  letter-spacing: 0.04em;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -4822,14 +4828,16 @@ textarea.form-control {
 
 .shop-fee-label {
   color: #8A8580;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 300;
+  letter-spacing: 0.04em;
 }
 
 .shop-fee-value {
   color: #F5F0EB;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 300;
+  letter-spacing: 0.04em;
 }
 
 .shop-fee-free {
@@ -4838,14 +4846,16 @@ textarea.form-control {
 
 .shop-fee-total-label {
   color: #F5F0EB;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 300;
+  letter-spacing: 0.04em;
 }
 
 .shop-fee-total-value {
   color: #F5F0EB;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 300;
+  letter-spacing: 0.04em;
 }
 
 /* 购物流程底部按钮 */
@@ -4864,11 +4874,11 @@ textarea.form-control {
   padding: 14px 0;
   background-color: #E8B4B8;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   color: #0A0A0A;
   font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
+  font-weight: 300;
+  letter-spacing: 0.08em;
   cursor: pointer;
   transition: all 0.3s ease;
 }
