@@ -202,7 +202,7 @@ export default function MobileCheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-24">
+    <div className="min-h-screen bg-[#0A0A0A]">
       {/* Header */}
       <div className="sticky top-0 bg-[#0A0A0A]/95 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
         <button onClick={() => router.back()} className="w-10 h-10 flex items-center justify-center text-[#8A8580] rounded-full hover:bg-[#111111] active:bg-[#1A1A1A] transition-colors">
@@ -415,8 +415,11 @@ export default function MobileCheckoutPage() {
         </div>
       </div>
 
-      {/* Bottom summary - simplified */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#0A0A0A]/95 backdrop-blur-sm px-4 py-4 pb-[env(safe-area-inset-bottom)]">
+      {/* Spacer for fixed bottom bar - prevents content overlap */}
+      <div className="h-[160px] shrink-0" />
+      
+      {/* Bottom summary - fixed */}
+      <div className="fixed bottom-0 left-0 right-0 bg-[#0A0A0A]/95 backdrop-blur-sm border-t border-[#1A1A1A] px-4 py-8 pb-[calc(2rem+env(safe-area-inset-bottom))]">
         <div className="flex items-center justify-between mb-4">
           <span className="text-sm text-[#8A8580]">应付总额</span>
           <span className="text-xl font-medium text-[#E8B4B8]">${formatPrice(selectedTotal)}</span>
@@ -426,7 +429,7 @@ export default function MobileCheckoutPage() {
           disabled={isSubmitting}
           className={`w-full py-4 rounded-xl text-sm font-medium transition-all ${
             isSubmitting
-              ? "bg-[#1A1A1A] text-[#8A8580]"
+              ? "bg-[#1A1A1A] text-[#8A8580] cursor-wait"
               : "bg-[#E8B4B8] text-[#0A0A0A] active:opacity-90"
           }`}
         >
