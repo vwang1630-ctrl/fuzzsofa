@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart, getUnitPrice } from "@/lib/cart-context";
-import { formatPrice } from "@/lib/products";
 
 const slugToImage: Record<string, string> = {
   "bear-sofa": "/products/bear-sofa/thumb.jpg",
@@ -18,20 +17,20 @@ const slugToImage: Record<string, string> = {
   "muscle-gorilla-sofa": "/products/muscle-gorilla-sofa/thumb.jpg",
 };
 
-type PaymentMethod = "creditcard" | "paypal";
+type PaymentMethod = "creditcard" | "paypal" | "alipay";
 
 interface AddressForm {
-  fullName: string;
-  address: string;
-  cityZip: string;
-  phone: string;
+  recipientName: string;
+  detailedAddress: string;
+  city: string;
+  zipCode: string;
 }
 
 const defaultForm: AddressForm = {
-  fullName: "",
-  address: "",
-  cityZip: "",
-  phone: "",
+  recipientName: "",
+  detailedAddress: "",
+  city: "",
+  zipCode: "",
 };
 
 export default function MobileCheckoutPage() {
@@ -53,10 +52,10 @@ export default function MobileCheckoutPage() {
 
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
-    if (!addressForm.fullName.trim()) errors.fullName = "请填写姓名";
-    if (!addressForm.address.trim()) errors.address = "请填写地址";
-    if (!addressForm.cityZip.trim()) errors.cityZip = "请填写城市和邮编";
-    if (!addressForm.phone.trim()) errors.phone = "请填写电话";
+    if (!addressForm.recipientName.trim()) errors.recipientName = "请填写收件人姓名";
+    if (!addressForm.detailedAddress.trim()) errors.detailedAddress = "请填写详细地址";
+    if (!addressForm.city.trim()) errors.city = "请填写城市";
+    if (!addressForm.zipCode.trim()) errors.zipCode = "请填写邮编";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -72,26 +71,29 @@ export default function MobileCheckoutPage() {
     setIsSubmitting(false);
   };
 
+  // Format price with USD
+  const formatPriceWithUSD = (price: number): string => {
+    return `$${price.toLocaleString()} USD`;
+  };
+
   // Order success page
   if (orderSuccess) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center px-6">
-        <div className="w-20 h-20 border border-[#E8B4B8] rounded-full flex items-center justify-center mb-6">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <div style={{ minHeight: "100vh", backgroundColor: "#0A0A0A", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+        <div style={{ width: "80px", height: "80px", border: "1px solid #E8B4B8", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "24px" }}>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
         </div>
-        <h1 className="font-serif text-2xl font-light text-[#F5F0EB] mb-3 tracking-wide">订单已提交</h1>
-        <p className="text-[#8A8580] mb-2 text-sm">订单号: {orderId}</p>
-        <p className="text-[#6A6560] mb-8 text-sm">感谢您的购买，我们将尽快安排发货</p>
-        <div className="flex gap-4">
-          <Link
-            href="/m"
-            className="inline-flex items-center px-6 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
-          >
-            继续选购
-          </Link>
-        </div>
+        <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "24px", fontWeight: 300, color: "#F5F0EB", marginBottom: "12px", letterSpacing: "0.05em" }}>订单已提交</h1>
+        <p style={{ color: "#8A8580", marginBottom: "8px", fontSize: "14px" }}>订单号: {orderId}</p>
+        <p style={{ color: "#6A6560", marginBottom: "32px", fontSize: "14px" }}>感谢您的购买，我们将尽快安排发货</p>
+        <Link
+          href="/m"
+          style={{ display: "inline-flex", alignItems: "center", padding: "12px 24px", border: "1px solid #E8B4B8", color: "#E8B4B8", fontSize: "14px", letterSpacing: "0.1em", textDecoration: "none", transition: "all 0.3s" }}
+        >
+          继续选购
+        </Link>
       </div>
     );
   }
@@ -100,19 +102,19 @@ export default function MobileCheckoutPage() {
   const totalWithShipping = selectedTotal + shippingFee;
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pb-32">
-      {/* Header */}
-      <div className="sticky top-0 bg-[#0A0A0A]/95 backdrop-blur-sm border-b border-[#1A1A1A] px-4 py-4 z-50">
-        <div className="flex items-center justify-between">
-          <Link href="/m/cart" className="text-[#8A8580] hover:text-[#F5F0EB]">
+    <div style={{ minHeight: "100vh", backgroundColor: "#0A0A0A", paddingBottom: "120px" }}>
+      {/* Header - 保持不变 */}
+      <div style={{ position: "sticky", top: 0, backgroundColor: "rgba(10, 10, 10, 0.95)", backdropFilter: "blur(8px)", borderBottom: "1px solid #1A1A1A", padding: "16px", zIndex: 50 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <Link href="/m/cart" style={{ color: "#8A8580" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
           </Link>
-          <h1 className="font-serif text-xl font-light text-[#F5F0EB] tracking-wide">结算</h1>
+          <h1 style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "20px", fontWeight: 300, color: "#F5F0EB", letterSpacing: "0.05em" }}>结算</h1>
           <button
             onClick={() => router.push("/m/cart")}
-            className="text-[#8A8580] hover:text-[#F5F0EB]"
+            style={{ color: "#8A8580", background: "none", border: "none", cursor: "pointer" }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <line x1="18" y1="6" x2="6" y2="18"/>
@@ -122,144 +124,233 @@ export default function MobileCheckoutPage() {
         </div>
       </div>
 
-      {/* Product List */}
-      <section className="px-4 py-5 border-b border-[#1A1A1A]">
-        <div className="text-xs text-[#6A6560] uppercase tracking-[0.15em] mb-4">商品清单</div>
+      {/* 商品清单模块 */}
+      <section style={{ padding: "20px 16px", borderBottom: "1px solid #1A1A1A" }}>
+        <div style={{ fontSize: "12px", color: "#6A6560", letterSpacing: "0.15em", marginBottom: "16px" }}>商品清单</div>
         {selectedItems.map((item) => {
           const imageSrc = slugToImage[item.product.slug] || "/products/owl-sofa/thumb.jpg";
           const unitPrice = getUnitPrice(item.product, region);
           const itemTotal = unitPrice * item.quantity;
 
           return (
-            <div key={`${item.product.slug}-${item.materialOption}`} className="flex gap-4 py-3">
-              <div className="w-20 h-20 rounded-lg overflow-hidden bg-[#111111] flex-shrink-0">
+            <div key={`${item.product.slug}-${item.materialOption}`} style={{ display: "flex", gap: "12px", padding: "12px 0" }}>
+              {/* 左侧缩略图 */}
+              <div style={{ width: "80px", height: "80px", borderRadius: "8px", overflow: "hidden", backgroundColor: "#111111" }}>
                 <img
                   src={imageSrc}
                   alt={item.product.name}
-                  className="w-full h-full object-cover"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   onError={(e) => {
                     e.currentTarget.src = "/products/owl/black-leather.png";
                   }}
                 />
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="font-serif text-base font-light text-[#F5F0EB] tracking-wide">{item.product.name}</div>
-                <div className="text-xs text-[#6A6560] mt-1">{item.materialOption || "标准款"}</div>
-                <div className="flex items-center justify-between mt-2">
-                  <span className="text-sm text-[#8A8580]">× {item.quantity}</span>
-                  <span className="text-base text-[#F5F0EB] font-light">${itemTotal.toLocaleString()}</span>
+              {/* 右侧商品信息 */}
+              <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
+                {/* 第一行：商品名称 + 数量 */}
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ color: "#F5F0EB", fontSize: "16px", fontWeight: 500 }}>{item.product.name}</span>
+                  <span style={{ color: "#8A8580", fontSize: "14px" }}>×{item.quantity}</span>
                 </div>
+                {/* 第二行：颜色·面料 */}
+                <div style={{ color: "#8A8580", fontSize: "13px", marginTop: "4px" }}>
+                  {item.materialOption || "标准款"}
+                </div>
+              </div>
+              {/* 价格右对齐 */}
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <span style={{ color: "#F5F0EB", fontSize: "16px", fontWeight: 500 }}>${itemTotal.toLocaleString()}</span>
               </div>
             </div>
           );
         })}
       </section>
 
-      {/* Shipping Address */}
-      <section className="px-4 py-5 border-b border-[#1A1A1A]">
-        <div className="text-xs text-[#6A6560] uppercase tracking-[0.15em] mb-4">配送信息</div>
-        <div className="space-y-4">
+      {/* 配送信息模块 */}
+      <section style={{ padding: "20px 16px", borderBottom: "1px solid #1A1A1A" }}>
+        <div style={{ fontSize: "12px", color: "#6A6560", letterSpacing: "0.15em", marginBottom: "16px" }}>配送信息</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          {/* 收件人姓名 */}
           <div>
             <input
               type="text"
-              placeholder="姓名"
-              value={addressForm.fullName}
-              onChange={(e) => setAddressForm({ ...addressForm, fullName: e.target.value })}
-              className={`w-full bg-transparent py-3 text-[#F5F0EB] placeholder:text-[#6A6560] border-b ${formErrors.fullName ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} focus:border-[#E8B4B8] transition-colors`}
+              placeholder="收件人姓名"
+              value={addressForm.recipientName}
+              onChange={(e) => setAddressForm({ ...addressForm, recipientName: e.target.value })}
+              style={{
+                width: "100%",
+                backgroundColor: "#1A1A1A",
+                borderRadius: "8px",
+                padding: "14px 16px",
+                color: "#F5F0EB",
+                fontSize: "14px",
+                border: "none",
+                outline: "none",
+              }}
             />
-            {formErrors.fullName && <div className="text-xs text-[#E8B4B8] mt-1">{formErrors.fullName}</div>}
+            {formErrors.recipientName && <div style={{ fontSize: "12px", color: "#E8B4B8", marginTop: "4px" }}>{formErrors.recipientName}</div>}
           </div>
+          {/* 详细地址 */}
           <div>
             <input
               type="text"
               placeholder="详细地址"
-              value={addressForm.address}
-              onChange={(e) => setAddressForm({ ...addressForm, address: e.target.value })}
-              className={`w-full bg-transparent py-3 text-[#F5F0EB] placeholder:text-[#6A6560] border-b ${formErrors.address ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} focus:border-[#E8B4B8] transition-colors`}
+              value={addressForm.detailedAddress}
+              onChange={(e) => setAddressForm({ ...addressForm, detailedAddress: e.target.value })}
+              style={{
+                width: "100%",
+                backgroundColor: "#1A1A1A",
+                borderRadius: "8px",
+                padding: "14px 16px",
+                color: "#F5F0EB",
+                fontSize: "14px",
+                border: "none",
+                outline: "none",
+              }}
             />
-            {formErrors.address && <div className="text-xs text-[#E8B4B8] mt-1">{formErrors.address}</div>}
+            {formErrors.detailedAddress && <div style={{ fontSize: "12px", color: "#E8B4B8", marginTop: "4px" }}>{formErrors.detailedAddress}</div>}
           </div>
+          {/* 城市 */}
           <div>
             <input
               type="text"
-              placeholder="城市 / 邮编"
-              value={addressForm.cityZip}
-              onChange={(e) => setAddressForm({ ...addressForm, cityZip: e.target.value })}
-              className={`w-full bg-transparent py-3 text-[#F5F0EB] placeholder:text-[#6A6560] border-b ${formErrors.cityZip ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} focus:border-[#E8B4B8] transition-colors`}
+              placeholder="城市"
+              value={addressForm.city}
+              onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
+              style={{
+                width: "100%",
+                backgroundColor: "#1A1A1A",
+                borderRadius: "8px",
+                padding: "14px 16px",
+                color: "#F5F0EB",
+                fontSize: "14px",
+                border: "none",
+                outline: "none",
+              }}
             />
-            {formErrors.cityZip && <div className="text-xs text-[#E8B4B8] mt-1">{formErrors.cityZip}</div>}
+            {formErrors.city && <div style={{ fontSize: "12px", color: "#E8B4B8", marginTop: "4px" }}>{formErrors.city}</div>}
           </div>
+          {/* 邮编 */}
           <div>
             <input
-              type="tel"
-              placeholder="电话"
-              value={addressForm.phone}
-              onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
-              className={`w-full bg-transparent py-3 text-[#F5F0EB] placeholder:text-[#6A6560] border-b ${formErrors.phone ? "border-[#E8B4B8]" : "border-[#1A1A1A]"} focus:border-[#E8B4B8] transition-colors`}
+              type="text"
+              placeholder="邮编"
+              value={addressForm.zipCode}
+              onChange={(e) => setAddressForm({ ...addressForm, zipCode: e.target.value })}
+              style={{
+                width: "100%",
+                backgroundColor: "#1A1A1A",
+                borderRadius: "8px",
+                padding: "14px 16px",
+                color: "#F5F0EB",
+                fontSize: "14px",
+                border: "none",
+                outline: "none",
+              }}
             />
-            {formErrors.phone && <div className="text-xs text-[#E8B4B8] mt-1">{formErrors.phone}</div>}
+            {formErrors.zipCode && <div style={{ fontSize: "12px", color: "#E8B4B8", marginTop: "4px" }}>{formErrors.zipCode}</div>}
           </div>
         </div>
       </section>
 
-      {/* Payment Method */}
-      <section className="px-4 py-5 border-b border-[#1A1A1A]">
-        <div className="text-xs text-[#6A6560] uppercase tracking-[0.15em] mb-4">支付方式</div>
-        <div className="flex gap-3">
+      {/* 支付方式模块 */}
+      <section style={{ padding: "20px 16px", borderBottom: "1px solid #1A1A1A" }}>
+        <div style={{ fontSize: "12px", color: "#6A6560", letterSpacing: "0.15em", marginBottom: "16px" }}>支付方式</div>
+        <div style={{ display: "flex", gap: "12px" }}>
+          {/* 信用卡 */}
           <button
             onClick={() => setPaymentMethod("creditcard")}
-            className={`flex-1 py-4 rounded-lg border text-sm tracking-[0.05em] transition-all duration-300 ${
-              paymentMethod === "creditcard"
-                ? "bg-[#E8B4B8]/10 border-[#E8B4B8] text-[#F5F0EB]"
-                : "bg-transparent border-[#333] text-[#8A8580] hover:border-[#E8B4B8]/50"
-            }`}
+            style={{
+              flex: 1,
+              padding: "14px 16px",
+              borderRadius: "8px",
+              backgroundColor: paymentMethod === "creditcard" ? "rgba(232, 180, 184, 0.1)" : "transparent",
+              border: paymentMethod === "creditcard" ? "1px solid #E8B4B8" : "1px solid #333",
+              color: paymentMethod === "creditcard" ? "#F5F0EB" : "#8A8580",
+              fontSize: "14px",
+              cursor: "pointer",
+              transition: "all 0.3s",
+            }}
           >
             信用卡
           </button>
+          {/* PayPal */}
           <button
             onClick={() => setPaymentMethod("paypal")}
-            className={`flex-1 py-4 rounded-lg border text-sm tracking-[0.05em] transition-all duration-300 ${
-              paymentMethod === "paypal"
-                ? "bg-[#E8B4B8]/10 border-[#E8B4B8] text-[#F5F0EB]"
-                : "bg-transparent border-[#333] text-[#8A8580] hover:border-[#E8B4B8]/50"
-            }`}
+            style={{
+              flex: 1,
+              padding: "14px 16px",
+              borderRadius: "8px",
+              backgroundColor: paymentMethod === "paypal" ? "rgba(232, 180, 184, 0.1)" : "transparent",
+              border: paymentMethod === "paypal" ? "1px solid #E8B4B8" : "1px solid #333",
+              color: paymentMethod === "paypal" ? "#F5F0EB" : "#8A8580",
+              fontSize: "14px",
+              cursor: "pointer",
+              transition: "all 0.3s",
+            }}
           >
             PayPal
+          </button>
+          {/* 支付宝 */}
+          <button
+            onClick={() => setPaymentMethod("alipay")}
+            style={{
+              flex: 1,
+              padding: "14px 16px",
+              borderRadius: "8px",
+              backgroundColor: paymentMethod === "alipay" ? "rgba(232, 180, 184, 0.1)" : "transparent",
+              border: paymentMethod === "alipay" ? "1px solid #E8B4B8" : "1px solid #333",
+              color: paymentMethod === "alipay" ? "#F5F0EB" : "#8A8580",
+              fontSize: "14px",
+              cursor: "pointer",
+              transition: "all 0.3s",
+            }}
+          >
+            支付宝
           </button>
         </div>
       </section>
 
-      {/* Price Summary */}
-      <section className="px-4 py-5">
-        <div className="text-xs text-[#6A6560] uppercase tracking-[0.15em] mb-4">费用明细</div>
-        <div className="space-y-3">
-          <div className="flex justify-between text-sm">
-            <span className="text-[#8A8580]">商品小计</span>
-            <span className="text-[#F5F0EB]">${selectedTotal.toLocaleString()}</span>
+      {/* 费用明细模块 */}
+      <section style={{ padding: "20px 16px" }}>
+        <div style={{ fontSize: "12px", color: "#6A6560", letterSpacing: "0.15em", marginBottom: "16px" }}>费用明细</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          {/* 小计 */}
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span style={{ color: "#8A8580", fontSize: "14px" }}>小计</span>
+            <span style={{ color: "#F5F0EB", fontSize: "14px" }}>{formatPriceWithUSD(selectedTotal)}</span>
           </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-[#8A8580]">运费</span>
-            <span className={shippingFee === 0 ? "text-[#E8B4B8]" : "text-[#F5F0EB]"}>
-              {shippingFee === 0 ? "免运费" : `$${shippingFee}`}
-            </span>
+          {/* 运费 */}
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span style={{ color: "#8A8580", fontSize: "14px" }}>运费</span>
+            <span style={{ color: "#F5F0EB", fontSize: "14px" }}>免费</span>
           </div>
-          <div className="flex justify-between pt-3 border-t border-[#1A1A1A]">
-            <span className="text-[#8A8580]">总计</span>
-            <span className="font-serif text-xl text-[#F5F0EB]">${totalWithShipping.toLocaleString()}</span>
+          {/* 总计 */}
+          <div style={{ display: "flex", justifyContent: "space-between", paddingTop: "12px", borderTop: "1px solid #1A1A1A" }}>
+            <span style={{ color: "#8A8580", fontSize: "14px" }}>总计</span>
+            <span style={{ color: "#F5F0EB", fontSize: "18px", fontWeight: 600 }}>{formatPriceWithUSD(totalWithShipping)}</span>
           </div>
         </div>
       </section>
 
-      {/* Bottom Action */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#0A0A0A]/95 backdrop-blur-sm border-t border-[#1A1A1A] px-4 py-5">
+      {/* 底部确认按钮 */}
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, backgroundColor: "rgba(10, 10, 10, 0.95)", backdropFilter: "blur(8px)", borderTop: "1px solid #1A1A1A", padding: "20px 16px" }}>
         <button
           onClick={handleSubmit}
           disabled={isSubmitting || selectedItems.length === 0}
-          className={`w-full py-4 border text-sm uppercase tracking-[0.15em] font-light transition-all duration-300 ${
-            isSubmitting || selectedItems.length === 0
-              ? "border-[#333] text-[#6A6560] cursor-not-allowed"
-              : "border-[#E8B4B8] text-[#E8B4B8] hover:bg-[#E8B4B8] hover:text-[#0A0A0A]"
-          }`}
+          style={{
+            width: "100%",
+            padding: "16px",
+            backgroundColor: isSubmitting || selectedItems.length === 0 ? "transparent" : "transparent",
+            border: isSubmitting || selectedItems.length === 0 ? "1px solid #333" : "1px solid #E8B4B8",
+            borderRadius: "8px",
+            color: isSubmitting || selectedItems.length === 0 ? "#6A6560" : "#E8B4B8",
+            fontSize: "14px",
+            fontWeight: 500,
+            letterSpacing: "0.1em",
+            cursor: isSubmitting || selectedItems.length === 0 ? "not-allowed" : "pointer",
+            transition: "all 0.3s",
+          }}
         >
           {isSubmitting ? "提交中..." : "确认下单"}
         </button>
