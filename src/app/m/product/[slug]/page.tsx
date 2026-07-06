@@ -364,6 +364,19 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </div>
 
+      {/* AI Preview Button - Always floating, adjusts position when panel opens */}
+      <button 
+        className={`btn-ai-float${showPurchasePanel ? ' panel-open' : ''}`} 
+        onClick={() => setShowAIOverlay(true)}
+      >
+        <svg className="icon" viewBox="0 0 24 24">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+          <line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+        <span className="ai-label">AI 预览</span>
+      </button>
+
       {/* Bottom CTA - Modified Structure */}
       <div className="bottom-cta">
         <div className="row-top">
@@ -383,16 +396,6 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
       {showPurchasePanel && (
         <div className="purchase-panel-overlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => { if (e.target === e.currentTarget) setShowPurchasePanel(false); }}>
           <div className="purchase-panel">
-            {/* AI Preview Button - Floating inside panel */}
-            <button className="btn-ai-float-panel" onClick={() => setShowAIOverlay(true)}>
-              <svg className="icon" viewBox="0 0 24 24">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                <line x1="12" y1="22.08" x2="12" y2="12"/>
-              </svg>
-              <span className="ai-label">AI 预览</span>
-            </button>
-            
             {/* Header */}
             <div className="panel-header">
               <span className="panel-title">现在购买</span>
