@@ -20,6 +20,7 @@ const slugToImage: Record<string, string> = {
 };
 
 type ShippingMethod = "standard" | "express";
+type PaymentMethod = "creditcard" | "paypal" | "applepay" | "bank";
 
 interface AddressForm {
   firstName: string;
@@ -83,15 +84,15 @@ const US_STATES = [
 ];
 
 export default function MobileCheckoutPage() {
-  const router = useRouter();
-  const { selectedItems, selectedTotal, region, clearCart } = useCart();
-  const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("standard");
-  const [addressForm, setAddressForm] = useState<AddressForm>(defaultForm);
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [orderId, setOrderId] = useState<string>("");
+ const router = useRouter();
+ const { selectedItems, selectedTotal, region, clearCart } = useCart();
+ const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("standard");
+ const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("creditcard");
+ const [addressForm, setAddressForm] = useState<AddressForm>(defaultForm);
+ const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+ const [isSubmitting, setIsSubmitting] = useState(false);
+ const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+ const [orderId, setOrderId] = useState<string>("");
 
   // Check if user is logged in
   useEffect(() => {
@@ -105,11 +106,11 @@ export default function MobileCheckoutPage() {
     checkAuth();
   }, []);
 
-  // Redirect if no selected items
-  if (selectedItems.length === 0 && !showSuccess) {
-    router.push("/m/cart");
-    return null;
-  }
+ // Redirect if no selected items
+ if (selectedItems.length === 0) {
+ router.push("/m/cart");
+ return null;
+ }
 
   const shippingFee = shippingMethod === "express" ? 500 : (selectedTotal >= 10000 ? 0 : 300);
   const totalWithShipping = selectedTotal + shippingFee;
@@ -148,10 +149,11 @@ export default function MobileCheckoutPage() {
             quantity: item.quantity,
             unitPrice: getUnitPrice(item.product, region),
           })),
-          shippingAddress: addressForm,
-          shippingMethod,
-          shippingFee,
-          total: totalWithShipping,
+ shippingAddress: addressForm,
+ shippingMethod,
+ paymentMethod,
+ shippingFee,
+ total: totalWithShipping,
         }),
       });
 
@@ -159,49 +161,21 @@ export default function MobileCheckoutPage() {
         throw new Error("订单创建失败");
       }
 
-      const data = await response.json();
-      setOrderId(data.orderId || `ORD-${Date.now()}`);
-      setShowSuccess(true);
-      clearCart();
+ const data = await response.json();
+ const newOrderId = data.orderId || `ORD-${Date.now()}`;
+ clearCart();
+
+ // Redirect to payment success page
+ router.push(`/m/payment/success?orderId=${newOrderId}&amount=${totalWithShipping}&paymentMethod=${paymentMethod}`);
     } catch (error) {
       console.error("Order submission failed:", error);
       alert("订单提交失败，请稍后重试");
     } finally {
       setIsSubmitting(false);
     }
-  };
+ };
 
-  // Success page
-  if (showSuccess) {
-    return (
-      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center px-6">
-        <div className="w-20 h-20 border border-[#E8B4B8] rounded-full flex items-center justify-center mb-6">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
-        </div>
-        <h1 className="font-serif text-2xl font-light text-[#F5F0EB] mb-3 tracking-wide">订单提交成功</h1>
-        <p className="text-[#8A8580] mb-2 text-sm">订单号: {orderId}</p>
-        <p className="text-[#8A8580] mb-8 text-sm">感谢您的购买，我们将尽快发货</p>
-        <div className="flex gap-4">
-          <Link
-            href="/m/profile/orders"
-            className="px-6 py-3 border border-[#E8B4B8] text-[#E8B4B8] text-sm tracking-[0.1em] uppercase hover:bg-[#E8B4B8] hover:text-[#0A0A0A] transition-all duration-300"
-          >
-            查看订单
-          </Link>
-          <Link
-            href="/m"
-            className="px-6 py-3 border border-[#333] text-[#8A8580] text-sm tracking-[0.1em] uppercase hover:border-[#E8B4B8] hover:text-[#F5F0EB] transition-all duration-300"
-          >
-            继续浏览
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  // Login prompt overlay
+ // Login prompt overlay
   if (showLoginPrompt) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center px-6">
@@ -416,19 +390,72 @@ export default function MobileCheckoutPage() {
         </div>
       </div>
 
-      {/* Payment Method */}
+ {/* Payment Method */}
       <div className="px-4 py-4">
         <h2 className="text-[#F5F0EB] font-medium mb-3">支付方式</h2>
-        <div className="bg-[#111111] rounded-lg p-4 border border-[#E8B4B8] flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-6 bg-[#1A1A1A] rounded flex items-center justify-center">
-              <span className="text-[#F5F0EB] text-xs font-bold">Stripe</span>
+        <div className="flex flex-col gap-2">
+          {/* Credit Card */}
+          <button
+            type="button"
+            onClick={() => setPaymentMethod("creditcard")}
+            className={`bg-[#111111] rounded-lg p-4 border flex items-center justify-between transition-all ${
+              paymentMethod === "creditcard" ? "border-[#E8B4B8]" : "border-[#1A1A1A]"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-6 bg-[#1A1A1A] rounded flex items-center justify-center">
+                <span className="text-[#F5F0EB] text-xs font-bold">Stripe</span>
+              </div>
+              <p className="text-[#F5F0EB] text-sm">信用卡支付</p>
             </div>
-            <p className="text-[#F5F0EB] text-sm">信用卡 / PayPal</p>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
+            {paymentMethod === "creditcard" && (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            )}
+          </button>
+
+          {/* PayPal */}
+          <button
+            type="button"
+            onClick={() => setPaymentMethod("paypal")}
+            className={`bg-[#111111] rounded-lg p-4 border flex items-center justify-between transition-all ${
+              paymentMethod === "paypal" ? "border-[#E8B4B8]" : "border-[#1A1A1A]"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-6 bg-[#003087] rounded flex items-center justify-center">
+                <span className="text-white text-xs font-bold">PayPal</span>
+              </div>
+              <p className="text-[#F5F0EB] text-sm">PayPal 账户支付</p>
+            </div>
+            {paymentMethod === "paypal" && (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            )}
+          </button>
+
+          {/* Bank Transfer */}
+          <button
+            type="button"
+            onClick={() => setPaymentMethod("bank")}
+            className={`bg-[#111111] rounded-lg p-4 border flex items-center justify-between transition-all ${
+              paymentMethod === "bank" ? "border-[#E8B4B8]" : "border-[#1A1A1A]"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-6 bg-[#1A1A1A] rounded flex items-center justify-center">
+                <span className="text-[#F5F0EB] text-xs">银行</span>
+              </div>
+              <p className="text-[#F5F0EB] text-sm">银行转账</p>
+            </div>
+            {paymentMethod === "bank" && (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            )}
+          </button>
         </div>
       </div>
 
