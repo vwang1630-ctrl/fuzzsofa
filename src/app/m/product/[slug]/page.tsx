@@ -365,25 +365,28 @@ export default function MobileProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </div>
 
-      {/* Bottom CTA - Original Structure */}
+      {/* Bottom CTA - Modified Structure */}
+      {/* AI Preview Button - Floating above */}
+      <button className="btn-ai-float" onClick={() => setShowAIOverlay(true)}>
+        <svg className="icon" viewBox="0 0 24 24">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+          <line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+        <span className="ai-label">AI 预览</span>
+      </button>
+
       <div className="bottom-cta">
         <div className="row-top">
           <div className="product-id">
             <span className="brand">FUZZ SOFA</span>
-            <span className="name">{OWL_DATA.name} <span className="light">✦</span></span>
+            <span className="name">{OWL_DATA.name}</span>
           </div>
-          <button className="btn-ai-clean" onClick={() => setShowAIOverlay(true)}>
-            <svg className="icon" viewBox="0 0 24 24">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-              <line x1="12" y1="22.08" x2="12" y2="12"/>
-            </svg>
-            <span className="ai-label">AI 预览</span>
-          </button>
+          <span className="price">$3,500 <small>USD</small></span>
         </div>
         <div className="row-bottom">
-          <span className="price">$3,500 <small>USD</small></span>
-          <button className="btn-buy" onClick={() => { setPurchaseSource('buy'); setShowPurchasePanel(true); }}>购买</button>
+          <button className="btn-cart" onClick={() => { setPurchaseSource('cart'); setShowPurchasePanel(true); }}>加入购物车</button>
+          <button className="btn-buy" onClick={() => { setPurchaseSource('buy'); setShowPurchasePanel(true); }}>立即购买</button>
         </div>
       </div>
 
