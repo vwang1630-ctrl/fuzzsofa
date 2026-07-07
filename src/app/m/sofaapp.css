@@ -5259,11 +5259,12 @@ textarea.form-control {
 .shop-submit-btn:active {
   transform: scale(0.97);
   background: rgba(232, 180, 184, 0.12);
-  border-color: rgba(232, 180, 184, 0.45);
+  border-color: rgba(232, 180, 184, 0.55);
+  box-shadow: 0 0 50px rgba(232, 180, 184, 0.06), inset 0 0 60px rgba(232, 180, 184, 0.025);
 }
 
 .shop-submit-btn:active::before {
-  border-color: rgba(232, 180, 184, 0.12);
+  border-color: rgba(232, 180, 184, 0.15);
 }
 
 /* 订单确认页面样式 */
