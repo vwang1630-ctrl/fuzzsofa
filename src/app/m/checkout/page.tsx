@@ -4,6 +4,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
 import type { CartItem } from "@/lib/cart-context";
+import {
+  getSavedAddresses,
+  saveAddress,
+  getDefaultAddress,
+  type SavedAddress,
+} from "@/lib/address-storage";
 import "@/app/m/sofaapp.css";
 
 interface AddressForm {
@@ -33,6 +39,15 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { clearCart, region } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<string>("credit-card");
+  const [checkoutItems, setCheckoutItems] = useState<CartItem[]>([]);
+  
+  // 地址相关状态
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+  const [useNewAddress, setUseNewAddress] = useState(false);
+  const [saveNewAddress, setSaveNewAddress] = useState(true);
+  const [addressLabel, setAddressLabel] = useState("Home");
+  
   const [addressForm, setAddressForm] = useState<AddressForm>({
     country: "US",
     fullName: "",
@@ -45,7 +60,6 @@ export default function CheckoutPage() {
     postalCode: "",
   });
   const [formErrors, setFormErrors] = useState<FormErrors>({});
-  const [checkoutItems, setCheckoutItems] = useState<CartItem[]>([]);
 
   // 商品图片映射
   const slugToImage: Record<string, string> = {
@@ -59,10 +73,73 @@ export default function CheckoutPage() {
     if (stored) {
       setCheckoutItems(JSON.parse(stored));
     } else {
-      // 没有商品则返回购物车
       router.push("/m/cart");
     }
   }, [router]);
+
+  // 读取已保存的地址
+  useEffect(() => {
+    const addresses = getSavedAddresses();
+    setSavedAddresses(addresses);
+    
+    // 如果有保存的地址，默认选择默认地址
+    if (addresses.length > 0) {
+      const defaultAddr = getDefaultAddress();
+      if (defaultAddr) {
+        setSelectedAddressId(defaultAddr.id);
+        setUseNewAddress(false);
+        // 自动填充表单
+        setAddressForm({
+          country: defaultAddr.country,
+          fullName: defaultAddr.fullName,
+          email: defaultAddr.email,
+          phone: defaultAddr.phone,
+          addressLine1: defaultAddr.addressLine1,
+          addressLine2: defaultAddr.addressLine2,
+          city: defaultAddr.city,
+          stateProvince: defaultAddr.state,
+          postalCode: defaultAddr.zipCode,
+        });
+      }
+    } else {
+      // 没有保存的地址，显示新地址表单
+      setUseNewAddress(true);
+    }
+  }, []);
+
+  // 选择已保存地址
+  const handleSelectAddress = (address: SavedAddress) => {
+    setSelectedAddressId(address.id);
+    setUseNewAddress(false);
+    setAddressForm({
+      country: address.country,
+      fullName: address.fullName,
+      email: address.email,
+      phone: address.phone,
+      addressLine1: address.addressLine1,
+      addressLine2: address.addressLine2,
+      city: address.city,
+      stateProvince: address.state,
+      postalCode: address.zipCode,
+    });
+  };
+
+  // 切换到新地址
+  const handleUseNewAddress = () => {
+    setSelectedAddressId(null);
+    setUseNewAddress(true);
+    setAddressForm({
+      country: "US",
+      fullName: "",
+      email: "",
+      phone: "",
+      addressLine1: "",
+      addressLine2: "",
+      city: "",
+      stateProvince: "",
+      postalCode: "",
+    });
+  };
 
   // 获取单价
   const getUnitPrice = (item: CartItem) => {
@@ -128,15 +205,35 @@ export default function CheckoutPage() {
     return Object.keys(errors).length === 0;
   };
 
-  // 提交订单 - 跳转到独立的订单确认页面
+  // 提交订单
   const handleSubmit = () => {
     if (!validateForm()) return;
+    
+    // 如果是新地址且用户选择保存，保存到localStorage
+    if (useNewAddress && saveNewAddress) {
+      saveAddress({
+        label: addressLabel,
+        fullName: addressForm.fullName,
+        email: addressForm.email,
+        phone: addressForm.phone,
+        addressLine1: addressForm.addressLine1,
+        addressLine2: addressForm.addressLine2,
+        city: addressForm.city,
+        state: addressForm.stateProvince,
+        zipCode: addressForm.postalCode,
+        country: addressForm.country,
+        isDefault: savedAddresses.length === 0,
+      });
+    }
+    
     // 生成订单号
     const newOrderId = `ORD-${Date.now().toString(36).toUpperCase()}`;
-    // 将订单信息存储到 sessionStorage（支付页面会读取）
+    
+    // 将订单信息存储到 sessionStorage
     sessionStorage.setItem("paymentOrderId", newOrderId);
     sessionStorage.setItem("paymentItems", JSON.stringify(checkoutItems));
     sessionStorage.setItem("paymentTotal", totalWithShipping.toString());
+    
     // 跳转到支付页面
     router.push("/m/payment");
   };
@@ -179,23 +276,16 @@ export default function CheckoutPage() {
 
           return (
             <div key={item.product.slug} className="shop-item-card">
-              {/* 左侧缩略图 */}
               <div className="shop-item-thumb">
                 <img src={imageSrc} alt={item.product.name} />
               </div>
-
-              {/* 右侧商品信息 */}
               <div className="shop-item-info">
-                {/* 第一行：商品名称 + 数量 */}
                 <div className="shop-item-row1">
                   <span className="shop-item-name">{item.product.name}</span>
                   <span className="shop-item-qty">×{item.quantity}</span>
                 </div>
-                {/* 第二行：颜色·面料 */}
                 <div className="shop-item-spec">{item.materialOption || "Standard"}</div>
               </div>
-
-              {/* 价格右对齐 */}
               <div className="shop-item-price">
                 <span className="shop-item-price-value">${itemTotal.toLocaleString()}</span>
               </div>
@@ -207,133 +297,213 @@ export default function CheckoutPage() {
       {/* 配送信息模块 */}
       <section className="shop-section">
         <div className="shop-section-title">Shipping Information</div>
-        <div className="shop-input-row">
-          {/* 国家/地区选择 */}
-          <div>
-            <select
-              value={addressForm.country}
-              onChange={(e) => setAddressForm({ ...addressForm, country: e.target.value })}
-              className="shop-input shop-select"
-            >
-              {countries.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.name}
-                </option>
+        
+        {/* 已保存地址选择 */}
+        {savedAddresses.length > 0 && (
+          <div className="saved-addresses-section">
+            <div className="saved-addresses-list">
+              {savedAddresses.map((addr) => (
+                <button
+                  key={addr.id}
+                  className={`saved-address-card ${selectedAddressId === addr.id ? "active" : ""}`}
+                  onClick={() => handleSelectAddress(addr)}
+                >
+                  <div className="saved-address-header">
+                    <span className="saved-address-label">{addr.label}</span>
+                    {addr.isDefault && <span className="saved-address-default-badge">Default</span>}
+                  </div>
+                  <div className="saved-address-name">{addr.fullName}</div>
+                  <div className="saved-address-detail">
+                    {addr.addressLine1}{addr.addressLine2 ? `, ${addr.addressLine2}` : ""}
+                  </div>
+                  <div className="saved-address-city">
+                    {addr.city}, {addr.state} {addr.zipCode}
+                  </div>
+                  <div className="saved-address-country">{addr.country}</div>
+                </button>
               ))}
-            </select>
+              
+              {/* 添加新地址按钮 */}
+              <button
+                className={`saved-address-card add-new ${useNewAddress ? "active" : ""}`}
+                onClick={handleUseNewAddress}
+              >
+                <div className="saved-address-add-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                </div>
+                <div className="saved-address-add-text">Add New Address</div>
+              </button>
+            </div>
           </div>
+        )}
+        
+        {/* 新地址表单（有保存地址时仅在useNewAddress=true时显示，无保存地址时始终显示） */}
+        {(useNewAddress || savedAddresses.length === 0) && (
+          <div className="shop-input-row">
+            {/* 国家/地区选择 */}
+            <div>
+              <select
+                value={addressForm.country}
+                onChange={(e) => setAddressForm({ ...addressForm, country: e.target.value })}
+                className="shop-input shop-select"
+              >
+                {countries.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* 全名 */}
-          <div>
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={addressForm.fullName}
-              onChange={(e) => setAddressForm({ ...addressForm, fullName: e.target.value })}
-              className={`shop-input ${formErrors.fullName ? "shop-input-error" : ""}`}
-            />
-            {formErrors.fullName && <div className="shop-input-error-text">{formErrors.fullName}</div>}
-          </div>
-
-          {/* 邮箱 */}
-          <div>
-            <input
-              type="email"
-              placeholder="Email Address"
-              value={addressForm.email}
-              onChange={(e) => setAddressForm({ ...addressForm, email: e.target.value })}
-              className={`shop-input ${formErrors.email ? "shop-input-error" : ""}`}
-            />
-            {formErrors.email && <div className="shop-input-error-text">{formErrors.email}</div>}
-          </div>
-
-          {/* 电话 */}
-          <div>
-            <input
-              type="tel"
-              placeholder="Phone"
-              value={addressForm.phone}
-              onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
-              className={`shop-input ${formErrors.phone ? "shop-input-error" : ""}`}
-            />
-            {formErrors.phone && <div className="shop-input-error-text">{formErrors.phone}</div>}
-          </div>
-
-          {/* 地址第1行 */}
-          <div>
-            <input
-              type="text"
-              placeholder="Address"
-              value={addressForm.addressLine1}
-              onChange={(e) => setAddressForm({ ...addressForm, addressLine1: e.target.value })}
-              className={`shop-input ${formErrors.addressLine1 ? "shop-input-error" : ""}`}
-            />
-            {formErrors.addressLine1 && <div className="shop-input-error-text">{formErrors.addressLine1}</div>}
-          </div>
-
-          {/* 地址第2行（选填） */}
-          <div>
-            <input
-              type="text"
-              placeholder="Apt, Suite, etc. (optional)"
-              value={addressForm.addressLine2}
-              onChange={(e) => setAddressForm({ ...addressForm, addressLine2: e.target.value })}
-              className="shop-input"
-            />
-          </div>
-
-          {/* 城市 */}
-          <div>
-            <input
-              type="text"
-              placeholder="City"
-              value={addressForm.city}
-              onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
-              className={`shop-input ${formErrors.city ? "shop-input-error" : ""}`}
-            />
-            {formErrors.city && <div className="shop-input-error-text">{formErrors.city}</div>}
-          </div>
-
-          {/* 州/省（根据国家动态显示） */}
-          {needsStateField && (
+            {/* 全名 */}
             <div>
               <input
                 type="text"
-                placeholder="State"
-                value={addressForm.stateProvince}
-                onChange={(e) => setAddressForm({ ...addressForm, stateProvince: e.target.value })}
-                className={`shop-input ${formErrors.stateProvince ? "shop-input-error" : ""}`}
+                placeholder="Full Name"
+                value={addressForm.fullName}
+                onChange={(e) => setAddressForm({ ...addressForm, fullName: e.target.value })}
+                className={`shop-input ${formErrors.fullName ? "shop-input-error" : ""}`}
               />
-              {formErrors.stateProvince && <div className="shop-input-error-text">{formErrors.stateProvince}</div>}
+              {formErrors.fullName && <div className="shop-input-error-text">{formErrors.fullName}</div>}
             </div>
-          )}
 
-          {/* 邮编 */}
-          <div>
-            <input
-              type="text"
-              placeholder="ZIP Code"
-              value={addressForm.postalCode}
-              onChange={(e) => setAddressForm({ ...addressForm, postalCode: e.target.value })}
-              className={`shop-input ${formErrors.postalCode ? "shop-input-error" : ""}`}
-            />
-            {formErrors.postalCode && <div className="shop-input-error-text">{formErrors.postalCode}</div>}
+            {/* 邮箱 */}
+            <div>
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={addressForm.email}
+                onChange={(e) => setAddressForm({ ...addressForm, email: e.target.value })}
+                className={`shop-input ${formErrors.email ? "shop-input-error" : ""}`}
+              />
+              {formErrors.email && <div className="shop-input-error-text">{formErrors.email}</div>}
+            </div>
+
+            {/* 电话 */}
+            <div>
+              <input
+                type="tel"
+                placeholder="Phone"
+                value={addressForm.phone}
+                onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
+                className={`shop-input ${formErrors.phone ? "shop-input-error" : ""}`}
+              />
+              {formErrors.phone && <div className="shop-input-error-text">{formErrors.phone}</div>}
+            </div>
+
+            {/* 地址第1行 */}
+            <div>
+              <input
+                type="text"
+                placeholder="Address"
+                value={addressForm.addressLine1}
+                onChange={(e) => setAddressForm({ ...addressForm, addressLine1: e.target.value })}
+                className={`shop-input ${formErrors.addressLine1 ? "shop-input-error" : ""}`}
+              />
+              {formErrors.addressLine1 && <div className="shop-input-error-text">{formErrors.addressLine1}</div>}
+            </div>
+
+            {/* 地址第2行（选填） */}
+            <div>
+              <input
+                type="text"
+                placeholder="Apt, Suite, etc. (optional)"
+                value={addressForm.addressLine2}
+                onChange={(e) => setAddressForm({ ...addressForm, addressLine2: e.target.value })}
+                className="shop-input"
+              />
+            </div>
+
+            {/* 城市 */}
+            <div>
+              <input
+                type="text"
+                placeholder="City"
+                value={addressForm.city}
+                onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
+                className={`shop-input ${formErrors.city ? "shop-input-error" : ""}`}
+              />
+              {formErrors.city && <div className="shop-input-error-text">{formErrors.city}</div>}
+            </div>
+
+            {/* 州/省（根据国家动态显示） */}
+            {needsStateField && (
+              <div>
+                <input
+                  type="text"
+                  placeholder="State"
+                  value={addressForm.stateProvince}
+                  onChange={(e) => setAddressForm({ ...addressForm, stateProvince: e.target.value })}
+                  className={`shop-input ${formErrors.stateProvince ? "shop-input-error" : ""}`}
+                />
+                {formErrors.stateProvince && <div className="shop-input-error-text">{formErrors.stateProvince}</div>}
+              </div>
+            )}
+
+            {/* 邮编 */}
+            <div>
+              <input
+                type="text"
+                placeholder="ZIP Code"
+                value={addressForm.postalCode}
+                onChange={(e) => setAddressForm({ ...addressForm, postalCode: e.target.value })}
+                className={`shop-input ${formErrors.postalCode ? "shop-input-error" : ""}`}
+              />
+              {formErrors.postalCode && <div className="shop-input-error-text">{formErrors.postalCode}</div>}
+            </div>
+            
+            {/* 保存地址选项（仅在输入新地址时显示） */}
+            {savedAddresses.length > 0 && (
+              <div className="save-address-option">
+                <div className="save-address-checkbox-row">
+                  <button
+                    className={`save-address-checkbox ${saveNewAddress ? "checked" : ""}`}
+                    onClick={() => setSaveNewAddress(!saveNewAddress)}
+                  >
+                    {saveNewAddress && (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    )}
+                  </button>
+                  <span className="save-address-text">Save this address for future orders</span>
+                </div>
+                
+                {saveNewAddress && (
+                  <div className="address-label-row">
+                    <span className="address-label-prefix">Label as:</span>
+                    <div className="address-label-buttons">
+                      {["Home", "Office", "Other"].map((label) => (
+                        <button
+                          key={label}
+                          className={`address-label-btn ${addressLabel === label ? "active" : ""}`}
+                          onClick={() => setAddressLabel(label)}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-        </div>
+        )}
       </section>
 
       {/* 支付方式模块 */}
       <section className="shop-section">
         <div className="shop-section-title">Payment Method</div>
         <div className="shop-payment-row">
-          {/* Credit Card */}
           <button
             className={`shop-payment-btn ${paymentMethod === "credit-card" ? "active" : ""}`}
             onClick={() => setPaymentMethod("credit-card")}
           >
             Credit Card
           </button>
-          {/* PayPal */}
           <button
             className={`shop-payment-btn ${paymentMethod === "paypal" ? "active" : ""}`}
             onClick={() => setPaymentMethod("paypal")}
