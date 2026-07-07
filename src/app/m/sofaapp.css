@@ -5098,11 +5098,11 @@ textarea.form-control {
   transform: translateX(-50%);
   width: 100%;
   max-width: 430px;
-  background: rgba(20, 20, 20, 0.92);
-  backdrop-filter: blur(20px);
-  padding: 18px 24px 22px;
-  padding-bottom: calc(22px + env(safe-area-inset-bottom, 0px));
-  border-top: 0.5px solid rgba(255, 255, 255, 0.06);
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(24px);
+  padding: 20px 20px 26px;
+  padding-bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0;
   z-index: 100;
   display: flex;
@@ -5112,36 +5112,37 @@ textarea.form-control {
 
 .shop-submit-btn {
   width: 100%;
-  padding: 14px 0;
+  padding: 16px 0;
   position: relative;
-  background: rgba(232, 180, 184, 0.06);
-  border: 1.5px solid rgba(232, 180, 184, 0.35);
+  background: rgba(232, 180, 184, 0.12);
+  border: 2px solid rgba(232, 180, 184, 0.5);
   border-radius: 0;
   color: #E8B4B8;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  letter-spacing: 0.15em;
-  min-height: 54px;
+  letter-spacing: 0.18em;
+  min-height: 58px;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 0 30px rgba(232, 180, 184, 0.02), inset 0 0 40px rgba(232, 180, 184, 0.015);
+  box-shadow: 0 0 40px rgba(232, 180, 184, 0.08), inset 0 0 50px rgba(232, 180, 184, 0.03);
+  text-transform: uppercase;
 }
 
 .shop-submit-btn::before {
   content: '';
   position: absolute;
-  inset: 4px;
-  border: 0.5px solid rgba(232, 180, 184, 0.06);
+  inset: 5px;
+  border: 0.5px solid rgba(232, 180, 184, 0.12);
   pointer-events: none;
   transition: all 0.35s ease;
 }
 
 .shop-submit-btn:active {
   transform: scale(0.97);
-  background: rgba(232, 180, 184, 0.12);
-  border-color: rgba(232, 180, 184, 0.55);
-  box-shadow: 0 0 50px rgba(232, 180, 184, 0.06), inset 0 0 60px rgba(232, 180, 184, 0.025);
+  background: rgba(232, 180, 184, 0.2);
+  border-color: rgba(232, 180, 184, 0.7);
+  box-shadow: 0 0 60px rgba(232, 180, 184, 0.15), inset 0 0 80px rgba(232, 180, 184, 0.05);
 }
 
 /* 订单确认页面样式 */
