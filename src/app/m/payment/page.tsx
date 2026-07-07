@@ -139,12 +139,20 @@ function PaymentContent() {
               <span className="payment-radio">
                 {paymentMethod === 'card' && <span className="payment-radio-dot"></span>}
               </span>
-              <span className="payment-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <rect x="1" y="4" width="22" height="16" rx="2"/>
-                  <line x1="1" y1="10" x2="23" y2="10"/>
-                </svg>
-              </span>
+              {}
+              <svg
+                className="payment-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
               <span className="payment-text">Credit Card</span>
             </button>
             <button
@@ -154,11 +162,16 @@ function PaymentContent() {
               <span className="payment-radio">
                 {paymentMethod === 'paypal' && <span className="payment-radio-dot"></span>}
               </span>
-              <span className="payment-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.38 5.474 0 5.998 0h7.47c2.836 0 5.083.584 6.628 1.74 1.555 1.166 2.348 2.972 2.348 5.362 0 3.562-1.49 6.286-4.39 8.04-2.896 1.753-6.936 2.635-12.02 2.635H7.076z"/>
-                </svg>
-              </span>
+              {}
+              <svg
+                className="payment-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor">
+                <path
+                  d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.771.771 0 0 1 .757-.64h6.953c2.297 0 4.147.485 5.195 1.38.995.85 1.394 2.097 1.176 3.707-.37 2.717-2.042 4.49-4.94 5.09-.8.17-1.67.24-2.58.24H8.91a.77.77 0 0 0-.756.64l-.92 5.83a.641.641 0 0 1-.633.74l-.525.003z" />
+              </svg>
               <span className="payment-text">PayPal</span>
             </button>
           </div>
