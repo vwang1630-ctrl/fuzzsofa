@@ -97,7 +97,7 @@ function PaymentContent() {
   };
   
   return (
-    <div className="shop-page">
+    <div className="shop-page" id="paymentPage">
       {/* Header */}
       <div className="shop-header">
         <Link href="/m/cart" className="shop-back">
@@ -230,7 +230,7 @@ function PaymentContent() {
         {/* Pay Button - 放在输入区域下方 */}
         <section className="payment-section payment-actions">
           <button 
-            className="shop-submit-btn"
+            className="panel-confirm-btn"
             onClick={handlePayNow}
             disabled={isProcessing}
           >

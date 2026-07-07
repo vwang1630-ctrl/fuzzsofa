@@ -5227,7 +5227,10 @@ textarea.form-control {
 }
 
 /* 底部主操作按钮 - 完全对齐详情页panel-confirm-btn */
-.shop-submit-btn {
+.shop-submit-btn,
+#paymentPage .payment-actions .panel-confirm-btn,
+#checkoutPage .shop-bottom-bar .panel-confirm-btn,
+#orderSuccessPage .order-success-actions .panel-confirm-btn {
   width: 100%;
   padding: 14px 0;
   min-height: 54px;
@@ -5246,7 +5249,10 @@ textarea.form-control {
   box-shadow: 0 0 30px rgba(232, 180, 184, 0.02), inset 0 0 40px rgba(232, 180, 184, 0.015);
 }
 
-.shop-submit-btn::before {
+.shop-submit-btn::before,
+#paymentPage .payment-actions .panel-confirm-btn::before,
+#checkoutPage .shop-bottom-bar .panel-confirm-btn::before,
+#orderSuccessPage .order-success-actions .panel-confirm-btn::before {
   content: '';
   position: absolute;
   inset: 4px;
@@ -5256,14 +5262,20 @@ textarea.form-control {
   transition: all 0.35s ease;
 }
 
-.shop-submit-btn:active {
+.shop-submit-btn:active,
+#paymentPage .payment-actions .panel-confirm-btn:active,
+#checkoutPage .shop-bottom-bar .panel-confirm-btn:active,
+#orderSuccessPage .order-success-actions .panel-confirm-btn:active {
   transform: scale(0.97);
   background: rgba(232, 180, 184, 0.12);
   border-color: rgba(232, 180, 184, 0.55);
   box-shadow: 0 0 50px rgba(232, 180, 184, 0.06), inset 0 0 60px rgba(232, 180, 184, 0.025);
 }
 
-.shop-submit-btn:active::before {
+.shop-submit-btn:active::before,
+#paymentPage .payment-actions .panel-confirm-btn:active::before,
+#checkoutPage .shop-bottom-bar .panel-confirm-btn:active::before,
+#orderSuccessPage .order-success-actions .panel-confirm-btn:active::before {
   border-color: rgba(232, 180, 184, 0.15);
 }
 

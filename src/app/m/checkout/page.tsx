@@ -272,7 +272,7 @@ export default function CheckoutPage() {
     };
 
     return (
-        <div className="shop-page">
+        <div className="shop-page" id="checkoutPage">
             {}
             <div className="shop-header">
                 <button onClick={handleBack} className="shop-header-back">
@@ -586,7 +586,7 @@ export default function CheckoutPage() {
             </section>
             {}
             <div className="shop-bottom-bar">
-                <button className="shop-submit-btn" onClick={handleSubmit}>Place Order
+                <button className="panel-confirm-btn" onClick={handleSubmit}>Place Order
                             </button>
             </div>
         </div>

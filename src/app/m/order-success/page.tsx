@@ -46,7 +46,7 @@ export default function OrderSuccessPage() {
   };
 
   return (
-    <div className="shop-page">
+    <div className="shop-page" id="orderSuccessPage">
       {/* 顶部导航栏 */}
       <div className="shop-header">
         <button onClick={handleClose} className="shop-header-back">
@@ -102,7 +102,7 @@ export default function OrderSuccessPage() {
 
         {/* 操作按钮 */}
         <div className="order-success-actions">
-          <button className="shop-submit-btn" onClick={() => router.push("/m")}>
+          <button className="panel-confirm-btn" onClick={() => router.push("/m")}>
             Continue Shopping
           </button>
         </div>
