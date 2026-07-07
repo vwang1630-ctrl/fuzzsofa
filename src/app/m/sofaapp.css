@@ -4720,6 +4720,8 @@ textarea.form-control {
   color: #8A8580;
   letter-spacing: 0.04em;
   margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
 }
 
 /* 商品项卡片 */
