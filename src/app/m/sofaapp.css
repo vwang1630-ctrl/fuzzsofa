@@ -5047,14 +5047,35 @@ textarea.form-control {
 /* 购物流程支付按钮排列 */
 .shop-payment-row {
   display: flex;
-  gap: 8px;
-  justify-content: space-between;
+  gap: 12px;
 }
 
-/* 购物流程支付方式 */
-.shop-payment-row {
-  display: flex;
-  gap: 12px;
+/* 支付方式选择指示器 */
+.payment-radio {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid rgba(245, 240, 235, 0.3);
+  border-radius: 50%;
+  margin-right: 10px;
+  position: relative;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.payment-radio-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: #E8B4B8;
+  border-radius: 50%;
+}
+
+.shop-payment-btn.selected .payment-radio {
+  border-color: #E8B4B8;
 }
 
 /* Tab切换组件 - 对齐详情页材质Tab（btn-cart/btn-buy效果） */

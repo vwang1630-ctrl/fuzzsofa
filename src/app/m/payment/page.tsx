@@ -136,7 +136,10 @@ function PaymentContent() {
               className={`shop-payment-btn ${paymentMethod === 'card' ? 'selected' : ''}`}
               onClick={() => setPaymentMethod('card')}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <span className="payment-radio">
+                {paymentMethod === 'card' && <span className="payment-radio-dot"></span>}
+              </span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <rect x="1" y="4" width="22" height="16" rx="2"/>
                 <line x1="1" y1="10" x2="23" y2="10"/>
               </svg>
@@ -146,7 +149,10 @@ function PaymentContent() {
               className={`shop-payment-btn ${paymentMethod === 'paypal' ? 'selected' : ''}`}
               onClick={() => setPaymentMethod('paypal')}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <span className="payment-radio">
+                {paymentMethod === 'paypal' && <span className="payment-radio-dot"></span>}
+              </span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.38 5.474 0 5.998 0h7.47c2.836 0 5.083.584 6.628 1.74 1.555 1.166 2.348 2.972 2.348 5.362 0 3.562-1.49 6.286-4.39 8.04-2.896 1.753-6.936 2.635-12.02 2.635H7.076z"/>
               </svg>
               <span>PayPal</span>
