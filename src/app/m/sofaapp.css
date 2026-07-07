@@ -5084,7 +5084,7 @@ textarea.form-control {
   position: relative;
   padding: 14px 0;
   background: transparent;
-  border: 1.5px solid rgba(245, 240, 235, 0.25);
+  border: 1.5px solid rgba(245, 240, 235, 0.3);
   border-radius: 0;
   color: #F5F0EB;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
