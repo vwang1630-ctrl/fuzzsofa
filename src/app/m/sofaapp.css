@@ -4821,21 +4821,18 @@ textarea.form-control {
   margin-top: 4px;
 }
 
-/* 购物流程输入框组线框 */
-.shop-input-group {
-  border: 1.5px solid rgba(51, 51, 51, 0.6);
-  border-radius: 0;
-  padding: 12px;
+/* 购物流程输入框排列 */
+.shop-input-row {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-/* 购物流程支付按钮组线框 */
-.shop-payment-group {
-  border: 1.5px solid rgba(51, 51, 51, 0.6);
-  border-radius: 0;
-  padding: 12px;
+/* 购物流程支付按钮排列 */
+.shop-payment-row {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
 }
 
 /* 购物流程支付方式 */

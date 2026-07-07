@@ -219,7 +219,7 @@ export default function CheckoutPage() {
       {/* 配送信息模块 */}
       <section className="shop-section">
         <div className="shop-section-title">配送信息</div>
-        <div className="shop-input-group">
+        <div className="shop-input-row">
           {/* 收件人姓名 */}
           <div>
             <input
