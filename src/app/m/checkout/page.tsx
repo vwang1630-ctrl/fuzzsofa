@@ -45,8 +45,6 @@ export default function CheckoutPage() {
     postalCode: "",
   });
   const [formErrors, setFormErrors] = useState<FormErrors>({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [orderId, setOrderId] = useState("");
   const [checkoutItems, setCheckoutItems] = useState<CartItem[]>([]);
 
   // 商品图片映射
@@ -130,17 +128,18 @@ export default function CheckoutPage() {
     return Object.keys(errors).length === 0;
   };
 
-  // 提交订单
+  // 提交订单 - 跳转到独立的订单确认页面
   const handleSubmit = () => {
     if (!validateForm()) return;
     // 生成订单号
     const newOrderId = `ORD-${Date.now().toString(36).toUpperCase()}`;
-    setOrderId(newOrderId);
-    setIsSubmitted(true);
     // 清空购物车中已结算的商品
     clearCart();
     // 清空 sessionStorage
     sessionStorage.removeItem("checkoutItems");
+    // 跳转到订单确认页面，传递订单信息
+    const itemsJson = encodeURIComponent(JSON.stringify(checkoutItems));
+    router.push(`/m/order-success?orderId=${newOrderId}&items=${itemsJson}&total=${totalWithShipping}`);
   };
 
   // 返回购物车
@@ -152,69 +151,6 @@ export default function CheckoutPage() {
   const handleClose = () => {
     router.push("/m");
   };
-
-  // 订单成功页面
-  if (isSubmitted) {
-    return (
-      <div className="shop-page">
-        {/* 顶部导航栏 */}
-        <div className="shop-header">
-          <button onClick={handleClose} className="shop-header-back">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="shop-header-title">Order Confirmed</h1>
-          <span></span>
-        </div>
-
-        <div style={{ padding: "60px 16px", textAlign: "center" }}>
-          {/* 成功图标 */}
-          <div
-            style={{
-              width: "80px",
-              height: "80px",
-              border: "2px solid #E8B4B8",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto 24px",
-            }}
-          >
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </div>
-
-          <p style={{ color: "#F5F0EB", fontSize: "18px", marginBottom: "12px", fontWeight: 300, letterSpacing: "0.04em" }}>Order Submitted Successfully</p>
-          <p style={{ color: "#8A8580", fontSize: "14px", marginBottom: "24px", fontWeight: 300, letterSpacing: "0.04em" }}>Order ID: {orderId}</p>
-
-          {/* 商品明细 */}
-          <div style={{ borderTop: "1px solid #1A1A1A", paddingTop: "24px" }}>
-            <div style={{ fontSize: "12px", color: "#6A6560", marginBottom: "16px", fontWeight: 300, letterSpacing: "0.1em" }}>ORDER DETAILS</div>
-            {checkoutItems.map((item: CartItem) => (
-              <div key={item.product.slug} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0" }}>
-                <span style={{ color: "#F5F0EB", fontSize: "14px", fontWeight: 300, letterSpacing: "0.04em" }}>
-                  {item.product.name} ×{item.quantity}
-                </span>
-                <span style={{ color: "#F5F0EB", fontSize: "14px", fontWeight: 300, letterSpacing: "0.04em" }}>
-                  ${(getUnitPrice(item) * item.quantity).toLocaleString()}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* 操作按钮 */}
-          <div style={{ marginTop: "40px", display: "flex", gap: "12px" }}>
-            <button className="shop-submit-btn" onClick={() => router.push("/m")}>
-              Continue Shopping
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="shop-page">

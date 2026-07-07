@@ -4977,6 +4977,107 @@ textarea.form-control {
   box-shadow: 0 0 50px rgba(232, 180, 184, 0.06), inset 0 0 60px rgba(232, 180, 184, 0.025);
 }
 
+/* 订单确认页面样式 */
+.shop-content {
+  padding: 60px 16px;
+  text-align: center;
+}
+
+.order-success-icon {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #E8B4B8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.order-success-title {
+  color: #F5F0EB;
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.order-success-id {
+  color: #8A8580;
+  font-size: 14px;
+  margin-bottom: 24px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.order-details-section {
+  border-top: 1px solid #1A1A1A;
+  padding-top: 24px;
+  margin-bottom: 24px;
+}
+
+.order-details-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.order-details-name {
+  color: #F5F0EB;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.order-details-price {
+  color: #F5F0EB;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.order-details-total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.06);
+  margin-top: 8px;
+}
+
+.order-details-total-label {
+  color: #F5F0EB;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.order-details-total-value {
+  color: #E8B4B8;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.order-confirm-section {
+  margin-bottom: 24px;
+}
+
+.order-confirm-text {
+  color: #8A8580;
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  text-align: left;
+  margin-top: 12px;
+}
+
+.order-success-actions {
+  margin-top: 40px;
+  display: flex;
+  gap: 12px;
+}
+
 .shop-submit-btn:active::before {
   border-color: rgba(232, 180, 184, 0.15);
 }
