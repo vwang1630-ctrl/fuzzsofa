@@ -4640,22 +4640,36 @@ textarea.form-control {
 /* =====购物流程页面通用样式（与购买弹窗一致）===== */
 
 /* 购物流程页面容器 */
+/* ===== 购物流程页面统一规范（对齐Owl Chair详情页） ===== */
+
+/* 页面容器 - 纯黑底色 #000 */
 .shop-page {
   min-height: 100vh;
-  min-height: 100dvh; /* 移动端动态视口高度 */
-  background-color: #111111;
+  min-height: 100dvh;
+  background: #000;
+  color: #F5F0EB;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  padding: 0 20px;
   padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px));
   overflow-x: hidden;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+  -webkit-overflow-scrolling: touch;
+  max-width: 430px;
+  margin: 0 auto;
 }
 
-/* 购物流程顶部导航栏 */
+/* 顶部导航栏 - 对齐详情页 */
 .shop-header {
   position: sticky;
   top: 0;
-  background-color: #111111;
-  padding: 16px 20px;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 12px 0;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
+}
   z-index: 50;
   display: flex;
   align-items: center;
@@ -4712,20 +4726,20 @@ textarea.form-control {
   color: #F5F0EB;
 }
 
-/* 购物流程模块区块 */
+/* 模块区块 - 对齐详情页间距 */
 .shop-section {
-  padding: 20px;
-  background-color: #111111;
+  padding: 20px 0;
 }
 
+/* 模块标题 - uppercase辅助文字 */
 .shop-section-title {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 300;
   color: #6A6560;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -4737,12 +4751,14 @@ textarea.form-control {
   border-bottom: 1px solid #1A1A1A;
 }
 
+/* 商品缩略图 - 圆角rounded-xl */
 .shop-item-thumb {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #1A1A1A;
+  background: #121212;
+  flex-shrink: 0;
 }
 
 .shop-item-thumb img {
@@ -4764,11 +4780,13 @@ textarea.form-control {
   align-items: center;
 }
 
+/* 商品名称 - 衬线字体 */
 .shop-item-name {
+  font-family: "Cormorant Garamond", Georgia, serif;
   color: #F5F0EB;
   font-size: 14px;
-  font-weight: 300;
-  letter-spacing: 0.04em;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .shop-item-qty {
@@ -4790,25 +4808,39 @@ textarea.form-control {
   align-items: center;
 }
 
+/* 商品价格 - accent色高亮 */
 .shop-item-price-value {
-  color: #F5F0EB;
-  font-size: 14px;
-  font-weight: 300;
-  letter-spacing: 0.04em;
+  font-family: Georgia, serif;
+  color: #E8B4B8;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
-/* 购物流程输入框 */
+/* 输入框 - 无边框深色填充背景 */
 .shop-input {
   width: 100%;
-  background-color: transparent;
-  border: 1.5px solid rgba(51, 51, 51, 0.6);
-  border-radius: 0;
-  padding: 12px 14px;
+  background: rgba(18, 18, 18, 0.6);
+  border: none;
+  border-radius: 8px;
+  padding: 14px 16px;
   color: #F5F0EB;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 300;
   letter-spacing: 0.04em;
   outline: none;
+  transition: all 0.3s ease;
+}
+
+.shop-input:focus {
+  background: rgba(18, 18, 18, 0.8);
+  box-shadow: 0 0 0 1px rgba(232, 180, 184, 0.2);
+}
+
+.shop-input::placeholder {
+  color: #6A6560;
+}
   transition: border-color 0.3s ease;
 }
 
@@ -4837,11 +4869,12 @@ textarea.form-control {
   gap: 8px;
 }
 
+/* 已保存地址卡片 - 圆角rounded-xl */
 .saved-address-card {
-  background: transparent;
-  border: 1.5px solid rgba(51, 51, 51, 0.6);
-  border-radius: 0;
-  padding: 12px 16px;
+  background: rgba(18, 18, 18, 0.4);
+  border: none;
+  border-radius: 8px;
+  padding: 14px 16px;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: left;
@@ -4849,12 +4882,12 @@ textarea.form-control {
 }
 
 .saved-address-card.active {
-  border-color: rgba(232, 180, 184, 0.35);
-  background: rgba(232, 180, 184, 0.06);
+  background: rgba(232, 180, 184, 0.08);
+  box-shadow: 0 0 0 1px rgba(232, 180, 184, 0.25);
 }
 
 .saved-address-card:hover {
-  border-color: rgba(232, 180, 184, 0.35);
+  background: rgba(18, 18, 18, 0.6);
 }
 
 .saved-address-header {
@@ -4928,23 +4961,24 @@ textarea.form-control {
   gap: 12px;
 }
 
+/* 复选框 - 圆角rounded-xl */
 .save-address-checkbox {
   width: 20px;
   height: 20px;
-  border: 1.5px solid rgba(51, 51, 51, 0.6);
-  border-radius: 0;
-  background: transparent;
+  border: none;
+  border-radius: 6px;
+  background: rgba(18, 18, 18, 0.6);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  color: #E8B4B8;
+  color: transparent;
 }
 
 .save-address-checkbox.checked {
-  border-color: rgba(232, 180, 184, 0.35);
-  background: rgba(232, 180, 184, 0.06);
+  background: rgba(232, 180, 184, 0.15);
+  color: #E8B4B8;
 }
 
 .save-address-text {
@@ -5030,13 +5064,15 @@ textarea.form-control {
   gap: 12px;
 }
 
+/* Tab切换组件 - 对齐详情页材质Tab */
 .shop-payment-btn {
   flex: 1;
-  padding: 10px 0;
-  background-color: transparent;
-  border: 1.5px solid rgba(51, 51, 51, 0.6);
-  border-radius: 0;
+  padding: 12px 0;
+  background: rgba(18, 18, 18, 0.4);
+  border: none;
+  border-radius: 8px;
   color: #8A8580;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 300;
   letter-spacing: 0.04em;
@@ -5044,10 +5080,11 @@ textarea.form-control {
   transition: all 0.3s ease;
 }
 
+/* Tab选中态 - accent色文字+深色背景填充 */
 .shop-payment-btn.active {
-  border-color: rgba(232, 180, 184, 0.35);
-  background: rgba(232, 180, 184, 0.06);
+  background: rgba(232, 180, 184, 0.08);
   color: #E8B4B8;
+  font-weight: 400;
 }
 
 /* 购物流程费用明细 */
@@ -5094,7 +5131,7 @@ textarea.form-control {
   letter-spacing: 0.04em;
 }
 
-/* 购物流程底部按钮 - 与bottom-cta设计一致 */
+/* 底部CTA区块 - 纯黑背景+安全区边距 */
 .shop-bottom-bar {
   position: fixed;
   bottom: 0;
@@ -5102,44 +5139,40 @@ textarea.form-control {
   transform: translateX(-50%);
   width: 100%;
   max-width: 430px;
-  background: rgba(20, 20, 20, 0.95);
-  backdrop-filter: blur(24px);
-  padding: 20px 20px 26px;
-  padding-bottom: calc(26px + env(safe-area-inset-bottom, 0px));
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 16px 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  border-top: 0.5px solid rgba(255, 255, 255, 0.06);
   z-index: 100;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
 
+/* 底部主操作按钮 - 对齐详情页加入购物车/立即购买 */
 .shop-submit-btn {
   width: 100%;
-  padding: 16px 0;
-  position: relative;
-  background: rgba(232, 180, 184, 0.12);
-  border: 2px solid rgba(232, 180, 184, 0.5);
-  border-radius: 0;
+  padding: 14px 0;
+  min-height: 54px;
+  background: rgba(232, 180, 184, 0.06);
+  border: 1.5px solid rgba(232, 180, 184, 0.35);
+  border-radius: 8px;
   color: #E8B4B8;
-  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  font-size: 16px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.18em;
-  min-height: 58px;
-  cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 0 40px rgba(232, 180, 184, 0.08), inset 0 0 50px rgba(232, 180, 184, 0.03);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .shop-submit-btn::before {
   content: '';
   position: absolute;
-  inset: 5px;
+  inset: 4px;
   border: 0.5px solid rgba(232, 180, 184, 0.12);
+  border-radius: 6px;
   pointer-events: none;
-  transition: all 0.35s ease;
 }
 
 .shop-submit-btn:active {
@@ -5166,12 +5199,14 @@ textarea.form-control {
   margin: 0 auto 24px;
 }
 
+/* 订单成功页面标题 - 衬线字体 */
 .order-success-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
   color: #F5F0EB;
-  font-size: 18px;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   margin-bottom: 12px;
-  font-weight: 300;
-  letter-spacing: 0.04em;
 }
 
 .order-success-id {
@@ -5302,10 +5337,13 @@ textarea.form-control {
   letter-spacing: 0.04em;
 }
 
+/* 总金额 - accent色高亮 */
 .payment-total-amount {
+  font-family: Georgia, serif;
   font-size: 18px;
-  color: #F5F0EB;
+  color: #E8B4B8;
   font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .card-fields-row {
@@ -5416,4 +5454,267 @@ textarea.form-control {
   color: #F5F0EB;
   font-size: 14px;
   font-weight: 300;
+}
+
+/* ========================================
+   Profile & Orders Pages
+   ======================================== */
+
+/* Profile Page */
+.profile-user-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 18px;
+  background: rgba(15, 15, 15, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  background: rgba(232, 180, 184, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(232, 180, 184, 0.2);
+}
+
+.profile-user-info {
+  flex: 1;
+}
+
+.profile-user-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #F5F0EB;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.profile-user-email {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: #6A6560;
+  letter-spacing: 0.04em;
+  margin: 4px 0 0 0;
+}
+
+.profile-signin-btn {
+  width: 100%;
+  padding: 14px 0;
+  background: rgba(232, 180, 184, 0.06);
+  border: 1.5px solid rgba(232, 180, 184, 0.35);
+  border-radius: 8px;
+  color: #E8B4B8;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-bottom: 32px;
+}
+
+.profile-signin-btn:hover {
+  background: rgba(232, 180, 184, 0.12);
+  border-color: rgba(232, 180, 184, 0.5);
+}
+
+.profile-signin-btn:active {
+  background: rgba(232, 180, 184, 0.18);
+}
+
+.profile-menu-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: rgba(15, 15, 15, 0.6);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.profile-menu-item:last-child {
+  border-bottom: none;
+}
+
+.profile-menu-item:hover {
+  background: rgba(20, 20, 20, 0.8);
+}
+
+.profile-menu-item:active {
+  background: rgba(25, 25, 25, 0.9);
+}
+
+.profile-menu-icon {
+  width: 20px;
+  height: 20px;
+  color: #8A8580;
+}
+
+.profile-menu-label {
+  flex: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #F5F0EB;
+  letter-spacing: 0.04em;
+}
+
+.profile-menu-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #E8B4B8;
+  letter-spacing: 0.04em;
+  margin-right: 8px;
+}
+
+.profile-menu-arrow {
+  color: #6A6560;
+}
+
+/* Orders Page */
+.orders-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.orders-empty-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  background: rgba(15, 15, 15, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6A6560;
+  margin-bottom: 20px;
+}
+
+.orders-empty-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #F5F0EB;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.orders-empty-subtext {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #6A6560;
+  letter-spacing: 0.04em;
+  margin: 8px 0 0 0;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-card {
+  background: rgba(15, 15, 15, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.04);
+}
+
+.order-card-id {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #F5F0EB;
+  letter-spacing: 0.02em;
+}
+
+.order-card-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: #6A6560;
+  letter-spacing: 0.04em;
+}
+
+.order-card-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.order-card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-card-item-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #F5F0EB;
+  letter-spacing: 0.04em;
+}
+
+.order-card-item-qty {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: #8A8580;
+  letter-spacing: 0.04em;
+}
+
+.order-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.04);
+}
+
+.order-card-total {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #E8B4B8;
+  letter-spacing: 0.02em;
+}
+
+.order-card-status {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
