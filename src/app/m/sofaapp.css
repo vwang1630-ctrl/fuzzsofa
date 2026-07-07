@@ -5109,15 +5109,14 @@ textarea.form-control {
   color: #E8B4B8;
 }
 
-/* 支付方式选择按钮 - 未选中态：透明底色+脏粉色细线条外框 */
-/* 支付方式选择按钮 - 未选中态：透明底色+灰色外框(#8A8580与文字一致)+空心圆环 */
+/* 支付方式选择按钮 - 未选中态：灰色边框+透明底色+空心圆点 */
 .shop-payment-btn {
   flex: 1;
   position: relative;
-  padding: 14px 0;
+  padding: 12px 16px;
   background: transparent;
-  border: 1px solid #A0A0A0;
-  border-radius: 0;
+  border: 1px solid #555555;
+  border-radius: 4px;
   box-sizing: border-box;
   color: #8A8580;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
@@ -5130,13 +5129,13 @@ textarea.form-control {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* 支付方式选择按钮 - 选中态：透明底色+脏粉色细线条外框高亮+实心圆点 */
 .shop-payment-btn.selected {
   background: transparent;
-  border: 1.5px solid rgba(232, 180, 184, 0.45);
+  border: 1px solid rgba(232, 180, 184, 0.45);
   color: #E8B4B8;
   font-weight: 500;
   box-shadow: 0 0 30px rgba(232, 180, 184, 0.02), inset 0 0 40px rgba(232, 180, 184, 0.015);
