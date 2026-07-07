@@ -304,7 +304,7 @@ export default function CheckoutPage() {
           <div>
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Email Address"
               value={addressForm.email}
               onChange={(e) => setAddressForm({ ...addressForm, email: e.target.value })}
               className={`shop-input ${formErrors.email ? "shop-input-error" : ""}`}
@@ -316,7 +316,7 @@ export default function CheckoutPage() {
           <div>
             <input
               type="tel"
-              placeholder="Phone Number"
+              placeholder="Phone"
               value={addressForm.phone}
               onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
               className={`shop-input ${formErrors.phone ? "shop-input-error" : ""}`}
@@ -328,7 +328,7 @@ export default function CheckoutPage() {
           <div>
             <input
               type="text"
-              placeholder="Address Line 1 (Street Address)"
+              placeholder="Address"
               value={addressForm.addressLine1}
               onChange={(e) => setAddressForm({ ...addressForm, addressLine1: e.target.value })}
               className={`shop-input ${formErrors.addressLine1 ? "shop-input-error" : ""}`}
@@ -340,7 +340,7 @@ export default function CheckoutPage() {
           <div>
             <input
               type="text"
-              placeholder="Address Line 2 (Apt, Suite, Unit - Optional)"
+              placeholder="Apt, Suite, etc. (optional)"
               value={addressForm.addressLine2}
               onChange={(e) => setAddressForm({ ...addressForm, addressLine2: e.target.value })}
               className="shop-input"
@@ -364,7 +364,7 @@ export default function CheckoutPage() {
             <div>
               <input
                 type="text"
-                placeholder="State / Province"
+                placeholder="State"
                 value={addressForm.stateProvince}
                 onChange={(e) => setAddressForm({ ...addressForm, stateProvince: e.target.value })}
                 className={`shop-input ${formErrors.stateProvince ? "shop-input-error" : ""}`}
@@ -377,7 +377,7 @@ export default function CheckoutPage() {
           <div>
             <input
               type="text"
-              placeholder="ZIP / Postal Code"
+              placeholder="ZIP Code"
               value={addressForm.postalCode}
               onChange={(e) => setAddressForm({ ...addressForm, postalCode: e.target.value })}
               className={`shop-input ${formErrors.postalCode ? "shop-input-error" : ""}`}
