@@ -203,27 +203,27 @@ function PaymentContent() {
             <p>You will be redirected to PayPal to complete your payment securely.</p>
           </section>
         )}
-      </div>
-      
-      {/* Bottom Bar */}
-      <div className="shop-bottom-bar">
-        <button 
-          className="shop-submit-btn"
-          onClick={handlePayNow}
-          disabled={isProcessing}
-        >
-          {isProcessing ? (
-            <span className="processing-text">
-              <svg className="processing-spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" strokeOpacity="0.25"/>
-                <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round"/>
-              </svg>
-              Processing...
-            </span>
-          ) : (
-            `Pay $${total}`
-          )}
-        </button>
+        
+        {/* Pay Button - 放在输入区域下方 */}
+        <section className="payment-section payment-actions">
+          <button 
+            className="shop-submit-btn"
+            onClick={handlePayNow}
+            disabled={isProcessing}
+          >
+            {isProcessing ? (
+              <span className="processing-text">
+                <svg className="processing-spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" strokeOpacity="0.25"/>
+                  <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round"/>
+                </svg>
+                Processing...
+              </span>
+            ) : (
+              `Pay $${total}`
+            )}
+          </button>
+        </section>
       </div>
     </div>
   );

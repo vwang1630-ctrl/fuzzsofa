@@ -5057,27 +5057,58 @@ textarea.form-control {
   gap: 12px;
 }
 
-/* Tab切换组件 - 对齐详情页材质Tab */
+/* Tab切换组件 - 对齐详情页材质Tab（btn-cart/btn-buy效果） */
 .shop-payment-btn {
   flex: 1;
-  padding: 12px 0;
-  background: rgba(18, 18, 18, 0.4);
-  border: none;
-  border-radius: 8px;
-  color: #8A8580;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 300;
-  letter-spacing: 0.04em;
+  position: relative;
+  padding: 14px 0;
+  background: transparent;
+  border: 1.5px solid rgba(245, 240, 235, 0.25);
+  border-radius: 0;
+  color: #F5F0EB;
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-/* Tab选中态 - accent色文字+深色背景填充 */
-.shop-payment-btn.active {
-  background: rgba(232, 180, 184, 0.08);
+/* Tab选中态 - accent色文字+深色背景填充（btn-buy效果） */
+.shop-payment-btn.selected {
+  background: rgba(232, 180, 184, 0.06);
+  border: 1.5px solid rgba(232, 180, 184, 0.35);
   color: #E8B4B8;
-  font-weight: 400;
+  font-weight: 500;
+  box-shadow: 0 0 30px rgba(232, 180, 184, 0.02), inset 0 0 40px rgba(232, 180, 184, 0.015);
+}
+
+.shop-payment-btn.selected::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 0.5px solid rgba(232, 180, 184, 0.06);
+  pointer-events: none;
+  transition: all 0.35s ease;
+}
+
+.shop-payment-btn:active {
+  transform: scale(0.97);
+}
+
+.shop-payment-btn.selected:active {
+  background: rgba(232, 180, 184, 0.12);
+  border-color: rgba(232, 180, 184, 0.55);
+  box-shadow: 0 0 50px rgba(232, 180, 184, 0.06), inset 0 0 60px rgba(232, 180, 184, 0.025);
+}
+
+.shop-payment-btn.selected:active::before {
+  border-color: rgba(232, 180, 184, 0.15);
 }
 
 /* 购物流程费用明细 */
@@ -5337,6 +5368,12 @@ textarea.form-control {
   color: #E8B4B8;
   font-weight: 400;
   letter-spacing: 0.02em;
+}
+
+/* 支付按钮区域 */
+.payment-actions {
+  padding-top: 24px;
+  margin-top: 8px;
 }
 
 .card-fields-row {
