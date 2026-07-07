@@ -5131,6 +5131,7 @@ textarea.form-control {
   align-items: center;
   justify-content: flex-start;
   gap: 12px;
+  white-space: nowrap; /* 防止文字换行 */
 }
 
 /* 支付方式选择按钮 - 选中态：透明底色+脏粉色细线条外框高亮+实心圆点 */
