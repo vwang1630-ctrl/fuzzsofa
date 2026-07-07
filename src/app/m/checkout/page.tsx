@@ -527,12 +527,7 @@ export default function CheckoutPage() {
                 <div className="shop-payment-row">
                     <button
                         className={`shop-payment-btn ${paymentMethod === "credit-card" ? "selected" : ""}`}
-                        onClick={() => setPaymentMethod("credit-card")}
-                        style={{
-                            borderWidth: "1px",
-                            borderStyle: "solid",
-                            borderColor: "#D6DAE4"
-                        }}>
+                        onClick={() => setPaymentMethod("credit-card")}>
                         <span className="payment-radio">
                             {paymentMethod === "credit-card" && <span className="payment-radio-dot"></span>}
                         </span>
