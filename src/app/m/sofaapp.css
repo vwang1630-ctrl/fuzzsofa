@@ -4178,7 +4178,7 @@ textarea.form-control {
 #pageDetail .purchase-panel .panel-colors {
   display: flex;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
@@ -4216,7 +4216,7 @@ textarea.form-control {
 }
 
 #pageDetail .purchase-panel .panel-options {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 #pageDetail .purchase-panel .option-row {
@@ -4260,10 +4260,10 @@ textarea.form-control {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   padding: 12px 0;
-  border-top: 1px solid #1A1A1A;
-  border-bottom: 1px solid #1A1A1A;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
 }
 
 #pageDetail .purchase-panel .qty-label {
@@ -4309,7 +4309,7 @@ textarea.form-control {
 #pageDetail .purchase-panel .panel-price-summary {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 #pageDetail .purchase-panel .summary-label {
