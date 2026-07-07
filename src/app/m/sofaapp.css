@@ -4715,10 +4715,11 @@ textarea.form-control {
 }
 
 .shop-section-title {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 300;
-  color: #8A8580;
-  letter-spacing: 0.04em;
+  color: #6A6560;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   margin-bottom: 16px;
   padding-bottom: 12px;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);

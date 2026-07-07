@@ -164,7 +164,7 @@ export default function CheckoutPage() {
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
           </button>
-          <h1 className="shop-header-title">订单成功</h1>
+          <h1 className="shop-header-title">Order Confirmed</h1>
           <span></span>
         </div>
 
@@ -187,18 +187,18 @@ export default function CheckoutPage() {
             </svg>
           </div>
 
-          <p style={{ color: "#F5F0EB", fontSize: "18px", marginBottom: "12px", fontWeight: 300 }}>订单提交成功</p>
-          <p style={{ color: "#8A8580", fontSize: "14px", marginBottom: "24px", fontWeight: 300 }}>订单号: {orderId}</p>
+          <p style={{ color: "#F5F0EB", fontSize: "18px", marginBottom: "12px", fontWeight: 300, letterSpacing: "0.04em" }}>Order Submitted Successfully</p>
+          <p style={{ color: "#8A8580", fontSize: "14px", marginBottom: "24px", fontWeight: 300, letterSpacing: "0.04em" }}>Order ID: {orderId}</p>
 
           {/* 商品明细 */}
           <div style={{ borderTop: "1px solid #1A1A1A", paddingTop: "24px" }}>
-            <div style={{ fontSize: "12px", color: "#6A6560", marginBottom: "16px", fontWeight: 300 }}>商品明细</div>
+            <div style={{ fontSize: "12px", color: "#6A6560", marginBottom: "16px", fontWeight: 300, letterSpacing: "0.1em" }}>ORDER DETAILS</div>
             {checkoutItems.map((item: CartItem) => (
               <div key={item.product.slug} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0" }}>
-                <span style={{ color: "#F5F0EB", fontSize: "14px", fontWeight: 300 }}>
+                <span style={{ color: "#F5F0EB", fontSize: "14px", fontWeight: 300, letterSpacing: "0.04em" }}>
                   {item.product.name} ×{item.quantity}
                 </span>
-                <span style={{ color: "#F5F0EB", fontSize: "14px", fontWeight: 300 }}>
+                <span style={{ color: "#F5F0EB", fontSize: "14px", fontWeight: 300, letterSpacing: "0.04em" }}>
                   ${(getUnitPrice(item) * item.quantity).toLocaleString()}
                 </span>
               </div>
@@ -208,7 +208,7 @@ export default function CheckoutPage() {
           {/* 操作按钮 */}
           <div style={{ marginTop: "40px", display: "flex", gap: "12px" }}>
             <button className="shop-submit-btn" onClick={() => router.push("/m")}>
-              继续选购
+              Continue Shopping
             </button>
           </div>
         </div>
@@ -225,7 +225,7 @@ export default function CheckoutPage() {
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 className="shop-header-title">结算</h1>
+        <h1 className="shop-header-title">Checkout</h1>
         <button onClick={handleClose} className="shop-header-close">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <line x1="18" y1="6" x2="6" y2="18" />
@@ -236,7 +236,7 @@ export default function CheckoutPage() {
 
       {/* 商品清单模块 */}
       <section className="shop-section">
-        <div className="shop-section-title">商品清单</div>
+        <div className="shop-section-title">Order Items</div>
         {checkoutItems.map((item: CartItem) => {
           const imageSrc = slugToImage[item.product.slug] || "/products/owl/black-leather.png";
           const unitPrice = getUnitPrice(item);
@@ -257,7 +257,7 @@ export default function CheckoutPage() {
                   <span className="shop-item-qty">×{item.quantity}</span>
                 </div>
                 {/* 第二行：颜色·面料 */}
-                <div className="shop-item-spec">{item.materialOption || "标准款"}</div>
+                <div className="shop-item-spec">{item.materialOption || "Standard"}</div>
               </div>
 
               {/* 价格右对齐 */}
@@ -389,14 +389,14 @@ export default function CheckoutPage() {
 
       {/* 支付方式模块 */}
       <section className="shop-section">
-        <div className="shop-section-title">支付方式</div>
+        <div className="shop-section-title">Payment Method</div>
         <div className="shop-payment-row">
-          {/* 信用卡 */}
+          {/* Credit Card */}
           <button
             className={`shop-payment-btn ${paymentMethod === "credit-card" ? "active" : ""}`}
             onClick={() => setPaymentMethod("credit-card")}
           >
-            信用卡
+            Credit Card
           </button>
           {/* PayPal */}
           <button
@@ -405,30 +405,23 @@ export default function CheckoutPage() {
           >
             PayPal
           </button>
-          {/* 支付宝 */}
-          <button
-            className={`shop-payment-btn ${paymentMethod === "alipay" ? "active" : ""}`}
-            onClick={() => setPaymentMethod("alipay")}
-          >
-            支付宝
-          </button>
         </div>
       </section>
 
       {/* 费用明细模块 */}
       <section className="shop-section">
         <div className="shop-fee-row">
-          <span className="shop-fee-label">小计</span>
+          <span className="shop-fee-label">Subtotal</span>
           <span className="shop-fee-value">${selectedTotal.toLocaleString()} USD</span>
         </div>
         <div className="shop-fee-row">
-          <span className="shop-fee-label">运费</span>
+          <span className="shop-fee-label">Shipping</span>
           <span className={`shop-fee-value ${shippingFee === 0 ? "shop-fee-free" : ""}`}>
-            {shippingFee === 0 ? "免费" : `$${shippingFee} USD`}
+            {shippingFee === 0 ? "Free" : `$${shippingFee} USD`}
           </span>
         </div>
         <div className="shop-fee-row">
-          <span className="shop-fee-total-label">总计</span>
+          <span className="shop-fee-total-label">Total</span>
           <span className="shop-fee-total-value">${totalWithShipping.toLocaleString()} USD</span>
         </div>
       </section>
@@ -436,7 +429,7 @@ export default function CheckoutPage() {
       {/* 底部确认下单按钮 */}
       <div className="shop-bottom-bar">
         <button className="shop-submit-btn" onClick={handleSubmit}>
-          确认下单
+          Place Order
         </button>
       </div>
     </div>
