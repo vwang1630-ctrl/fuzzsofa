@@ -1,5 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
 
+/* ===== 全局按钮文字样式强制统一 ===== */
+/* 所有panel-confirm-btn和shop-submit-btn按钮文字必须统一 */
+.panel-confirm-btn,
+.shop-submit-btn,
+.panel-confirm-btn span,
+.shop-submit-btn span,
+.panel-confirm-btn *,
+.shop-submit-btn * {
+  color: #E8B4B8 !important;
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.15em !important;
+}
+
 /* ===== Tailwind Override for /m/ route ===== */
 .app img {
   max-width: none;
