@@ -7,17 +7,26 @@ import type { CartItem } from "@/lib/cart-context";
 import "@/app/m/sofaapp.css";
 
 interface AddressForm {
-  recipientName: string;
-  detailedAddress: string;
+  country: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  addressLine1: string;
+  addressLine2: string;
   city: string;
-  zipCode: string;
+  stateProvince: string;
+  postalCode: string;
 }
 
 interface FormErrors {
-  recipientName?: string;
-  detailedAddress?: string;
+  country?: string;
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  addressLine1?: string;
   city?: string;
-  zipCode?: string;
+  stateProvince?: string;
+  postalCode?: string;
 }
 
 export default function CheckoutPage() {
@@ -25,10 +34,15 @@ export default function CheckoutPage() {
   const { clearCart, region } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<string>("credit-card");
   const [addressForm, setAddressForm] = useState<AddressForm>({
-    recipientName: "",
-    detailedAddress: "",
+    country: "US",
+    fullName: "",
+    email: "",
+    phone: "",
+    addressLine1: "",
+    addressLine2: "",
     city: "",
-    zipCode: "",
+    stateProvince: "",
+    postalCode: "",
   });
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -66,13 +80,52 @@ export default function CheckoutPage() {
   const shippingFee = selectedTotal >= 10000 ? 0 : 300;
   const totalWithShipping = selectedTotal + shippingFee;
 
+  // 国家列表
+  const countries = [
+    { code: "US", name: "United States" },
+    { code: "CA", name: "Canada" },
+    { code: "GB", name: "United Kingdom" },
+    { code: "AU", name: "Australia" },
+    { code: "DE", name: "Germany" },
+    { code: "FR", name: "France" },
+    { code: "JP", name: "Japan" },
+    { code: "CN", name: "China" },
+    { code: "KR", name: "South Korea" },
+    { code: "SG", name: "Singapore" },
+    { code: "NZ", name: "New Zealand" },
+    { code: "IT", name: "Italy" },
+    { code: "ES", name: "Spain" },
+    { code: "NL", name: "Netherlands" },
+    { code: "SE", name: "Sweden" },
+    { code: "OTHER", name: "Other" },
+  ];
+
+  // 需要州/省字段的国家
+  const countriesWithState = ["US", "CA", "AU", "JP", "CN", "KR", "IN", "BR", "MX"];
+
+  // 判断是否需要显示州/省字段
+  const needsStateField = countriesWithState.includes(addressForm.country);
+
   // 表单验证
   const validateForm = (): boolean => {
     const errors: FormErrors = {};
-    if (!addressForm.recipientName.trim()) errors.recipientName = "请填写收件人姓名";
-    if (!addressForm.detailedAddress.trim()) errors.detailedAddress = "请填写详细地址";
-    if (!addressForm.city.trim()) errors.city = "请填写城市";
-    if (!addressForm.zipCode.trim()) errors.zipCode = "请填写邮编";
+    if (!addressForm.fullName.trim()) errors.fullName = "Please enter your full name";
+    if (!addressForm.email.trim()) {
+      errors.email = "Please enter your email";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(addressForm.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+    if (!addressForm.phone.trim()) {
+      errors.phone = "Please enter your phone number";
+    } else if (!/^[\d\s\+\-\(\)]{7,}$/.test(addressForm.phone)) {
+      errors.phone = "Please enter a valid phone number";
+    }
+    if (!addressForm.addressLine1.trim()) errors.addressLine1 = "Please enter your address";
+    if (!addressForm.city.trim()) errors.city = "Please enter your city";
+    if (needsStateField && !addressForm.stateProvince.trim()) {
+      errors.stateProvince = "Please enter your state/province";
+    }
+    if (!addressForm.postalCode.trim()) errors.postalCode = "Please enter your postal code";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -218,37 +271,87 @@ export default function CheckoutPage() {
 
       {/* 配送信息模块 */}
       <section className="shop-section">
-        <div className="shop-section-title">配送信息</div>
+        <div className="shop-section-title">Shipping Information</div>
         <div className="shop-input-row">
-          {/* 收件人姓名 */}
+          {/* 国家/地区选择 */}
           <div>
-            <input
-              type="text"
-              placeholder="收件人姓名"
-              value={addressForm.recipientName}
-              onChange={(e) => setAddressForm({ ...addressForm, recipientName: e.target.value })}
-              className={`shop-input ${formErrors.recipientName ? "shop-input-error" : ""}`}
-            />
-            {formErrors.recipientName && <div className="shop-input-error-text">{formErrors.recipientName}</div>}
+            <select
+              value={addressForm.country}
+              onChange={(e) => setAddressForm({ ...addressForm, country: e.target.value })}
+              className="shop-input shop-select"
+            >
+              {countries.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
           </div>
 
-          {/* 详细地址 */}
+          {/* 全名 */}
           <div>
             <input
               type="text"
-              placeholder="详细地址"
-              value={addressForm.detailedAddress}
-              onChange={(e) => setAddressForm({ ...addressForm, detailedAddress: e.target.value })}
-              className={`shop-input ${formErrors.detailedAddress ? "shop-input-error" : ""}`}
+              placeholder="Full Name"
+              value={addressForm.fullName}
+              onChange={(e) => setAddressForm({ ...addressForm, fullName: e.target.value })}
+              className={`shop-input ${formErrors.fullName ? "shop-input-error" : ""}`}
             />
-            {formErrors.detailedAddress && <div className="shop-input-error-text">{formErrors.detailedAddress}</div>}
+            {formErrors.fullName && <div className="shop-input-error-text">{formErrors.fullName}</div>}
+          </div>
+
+          {/* 邮箱 */}
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              value={addressForm.email}
+              onChange={(e) => setAddressForm({ ...addressForm, email: e.target.value })}
+              className={`shop-input ${formErrors.email ? "shop-input-error" : ""}`}
+            />
+            {formErrors.email && <div className="shop-input-error-text">{formErrors.email}</div>}
+          </div>
+
+          {/* 电话 */}
+          <div>
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              value={addressForm.phone}
+              onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
+              className={`shop-input ${formErrors.phone ? "shop-input-error" : ""}`}
+            />
+            {formErrors.phone && <div className="shop-input-error-text">{formErrors.phone}</div>}
+          </div>
+
+          {/* 地址第1行 */}
+          <div>
+            <input
+              type="text"
+              placeholder="Address Line 1 (Street Address)"
+              value={addressForm.addressLine1}
+              onChange={(e) => setAddressForm({ ...addressForm, addressLine1: e.target.value })}
+              className={`shop-input ${formErrors.addressLine1 ? "shop-input-error" : ""}`}
+            />
+            {formErrors.addressLine1 && <div className="shop-input-error-text">{formErrors.addressLine1}</div>}
+          </div>
+
+          {/* 地址第2行（选填） */}
+          <div>
+            <input
+              type="text"
+              placeholder="Address Line 2 (Apt, Suite, Unit - Optional)"
+              value={addressForm.addressLine2}
+              onChange={(e) => setAddressForm({ ...addressForm, addressLine2: e.target.value })}
+              className="shop-input"
+            />
           </div>
 
           {/* 城市 */}
           <div>
             <input
               type="text"
-              placeholder="城市"
+              placeholder="City"
               value={addressForm.city}
               onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
               className={`shop-input ${formErrors.city ? "shop-input-error" : ""}`}
@@ -256,16 +359,30 @@ export default function CheckoutPage() {
             {formErrors.city && <div className="shop-input-error-text">{formErrors.city}</div>}
           </div>
 
+          {/* 州/省（根据国家动态显示） */}
+          {needsStateField && (
+            <div>
+              <input
+                type="text"
+                placeholder="State / Province"
+                value={addressForm.stateProvince}
+                onChange={(e) => setAddressForm({ ...addressForm, stateProvince: e.target.value })}
+                className={`shop-input ${formErrors.stateProvince ? "shop-input-error" : ""}`}
+              />
+              {formErrors.stateProvince && <div className="shop-input-error-text">{formErrors.stateProvince}</div>}
+            </div>
+          )}
+
           {/* 邮编 */}
           <div>
             <input
               type="text"
-              placeholder="邮编"
-              value={addressForm.zipCode}
-              onChange={(e) => setAddressForm({ ...addressForm, zipCode: e.target.value })}
-              className={`shop-input ${formErrors.zipCode ? "shop-input-error" : ""}`}
+              placeholder="ZIP / Postal Code"
+              value={addressForm.postalCode}
+              onChange={(e) => setAddressForm({ ...addressForm, postalCode: e.target.value })}
+              className={`shop-input ${formErrors.postalCode ? "shop-input-error" : ""}`}
             />
-            {formErrors.zipCode && <div className="shop-input-error-text">{formErrors.zipCode}</div>}
+            {formErrors.postalCode && <div className="shop-input-error-text">{formErrors.postalCode}</div>}
           </div>
         </div>
       </section>
