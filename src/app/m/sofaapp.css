@@ -5052,11 +5052,12 @@ textarea.form-control {
 
 /* 支付方式选择指示器 */
 /* 单选圆点 - 未选中态：空心细圆环，脏粉色 */
+/* 圆点选择指示器 - 未选中态：空心灰色圆环(#8A8580与外框文字一致) */
 .payment-radio {
   display: inline-block;
   width: 14px;
   height: 14px;
-  border: 1px solid rgba(232, 180, 184, 0.25);
+  border: 1px solid #8A8580;
   border-radius: 50%;
   margin-right: 10px;
   position: relative;
@@ -5094,8 +5095,9 @@ textarea.form-control {
 }
 
 /* 选中态：圆环边框高亮，实心粉色圆点 */
+/* 选中态：圆点外框脏粉色高亮 */
 .shop-payment-btn.selected .payment-radio {
-  border-color: rgba(232, 180, 184, 0.5);
+  border-color: #E8B4B8;
 }
 
 /* 选中态：图标+文字脏粉色高亮 */
@@ -5108,12 +5110,13 @@ textarea.form-control {
 }
 
 /* 支付方式选择按钮 - 未选中态：透明底色+脏粉色细线条外框 */
+/* 支付方式选择按钮 - 未选中态：透明底色+灰色外框(#8A8580与文字一致)+空心圆环 */
 .shop-payment-btn {
   flex: 1;
   position: relative;
   padding: 14px 0;
   background: transparent;
-  border: 1.5px solid rgba(232, 180, 184, 0.25);
+  border: 1.5px solid #8A8580;
   border-radius: 0;
   color: #8A8580;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
