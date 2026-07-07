@@ -5249,20 +5249,14 @@ textarea.form-control {
   box-shadow: 0 0 30px rgba(232, 180, 184, 0.02), inset 0 0 40px rgba(232, 180, 184, 0.015);
 }
 
-/* 按钮内文字样式强制统一 */
-.shop-submit-btn,
+/* 按钮内span文字继承样式 */
 .shop-submit-btn span,
-#paymentPage .payment-actions .panel-confirm-btn,
 #paymentPage .payment-actions .panel-confirm-btn span,
-#checkoutPage .shop-bottom-bar .panel-confirm-btn,
 #checkoutPage .shop-bottom-bar .panel-confirm-btn span,
-#orderSuccessPage .order-success-actions .panel-confirm-btn,
 #orderSuccessPage .order-success-actions .panel-confirm-btn span {
-  color: #E8B4B8;
-  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.15em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .shop-submit-btn::before,
@@ -5495,7 +5489,7 @@ textarea.form-control {
 }
 
 .processing-text {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -5503,6 +5497,7 @@ textarea.form-control {
 
 .processing-spinner {
   animation: spin 1s linear infinite;
+  color: #E8B4B8;
 }
 
 @keyframes spin {
