@@ -5055,11 +5055,12 @@ textarea.form-control {
 /* 圆点选择指示器 - 未选中态：空心灰色圆环(#8A8580与外框文字一致) */
 .payment-radio {
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 1px solid #8A8580;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #555555;
   border-radius: 50%;
-  margin-right: 10px;
+  background: transparent;
+  margin-right: 0;
   position: relative;
   vertical-align: middle;
   flex-shrink: 0;
@@ -5114,11 +5115,11 @@ textarea.form-control {
   flex: 1;
   position: relative;
   padding: 12px 16px;
-  background: transparent;
+  background: #111111;
   border: 1px solid #555555;
   border-radius: 4px;
   box-sizing: border-box;
-  color: #8A8580;
+  color: #999999;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   font-size: 14px;
   font-weight: 300;
@@ -5128,13 +5129,13 @@ textarea.form-control {
   min-height: 54px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
 }
 
 /* 支付方式选择按钮 - 选中态：透明底色+脏粉色细线条外框高亮+实心圆点 */
 .shop-payment-btn.selected {
-  background: transparent;
+  background: #111111;
   border: 1px solid rgba(232, 180, 184, 0.45);
   color: #E8B4B8;
   font-weight: 500;
