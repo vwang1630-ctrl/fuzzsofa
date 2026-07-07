@@ -5051,16 +5051,18 @@ textarea.form-control {
 }
 
 /* 支付方式选择指示器 */
+/* 单选圆点 - 未选中态：空心细圆环，脏粉色 */
 .payment-radio {
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 1.5px solid rgba(245, 240, 235, 0.3);
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(232, 180, 184, 0.25);
   border-radius: 50%;
   margin-right: 10px;
   position: relative;
   vertical-align: middle;
   flex-shrink: 0;
+  transition: all 0.35s;
 }
 
 .payment-radio-dot {
@@ -5074,36 +5076,63 @@ textarea.form-control {
   border-radius: 50%;
 }
 
-.shop-payment-btn.selected .payment-radio {
-  border-color: #E8B4B8;
+.payment-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: rgba(245, 240, 235, 0.6); /* 未选中态浅灰色 */
+  transition: color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Tab切换组件 - 对齐详情页材质Tab（btn-cart/btn-buy效果） */
+.payment-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: rgba(245, 240, 235, 0.6); /* 未选中态浅灰色 */
+  transition: color 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 选中态：圆环边框高亮，实心粉色圆点 */
+.shop-payment-btn.selected .payment-radio {
+  border-color: rgba(232, 180, 184, 0.5);
+}
+
+/* 选中态：图标+文字脏粉色高亮 */
+.shop-payment-btn.selected .payment-icon {
+  color: #E8B4B8;
+}
+
+.shop-payment-btn.selected .payment-text {
+  color: #E8B4B8;
+}
+
+/* 支付方式选择按钮 - 未选中态：透明底色+脏粉色细线条外框 */
 .shop-payment-btn {
   flex: 1;
   position: relative;
   padding: 14px 0;
   background: transparent;
-  border: 2px solid rgba(245, 240, 235, 0.4);
+  border: 1.5px solid rgba(232, 180, 184, 0.25);
   border-radius: 0;
-  color: #F5F0EB;
+  color: #8A8580;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 0.15em;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   min-height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-/* Tab选中态 - accent色文字+深色背景填充（btn-buy效果） */
+/* 支付方式选择按钮 - 选中态：透明底色+脏粉色细线条外框高亮+实心圆点 */
 .shop-payment-btn.selected {
-  background: rgba(232, 180, 184, 0.06);
-  border: 1.5px solid rgba(232, 180, 184, 0.35);
+  background: transparent;
+  border: 1.5px solid rgba(232, 180, 184, 0.45);
   color: #E8B4B8;
   font-weight: 500;
   box-shadow: 0 0 30px rgba(232, 180, 184, 0.02), inset 0 0 40px rgba(232, 180, 184, 0.015);
