@@ -5249,6 +5249,22 @@ textarea.form-control {
   box-shadow: 0 0 30px rgba(232, 180, 184, 0.02), inset 0 0 40px rgba(232, 180, 184, 0.015);
 }
 
+/* 按钮内文字样式强制统一 */
+.shop-submit-btn,
+.shop-submit-btn span,
+#paymentPage .payment-actions .panel-confirm-btn,
+#paymentPage .payment-actions .panel-confirm-btn span,
+#checkoutPage .shop-bottom-bar .panel-confirm-btn,
+#checkoutPage .shop-bottom-bar .panel-confirm-btn span,
+#orderSuccessPage .order-success-actions .panel-confirm-btn,
+#orderSuccessPage .order-success-actions .panel-confirm-btn span {
+  color: #E8B4B8;
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+}
+
 .shop-submit-btn::before,
 #paymentPage .payment-actions .panel-confirm-btn::before,
 #checkoutPage .shop-bottom-bar .panel-confirm-btn::before,
