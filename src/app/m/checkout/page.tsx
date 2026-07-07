@@ -273,30 +273,28 @@ export default function CheckoutPage() {
       {/* 支付方式模块 */}
       <section className="shop-section">
         <div className="shop-section-title">支付方式</div>
-        <div className="shop-payment-group">
-          <div className="shop-payment-row">
-            {/* 信用卡 */}
-            <button
-              className={`shop-payment-btn ${paymentMethod === "credit-card" ? "active" : ""}`}
-              onClick={() => setPaymentMethod("credit-card")}
-            >
-              信用卡
-            </button>
-            {/* PayPal */}
-            <button
-              className={`shop-payment-btn ${paymentMethod === "paypal" ? "active" : ""}`}
-              onClick={() => setPaymentMethod("paypal")}
-            >
-              PayPal
-            </button>
-            {/* 支付宝 */}
-            <button
-              className={`shop-payment-btn ${paymentMethod === "alipay" ? "active" : ""}`}
-              onClick={() => setPaymentMethod("alipay")}
-            >
-              支付宝
-            </button>
-          </div>
+        <div className="shop-payment-row">
+          {/* 信用卡 */}
+          <button
+            className={`shop-payment-btn ${paymentMethod === "credit-card" ? "active" : ""}`}
+            onClick={() => setPaymentMethod("credit-card")}
+          >
+            信用卡
+          </button>
+          {/* PayPal */}
+          <button
+            className={`shop-payment-btn ${paymentMethod === "paypal" ? "active" : ""}`}
+            onClick={() => setPaymentMethod("paypal")}
+          >
+            PayPal
+          </button>
+          {/* 支付宝 */}
+          <button
+            className={`shop-payment-btn ${paymentMethod === "alipay" ? "active" : ""}`}
+            onClick={() => setPaymentMethod("alipay")}
+          >
+            支付宝
+          </button>
         </div>
       </section>
 
