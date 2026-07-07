@@ -133,13 +133,12 @@ export default function CheckoutPage() {
     if (!validateForm()) return;
     // 生成订单号
     const newOrderId = `ORD-${Date.now().toString(36).toUpperCase()}`;
-    // 清空购物车中已结算的商品
-    clearCart();
-    // 清空 sessionStorage
-    sessionStorage.removeItem("checkoutItems");
-    // 跳转到订单确认页面，传递订单信息
-    const itemsJson = encodeURIComponent(JSON.stringify(checkoutItems));
-    router.push(`/m/order-success?orderId=${newOrderId}&items=${itemsJson}&total=${totalWithShipping}`);
+    // 将订单信息存储到 sessionStorage（支付页面会读取）
+    sessionStorage.setItem("paymentOrderId", newOrderId);
+    sessionStorage.setItem("paymentItems", JSON.stringify(checkoutItems));
+    sessionStorage.setItem("paymentTotal", totalWithShipping.toString());
+    // 跳转到支付页面
+    router.push("/m/payment");
   };
 
   // 返回购物车
