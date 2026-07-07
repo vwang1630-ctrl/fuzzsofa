@@ -5178,7 +5178,6 @@ textarea.form-control {
 }
 
 .order-details-section {
-  border-top: 1px solid #1A1A1A;
   padding-top: 24px;
   margin-bottom: 24px;
 }
@@ -5255,7 +5254,6 @@ textarea.form-control {
 }
 
 .payment-summary {
-  background: rgba(20, 20, 20, 0.92);
   padding: 16px;
 }
 
@@ -5324,7 +5322,6 @@ textarea.form-control {
 
 .paypal-notice {
   padding: 24px 16px;
-  background: rgba(20, 20, 20, 0.92);
 }
 
 .paypal-notice p {
