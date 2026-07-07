@@ -5178,32 +5178,48 @@ textarea.form-control {
   min-height: 54px;
   background: rgba(232, 180, 184, 0.06);
   border: 1.5px solid rgba(232, 180, 184, 0.35);
-  border-radius: 8px;
+  border-radius: 0;
   color: #E8B4B8;
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
+  box-shadow: 0 0 30px rgba(232, 180, 184, 0.02), inset 0 0 40px rgba(232, 180, 184, 0.015);
 }
 
 .shop-submit-btn::before {
   content: '';
   position: absolute;
   inset: 4px;
-  border: 0.5px solid rgba(232, 180, 184, 0.12);
-  border-radius: 6px;
+  border: 0.5px solid rgba(232, 180, 184, 0.06);
+  border-radius: 0;
   pointer-events: none;
+  transition: all 0.35s ease;
+}
+
+.shop-submit-btn:hover {
+  background: rgba(232, 180, 184, 0.12);
+  border-color: rgba(232, 180, 184, 0.55);
+  box-shadow: 0 0 50px rgba(232, 180, 184, 0.06), inset 0 0 60px rgba(232, 180, 184, 0.025);
+}
+
+.shop-submit-btn:hover::before {
+  border-color: rgba(232, 180, 184, 0.15);
 }
 
 .shop-submit-btn:active {
   transform: scale(0.97);
-  background: rgba(232, 180, 184, 0.2);
-  border-color: rgba(232, 180, 184, 0.7);
+  background: rgba(232, 180, 184, 0.18);
+  border-color: rgba(232, 180, 184, 0.65);
   box-shadow: 0 0 60px rgba(232, 180, 184, 0.15), inset 0 0 80px rgba(232, 180, 184, 0.05);
+}
+
+.shop-submit-btn:active::before {
+  border-color: rgba(232, 180, 184, 0.2);
 }
 
 /* 订单确认页面样式 */

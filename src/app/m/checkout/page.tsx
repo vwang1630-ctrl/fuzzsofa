@@ -499,13 +499,13 @@ export default function CheckoutPage() {
         <div className="shop-section-title">Payment Method</div>
         <div className="shop-payment-row">
           <button
-            className={`shop-payment-btn ${paymentMethod === "credit-card" ? "active" : ""}`}
+            className={`shop-payment-btn ${paymentMethod === "credit-card" ? "selected" : ""}`}
             onClick={() => setPaymentMethod("credit-card")}
           >
             Credit Card
           </button>
           <button
-            className={`shop-payment-btn ${paymentMethod === "paypal" ? "active" : ""}`}
+            className={`shop-payment-btn ${paymentMethod === "paypal" ? "selected" : ""}`}
             onClick={() => setPaymentMethod("paypal")}
           >
             PayPal
