@@ -4642,8 +4642,12 @@ textarea.form-control {
 /* 购物流程页面容器 */
 .shop-page {
   min-height: 100vh;
+  min-height: 100dvh; /* 移动端动态视口高度 */
   background-color: #111111;
-  padding-bottom: 120px;
+  padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px));
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
 }
 
 /* 购物流程顶部导航栏 */
@@ -5247,7 +5251,7 @@ textarea.form-control {
 
 /* ========== Payment 页面样式 ========== */
 .payment-content {
-  padding-bottom: 80px;
+  padding-bottom: 0; /* 由shop-page统一处理底部安全区 */
 }
 
 .payment-section {
