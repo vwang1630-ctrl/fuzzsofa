@@ -227,7 +227,7 @@ function OrdersTab() {
                     style={{
                         padding: "6px 12px",
                         background: filter === tab.key ? "rgba(232, 180, 184, 0.06)" : "transparent",
-                        color: filter === tab.key ? "#E8B4B8" : "#8A8580",
+                        color: filter === tab.key ? "#E8B4B8" : "#F5F0EB",
                         border: `1px solid ${filter === tab.key ? "rgba(232, 180, 184, 0.35)" : "#333333"}`,
                         borderRadius: 0,
                         fontSize: "11px",
