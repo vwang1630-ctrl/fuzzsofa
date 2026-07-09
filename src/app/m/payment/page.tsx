@@ -4,10 +4,12 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { saveOrder, getOrders, type Order } from '@/lib/order-storage';
+import { useCart } from '@/lib/cart-context';
 import '@/app/m/sofaapp.css';
 
 function PaymentContent() {
   const router = useRouter();
+  const { clearCart } = useCart();
   
   const [orderId, setOrderId] = useState('');
   const [items, setItems] = useState<{name: string; color: string; quantity: number; price: number}[]>([]);
@@ -105,6 +107,9 @@ function PaymentContent() {
     console.log('Saving order:', order);
     saveOrder(order);
     console.log('Order saved. Current orders:', getOrders());
+    
+    // Clear cart after successful payment
+    clearCart();
     
     // Clear payment session data
     sessionStorage.removeItem('paymentOrderId');
