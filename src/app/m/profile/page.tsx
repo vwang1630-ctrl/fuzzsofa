@@ -104,7 +104,6 @@ export default function ProfilePage() {
                     <p className="profile-user-name" style={{ fontSize: "18px", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", color: "#F5F0EB", marginBottom: isLoggedIn ? "0" : "8px" }}>{userName}</p>
                     {!isLoggedIn && (
                         <>
-                            <p className="profile-user-email" style={{ fontSize: "12px", color: "#8A8580", letterSpacing: "0.05em", marginBottom: "20px" }}>Sign in to sync your data across devices</p>
                             <button className="profile-signin-btn" style={{ padding: "12px 32px", background: "transparent", border: "1px solid #E8B4B8", color: "#E8B4B8", fontSize: "12px", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.3s ease" }}>
                                 Sign In / Register
                             </button>
@@ -114,9 +113,6 @@ export default function ProfilePage() {
                 {}
                 {!isLoggedIn && (
                     <div style={{ padding: "0 20px 20px", textAlign: "center" }}>
-                        <p style={{ fontSize: "11px", color: "#6A6560", letterSpacing: "0.05em", lineHeight: 1.6 }}>
-                            Create an account to track orders, save addresses, and access exclusive features.
-                        </p>
                     </div>
                 )}
                 {}
