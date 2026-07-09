@@ -493,7 +493,7 @@ export default function MobileProductPage(
                 </div>
             </div>
             {}
-            <button
+            {!showAR && <button
                 className={`btn-ai-float${showPurchasePanel ? " panel-open" : ""}`}
                 onClick={() => setShowAIOverlay(true)}>
                 <svg className="icon" viewBox="0 0 24 24">
@@ -503,7 +503,7 @@ export default function MobileProductPage(
                     <line x1="12" y1="22.08" x2="12" y2="12" />
                 </svg>
                 <span className="ai-label">AI 预览</span>
-            </button>
+            </button>}
             {}
             <div className="bottom-cta">
                 <div className="row-top">
