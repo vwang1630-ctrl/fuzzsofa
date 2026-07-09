@@ -6786,3 +6786,337 @@ textarea.form-control {
   background: rgba(239, 68, 68, 0.1);
   border-color: #ef4444;
 }
+
+/* ============================================
+   CART PAGE STYLES (统一视觉规范)
+   ============================================ */
+
+#cartPage {
+  background: #0A0A0A;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+#cartPage .shop-page {
+  background: #0A0A0A;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+#cartPage .shop-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #1A1A1A;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+}
+
+#cartPage .shop-header-back {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #F5F0EB;
+  cursor: pointer;
+}
+
+#cartPage .shop-header-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #F5F0EB;
+}
+
+#cartPage .cart-item-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: #8A8580;
+  letter-spacing: 0.05em;
+}
+
+#cartPage .shop-section {
+  padding: 16px;
+  margin-top: 60px;
+}
+
+#cartPage .cart-select-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #1A1A1A;
+  margin-bottom: 16px;
+}
+
+#cartPage .cart-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #555555;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #111111;
+}
+
+#cartPage .cart-checkbox.checked {
+  background: #E8B4B8;
+  border-color: #E8B4B8;
+}
+
+#cartPage .cart-select-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #8A8580;
+  margin-left: 12px;
+  letter-spacing: 0.05em;
+}
+
+#cartPage .shop-item-card {
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #1A1A1A;
+  gap: 12px;
+}
+
+#cartPage .shop-item-thumb {
+  width: 80px;
+  height: 80px;
+  border-radius: 0;
+  overflow: hidden;
+  background: #111111;
+  flex-shrink: 0;
+}
+
+#cartPage .shop-item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#cartPage .shop-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+#cartPage .shop-item-row1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+#cartPage .shop-item-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #F5F0EB;
+  letter-spacing: 0.02em;
+}
+
+#cartPage .shop-item-qty {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: #8A8580;
+}
+
+#cartPage .shop-item-spec {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: #6A6560;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+#cartPage .cart-qty-control {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid #333333;
+  border-radius: 0;
+  width: fit-content;
+}
+
+#cartPage .cart-qty-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #8A8580;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#cartPage .cart-qty-btn:hover {
+  color: #E8B4B8;
+}
+
+#cartPage .cart-qty-num {
+  width: 32px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #F5F0EB;
+  border-left: 1px solid #333333;
+  border-right: 1px solid #333333;
+  line-height: 28px;
+}
+
+#cartPage .shop-item-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+#cartPage .shop-item-price-value {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #E8B4B8;
+  letter-spacing: 0.02em;
+}
+
+#cartPage .cart-delete-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #6A6560;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+#cartPage .cart-delete-btn:hover {
+  color: #E8B4B8;
+}
+
+#cartPage .cart-empty {
+  text-align: center;
+  padding: 80px 0;
+}
+
+#cartPage .cart-empty-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #8A8580;
+  margin: 16px 0;
+  letter-spacing: 0.05em;
+}
+
+#cartPage .cart-empty-link {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #E8B4B8;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+#cartPage .shop-fee-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #1A1A1A;
+}
+
+#cartPage .shop-fee-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #8A8580;
+  letter-spacing: 0.05em;
+}
+
+#cartPage .shop-fee-value {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #F5F0EB;
+  letter-spacing: 0.02em;
+}
+
+#cartPage .shop-fee-free {
+  color: #E8B4B8;
+}
+
+#cartPage .shop-fee-total-label {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #F5F0EB;
+  letter-spacing: 0.05em;
+}
+
+#cartPage .shop-fee-total-value {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #E8B4B8;
+  letter-spacing: 0.02em;
+}
+
+#cartPage .shop-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid #1A1A1A;
+}
+
+#cartPage .panel-confirm-btn {
+  width: 100%;
+  height: 54px;
+  background: rgba(232, 180, 184, 0.06);
+  border: 1.5px solid rgba(232, 180, 184, 0.35);
+  border-radius: 0;
+  color: #E8B4B8;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#cartPage .panel-confirm-btn:hover {
+  background: rgba(232, 180, 184, 0.12);
+  border-color: rgba(232, 180, 184, 0.55);
+}
+
+#cartPage .panel-confirm-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

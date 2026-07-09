@@ -48,8 +48,12 @@ export default function CartPage() {
   // 获取商品key
   const getItemKey = (item: typeof items[0]) => `${item.product.slug}-${item.materialOption || "default"}`;
 
+  // 计算运费
+  const shipping = selectedTotal >= 10000 ? 0 : 300;
+  const grandTotal = selectedTotal + shipping;
+
   return (
-    <div className="shop-page">
+    <div id="cartPage" className="shop-page">
       {/* 顶部导航栏 */}
       <div className="shop-header">
         <button onClick={handleBack} className="shop-header-back">
@@ -57,8 +61,8 @@ export default function CartPage() {
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 className="shop-header-title">购物车</h1>
-        <span style={{ color: "#8A8580", fontSize: "14px", fontWeight: 300 }}>{totalItems}件</span>
+        <h1 className="shop-header-title">Shopping Cart</h1>
+        <span className="cart-item-count">{totalItems} items</span>
       </div>
 
       {/* 商品列表 */}
@@ -68,7 +72,6 @@ export default function CartPage() {
           <div
             className={`cart-checkbox ${allSelected ? "checked" : ""}`}
             onClick={() => toggleSelectAll(!allSelected)}
-            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
           >
             {allSelected && (
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3">
@@ -76,15 +79,20 @@ export default function CartPage() {
               </svg>
             )}
           </div>
-          <span style={{ marginLeft: "12px", color: "#8A8580", fontSize: "14px", fontWeight: 300 }}>全选</span>
+          <span className="cart-select-label">Select All</span>
         </div>
 
         {/* 商品卡片列表 */}
         {items.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "60px 0", color: "#8A8580" }}>
-            <p style={{ fontSize: "14px", fontWeight: 300 }}>购物车是空的</p>
-            <Link href="/m" style={{ color: "#E8B4B8", fontSize: "14px", marginTop: "16px", fontWeight: 300 }}>
-              去选购
+          <div className="cart-empty">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6A6560" strokeWidth="1">
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="20" cy="21" r="1" />
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+            </svg>
+            <p className="cart-empty-text">Your cart is empty</p>
+            <Link href="/m" className="cart-empty-link">
+              Continue Shopping
             </Link>
           </div>
         ) : (
@@ -99,7 +107,6 @@ export default function CartPage() {
                 <div
                   className={`cart-checkbox ${item.selected ? "checked" : ""}`}
                   onClick={() => toggleSelect(item.product.slug, item.materialOption)}
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", alignSelf: "center" }}
                 >
                   {item.selected && (
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3">
@@ -119,10 +126,10 @@ export default function CartPage() {
                     <span className="shop-item-name">{item.product.name}</span>
                     <span className="shop-item-qty">×{item.quantity}</span>
                   </div>
-                  <div className="shop-item-spec">{item.materialOption || "标准款"}</div>
+                  <div className="shop-item-spec">{item.materialOption || "Standard"}</div>
 
                   {/* 数量控制 */}
-                  <div className="cart-qty-control" style={{ marginTop: "8px" }}>
+                  <div className="cart-qty-control">
                     <button
                       className="cart-qty-btn"
                       onClick={() => updateQuantity(item.product.slug, item.materialOption, Math.max(1, item.quantity - 1))}
@@ -140,14 +147,14 @@ export default function CartPage() {
                 </div>
 
                 {/* 价格 */}
-                <div className="shop-item-price" style={{ alignSelf: "center" }}>
+                <div className="shop-item-price">
                   <span className="shop-item-price-value">${(unitPrice * item.quantity).toLocaleString()}</span>
                 </div>
 
                 {/* 删除按钮 */}
                 <button
+                  className="cart-delete-btn"
                   onClick={() => removeItem(item.product.slug, item.materialOption)}
-                  style={{ alignSelf: "center", color: "#6A6560", background: "none", border: "none", marginLeft: "8px" }}
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
@@ -163,19 +170,19 @@ export default function CartPage() {
       {items.length > 0 && (
         <section className="shop-section">
           <div className="shop-fee-row">
-            <span className="shop-fee-label">小计</span>
+            <span className="shop-fee-label">Subtotal</span>
             <span className="shop-fee-value">${selectedTotal.toLocaleString()}</span>
           </div>
           <div className="shop-fee-row">
-            <span className="shop-fee-label">运费</span>
+            <span className="shop-fee-label">Shipping</span>
             <span className={`shop-fee-value ${selectedTotal >= 10000 ? "shop-fee-free" : ""}`}>
-              {selectedTotal >= 10000 ? "免费" : "$300"}
+              {selectedTotal >= 10000 ? "Free" : "$300"}
             </span>
           </div>
           <div className="shop-fee-row">
-            <span className="shop-fee-total-label">总计</span>
+            <span className="shop-fee-total-label">Total</span>
             <span className="shop-fee-total-value">
-              ${(selectedTotal + (selectedTotal >= 10000 ? 0 : 300)).toLocaleString()} USD
+              ${grandTotal.toLocaleString()} USD
             </span>
           </div>
         </section>
@@ -183,8 +190,8 @@ export default function CartPage() {
 
       {/* 底部结算按钮 */}
       <div className="shop-bottom-bar">
-        <button className="shop-submit-btn" onClick={handleCheckout} disabled={selectedItems.length === 0}>
-          确认下单
+        <button className="panel-confirm-btn" onClick={handleCheckout} disabled={selectedItems.length === 0}>
+          Proceed to Checkout
         </button>
       </div>
     </div>
