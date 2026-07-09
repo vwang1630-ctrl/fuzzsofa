@@ -61,20 +61,49 @@ export default function ProfilePage() {
     return (
         <div className="shop-page profile-page">
             {}
-            <div className="shop-header">
-                <button onClick={handleBack} className="shop-header-back">
+            {/* Header */}
+            <div
+                style={{
+                    position: "sticky",
+                    top: 0,
+                    background: "#0A0A0A",
+                    borderBottom: "1px solid #1A1A1A",
+                    padding: "16px 20px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    zIndex: 100
+                }}>
+                <button
+                    onClick={handleBack}
+                    style={{
+                        background: "transparent",
+                        border: "none",
+                        color: "#E8B4B8",
+                        cursor: "pointer",
+                        padding: "4px"
+                    }}>
                     <svg
-                        width="24"
-                        height="24"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.5">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                        <polyline points="15 18 9 12 15 6" />
                     </svg>
                 </button>
-                <h1 className="shop-header-title">My Account</h1>
-                <span></span>
+                <h1
+                    style={{
+                        color: "#F5F0EB",
+                        fontSize: "16px",
+                        fontWeight: 400,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        fontFamily: "'Cormorant Garamond', Georgia, serif"
+                    }}>
+                    My Account
+                </h1>
             </div>
             <div className="shop-content profile-content">
                 {}
