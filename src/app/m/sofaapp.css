@@ -3493,7 +3493,7 @@
 .form-group label {
   display: block;
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   color: #8A8580;
   font-weight: 400;
   letter-spacing: 0.05em;
@@ -6580,7 +6580,7 @@ textarea.form-control {
   text-align: center;
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #E8B4B8;
