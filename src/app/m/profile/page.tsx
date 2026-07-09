@@ -104,8 +104,11 @@ export default function ProfilePage() {
                         <p className="profile-user-name" style={{ fontSize: "15px", fontWeight: 400, letterSpacing: "0.05em", color: "#F5F0EB", margin: 0 }}>{userName}</p>
                     </div>
                 ) : (
-                    // 未登录状态：只显示登录按钮
-                    <div style={{ padding: "16px 20px" }}>
+                    // 未登录状态：显示提示文字和登录按钮
+                    <div style={{ padding: "16px 20px", textAlign: "center" }}>
+                        <p style={{ fontSize: "13px", color: "#8A8580", marginBottom: "16px", letterSpacing: "0.05em" }}>
+                            你还没有登录/注册？请<span style={{ color: "#E8B4B8", fontWeight: 600 }}>注册和登录</span>
+                        </p>
                         <button 
                             className="profile-signin-btn" 
                             onClick={handleUserCardClick}
