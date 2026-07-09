@@ -4795,8 +4795,9 @@ textarea.form-control {
 .shop-item-card {
   display: flex;
   gap: 12px;
-  padding: 16px 0;
+  padding: 16px;
   border-bottom: 1px solid #1A1A1A;
+  background: #111111;
 }
 
 /* 商品缩略图 - 圆角rounded-xl */
