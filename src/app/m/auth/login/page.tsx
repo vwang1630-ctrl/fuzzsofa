@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { getSupabaseBrowserClient } from '@/lib/supabase-browser';
 
 export default function LoginPage() {
   const router = useRouter();
+  const supabase = getSupabaseBrowserClient();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -17,24 +19,45 @@ export default function LoginPage() {
     setIsLoading(true);
     setError('');
 
-    // TODO: 实际登录逻辑
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // 模拟登录成功
-    router.push('/m/profile');
-    setIsLoading(false);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setError(error.message);
+        setIsLoading(false);
+        return;
+      }
+
+      router.push('/m/profile');
+    } catch (err) {
+      setError('An unexpected error occurred');
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     setError('');
 
-    // TODO: 实际 Google OAuth 逻辑
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // 模拟登录成功
-    router.push('/m/profile');
-    setIsLoading(false);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/m/auth/callback`,
+        },
+      });
+
+      if (error) {
+        setError(error.message);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      setError('An unexpected error occurred');
+      setIsLoading(false);
+    }
   };
 
   return (
