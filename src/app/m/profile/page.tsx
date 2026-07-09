@@ -201,18 +201,19 @@ function OrdersTab() {
                     key={tab.key}
                     onClick={() => setFilter(tab.key)}
                     style={{
-                        padding: "6px 10px",
-                        background: filter === tab.key ? "#E8B4B8" : "transparent",
-                        color: filter === tab.key ? "#0A0A0A" : "#8A8580",
-                        border: `1px solid ${filter === tab.key ? "#E8B4B8" : "#333333"}`,
+                        padding: "6px 12px",
+                        background: filter === tab.key ? "rgba(232, 180, 184, 0.06)" : "transparent",
+                        color: filter === tab.key ? "#E8B4B8" : "#8A8580",
+                        border: `1px solid ${filter === tab.key ? "rgba(232, 180, 184, 0.35)" : "#333333"}`,
                         borderRadius: 0,
-                        fontSize: "10px",
+                        fontSize: "11px",
                         fontWeight: 500,
-                        letterSpacing: "0.05em",
+                        letterSpacing: "0.1em",
                         textTransform: "uppercase",
                         whiteSpace: "nowrap",
                         cursor: "pointer",
-                        transition: "all 0.3s ease"
+                        transition: "all 0.3s ease",
+                        fontFamily: "'Cormorant Garamond', Georgia, serif"
                     }}>
                     {tab.label}
                               </button>)}
