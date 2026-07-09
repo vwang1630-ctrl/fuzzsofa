@@ -84,15 +84,15 @@ export default function ProfilePage() {
                     style={{ 
                         flexDirection: "column", 
                         alignItems: "center", 
-                        padding: "32px 20px", 
+                        padding: "20px", 
                         textAlign: "center",
                         cursor: isLoggedIn ? "default" : "pointer",
                         transition: "all 0.3s ease"
                     }}>
-                    <div className="profile-avatar" style={{ width: "80px", height: "80px", borderRadius: "50%", background: "rgba(232, 180, 184, 0.1)", border: "1px solid rgba(232, 180, 184, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px" }}>
+                    <div className="profile-avatar" style={{ width: "60px", height: "60px", borderRadius: "50%", background: "rgba(232, 180, 184, 0.1)", border: "1px solid rgba(232, 180, 184, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "12px" }}>
                         <svg
-                            width="40"
-                            height="40"
+                            width="30"
+                            height="30"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="#E8B4B8"
