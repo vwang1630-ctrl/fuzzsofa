@@ -395,43 +395,46 @@
   color: #F5F0EB;
 }
 .hero-tag {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(232, 180, 184, 0.7);
+  color: #E8B4B8;
   margin-bottom: 8px;
   font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
 }
 .hero-overlay h1 {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 32px;
-  font-weight: 300;
+  font-size: 20px;
+  font-weight: 600;
   letter-spacing: 0.04em;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  color: #FFFFFF;
 }
 .hero-overlay .hero-sub {
-  font-size: 13px;
-  color: rgba(245, 240, 235, 0.6);
-  font-weight: 300;
+  font-size: 14px;
+  color: #A8A8A0;
+  font-weight: 400;
   letter-spacing: 0.04em;
   margin-bottom: 16px;
 }
 .btn-explore {
   display: inline-block;
-  padding: 10px 24px;
-  border: 0.5px solid rgba(232, 180, 184, 0.3);
+  padding: 12px 24px;
+  border: 1px solid #E8B4B8;
   background: transparent;
   color: #E8B4B8;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: inherit;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
 }
 .btn-explore:active {
-  background: rgba(232, 180, 184, 0.08);
-  transform: scale(0.96);
+  background: #E8B4B8;
+  color: #0A0A0A;
 }
 .hero-gradient {
   position: absolute;
@@ -461,18 +464,18 @@
   background: #E8B4B8;
 }
 .brand-philosophy {
-  padding: 20px 20px 8px;
+  padding: 16px 16px 8px;
   text-align: center;
   font-size: 14px;
-  color: #8A8580;
-  font-weight: 300;
+  color: #A8A8A0;
+  font-weight: 400;
   letter-spacing: 0.06em;
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 .media-quote {
-  padding: 16px 20px;
+  padding: 16px 16px;
   background: rgba(255, 255, 255, 0.01);
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -483,22 +486,22 @@
   flex-shrink: 0;
 }
 .media-quote blockquote {
-  font-size: 13px;
+  font-size: 14px;
   font-style: italic;
-  color: #8A8580;
-  font-weight: 300;
+  color: #A8A8A0;
+  font-weight: 400;
   line-height: 1.6;
   margin: 0;
 }
 .media-quote cite {
   display: block;
-  font-size: 11px;
-  color: #6A6560;
+  font-size: 12px;
+  color: #8A8580;
   font-style: normal;
-  margin-top: 2px;
+  margin-top: 8px;
 }
 .featured-works {
-  padding: 24px 20px 12px;
+  padding: 24px 16px 16px;
 }
 .section-header {
   display: flex;
@@ -509,16 +512,16 @@
 .section-header h2 {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 20px;
-  font-weight: 300;
-  color: #F5F0EB;
+  font-weight: 600;
+  color: #FFFFFF;
   letter-spacing: 0.04em;
 }
 .section-header .view-all {
-  font-size: 11px;
-  color: #6A6560;
+  font-size: 12px;
+  color: #8A8580;
   text-decoration: none;
   letter-spacing: 0.04em;
-  font-weight: 300;
+  font-weight: 400;
   cursor: pointer;
   transition: color 0.2s;
 }
@@ -528,7 +531,7 @@
 .product-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 16px;
 }
 .product-card {
   text-decoration: none;
@@ -555,37 +558,38 @@
   transform: scale(1.04);
 }
 .product-card .info {
-  padding-top: 10px;
+  padding-top: 8px;
 }
 .product-card .info .name {
-  font-family: Georgia, serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 14px;
   font-weight: 400;
-  color: #F5F0EB;
+  color: #FFFFFF;
   letter-spacing: 0.02em;
 }
 .product-card:active .info .name {
   color: #E8B4B8;
 }
 .product-card .info .price {
-  font-size: 12px;
-  color: #8A8580;
-  margin-top: 2px;
+  font-size: 18px;
+  color: #E8B4B8;
+  margin-top: 8px;
   letter-spacing: 0.04em;
+  font-weight: 600;
 }
 .log-preview {
-  margin: 16px 20px 32px;
+  margin: 16px 16px 32px;
   display: flex;
   flex-direction: column;
   gap: 0;
   background: rgba(255, 255, 255, 0.01);
-  border: 0.5px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.03);
   overflow: hidden;
   cursor: pointer;
   transition: border-color 0.3s;
 }
 .log-preview:active {
-  border-color: rgba(232, 180, 184, 0.15);
+  border-color: #E8B4B8;
 }
 .log-preview-image {
   width: 100%;
@@ -602,28 +606,28 @@
   padding: 0 16px 16px;
 }
 .log-preview-content .log-tag {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #6A6560;
-  font-weight: 300;
-  margin-bottom: 4px;
-  margin-top: 10px;
+  color: #8A8580;
+  font-weight: 400;
+  margin-bottom: 8px;
+  margin-top: 8px;
 }
 .log-preview-content h3 {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 18px;
-  font-weight: 500;
-  color: #F5F0EB;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
   letter-spacing: 0.04em;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 .log-preview-content .summary {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.7;
-  color: #8A8580;
-  font-weight: 300;
-  margin-bottom: 10px;
+  color: #A8A8A0;
+  font-weight: 400;
+  margin-bottom: 8px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -646,24 +650,25 @@
 
 /* ===== 作品集 ===== */
 .page-collection .page-title {
-  font-family: Georgia, serif;
-  font-size: 22px;
-  font-weight: 300;
-  padding: 20px 20px 4px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 16px 16px 8px;
   letter-spacing: 0.02em;
+  color: #FFFFFF;
 }
 .page-collection .page-sub {
-  font-size: 12px;
-  color: #8A8580;
-  padding: 0 20px 12px;
-  font-weight: 300;
+  font-size: 14px;
+  color: #A8A8A0;
+  padding: 0 16px 8px;
+  font-weight: 400;
   letter-spacing: 0.04em;
 }
 .collection-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  padding: 20px;
+  gap: 16px;
+  padding: 16px;
 }
 
 /* ===== 日志列表 ===== */
