@@ -7107,12 +7107,17 @@ textarea.form-control {
 #cartPage .shop-bottom-bar {
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
   padding: 16px;
   background: rgba(10, 10, 10, 0.95);
   backdrop-filter: blur(8px);
   border-top: 1px solid #1A1A1A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #cartPage .panel-confirm-btn {
