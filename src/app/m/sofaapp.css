@@ -6917,9 +6917,9 @@ textarea.form-control {
 #cartPage .cart-select-row {
   display: flex;
   align-items: center;
-  padding: 12px 0;
+  padding: 8px 0;
   border-bottom: 1px solid #1A1A1A;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 #cartPage .cart-checkbox {
@@ -7080,7 +7080,11 @@ textarea.form-control {
 
 #cartPage .cart-empty {
   text-align: center;
-  padding: 80px 0;
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #cartPage .cart-empty-text {
