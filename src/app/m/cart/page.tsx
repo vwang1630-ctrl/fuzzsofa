@@ -275,8 +275,8 @@ export default function CartPage() {
           <div style={{
             background: "#111111",
             border: "1px solid #1A1A1A",
-            borderRadius: 0,
-            marginTop: "16px"
+            borderTop: "none",
+            borderRadius: 0
           }}>
             <div style={{
               padding: "16px",
