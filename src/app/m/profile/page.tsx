@@ -59,7 +59,7 @@ export default function ProfilePage() {
     }];
 
     return (
-        <div className="shop-page profile-page">
+        <div className="shop-page profile-page" style={{ padding: "0" }}>
             {}
             {/* Header */}
             <div
@@ -72,7 +72,9 @@ export default function ProfilePage() {
                     display: "flex",
                     alignItems: "center",
                     gap: "12px",
-                    zIndex: 100
+                    zIndex: 100,
+                    margin: "0 -20px",
+                    width: "calc(100% + 40px)"
                 }}>
                 <button
                     onClick={handleBack}
