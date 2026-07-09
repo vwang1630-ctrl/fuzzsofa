@@ -72,9 +72,7 @@ export default function ProfilePage() {
                     display: "flex",
                     alignItems: "center",
                     gap: "12px",
-                    zIndex: 100,
-                    margin: "0 -20px",
-                    width: "calc(100% + 40px)"
+                    zIndex: 100
                 }}>
                 <button
                     onClick={handleBack}
