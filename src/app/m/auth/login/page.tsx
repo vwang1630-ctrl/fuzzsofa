@@ -121,7 +121,7 @@ export default function LoginPage() {
       {/* 品牌标识 */}
       <div style={{
         textAlign: 'center',
-        marginBottom: '48px'
+        marginBottom: '32px'
       }}>
         <div style={{
           fontFamily: "'Cormorant Garamond', Georgia, 'Times New Roman', serif",
@@ -160,7 +160,7 @@ export default function LoginPage() {
         letterSpacing: '0.05em',
         color: '#8A8580',
         textAlign: 'center',
-        marginBottom: '40px',
+        marginBottom: '24px',
         lineHeight: '1.6'
       }}>{isSignUp ? 'Sign up to get started' : 'Sign in to sync your data across devices'}</div>
       
