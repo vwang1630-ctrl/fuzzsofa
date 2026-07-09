@@ -6870,8 +6870,8 @@ textarea.form-control {
 
 #cartPage .cart-item-count {
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 300;
+  font-size: 12px;
+  font-weight: 400;
   color: #8A8580;
   letter-spacing: 0.05em;
 }
@@ -6910,7 +6910,7 @@ textarea.form-control {
 #cartPage .cart-select-label {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: #8A8580;
   margin-left: 12px;
   letter-spacing: 0.05em;
@@ -6954,22 +6954,22 @@ textarea.form-control {
 #cartPage .shop-item-name {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   color: #F5F0EB;
   letter-spacing: 0.02em;
 }
 
 #cartPage .shop-item-qty {
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 300;
+  font-size: 12px;
+  font-weight: 400;
   color: #8A8580;
 }
 
 #cartPage .shop-item-spec {
   font-family: 'Inter', sans-serif;
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 400;
   color: #6A6560;
   letter-spacing: 0.05em;
   margin-bottom: 8px;
@@ -7062,7 +7062,7 @@ textarea.form-control {
 #cartPage .cart-empty-link {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   color: #E8B4B8;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -7080,7 +7080,7 @@ textarea.form-control {
 #cartPage .shop-fee-label {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: #8A8580;
   letter-spacing: 0.05em;
 }
@@ -7099,8 +7099,8 @@ textarea.form-control {
 
 #cartPage .shop-fee-total-label {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   color: #F5F0EB;
   letter-spacing: 0.05em;
 }
