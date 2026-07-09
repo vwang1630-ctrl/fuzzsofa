@@ -269,29 +269,87 @@ export default function CartPage() {
             );
           })
         )}
-      </section>
 
-      {/* 费用明细 */}
-      {items.length > 0 && (
-        <section className="shop-section">
-          <div className="shop-fee-row">
-            <span className="shop-fee-label">Subtotal</span>
-            <span className="shop-fee-value">${selectedTotal.toLocaleString()}</span>
+        {/* 费用明细 */}
+        {items.length > 0 && (
+          <div style={{
+            background: "#111111",
+            border: "1px solid #1A1A1A",
+            borderRadius: 0,
+            marginTop: "16px"
+          }}>
+            <div style={{
+              padding: "16px",
+              borderBottom: "1px solid #1A1A1A"
+            }}>
+              <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "12px"
+              }}>
+                <span style={{
+                  fontSize: "14px",
+                  color: "#8A8580",
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: 400
+                }}>Subtotal</span>
+                <span style={{
+                  fontSize: "15px",
+                  color: "#F5F0EB",
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontWeight: 600
+                }}>${selectedTotal.toLocaleString()}</span>
+              </div>
+              <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}>
+                <span style={{
+                  fontSize: "14px",
+                  color: "#8A8580",
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: 400
+                }}>Shipping</span>
+                <span style={{
+                  fontSize: "15px",
+                  color: selectedTotal >= 10000 ? "#E8B4B8" : "#F5F0EB",
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontWeight: 600
+                }}>
+                  {selectedTotal >= 10000 ? "Free" : "$300"}
+                </span>
+              </div>
+            </div>
+            <div style={{
+              padding: "16px",
+              background: "rgba(232, 180, 184, 0.02)"
+            }}>
+              <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}>
+                <span style={{
+                  fontSize: "16px",
+                  color: "#F5F0EB",
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontWeight: 600
+                }}>Total</span>
+                <span style={{
+                  fontSize: "18px",
+                  color: "#E8B4B8",
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontWeight: 600
+                }}>
+                  ${grandTotal.toLocaleString()} USD
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="shop-fee-row">
-            <span className="shop-fee-label">Shipping</span>
-            <span className={`shop-fee-value ${selectedTotal >= 10000 ? "shop-fee-free" : ""}`}>
-              {selectedTotal >= 10000 ? "Free" : "$300"}
-            </span>
-          </div>
-          <div className="shop-fee-row">
-            <span className="shop-fee-total-label">Total</span>
-            <span className="shop-fee-total-value">
-              ${grandTotal.toLocaleString()} USD
-            </span>
-          </div>
-        </section>
-      )}
+        )}
+      </section>
 
       {/* 底部结算按钮 */}
       <div className="shop-bottom-bar">
