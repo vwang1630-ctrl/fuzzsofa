@@ -1,56 +1,33 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-
-interface OrderItem {
-  name: string;
-  color: string;
-  fabric: string;
-  price: string;
-  image: string;
-}
-
-interface Order {
-  id: string;
-  date: string;
-  status: 'Pending' | 'Shipping' | 'Completed' | 'Cancelled';
-  total: string;
-  items: OrderItem[];
-}
-
-const orders: Order[] = [
-  {
-    id: 'FUZZ-20260628-001',
-    date: 'Jun 28, 2026',
-    status: 'Pending',
-    total: '$7,800',
-    items: [
-      { name: 'Gorilla Sofa', color: 'Snow White', fabric: 'Cloud Touch', price: '$7,800', image: '/products/gorilla-sofa.jpg' }
-    ]
-  },
-  {
-    id: 'FUZZ-20260610-003',
-    date: 'Jun 10, 2026',
-    status: 'Shipping',
-    total: '$3,500',
-    items: [
-      { name: 'Ring Sofa', color: 'Space Grey', fabric: 'Velvet', price: '$3,500', image: '/products/ring-sofa.jpg' }
-    ]
-  },
-  {
-    id: 'FUZZ-20260515-002',
-    date: 'May 15, 2026',
-    status: 'Completed',
-    total: '$5,200',
-    items: [
-      { name: 'Owl Chair', color: 'Warm Beige', fabric: 'Linen', price: '$5,200', image: '/products/owl-chair.jpg' }
-    ]
-  }
-];
+import { getOrders, type Order } from '@/lib/order-storage';
 
 const statusFilters = ['All', 'Pending', 'Shipping', 'Completed'] as const;
 
 export default function OrdersPage() {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [activeFilter, setActiveFilter] = useState<string>('All');
+
+  useEffect(() => {
+    const storedOrders = getOrders();
+    setOrders(storedOrders);
+  }, []);
+
+  const filteredOrders = activeFilter === 'All' 
+    ? orders 
+    : orders.filter(o => o.status === activeFilter);
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
+
   return (
     <div className="page page-orders active" id="pageOrders">
       {/* Header */}
@@ -62,24 +39,29 @@ export default function OrdersPage() {
       {/* Status Filters */}
       <div className="order-filters">
         {statusFilters.map((filter) => (
-          <button key={filter} className={`order-filter-btn ${filter === 'All' ? 'active' : ''}`}>
+          <button 
+            key={filter} 
+            className={`order-filter-btn ${activeFilter === filter ? 'active' : ''}`}
+            onClick={() => setActiveFilter(filter)}
+          >
             {filter}
           </button>
         ))}
       </div>
 
       {/* Order List */}
-      {orders.length === 0 ? (
+      {filteredOrders.length === 0 ? (
         <div className="empty-state">
           <svg className="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
             <rect x="2" y="7" width="20" height="14" rx="2" />
             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
           </svg>
           <div className="empty-text">No orders yet</div>
+          <Link href="/m" className="empty-btn">Start Shopping</Link>
         </div>
       ) : (
         <div className="order-list" id="orderList">
-          {orders.map((order) => (
+          {filteredOrders.map((order) => (
             <div key={order.id} className="order-card">
               {/* Order Header */}
               <div className="order-top">
@@ -97,31 +79,43 @@ export default function OrdersPage() {
                 {order.items.map((item, idx) => (
                   <div key={idx} className="order-item">
                     <div className="order-item-image">
-                      <img src={item.image} alt={item.name} />
+                      <img src={item.image || '/products/placeholder.jpg'} alt={item.name} />
                     </div>
                     <div className="order-item-info">
                       <div className="order-item-name">{item.name}</div>
-                      <div className="order-item-spec">{item.color} &middot; {item.fabric}</div>
-                      <div className="order-item-price">{item.price}</div>
+                      <div className="order-item-spec">
+                        {item.color}{item.fabric ? ` / ${item.fabric}` : ''}
+                      </div>
+                      <div className="order-item-price">
+                        ${item.price.toLocaleString()} × {item.quantity}
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Order Footer */}
-              <div className="order-footer">
-                <span className="order-date">{order.date}</span>
-                <span className="order-total">Total: {order.total}</span>
+              <div className="order-bottom">
+                <div className="order-date-group">
+                  <span className="order-date-label">Date</span>
+                  <span className="order-date">{formatDate(order.date)}</span>
+                </div>
+                <div className="order-total-group">
+                  <span className="order-total-label">Total</span>
+                  <span className="order-total">${order.total.toLocaleString()}</span>
+                </div>
               </div>
 
               {/* Order Actions */}
               <div className="order-actions">
-                <button className="order-action-btn">View Details</button>
+                {order.status === 'Pending' && (
+                  <button className="order-action-btn">Track Order</button>
+                )}
                 {order.status === 'Shipping' && (
-                  <button className="order-action-btn primary">Track Order</button>
+                  <button className="order-action-btn">Track Order</button>
                 )}
                 {order.status === 'Completed' && (
-                  <button className="order-action-btn primary">Buy Again</button>
+                  <button className="order-action-btn">Buy Again</button>
                 )}
               </div>
             </div>

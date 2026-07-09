@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { saveOrder, type Order } from '@/lib/order-storage';
 import '@/app/m/sofaapp.css';
 
 function PaymentContent() {
@@ -85,6 +86,23 @@ function PaymentContent() {
     
     // Simulate payment processing (2 seconds)
     await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Save order to localStorage
+    const order: Order = {
+      id: orderId,
+      date: new Date().toISOString(),
+      status: 'Pending',
+      total: Number(total),
+      items: items.map(item => ({
+        name: item.name,
+        color: item.color,
+        fabric: '',
+        price: item.price,
+        quantity: item.quantity,
+        image: ''
+      }))
+    };
+    saveOrder(order);
     
     // Clear payment session data
     sessionStorage.removeItem('paymentOrderId');
