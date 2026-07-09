@@ -7019,8 +7019,8 @@ textarea.form-control {
 
 #cartPage .shop-item-price-value {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   color: #E8B4B8;
   letter-spacing: 0.02em;
 }
@@ -7086,7 +7086,7 @@ textarea.form-control {
 #cartPage .shop-fee-value {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   color: #F5F0EB;
   letter-spacing: 0.02em;
 }
@@ -7105,8 +7105,8 @@ textarea.form-control {
 
 #cartPage .shop-fee-total-value {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   color: #E8B4B8;
   letter-spacing: 0.02em;
 }
