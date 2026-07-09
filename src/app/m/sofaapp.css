@@ -3523,6 +3523,16 @@
   color: #8A8580;
   opacity: 0.6;
 }
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  background: #111111;
+  border: 1px solid #1A1A1A;
+  color: #F5F0EB;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   border-radius: 0;
   outline: none;
   transition: border-color 0.3s;
