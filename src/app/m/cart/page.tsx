@@ -53,7 +53,7 @@ export default function CartPage() {
   const grandTotal = selectedTotal + shipping;
 
   return (
-    <div id="cartPage" className="shop-page">
+    <div id="cartPage" className="shop-page" style={{ padding: "0" }}>
       {/* 顶部导航栏 */}
       <div
         style={{
