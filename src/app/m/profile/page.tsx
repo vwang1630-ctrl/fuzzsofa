@@ -421,7 +421,8 @@ function OrdersTab() {
                                 fontSize: "12px",
                                 color: "#8A8580",
                                 letterSpacing: "0.1em",
-                                textTransform: "uppercase"
+                                textTransform: "uppercase",
+                                fontFamily: "'Cormorant Garamond', serif"
                             }}>Total
                                             </span>
                         <span
