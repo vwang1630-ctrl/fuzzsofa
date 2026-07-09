@@ -5,9 +5,53 @@ import Link from 'next/link';
 export default function NewAddressPage() {
   return (
     <div className="page page-addr-form active" id="pageAddrForm">
-      <div className="page-header">
-        <Link href="/m/profile/addresses" className="log-detail-back">‹</Link>
-        <span className="title">添加地址</span>
+      {/* Header */}
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          background: "#0A0A0A",
+          borderBottom: "1px solid #1A1A1A",
+          padding: "16px 20px",
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          zIndex: 100
+        }}>
+        <Link
+          href="/m/profile/addresses"
+          style={{
+            background: "transparent",
+            border: "none",
+            color: "#E8B4B8",
+            cursor: "pointer",
+            padding: "4px",
+            display: "flex",
+            alignItems: "center",
+            textDecoration: "none"
+          }}>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </Link>
+        <h1
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "16px",
+            fontWeight: 400,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "#F5F0EB",
+            margin: 0
+          }}>
+          添加地址
+        </h1>
       </div>
       <form className="addr-form" id="addrForm">
         <div className="form-group">
