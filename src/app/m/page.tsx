@@ -145,7 +145,7 @@ export default function MobileHomePage() {
       >
         {heroSlides.map((slide, i) => (
           <div key={i} className={`slide${i === heroIndex ? ' active' : ''}`} data-index={i}>
-            <img src={slide.image} alt={slide.alt} />
+            {slide.image && <img src={slide.image} alt={slide.alt} />}
             <div className="hero-overlay">
               <div className="hero-tag">{slide.tag}</div>
               <h1>{slide.title}</h1>
@@ -204,6 +204,9 @@ export default function MobileHomePage() {
                   src={p.images?.[0] || '/products/placeholder.jpg'}
                   alt={p.name}
                   loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.src = '/products/placeholder.jpg';
+                  }}
                 />
               </div>
               <div className="info">
@@ -216,7 +219,7 @@ export default function MobileHomePage() {
       </section>
 
       {/* Log Preview */}
-      {firstLog && (
+      {firstLog && firstLog.image && (
         <Link href={`/m/log/${firstLog.id}`} className="log-preview" id="homeLogPreview">
           <div className="log-preview-image" id="homeLogImg">
             <img src={firstLog.image} alt="日志封面" />
