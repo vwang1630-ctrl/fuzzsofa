@@ -258,7 +258,7 @@ function OrdersTab() {
                         {item.color} × {item.quantity}
                       </p>
                       <p style={{ fontSize: '13px', color: '#E8B4B8' }}>
-                        ${item.price.toLocaleString()}
+                        ${typeof item.price === 'number' ? item.price.toLocaleString() : '0'}
                       </p>
                     </div>
                   </div>
@@ -278,7 +278,7 @@ function OrdersTab() {
                   Total
                 </span>
                 <span style={{ fontSize: '16px', color: '#E8B4B8', fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}>
-                  ${order.total.toLocaleString()}
+                  ${typeof order.total === 'number' ? order.total.toLocaleString() : '0'}
                 </span>
               </div>
             </div>
