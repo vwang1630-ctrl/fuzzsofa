@@ -257,8 +257,15 @@ export default function CheckoutPage() {
         }
 
         const newOrderId = `ORD-${Date.now().toString(36).toUpperCase()}`;
+        // Convert CartItem[] to payment format
+        const paymentItems = checkoutItems.map(item => ({
+            name: item.product.name,
+            color: item.materialOption || 'Default',
+            quantity: item.quantity,
+            price: getUnitPrice(item)
+        }));
         sessionStorage.setItem("paymentOrderId", newOrderId);
-        sessionStorage.setItem("paymentItems", JSON.stringify(checkoutItems));
+        sessionStorage.setItem("paymentItems", JSON.stringify(paymentItems));
         sessionStorage.setItem("paymentTotal", totalWithShipping.toString());
         router.push("/m/payment");
     };
