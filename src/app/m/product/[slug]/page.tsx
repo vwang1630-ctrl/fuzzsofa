@@ -289,28 +289,6 @@ export default function MobileProductPage(
     return (
         <div className="page active" id="pageDetail">
             <div className="container">
-                <div className="top-nav-row">
-                    <Link href="/m" className="back-link">‹</Link>
-                    <span
-                        style={{
-                            flex: 1
-                        }} />
-                    <button className="nav-ai-btn" onClick={() => setShowAIOverlay(true)}>
-                        <svg
-                            viewBox="0 0 24 24"
-                            width="18"
-                            height="18"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            fill="none">
-                            <path
-                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                            <line x1="12" y1="22.08" x2="12" y2="12" />
-                        </svg>
-                        <span>AI 预览</span>
-                    </button>
-                </div>
                 {}
                 <div className="hero-image" id="detailHeroImage">
                     <img
