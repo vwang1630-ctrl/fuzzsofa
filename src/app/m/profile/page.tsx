@@ -78,41 +78,53 @@ export default function ProfilePage() {
             </div>
             <div className="shop-content profile-content">
                 {}
-                <div 
-                    className="profile-user-card" 
-                    onClick={handleUserCardClick}
-                    style={{ 
-                        flexDirection: "column", 
-                        alignItems: "center", 
-                        padding: "20px", 
-                        textAlign: "center",
-                        cursor: isLoggedIn ? "default" : "pointer",
-                        transition: "all 0.3s ease"
-                    }}>
-                    <div className="profile-avatar" style={{ width: "60px", height: "60px", borderRadius: "50%", background: "rgba(232, 180, 184, 0.1)", border: "1px solid rgba(232, 180, 184, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "12px" }}>
-                        <svg
-                            width="30"
-                            height="30"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#E8B4B8"
-                            strokeWidth="1.5">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                            <circle cx="12" cy="7" r="4" />
-                        </svg>
+                {isLoggedIn ? (
+                    // 已登录状态：显示头像和用户信息
+                    <div 
+                        className="profile-user-card" 
+                        style={{ 
+                            flexDirection: "row", 
+                            alignItems: "center", 
+                            padding: "16px 20px",
+                            gap: "16px",
+                            cursor: "default"
+                        }}>
+                        <div className="profile-avatar" style={{ width: "48px", height: "48px", borderRadius: "50%", background: "rgba(232, 180, 184, 0.1)", border: "1px solid rgba(232, 180, 184, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#E8B4B8"
+                                strokeWidth="1.5">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                        </div>
+                        <p className="profile-user-name" style={{ fontSize: "15px", fontWeight: 400, letterSpacing: "0.05em", color: "#F5F0EB", margin: 0 }}>{userName}</p>
                     </div>
-                    <p className="profile-user-name" style={{ fontSize: "18px", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", color: "#F5F0EB", marginBottom: isLoggedIn ? "0" : "8px" }}>{userName}</p>
-                    {!isLoggedIn && (
-                        <>
-                            <button className="profile-signin-btn" style={{ padding: "12px 32px", background: "transparent", border: "1px solid #E8B4B8", color: "#E8B4B8", fontSize: "12px", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.3s ease" }}>
-                                Sign In / Register
-                            </button>
-                        </>
-                    )}
-                </div>
-                {}
-                {!isLoggedIn && (
-                    <div style={{ padding: "0 20px 20px", textAlign: "center" }}>
+                ) : (
+                    // 未登录状态：只显示登录按钮
+                    <div style={{ padding: "16px 20px" }}>
+                        <button 
+                            className="profile-signin-btn" 
+                            onClick={handleUserCardClick}
+                            style={{ 
+                                width: "100%",
+                                padding: "14px 24px", 
+                                background: "transparent", 
+                                border: "1px solid #E8B4B8", 
+                                color: "#E8B4B8", 
+                                fontSize: "13px", 
+                                fontFamily: "'Cormorant Garamond', serif",
+                                fontWeight: 500, 
+                                letterSpacing: "0.15em", 
+                                textTransform: "uppercase", 
+                                cursor: "pointer", 
+                                transition: "all 0.3s ease" 
+                            }}>
+                            Sign In / Register
+                        </button>
                     </div>
                 )}
                 {}
