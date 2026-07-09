@@ -6044,9 +6044,9 @@ textarea.form-control {
   align-items: center;
   gap: 14px;
   padding: 16px 12px;
-  background: transparent;
+  background: #111111;
   border: none;
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid #1A1A1A;
   cursor: pointer;
   transition: all 0.2s ease;
   width: 100%;
