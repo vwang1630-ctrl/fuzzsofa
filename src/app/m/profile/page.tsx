@@ -228,12 +228,14 @@ function OrdersTab() {
                 </div> : filteredOrders.map(order => <div
                     key={order.id}
                     className="order-card"
+                    onClick={() => router.push(`/m/profile/orders/${order.id}`)}
                     style={{
                         background: "#111111",
                         border: "1px solid #1A1A1A",
                         borderRadius: 0,
                         marginBottom: "16px",
-                        overflow: "hidden"
+                        overflow: "hidden",
+                        cursor: "pointer"
                     }}>
                     {}
                     <div
