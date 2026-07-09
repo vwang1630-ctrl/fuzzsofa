@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { saveOrder, type Order } from '@/lib/order-storage';
+import { saveOrder, getOrders, type Order } from '@/lib/order-storage';
 import '@/app/m/sofaapp.css';
 
 function PaymentContent() {
@@ -102,7 +102,9 @@ function PaymentContent() {
         image: ''
       }))
     };
+    console.log('Saving order:', order);
     saveOrder(order);
+    console.log('Order saved. Current orders:', getOrders());
     
     // Clear payment session data
     sessionStorage.removeItem('paymentOrderId');

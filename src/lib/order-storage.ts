@@ -34,8 +34,12 @@ export function getOrders(): Order[] {
   if (typeof window === 'undefined') return [];
   try {
     const data = localStorage.getItem(ORDERS_STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  } catch {
+    console.log('getOrders: raw data =', data);
+    const result = data ? JSON.parse(data) : [];
+    console.log('getOrders: parsed result =', result);
+    return result;
+  } catch (e) {
+    console.error('getOrders error:', e);
     return [];
   }
 }

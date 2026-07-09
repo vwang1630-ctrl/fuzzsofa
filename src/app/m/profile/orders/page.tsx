@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { getOrders, type Order } from '@/lib/order-storage';
 
@@ -10,10 +10,29 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [activeFilter, setActiveFilter] = useState<string>('All');
 
-  useEffect(() => {
+  const loadOrders = useCallback(() => {
     const storedOrders = getOrders();
+    console.log('Loaded orders:', storedOrders);
     setOrders(storedOrders);
   }, []);
+
+  useEffect(() => {
+    loadOrders();
+    // Listen for storage changes from other tabs/windows
+    const handleStorage = () => loadOrders();
+    window.addEventListener('storage', handleStorage);
+    // Also check when page becomes visible
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        loadOrders();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [loadOrders]);
 
   const filteredOrders = activeFilter === 'All' 
     ? orders 
