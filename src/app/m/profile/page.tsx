@@ -104,30 +104,14 @@ export default function ProfilePage() {
                         <p className="profile-user-name" style={{ fontSize: "15px", fontWeight: 400, letterSpacing: "0.05em", color: "#F5F0EB", margin: 0 }}>{userName}</p>
                     </div>
                 ) : (
-                    // 未登录状态：显示提示文字和登录按钮
+                    // 未登录状态：显示提示文字，点击跳转登录
                     <div style={{ padding: "16px 20px", textAlign: "center" }}>
-                        <p style={{ fontSize: "13px", color: "#8A8580", marginBottom: "16px", letterSpacing: "0.05em" }}>
-                            你还没有登录/注册？请<span style={{ color: "#E8B4B8", fontWeight: 600 }}>注册和登录</span>
-                        </p>
-                        <button 
-                            className="profile-signin-btn" 
+                        <p 
+                            style={{ fontSize: "13px", color: "#8A8580", letterSpacing: "0.05em", cursor: "pointer" }}
                             onClick={handleUserCardClick}
-                            style={{ 
-                                width: "100%",
-                                padding: "14px 24px", 
-                                background: "transparent", 
-                                border: "1px solid #E8B4B8", 
-                                color: "#E8B4B8", 
-                                fontSize: "13px", 
-                                fontFamily: "'Cormorant Garamond', serif",
-                                fontWeight: 500, 
-                                letterSpacing: "0.15em", 
-                                textTransform: "uppercase", 
-                                cursor: "pointer", 
-                                transition: "all 0.3s ease" 
-                            }}>
-                            Sign In / Register
-                        </button>
+                        >
+                            你还没有登录/注册？请<span style={{ color: "#E8B4B8", fontWeight: 600 }}>注册</span><span style={{ color: "#8A8580" }}>/</span><span style={{ color: "#E8B4B8", fontWeight: 600 }}>登录</span>
+                        </p>
                     </div>
                 )}
                 {}
