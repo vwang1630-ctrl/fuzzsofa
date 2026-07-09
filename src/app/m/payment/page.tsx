@@ -93,7 +93,7 @@ function PaymentContent() {
     const order: Order = {
       id: orderId,
       date: new Date().toISOString(),
-      status: 'Pending',
+      status: 'Shipping',
       total: Number(total),
       items: items.map(item => ({
         name: item.name,
