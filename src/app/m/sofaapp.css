@@ -4827,10 +4827,10 @@ textarea.form-control {
 
 /* 商品价格 - accent色高亮 */
 .shop-item-price-value {
-  font-family: Georgia, serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   color: #E8B4B8;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.02em;
 }
 
@@ -5208,10 +5208,11 @@ textarea.form-control {
 }
 
 .shop-fee-value {
+  font-family: 'Cormorant Garamond', Georgia, serif;
   color: #F5F0EB;
-  font-size: 13px;
-  font-weight: 300;
-  letter-spacing: 0.04em;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .shop-fee-free {
@@ -5226,10 +5227,11 @@ textarea.form-control {
 }
 
 .shop-fee-total-value {
-  color: #F5F0EB;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: #E8B4B8;
   font-size: 15px;
-  font-weight: 300;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 /* 底部CTA区块 - 纯黑背景+安全区边距 */
