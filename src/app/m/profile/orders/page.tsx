@@ -13,24 +13,38 @@ export default function OrdersPage() {
   const loadOrders = useCallback(() => {
     const storedOrders = getOrders();
     console.log('Loaded orders:', storedOrders);
+    console.log('Orders count:', storedOrders.length);
     setOrders(storedOrders);
   }, []);
 
   useEffect(() => {
     loadOrders();
     // Listen for storage changes from other tabs/windows
-    const handleStorage = () => loadOrders();
+    const handleStorage = (e: StorageEvent) => {
+      console.log('Storage event:', e.key);
+      if (e.key === 'fuzz_orders') {
+        loadOrders();
+      }
+    };
     window.addEventListener('storage', handleStorage);
     // Also check when page becomes visible
     const handleVisibility = () => {
       if (document.visibilityState === 'visible') {
+        console.log('Page visible, reloading orders');
         loadOrders();
       }
     };
     document.addEventListener('visibilitychange', handleVisibility);
+    // Force reload every 2 seconds when page is visible
+    const interval = setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        loadOrders();
+      }
+    }, 2000);
     return () => {
       window.removeEventListener('storage', handleStorage);
       document.removeEventListener('visibilitychange', handleVisibility);
+      clearInterval(interval);
     };
   }, [loadOrders]);
 
