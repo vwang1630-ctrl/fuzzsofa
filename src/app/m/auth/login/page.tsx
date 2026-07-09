@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { getSupabaseBrowserClient } from '@/lib/supabase-browser';
+import { useState, useEffect } from 'react';
+import { getSupabaseBrowserClientAsync } from '@/lib/supabase-browser';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export default function LoginPage() {
   const router = useRouter();
-  const supabase = getSupabaseBrowserClient();
+  const [supabase, setSupabase] = useState<SupabaseClient | null>(null);
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,8 +17,20 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    getSupabaseBrowserClientAsync()
+      .then(setSupabase)
+      .catch(() => {
+        setError('Failed to initialize authentication');
+      });
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!supabase) {
+      setError('Authentication not ready');
+      return;
+    }
     setIsLoading(true);
     setError('');
 
@@ -68,6 +81,10 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = async () => {
+    if (!supabase) {
+      setError('Authentication not ready');
+      return;
+    }
     setIsLoading(true);
     setError('');
 
