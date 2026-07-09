@@ -2016,7 +2016,7 @@
 #pageDetail .bottom-cta .row-top .price {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 22px;
-  font-weight: 400;
+  font-weight: 600;
   color: #F5F0EB;
   letter-spacing: 0.02em;
   flex-shrink: 0;
@@ -5468,10 +5468,10 @@ textarea.form-control {
 
 /* 总金额 - accent色高亮 */
 .payment-total-amount {
-  font-family: Georgia, serif;
-  font-size: 18px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
   color: #E8B4B8;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.02em;
 }
 
