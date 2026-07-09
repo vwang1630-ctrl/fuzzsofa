@@ -148,32 +148,96 @@ export default function CartPage() {
             const unitPrice = getUnitPrice(item);
 
             return (
-              <div key={key} className="shop-item-card">
-                {/* 选择框 */}
-                <div
-                  className={`cart-checkbox ${item.selected ? "checked" : ""}`}
-                  onClick={() => toggleSelect(item.product.slug, item.materialOption)}
-                >
-                  {item.selected && (
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
-                </div>
-
-                {/* 缩略图 */}
-                <div className="shop-item-thumb">
-                  <img src={imageSrc} alt={item.product.name} />
-                </div>
-
-                {/* 商品信息 */}
-                <div className="shop-item-info">
-                  <div className="shop-item-row1">
-                    <span className="shop-item-name">{item.product.name}</span>
-                    <span className="shop-item-qty">×{item.quantity}</span>
+              <div key={key} style={{
+                background: "#111111",
+                border: "1px solid #1A1A1A",
+                borderRadius: 0,
+                overflow: "hidden"
+              }}>
+                <div style={{
+                  display: "flex",
+                  gap: "12px",
+                  padding: "16px"
+                }}>
+                  {/* 选择框 */}
+                  <div
+                    className={`cart-checkbox ${item.selected ? "checked" : ""}`}
+                    onClick={() => toggleSelect(item.product.slug, item.materialOption)}
+                    style={{
+                      alignSelf: "flex-start",
+                      marginTop: "4px"
+                    }}
+                  >
+                    {item.selected && (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    )}
                   </div>
-                  <div className="shop-item-spec">{item.materialOption || "Standard"}</div>
 
+                  {/* 缩略图 */}
+                  <div style={{
+                    width: "80px",
+                    height: "80px",
+                    background: "#0A0A0A",
+                    border: "1px solid #1A1A1A",
+                    borderRadius: 0,
+                    overflow: "hidden",
+                    flexShrink: 0
+                  }}>
+                    <img
+                      src={imageSrc}
+                      alt={item.product.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover"
+                      }}
+                    />
+                  </div>
+
+                  {/* 商品信息 */}
+                  <div style={{
+                    flex: 1,
+                    minWidth: 0
+                  }}>
+                    <p style={{
+                      fontSize: "14px",
+                      color: "#F5F0EB",
+                      marginBottom: "4px",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis"
+                    }}>
+                      {item.product.name}
+                    </p>
+                    <p style={{
+                      fontSize: "12px",
+                      color: "#8A8580",
+                      marginBottom: "4px"
+                    }}>
+                      {item.materialOption || "Standard"} × {item.quantity}
+                    </p>
+                    <p style={{
+                      fontSize: "15px",
+                      color: "#E8B4B8",
+                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontWeight: 600
+                    }}>
+                      ${(unitPrice * item.quantity).toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+
+                {/* 底部操作栏 */}
+                <div style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "12px 16px",
+                  borderTop: "1px solid #1A1A1A",
+                  background: "rgba(232, 180, 184, 0.02)"
+                }}>
                   {/* 数量控制 */}
                   <div className="cart-qty-control">
                     <button
@@ -190,22 +254,17 @@ export default function CartPage() {
                       +
                     </button>
                   </div>
-                </div>
 
-                {/* 价格 */}
-                <div className="shop-item-price">
-                  <span className="shop-item-price-value">${(unitPrice * item.quantity).toLocaleString()}</span>
+                  {/* 删除按钮 */}
+                  <button
+                    className="cart-delete-btn"
+                    onClick={() => removeItem(item.product.slug, item.materialOption)}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                    </svg>
+                  </button>
                 </div>
-
-                {/* 删除按钮 */}
-                <button
-                  className="cart-delete-btn"
-                  onClick={() => removeItem(item.product.slug, item.materialOption)}
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
-                  </svg>
-                </button>
               </div>
             );
           })
