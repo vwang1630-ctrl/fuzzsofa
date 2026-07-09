@@ -6662,9 +6662,9 @@ textarea.form-control {
 
 .settings-section-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #8A8580;
   margin-bottom: 12px;
