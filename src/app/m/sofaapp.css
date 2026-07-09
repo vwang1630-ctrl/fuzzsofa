@@ -5728,7 +5728,7 @@ textarea.form-control {
 
 /* ===== Profile Page - Redesigned ===== */
 .profile-page .profile-content {
-  padding: 16px 16px 40px;
+  padding: 16px 0 40px;
 }
 
 /* 用户信息卡片 */
