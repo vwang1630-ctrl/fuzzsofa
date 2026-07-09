@@ -6215,3 +6215,575 @@ textarea.form-control {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
+
+/* ============================================
+   ORDERS PAGE
+   ============================================ */
+.order-filters {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.order-filter-btn {
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a8580;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 0;
+  white-space: nowrap;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.order-filter-btn.active,
+.order-filter-btn:hover {
+  color: #E8B4B8;
+  border-color: #E8B4B8;
+}
+
+.order-list {
+  padding: 16px 20px;
+}
+
+.order-card {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 0;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.order-id-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.order-id-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #6a6560;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.order-id {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #8a8580;
+  letter-spacing: 0.05em;
+}
+
+.order-status {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 0;
+}
+
+.order-status.status-pending {
+  color: #E8B4B8;
+  background: rgba(232, 180, 184, 0.1);
+}
+
+.order-status.status-shipping {
+  color: #8a8580;
+  background: rgba(138, 133, 128, 0.1);
+}
+
+.order-status.status-completed {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+}
+
+.order-status.status-cancelled {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.order-items {
+  margin-bottom: 16px;
+}
+
+.order-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.order-item + .order-item {
+  border-top: 1px solid #1a1a1a;
+}
+
+.order-item-image {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #333;
+  border-radius: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.order-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.order-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.order-item-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #F5F0EB;
+  margin-bottom: 4px;
+}
+
+.order-item-spec {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #8a8580;
+  margin-bottom: 4px;
+}
+
+.order-item-price {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #E8B4B8;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #1a1a1a;
+}
+
+.order-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #6a6560;
+}
+
+.order-total {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #F5F0EB;
+}
+
+.order-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.order-action-btn {
+  flex: 1;
+  padding: 12px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a8580;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.order-action-btn:hover {
+  color: #F5F0EB;
+  border-color: #F5F0EB;
+}
+
+.order-action-btn.primary {
+  color: #E8B4B8;
+  border-color: rgba(232, 180, 184, 0.35);
+  background: rgba(232, 180, 184, 0.06);
+}
+
+.order-action-btn.primary:hover {
+  background: rgba(232, 180, 184, 0.12);
+  border-color: rgba(232, 180, 184, 0.55);
+}
+
+/* ============================================
+   ADDRESSES PAGE
+   ============================================ */
+.addr-list {
+  padding: 16px 20px;
+}
+
+.addr-card {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 0;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.addr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.addr-name-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.addr-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #F5F0EB;
+}
+
+.addr-badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #E8B4B8;
+  background: rgba(232, 180, 184, 0.1);
+  padding: 2px 8px;
+  border-radius: 0;
+}
+
+.addr-phone {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #8a8580;
+}
+
+.addr-body {
+  margin-bottom: 16px;
+}
+
+.addr-line {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #8a8580;
+  line-height: 1.6;
+}
+
+.addr-country {
+  color: #6a6560;
+  margin-top: 4px;
+}
+
+.addr-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #1a1a1a;
+}
+
+.addr-action-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a8580;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.addr-action-btn:hover {
+  color: #F5F0EB;
+}
+
+.addr-action-btn.danger:hover {
+  color: #ef4444;
+}
+
+.addr-add-btn {
+  display: block;
+  margin: 20px;
+  padding: 16px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #E8B4B8;
+  background: rgba(232, 180, 184, 0.06);
+  border: 1.5px solid rgba(232, 180, 184, 0.35);
+  border-radius: 0;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.addr-add-btn:hover {
+  background: rgba(232, 180, 184, 0.12);
+  border-color: rgba(232, 180, 184, 0.55);
+}
+
+/* ============================================
+   FAVORITES PAGE
+   ============================================ */
+.fav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 16px 20px;
+}
+
+.fav-card {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 0;
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.fav-card:hover {
+  border-color: #333;
+  transform: translateY(-2px);
+}
+
+.fav-image {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.fav-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.fav-card:hover .fav-image img {
+  transform: scale(1.05);
+}
+
+.fav-info {
+  padding: 12px;
+}
+
+.fav-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #F5F0EB;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fav-price {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #E8B4B8;
+}
+
+.empty-action {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 12px 24px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #E8B4B8;
+  background: transparent;
+  border: 1px solid rgba(232, 180, 184, 0.35);
+  border-radius: 0;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.empty-action:hover {
+  background: rgba(232, 180, 184, 0.1);
+  border-color: #E8B4B8;
+}
+
+/* ============================================
+   SETTINGS PAGE
+   ============================================ */
+.settings-sections {
+  padding: 16px 20px;
+}
+
+.settings-section {
+  margin-bottom: 24px;
+}
+
+.settings-section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #6a6560;
+  margin-bottom: 12px;
+}
+
+.settings-group {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.settings-item:not(:last-child) {
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.settings-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.settings-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #F5F0EB;
+}
+
+.settings-arrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  color: #6a6560;
+}
+
+.settings-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.settings-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #333;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  background: #8a8580;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.settings-toggle input:checked + .toggle-slider {
+  background: rgba(232, 180, 184, 0.3);
+}
+
+.settings-toggle input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+  background: #E8B4B8;
+}
+
+.settings-select {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #8a8580;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  appearance: none;
+}
+
+.settings-select option {
+  background: #111;
+  color: #F5F0EB;
+}
+
+.settings-signout {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin-top: 24px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ef4444;
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.settings-signout:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+}
+}

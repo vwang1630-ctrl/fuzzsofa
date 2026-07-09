@@ -1,43 +1,118 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 
-const addresses = [
-  { id: 1, name: '张三', phone: '+86 138****5678', line1: '上海市静安区南京西路 1688 号', line2: '静安嘉里中心 T3-2801', default: true },
+interface Address {
+  id: number;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  country: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state?: string;
+  zipCode: string;
+  isDefault: boolean;
+}
+
+const addresses: Address[] = [
+  {
+    id: 1,
+    firstName: 'John',
+    lastName: 'Smith',
+    phone: '+1 212-555-0123',
+    country: 'United States',
+    address1: '123 Fifth Avenue',
+    address2: 'Apt 4B',
+    city: 'New York',
+    state: 'NY',
+    zipCode: '10001',
+    isDefault: true
+  },
+  {
+    id: 2,
+    firstName: 'John',
+    lastName: 'Smith',
+    phone: '+1 212-555-0123',
+    country: 'United States',
+    address1: '456 Park Avenue',
+    city: 'New York',
+    state: 'NY',
+    zipCode: '10022',
+    isDefault: false
+  }
 ];
 
 export default function AddressesPage() {
+  const [addressList, setAddressList] = useState<Address[]>(addresses);
+
+  const handleDelete = (id: number) => {
+    setAddressList(addressList.filter(a => a.id !== id));
+  };
+
   return (
     <div className="page page-addresses active" id="pageAddresses">
+      {/* Header */}
       <div className="page-header">
-        <Link href="/m/profile" className="log-detail-back">‹</Link>
-        <span className="title">地址管理</span>
+        <Link href="/m/profile" className="log-detail-back">&lsaquo;</Link>
+        <span className="title">Shipping Addresses</span>
       </div>
-      {addresses.length === 0 ? (
+
+      {/* Address List */}
+      {addressList.length === 0 ? (
         <div className="empty-state">
-          <svg className="empty-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-          <div className="empty-text">暂无地址</div>
+          <svg className="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <div className="empty-text">No addresses saved</div>
         </div>
       ) : (
         <div className="addr-list" id="addrList">
-          {addresses.map((a) => (
-            <div key={a.id} className="addr-card">
-              <div className="addr-top">
-                <span className="addr-name">{a.name}</span>
-                <span className="addr-phone">{a.phone}</span>
-                {a.default && <span className="addr-default">默认</span>}
+          {addressList.map((addr) => (
+            <div key={addr.id} className="addr-card">
+              {/* Address Header */}
+              <div className="addr-header">
+                <div className="addr-name-group">
+                  <span className="addr-name">{addr.firstName} {addr.lastName}</span>
+                  {addr.isDefault && <span className="addr-badge">Default</span>}
+                </div>
+                <span className="addr-phone">{addr.phone}</span>
               </div>
-              <div className="addr-line">{a.line1}</div>
-              <div className="addr-line">{a.line2}</div>
+
+              {/* Address Body */}
+              <div className="addr-body">
+                <div className="addr-line">{addr.address1}</div>
+                {addr.address2 && <div className="addr-line">{addr.address2}</div>}
+                <div className="addr-line">
+                  {addr.city}{addr.state ? `, ${addr.state}` : ''} {addr.zipCode}
+                </div>
+                <div className="addr-line addr-country">{addr.country}</div>
+              </div>
+
+              {/* Address Actions */}
               <div className="addr-actions">
-                <button className="addr-edit">编辑</button>
-                <button className="addr-del">删除</button>
+                <Link href={`/m/profile/addresses/edit/${addr.id}`} className="addr-action-btn">
+                  Edit
+                </Link>
+                <button 
+                  className="addr-action-btn danger"
+                  onClick={() => handleDelete(addr.id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
         </div>
       )}
-      <Link href="/m/profile/addresses/new" className="addr-add-btn">+ 新增地址</Link>
+
+      {/* Add New Address Button */}
+      <Link href="/m/profile/addresses/new" className="addr-add-btn panel-confirm-btn">
+        + Add New Address
+      </Link>
     </div>
   );
 }
