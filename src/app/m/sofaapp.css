@@ -11,7 +11,7 @@
   color: #E8B4B8 !important;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif !important;
   font-size: 15px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   letter-spacing: 0.15em !important;
 }
 
@@ -4023,10 +4023,11 @@ textarea.form-control {
   background: transparent;
   border: 1px solid #F5F0EB;
   color: #F5F0EB;
-  font-size: 14px;
-  font-weight: 300;
-  letter-spacing: 0.08em;
-  border-radius: 6px;
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  border-radius: 0;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -4043,10 +4044,11 @@ textarea.form-control {
   background: #E8B4B8;
   border: 1px solid #E8B4B8;
   color: #0A0A0A;
-  font-size: 14px;
-  font-weight: 300;
-  letter-spacing: 0.08em;
-  border-radius: 6px;
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  border-radius: 0;
   cursor: pointer;
   transition: all 0.3s ease;
 }
