@@ -11,13 +11,34 @@ export default function ProfilePage() {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<Tab>("orders");
     const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
+    const [userName, setUserName] = useState<string>("Guest User");
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
         setSavedAddresses(getSavedAddresses());
+        // 检查用户是否已登录
+        const userStr = localStorage.getItem("fuzz_user");
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr);
+                if (user && user.name) {
+                    setUserName(user.name);
+                    setIsLoggedIn(true);
+                }
+            } catch (e) {
+                // 解析失败，保持 Guest User
+            }
+        }
     }, []);
 
     const handleBack = () => {
         router.push("/m");
+    };
+
+    const handleUserCardClick = () => {
+        if (!isLoggedIn) {
+            router.push("/m/auth/login");
+        }
     };
 
     const tabs: {
@@ -57,7 +78,17 @@ export default function ProfilePage() {
             </div>
             <div className="shop-content profile-content">
                 {}
-                <div className="profile-user-card" style={{ flexDirection: "column", alignItems: "center", padding: "32px 20px", textAlign: "center" }}>
+                <div 
+                    className="profile-user-card" 
+                    onClick={handleUserCardClick}
+                    style={{ 
+                        flexDirection: "column", 
+                        alignItems: "center", 
+                        padding: "32px 20px", 
+                        textAlign: "center",
+                        cursor: isLoggedIn ? "default" : "pointer",
+                        transition: "all 0.3s ease"
+                    }}>
                     <div className="profile-avatar" style={{ width: "80px", height: "80px", borderRadius: "50%", background: "rgba(232, 180, 184, 0.1)", border: "1px solid rgba(232, 180, 184, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px" }}>
                         <svg
                             width="40"
@@ -70,18 +101,24 @@ export default function ProfilePage() {
                             <circle cx="12" cy="7" r="4" />
                         </svg>
                     </div>
-                    <p className="profile-user-name" style={{ fontSize: "18px", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", color: "#F5F0EB", marginBottom: "8px" }}>Guest User</p>
-                    <p className="profile-user-email" style={{ fontSize: "12px", color: "#8A8580", letterSpacing: "0.05em", marginBottom: "20px" }}>Sign in to sync your data across devices</p>
-                    <button className="profile-signin-btn" style={{ padding: "12px 32px", background: "transparent", border: "1px solid #E8B4B8", color: "#E8B4B8", fontSize: "12px", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.3s ease" }}>
-                        Sign In / Register
-                    </button>
+                    <p className="profile-user-name" style={{ fontSize: "18px", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", color: "#F5F0EB", marginBottom: isLoggedIn ? "0" : "8px" }}>{userName}</p>
+                    {!isLoggedIn && (
+                        <>
+                            <p className="profile-user-email" style={{ fontSize: "12px", color: "#8A8580", letterSpacing: "0.05em", marginBottom: "20px" }}>Sign in to sync your data across devices</p>
+                            <button className="profile-signin-btn" style={{ padding: "12px 32px", background: "transparent", border: "1px solid #E8B4B8", color: "#E8B4B8", fontSize: "12px", fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.3s ease" }}>
+                                Sign In / Register
+                            </button>
+                        </>
+                    )}
                 </div>
                 {}
-                <div style={{ padding: "0 20px 20px", textAlign: "center" }}>
-                    <p style={{ fontSize: "11px", color: "#6A6560", letterSpacing: "0.05em", lineHeight: 1.6 }}>
-                        Create an account to track orders, save addresses, and access exclusive features.
-                    </p>
-                </div>
+                {!isLoggedIn && (
+                    <div style={{ padding: "0 20px 20px", textAlign: "center" }}>
+                        <p style={{ fontSize: "11px", color: "#6A6560", letterSpacing: "0.05em", lineHeight: 1.6 }}>
+                            Create an account to track orders, save addresses, and access exclusive features.
+                        </p>
+                    </div>
+                )}
                 {}
                 <div className="profile-tabs">
                     {tabs.map(tab => <button
