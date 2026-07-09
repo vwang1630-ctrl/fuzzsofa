@@ -501,7 +501,7 @@ function SettingsTab() {
         </svg>,
 
         label: "Payment Methods",
-        action: () => {}
+        action: () => router.push("/m/profile/payment")
     }, {
         icon: <svg
             width="20"
