@@ -225,6 +225,14 @@ export default function MobileProductPage(
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [unit, setUnit] = useState<"cm" | "in">("cm");
     const [faved, setFaved] = useState(false);
+    
+    // 从 localStorage 读取收藏状态
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const favs = JSON.parse(localStorage.getItem("fuzz_favs") || "[]");
+            setFaved(favs.includes(OWL_DATA.slug));
+        }
+    }, []);
     const [showShare, setShowShare] = useState(false);
     const [showPurchasePanel, setShowPurchasePanel] = useState(false);
     const [purchaseSource, setPurchaseSource] = useState<"cart" | "buy">("cart");
@@ -349,7 +357,24 @@ export default function MobileProductPage(
                         <button
                             id="detailFavBtn"
                             className={faved ? "faved" : ""}
-                            onClick={() => setFaved(!faved)}>
+                            onClick={() => {
+                                const newFaved = !faved;
+                                setFaved(newFaved);
+                                if (typeof window !== "undefined") {
+                                    const favs = JSON.parse(localStorage.getItem("fuzz_favs") || "[]");
+                                    if (newFaved) {
+                                        if (!favs.includes(OWL_DATA.slug)) {
+                                            favs.push(OWL_DATA.slug);
+                                        }
+                                    } else {
+                                        const idx = favs.indexOf(OWL_DATA.slug);
+                                        if (idx > -1) {
+                                            favs.splice(idx, 1);
+                                        }
+                                    }
+                                    localStorage.setItem("fuzz_favs", JSON.stringify(favs));
+                                }
+                            }}>
                             <svg
                                 className="icon"
                                 viewBox="0 0 24 24"
