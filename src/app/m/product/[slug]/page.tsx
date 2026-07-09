@@ -667,7 +667,7 @@ export default function MobileProductPage(
                                 setShowPurchasePanel(false);
                                 router.push("/m/checkout");
                             }
-                        }}>现在购买</button>
+                        }}>{purchaseSource === "cart" ? "Add to Cart" : "Buy Now"}</button>
                 </div>
             </div>}
             {}
