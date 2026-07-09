@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
-import type { CartItem } from "@/lib/cart-context";
 import "@/app/m/sofaapp.css";
 
 export default function OrderSuccessPage() {
@@ -11,7 +10,7 @@ export default function OrderSuccessPage() {
   const searchParams = useSearchParams();
   const { region } = useCart();
   const [orderId, setOrderId] = useState<string>("");
-  const [orderItems, setOrderItems] = useState<CartItem[]>([]);
+  const [orderItems, setOrderItems] = useState<{ name: string; color: string; quantity: number; price: number }[]>([]);
   const [total, setTotal] = useState<number>(0);
 
   // 商品图片映射
@@ -34,12 +33,6 @@ export default function OrderSuccessPage() {
     }
     setTotal(Number(totalAmount));
   }, [searchParams]);
-
-  // 获取单价
-  const getUnitPrice = (item: CartItem) => {
-    const range = item.product.priceRange[region] || item.product.priceRange.americas;
-    return range[0];
-  };
 
   const handleClose = () => {
     router.push("/m");
@@ -72,15 +65,15 @@ export default function OrderSuccessPage() {
         {/* 商品明细 */}
         <div className="order-details-section">
           <div className="shop-section-title">Order Details</div>
-          {orderItems.map((item: CartItem) => (
-            <div key={item.product.slug} className="order-details-row">
+          {orderItems.map((item, index) => (
+            <div key={index} className="order-details-row">
               <div className="order-details-item">
                 <span className="order-details-name">
-                  {item.product.name} ×{item.quantity}
+                  {item.name} ×{item.quantity}
                 </span>
               </div>
               <span className="order-details-price">
-                ${(getUnitPrice(item) * item.quantity).toLocaleString()}
+                ${(item.price * item.quantity).toLocaleString()}
               </span>
             </div>
           ))}
