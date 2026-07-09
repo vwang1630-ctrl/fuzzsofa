@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 import type { Region } from "./products";
 
 // Simplified product type for cart items
@@ -48,9 +48,48 @@ function getUnitPrice(product: CartProduct, region: Region): number {
   return range[0]; // Use the low end of the price range as the unit price
 }
 
+const CART_STORAGE_KEY = 'sofa_cart_items';
+
+// Load cart items from localStorage
+function loadCartItems(): CartItem[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error('Failed to load cart items:', e);
+  }
+  return [];
+}
+
+// Save cart items to localStorage
+function saveCartItems(items: CartItem[]): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  } catch (e) {
+    console.error('Failed to save cart items:', e);
+  }
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const region = "americas" as Region; // Default region; could be derived from language context
+
+  // Load cart items from localStorage on mount
+  useEffect(() => {
+    const storedItems = loadCartItems();
+    if (storedItems.length > 0) {
+      setItems(storedItems);
+    }
+  }, []);
+
+  // Save cart items to localStorage whenever they change
+  useEffect(() => {
+    saveCartItems(items);
+  }, [items]);
 
   const addItem = useCallback((item: CartItem) => {
     setItems((prev) => {
