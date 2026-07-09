@@ -56,7 +56,18 @@ function loadCartItems(): CartItem[] {
   try {
     const stored = localStorage.getItem(CART_STORAGE_KEY);
     if (stored) {
-      return JSON.parse(stored);
+      const parsed = JSON.parse(stored);
+      // Validate data structure
+      if (Array.isArray(parsed)) {
+        return parsed.filter((item) => 
+          item && 
+          typeof item === 'object' && 
+          item.product && 
+          typeof item.product === 'object' &&
+          typeof item.product.name === 'string' &&
+          typeof item.product.slug === 'string'
+        );
+      }
     }
   } catch (e) {
     console.error('Failed to load cart items:', e);
