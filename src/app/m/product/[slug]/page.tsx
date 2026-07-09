@@ -493,7 +493,7 @@ export default function MobileProductPage(
                 </div>
             </div>
             {}
-            {!showAR && <button
+            {!showAR && !showAIOverlay && <button
                 className={`btn-ai-float${showPurchasePanel ? " panel-open" : ""}`}
                 onClick={() => setShowAIOverlay(true)}>
                 <svg className="icon" viewBox="0 0 24 24">
