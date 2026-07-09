@@ -8,8 +8,10 @@ import { getSupabaseBrowserClient } from '@/lib/supabase-browser';
 export default function LoginPage() {
   const router = useRouter();
   const supabase = getSupabaseBrowserClient();
+  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -19,19 +21,46 @@ export default function LoginPage() {
     setIsLoading(true);
     setError('');
 
+    if (isSignUp && password !== confirmPassword) {
+      setError('Passwords do not match');
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      if (isSignUp) {
+        // 注册
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+        });
 
-      if (error) {
-        setError(error.message);
-        setIsLoading(false);
-        return;
+        if (error) {
+          setError(error.message);
+          setIsLoading(false);
+          return;
+        }
+
+        // 注册成功后保存用户信息到 localStorage
+        localStorage.setItem('fuzz_user', JSON.stringify({ email }));
+        router.push('/m/profile');
+      } else {
+        // 登录
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (error) {
+          setError(error.message);
+          setIsLoading(false);
+          return;
+        }
+
+        // 登录成功后保存用户信息到 localStorage
+        localStorage.setItem('fuzz_user', JSON.stringify({ email }));
+        router.push('/m/profile');
       }
-
-      router.push('/m/profile');
     } catch (err) {
       setError('An unexpected error occurred');
       setIsLoading(false);
@@ -121,7 +150,7 @@ export default function LoginPage() {
         color: '#F5F0EB',
         textAlign: 'center',
         marginBottom: '12px'
-      }}>Welcome Back</div>
+      }}>{isSignUp ? 'Create Account' : 'Welcome Back'}</div>
 
       {/* 副标题 */}
       <div style={{
@@ -133,7 +162,7 @@ export default function LoginPage() {
         textAlign: 'center',
         marginBottom: '40px',
         lineHeight: '1.6'
-      }}>Sign in to sync your data across devices</div>
+      }}>{isSignUp ? 'Sign up to get started' : 'Sign in to sync your data across devices'}</div>
       
       {/* 错误提示 */}
       {error && (
@@ -213,7 +242,7 @@ export default function LoginPage() {
           letterSpacing: '0.1em',
           color: '#8A8580',
           textTransform: 'uppercase'
-        }}>or login with email</span>
+        }}>{isSignUp ? 'or sign up with email' : 'or login with email'}</span>
         <div style={{
           flex: '1',
           height: '1px',
@@ -221,7 +250,7 @@ export default function LoginPage() {
         }}></div>
       </div>
 
-      {/* 登录表单 */}
+      {/* 表单 */}
       <form onSubmit={handleSubmit} style={{
         display: 'flex',
         flexDirection: 'column',
@@ -297,46 +326,89 @@ export default function LoginPage() {
             onBlur={(e) => e.currentTarget.style.borderColor = '#333'}
           />
         </div>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <label style={{
+
+        {/* 注册时显示确认密码 */}
+        {isSignUp && (
+          <div>
+            <label style={{
+              display: 'block',
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              fontSize: '11px',
+              fontWeight: '300',
+              letterSpacing: '0.1em',
+              color: '#8A8580',
+              textTransform: 'uppercase',
+              marginBottom: '8px'
+            }}>Confirm Password</label>
+            <input 
+              type="password" 
+              placeholder="••••••••" 
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required 
+              style={{
+                width: '100%',
+                background: '#111111',
+                border: '1px solid #333',
+                borderRadius: '0',
+                color: '#F5F0EB',
+                padding: '14px 16px',
+                fontSize: '14px',
+                fontFamily: "'Inter', -apple-system, sans-serif",
+                fontWeight: '300',
+                letterSpacing: '0.02em',
+                outline: 'none',
+                transition: 'border-color 0.3s ease'
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = '#E8B4B8'}
+              onBlur={(e) => e.currentTarget.style.borderColor = '#333'}
+            />
+          </div>
+        )}
+
+        {!isSignUp && (
+          <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            fontFamily: "'Inter', -apple-system, sans-serif",
-            fontSize: '12px',
-            fontWeight: '300',
-            color: '#8A8580',
-            cursor: 'pointer'
+            justifyContent: 'space-between'
           }}>
-            <input 
-              type="checkbox" 
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              style={{
-                width: '16px',
-                height: '16px',
-                accentColor: '#E8B4B8'
-              }}
-            /> 
-            Remember me
-          </label>
-          <Link href="/m/auth/forgot-password" style={{
-            fontFamily: "'Inter', -apple-system, sans-serif",
-            fontSize: '12px',
-            fontWeight: '300',
-            color: '#E8B4B8',
-            textDecoration: 'none',
-            letterSpacing: '0.02em',
-            transition: 'opacity 0.3s ease'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
-          onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
-          >Forgot password?</Link>
-        </div>
+            <label style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              fontSize: '12px',
+              fontWeight: '300',
+              color: '#8A8580',
+              cursor: 'pointer'
+            }}>
+              <input 
+                type="checkbox" 
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  accentColor: '#E8B4B8'
+                }}
+              /> 
+              Remember me
+            </label>
+            <Link href="/m/auth/forgot-password" style={{
+              fontFamily: "'Inter', -apple-system, sans-serif",
+              fontSize: '12px',
+              fontWeight: '300',
+              color: '#E8B4B8',
+              textDecoration: 'none',
+              letterSpacing: '0.02em',
+              transition: 'opacity 0.3s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+            >Forgot password?</Link>
+          </div>
+        )}
+
         <button 
           type="submit" 
           className="panel-confirm-btn"
@@ -346,11 +418,11 @@ export default function LoginPage() {
             marginTop: '8px'
           }}
         >
-          {isLoading ? 'SIGNING IN...' : 'SIGN IN'}
+          {isLoading ? (isSignUp ? 'CREATING ACCOUNT...' : 'SIGNING IN...') : (isSignUp ? 'CREATE ACCOUNT' : 'SIGN IN')}
         </button>
       </form>
 
-      {/* 注册链接 */}
+      {/* 切换链接 */}
       <div style={{
         textAlign: 'center',
         marginTop: '32px',
@@ -360,16 +432,27 @@ export default function LoginPage() {
         color: '#8A8580',
         letterSpacing: '0.02em'
       }}>
-        Don't have an account?{' '}
-        <Link href="/m/auth/register" style={{
-          color: '#E8B4B8',
-          textDecoration: 'none',
-          fontWeight: '400',
-          transition: 'opacity 0.3s ease'
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
-        onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
-        >Sign up</Link>
+        {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+        <button 
+          type="button"
+          onClick={() => {
+            setIsSignUp(!isSignUp);
+            setError('');
+          }}
+          style={{
+            color: '#E8B4B8',
+            textDecoration: 'none',
+            fontWeight: '400',
+            transition: 'opacity 0.3s ease',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0,
+            font: 'inherit'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
+          onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+        >{isSignUp ? 'Sign in' : 'Sign up'}</button>
       </div>
 
       {/* 条款说明 */}
@@ -383,7 +466,7 @@ export default function LoginPage() {
         lineHeight: '1.6',
         letterSpacing: '0.02em'
       }}>
-        By signing in, you agree to our{' '}
+        By {isSignUp ? 'signing up' : 'signing in'}, you agree to our{' '}
         <Link href="/m/profile/settings/terms" style={{
           color: 'rgba(232, 180, 184, 0.6)',
           textDecoration: 'none'
