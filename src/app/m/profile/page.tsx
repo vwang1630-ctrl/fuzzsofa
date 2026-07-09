@@ -160,14 +160,14 @@ function OrdersTab() {
                     key={tab.key}
                     onClick={() => setFilter(tab.key)}
                     style={{
-                        padding: "8px 16px",
+                        padding: "6px 10px",
                         background: filter === tab.key ? "#E8B4B8" : "transparent",
                         color: filter === tab.key ? "#0A0A0A" : "#8A8580",
                         border: `1px solid ${filter === tab.key ? "#E8B4B8" : "#333333"}`,
                         borderRadius: 0,
-                        fontSize: "12px",
+                        fontSize: "10px",
                         fontWeight: 500,
-                        letterSpacing: "0.1em",
+                        letterSpacing: "0.05em",
                         textTransform: "uppercase",
                         whiteSpace: "nowrap",
                         cursor: "pointer",
