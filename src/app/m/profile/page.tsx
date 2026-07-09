@@ -272,7 +272,10 @@ function OrdersTab() {
                         borderRadius: 0,
                         marginBottom: "16px",
                         overflow: "hidden",
-                        cursor: "pointer"
+                        cursor: "pointer",
+                        marginLeft: "-16px",
+                        marginRight: "-16px",
+                        width: "calc(100% + 32px)"
                     }}>
                     {}
                     <div
