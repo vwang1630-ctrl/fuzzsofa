@@ -1934,9 +1934,9 @@
   border: 1.5px solid rgba(232, 180, 184, 0.35);
   padding: 14px 42px;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   color: #E8B4B8;
@@ -2043,7 +2043,7 @@
   padding: 14px 20px;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.15em;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -2065,7 +2065,7 @@
   padding: 14px 20px;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.15em;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -4352,7 +4352,7 @@ textarea.form-control {
   color: #E8B4B8;
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.15em;
   border-radius: 0;
   min-height: 54px;
