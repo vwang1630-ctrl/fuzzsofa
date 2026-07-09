@@ -519,24 +519,157 @@ function AddressesTab(
 
 function FavoritesTab() {
     const router = useRouter();
+    const [favorites, setFavorites] = useState<string[]>([]);
+
+    // 从 localStorage 读取收藏数据
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const favs = JSON.parse(localStorage.getItem("fuzz_favs") || "[]");
+            setFavorites(favs);
+        }
+    }, []);
+
+    // 产品数据映射
+    const productData: Record<string, { name: string; image: string; price: string; slug: string }> = {
+        "owl-sofa": {
+            name: "Owl Chair",
+            image: "/products/owl/snowy-white.png",
+            price: "$3,500",
+            slug: "owl-sofa"
+        },
+        "gorilla-sofa": {
+            name: "Gorilla Sofa",
+            image: "/products/gorilla-sofa/gray.jpg",
+            price: "$7,800",
+            slug: "gorilla-sofa"
+        },
+        "flamingo-sofa": {
+            name: "Flamingo Sofa",
+            image: "/products/gorilla-sofa/cream.jpg",
+            price: "$5,600",
+            slug: "flamingo-sofa"
+        }
+    };
+
+    const handleRemoveFavorite = (slug: string) => {
+        const newFavs = favorites.filter(s => s !== slug);
+        setFavorites(newFavs);
+        localStorage.setItem("fuzz_favs", JSON.stringify(newFavs));
+    };
+
+    if (favorites.length === 0) {
+        return (
+            <div className="profile-section">
+                <div className="profile-empty-state">
+                    <svg
+                        width="48"
+                        height="48"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                    <p className="profile-empty-title">No Favorites Yet</p>
+                    <p className="profile-empty-text">Save your favorite items to view them later</p>
+                    <button className="profile-empty-btn" onClick={() => router.push("/m")}>Discover Products
+                                </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="profile-section">
-            <div className="profile-empty-state">
-                <svg
-                    width="48"
-                    height="48"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1">
-                    <path
-                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-                <p className="profile-empty-title">No Favorites Yet</p>
-                <p className="profile-empty-text">Save your favorite items to view them later</p>
-                <button className="profile-empty-btn" onClick={() => router.push("/m")}>Discover Products
+            <div style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "16px",
+                padding: "16px"
+            }}>
+                {favorites.map((slug) => {
+                    const product = productData[slug];
+                    if (!product) return null;
+
+                    return (
+                        <div key={slug} style={{ position: "relative" }}>
+                            <Link href={`/m/product/${slug}`} style={{
+                                display: "block",
+                                background: "#111111",
+                                border: "1px solid #1A1A1A",
+                                borderRadius: 0,
+                                overflow: "hidden",
+                                textDecoration: "none"
+                            }}>
+                                <div style={{
+                                    width: "100%",
+                                    aspectRatio: "1",
+                                    background: "#0A0A0A",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    overflow: "hidden"
+                                }}>
+                                    <img 
+                                        src={product.image} 
+                                        alt={product.name} 
+                                        loading="lazy"
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover"
+                                        }}
+                                    />
+                                </div>
+                                <div style={{ padding: "12px" }}>
+                                    <div style={{
+                                        fontFamily: "'Inter', sans-serif",
+                                        fontSize: "14px",
+                                        fontWeight: 400,
+                                        color: "#F5F0EB",
+                                        marginBottom: "8px",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        whiteSpace: "nowrap"
+                                    }}>{product.name}</div>
+                                    <div style={{
+                                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                        fontSize: "15px",
+                                        fontWeight: 600,
+                                        color: "#E8B4B8"
+                                    }}>{product.price}</div>
+                                </div>
+                            </Link>
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    handleRemoveFavorite(slug);
+                                }}
+                                style={{
+                                    position: "absolute",
+                                    top: "8px",
+                                    right: "8px",
+                                    width: "32px",
+                                    height: "32px",
+                                    background: "#0A0A0A",
+                                    border: "1px solid #1A1A1A",
+                                    borderRadius: 0,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    cursor: "pointer",
+                                    zIndex: 10
+                                }}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8B4B8" stroke="#E8B4B8" strokeWidth="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                </svg>
                             </button>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );
