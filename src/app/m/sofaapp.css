@@ -1962,7 +1962,7 @@
 /* ===== AI Preview Floating Button ===== */
 #pageDetail .btn-ai-float {
   position: fixed;
-  bottom: 82px;
+  bottom: 130px;
   right: 20px;
   width: 56px;
   height: 56px;
@@ -2001,7 +2001,7 @@
 
 /* AI button position when purchase panel is open - above panel, right side */
 #pageDetail .btn-ai-float.panel-open {
-  bottom: calc(70vh + 8px);
+  bottom: calc(70vh + 20px);
   z-index: 301;
   right: 20px;
 }
