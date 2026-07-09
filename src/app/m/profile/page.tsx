@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getSavedAddresses, SavedAddress } from '@/lib/address-storage';
+import { getOrders, Order } from '@/lib/order-storage';
 import '@/app/m/sofaapp.css';
 
 type Tab = 'orders' | 'addresses' | 'favorites' | 'settings';
@@ -90,62 +91,199 @@ export default function ProfilePage() {
 // 订单标签页
 function OrdersTab() {
   const router = useRouter();
-  
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [filter, setFilter] = useState<string>('all');
+
+  useEffect(() => {
+    setOrders(getOrders());
+  }, []);
+
+  const filteredOrders = filter === 'all' ? orders : orders.filter(o => o.status === filter);
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Pending': return '#E8A050';
+      case 'Shipping': return '#7EB8E0';
+      case 'Completed': return '#A8A8A8';
+      case 'Cancelled': return '#555555';
+      default: return '#8A8580';
+    }
+  };
+
   return (
     <div className="profile-section">
-      {/* 订单统计卡片 */}
-      <div className="profile-stats-grid">
-        <div className="profile-stat-card" onClick={() => router.push('/m/orders')}>
-          <div className="profile-stat-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
-              <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-            </svg>
-          </div>
-          <span className="profile-stat-label">All Orders</span>
-        </div>
-        <div className="profile-stat-card" onClick={() => router.push('/m/orders?status=pending')}>
-          <div className="profile-stat-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-          </div>
-          <span className="profile-stat-label">Pending</span>
-        </div>
-        <div className="profile-stat-card" onClick={() => router.push('/m/orders?status=shipped')}>
-          <div className="profile-stat-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="1" y="3" width="15" height="13" />
-              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
-              <circle cx="5.5" cy="18.5" r="2.5" />
-              <circle cx="18.5" cy="18.5" r="2.5" />
-            </svg>
-          </div>
-          <span className="profile-stat-label">Shipping</span>
-        </div>
-        <div className="profile-stat-card" onClick={() => router.push('/m/orders?status=delivered')}>
-          <div className="profile-stat-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-          </div>
-          <span className="profile-stat-label">Completed</span>
-        </div>
+      {/* 状态筛选器 */}
+      <div style={{
+        display: 'flex',
+        gap: '8px',
+        padding: '16px',
+        overflowX: 'auto',
+        borderBottom: '1px solid #1A1A1A'
+      }}>
+        {[
+          { key: 'all', label: 'All', count: orders.length },
+          { key: 'Pending', label: 'Pending', count: orders.filter(o => o.status === 'Pending').length },
+          { key: 'Shipping', label: 'Shipping', count: orders.filter(o => o.status === 'Shipping').length },
+          { key: 'Completed', label: 'Completed', count: orders.filter(o => o.status === 'Completed').length },
+          { key: 'Cancelled', label: 'Cancelled', count: orders.filter(o => o.status === 'Cancelled').length },
+        ].map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setFilter(tab.key)}
+            style={{
+              padding: '8px 16px',
+              background: filter === tab.key ? '#E8B4B8' : 'transparent',
+              color: filter === tab.key ? '#0A0A0A' : '#8A8580',
+              border: `1px solid ${filter === tab.key ? '#E8B4B8' : '#333333'}`,
+              borderRadius: 0,
+              fontSize: '12px',
+              fontWeight: 500,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              whiteSpace: 'nowrap',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            {tab.label} ({tab.count})
+          </button>
+        ))}
       </div>
+      
+      {/* Orders List */}
+      <div className="orders-list" style={{ padding: '16px' }}>
+        {filteredOrders.length === 0 ? (
+          <div className="orders-empty" style={{
+            textAlign: 'center',
+            padding: '60px 20px',
+            color: '#8A8580'
+          }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" style={{ margin: '0 auto 16px', opacity: 0.5 }}>
+              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            <p style={{ fontSize: '14px', marginBottom: '16px' }}>No orders yet</p>
+            <Link 
+              href="/m"
+              style={{
+                display: 'inline-block',
+                padding: '12px 24px',
+                background: 'rgba(232, 180, 184, 0.06)',
+                color: '#E8B4B8',
+                border: '1.5px solid rgba(232, 180, 184, 0.35)',
+                borderRadius: 0,
+                fontSize: '13px',
+                fontWeight: 500,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              Start Shopping
+            </Link>
+          </div>
+        ) : (
+          filteredOrders.map(order => (
+            <div key={order.id} className="order-card" style={{
+              background: '#111111',
+              border: '1px solid #1A1A1A',
+              borderRadius: 0,
+              marginBottom: '16px',
+              overflow: 'hidden'
+            }}>
+              {/* Order Header */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '16px',
+                borderBottom: '1px solid #1A1A1A'
+              }}>
+                <div>
+                  <p style={{ fontSize: '11px', color: '#8A8580', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px' }}>
+                    Order #{order.id.slice(-8)}
+                  </p>
+                  <p style={{ fontSize: '12px', color: '#6A6560' }}>
+                    {new Date(order.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                  </p>
+                </div>
+                <span style={{
+                  padding: '4px 12px',
+                  fontSize: '11px',
+                  fontWeight: 500,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: getStatusColor(order.status),
+                  border: `1px solid ${getStatusColor(order.status)}`,
+                  borderRadius: 0
+                }}>
+                  {order.status}
+                </span>
+              </div>
 
-      {/* 空状态 */}
-      <div className="profile-empty-state">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
-          <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-        </svg>
-        <p className="profile-empty-title">No Orders Yet</p>
-        <p className="profile-empty-text">Start shopping to see your orders here</p>
-        <button className="profile-empty-btn" onClick={() => router.push('/m')}>
-          Browse Collection
-        </button>
+              {/* Order Items */}
+              <div style={{ padding: '16px' }}>
+                {order.items.map((item, idx) => (
+                  <div key={idx} style={{
+                    display: 'flex',
+                    gap: '12px',
+                    marginBottom: idx < order.items.length - 1 ? '12px' : 0
+                  }}>
+                    <div style={{
+                      width: '60px',
+                      height: '60px',
+                      background: '#0A0A0A',
+                      border: '1px solid #1A1A1A',
+                      borderRadius: 0,
+                      overflow: 'hidden',
+                      flexShrink: 0
+                    }}>
+                      {item.image ? (
+                        <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#333' }}>
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: '14px', color: '#F5F0EB', marginBottom: '4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {item.name}
+                      </p>
+                      <p style={{ fontSize: '12px', color: '#8A8580', marginBottom: '4px' }}>
+                        {item.color} × {item.quantity}
+                      </p>
+                      <p style={{ fontSize: '13px', color: '#E8B4B8' }}>
+                        ${item.price.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Order Footer */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '12px 16px',
+                borderTop: '1px solid #1A1A1A',
+                background: 'rgba(232, 180, 184, 0.02)'
+              }}>
+                <span style={{ fontSize: '12px', color: '#8A8580', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                  Total
+                </span>
+                <span style={{ fontSize: '16px', color: '#E8B4B8', fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}>
+                  ${order.total.toLocaleString()}
+                </span>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
