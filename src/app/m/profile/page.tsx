@@ -173,7 +173,7 @@ function OrdersTab() {
                         cursor: "pointer",
                         transition: "all 0.3s ease"
                     }}>
-                    {tab.label}All<!-- -->&nbsp;{tab.count})
+                    {tab.label}
                               </button>)}
             </div>
             {}
