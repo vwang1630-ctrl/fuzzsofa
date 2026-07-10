@@ -4201,7 +4201,7 @@ textarea.form-control {
 #pageDetail .purchase-panel .spec-selector,
 #pageDetail .purchase-panel .panel-quantity,
 #pageDetail .purchase-panel .panel-price-summary {
-  padding: 16px 20px;
+  padding: 16px 0;
   border-bottom: 1px solid #1A1A1A;
   margin: 0;
 }

@@ -589,10 +589,7 @@ export default function MobileProductPage(
                     </div>
                     {}
                     <div
-                        className="spec-selector"
-                        style={{
-                            marginTop: 16
-                        }}>
+                        className="spec-selector">
                         {}
                         <div className="material-tabs">
                             {MATERIAL_GROUPS.map(mg => {
