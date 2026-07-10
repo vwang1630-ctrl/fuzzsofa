@@ -41,14 +41,14 @@ export default function OrderSuccessPage() {
   return (
     <div className="shop-page" id="orderSuccessPage">
       {/* 顶部导航栏 */}
-      <div className="shop-header">
-        <button onClick={handleClose} className="shop-header-back" style={{ color: "#E8B4B8" }}>
+      <div style={{ display: "flex", alignItems: "center", padding: "16px 20px", background: "#000", borderBottom: "1px solid #1A1A1A" }}>
+        <button onClick={handleClose} style={{ width: "32px", height: "32px", display: "flex", alignItems: "center", justifyContent: "center", background: "transparent", border: "none", color: "#E8B4B8", cursor: "pointer", padding: 0 }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <polyline points="15 18 9 12 15 6" />
           </svg>
         </button>
-        <h1 className="shop-header-title" style={{ fontSize: "16px", textTransform: "uppercase", flex: 1, textAlign: "center" }}>Order Confirmed</h1>
-        <span style={{ width: "28px" }}></span>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "16px", fontWeight: 400, letterSpacing: "0.15em", color: "#F5F0EB", margin: 0, flex: 1, textAlign: "center", textTransform: "uppercase" }}>ORDER CONFIRMED</h1>
+        <span style={{ width: "32px" }}></span>
       </div>
 
       <div className="shop-content">
