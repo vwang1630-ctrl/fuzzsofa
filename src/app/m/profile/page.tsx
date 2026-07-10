@@ -364,7 +364,7 @@ function OrdersTab() {
                                 marginBottom: idx < order.items.length - 1 ? "12px" : 0
                             }}>
                             <Link
-                                href={`/m/product/${item.name.toLowerCase().includes('owl') ? 'owl-sofa' : item.name.toLowerCase().includes('gorilla') ? 'gorilla-sofa' : 'flamingo-sofa'}`}
+                                href={`/m/product/${item.name?.toLowerCase().includes('owl') ? 'owl-sofa' : item.name?.toLowerCase().includes('gorilla') ? 'gorilla-sofa' : 'flamingo-sofa'}`}
                                 style={{
                                     width: "60px",
                                     height: "60px",
