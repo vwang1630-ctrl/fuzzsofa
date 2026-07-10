@@ -311,13 +311,13 @@ export default function MobileProfilePage() {
                                                 <p className="profile-order-item-name">{item.name}</p>
                                                 <p className="profile-order-item-variant">{item.color} × {item.quantity}</p>
                                             </div>
-                                            <p className="profile-order-item-price">${item.price.toLocaleString()}</p>
+                                            <p className="profile-order-item-price">${typeof item.price === 'number' ? item.price.toLocaleString() : '0'}</p>
                                         </div>
                                     ))}
                                 </div>
                                 <div className="profile-order-card-footer">
                                     <span className="profile-order-date">{order.date}</span>
-                                    <span className="profile-order-total">${order.total.toLocaleString()}</span>
+                                    <span className="profile-order-total">${typeof order.total === 'number' ? order.total.toLocaleString() : '0'}</span>
                                 </div>
                             </Link>
                         ))}

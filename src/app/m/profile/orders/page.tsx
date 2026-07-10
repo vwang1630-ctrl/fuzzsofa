@@ -120,7 +120,7 @@ export default function OrdersPage() {
                         {item.color}{item.fabric ? ` / ${item.fabric}` : ''}
                       </div>
                       <div className="order-item-price">
-                        ${item.price.toLocaleString()} × {item.quantity}
+                        ${typeof item.price === 'number' ? item.price.toLocaleString() : '0'} × {item.quantity}
                       </div>
                     </div>
                   </div>
@@ -135,7 +135,7 @@ export default function OrdersPage() {
                 </div>
                 <div className="order-total-group">
                   <span className="order-total-label">Total</span>
-                  <span className="order-total">${order.total.toLocaleString()}</span>
+                  <span className="order-total">${typeof order.total === 'number' ? order.total.toLocaleString() : '0'}</span>
                 </div>
               </div>
 
