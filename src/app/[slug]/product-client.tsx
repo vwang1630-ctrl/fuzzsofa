@@ -1062,7 +1062,7 @@ export function ProductPageClient(
                     {}
                     <div className="sm:hidden">
                         {}
-                        <div className="relative w-full aspect-[4/3] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                        <div className="relative w-full aspect-[16/10] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
                             {madeBg ? <img
                                 src={madeBg}
                                 alt={`${productName} craftsmanship`}
@@ -1114,7 +1114,7 @@ export function ProductPageClient(
                 <div className="max-w-[1600px] mx-auto">
                     {}
                     <div
-                        className="relative w-full aspect-[4/3] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden hidden sm:block">
+                        className="relative w-full aspect-[16/9] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden hidden sm:block">
                         {madeBg ? <img
                             src={madeBg}
                             alt={`${productName} craftsmanship`}
