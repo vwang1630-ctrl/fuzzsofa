@@ -431,6 +431,17 @@ export default function MobileProductPage(
                     </div>
                 </div>
                 {}
+                <div className="inspiration">
+                    <div className="section-label">实景灵感</div>
+                    <div className="scene-scroll">
+                        {OWL_DATA.scenes.map((s, i) => <div key={i} className="scene-card">
+                            <img src={s.image} alt="" loading="lazy" />
+                            <div className="label">{s.label}</div>
+                            <div className="sub">{s.sub}</div>
+                        </div>)}
+                    </div>
+                </div>
+                {}
                 <div className="features">
                     {OWL_DATA.features.map(f => <div key={f.num} className="feature-row">
                         <span className="num">{f.num}</span>
@@ -502,17 +513,6 @@ export default function MobileProductPage(
                             <span className="line" />
                             <span className="name">{c.name}</span>
                             <span className="detail">{c.detail}</span>
-                        </div>)}
-                    </div>
-                </div>
-                {}
-                <div className="inspiration">
-                    <div className="section-label">实景灵感</div>
-                    <div className="scene-scroll">
-                        {OWL_DATA.scenes.map((s, i) => <div key={i} className="scene-card">
-                            <img src={s.image} alt="" loading="lazy" />
-                            <div className="label">{s.label}</div>
-                            <div className="sub">{s.sub}</div>
                         </div>)}
                     </div>
                 </div>
