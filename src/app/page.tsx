@@ -276,12 +276,12 @@ export default function HomePage() {
                     />
                   </div>
                   <div className="pt-4 pb-2">
-                    <h3 className="font-serif text-[18px] font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
+                    <h3 className="font-serif text-[16px] font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
                       {t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                     </h3>
                     <p className="mt-1 text-[12px] text-[#8A8580]">{t(slugToPrefix[product.slug] + "Tagline" as TranslationKeys)}</p>
                     <div className="mt-3 flex items-center justify-between">
-                      <p className="text-[18px] font-semibold text-[#E8B4B8]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
+                      <p className="text-[16px] font-light text-[#E8B4B8]">${(product.priceRange.americas[0] ?? 0).toLocaleString()}</p>
                       <p className="text-[12px] tracking-[0.08em] text-[#8A8580]/70">Made to order (1–2 weeks)</p>
                     </div>
                   </div>
@@ -321,7 +321,7 @@ export default function HomePage() {
                     )}
                   </div>
                   <div className="p-3 md:p-6">
-                    <h3 className="font-serif text-[14px] md:text-[18px] text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">{interior.title}</h3>
+                    <h3 className="font-serif text-[14px] md:text-[16px] text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">{interior.title}</h3>
                   </div>
                 </div>
               </Link>
@@ -344,7 +344,7 @@ export default function HomePage() {
             {latestArticles.map((article) => (
               <Link key={article.slug} href={`/journal/${article.slug}`} className="group border-l md:border-l-2 border-[#1A1A1A] hover:border-[#E8B4B8] transition-colors duration-300 pl-4 md:pl-6 py-2">
                 <p className="text-[12px] text-[#8A8580] tracking-[0.1em] uppercase">{article.category}</p>
-                <h3 className="mt-2 md:mt-3 font-serif text-[14px] md:text-[18px] text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">{article.title}</h3>
+                <h3 className="mt-2 md:mt-3 font-serif text-[14px] md:text-[16px] text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300 leading-snug">{article.title}</h3>
                 <p className="mt-1.5 md:mt-2 text-[12px] md:text-[14px] text-[#8A8580] line-clamp-2">{article.excerpt}</p>
               </Link>
             ))}

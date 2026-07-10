@@ -316,7 +316,7 @@ img {
 
 @media (min-width: 1024px) {
   .section-padding {
-    padding: 96px 32px;
+    padding: 80px 32px;
   }
 }
 
@@ -340,6 +340,7 @@ img {
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: 0.05em;
+  color: #F5F0EB;
 }
 
 @media (min-width: 640px) {
@@ -354,6 +355,7 @@ img {
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: 0.05em;
+  color: #F5F0EB;
 }
 
 @media (min-width: 640px) {
@@ -368,11 +370,12 @@ img {
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: 0.02em;
+  color: #F5F0EB;
 }
 
 @media (min-width: 640px) {
   .text-card-title {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
@@ -382,26 +385,27 @@ img {
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: 0.02em;
+  color: #F5F0EB;
 }
 
 @media (min-width: 640px) {
   .text-product-name {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
 .text-price {
   font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 400;
   line-height: 1.2;
   letter-spacing: 0.02em;
-  color: var(--accent);
+  color: #E8B4B8;
 }
 
 @media (min-width: 640px) {
   .text-price {
-    font-size: 24px;
+    font-size: 16px;
   }
 }
 
@@ -420,7 +424,7 @@ img {
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: 0.02em;
-  color: var(--muted);
+  color: #A8A8A0;
 }
 
 .text-caption {
@@ -429,17 +433,17 @@ img {
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.04em;
-  color: var(--muted);
+  color: #8A8580;
 }
 
 .text-label {
   font-family: var(--font-sans);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #8A8580;
 }
 
 /* ─── Product grid ─── */
