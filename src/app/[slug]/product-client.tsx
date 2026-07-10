@@ -396,7 +396,7 @@ export function ProductPageClient(
                                                     idx += m.options.length;
                                                 }
                                             }}
-                                                className={`text-[9px] tracking-[0.06em] px-3 py-1 rounded-sm transition-all duration-300 ${isMatSel ? "text-[#E8B4B8] border border-[#E8B4B8]/50 bg-[#E8B4B8]/8" : "text-[#8A8580] border border-[#333] hover:border-[#555]"}`}>
+                                                className={`text-[12px] tracking-[0.06em] px-3 py-1 rounded-sm transition-all duration-300 ${isMatSel ? "text-[#E8B4B8] border border-[#E8B4B8]/50 bg-[#E8B4B8]/8" : "text-[#8A8580] border border-[#333] hover:border-[#555]"}`}>
                                                 {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
                                             </button>
                                         );
@@ -424,7 +424,7 @@ export function ProductPageClient(
                                                         <span className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
                                                             {swatchImg ? <img src={swatchImg.src} alt={opt} width={44} height={44} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
                                                         </span>
-                                                        <span className={`text-[8px] tracking-[0.03em] max-w-[64px] truncate ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>
+                                                        <span className={`text-[12px] tracking-[0.03em] max-w-[64px] truncate ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>
                                                             {t((colorNameKeyMap[opt] || "colorSelectColor") as TranslationKeys)}
                                                         </span>
                                                     </button>
@@ -441,14 +441,14 @@ export function ProductPageClient(
                     {/* Mobile info panel — title+price, features, details */}
                     <div className="sm:hidden px-4 pt-2.5 pb-4 bg-[#111]">
                         {/* Collection label */}
-                        <p className="text-[9px] text-[#8A8580] tracking-[0.25em] uppercase mb-1.5">{collectionName}</p>
+                        <p className="text-[12px] text-[#8A8580] tracking-[0.25em] uppercase mb-1.5">{collectionName}</p>
                         {/* Title + Price row */}
                         <div className="flex items-baseline justify-between gap-2 mb-2">
                             <h1 className="font-serif text-[18px] font-light text-[#F5F0EB] leading-[1.15] tracking-[0.02em]">{productName}</h1>
                             <span className="font-serif text-[16px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</span>
                         </div>
                         {/* Tagline */}
-                        <p className="text-[11px] text-[#8A8580] leading-[1.5] mb-3">{productTagline}</p>
+                        <p className="text-[12px] text-[#8A8580] leading-[1.5] mb-3">{productTagline}</p>
                         {/* Feature cards */}
                         <div className="space-y-2 mb-3">
                             {(() => {
@@ -486,10 +486,10 @@ export function ProductPageClient(
                                 const feats = featureData[product.slug] || [];
                                 return feats.map((feat, i) => (
                                     <div key={i} className="flex items-start gap-2">
-                                        <span className="text-[#E8B4B8] text-[10px] mt-0.5 flex-shrink-0">✦</span>
+                                        <span className="text-[#E8B4B8] text-[12px] mt-0.5 flex-shrink-0">✦</span>
                                         <div>
-                                            <h4 className="text-[11px] text-[#F5F0EB] tracking-[0.04em] font-light leading-[1.3]">{(() => { const v = t(feat.titleKey as TranslationKeys); return v === feat.titleKey ? feat.fallbackTitle : v; })()}</h4>
-                                            <p className="text-[10px] text-[#8A8580] leading-[1.5]">{(() => { const v = t(feat.descKey as TranslationKeys); return v === feat.descKey ? feat.fallbackDesc : v; })()}</p>
+                                            <h4 className="text-[12px] text-[#F5F0EB] tracking-[0.04em] font-light leading-[1.3]">{(() => { const v = t(feat.titleKey as TranslationKeys); return v === feat.titleKey ? feat.fallbackTitle : v; })()}</h4>
+                                            <p className="text-[12px] text-[#8A8580] leading-[1.5]">{(() => { const v = t(feat.descKey as TranslationKeys); return v === feat.descKey ? feat.fallbackDesc : v; })()}</p>
                                         </div>
                                     </div>
                                 ));
@@ -498,27 +498,27 @@ export function ProductPageClient(
                         {/* Dimensions */}
                         {product.specifications && <div className="pt-2.5 border-t border-white/[0.06]">
                             <div className="flex items-center justify-between mb-0.5">
-                                <label className="text-[9px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
-                                <button onClick={() => setUseCm(!useCm)} className="text-[9px] tracking-[0.12em] uppercase text-[#8A8580] border border-white/10 px-1.5 py-0.5 rounded-sm">{useCm ? "IN" : "CM"}</button>
+                                <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
+                                <button onClick={() => setUseCm(!useCm)} className="text-[12px] tracking-[0.12em] uppercase text-[#8A8580] border border-white/10 px-1.5 py-0.5 rounded-sm">{useCm ? "IN" : "CM"}</button>
                             </div>
-                            <p className="text-[10px] text-[#F5F0EB]/50 tracking-[0.02em]">
+                            <p className="text-[12px] text-[#F5F0EB]/50 tracking-[0.02em]">
                                 {(() => { const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`; return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`; })()}
                             </p>
                         </div>}
                         {/* Materials */}
                         {product.materials && product.materials.length > 0 && <div className="mt-2 pt-2 border-t border-white/[0.06]">
-                            <label className="text-[9px] text-[#8A8580] tracking-[0.2em] uppercase block mb-0.5">{t("materialsLabel" as TranslationKeys)}</label>
+                            <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-0.5">{t("materialsLabel" as TranslationKeys)}</label>
                             <div className="flex flex-wrap gap-x-2 gap-y-0.5">
                                 {product.materials.map((mat, i) => {
                                     const matKeyMap: Record<string, string[]> = { "gorilla-sofa": ["gorillaMat1", "gorillaMat2", "gorillaMat3", "gorillaMat4"], "owl-sofa": ["owlMat1", "owlMat2", "owlMat3", "owlMat4"], "silverback-sofa": ["silverbackMat1", "silverbackMat2"], "meteorite-ring-sofa": ["meteorMat1", "meteorMat2", "meteorMat3", "meteorMat4"], "muscle-gorilla-sofa": ["muscleGorillaMat1", "muscleGorillaMat2", "muscleGorillaMat3", "muscleGorillaMat4"] };
                                     const keys = matKeyMap[product.slug];
                                     const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
-                                    return <span key={i} className="text-[10px] text-[#F5F0EB]/40">{i18nMat}{i < product.materials.length - 1 && <span className="mx-1 text-[#8A8580]/30">·</span>}</span>;
+                                    return <span key={i} className="text-[12px] text-[#F5F0EB]/40">{i18nMat}{i < product.materials.length - 1 && <span className="mx-1 text-[#8A8580]/30">·</span>}</span>;
                                 })}
                             </div>
                         </div>}
                         {/* Delivery info */}
-                        <div className="mt-2 pt-2 border-t border-white/[0.06] flex items-center gap-2 text-[9px] text-[#8A8580]/60">
+                        <div className="mt-2 pt-2 border-t border-white/[0.06] flex items-center gap-2 text-[12px] text-[#8A8580]/60">
                             <span>{t("leadTimeShort" as TranslationKeys)}</span>
                             <span className="text-white/10">·</span>
                             <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
@@ -751,7 +751,7 @@ export function ProductPageClient(
                                 {displayPrice}
                             </p>
                             {}
-                            <p className="text-[15px] text-[#8A8580] leading-[1.7] mt-3 hidden sm:block">
+                            <p className="text-[14px] text-[#8A8580] leading-[1.7] mt-3 hidden sm:block">
                                 {productTagline}
                             </p>
                             {}
@@ -807,7 +807,7 @@ export function ProductPageClient(
                                                         <span className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
                                                             {swatchImage ? <img src={swatchImage.src} alt={opt} width={44} height={44} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
                                                         </span>
-                                                        <span className={`text-[11px] tracking-[0.04em] mt-1.5 whitespace-nowrap ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
+                                                        <span className={`text-[12px] tracking-[0.04em] mt-1.5 whitespace-nowrap ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
                                                             {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
                                                         </span>
                                                     </button>
@@ -830,7 +830,7 @@ export function ProductPageClient(
                                         {useCm ? t("switchToInches" as TranslationKeys) : t("switchToCm" as TranslationKeys)}
                                     </button>
                                 </div>
-                                <p className="text-[13px] text-[#F5F0EB]/60">
+                                <p className="text-[14px] text-[#F5F0EB]/60">
                                     {(() => {
                                         const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
                                         return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)} · ${t("seatHeightLabel" as TranslationKeys)}${f(product.specifications.seatHeight)}`;
@@ -855,7 +855,7 @@ export function ProductPageClient(
                                         const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
                                         return <p
                                         key={i}
-                                        className="text-[13px] text-[#F5F0EB]/50 tracking-[0.02em] leading-[1.5]">
+                                        className="text-[14px] text-[#F5F0EB]/50 tracking-[0.02em] leading-[1.5]">
                                         {i18nMat}
                                     </p>})}
                                 </div>
@@ -865,7 +865,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={handleAddToCart}
-                                className="hidden sm:flex w-full py-4 text-[#0A0A0A] font-medium text-[13px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
+                                className="hidden sm:flex w-full py-4 text-[#0A0A0A] font-medium text-[15px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
@@ -886,7 +886,7 @@ export function ProductPageClient(
                                 </>}
                             </button>
                             <button
-                                className="hidden sm:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[13px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
+                                className="hidden sm:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[15px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
                                 style={{
                                     border: "1px solid #E8B4B8"
                                 }}
@@ -929,7 +929,7 @@ export function ProductPageClient(
                     {}
                     <div className="mb-3 md:mb-6">
                         <p
-                            className="text-[9px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 md:mb-3 flex items-center gap-2">
+                            className="text-[12px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 md:mb-3 flex items-center gap-2">
                             <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys)}
                         </p>
                         <h2
@@ -955,7 +955,7 @@ export function ProductPageClient(
                                     className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
                                 {/* Mobile: title overlay on image */}
                                 <div className="absolute bottom-0 left-0 right-0 p-3 sm:hidden">
-                                    <p className="text-[10px] tracking-[0.15em] uppercase text-[#F5F0EB]/60">
+                                    <p className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/60">
                                         {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
                                     </p>
                                 </div>
@@ -966,7 +966,7 @@ export function ProductPageClient(
                                 className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
                                 {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
                             </p>
-                            <p className="text-[13px] text-[#8A8580] leading-[1.6]">
+                            <p className="text-[14px] text-[#8A8580] leading-[1.6]">
                                 {t(space.descKey as TranslationKeys)}
                             </p>
                             </div>
@@ -984,7 +984,7 @@ export function ProductPageClient(
                         {}
                         <div className="flex-1">
                             <p
-                                className="text-[9px] md:text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-1.5 md:mb-3 flex items-center gap-2">
+                                className="text-[12px] md:text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-1.5 md:mb-3 flex items-center gap-2">
                                 <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
                                                             </p>
                             <h3
@@ -994,13 +994,13 @@ export function ProductPageClient(
                             <p className="text-[14px] md:text-[20px] text-[#E8B4B8]/50 italic mb-3 md:mb-5 font-serif">
                                 {productTagline}
                             </p>
-                            <div className="text-[12px] md:text-[15px] font-light text-[#F5F0EB]/70 leading-[1.9]">
+                            <div className="text-[12px] md:text-[14px] font-light text-[#F5F0EB]/70 leading-[1.9]">
                                 <p>{productConcept}</p>
                                 <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
                             </div>
                             <div
                                 className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
-                                <p className="text-[13px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
+                                <p className="text-[14px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
                                     {product.slug === "meteorite-ring-sofa" ? (
                                         <>{t("testedLoadCapacity" as TranslationKeys)}</>
                                     ) : (
@@ -1060,7 +1060,7 @@ export function ProductPageClient(
                                     </div>
                                     <div className="text-center">
                                         <span
-                                            className="block text-[15px] font-light text-[#E8B4B8] leading-none font-serif">{t("seatHeightUnit" as TranslationKeys)}</span>
+                                            className="block text-[14px] font-light text-[#E8B4B8] leading-none font-serif">{t("seatHeightUnit" as TranslationKeys)}</span>
                                         <span className="text-[12px] font-light text-[#8A8580] font-serif">{useCm ? `${product.specifications.seatHeight}cm` : `${(Number(product.specifications.seatHeight) / 2.54).toFixed(1)}"`}</span>
                                     </div>
                                     <button
@@ -1113,8 +1113,8 @@ export function ProductPageClient(
                                                     {card.icon === "detail" && <><path d="M2 20 L6 20 L6 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M22 20 L18 20 L18 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M6 16 L18 16 L18 4 L6 4 Z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></>}
                                                 </svg>
                                             </div>
-                                            <h4 className="text-[11px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1">{t(card.titleKey as TranslationKeys)}</h4>
-                                            <p className="text-[11px] font-light text-[#8A8580] leading-[1.6]">{t(card.descKey as TranslationKeys)}</p>
+                                            <h4 className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1">{t(card.titleKey as TranslationKeys)}</h4>
+                                            <p className="text-[12px] font-light text-[#8A8580] leading-[1.6]">{t(card.descKey as TranslationKeys)}</p>
                                         </div>
                                     ));
                                 })()}
@@ -1353,14 +1353,14 @@ export function ProductPageClient(
                         className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
                 <div className="relative max-w-[700px] mx-auto px-5 py-10 md:py-[140px] text-center">
-                    <p className="text-[9px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2.5 md:mb-5">
+                    <p className="text-[12px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2.5 md:mb-5">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
                         className="font-serif text-xl md:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-4 md:mb-6">
                         {t("deliveredWorldwide" as TranslationKeys)}
                     </h2>
-                    <p className="text-[#8A8580] leading-[1.8] text-[13px] md:text-[15px] mb-8 md:mb-10">
+                    <p className="text-[#8A8580] leading-[1.8] text-[14px] md:text-[14px] mb-8 md:mb-10">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
                     <div
@@ -1397,7 +1397,7 @@ export function ProductPageClient(
                                 </svg>
                             </div>
                             <span
-                                className="text-[11px] text-[#8A8580] tracking-[0.1em] uppercase text-center leading-[1.4]">{t("handcraftedShort" as TranslationKeys)}</span>
+                                className="text-[12px] text-[#8A8580] tracking-[0.1em] uppercase text-center leading-[1.4]">{t("handcraftedShort" as TranslationKeys)}</span>
                         </div>
                         <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
                             <div
@@ -1492,7 +1492,7 @@ export function ProductPageClient(
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
                 <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-5 md:py-12">
-                    <p className="text-[9px] md:text-[10px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 md:mb-2">
+                    <p className="text-[12px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 md:mb-2">
                         {t("youMayAlsoLike" as TranslationKeys)}
                     </p>
                     <h2
@@ -1524,11 +1524,11 @@ export function ProductPageClient(
                                         </div>}
                                     </div>
                                     <div className="pt-2 pb-0.5 sm:p-5">
-                                        <p className="text-[8px] sm:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5 sm:mb-1">
+                                        <p className="text-[12px] sm:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5 sm:mb-1">
                                             {t((animalKeyMap[rp.animal] || "animalGorilla") as TranslationKeys)} {t("collection").toUpperCase()}
                                         </p>
-                                        <h3 className="font-serif text-[13px] sm:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
-                                        <p className="text-[10px] sm:text-[13px] text-[#8A8580] mt-0.5 sm:mt-1 mb-0.5 sm:mb-3 line-clamp-1">{rpTagline}</p>
+                                        <h3 className="font-serif text-[14px] sm:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
+                                        <p className="text-[12px] sm:text-[14px] text-[#8A8580] mt-0.5 sm:mt-1 mb-0.5 sm:mb-3 line-clamp-1">{rpTagline}</p>
                                         <p className="font-serif text-[12px] sm:text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
                                     </div>
                                 </Link>
@@ -1591,7 +1591,7 @@ export function ProductPageClient(
                         <div className="absolute -inset-1 rounded-full opacity-30 pointer-events-none" style={{ background: "radial-gradient(circle, #E8B4B8 0%, transparent 70%)", filter: "blur(6px)" }} />
                         <button
                             onClick={handleBuyNow}
-                            className="relative flex items-center gap-1.5 px-5 py-2 text-[#0A0A0A] text-[11px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
+                            className="relative flex items-center gap-1.5 px-5 py-2 text-[#0A0A0A] text-[15px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
                             style={{ background: "#E8B4B8" }}>
                             {t("buyNow" as TranslationKeys)}
                             <svg aria-hidden="true" viewBox="0 0 10 10" width="9" height="9" fill="none">

@@ -1014,7 +1014,7 @@ export default function AccountPage() {
                         <span className="sm:hidden">{t(tab.shortKey)}</span>
                         <span className="hidden sm:inline">{t(tab.labelKey)}</span>
                         {tab.count > 0 && <span
-                            className={`text-[11px] min-w-[20px] h-5 px-1.5 flex items-center justify-center rounded-full ${orderTab === tab.key ? "bg-[#c98b96] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#a8a8a8]"}`}>
+                            className={`text-[12px] min-w-[20px] h-5 px-1.5 flex items-center justify-center rounded-full ${orderTab === tab.key ? "bg-[#c98b96] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#a8a8a8]"}`}>
                             {tab.count}
                         </span>}
                     </button>)}
@@ -1048,12 +1048,12 @@ export default function AccountPage() {
                                             <span className="text-[#F5F0EB] text-xs sm:text-sm font-light tracking-wider">{order.orderNumber}</span>
                                             <Link
                                                 href={`/order/detail?orderNo=${order.orderNumber}`}
-                                                className="text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#c98b96] border border-[#c98b96]/40 px-3 py-1 rounded hover:bg-[#c98b96] hover:text-[#0A0A0A] transition-all duration-300">
+                                                className="text-[12px] tracking-[0.15em] uppercase text-[#c98b96] border border-[#c98b96]/40 px-3 py-1 rounded hover:bg-[#c98b96] hover:text-[#0A0A0A] transition-all duration-300">
                                                 {t("viewDetails")}
                                             </Link>
                                             {(order.status === "pending" || order.paymentStatus === "pending_payment" || order.paymentStatus === "pending") && <button
                                                 onClick={() => openEditOrder(order)}
-                                                className="text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#F5F0EB] border border-[#333] px-3 py-1 rounded hover:border-[#c98b96] hover:text-[#c98b96] transition-all duration-300">
+                                                className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB] border border-[#333] px-3 py-1 rounded hover:border-[#c98b96] hover:text-[#c98b96] transition-all duration-300">
                                                 {t("editOrder")}
                                             </button>}
                                         </div>
@@ -1061,9 +1061,9 @@ export default function AccountPage() {
                                 </div>
                                 {}
                                 <div className="flex items-center justify-between mb-3">
-                                    <p className="text-[#8A8580] text-[10px] sm:text-xs tracking-wide">{formatDate(order.createdAt)}</p>
+                                    <p className="text-[#8A8580] text-[12px] tracking-wide">{formatDate(order.createdAt)}</p>
                                     <span
-                                        className={`inline-block px-2 py-0.5 text-[9px] sm:text-[10px] tracking-wider rounded border ${statusColor(order.status)}`}>
+                                        className={`inline-block px-2 py-0.5 text-[12px] tracking-wider rounded border ${statusColor(order.status)}`}>
                                         {statusLabel(order.status, t)}
                                     </span>
                                 </div>
@@ -1078,13 +1078,13 @@ export default function AccountPage() {
                                     </div>}
                                     <div className="flex-1 min-w-0">
                                         <p className="text-[#F5F0EB] text-xs sm:text-sm font-light truncate">{mainItem?.productName || "—"}</p>
-                                        <p className="text-[#8A8580] text-[10px] sm:text-xs mt-0.5">
+                                        <p className="text-[#8A8580] text-[12px] mt-0.5">
                                             {totalQty > 1 ? `× ${totalQty}` : ""}
                                         </p>
                                     </div>
                                     <div className="text-right flex-shrink-0">
                                         <p className="text-[#F5F0EB] text-sm sm:text-base font-light">{formatPrice(order.total)}</p>
-                                        <p className="text-[#8A8580] text-[9px] sm:text-[10px] mt-0.5">
+                                        <p className="text-[#8A8580] text-[12px] mt-0.5">
                                             {paymentStatusLabel(order.paymentStatus, t)}· {order.paymentMethod || "PayPal"}
                                         </p>
                                     </div>

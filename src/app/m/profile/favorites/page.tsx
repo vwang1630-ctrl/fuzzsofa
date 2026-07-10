@@ -193,7 +193,7 @@ export default function FavoritesPage() {
                     fontSize: "15px",
                     fontWeight: 600,
                     color: "#E8B4B8"
-                  }}>{formatPrice(item.priceRange)}</div>
+                  }}>{formatPrice(item.priceRange?.americas?.[0] ?? 0)}</div>
                 </div>
               </Link>
               <button
