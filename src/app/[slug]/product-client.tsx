@@ -1139,7 +1139,7 @@ export function ProductPageClient(
                                 backgroundColor: "#0A0A0A"
                             }}>
                             <p
-                                className="font-serif text-2xl md:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-10 relative">
+                                className="font-serif text-2xl md:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-5 relative">
                                 <span className="opacity-30 mr-3">—</span>{t("materialsCraftsmanship" as TranslationKeys)}
                                                                                                                                 <span className="opacity-30 ml-3">—</span>
                             </p>
