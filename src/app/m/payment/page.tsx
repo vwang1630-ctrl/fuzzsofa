@@ -164,106 +164,107 @@ function PaymentContent() {
             <span className="payment-card-title">PAYMENT METHOD</span>
           </div>
           <div className="payment-card-body">
-            <button
-              className={`payment-method-option ${paymentMethod === 'card' ? 'selected' : ''}`}
-              onClick={() => setPaymentMethod('card')}
-            >
-              <span className={`payment-radio-new ${paymentMethod === 'card' ? 'checked' : ''}`}>
-                {paymentMethod === 'card' && <span className="payment-radio-dot-new"></span>}
-              </span>
-              <svg
-                className="payment-method-icon"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round">
-                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-                <line x1="1" y1="10" x2="23" y2="10" />
-              </svg>
-              <span className="payment-method-text">Credit Card</span>
-            </button>
-            <div className="payment-method-divider"></div>
-            <button
-              className={`payment-method-option ${paymentMethod === 'paypal' ? 'selected' : ''}`}
-              onClick={() => setPaymentMethod('paypal')}
-            >
-              <span className={`payment-radio-new ${paymentMethod === 'paypal' ? 'checked' : ''}`}>
-                {paymentMethod === 'paypal' && <span className="payment-radio-dot-new"></span>}
-              </span>
-              <svg
-                className="payment-method-icon"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="currentColor">
-                <path
-                  d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.771.771 0 0 1 .757-.64h6.953c2.297 0 4.147.485 5.195 1.38.995.85 1.394 2.097 1.176 3.707-.37 2.717-2.042 4.49-4.94 5.09-.8.17-1.67.24-2.58.24H8.91a.77.77 0 0 0-.756.64l-.92 5.83a.641.641 0 0 1-.633.74l-.525.003z" />
-              </svg>
-              <span className="payment-method-text">PayPal</span>
-            </button>
+            <div className="payment-methods-row">
+              <button
+                className={`payment-method-option-new ${paymentMethod === 'card' ? 'selected' : ''}`}
+                onClick={() => setPaymentMethod('card')}
+              >
+                <span className={`payment-radio-new ${paymentMethod === 'card' ? 'checked' : ''}`}>
+                  {paymentMethod === 'card' && <span className="payment-radio-dot-new"></span>}
+                </span>
+                <svg
+                  className="payment-method-icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                  <line x1="1" y1="10" x2="23" y2="10" />
+                </svg>
+                <span className="payment-method-text">Credit Card</span>
+              </button>
+              <button
+                className={`payment-method-option-new ${paymentMethod === 'paypal' ? 'selected' : ''}`}
+                onClick={() => setPaymentMethod('paypal')}
+              >
+                <span className={`payment-radio-new ${paymentMethod === 'paypal' ? 'checked' : ''}`}>
+                  {paymentMethod === 'paypal' && <span className="payment-radio-dot-new"></span>}
+                </span>
+                <svg
+                  className="payment-method-icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path
+                    d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.771.771 0 0 1 .757-.64h6.953c2.297 0 4.147.485 5.195 1.38.995.85 1.394 2.097 1.176 3.707-.37 2.717-2.042 4.49-4.94 5.09-.8.17-1.67.24-2.58.24H8.91a.77.77 0 0 0-.756.64l-.92 5.83a.641.641 0 0 1-.633.74l-.525.003z" />
+                </svg>
+                <span className="payment-method-text">PayPal</span>
+              </button>
+            </div>
           </div>
+          
+          {/* Card Details (connected when card selected) */}
+          {paymentMethod === 'card' && (
+            <>
+              <div className="payment-method-divider"></div>
+              <div className="payment-card-body">
+                <div className="payment-card-section-title">CARD DETAILS</div>
+                <div className="payment-input-group">
+                  <label className="payment-input-label">Card Number</label>
+                  <input
+                    type="text"
+                    className="payment-input-new"
+                    placeholder="1234 5678 9012 3456"
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
+                    maxLength={19}
+                  />
+                </div>
+                <div className="payment-input-row">
+                  <div className="payment-input-group">
+                    <label className="payment-input-label">Expiry</label>
+                    <input
+                      type="text"
+                      className="payment-input-new"
+                      placeholder="MM/YY"
+                      value={expiryDate}
+                      onChange={(e) => setExpiryDate(formatExpiryDate(e.target.value))}
+                      maxLength={5}
+                    />
+                  </div>
+                  <div className="payment-input-group">
+                    <label className="payment-input-label">CVV</label>
+                    <input
+                      type="text"
+                      className="payment-input-new"
+                      placeholder="123"
+                      value={cvv}
+                      onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').substring(0, 4))}
+                      maxLength={4}
+                    />
+                  </div>
+                </div>
+                <div className="payment-input-group">
+                  <label className="payment-input-label">Cardholder Name</label>
+                  <input
+                    type="text"
+                    className="payment-input-new"
+                    placeholder="John Doe"
+                    value={cardName}
+                    onChange={(e) => setCardName(e.target.value)}
+                  />
+                </div>
+                {cardError && <p className="payment-error">{cardError}</p>}
+              </div>
+            </>
+          )}
         </section>
-        
-        {/* Card Details Card (only show when card selected) */}
-        {paymentMethod === 'card' && (
-          <section className="payment-card">
-            <div className="payment-card-header">
-              <span className="payment-card-title">CARD DETAILS</span>
-            </div>
-            <div className="payment-card-body">
-              <div className="payment-input-group">
-                <label className="payment-input-label">Card Number</label>
-                <input
-                  type="text"
-                  className="payment-input-new"
-                  placeholder="1234 5678 9012 3456"
-                  value={cardNumber}
-                  onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
-                  maxLength={19}
-                />
-              </div>
-              <div className="payment-input-row">
-                <div className="payment-input-group">
-                  <label className="payment-input-label">Expiry</label>
-                  <input
-                    type="text"
-                    className="payment-input-new"
-                    placeholder="MM/YY"
-                    value={expiryDate}
-                    onChange={(e) => setExpiryDate(formatExpiryDate(e.target.value))}
-                    maxLength={5}
-                  />
-                </div>
-                <div className="payment-input-group">
-                  <label className="payment-input-label">CVV</label>
-                  <input
-                    type="text"
-                    className="payment-input-new"
-                    placeholder="123"
-                    value={cvv}
-                    onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').substring(0, 4))}
-                    maxLength={4}
-                  />
-                </div>
-              </div>
-              <div className="payment-input-group">
-                <label className="payment-input-label">Cardholder Name</label>
-                <input
-                  type="text"
-                  className="payment-input-new"
-                  placeholder="John Doe"
-                  value={cardName}
-                  onChange={(e) => setCardName(e.target.value)}
-                />
-              </div>
-              {cardError && <p className="payment-error">{cardError}</p>}
-            </div>
-          </section>
-        )}
+
         
         {/* PayPal Info */}
         {paymentMethod === 'paypal' && (
