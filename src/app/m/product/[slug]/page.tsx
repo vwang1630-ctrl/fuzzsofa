@@ -443,6 +443,28 @@ export default function MobileProductPage(
                     <p>{OWL_DATA.description}</p>
                 </div>
                 {}
+                {/* Interior Inspiration */}
+                <div className="interior-inspiration">
+                    <div className="interior-header">
+                        <span className="interior-label">✦ Interior Inspiration</span>
+                        <h2 className="interior-title">See It In Real Spaces</h2>
+                    </div>
+                    <div className="interior-grid">
+                        {OWL_DATA.scenes.map((scene: { image: string; label: string; sub: string }, idx: number) => (
+                            <div key={idx} className="interior-item">
+                                <div className="interior-image">
+                                    <img src={scene.image} alt={scene.label} loading="lazy" />
+                                    <div className="interior-overlay" />
+                                    <div className="interior-caption">
+                                        <span className="interior-scene-label">{scene.label}</span>
+                                    </div>
+                                </div>
+                                <p className="interior-sub">{scene.sub}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                {}
                 <div className="story">
                     <div className="section-label">设计故事</div>
                     <div className="story-grid">
