@@ -441,8 +441,6 @@ img {
   text-transform: uppercase;
   color: var(--muted);
 }
-  max-width: 700px;
-}
 
 /* ─── Product grid ─── */
 .product-grid {
