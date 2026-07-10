@@ -7269,6 +7269,7 @@ textarea.form-control {
 
 /* ===== User Section ===== */
 .profile-user-section {
+  margin-top: 16px;
   margin-bottom: 32px;
 }
 
