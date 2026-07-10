@@ -583,68 +583,69 @@ export default function MobileProductPage(
                         setShowPurchasePanel(false);
                 }}>
                 <div className="purchase-panel">
-                    {}
-                    <div className="panel-header">
-                        <button className="panel-close" onClick={() => setShowPurchasePanel(false)}>×</button>
-                    </div>
-                    {}
-                    <div
-                        className="spec-selector">
+                    <div className="purchase-panel-content">
                         {}
-                        <div className="material-tabs">
-                            {MATERIAL_GROUPS.map(mg => {
-                                const hasColorsInGroup = OWL_DATA.colors.some(c => c.group === mg.key);
-
-                                if (!hasColorsInGroup)
-                                    return null;
-
-                                return (
-                                    <button
-                                        key={mg.key}
-                                        className={`material-tab${selectedMaterial === mg.key ? " active" : ""}`}
-                                        onClick={() => {
-                                            setSelectedMaterial(mg.key);
-                                            const firstColorInGroup = OWL_DATA.colors.find(c => c.group === mg.key);
-
-                                            if (firstColorInGroup) {
-                                                setPanelColor(firstColorInGroup.key);
-                                            }
-                                        }}>
-                                        {mg.label}
-                                    </button>
-                                );
-                            })}
+                        <div className="panel-header">
+                            <button className="panel-close" onClick={() => setShowPurchasePanel(false)}>×</button>
                         </div>
                         {}
-                        <div className="color-circles">
-                            {OWL_DATA.colors.filter(c => c.group === selectedMaterial).map(c => <button
-                                key={c.key}
-                                className={`color-circle${panelColor === c.key ? " selected" : ""}`}
-                                onClick={() => setPanelColor(c.key)}>
-                                <img
-                                    src={OWL_DATA.images[c.imageIndex]}
-                                    alt={c.label}
-                                    className="circle-thumb" />
-                                {panelColor === c.key && <span className="selected-dot" />}
-                            </button>)}
+                        <div
+                            className="spec-selector">
+                            {}
+                            <div className="material-tabs">
+                                {MATERIAL_GROUPS.map(mg => {
+                                    const hasColorsInGroup = OWL_DATA.colors.some(c => c.group === mg.key);
+
+                                    if (!hasColorsInGroup)
+                                        return null;
+
+                                    return (
+                                        <button
+                                            key={mg.key}
+                                            className={`material-tab${selectedMaterial === mg.key ? " active" : ""}`}
+                                            onClick={() => {
+                                                setSelectedMaterial(mg.key);
+                                                const firstColorInGroup = OWL_DATA.colors.find(c => c.group === mg.key);
+
+                                                if (firstColorInGroup) {
+                                                    setPanelColor(firstColorInGroup.key);
+                                                }
+                                            }}>
+                                            {mg.label}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            {}
+                            <div className="color-circles">
+                                {OWL_DATA.colors.filter(c => c.group === selectedMaterial).map(c => <button
+                                    key={c.key}
+                                    className={`color-circle${panelColor === c.key ? " selected" : ""}`}
+                                    onClick={() => setPanelColor(c.key)}>
+                                    <img
+                                        src={OWL_DATA.images[c.imageIndex]}
+                                        alt={c.label}
+                                        className="circle-thumb" />
+                                    {panelColor === c.key && <span className="selected-dot" />}
+                                </button>)}
+                            </div>
                         </div>
-                    </div>
-                    {}
-                    <div className="panel-quantity">
-                        <span className="qty-label">数量</span>
-                        <div className="qty-controls">
-                            <button
-                                className="qty-btn"
-                                onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
-                            <span className="qty-value">{quantity}</span>
-                            <button className="qty-btn" onClick={() => setQuantity(quantity + 1)}>+</button>
+                        {}
+                        <div className="panel-quantity">
+                            <span className="qty-label">数量</span>
+                            <div className="qty-controls">
+                                <button
+                                    className="qty-btn"
+                                    onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
+                                <span className="qty-value">{quantity}</span>
+                                <button className="qty-btn" onClick={() => setQuantity(quantity + 1)}>+</button>
+                            </div>
                         </div>
-                    </div>
-                    {}
-                    <div className="panel-price-summary">
-                        <span className="summary-label">合计</span>
-                        <span className="summary-price">${(OWL_DATA.priceRange.americas[0] * quantity).toLocaleString()}USD</span>
-                    </div>
+                        {}
+                        <div className="panel-price-summary">
+                            <span className="summary-label">合计</span>
+                            <span className="summary-price">${(OWL_DATA.priceRange.americas[0] * quantity).toLocaleString()}USD</span>
+                        </div>
                     {}
                     <button
                         className="panel-confirm-btn"
@@ -693,6 +694,7 @@ export default function MobileProductPage(
                                 router.push("/m/payment");
                             }
                         }}>{purchaseSource === "cart" ? "Add to Cart" : "Buy Now"}</button>
+                    </div>
                 </div>
             </div>}
             {}

@@ -4138,8 +4138,8 @@ textarea.form-control {
 #pageDetail .purchase-panel-overlay {
   position: fixed;
   top: 0;
-  left: 16px;
-  right: 16px;
+  left: 0;
+  right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.85);
   z-index: 200;
@@ -4158,6 +4158,11 @@ textarea.form-control {
   padding-bottom: env(safe-area-inset-bottom, 0px);
   overflow-y: auto;
   animation: slideUp 0.3s ease;
+}
+
+/* Content wrapper inside panel - 16px padding */
+#pageDetail .purchase-panel-content {
+  padding: 0 16px;
 }
 
 @keyframes slideUp {
