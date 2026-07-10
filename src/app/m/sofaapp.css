@@ -4708,18 +4708,18 @@ textarea.form-control {
 .shop-page {
   min-height: 100vh;
   min-height: 100dvh;
-  background: #000;
+  background: #0A0A0A;
   color: #F5F0EB;
   font-family: 'Inter', -apple-system, sans-serif;
   font-weight: 300;
   letter-spacing: 0.04em;
-  padding: 0 20px;
+  padding: 0;
   padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px));
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  max-width: 430px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* 顶部导航栏 - 对齐详情页 */
