@@ -966,12 +966,12 @@ export default function AccountPage() {
         <div className="max-w-6xl mx-auto px-6 py-20">
             <h1 className="font-serif text-3xl text-[#F5F0EB] tracking-wide mb-10">{t("accountTitle")}</h1>
             {}
-            <div
-                className="flex gap-4 md:gap-8 border-b border-[#1A1A1A] mb-10 overflow-x-auto scrollbar-hide">
+            {/* 一级菜单：主导航 */}
+            <div className="flex gap-6 md:gap-10 border-b border-[#1A1A1A] mb-8 overflow-x-auto scrollbar-hide">
                 {(["orders", "addresses", "payment", "favorites"] as Tab[]).map(tabKey => <button
                     key={tabKey}
                     onClick={() => setTab(tabKey)}
-                    className={`pb-3 text-xs md:text-sm tracking-[0.1em] uppercase transition-colors whitespace-nowrap flex-shrink-0 ${tab === tabKey ? "text-[#E8B4B8] border-b-2 border-[#E8B4B8]" : "text-[#8A8580] hover:text-[#F5F0EB]"}`}>
+                    className={`pb-4 text-sm md:text-base font-serif font-light tracking-[0.15em] uppercase transition-all duration-200 whitespace-nowrap flex-shrink-0 ${tab === tabKey ? "text-[#F5F0EB] border-b-2 border-[#E8B4B8]" : "text-[#8A8580] hover:text-[#F5F0EB]"}`}>
                     {tabKey === "orders" && <><span className="sm:hidden">{t("accountTabOrdersShort")}</span><span className="hidden sm:inline">{t("accountMyOrders")}</span></>}
                     {tabKey === "addresses" && <><span className="sm:hidden">{t("accountTabAddressesShort")}</span><span className="hidden sm:inline">{t("accountMyAddresses")}</span></>}
                     {tabKey === "payment" && <><span className="sm:hidden">{t("accountTabPaymentShort")}</span><span className="hidden sm:inline">{t("accountPaymentSettings")}</span></>}
@@ -979,9 +979,10 @@ export default function AccountPage() {
                 </button>)}
             </div>
             {}
+            {/* 二级菜单：订单状态筛选 */}
             {tab === "orders" && <div>
-                {}
-                <div className="flex gap-8 border-b border-[#1A1A1A] mb-6">
+                {/* 子导航 */}
+                <div className="flex gap-4 md:gap-6 border-b border-[#1A1A1A] mb-6 overflow-x-auto scrollbar-hide">
                     {[{
                         key: "all" as OrderTab,
                         labelKey: "orderTabAll" as TranslationKeys,
@@ -1010,11 +1011,11 @@ export default function AccountPage() {
                     }].map(tab => <button
                         key={tab.key}
                         onClick={() => setOrderTab(tab.key)}
-                        className={`pb-3 text-sm tracking-[0.1em] uppercase transition-colors flex items-center gap-2 whitespace-nowrap ${orderTab === tab.key ? "text-[#E8B4B8] border-b-2 border-[#E8B4B8]" : "text-[#8A8580] hover:text-[#F5F0EB]"}`}>
+                        className={`pb-3 text-xs md:text-sm tracking-[0.1em] uppercase transition-all duration-200 flex items-center gap-2 whitespace-nowrap ${orderTab === tab.key ? "text-[#E8B4B8] border-b-2 border-[#E8B4B8]" : "text-[#8A8580] hover:text-[#F5F0EB]"}`}>
                         <span className="sm:hidden">{t(tab.shortKey)}</span>
                         <span className="hidden sm:inline">{t(tab.labelKey)}</span>
                         {tab.count > 0 && <span
-                            className={`text-[12px] min-w-[20px] h-5 px-1.5 flex items-center justify-center rounded-full ${orderTab === tab.key ? "bg-[#E8B4B8] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#8A8580]"}`}>
+                            className={`text-[11px] min-w-[18px] h-[18px] px-1.5 flex items-center justify-center rounded-full ${orderTab === tab.key ? "bg-[#E8B4B8] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#8A8580]"}`}>
                             {tab.count}
                         </span>}
                     </button>)}
