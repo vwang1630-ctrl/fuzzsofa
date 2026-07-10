@@ -1,750 +1,328 @@
 "use client";
+
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { getSavedAddresses, SavedAddress } from "@/lib/address-storage";
-import { getOrders, Order } from "@/lib/order-storage";
-import "@/app/m/sofaapp.css";
-type Tab = "orders" | "addresses" | "favorites" | "settings";
+import { useRouter } from "next/navigation";
+import "../sofaapp.css";
 
-export default function ProfilePage() {
+// ===== 类型定义 =====
+interface OrderItem {
+    name: string;
+    color: string;
+    quantity: number;
+    price: number;
+    image?: string;
+}
+
+interface Order {
+    id: string;
+    date: string;
+    status: "pending" | "paid" | "shipped" | "delivered";
+    total: number;
+    items: OrderItem[];
+}
+
+interface SavedAddress {
+    fullName: string;
+    addressLine1: string;
+    addressLine2?: string;
+    city: string;
+    state?: string;
+    zipCode: string;
+    country: string;
+    label?: string;
+}
+
+// ===== 主页面组件 =====
+export default function MobileProfilePage() {
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState<Tab>("orders");
-    const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
-    const [userName, setUserName] = useState<string>("Guest User");
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [activeTab, setActiveTab] = useState<"orders" | "favorites" | "addresses" | "settings">("orders");
 
-    useEffect(() => {
-        setSavedAddresses(getSavedAddresses());
-        // 检查用户是否已登录
-        const userStr = localStorage.getItem("fuzz_user");
-        if (userStr) {
-            try {
-                const user = JSON.parse(userStr);
-                if (user && user.name) {
-                    setUserName(user.name);
-                    setIsLoggedIn(true);
+    // 模拟用户数据
+    const user = {
+        name: "Alexander Chen",
+        email: "alexander@fuzz.design",
+        avatar: null,
+        memberLevel: "Gold Member"
+    };
+
+    // 模拟订单数据
+    const orders: Order[] = [
+        {
+            id: "FZ-2024-0892",
+            date: "2024-12-15",
+            status: "delivered",
+            total: 3500,
+            items: [
+                {
+                    name: "Owl Chair",
+                    color: "Snowy White",
+                    quantity: 1,
+                    price: 3500,
+                    image: "/products/owl/snowy-white.png"
                 }
-            } catch (e) {
-                // 解析失败，保持 Guest User
-            }
+            ]
+        },
+        {
+            id: "FZ-2024-0756",
+            date: "2024-11-28",
+            status: "shipped",
+            total: 7800,
+            items: [
+                {
+                    name: "Silverback Sofa",
+                    color: "Charcoal",
+                    quantity: 1,
+                    price: 7800,
+                    image: "/products/gorilla-sofa/gray.jpg"
+                }
+            ]
         }
-    }, []);
+    ];
 
-    const handleBack = () => {
-        router.push("/m");
-    };
-
-    const handleUserCardClick = () => {
-        if (!isLoggedIn) {
-            router.push("/m/auth/login");
+    // 模拟地址数据
+    const addresses: SavedAddress[] = [
+        {
+            fullName: "Alexander Chen",
+            addressLine1: "123 Design District",
+            addressLine2: "Suite 456",
+            city: "San Francisco",
+            state: "CA",
+            zipCode: "94107",
+            country: "United States",
+            label: "Home"
         }
-    };
+    ];
 
-    const tabs: {
-        key: Tab;
-        label: string;
-    }[] = [{
-        key: "orders",
-        label: "Orders"
-    }, {
-        key: "addresses",
-        label: "Addresses"
-    }, {
-        key: "favorites",
-        label: "Favorites"
-    }, {
-        key: "settings",
-        label: "Settings"
-    }];
+    // 订单状态统计
+    const orderStats = [
+        { label: "Pending", count: 0, icon: "clock", status: "pending" },
+        { label: "Paid", count: 0, icon: "credit-card", status: "paid" },
+        { label: "Shipped", count: 1, icon: "truck", status: "shipped" },
+        { label: "Completed", count: 1, icon: "check-circle", status: "delivered" }
+    ];
 
     return (
-        <div className="shop-page profile-page" style={{ padding: "0" }}>
-            {}
-            {/* Header */}
-            <div
-                style={{
-                    position: "sticky",
-                    top: 0,
-                    background: "#0A0A0A",
-                    borderBottom: "1px solid #1A1A1A",
-                    padding: "16px 20px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    zIndex: 100
-                }}>
-                <button
-                    onClick={handleBack}
-                    style={{
-                        background: "transparent",
-                        border: "none",
-                        color: "#E8B4B8",
-                        cursor: "pointer",
-                        padding: "4px"
-                    }}>
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5">
-                        <polyline points="15 18 9 12 15 6" />
-                    </svg>
-                </button>
-                <h1
-                    style={{
-                        color: "#F5F0EB",
-                        fontSize: "16px",
-                        fontWeight: 400,
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        fontFamily: "'Cormorant Garamond', Georgia, serif"
-                    }}>
-                    My Account
-                </h1>
-            </div>
-            <div className="shop-content profile-content">
-                {}
-                {isLoggedIn ? (
-                    // 已登录状态：显示头像和用户信息
-                    <div 
-                        className="profile-user-card" 
-                        style={{ 
-                            flexDirection: "row", 
-                            alignItems: "center", 
-                            padding: "16px 20px",
-                            gap: "16px",
-                            cursor: "default"
-                        }}>
-                        <div className="profile-avatar" style={{ width: "48px", height: "48px", borderRadius: "50%", background: "rgba(232, 180, 184, 0.1)", border: "1px solid rgba(232, 180, 184, 0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="#E8B4B8"
-                                strokeWidth="1.5">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                <circle cx="12" cy="7" r="4" />
-                            </svg>
-                        </div>
-                        <p className="profile-user-name" style={{ fontSize: "15px", fontWeight: 400, letterSpacing: "0.05em", color: "#F5F0EB", margin: 0 }}>{userName}</p>
-                    </div>
-                ) : (
-                    // 未登录状态：显示提示文字，点击跳转登录
-                    <div style={{ padding: "16px 20px", textAlign: "center" }}>
-                        <p 
-                            style={{ fontSize: "13px", color: "#8A8580", letterSpacing: "0.05em", cursor: "pointer" }}
-                            onClick={handleUserCardClick}
-                        >
-                            你还没有登录/注册？请<span style={{ color: "#E8B4B8", fontWeight: 600 }}>注册</span><span style={{ color: "#8A8580" }}>/</span><span style={{ color: "#E8B4B8", fontWeight: 600 }}>登录</span>
-                        </p>
-                    </div>
-                )}
-                {}
-                <div className="profile-tabs">
-                    {tabs.map(tab => <button
-                        key={tab.key}
-                        className={`profile-tab ${activeTab === tab.key ? "active" : ""}`}
-                        onClick={() => setActiveTab(tab.key)}>
-                        {tab.label}
-                    </button>)}
-                </div>
-                {}
-                <div className="profile-tab-content">
-                    {activeTab === "orders" && <OrdersTab />}
-                    {activeTab === "addresses" && <AddressesTab addresses={savedAddresses} />}
-                    {activeTab === "favorites" && <FavoritesTab />}
-                    {activeTab === "settings" && <SettingsTab />}
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function OrdersTab() {
-    const router = useRouter();
-    const [orders, setOrders] = useState<Order[]>([]);
-    const [filter, setFilter] = useState<string>("all");
-
-    useEffect(() => {
-        setOrders(getOrders());
-    }, []);
-
-    const filteredOrders = filter === "all" ? orders : orders.filter(o => o.status === filter);
-
-    const getStatusColor = (status: string) => {
-        switch (status) {
-        case "Pending":
-            return "#E8A050";
-        case "Shipping":
-            return "#7EB8E0";
-        case "Completed":
-            return "#A8A8A8";
-        case "Cancelled":
-            return "#555555";
-        default:
-            return "#8A8580";
-        }
-    };
-
-    return (
-        <div className="profile-section">
-            {}
-            <div
-                style={{
-                    display: "flex",
-                    gap: "8px",
-                    padding: "16px",
-                    overflowX: "auto",
-                    borderBottom: "1px solid #1A1A1A"
-                }}>
-                {[{
-                    key: "all",
-                    label: "All",
-                    count: orders.length
-                }, {
-                    key: "Pending",
-                    label: "Pending",
-                    count: orders.filter(o => o.status === "Pending").length
-                }, {
-                    key: "Shipping",
-                    label: "Shipping",
-                    count: orders.filter(o => o.status === "Shipping").length
-                }, {
-                    key: "Completed",
-                    label: "Completed",
-                    count: orders.filter(o => o.status === "Completed").length
-                }, {
-                    key: "Cancelled",
-                    label: "Cancelled",
-                    count: orders.filter(o => o.status === "Cancelled").length
-                }].map(tab => <button
-                    key={tab.key}
-                    onClick={() => setFilter(tab.key)}
-                    style={{
-                        padding: "6px 12px",
-                        background: filter === tab.key ? "rgba(232, 180, 184, 0.06)" : "transparent",
-                        color: filter === tab.key ? "#E8B4B8" : "#F5F0EB",
-                        border: `1px solid ${filter === tab.key ? "rgba(232, 180, 184, 0.35)" : "#333333"}`,
-                        borderRadius: 0,
-                        fontSize: "11px",
-                        fontWeight: 500,
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        whiteSpace: "nowrap",
-                        cursor: "pointer",
-                        transition: "all 0.3s ease",
-                        fontFamily: "'Cormorant Garamond', Georgia, serif"
-                    }}>
-                    {tab.label}
-                              </button>)}
-            </div>
-            {}
-            <div
-                className="orders-list"
-                style={{
-                    padding: "16px"
-                }}>
-                {filteredOrders.length === 0 ? <div
-                    className="orders-empty"
-                    style={{
-                        textAlign: "center",
-                        padding: "60px 20px",
-                        color: "#8A8580"
-                    }}>
-                    <svg
-                        width="48"
-                        height="48"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                        style={{
-                            margin: "0 auto 16px",
-                            opacity: 0.5
-                        }}>
-                        <path
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                    <p
-                        style={{
-                            fontSize: "14px",
-                            marginBottom: "16px"
-                        }}>No orders yet</p>
-                    <Link
-                        href="/m"
-                        style={{
-                            display: "inline-block",
-                            padding: "12px 24px",
-                            background: "rgba(232, 180, 184, 0.06)",
-                            color: "#E8B4B8",
-                            border: "1.5px solid rgba(232, 180, 184, 0.35)",
-                            borderRadius: 0,
-                            fontSize: "13px",
-                            fontWeight: 500,
-                            letterSpacing: "0.15em",
-                            textTransform: "uppercase",
-                            textDecoration: "none",
-                            transition: "all 0.3s ease"
-                        }}>Start Shopping
-                                    </Link>
-                </div> : filteredOrders.map(order => <div
-                    key={order.id}
-                    className="order-card"
-                    onClick={() => router.push(`/m/profile/orders/${order.id}`)}
-                    style={{
-                        background: "#111111",
-                        border: "1px solid #1A1A1A",
-                        borderRadius: 0,
-                        marginBottom: "16px",
-                        overflow: "hidden",
-                        cursor: "pointer",
-                        marginLeft: "-16px",
-                        marginRight: "-16px",
-                        width: "calc(100% + 32px)"
-                    }}>
-                    {}
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "16px",
-                            borderBottom: "1px solid #1A1A1A"
-                        }}>
-                        <div>
-                            <p
-                                style={{
-                                    fontSize: "11px",
-                                    color: "#8A8580",
-                                    letterSpacing: "0.1em",
-                                    textTransform: "uppercase",
-                                    marginBottom: "4px"
-                                }}>Order #{order.id.slice(-8)}
-                            </p>
-                            <p
-                                style={{
-                                    fontSize: "12px",
-                                    color: "#6A6560"
-                                }}>
-                                {new Date(order.date).toLocaleDateString("en-US", {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric"
-                                })}
-                            </p>
-                        </div>
-                        <span
-                            style={{
-                                padding: "4px 12px",
-                                fontSize: "11px",
-                                fontWeight: 500,
-                                letterSpacing: "0.1em",
-                                textTransform: "uppercase",
-                                color: getStatusColor(order.status),
-                                border: `1px solid ${getStatusColor(order.status)}`,
-                                borderRadius: 0
-                            }}>
-                            {order.status}
-                        </span>
-                    </div>
-                    {}
-                    <div
-                        style={{
-                            padding: "16px"
-                        }}>
-                        {order.items.map((item, idx) => <div
-                            key={idx}
-                            style={{
-                                display: "flex",
-                                gap: "12px",
-                                marginBottom: idx < order.items.length - 1 ? "12px" : 0
-                            }}>
-                            <div
-                                style={{
-                                    width: "60px",
-                                    height: "60px",
-                                    background: "#0A0A0A",
-                                    border: "1px solid #1A1A1A",
-                                    borderRadius: 0,
-                                    overflow: "hidden",
-                                    flexShrink: 0
-                                }}>
-                                {item.image ? <img
-                                    src={item.image}
-                                    alt={item.name}
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "cover"
-                                    }} /> : <div
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        color: "#333"
-                                    }}>
-                                    <svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="1">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                        <circle cx="8.5" cy="8.5" r="1.5" />
-                                        <polyline points="21 15 16 10 5 21" />
+        <div className="app">
+            <div className="profile-page-new">
+                {/* ===== 顶部用户信息区 ===== */}
+                <div className="profile-user-section">
+                    <div className="profile-user-card-new">
+                        <div className="profile-avatar-new">
+                            {user.avatar ? (
+                                <img src={user.avatar} alt={user.name} />
+                            ) : (
+                                <div className="profile-avatar-placeholder">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
                                     </svg>
-                                </div>}
-                            </div>
-                            <div
-                                style={{
-                                    flex: 1,
-                                    minWidth: 0
-                                }}>
-                                <p
-                                    style={{
-                                        fontSize: "14px",
-                                        color: "#F5F0EB",
-                                        marginBottom: "4px",
-                                        whiteSpace: "nowrap",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis"
-                                    }}>
-                                    {item.name}
-                                </p>
-                                <p
-                                    style={{
-                                        fontSize: "12px",
-                                        color: "#8A8580",
-                                        marginBottom: "4px"
-                                    }}>
-                                    {item.color}× {item.quantity}
-                                </p>
-                                <p
-                                    style={{
-                                        fontSize: "13px",
-                                        color: "#E8B4B8"
-                                    }}>${typeof item.price === "number" ? item.price.toLocaleString() : "0"}
-                                </p>
-                            </div>
-                        </div>)}
+                                </div>
+                            )}
+                        </div>
+                        <div className="profile-user-info-new">
+                            <h1 className="profile-user-name-new">{user.name}</h1>
+                            <span className="profile-member-badge">{user.memberLevel}</span>
+                        </div>
+                        <button className="profile-edit-btn-new" onClick={() => router.push("/m/profile/settings")}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                            </svg>
+                        </button>
                     </div>
-                    {}
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "12px 16px",
-                            borderTop: "1px solid #1A1A1A",
-                            background: "rgba(232, 180, 184, 0.02)"
-                        }}>
-                        <span
-                            style={{
-                                fontSize: "12px",
-                                color: "#8A8580",
-                                letterSpacing: "0.1em",
-                                textTransform: "uppercase",
-                                fontFamily: "'Cormorant Garamond', serif"
-                            }}>Total
-                                            </span>
-                        <span
-                            style={{
-                                fontSize: "16px",
-                                color: "#E8B4B8",
-                                fontFamily: "'Cormorant Garamond', serif",
-                                fontWeight: 500
-                            }}>${typeof order.total === "number" ? order.total.toLocaleString() : "0"}
-                        </span>
-                    </div>
-                </div>)}
-            </div>
-        </div>
-    );
-}
-
-function AddressesTab(
-    {
-        addresses
-    }: {
-        addresses: SavedAddress[];
-    }
-) {
-    const router = useRouter();
-
-    return (
-        <div className="profile-section">
-            {addresses.length > 0 ? <div className="profile-address-list">
-                {addresses.map((addr, index) => <div key={index} className="profile-address-card">
-                    <div className="profile-address-info">
-                        <p className="profile-address-name">{addr.fullName}</p>
-                        <p className="profile-address-detail">{addr.addressLine1}</p>
-                        {addr.addressLine2 && <p className="profile-address-detail">{addr.addressLine2}</p>}
-                        <p className="profile-address-detail">
-                            {addr.city}{addr.state ? `, ${addr.state}` : ""} {addr.zipCode}
-                        </p>
-                        <p className="profile-address-detail">{addr.country}</p>
-                    </div>
-                    <div className="profile-address-actions">
-                        <button className="profile-address-edit-btn">Edit</button>
-                    </div>
-                </div>)}
-            </div> : <div className="profile-empty-state">
-                <svg
-                    width="48"
-                    height="48"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                </svg>
-                <p className="profile-empty-title">No Saved Addresses</p>
-                <p className="profile-empty-text">Your saved addresses will appear here</p>
-            </div>}
-            <button
-                className="profile-add-address-btn"
-                onClick={() => router.push("/m/profile/addresses/new")}>+ Add New Address
-                      </button>
-        </div>
-    );
-}
-
-function FavoritesTab() {
-    const router = useRouter();
-    const [favorites, setFavorites] = useState<string[]>([]);
-
-    // 从 localStorage 读取收藏数据
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const favs = JSON.parse(localStorage.getItem("fuzz_favs") || "[]");
-            setFavorites(favs);
-        }
-    }, []);
-
-    // 产品数据映射
-    const productData: Record<string, { name: string; image: string; price: string; slug: string }> = {
-        "owl-sofa": {
-            name: "Owl Chair",
-            image: "/products/owl/snowy-white.png",
-            price: "$3,500",
-            slug: "owl-sofa"
-        },
-        "gorilla-sofa": {
-            name: "Gorilla Sofa",
-            image: "/products/gorilla-sofa/gray.jpg",
-            price: "$7,800",
-            slug: "gorilla-sofa"
-        },
-        "flamingo-sofa": {
-            name: "Flamingo Sofa",
-            image: "/products/gorilla-sofa/cream.jpg",
-            price: "$5,600",
-            slug: "flamingo-sofa"
-        }
-    };
-
-    const handleRemoveFavorite = (slug: string) => {
-        const newFavs = favorites.filter(s => s !== slug);
-        setFavorites(newFavs);
-        localStorage.setItem("fuzz_favs", JSON.stringify(newFavs));
-    };
-
-    if (favorites.length === 0) {
-        return (
-            <div className="profile-section">
-                <div className="profile-empty-state">
-                    <svg
-                        width="48"
-                        height="48"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1">
-                        <path
-                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                    </svg>
-                    <p className="profile-empty-title">No Favorites Yet</p>
-                    <p className="profile-empty-text">Save your favorite items to view them later</p>
-                    <button className="profile-empty-btn" onClick={() => router.push("/m")}>Discover Products
-                                </button>
                 </div>
-            </div>
-        );
-    }
 
-    return (
-        <div className="profile-section">
-            <div style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "16px",
-                padding: "16px"
-            }}>
-                {favorites.map((slug) => {
-                    const product = productData[slug];
-                    if (!product) return null;
-
-                    return (
-                        <div key={slug} style={{ position: "relative" }}>
-                            <Link href={`/m/product/${slug}`} style={{
-                                display: "block",
-                                background: "#111111",
-                                border: "1px solid #1A1A1A",
-                                borderRadius: 0,
-                                overflow: "hidden",
-                                textDecoration: "none"
-                            }}>
-                                <div style={{
-                                    width: "100%",
-                                    aspectRatio: "1",
-                                    background: "#0A0A0A",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    overflow: "hidden"
-                                }}>
-                                    <img 
-                                        src={product.image} 
-                                        alt={product.name} 
-                                        loading="lazy"
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            objectFit: "cover"
-                                        }}
-                                    />
-                                </div>
-                                <div style={{ padding: "12px" }}>
-                                    <div style={{
-                                        fontFamily: "'Inter', sans-serif",
-                                        fontSize: "14px",
-                                        fontWeight: 400,
-                                        color: "#F5F0EB",
-                                        marginBottom: "8px",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "nowrap"
-                                    }}>{product.name}</div>
-                                    <div style={{
-                                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                        fontSize: "15px",
-                                        fontWeight: 600,
-                                        color: "#E8B4B8"
-                                    }}>{product.price}</div>
-                                </div>
-                            </Link>
-                            <button
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    handleRemoveFavorite(slug);
-                                }}
-                                style={{
-                                    position: "absolute",
-                                    top: "8px",
-                                    right: "8px",
-                                    width: "32px",
-                                    height: "32px",
-                                    background: "#0A0A0A",
-                                    border: "1px solid #1A1A1A",
-                                    borderRadius: 0,
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    cursor: "pointer",
-                                    zIndex: 10
-                                }}
+                {/* ===== 订单状态入口 ===== */}
+                <div className="profile-orders-section">
+                    <div className="profile-section-header">
+                        <h2 className="profile-section-title">MY ORDERS</h2>
+                        <Link href="/m/profile/orders" className="profile-section-link">
+                            View All
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </Link>
+                    </div>
+                    <div className="profile-order-grid">
+                        {orderStats.map((stat) => (
+                            <Link
+                                key={stat.status}
+                                href={`/m/profile/orders?status=${stat.status}`}
+                                className="profile-order-stat"
                             >
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8B4B8" stroke="#E8B4B8" strokeWidth="2">
+                                <div className="profile-order-stat-icon">
+                                    {stat.icon === "clock" && (
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <polyline points="12 6 12 12 16 14" />
+                                        </svg>
+                                    )}
+                                    {stat.icon === "credit-card" && (
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                                            <line x1="1" y1="10" x2="23" y2="10" />
+                                        </svg>
+                                    )}
+                                    {stat.icon === "truck" && (
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                            <rect x="1" y="3" width="15" height="13" />
+                                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                                            <circle cx="5.5" cy="18.5" r="2.5" />
+                                            <circle cx="18.5" cy="18.5" r="2.5" />
+                                        </svg>
+                                    )}
+                                    {stat.icon === "check-circle" && (
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                            <polyline points="22 4 12 14.01 9 11.01" />
+                                        </svg>
+                                    )}
+                                </div>
+                                <span className="profile-order-stat-label">{stat.label}</span>
+                                {stat.count > 0 && (
+                                    <span className="profile-order-stat-badge">{stat.count}</span>
+                                )}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+
+                {/* ===== 功能列表 ===== */}
+                <div className="profile-functions-section">
+                    <div className="profile-function-list">
+                        <Link href="/m/profile/addresses" className="profile-function-item">
+                            <div className="profile-function-left">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                    <circle cx="12" cy="10" r="3" />
+                                </svg>
+                                <span>My Addresses</span>
+                            </div>
+                            <svg className="profile-function-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </Link>
+
+                        <Link href="/m/profile/favorites" className="profile-function-item">
+                            <div className="profile-function-left">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                                 </svg>
-                            </button>
+                                <span>My Favorites</span>
+                            </div>
+                            <div className="profile-function-right">
+                                <span className="profile-function-count">3</span>
+                                <svg className="profile-function-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <polyline points="9 18 15 12 9 6" />
+                                </svg>
+                            </div>
+                        </Link>
+
+                        <Link href="/m/profile/payment" className="profile-function-item">
+                            <div className="profile-function-left">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                                    <line x1="1" y1="10" x2="23" y2="10" />
+                                </svg>
+                                <span>Payment Methods</span>
+                            </div>
+                            <svg className="profile-function-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </Link>
+
+                        <Link href="/m/profile/coupons" className="profile-function-item">
+                            <div className="profile-function-left">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <polyline points="20 12 20 22 4 22 4 12" />
+                                    <rect x="2" y="7" width="20" height="5" />
+                                    <line x1="12" y1="22" x2="12" y2="7" />
+                                    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                                    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                                </svg>
+                                <span>My Coupons</span>
+                            </div>
+                            <svg className="profile-function-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </Link>
+                    </div>
+                </div>
+
+                {/* ===== 设置与退出 ===== */}
+                <div className="profile-settings-section">
+                    <div className="profile-function-list">
+                        <Link href="/m/profile/settings" className="profile-function-item">
+                            <div className="profile-function-left">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                                </svg>
+                                <span>Account Settings</span>
+                            </div>
+                            <svg className="profile-function-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </Link>
+
+                        <button className="profile-function-item profile-signout-btn" onClick={() => {}}>
+                            <div className="profile-function-left">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                    <polyline points="16 17 21 12 16 7" />
+                                    <line x1="21" y1="12" x2="9" y2="12" />
+                                </svg>
+                                <span>Sign Out</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                {/* ===== 最近订单预览 ===== */}
+                {orders.length > 0 && (
+                    <div className="profile-recent-orders">
+                        <div className="profile-section-header">
+                            <h2 className="profile-section-title">RECENT ORDERS</h2>
                         </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
-}
-
-function SettingsTab() {
-    const router = useRouter();
-
-    const menuItems = [{
-        icon: <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5">
-            <circle cx="12" cy="12" r="3" />
-            <path
-                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-        </svg>,
-
-        label: "Account Settings",
-        action: () => router.push("/m/profile/settings")
-    }, {
-        icon: <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5">
-            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-            <line x1="1" y1="10" x2="23" y2="10" />
-        </svg>,
-
-        label: "Payment Methods",
-        action: () => router.push("/m/profile/payment")
-    }, {
-        icon: <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-            <polyline points="16 17 21 12 16 7" />
-            <line x1="21" y1="12" x2="9" y2="12" />
-        </svg>,
-
-        label: "Sign Out",
-        action: () => {},
-        isDestructive: true
-    }];
-
-    return (
-        <div className="profile-section">
-            <div className="profile-menu-list">
-                {menuItems.map((item, index) => <button
-                    key={index}
-                    className={`profile-menu-item ${item.isDestructive ? "destructive" : ""}`}
-                    onClick={item.action}>
-                    <span className="profile-menu-icon">{item.icon}</span>
-                    <span className="profile-menu-label">{item.label}</span>
-                    {!item.isDestructive && <svg
-                        className="profile-menu-arrow"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5">
-                        <polyline points="9 18 15 12 9 6" />
-                    </svg>}
-                </button>)}
+                        {orders.map((order) => (
+                            <Link
+                                key={order.id}
+                                href={`/m/profile/orders/${order.id}`}
+                                className="profile-recent-order-card"
+                            >
+                                <div className="profile-order-card-header">
+                                    <span className="profile-order-id">{order.id}</span>
+                                    <span className={`profile-order-status profile-order-status-${order.status}`}>
+                                        {order.status === "delivered" ? "Completed" : order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                                    </span>
+                                </div>
+                                <div className="profile-order-card-items">
+                                    {order.items.map((item, idx) => (
+                                        <div key={idx} className="profile-order-item">
+                                            <div className="profile-order-item-image">
+                                                {item.image ? (
+                                                    <img src={item.image} alt={item.name} />
+                                                ) : (
+                                                    <div className="profile-order-item-placeholder" />
+                                                )}
+                                            </div>
+                                            <div className="profile-order-item-info">
+                                                <p className="profile-order-item-name">{item.name}</p>
+                                                <p className="profile-order-item-variant">{item.color} × {item.quantity}</p>
+                                            </div>
+                                            <p className="profile-order-item-price">${item.price.toLocaleString()}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="profile-order-card-footer">
+                                    <span className="profile-order-date">{order.date}</span>
+                                    <span className="profile-order-total">${order.total.toLocaleString()}</span>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

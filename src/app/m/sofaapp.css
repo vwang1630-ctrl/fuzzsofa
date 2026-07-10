@@ -7288,3 +7288,449 @@ textarea.form-control {
   margin: 0;
   line-height: 1.5;
 }
+
+/* ============================================
+   PROFILE PAGE V2 - Dark Minimalist Design
+   Layout: 20px safe margins, 5-6px radius
+   Colors: #000 bg, #121212/#1A1A1A cards, #333 dividers
+   ============================================ */
+
+.profile-page-new {
+  width: 100%;
+  padding: 20px;
+  padding-bottom: 92px;
+  background: #000000;
+  min-height: 100vh;
+}
+
+/* ===== User Section ===== */
+.profile-user-section {
+  margin-bottom: 32px;
+}
+
+.profile-user-card-new {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 16px;
+  background: #121212;
+  border-radius: 6px;
+  border: 1px solid #1A1A1A;
+}
+
+.profile-avatar-new {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid #333333;
+}
+
+.profile-avatar-new img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1A1A1A;
+  color: #8A8580;
+}
+
+.profile-user-info-new {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-user-name-new {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #F5F0EB;
+  letter-spacing: 0.02em;
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+
+.profile-member-badge {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #E8B4B8;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  background: rgba(232, 180, 184, 0.08);
+  border: 1px solid rgba(232, 180, 184, 0.2);
+  border-radius: 3px;
+}
+
+.profile-edit-btn-new {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid #333333;
+  border-radius: 5px;
+  color: #8A8580;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.profile-edit-btn-new:active {
+  border-color: #E8B4B8;
+  color: #E8B4B8;
+}
+
+/* ===== Section Header ===== */
+.profile-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.profile-section-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #8A8580;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.profile-section-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #8A8580;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.profile-section-link:active {
+  color: #E8B4B8;
+}
+
+.profile-section-link svg {
+  stroke: currentColor;
+}
+
+/* ===== Orders Section ===== */
+.profile-orders-section {
+  margin-bottom: 32px;
+}
+
+.profile-order-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.profile-order-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 8px;
+  background: #121212;
+  border: 1px solid #1A1A1A;
+  border-radius: 6px;
+  text-decoration: none;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.profile-order-stat:active {
+  border-color: #333333;
+}
+
+.profile-order-stat-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F5F0EB;
+}
+
+.profile-order-stat-icon svg {
+  stroke: currentColor;
+}
+
+.profile-order-stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #8A8580;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.profile-order-stat-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  background: #E8B4B8;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* ===== Functions Section ===== */
+.profile-functions-section,
+.profile-settings-section {
+  margin-bottom: 32px;
+}
+
+.profile-function-list {
+  background: #121212;
+  border: 1px solid #1A1A1A;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.profile-function-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  text-decoration: none;
+  border-bottom: 1px solid #1A1A1A;
+  transition: background 0.15s;
+  cursor: pointer;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.profile-function-item:last-child {
+  border-bottom: none;
+}
+
+.profile-function-item:active {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.profile-function-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-function-left svg {
+  stroke: #8A8580;
+  flex-shrink: 0;
+}
+
+.profile-function-left span {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #F5F0EB;
+  letter-spacing: 0.01em;
+}
+
+.profile-function-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-function-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #8A8580;
+}
+
+.profile-function-arrow {
+  stroke: #333333;
+  flex-shrink: 0;
+}
+
+/* Sign Out button */
+.profile-signout-btn .profile-function-left svg {
+  stroke: #E8B4B8;
+}
+
+.profile-signout-btn .profile-function-left span {
+  color: #E8B4B8;
+}
+
+/* ===== Recent Orders ===== */
+.profile-recent-orders {
+  margin-bottom: 32px;
+}
+
+.profile-recent-order-card {
+  display: block;
+  padding: 16px;
+  background: #121212;
+  border: 1px solid #1A1A1A;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+
+.profile-recent-order-card:last-child {
+  margin-bottom: 0;
+}
+
+.profile-recent-order-card:active {
+  border-color: #333333;
+}
+
+.profile-order-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1A1A1A;
+}
+
+.profile-order-id {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #8A8580;
+  letter-spacing: 0.05em;
+}
+
+.profile-order-status {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #8A8580;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  background: rgba(138, 133, 128, 0.08);
+  border-radius: 3px;
+}
+
+.profile-order-status-delivered {
+  color: #E8B4B8;
+  background: rgba(232, 180, 184, 0.08);
+}
+
+.profile-order-status-shipped {
+  color: #F5F0EB;
+  background: rgba(245, 240, 235, 0.05);
+}
+
+.profile-order-card-items {
+  margin-bottom: 12px;
+}
+
+.profile-order-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.profile-order-item + .profile-order-item {
+  border-top: 1px solid rgba(26, 26, 26, 0.5);
+}
+
+.profile-order-item-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #0A0A0A;
+  flex-shrink: 0;
+  border: 1px solid #1A1A1A;
+}
+
+.profile-order-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-order-item-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.profile-order-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-order-item-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #F5F0EB;
+  margin: 0 0 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-order-item-variant {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #8A8580;
+  margin: 0;
+}
+
+.profile-order-item-price {
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: #E8B4B8;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.profile-order-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid #1A1A1A;
+}
+
+.profile-order-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #8A8580;
+}
+
+.profile-order-total {
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #E8B4B8;
+}

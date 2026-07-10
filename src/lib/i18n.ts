@@ -164,6 +164,7 @@ export type TranslationKeys =
   | "heroTitle"
   | "heroSubtitle"
   | "heroDescription"
+  | "heroShopNow"
   | "hero2Title"
   | "hero2Subtitle"
   | "hero2Description"
@@ -5444,6 +5445,7 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     heroTitle: "Setzen Sie sich auf Kunst",
     heroSubtitle: "Skulpturale Tiermöbel",
     heroDescription: "Geboren in Shanghai. Jedes Stück handgeschnitzt, mit Plüschfell bezogen und zum Leben gemacht — nicht nur zum Anschauen.",
+    heroShopNow: "Jetzt Kaufen",
     hero2Title: "Punk Eule",
     hero2Subtitle: "Rosa Eulensessel",
     hero2Description: "Rosa Fell. Rohbeton. Neonlicht. Sanfte Rebellion, hartes Design.",
@@ -8617,12 +8619,12 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     heroTitle: "Sente-se na arte",
     heroSubtitle: "Mobiliário Animal Escultórico",
     heroDescription: "Nascido em Xangai. Cada peça é esculpida à mão, estofada em pele de pelúcia, e feita para ser vivida — não apenas olhada.",
+    heroShopNow: "Comprar Agora",
     hero2Title: "Coruja Punk",
     hero2Subtitle: "Poltrona Coruja Rosa",
     hero2Description: "Pele rosa. Concreto cru. Brilho neon. Rebelião suave, design duro.",
     hero2Cta: "Conheça a Coruja",
     hero2AiCta: "IA no Meu Quarto",
-    heroShopNow: "Comprar Agora",
     aiRoomTitle: "IA no Meu Quarto",
     aiRoomDropHint: "Solte a foto do seu quarto aqui ou clique para carregar",
     aiRoomDescription: "Carregue uma foto do seu quarto e nossa IA colocará esta peça naturalmente no seu espaço.",
@@ -9675,6 +9677,7 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     heroTitle: "Sente-se na arte",
     heroSubtitle: "Mobiliário Animal Escultórico",
     heroDescription: "Nascido em Xangai. Cada peça é esculpida à mão, estofada em pele de pelúcia, e feita para ser vivida — não apenas olhada.",
+    heroShopNow: "Comprar Agora",
     hero2Title: "Coruja Punk",
     hero2Subtitle: "Poltrona Coruja Rosa",
     hero2Description: "Pele rosa. Concreto cru. Brilho neon. Rebelião suave, design duro.",
@@ -10733,6 +10736,7 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     heroTitle: "اجلس على الفن",
     heroSubtitle: "أثاث حيواني نحتي",
     heroDescription: "ولد في شنغهاي. كل قطعة منحوتة يدوياً، مغطاة بالفراء، وصُنعت لتُعاش — لا ليُنظر إليها فقط.",
+    heroShopNow: "تسوق الآن",
     hero2Title: "بومة بانك",
     hero2Subtitle: "كرسي البومة الوردي",
     hero2Description: "فرو وردي. خرسانة خام. توهج نيون. تمرد ناعم، تصميم صلب.",
@@ -11791,6 +11795,7 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     heroTitle: "روی هنر بنشینید",
     heroSubtitle: "مبلمان حیوانی مجسمه‌سازی",
     heroDescription: "متولد شانگهای. هر قطعه دست‌تراشیده، با خزاپلاشی پوشانده و برای زندگی ساخته شده — نه فقط برای تماشا.",
+    heroShopNow: "اکنون خرید کنید",
     hero2Title: "جغد پانک",
     hero2Subtitle: "مبل جغد صورتی",
     hero2Description: "خز صورتی. بتن خام. درخشش نئون. شورش ملایم، طراحی سخت.",
@@ -12849,6 +12854,7 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     heroTitle: "कला पर बैठें",
     heroSubtitle: "मूर्तिकला पशु फर्नीचर",
     heroDescription: "शंघाई में जन्मी। प्रत्येक टुकड़ा हस्त-निर्मित, प्लश फर से ढकी, और जीने के लिए बनाई गई — केवल देखने के लिए नहीं।",
+    heroShopNow: "अभी खरीदें",
     hero2Title: "पंक उल्लू",
     hero2Subtitle: "गुलाबी उल्लू आर्मचेयर",
     hero2Description: "गुलाबी फर। कंक्रीट। नियॉन चमक। कोमल विद्रोह, कड़ा डिज़ाइन।",
@@ -13907,6 +13913,7 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     heroTitle: "예술에 앉다",
     heroSubtitle: "조각 동물 가구",
     heroDescription: "상하이에서 태어나다. 각 작품은 수작업 조각, 플러시 퍼로 마감되었으며, 삶을 위해 만들어졌습니다 — 감상만을 위한 것이 아닙니다.",
+    heroShopNow: "지금 쇼핑하기",
     hero2Title: "펑크 올빼미",
     hero2Subtitle: "핑크 올빼미 소파",
     hero2Description: "핑크 털, 거친 콘크리트, 네온 빛. 부드러운 반역, 하드한 디자인.",
