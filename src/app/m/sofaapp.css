@@ -8123,3 +8123,347 @@ textarea.form-control {
 .cart-checkout-btn:not(:disabled):active {
   background: #F5F0EB;
 }
+
+/* ============================================
+   PAYMENT PAGE V2 - Dark Minimalist Design
+   ============================================ */
+
+.payment-page-new {
+  width: 100%;
+  min-height: 100vh;
+  background: #000000;
+  padding-bottom: 40px;
+}
+
+/* Header */
+.payment-header-new {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  background: #000000;
+  border-bottom: 1px solid #1A1A1A;
+  z-index: 100;
+}
+
+.payment-back-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #E8B4B8;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+.payment-back-btn svg {
+  stroke: currentColor;
+}
+
+.payment-title-new {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: #F5F0EB;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.payment-header-right {
+  width: 32px;
+}
+
+/* Content */
+.payment-content-new {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Payment Card */
+.payment-card {
+  background: #121212;
+  border: 1px solid #1A1A1A;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.payment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #1A1A1A;
+}
+
+.payment-card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #8A8580;
+  text-transform: uppercase;
+}
+
+.payment-order-id {
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 11px;
+  color: #666;
+}
+
+.payment-card-body {
+  padding: 16px;
+}
+
+/* Payment Item Row */
+.payment-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 0;
+}
+
+.payment-item-row + .payment-item-row {
+  border-top: 1px solid #1A1A1A;
+}
+
+.payment-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.payment-item-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #F5F0EB;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.payment-item-variant {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #8A8580;
+}
+
+.payment-item-price {
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: #E8B4B8;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+/* Total Divider */
+.payment-total-divider {
+  height: 1px;
+  background: #333333;
+  margin: 12px 0;
+}
+
+/* Total Row */
+.payment-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-total-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #F5F0EB;
+}
+
+.payment-total-amount {
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 18px;
+  font-weight: 600;
+  color: #E8B4B8;
+}
+
+/* Payment Method Option */
+.payment-method-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.payment-method-divider {
+  height: 1px;
+  background: #1A1A1A;
+}
+
+.payment-radio-new {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #333333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+
+.payment-radio-new.checked {
+  border-color: #E8B4B8;
+}
+
+.payment-radio-dot-new {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #E8B4B8;
+}
+
+.payment-method-icon {
+  color: #8A8580;
+  flex-shrink: 0;
+}
+
+.payment-method-option.selected .payment-method-icon {
+  color: #F5F0EB;
+}
+
+.payment-method-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #F5F0EB;
+}
+
+/* Payment Input */
+.payment-input-group {
+  margin-bottom: 16px;
+}
+
+.payment-input-group:last-child {
+  margin-bottom: 0;
+}
+
+.payment-input-label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #8A8580;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.payment-input-new {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #F5F0EB;
+  background: #0A0A0A;
+  border: 1px solid #333333;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.payment-input-new::placeholder {
+  color: #666;
+}
+
+.payment-input-new:focus {
+  border-color: #E8B4B8;
+}
+
+.payment-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.payment-input-row .payment-input-group {
+  margin-bottom: 16px;
+}
+
+/* Payment Error */
+.payment-error {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #E8B4B8;
+  margin: 8px 0 0 0;
+}
+
+/* Payment Notice */
+.payment-notice-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8A8580;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Pay Button */
+.payment-pay-btn {
+  width: 100%;
+  padding: 16px;
+  margin-top: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000000;
+  background: #E8B4B8;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.payment-pay-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.payment-pay-btn:not(:disabled):active {
+  background: #F5F0EB;
+}
+
+.payment-processing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.payment-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
