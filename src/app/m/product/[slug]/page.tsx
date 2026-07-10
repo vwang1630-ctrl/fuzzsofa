@@ -431,17 +431,6 @@ export default function MobileProductPage(
                     </div>
                 </div>
                 {}
-                <div className="inspiration">
-                    <div className="section-label">实景灵感</div>
-                    <div className="scene-scroll">
-                        {OWL_DATA.scenes.map((s, i) => <div key={i} className="scene-card">
-                            <img src={s.image} alt="" loading="lazy" />
-                            <div className="label">{s.label}</div>
-                            <div className="sub">{s.sub}</div>
-                        </div>)}
-                    </div>
-                </div>
-                {}
                 <div className="features">
                     {OWL_DATA.features.map(f => <div key={f.num} className="feature-row">
                         <span className="num">{f.num}</span>
@@ -452,6 +441,28 @@ export default function MobileProductPage(
                 {}
                 <div className="description">
                     <p>{OWL_DATA.description}</p>
+                </div>
+                {}
+                {/* Interior Inspiration */}
+                <div className="interior-inspiration">
+                    <div className="interior-header">
+                        <span className="interior-label">✦ Interior Inspiration</span>
+                        <h2 className="interior-title">See It In Real Spaces</h2>
+                    </div>
+                    <div className="interior-grid">
+                        {OWL_DATA.scenes.map((scene: { image: string; label: string; sub: string }, idx: number) => (
+                            <div key={idx} className="interior-item">
+                                <div className="interior-image">
+                                    <img src={scene.image} alt={scene.label} loading="lazy" />
+                                    <div className="interior-overlay" />
+                                    <div className="interior-caption">
+                                        <span className="interior-scene-label">{scene.label}</span>
+                                    </div>
+                                </div>
+                                <p className="interior-sub">{scene.sub}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 {}
                 <div className="story">
@@ -468,26 +479,6 @@ export default function MobileProductPage(
                             {OWL_DATA.storyText.map((t: string, i: number) => <p key={i}>{t}</p>)}
                             <p className="spec-note">* 手工制作 · 尺寸可能存在 ±1-3cm 差异 · 重量因面料批次略有浮动</p>
                         </div>
-                    </div>
-                </div>
-                {}
-                {/* Interior Inspiration - 背景色充满，内容保持合理范围 */}
-                <div className="interior-inspiration">
-                    <div className="interior-header">
-                        <span className="interior-label">✦ Interior Inspiration</span>
-                        <h2 className="interior-title">See It In Real Spaces</h2>
-                    </div>
-                    <div className="interior-scroll">
-                        {OWL_DATA.scenes.map((scene: { image: string; label: string; sub: string }, idx: number) => (
-                            <div key={idx} className="interior-card">
-                                <div className="interior-image">
-                                    <img src={scene.image} alt={scene.label} loading="lazy" />
-                                </div>
-                                <div className="interior-caption">
-                                    <p>{scene.label} — {scene.sub}</p>
-                                </div>
-                            </div>
-                        ))}
                     </div>
                 </div>
                 {}
@@ -512,6 +503,17 @@ export default function MobileProductPage(
                             <span className="line" />
                             <span className="name">{c.name}</span>
                             <span className="detail">{c.detail}</span>
+                        </div>)}
+                    </div>
+                </div>
+                {}
+                <div className="inspiration">
+                    <div className="section-label">实景灵感</div>
+                    <div className="scene-scroll">
+                        {OWL_DATA.scenes.map((s, i) => <div key={i} className="scene-card">
+                            <img src={s.image} alt="" loading="lazy" />
+                            <div className="label">{s.label}</div>
+                            <div className="sub">{s.sub}</div>
                         </div>)}
                     </div>
                 </div>
