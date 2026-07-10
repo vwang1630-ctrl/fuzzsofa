@@ -13,8 +13,8 @@ export function Footer() {
         {/* Brand + Manufacturing Entity */}
         <div>
           <h3 className="font-serif text-[14px] tracking-[0.15em] uppercase text-[#F5F0EB] mb-4">Fuzz Sofa Studio</h3>
-          <p className="text-[12px] tracking-[0.05em] text-[#8A8580] mb-4">{t("footerBrandDesc" as TranslationKeys)}</p>
-          <p className="text-[12px] tracking-[0.05em] text-[#8A8580] mb-2">
+          <p className="text-[12px] tracking-[0.05em] text-[#8A8580] mb-3">{t("footerBrandDesc" as TranslationKeys)}</p>
+          <p className="text-[12px] tracking-[0.05em] text-[#8A8580] mb-3">
             <a href="mailto:support@fuzzsofa.com" className="hover:text-[#E8B4B8] transition-colors">support@fuzzsofa.com</a>
           </p>
           <p className="text-[12px] tracking-[0.05em] text-[#8A8580] mb-4">
@@ -39,7 +39,7 @@ export function Footer() {
         {/* Collection */}
         <div>
           <h4 className="font-serif text-[14px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-4">{t("collection")}</h4>
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             <li><Link href="/gorilla-sofa" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("gorillaSofaName")}</Link></li>
             <li><Link href="/owl-sofa" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("owlChairName")}</Link></li>
             <li><Link href="/silverback-sofa" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("silverbackSofaName")}</Link></li>
@@ -52,7 +52,7 @@ export function Footer() {
         {/* Explore */}
         <div>
           <h4 className="font-serif text-[14px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-4">{t("explore")}</h4>
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             <li><Link href="/about" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("aboutTheStudio" as TranslationKeys)}</Link></li>
             <li><Link href="/studio" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("studio" as TranslationKeys)}</Link></li>
             <li><Link href="/workshop" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("workshop" as TranslationKeys)}</Link></li>
@@ -65,7 +65,7 @@ export function Footer() {
         {/* Support + Legal */}
         <div>
           <h4 className="font-serif text-[14px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-4">{t("support")}</h4>
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             <li><Link href="/shipping-policy" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("shippingPolicy" as TranslationKeys)}</Link></li>
             <li><Link href="/refund-policy" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("refundPolicy" as TranslationKeys)}</Link></li>
             <li><Link href="/warranty" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("warranty")}</Link></li>
