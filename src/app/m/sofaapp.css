@@ -7255,6 +7255,10 @@ textarea.form-control {
   border-top: 1px solid #1A1A1A;
   border-bottom: 1px solid #1A1A1A;
   margin: 32px 0;
+  background: #0A0A0A;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
 }
 
 .interior-header {
@@ -7263,6 +7267,9 @@ textarea.form-control {
   gap: 12px;
   margin-bottom: 24px;
   padding: 0 20px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .interior-header h3 {
@@ -7291,6 +7298,9 @@ textarea.form-control {
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .interior-scroll::-webkit-scrollbar {
