@@ -177,6 +177,17 @@ export default function HomePage() {
                 Made-to-order, delivered in 1–2 weeks
               </p>
               <div className="mt-5 md:mt-6 animate-fade-in-delay-3 flex flex-col items-start gap-3">
+                {/* Primary CTA: Shop Now */}
+                <Link
+                  href={sceneConfig.keys.href}
+                  className="group inline-flex items-center gap-2.5 px-6 py-3 bg-[#E8B4B8] text-[#0A0A0A] text-[15px] tracking-[0.2em] uppercase font-light transition-all duration-300 hover:bg-[#F5F0EB] hover:shadow-[0_0_20px_rgba(232,180,184,0.3)]"
+                >
+                  {t('heroShopNow' as TranslationKeys)}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform duration-300">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </Link>
+                {/* Secondary CTA: AI Room */}
                 <button
                   onClick={() => {
                     const event = new CustomEvent('open-ai-room', { detail: { productSlug: sceneConfig.keys.href.replace('/', '') } });
@@ -268,12 +279,35 @@ export default function HomePage() {
                 </div>
                 {/* Desktop: image + text below */}
                 <div className="hidden sm:block">
-                  <div className="aspect-square overflow-hidden">
+                  <div className="relative aspect-square overflow-hidden">
                     <img
                       src={(product.images ?? [])[0] ?? ''}
                       alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
+                    {/* Hover overlay with quick action buttons */}
+                    <div className="absolute inset-0 bg-[#0A0A0A]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          // Add to cart logic
+                        }}
+                        className="bg-[#F5F0EB] text-[#0A0A0A] px-4 py-2 text-[12px] tracking-[0.1em] uppercase font-light hover:bg-[#E8B4B8] transition-colors duration-200"
+                      >
+                        Quick Add
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          // Quick view logic
+                        }}
+                        className="border border-[#F5F0EB] text-[#F5F0EB] px-4 py-2 text-[12px] tracking-[0.1em] uppercase font-light hover:bg-[#F5F0EB] hover:text-[#0A0A0A] transition-colors duration-200"
+                      >
+                        Quick View
+                      </button>
+                    </div>
                   </div>
                   <div className="pt-4 pb-2">
                     <h3 className="font-serif text-[16px] font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">

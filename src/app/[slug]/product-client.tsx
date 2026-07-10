@@ -865,16 +865,17 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={handleAddToCart}
-                                className="hidden sm:flex w-full py-4 text-[#0A0A0A] font-medium text-[15px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
+                                className="hidden sm:flex w-full py-5 text-[#0A0A0A] font-medium text-[16px] tracking-[0.15em] uppercase transition-all duration-300 mb-3 items-center justify-center gap-2 rounded-sm shadow-lg hover:shadow-xl hover:scale-[1.02]"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
-                                    border: addedToCart ? "1px solid #E8B4B8" : "none"
+                                    border: addedToCart ? "1px solid #E8B4B8" : "none",
+                                    boxShadow: addedToCart ? "none" : "0 4px 20px rgba(232, 180, 184, 0.3)"
                                 }}>
                                 {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : <>
                                     {t("addToCart")}
                                     <svg
-                                        width="14"
-                                        height="14"
+                                        width="16"
+                                        height="16"
                                         viewBox="0 0 16 16"
                                         fill="none"
                                         stroke="currentColor"
@@ -886,7 +887,7 @@ export function ProductPageClient(
                                 </>}
                             </button>
                             <button
-                                className="hidden sm:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[15px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
+                                className="hidden sm:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[15px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/10 hover:scale-[1.01]"
                                 style={{
                                     border: "1px solid #E8B4B8"
                                 }}
