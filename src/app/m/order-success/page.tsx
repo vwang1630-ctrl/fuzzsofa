@@ -47,7 +47,7 @@ export default function OrderSuccessPage() {
             <polyline points="15 18 9 12 15 6" />
           </svg>
         </button>
-        <h1 className="shop-header-title" style={{ fontSize: "16px", textTransform: "uppercase" }}>Order Confirmed</h1>
+        <h1 className="shop-header-title" style={{ fontSize: "16px", textTransform: "uppercase", flex: 1, textAlign: "center" }}>Order Confirmed</h1>
         <span style={{ width: "28px" }}></span>
       </div>
 
