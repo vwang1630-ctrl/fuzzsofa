@@ -6736,6 +6736,7 @@ textarea.form-control {
   font-weight: 400;
   color: #F5F0EB;
   letter-spacing: 0.02em;
+  margin-right: 16px;
 }
 
 .settings-arrow {
