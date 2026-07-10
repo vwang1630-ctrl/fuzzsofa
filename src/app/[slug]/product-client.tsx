@@ -928,7 +928,7 @@ export function ProductPageClient(
                     <div className="flex sm:grid sm:grid-cols-3 gap-2.5 md:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 sm:mx-0 sm:px-0 pb-1 sm:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                         {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[80vw] sm:w-auto snap-start">
                             {}
-                            <div className="relative aspect-[4/3] md:aspect-[2/1] bg-[#111] overflow-hidden mb-2 md:mb-4 rounded-sm">
+                            <div className="relative aspect-[4/3] bg-[#111] overflow-hidden mb-2 md:mb-4 rounded-sm">
                                 {space.image ? <img
                                     src={space.image}
                                     alt={`${productName} in ${space.title}`}
@@ -1114,7 +1114,7 @@ export function ProductPageClient(
                 <div className="max-w-[1600px] mx-auto">
                     {}
                     <div
-                        className="relative w-full aspect-[3/1] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden hidden sm:block">
+                        className="relative w-full aspect-[4/3] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden hidden sm:block">
                         {madeBg ? <img
                             src={madeBg}
                             alt={`${productName} craftsmanship`}
