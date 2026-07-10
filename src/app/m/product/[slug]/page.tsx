@@ -466,11 +466,11 @@ export default function MobileProductPage(
                                 {OWL_DATA.storyTitle} <span className="light">✦</span>
                             </div>
                             {OWL_DATA.storyText.map((t: string, i: number) => <p key={i}>{t}</p>)}
-                            {/* Interior Inspiration */}
+                            {/* 产品展示 */}
                             <div className="interior-inspiration">
                                 <div className="interior-header">
-                                    <span className="interior-label">✦ Interior Inspiration</span>
-                                    <h2 className="interior-title">See It In Real Spaces</h2>
+                                    <span className="interior-label">✦ 产品展示</span>
+                                    <h2 className="interior-title">细节展示</h2>
                                 </div>
                                 <div className="interior-grid">
                                     {OWL_DATA.scenes.map((scene: { image: string; label: string; sub: string }, idx: number) => (
