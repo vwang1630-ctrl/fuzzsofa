@@ -674,23 +674,26 @@ export default function MobileProductPage(
                                 setShowCartSuccess(true);
                                 setTimeout(() => setShowCartSuccess(false), 3000);
                             } else {
-                                addItem({
-                                    product: {
-                                        slug: OWL_DATA.slug,
-                                        name: OWL_DATA.name,
-                                        priceRange: OWL_DATA.priceRange,
-                                        images: OWL_DATA.images
-                                    },
-
+                                // Buy Now - 直接跳转到支付页面
+                                const selectedColorData = OWL_DATA.colors.find(c => c.key === panelColor);
+                                const priceRange = OWL_DATA.priceRange.americas;
+                                const price = priceRange[0]; // 使用最低价格
+                                const orderId = `FZ-${Date.now()}`;
+                                const items = [{
+                                    name: OWL_DATA.name,
+                                    color: selectedColorData?.label || panelColor,
                                     quantity: quantity,
-                                    materialType: selectedMaterial,
-                                    materialOption: selectedColorData?.label || panelColor,
-                                    region: "americas",
-                                    selected: true
-                                });
+                                    price: price
+                                }];
+                                const total = (price * quantity).toFixed(2);
+
+                                // 存储订单信息到 sessionStorage
+                                sessionStorage.setItem('paymentOrderId', orderId);
+                                sessionStorage.setItem('paymentItems', JSON.stringify(items));
+                                sessionStorage.setItem('paymentTotal', total);
 
                                 setShowPurchasePanel(false);
-                                router.push("/m/checkout");
+                                router.push("/m/payment");
                             }
                         }}>{purchaseSource === "cart" ? "Add to Cart" : "Buy Now"}</button>
                 </div>
