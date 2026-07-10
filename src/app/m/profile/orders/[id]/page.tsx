@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { getOrders, type Order } from "@/lib/order-storage";
 
 export default function OrderDetailPage() {
@@ -405,78 +406,93 @@ export default function OrderDetailPage() {
                             background: "#111111",
                             border: "1px solid #1A1A1A"
                         }}>
-                        {order.items.map((item, index) => (
-                            <div
-                                key={index}
-                                style={{
-                                    display: "flex",
-                                    gap: "16px",
-                                    padding: "16px",
-                                    borderBottom: index < order.items.length - 1 ? "1px solid #1A1A1A" : "none"
-                                }}>
-                                {/* Product Image */}
-                                <div
-                                    style={{
-                                        width: "60px",
-                                        height: "60px",
-                                        flexShrink: 0,
-                                        background: "#1A1A1A",
-                                        overflow: "hidden"
-                                    }}>
-                                    {item.image ? (
-                                        <img
-                                            src={item.image}
-                                            alt={item.name}
-                                            style={{
-                                                width: "100%",
-                                                height: "100%",
-                                                objectFit: "cover"
-                                            }}
-                                        />
-                                    ) : (
-                                        <div
-                                            style={{
-                                                width: "100%",
-                                                height: "100%",
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                color: "#333",
-                                                fontSize: "20px"
-                                            }}>
-                                            {(item.name || "?").charAt(0)}
-                                        </div>
-                                    )}
-                                </div>
+                        {order.items.map((item, index) => {
+                            // 根据产品名称推断产品 slug
+                            const getProductSlug = (name: string): string => {
+                                const lowerName = name.toLowerCase();
+                                if (lowerName.includes("owl")) return "owl-sofa";
+                                if (lowerName.includes("gorilla")) return "gorilla-sofa";
+                                if (lowerName.includes("flamingo")) return "flamingo-sofa";
+                                return "owl-sofa"; // 默认
+                            };
+                            const productSlug = getProductSlug(item.name);
 
-                                {/* Product Info */}
-                                <div style={{ flex: 1 }}>
-                                    <p
+                            return (
+                                <Link 
+                                    key={index}
+                                    href={`/m/product/${productSlug}`}
+                                    style={{
+                                        display: "flex",
+                                        gap: "16px",
+                                        padding: "16px",
+                                        borderBottom: index < order.items.length - 1 ? "1px solid #1A1A1A" : "none",
+                                        textDecoration: "none",
+                                        cursor: "pointer"
+                                    }}>
+                                    {/* Product Image */}
+                                    <div
                                         style={{
-                                            color: "#F5F0EB",
-                                            fontSize: "14px",
-                                            marginBottom: "4px"
+                                            width: "60px",
+                                            height: "60px",
+                                            flexShrink: 0,
+                                            background: "#1A1A1A",
+                                            overflow: "hidden"
                                         }}>
-                                        {item.name}
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "#8A8580",
-                                            fontSize: "12px",
-                                            marginBottom: "8px"
-                                        }}>
-                                        {item.color} × {item.quantity}
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: "#F5F0EB",
-                                            fontSize: "14px"
-                                        }}>
-                                        {formatPrice(item.price)}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
+                                        {item.image ? (
+                                            <img
+                                                src={item.image}
+                                                alt={item.name}
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    objectFit: "cover"
+                                                }}
+                                            />
+                                        ) : (
+                                            <div
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    color: "#333",
+                                                    fontSize: "20px"
+                                                }}>
+                                                {(item.name || "?").charAt(0)}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Product Info */}
+                                    <div style={{ flex: 1 }}>
+                                        <p
+                                            style={{
+                                                color: "#F5F0EB",
+                                                fontSize: "14px",
+                                                marginBottom: "4px"
+                                            }}>
+                                            {item.name}
+                                        </p>
+                                        <p
+                                            style={{
+                                                color: "#8A8580",
+                                                fontSize: "12px",
+                                                marginBottom: "8px"
+                                            }}>
+                                            {item.color} × {item.quantity}
+                                        </p>
+                                        <p
+                                            style={{
+                                                color: "#F5F0EB",
+                                                fontSize: "14px"
+                                            }}>
+                                            {formatPrice(item.price)}
+                                        </p>
+                                    </div>
+                                </Link>
+                            );
+                        })}
                     </div>
                 </div>
 
