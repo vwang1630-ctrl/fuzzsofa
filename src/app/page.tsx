@@ -264,11 +264,15 @@ export default function HomePage() {
                 {/* Mobile: image + text below with breathing room */}
                 <div className="sm:hidden">
                   <div className="aspect-square overflow-hidden">
-                    <img
-                      src={(product.images ?? [])[0] ?? ''}
-                      alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
+                    {(product.images ?? [])[0] ? (
+                      <img
+                        src={(product.images ?? [])[0]}
+                        alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#1A1A1A]" />
+                    )}
                   </div>
                   <div className="pt-3 pb-2">
                     <h3 className="font-serif text-[14px] font-light text-[#F5F0EB] leading-snug tracking-[0.02em] group-hover:text-[#E8B4B8] transition-colors duration-300">
@@ -280,11 +284,15 @@ export default function HomePage() {
                 {/* Desktop: image + text below */}
                 <div className="hidden sm:block">
                   <div className="relative aspect-square overflow-hidden">
-                    <img
-                      src={(product.images ?? [])[0] ?? ''}
-                      alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
+                    {(product.images ?? [])[0] ? (
+                      <img
+                        src={(product.images ?? [])[0]}
+                        alt={t(slugToPrefix[product.slug] + "Name" as TranslationKeys)}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#1A1A1A]" />
+                    )}
                     {/* Hover overlay with quick action buttons */}
                     <div className="absolute inset-0 bg-[#0A0A0A]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
                       <button
