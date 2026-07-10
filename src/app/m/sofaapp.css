@@ -106,6 +106,14 @@
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(12px);
 }
+.navbar.transparent {
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
 .navbar .brand {
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   font-size: 16px;
@@ -369,6 +377,8 @@
   aspect-ratio: 3/4;
   overflow: hidden;
   background: #0A0A0A;
+  margin-top: -60px;
+  padding-top: 60px;
 }
 .hero-carousel .slide {
   position: absolute;
