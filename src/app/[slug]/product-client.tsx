@@ -865,7 +865,7 @@ export function ProductPageClient(
                             {}
                             <button
                                 onClick={handleAddToCart}
-                                className="hidden sm:flex w-full py-4 text-[#0A0A0A] font-medium text-[15px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
+                                className="hidden sm:flex w-full py-3 text-[#0A0A0A] font-medium text-[14px] tracking-[0.15em] uppercase transition-all duration-300 mb-2 items-center justify-center gap-2 rounded-sm"
                                 style={{
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
@@ -886,7 +886,7 @@ export function ProductPageClient(
                                 </>}
                             </button>
                             <button
-                                className="hidden sm:flex w-full py-4 bg-transparent text-[#E8B4B8] text-[15px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
+                                className="hidden sm:flex w-full py-2.5 bg-transparent text-[#E8B4B8] text-[14px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
                                 style={{
                                     border: "1px solid #E8B4B8"
                                 }}
