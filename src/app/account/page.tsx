@@ -971,7 +971,7 @@ export default function AccountPage() {
                 {(["orders", "addresses", "payment", "favorites"] as Tab[]).map(tabKey => <button
                     key={tabKey}
                     onClick={() => setTab(tabKey)}
-                    className={`pb-3 text-xs md:text-sm tracking-[0.1em] uppercase transition-colors whitespace-nowrap flex-shrink-0 ${tab === tabKey ? "text-[#F5F0EB] border-b-2 border-[#E8B4B8]" : "text-[#8A8580] hover:text-[#F5F0EB]"}`}>
+                    className={`pb-3 text-xs md:text-sm tracking-[0.1em] uppercase transition-colors whitespace-nowrap flex-shrink-0 ${tab === tabKey ? "text-[#E8B4B8] border-b-2 border-[#E8B4B8]" : "text-[#8A8580] hover:text-[#F5F0EB]"}`}>
                     {tabKey === "orders" && <><span className="sm:hidden">{t("accountTabOrdersShort")}</span><span className="hidden sm:inline">{t("accountMyOrders")}</span></>}
                     {tabKey === "addresses" && <><span className="sm:hidden">{t("accountTabAddressesShort")}</span><span className="hidden sm:inline">{t("accountMyAddresses")}</span></>}
                     {tabKey === "payment" && <><span className="sm:hidden">{t("accountTabPaymentShort")}</span><span className="hidden sm:inline">{t("accountPaymentSettings")}</span></>}
@@ -1010,11 +1010,11 @@ export default function AccountPage() {
                     }].map(tab => <button
                         key={tab.key}
                         onClick={() => setOrderTab(tab.key)}
-                        className={`pb-3 text-sm tracking-[0.1em] uppercase transition-colors flex items-center gap-2 whitespace-nowrap ${orderTab === tab.key ? "text-[#c98b96] border-b-2 border-[#c98b96]" : "text-[#a8a8a8] hover:text-[#F5F0EB]"}`}>
+                        className={`pb-3 text-sm tracking-[0.1em] uppercase transition-colors flex items-center gap-2 whitespace-nowrap ${orderTab === tab.key ? "text-[#E8B4B8] border-b-2 border-[#E8B4B8]" : "text-[#8A8580] hover:text-[#F5F0EB]"}`}>
                         <span className="sm:hidden">{t(tab.shortKey)}</span>
                         <span className="hidden sm:inline">{t(tab.labelKey)}</span>
                         {tab.count > 0 && <span
-                            className={`text-[12px] min-w-[20px] h-5 px-1.5 flex items-center justify-center rounded-full ${orderTab === tab.key ? "bg-[#c98b96] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#a8a8a8]"}`}>
+                            className={`text-[12px] min-w-[20px] h-5 px-1.5 flex items-center justify-center rounded-full ${orderTab === tab.key ? "bg-[#E8B4B8] text-[#0A0A0A]" : "bg-[#1A1A1A] text-[#8A8580]"}`}>
                             {tab.count}
                         </span>}
                     </button>)}
