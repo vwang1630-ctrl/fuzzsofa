@@ -8421,3 +8421,352 @@ textarea.form-control {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* ============================================
+   ORDERS PAGE V2 - Dark Minimalist Design
+   ============================================ */
+
+.orders-page-new {
+  width: 100%;
+  min-height: 100vh;
+  background: #000000;
+  padding-bottom: 40px;
+}
+
+/* Header */
+.orders-header-new {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  background: #000000;
+  border-bottom: 1px solid #1A1A1A;
+  z-index: 100;
+}
+
+.orders-back-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #E8B4B8;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+.orders-back-btn svg {
+  stroke: currentColor;
+}
+
+.orders-title-new {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: #F5F0EB;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.orders-header-right {
+  width: 32px;
+}
+
+/* Filters */
+.orders-filters-new {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.orders-filters-new::-webkit-scrollbar {
+  display: none;
+}
+
+.orders-filter-btn-new {
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: #8A8580;
+  background: transparent;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.orders-filter-btn-new.active {
+  border-color: #E8B4B8;
+  color: #E8B4B8;
+}
+
+/* Content */
+.orders-content-new {
+  padding: 0 20px;
+}
+
+/* Orders List */
+.orders-list-new {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Order Card */
+.orders-card-new {
+  background: #121212;
+  border: 1px solid #1A1A1A;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.orders-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #1A1A1A;
+}
+
+.orders-order-id-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.orders-order-id-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #8A8580;
+  text-transform: uppercase;
+}
+
+.orders-order-id-value {
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 12px;
+  color: #F5F0EB;
+}
+
+.orders-order-status {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+.orders-status-pending {
+  color: #E8B4B8;
+  background: rgba(232, 180, 184, 0.1);
+}
+
+.orders-status-shipping {
+  color: #8A8580;
+  background: rgba(138, 133, 128, 0.1);
+}
+
+.orders-status-completed {
+  color: #4CAF50;
+  background: rgba(76, 175, 80, 0.1);
+}
+
+/* Items List */
+.orders-items-list {
+  padding: 12px 16px;
+}
+
+.orders-item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.orders-item-row + .orders-item-row {
+  border-top: 1px solid #1A1A1A;
+}
+
+.orders-item-image {
+  width: 56px;
+  height: 56px;
+  background: #0A0A0A;
+  border: 1px solid #1A1A1A;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.orders-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.orders-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.orders-item-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #F5F0EB;
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orders-item-variant {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #8A8580;
+  margin: 0;
+}
+
+.orders-item-price {
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: #E8B4B8;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Card Footer */
+.orders-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid #1A1A1A;
+}
+
+.orders-date-group,
+.orders-total-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.orders-date-label,
+.orders-total-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #8A8580;
+  text-transform: uppercase;
+}
+
+.orders-date-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #F5F0EB;
+}
+
+.orders-total-value {
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #E8B4B8;
+}
+
+/* Actions */
+.orders-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 16px;
+  border-top: 1px solid #1A1A1A;
+}
+
+.orders-action-btn {
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #F5F0EB;
+  background: transparent;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.orders-action-btn:active {
+  background: #E8B4B8;
+  border-color: #E8B4B8;
+  color: #000000;
+}
+
+/* Empty State */
+.orders-empty-new {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.orders-empty-new svg {
+  margin-bottom: 20px;
+  opacity: 0.5;
+  color: #8A8580;
+}
+
+.orders-empty-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #F5F0EB;
+  letter-spacing: 0.05em;
+  margin: 0 0 8px 0;
+}
+
+.orders-empty-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8A8580;
+  margin: 0 0 24px 0;
+}
+
+.orders-empty-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #F5F0EB;
+  border: 1px solid #333333;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.orders-empty-btn:active {
+  background: #E8B4B8;
+  border-color: #E8B4B8;
+  color: #000;
+}

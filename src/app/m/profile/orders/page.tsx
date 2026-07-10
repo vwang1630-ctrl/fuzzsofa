@@ -12,30 +12,23 @@ export default function OrdersPage() {
 
   const loadOrders = useCallback(() => {
     const storedOrders = getOrders();
-    console.log('Loaded orders:', storedOrders);
-    console.log('Orders count:', storedOrders.length);
     setOrders(storedOrders);
   }, []);
 
   useEffect(() => {
     loadOrders();
-    // Listen for storage changes from other tabs/windows
     const handleStorage = (e: StorageEvent) => {
-      console.log('Storage event:', e.key);
       if (e.key === 'fuzz_orders') {
         loadOrders();
       }
     };
     window.addEventListener('storage', handleStorage);
-    // Also check when page becomes visible
     const handleVisibility = () => {
       if (document.visibilityState === 'visible') {
-        console.log('Page visible, reloading orders');
         loadOrders();
       }
     };
     document.addEventListener('visibilitychange', handleVisibility);
-    // Force reload every 2 seconds when page is visible
     const interval = setInterval(() => {
       if (document.visibilityState === 'visible') {
         loadOrders();
@@ -62,19 +55,24 @@ export default function OrdersPage() {
   };
 
   return (
-    <div className="page page-orders active" id="pageOrders">
+    <div className="orders-page-new">
       {/* Header */}
-      <div className="page-header">
-        <Link href="/m/profile" className="log-detail-back">&lsaquo;</Link>
-        <span className="title">My Orders</span>
+      <div className="orders-header-new">
+        <Link href="/m/profile" className="orders-back-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </Link>
+        <h1 className="orders-title-new">MY ORDERS</h1>
+        <span className="orders-header-right"></span>
       </div>
 
       {/* Status Filters */}
-      <div className="order-filters">
+      <div className="orders-filters-new">
         {statusFilters.map((filter) => (
           <button 
             key={filter} 
-            className={`order-filter-btn ${activeFilter === filter ? 'active' : ''}`}
+            className={`orders-filter-btn-new ${activeFilter === filter ? 'active' : ''}`}
             onClick={() => setActiveFilter(filter)}
           >
             {filter}
@@ -83,78 +81,81 @@ export default function OrdersPage() {
       </div>
 
       {/* Order List */}
-      {filteredOrders.length === 0 ? (
-        <div className="empty-state">
-          <svg className="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-            <rect x="2" y="7" width="20" height="14" rx="2" />
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-          </svg>
-          <div className="empty-text">No orders yet</div>
-          <Link href="/m" className="empty-btn">Start Shopping</Link>
-        </div>
-      ) : (
-        <div className="order-list" id="orderList">
-          {filteredOrders.map((order) => (
-            <div key={order.id} className="order-card">
-              {/* Order Header */}
-              <div className="order-top">
-                <div className="order-id-group">
-                  <span className="order-id-label">Order</span>
-                  <span className="order-id">#{order.id}</span>
-                </div>
-                <span className={`order-status status-${order.status.toLowerCase()}`}>
-                  {order.status}
-                </span>
-              </div>
-
-              {/* Order Items */}
-              <div className="order-items">
-                {order.items.map((item, idx) => (
-                  <div key={idx} className="order-item">
-                    <div className="order-item-image">
-                      <img src={item.image || '/products/placeholder.jpg'} alt={item.name} />
-                    </div>
-                    <div className="order-item-info">
-                      <div className="order-item-name">{item.name}</div>
-                      <div className="order-item-spec">
-                        {item.color}{item.fabric ? ` / ${item.fabric}` : ''}
-                      </div>
-                      <div className="order-item-price">
-                        ${typeof item.price === 'number' ? item.price.toLocaleString() : '0'} × {item.quantity}
-                      </div>
-                    </div>
+      <div className="orders-content-new">
+        {filteredOrders.length === 0 ? (
+          <div className="orders-empty-new">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+              <rect x="2" y="7" width="20" height="14" rx="2" />
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+            </svg>
+            <p className="orders-empty-title">No Orders Yet</p>
+            <p className="orders-empty-text">Start shopping to see your orders here</p>
+            <Link href="/m" className="orders-empty-btn">Browse Products</Link>
+          </div>
+        ) : (
+          <div className="orders-list-new">
+            {filteredOrders.map((order) => (
+              <div key={order.id} className="orders-card-new">
+                {/* Order Header */}
+                <div className="orders-card-header">
+                  <div className="orders-order-id-group">
+                    <span className="orders-order-id-label">Order</span>
+                    <span className="orders-order-id-value">#{order.id}</span>
                   </div>
-                ))}
-              </div>
-
-              {/* Order Footer */}
-              <div className="order-bottom">
-                <div className="order-date-group">
-                  <span className="order-date-label">Date</span>
-                  <span className="order-date">{formatDate(order.date)}</span>
+                  <span className={`orders-order-status orders-status-${order.status.toLowerCase()}`}>
+                    {order.status}
+                  </span>
                 </div>
-                <div className="order-total-group">
-                  <span className="order-total-label">Total</span>
-                  <span className="order-total">${typeof order.total === 'number' ? order.total.toLocaleString() : '0'}</span>
+
+                {/* Order Items */}
+                <div className="orders-items-list">
+                  {order.items.map((item, idx) => (
+                    <div key={idx} className="orders-item-row">
+                      <div className="orders-item-image">
+                        <img src={item.image || '/products/placeholder.jpg'} alt={item.name} />
+                      </div>
+                      <div className="orders-item-info">
+                        <p className="orders-item-name">{item.name}</p>
+                        <p className="orders-item-variant">
+                          {item.color}{item.fabric ? ` / ${item.fabric}` : ''} × {item.quantity}
+                        </p>
+                      </div>
+                      <p className="orders-item-price">
+                        ${typeof item.price === 'number' ? item.price.toLocaleString() : '0'}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Order Footer */}
+                <div className="orders-card-footer">
+                  <div className="orders-date-group">
+                    <span className="orders-date-label">Date</span>
+                    <span className="orders-date-value">{formatDate(order.date)}</span>
+                  </div>
+                  <div className="orders-total-group">
+                    <span className="orders-total-label">Total</span>
+                    <span className="orders-total-value">${typeof order.total === 'number' ? order.total.toLocaleString() : '0'}</span>
+                  </div>
+                </div>
+
+                {/* Order Actions */}
+                <div className="orders-actions">
+                  {order.status === 'Pending' && (
+                    <button className="orders-action-btn">Track Order</button>
+                  )}
+                  {order.status === 'Shipping' && (
+                    <button className="orders-action-btn">Track Order</button>
+                  )}
+                  {order.status === 'Completed' && (
+                    <button className="orders-action-btn">Buy Again</button>
+                  )}
                 </div>
               </div>
-
-              {/* Order Actions */}
-              <div className="order-actions">
-                {order.status === 'Pending' && (
-                  <button className="order-action-btn">Track Order</button>
-                )}
-                {order.status === 'Shipping' && (
-                  <button className="order-action-btn">Track Order</button>
-                )}
-                {order.status === 'Completed' && (
-                  <button className="order-action-btn">Buy Again</button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
