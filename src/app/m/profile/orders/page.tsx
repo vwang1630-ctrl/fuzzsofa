@@ -95,7 +95,7 @@ export default function OrdersPage() {
         ) : (
           <div className="orders-list-new">
             {filteredOrders.map((order) => (
-              <div key={order.id} className="orders-card-new">
+              <Link key={order.id} href={`/m/profile/orders/${order.id}`} className="orders-card-new" style={{ textDecoration: 'none', color: 'inherit' }}>
                 {/* Order Header */}
                 <div className="orders-card-header">
                   <div className="orders-order-id-group">
@@ -142,16 +142,16 @@ export default function OrdersPage() {
                 {/* Order Actions */}
                 <div className="orders-actions">
                   {order.status === 'Pending' && (
-                    <button className="orders-action-btn">Track Order</button>
+                    <span className="orders-action-btn">Track Order</span>
                   )}
                   {order.status === 'Shipping' && (
-                    <button className="orders-action-btn">Track Order</button>
+                    <span className="orders-action-btn">Track Order</span>
                   )}
                   {order.status === 'Completed' && (
-                    <button className="orders-action-btn">Buy Again</button>
+                    <span className="orders-action-btn">Buy Again</span>
                   )}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
