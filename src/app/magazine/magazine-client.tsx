@@ -319,12 +319,12 @@ export function MagazinePageClient() {
                 />
                 <div className="absolute bottom-0 left-0 right-0 px-3 py-2 sm:px-4 sm:py-3 bg-gradient-to-t from-[#0A0A0A]/90 to-transparent">
                   <div className="flex items-center justify-between">
-                    <span className="font-sans text-[10px] sm:text-xs text-[#F5F0EB] tracking-wide">
+                    <span className="font-sans text-[12px] text-[#F5F0EB] tracking-wide">
                       {post.username}
                     </span>
                     <div className="flex items-center gap-1 text-[#8A8580]">
                       <Heart className="w-3.5 h-3.5" />
-                      <span className="font-sans text-xs">{post.likes}</span>
+                      <span className="font-sans text-[12px]">{post.likes}</span>
                     </div>
                   </div>
                 </div>

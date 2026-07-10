@@ -88,23 +88,23 @@ export default function StudioClient() {
           </h2>
           <div className="space-y-6 max-w-[540px]">
             <div className="border-l border-[#333] pl-6">
-              <p className="text-[13px] font-light text-[#F5F0EB] mb-1">No Inventory</p>
+              <p className="text-[14px] font-light text-[#F5F0EB] mb-1">No Inventory</p>
               <p className="text-[12px] font-light text-[#8A8580]/70">Every piece is produced on demand. No warehouse stock.</p>
             </div>
             <div className="border-l border-[#333] pl-6">
-              <p className="text-[13px] font-light text-[#F5F0EB] mb-1">No Pre-Made Stock</p>
+              <p className="text-[14px] font-light text-[#F5F0EB] mb-1">No Pre-Made Stock</p>
               <p className="text-[12px] font-light text-[#8A8580]/70">Production begins only after order confirmation.</p>
             </div>
             <div className="border-l border-[#333] pl-6">
-              <p className="text-[13px] font-light text-[#F5F0EB] mb-1">1–2 Weeks Production</p>
+              <p className="text-[14px] font-light text-[#F5F0EB] mb-1">1–2 Weeks Production</p>
               <p className="text-[12px] font-light text-[#8A8580]/70">Each piece receives dedicated studio attention.</p>
             </div>
             <div className="border-l border-[#333] pl-6">
-              <p className="text-[13px] font-light text-[#F5F0EB] mb-1">Worldwide Shipping</p>
+              <p className="text-[14px] font-light text-[#F5F0EB] mb-1">Worldwide Shipping</p>
               <p className="text-[12px] font-light text-[#8A8580]/70">International delivery with full tracking and packaging.</p>
             </div>
             <div className="border-l border-[#333] pl-6">
-              <p className="text-[13px] font-light text-[#F5F0EB] mb-1">Custom Dimensions & Finish</p>
+              <p className="text-[14px] font-light text-[#F5F0EB] mb-1">Custom Dimensions & Finish</p>
               <p className="text-[12px] font-light text-[#8A8580]/70">Size, fabric, and proportion can be adjusted per project.</p>
             </div>
           </div>

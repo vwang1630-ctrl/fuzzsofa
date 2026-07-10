@@ -216,7 +216,7 @@ function TimelineNode({
           </svg>
         )}
         {isException && (
-          <span className="text-red-400 text-[8px] font-bold">!</span>
+          <span className="text-red-400 text-[12px] font-bold">!</span>
         )}
         {isCurrent && (
           <div className="w-1.5 h-1.5 rounded-full bg-[#E8B4B8] animate-pulse" />

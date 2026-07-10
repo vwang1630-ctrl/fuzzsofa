@@ -338,7 +338,7 @@ export default function HomePage() {
               <p className="sm:hidden text-[12px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Editorial</p>
               <h2 className="font-serif text-[16px] md:text-[24px] font-light text-[#F5F0EB]">{t("journalTitle")}</h2>
             </div>
-            <Link href="/journal" className="text-[10px] md:text-sm text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">{t("articles")} &rarr;</Link>
+            <Link href="/journal" className="text-[12px] text-[#E8B4B8] hover:text-[#D4A0A4] transition-colors">{t("articles")} &rarr;</Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
             {latestArticles.map((article) => (

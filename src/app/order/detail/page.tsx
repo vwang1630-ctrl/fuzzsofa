@@ -243,11 +243,11 @@ export default function OrderDetailPage() {
                   </h1>
                   <div className="flex items-center gap-3 flex-wrap">
                     <span className="text-[#8A8580] text-xs sm:text-sm tracking-wider">{order.orderNumber}</span>
-                    <span className={`inline-block px-2 py-0.5 text-[10px] tracking-wider rounded border ${statusColor(order.status)}`}>
+                    <span className={`inline-block px-2 py-0.5 text-[12px] tracking-wider rounded border ${statusColor(order.status)}`}>
                       {statusLabel(order.status, t)}
                     </span>
                   </div>
-                  <p className="text-[#8A8580] text-[11px] sm:text-xs mt-1.5 tracking-wide">
+                  <p className="text-[#8A8580] text-[12px] mt-1.5 tracking-wide">
                     {formatDate(order.createdAt)} · {t("odUtcTime")}
                   </p>
                 </div>
@@ -283,16 +283,16 @@ export default function OrderDetailPage() {
                       {/* Product info */}
                       <div className="flex-1 min-w-0 space-y-1.5">
                         <p className="text-[#F5F0EB] text-sm sm:text-base font-light">{item.productName}</p>
-                        <p className="text-[#8A8580] text-[10px] sm:text-xs tracking-wider">
+                        <p className="text-[#8A8580] text-[12px] tracking-wider">
                           {t("odModel")}: <span className="text-[#F5F0EB]/70">{item.productSlug}</span>
                         </p>
                         <div className="flex items-center gap-2">
                           {item.colorHex && (
                             <span className="w-3.5 h-3.5 rounded-full border border-[#333]" style={{ backgroundColor: item.colorHex }} />
                           )}
-                          <span className="text-[#8A8580] text-[10px] sm:text-xs">{item.colorName ? `${t("odColor")}: ${item.colorName}` : ""}</span>
+                          <span className="text-[#8A8580] text-[12px]">{item.colorName ? `${t("odColor")}: ${item.colorName}` : ""}</span>
                         </div>
-                        <div className="flex items-center gap-4 text-[10px] sm:text-xs text-[#8A8580] pt-1">
+                        <div className="flex items-center gap-4 text-[12px] text-[#8A8580] pt-1">
                           <span>{t("odUnitPrice")}: <span className="text-[#F5F0EB]/80">{formatPrice(item.unitPrice)}</span></span>
                           <span>{t("odQty")}: <span className="text-[#F5F0EB]/80">{item.quantity}</span></span>
                           <span>{t("odItemSubtotal")}: <span className="text-[#F5F0EB]">{formatPrice(item.subtotal)}</span></span>
@@ -304,7 +304,7 @@ export default function OrderDetailPage() {
                     <div className="border-t border-[#1a1a1a]">
                       <button
                         onClick={() => setSpecsOpen(!specsOpen)}
-                        className="w-full px-4 sm:px-5 py-2.5 flex items-center justify-between text-[10px] sm:text-xs tracking-wider text-[#8A8580] hover:text-[#c98b96] transition-colors"
+                        className="w-full px-4 sm:px-5 py-2.5 flex items-center justify-between text-[12px] tracking-wider text-[#8A8580] hover:text-[#c98b96] transition-colors"
                       >
                         <span>{t("odProductSpecs")}</span>
                         <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${specsOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -312,7 +312,7 @@ export default function OrderDetailPage() {
                         </svg>
                       </button>
                       {specsOpen && (
-                        <div className="px-4 sm:px-5 pb-4 space-y-2 text-[10px] sm:text-xs">
+                        <div className="px-4 sm:px-5 pb-4 space-y-2 text-[12px]">
                           <div className="flex justify-between"><span className="text-[#8A8580]">{t("odMaterial")}</span><span className="text-[#F5F0EB]/70 text-right">{t("odMaterialDesc")}</span></div>
                           {item.size && <div className="flex justify-between"><span className="text-[#8A8580]">{t("odProductSize")}</span><span className="text-[#F5F0EB]/70">{item.size}</span></div>}
                           {item.fabric && <div className="flex justify-between"><span className="text-[#8A8580]">{t("odFabric")}</span><span className="text-[#F5F0EB]/70">{item.fabric}</span></div>}
@@ -344,12 +344,12 @@ export default function OrderDetailPage() {
                 <div className="pt-2">
                   <button
                     onClick={() => setDdpOpen(!ddpOpen)}
-                    className="text-[#c98b96] text-[10px] sm:text-xs tracking-wider underline underline-offset-4 hover:no-underline transition-all"
+                    className="text-[#c98b96] text-[12px] tracking-wider underline underline-offset-4 hover:no-underline transition-all"
                   >
                     {t("odDdpDetails")} {ddpOpen ? "▲" : "▼"}
                   </button>
                   {ddpOpen && (
-                    <div className="mt-3 bg-[#0A0A0A] rounded p-3 sm:p-4 space-y-2 text-[10px] sm:text-xs text-[#8A8580] leading-relaxed">
+                    <div className="mt-3 bg-[#0A0A0A] rounded p-3 sm:p-4 space-y-2 text-[12px] text-[#8A8580] leading-relaxed">
                       <p>{locale === "zh" ? t("odDdpDetail1Zh") : t("odDdpDetail1En")}</p>
                       <p>{locale === "zh" ? t("odDdpDetail2Zh") : t("odDdpDetail2En")}</p>
                     </div>
@@ -401,7 +401,7 @@ export default function OrderDetailPage() {
                         }`}>
                           {t(step.titleKey)}
                         </p>
-                        <p className={`text-[10px] sm:text-xs mt-0.5 leading-relaxed ${
+                        <p className={`text-[12px] mt-0.5 leading-relaxed ${
                           stepState === "current" ? "text-[#8A8580]" :
                           stepState === "done" ? "text-[#555]" :
                           "text-[#333]"
@@ -416,8 +416,8 @@ export default function OrderDetailPage() {
 
               {/* Shipping route summary */}
               <div className="mt-6 bg-[#111] border border-[#1a1a1a] rounded-lg p-3 sm:p-4">
-                <p className="text-[10px] sm:text-xs text-[#8A8580] tracking-wider mb-2">{t("odShippingRoute")}</p>
-                <p className="text-[10px] sm:text-xs text-[#F5F0EB]/60 leading-relaxed">
+                <p className="text-[12px] text-[#8A8580] tracking-wider mb-2">{t("odShippingRoute")}</p>
+                <p className="text-[12px] text-[#F5F0EB]/60 leading-relaxed">
                   {locale === "zh" ? t("odShippingRouteZh") : t("odShippingRouteEn")}
                 </p>
               </div>
@@ -448,13 +448,13 @@ export default function OrderDetailPage() {
               </div>
 
               <div className="mt-4 pt-3 border-t border-[#1a1a1a] space-y-2">
-                <div className="flex justify-between text-[10px] sm:text-xs">
+                <div className="flex justify-between text-[12px]">
                   <span className="text-[#8A8580]">{t("odPaymentStatus")}</span>
                   <span className={order.paymentStatus === "paid" ? "text-green-400" : "text-[#c98b96]"}>
                     {paymentStatusLabel(order.paymentStatus, t)}
                   </span>
                 </div>
-                <div className="flex justify-between text-[10px] sm:text-xs">
+                <div className="flex justify-between text-[12px]">
                   <span className="text-[#8A8580]">{t("odPaymentMethod")}</span>
                   <span className="text-[#F5F0EB]/70">{order.paymentMethod || "PayPal"}</span>
                 </div>
@@ -466,7 +466,7 @@ export default function OrderDetailPage() {
               <h3 className="text-xs sm:text-sm tracking-[0.15em] uppercase text-[#8A8580] mb-3 pb-2 border-b border-[#1a1a1a]">
                 {t("odShippingAddress")}
               </h3>
-              <div className="space-y-1.5 text-[10px] sm:text-xs text-[#F5F0EB]/70">
+              <div className="space-y-1.5 text-[12px] text-[#F5F0EB]/70">
                 <p>{order.firstName} {order.lastName}</p>
                 <p>{order.addressLine1}</p>
                 {order.addressLine2 && <p>{order.addressLine2}</p>}
@@ -479,7 +479,7 @@ export default function OrderDetailPage() {
             {/* Contact Support */}
             <Link
               href="/contact"
-              className="block text-center text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#8A8580] border border-[#333] rounded-lg py-3 hover:border-[#c98b96] hover:text-[#c98b96] transition-all duration-300"
+              className="block text-center text-[12px] tracking-[0.15em] uppercase text-[#8A8580] border border-[#333] rounded-lg py-3 hover:border-[#c98b96] hover:text-[#c98b96] transition-all duration-300"
             >
               {t("odContactSupport")}
             </Link>
