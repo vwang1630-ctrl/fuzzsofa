@@ -577,36 +577,31 @@ export default function MobileProductPage(
             </div>
             {}
             {showPurchasePanel && <div
-                className="purchase-panel-overlay"
+                className="new-bottom-sheet-overlay"
                 onClick={(e: React.MouseEvent<HTMLDivElement>) => {
                     if (e.target === e.currentTarget)
                         setShowPurchasePanel(false);
                 }}>
-                <div className="purchase-panel">
-                    <div className="purchase-panel-content">
-                        {}
-                        <div className="panel-header">
-                            <button className="panel-close" onClick={() => setShowPurchasePanel(false)}>×</button>
+                <div className="new-bottom-sheet-panel">
+                    <div className="new-bottom-sheet-content">
+                        {/* Header with close button */}
+                        <div className="new-sheet-header">
+                            <button className="new-sheet-close" onClick={() => setShowPurchasePanel(false)}>×</button>
                         </div>
-                        {}
-                        <div
-                            className="spec-selector">
-                            {}
-                            <div className="material-tabs">
+                        
+                        {/* Material selection */}
+                        <div className="new-sheet-section">
+                            <div className="new-sheet-material-tabs">
                                 {MATERIAL_GROUPS.map(mg => {
                                     const hasColorsInGroup = OWL_DATA.colors.some(c => c.group === mg.key);
-
-                                    if (!hasColorsInGroup)
-                                        return null;
-
+                                    if (!hasColorsInGroup) return null;
                                     return (
                                         <button
                                             key={mg.key}
-                                            className={`material-tab${selectedMaterial === mg.key ? " active" : ""}`}
+                                            className={`new-sheet-material-tab${selectedMaterial === mg.key ? " active" : ""}`}
                                             onClick={() => {
                                                 setSelectedMaterial(mg.key);
                                                 const firstColorInGroup = OWL_DATA.colors.find(c => c.group === mg.key);
-
                                                 if (firstColorInGroup) {
                                                     setPanelColor(firstColorInGroup.key);
                                                 }
@@ -616,84 +611,81 @@ export default function MobileProductPage(
                                     );
                                 })}
                             </div>
-                            {}
-                            <div className="color-circles">
-                                {OWL_DATA.colors.filter(c => c.group === selectedMaterial).map(c => <button
-                                    key={c.key}
-                                    className={`color-circle${panelColor === c.key ? " selected" : ""}`}
-                                    onClick={() => setPanelColor(c.key)}>
-                                    <img
-                                        src={OWL_DATA.images[c.imageIndex]}
-                                        alt={c.label}
-                                        className="circle-thumb" />
-                                    {panelColor === c.key && <span className="selected-dot" />}
-                                </button>)}
+                            <div className="new-sheet-color-circles">
+                                {OWL_DATA.colors.filter(c => c.group === selectedMaterial).map(c => (
+                                    <button
+                                        key={c.key}
+                                        className={`new-sheet-color-circle${panelColor === c.key ? " selected" : ""}`}
+                                        onClick={() => setPanelColor(c.key)}>
+                                        <img
+                                            src={OWL_DATA.images[c.imageIndex]}
+                                            alt={c.label}
+                                            className="new-sheet-circle-thumb" />
+                                        {panelColor === c.key && <span className="new-sheet-selected-dot" />}
+                                    </button>
+                                ))}
                             </div>
                         </div>
-                        {}
-                        <div className="panel-quantity">
-                            <span className="qty-label">数量</span>
-                            <div className="qty-controls">
+                        
+                        {/* Quantity */}
+                        <div className="new-sheet-section new-sheet-quantity-row">
+                            <span className="new-sheet-qty-label">Quantity</span>
+                            <div className="new-sheet-qty-controls">
                                 <button
-                                    className="qty-btn"
+                                    className="new-sheet-qty-btn"
                                     onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
-                                <span className="qty-value">{quantity}</span>
-                                <button className="qty-btn" onClick={() => setQuantity(quantity + 1)}>+</button>
+                                <span className="new-sheet-qty-value">{quantity}</span>
+                                <button className="new-sheet-qty-btn" onClick={() => setQuantity(quantity + 1)}>+</button>
                             </div>
                         </div>
-                        {}
-                        <div className="panel-price-summary">
-                            <span className="summary-label">合计</span>
-                            <span className="summary-price">${(OWL_DATA.priceRange.americas[0] * quantity).toLocaleString()}USD</span>
+                        
+                        {/* Price summary */}
+                        <div className="new-sheet-section new-sheet-price-row">
+                            <span className="new-sheet-summary-label">Total</span>
+                            <span className="new-sheet-summary-price">${(OWL_DATA.priceRange.americas[0] * quantity).toLocaleString()}USD</span>
                         </div>
-                    {}
-                    <button
-                        className="panel-confirm-btn"
-                        onClick={() => {
-                            const selectedColorData = OWL_DATA.colors.find(c => c.key === panelColor);
-
-                            if (purchaseSource === "cart") {
-                                addItem({
-                                    product: {
-                                        slug: OWL_DATA.slug,
-                                        name: OWL_DATA.name,
-                                        priceRange: OWL_DATA.priceRange,
-                                        images: OWL_DATA.images
-                                    },
-
-                                    quantity: quantity,
-                                    materialType: selectedMaterial,
-                                    materialOption: selectedColorData?.label || panelColor,
-                                    region: "americas",
-                                    selected: true
-                                });
-
-                                setShowPurchasePanel(false);
-                                setShowCartSuccess(true);
-                                setTimeout(() => setShowCartSuccess(false), 3000);
-                            } else {
-                                // Buy Now - 直接跳转到支付页面
+                        
+                        {/* Confirm button */}
+                        <button
+                            className="new-sheet-confirm-btn"
+                            onClick={() => {
                                 const selectedColorData = OWL_DATA.colors.find(c => c.key === panelColor);
-                                const priceRange = OWL_DATA.priceRange.americas;
-                                const price = priceRange[0]; // 使用最低价格
-                                const orderId = `FZ-${Date.now()}`;
-                                const items = [{
-                                    name: OWL_DATA.name,
-                                    color: selectedColorData?.label || panelColor,
-                                    quantity: quantity,
-                                    price: price
-                                }];
-                                const total = (price * quantity).toFixed(2);
-
-                                // 存储订单信息到 sessionStorage
-                                sessionStorage.setItem('paymentOrderId', orderId);
-                                sessionStorage.setItem('paymentItems', JSON.stringify(items));
-                                sessionStorage.setItem('paymentTotal', total);
-
-                                setShowPurchasePanel(false);
-                                router.push("/m/payment");
-                            }
-                        }}>{purchaseSource === "cart" ? "Add to Cart" : "Buy Now"}</button>
+                                if (purchaseSource === "cart") {
+                                    addItem({
+                                        product: {
+                                            slug: OWL_DATA.slug,
+                                            name: OWL_DATA.name,
+                                            priceRange: OWL_DATA.priceRange,
+                                            images: OWL_DATA.images
+                                        },
+                                        quantity: quantity,
+                                        materialType: selectedMaterial,
+                                        materialOption: selectedColorData?.label || panelColor,
+                                        region: "americas",
+                                        selected: true
+                                    });
+                                    setShowPurchasePanel(false);
+                                    setShowCartSuccess(true);
+                                    setTimeout(() => setShowCartSuccess(false), 3000);
+                                } else {
+                                    const selectedColorData = OWL_DATA.colors.find(c => c.key === panelColor);
+                                    const priceRange = OWL_DATA.priceRange.americas;
+                                    const price = priceRange[0];
+                                    const orderId = `FZ-${Date.now()}`;
+                                    const items = [{
+                                        name: OWL_DATA.name,
+                                        color: selectedColorData?.label || panelColor,
+                                        quantity: quantity,
+                                        price: price
+                                    }];
+                                    const total = (price * quantity).toFixed(2);
+                                    sessionStorage.setItem('paymentOrderId', orderId);
+                                    sessionStorage.setItem('paymentItems', JSON.stringify(items));
+                                    sessionStorage.setItem('paymentTotal', total);
+                                    setShowPurchasePanel(false);
+                                    router.push("/m/payment");
+                                }
+                            }}>{purchaseSource === "cart" ? "Add to Cart" : "Buy Now"}</button>
                     </div>
                 </div>
             </div>}

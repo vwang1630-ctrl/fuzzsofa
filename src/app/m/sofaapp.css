@@ -8825,3 +8825,267 @@ textarea.form-control {
   padding-bottom: 12px;
   border-bottom: 1px solid #1A1A1A;
 }
+
+/* ============================================
+   NEW BOTTOM SHEET - Two-Layer Structure
+   ============================================ */
+
+/* First Layer: Overlay (Background) - Full screen, flush with edges */
+.new-bottom-sheet-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+/* Panel container - Black background, flush with screen edges */
+.new-bottom-sheet-panel {
+  width: 100%;
+  background: #000000;
+  border-top: 1px solid #1A1A1A;
+  border-radius: 12px 12px 0 0;
+  max-height: 75vh;
+  overflow-y: auto;
+  animation: newSheetSlideUp 0.3s ease;
+  padding: 0;
+  margin: 0;
+}
+
+@keyframes newSheetSlideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Second Layer: Content - 16px padding */
+.new-bottom-sheet-content {
+  width: 100%;
+  padding: 0 16px 16px 16px;
+  box-sizing: border-box;
+}
+
+/* Header with close button */
+.new-sheet-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 0;
+  border-bottom: 1px solid #1A1A1A;
+  margin: 0 -16px 16px -16px;
+  padding: 16px 16px;
+}
+
+.new-sheet-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #8A8580;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.new-sheet-close:active {
+  color: #E8B4B8;
+}
+
+/* Section spacing */
+.new-sheet-section {
+  padding: 16px 0;
+  border-bottom: 1px solid #1A1A1A;
+}
+
+.new-sheet-section:last-of-type {
+  border-bottom: none;
+}
+
+/* Material tabs */
+.new-sheet-material-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.new-sheet-material-tab {
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  color: #8A8580;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.new-sheet-material-tab.active {
+  border-color: #E8B4B8;
+  color: #E8B4B8;
+}
+
+/* Color circles */
+.new-sheet-color-circles {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.new-sheet-color-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #333333;
+  padding: 3px;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.new-sheet-color-circle.selected {
+  border-color: #E8B4B8;
+}
+
+.new-sheet-circle-thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.new-sheet-selected-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #E8B4B8;
+}
+
+/* Quantity row */
+.new-sheet-quantity-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.new-sheet-qty-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8A8580;
+}
+
+.new-sheet-qty-controls {
+  display: flex;
+  align-items: center;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.new-sheet-qty-btn {
+  width: 36px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #8A8580;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.new-sheet-qty-btn:active {
+  background: rgba(232, 180, 184, 0.1);
+  color: #E8B4B8;
+}
+
+.new-sheet-qty-value {
+  width: 40px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #F5F0EB;
+  border-left: 1px solid #333333;
+  border-right: 1px solid #333333;
+  line-height: 32px;
+}
+
+/* Price row */
+.new-sheet-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-sheet-summary-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8A8580;
+}
+
+.new-sheet-summary-price {
+  font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+  font-size: 18px;
+  font-weight: 500;
+  color: #E8B4B8;
+}
+
+/* Confirm button */
+.new-sheet-confirm-btn {
+  width: 100%;
+  padding: 16px;
+  margin-top: 16px;
+  background: transparent;
+  border: 1.5px solid rgba(232, 180, 184, 0.35);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #E8B4B8;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.new-sheet-confirm-btn::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 0.5px solid rgba(232, 180, 184, 0.06);
+  pointer-events: none;
+}
+
+.new-sheet-confirm-btn:active {
+  transform: scale(0.97);
+  border-color: rgba(232, 180, 184, 0.6);
+}
+
+.new-sheet-confirm-btn:active::before {
+  border-color: rgba(232, 180, 184, 0.15);
+}
