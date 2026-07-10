@@ -7047,6 +7047,51 @@ textarea.form-control {
   line-height: 28px;
 }
 
+/* 添加地址页面 checkbox 样式 */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #555555;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #111111;
+  flex-shrink: 0;
+}
+
+.custom-checkbox svg {
+  opacity: 0;
+  transition: opacity 0.3s;
+  color: #0A0A0A;
+}
+
+.custom-checkbox.checked {
+  background: #E8B4B8;
+  border-color: #E8B4B8;
+}
+
+.custom-checkbox.checked svg {
+  opacity: 1;
+}
+
+.checkbox-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #A8A8A0;
+  letter-spacing: 0.05em;
+}
+
 #cartPage .shop-item-price {
   text-align: right;
   flex-shrink: 0;

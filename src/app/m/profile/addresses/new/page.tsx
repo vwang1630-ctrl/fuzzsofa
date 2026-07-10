@@ -1,8 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function NewAddressPage() {
+  const [isDefault, setIsDefault] = useState(false);
+
   return (
     <div className="page page-addr-form active" id="pageAddrForm">
       {/* Header */}
@@ -71,8 +74,13 @@ export default function NewAddressPage() {
           <textarea placeholder="街道、楼栋、门牌号…" required />
         </div>
         <div className="form-group">
-          <label className="checkbox-label">
-            <input type="checkbox" /> 设为默认地址
+          <label className="checkbox-label" onClick={() => setIsDefault(!isDefault)}>
+            <span className={`custom-checkbox ${isDefault ? 'checked' : ''}`}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </span>
+            <span className="checkbox-text">设为默认地址</span>
           </label>
         </div>
         <button type="submit" className="btn-primary">保存</button>
