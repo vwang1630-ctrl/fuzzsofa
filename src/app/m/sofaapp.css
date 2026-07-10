@@ -4337,24 +4337,37 @@ textarea.form-control {
   width: 100%;
   padding: 16px 20px;
   margin: 0;
-  background: #E8B4B8;
-  border: none;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  position: relative;
+  background: rgba(232, 180, 184, 0.06);
+  border: 1.5px solid rgba(232, 180, 184, 0.35);
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #000000;
+  color: #E8B4B8;
   cursor: pointer;
-  transition: all 0.2s;
-}
-
-#pageDetail .purchase-panel .panel-confirm-btn:active {
-  background: #F5F0EB;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 #pageDetail .purchase-panel .panel-confirm-btn::before {
-  display: none;
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 0.5px solid rgba(232, 180, 184, 0.06);
+  pointer-events: none;
+  transition: all 0.35s ease;
+}
+
+#pageDetail .purchase-panel .panel-confirm-btn:active {
+  transform: scale(0.97);
+  background: rgba(232, 180, 184, 0.12);
+  border-color: rgba(232, 180, 184, 0.55);
+  box-shadow: 0 0 50px rgba(232, 180, 184, 0.06), inset 0 0 60px rgba(232, 180, 184, 0.025);
+}
+
+#pageDetail .purchase-panel .panel-confirm-btn:active::before {
+  border-color: rgba(232, 180, 184, 0.15);
 }
 
 /* ===== NEW: AI试用覆盖层 ===== */
