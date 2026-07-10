@@ -870,20 +870,7 @@ export function ProductPageClient(
                                     background: addedToCart ? "#111" : "#E8B4B8",
                                     border: addedToCart ? "1px solid #E8B4B8" : "none"
                                 }}>
-                                {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : <>
-                                    {t("addToCart")}
-                                    <svg
-                                        width="14"
-                                        height="14"
-                                        viewBox="0 0 16 16"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round">
-                                        <path d="M3 8h10M9 4l4 4-4 4" />
-                                    </svg>
-                                </>}
+                                {addedToCart ? <span className="text-[#E8B4B8]">{t("addedToCart")}</span> : t("addToCart")}
                             </button>
                             <button
                                 className="hidden sm:flex w-full py-2.5 bg-transparent text-[#E8B4B8] text-[14px] tracking-[0.15em] uppercase transition-all duration-300 items-center justify-center rounded-sm hover:bg-[#E8B4B8]/8"
