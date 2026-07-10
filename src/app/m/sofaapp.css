@@ -4152,10 +4152,10 @@ textarea.form-control {
   background: #000000;
   border-top: 1px solid #1A1A1A;
   border-radius: 12px 12px 0 0;
-  width: 100%;
+  width: calc(100% - 32px);
   max-width: 500px;
   max-height: 75vh;
-  padding: 0 16px;
+  padding: 0;
   padding-bottom: env(safe-area-inset-bottom, 0px);
   overflow-y: auto;
   animation: slideUp 0.3s ease;
