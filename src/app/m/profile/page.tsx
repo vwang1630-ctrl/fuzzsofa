@@ -363,7 +363,8 @@ function OrdersTab() {
                                 gap: "12px",
                                 marginBottom: idx < order.items.length - 1 ? "12px" : 0
                             }}>
-                            <div
+                            <Link
+                                href={`/m/product/${item.name.toLowerCase().includes('owl') ? 'owl-sofa' : item.name.toLowerCase().includes('gorilla') ? 'gorilla-sofa' : 'flamingo-sofa'}`}
                                 style={{
                                     width: "60px",
                                     height: "60px",
@@ -371,7 +372,8 @@ function OrdersTab() {
                                     border: "1px solid #1A1A1A",
                                     borderRadius: 0,
                                     overflow: "hidden",
-                                    flexShrink: 0
+                                    flexShrink: 0,
+                                    display: "block"
                                 }}>
                                 {item.image ? <img
                                     src={item.image}
@@ -401,7 +403,7 @@ function OrdersTab() {
                                         <polyline points="21 15 16 10 5 21" />
                                     </svg>
                                 </div>}
-                            </div>
+                            </Link>
                             <div
                                 style={{
                                     flex: 1,
