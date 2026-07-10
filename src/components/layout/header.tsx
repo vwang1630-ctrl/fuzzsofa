@@ -140,7 +140,7 @@ export function Header() {
                     {}
                     <span
                         className={`hidden sm:flex items-center gap-1 text-xs tracking-[0.05em] ${headerSolid ? "text-[#555]" : "text-white/40"}`}>
-                        {region === "europe" ? "EUR" : "USD"}USD{"\u00A0"}{region === "americas" ? "Americas" : region === "europe" ? "Europe" : region === "middle_east" ? "Middle East" : "SE Asia"}
+                        {region === "europe" ? "EUR" : "USD"}
                     </span>
                     {}
                     <div ref={langRef} className="relative">
