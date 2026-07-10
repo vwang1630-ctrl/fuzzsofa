@@ -103,16 +103,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(12px);
-}
-.navbar.transparent {
-  background: transparent;
-  backdrop-filter: none;
-  border-bottom: none;
-  position: absolute;
-  left: 0;
-  right: 0;
+  background: #0A0A0A;
 }
 .navbar .brand {
   font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;

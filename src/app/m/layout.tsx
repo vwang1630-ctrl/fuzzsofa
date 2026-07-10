@@ -27,7 +27,7 @@ export default function MobileLayout({
 
   return (
     <div className="app">
-      <header className={`navbar${isHome ? ' transparent' : ''}`} id="mainNav">
+      <header className="navbar" id="mainNav">
         <Link href="/m" className="brand" id="brandHome">
           FUZZ SOFA <em>studio</em>
         </Link>
