@@ -274,9 +274,8 @@ html, body {
   transform: translateX(-50%);
   width: 100%;
   max-width: 430px;
-  background: rgba(10, 10, 10, 0.94);
-  backdrop-filter: blur(14px);
-  border-top: 0.5px solid rgba(255, 255, 255, 0.04);
+  background: #000000;
+  border-top: 1px solid #1A1A1A;
   display: flex;
   justify-content: space-around;
   align-items: center;
