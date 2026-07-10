@@ -40,11 +40,38 @@ export default function LogDetailPage() {
 
   return (
     <div className="page page-log-detail active">
-      <div className="page-header">
-        <Link href="/m/log" className="log-detail-back">
-          ‹
+      <div style={{
+        position: "sticky",
+        top: 0,
+        background: "#0A0A0A",
+        borderBottom: "1px solid #1A1A1A",
+        padding: "16px 20px",
+        display: "flex",
+        alignItems: "center",
+        gap: "12px",
+        zIndex: 100
+      }}>
+        <Link href="/m/log" style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "4px",
+          background: "transparent",
+          border: "none",
+          cursor: "pointer"
+        }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
         </Link>
-        <span className="title">日志详情</span>
+        <span style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: "16px",
+          fontWeight: 400,
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+          color: "#F5F0EB"
+        }}>Log Detail</span>
       </div>
       <div className="log-detail-title" id="logDetailTitle">
         {log.title}
