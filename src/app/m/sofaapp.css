@@ -4181,6 +4181,7 @@ textarea.form-control {
   font-size: 24px;
   cursor: pointer;
   transition: color 0.2s;
+  margin-left: auto;
 }
 
 #pageDetail .purchase-panel .panel-close:active {
