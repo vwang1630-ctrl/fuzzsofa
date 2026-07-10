@@ -12,12 +12,12 @@ export function Footer() {
       <div className="max-w-[1200px] mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-4 gap-12">
         {/* Brand + Manufacturing Entity */}
         <div>
-          <h3 className="font-serif text-lg tracking-[0.08em] text-[#F5F0EB] mb-1">Fuzz Sofa Studio</h3>
+          <h3 className="font-serif text-[14px] tracking-[0.08em] text-[#F5F0EB] mb-1">Fuzz Sofa Studio</h3>
           <p className="text-[12px] tracking-[0.08em] text-[#8A8580] mb-4">{t("footerBrandDesc" as TranslationKeys)}</p>
-          <p className="text-xs text-[#8A8580] mb-1">
+          <p className="text-[12px] text-[#8A8580] mb-1">
             <a href="mailto:support@fuzzsofa.com" className="hover:text-[#E8B4B8] transition-colors">support@fuzzsofa.com</a>
           </p>
-          <p className="text-xs text-[#8A8580] mb-4">
+          <p className="text-[12px] text-[#8A8580] mb-4">
             <a href="tel:+862112345678" className="hover:text-[#E8B4B8] transition-colors">+86 21 1234 5678</a>
           </p>
           <div className="flex gap-4">
@@ -38,38 +38,38 @@ export function Footer() {
 
         {/* Collection */}
         <div>
-          <h4 className="text-xs font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("collection")}</h4>
+          <h4 className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("collection")}</h4>
           <ul className="space-y-3">
-            <li><Link href="/gorilla-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("gorillaSofaName")}</Link></li>
-            <li><Link href="/owl-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("owlChairName")}</Link></li>
-            <li><Link href="/silverback-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("silverbackSofaName")}</Link></li>
-            <li><Link href="/meteorite-ring-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("meteoriteRingSofaName")}</Link></li>
-            <li><Link href="/muscle-gorilla-sofa" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("muscleGorillaSofaName")}</Link></li>
-            <li><Link href="/animal-sofa-collection" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("fullCollection")}</Link></li>
+            <li><Link href="/gorilla-sofa" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("gorillaSofaName")}</Link></li>
+            <li><Link href="/owl-sofa" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("owlChairName")}</Link></li>
+            <li><Link href="/silverback-sofa" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("silverbackSofaName")}</Link></li>
+            <li><Link href="/meteorite-ring-sofa" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("meteoriteRingSofaName")}</Link></li>
+            <li><Link href="/muscle-gorilla-sofa" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("muscleGorillaSofaName")}</Link></li>
+            <li><Link href="/animal-sofa-collection" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("fullCollection")}</Link></li>
           </ul>
         </div>
 
         {/* Explore */}
         <div>
-          <h4 className="text-xs font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("explore")}</h4>
+          <h4 className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("explore")}</h4>
           <ul className="space-y-3">
-            <li><Link href="/about" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("aboutTheStudio" as TranslationKeys)}</Link></li>
-            <li><Link href="/studio" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("studio" as TranslationKeys)}</Link></li>
-            <li><Link href="/workshop" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("workshop" as TranslationKeys)}</Link></li>
-            <li><Link href="/luxury-villa-interior" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("luxuryVillaScene")}</Link></li>
-            <li><Link href="/boutique-hotel-lobby" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("boutiqueHotelScene")}</Link></li>
-            <li><Link href="/contact" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link></li>
+            <li><Link href="/about" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("aboutTheStudio" as TranslationKeys)}</Link></li>
+            <li><Link href="/studio" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("studio" as TranslationKeys)}</Link></li>
+            <li><Link href="/workshop" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("workshop" as TranslationKeys)}</Link></li>
+            <li><Link href="/luxury-villa-interior" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("luxuryVillaScene")}</Link></li>
+            <li><Link href="/boutique-hotel-lobby" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("boutiqueHotelScene")}</Link></li>
+            <li><Link href="/contact" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link></li>
           </ul>
         </div>
 
         {/* Support + Legal */}
         <div>
-          <h4 className="text-xs font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("support")}</h4>
+          <h4 className="text-[12px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-6">{t("support")}</h4>
           <ul className="space-y-3">
-            <li><Link href="/shipping-policy" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("shippingPolicy" as TranslationKeys)}</Link></li>
-            <li><Link href="/refund-policy" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("refundPolicy" as TranslationKeys)}</Link></li>
-            <li><Link href="/warranty" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("warranty")}</Link></li>
-            <li><Link href="/privacy" className="text-sm font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("privacy")}</Link></li>
+            <li><Link href="/shipping-policy" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("shippingPolicy" as TranslationKeys)}</Link></li>
+            <li><Link href="/refund-policy" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("refundPolicy" as TranslationKeys)}</Link></li>
+            <li><Link href="/warranty" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("warranty")}</Link></li>
+            <li><Link href="/privacy" className="text-[14px] font-light text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("privacy")}</Link></li>
           </ul>
         </div>
       </div>
