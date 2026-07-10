@@ -7261,7 +7261,7 @@ textarea.form-control {
 
 .profile-page-new {
   width: 100%;
-  padding: 20px;
+  padding: 0;
   padding-bottom: 92px;
   background: #000000;
   min-height: 100vh;
