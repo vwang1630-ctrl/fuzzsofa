@@ -4138,8 +4138,8 @@ textarea.form-control {
 #pageDetail .purchase-panel-overlay {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 16px;
+  right: 16px;
   bottom: 0;
   background: rgba(0, 0, 0, 0.85);
   z-index: 200;
@@ -4153,9 +4153,8 @@ textarea.form-control {
   border-top: 1px solid #1A1A1A;
   border-radius: 12px 12px 0 0;
   width: 100%;
-  max-width: 100%;
   max-height: 75vh;
-  padding: 0 16px;
+  padding: 0;
   padding-bottom: env(safe-area-inset-bottom, 0px);
   overflow-y: auto;
   animation: slideUp 0.3s ease;
