@@ -72,7 +72,6 @@ html, body {
 }
 .app {
   width: 100%;
-  max-width: 430px;
   background: #000000;
   min-height: 100vh;
   position: relative;
@@ -85,7 +84,6 @@ html, body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0 auto;
 }
 .icon {
   display: block;
@@ -284,10 +282,9 @@ html, body {
 .bottom-nav {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   width: 100%;
-  max-width: 430px;
   background: #000000;
   border-top: 1px solid #1A1A1A;
   display: flex;
@@ -1059,7 +1056,6 @@ html, body {
    ============================================================ */
 #pageDetail .container {
   width: 100%;
-  max-width: 430px;
   background: #0A0A0A;
   padding: 0 20px 110px;
   position: relative;
@@ -1858,10 +1854,9 @@ html, body {
 #pageDetail .bottom-cta {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   width: 100%;
-  max-width: 430px;
   background: #000000;
   border-top: 1px solid #1A1A1A;
   padding: 18px 16px 22px;
@@ -2009,7 +2004,6 @@ html, body {
   z-index: 99;
   transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 40px rgba(232, 180, 184, 0.08);
-  max-width: 430px;
 }
 #pageDetail .btn-ai-float .icon {
   width: 22px;
@@ -2153,7 +2147,6 @@ html, body {
 }
 .panel {
   width: 100%;
-  max-width: 430px;
   background: rgba(22, 22, 22, 0.95);
   backdrop-filter: blur(20px);
   border-top: 0.5px solid rgba(255, 255, 255, 0.04);
@@ -2848,7 +2841,6 @@ html, body {
 }
 .ai-panel {
   width: 100%;
-  max-width: 430px;
   background: rgba(22, 22, 22, 0.95);
   backdrop-filter: blur(20px);
   border-top: 0.5px solid rgba(255, 255, 255, 0.04);
@@ -3830,8 +3822,9 @@ textarea.form-control {
   }
   .bottom-nav {
     max-width: 600px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     border-radius: 16px 16px 0 0;
     padding: 12px 24px 16px;
   }
@@ -3878,8 +3871,9 @@ textarea.form-control {
   }
   #pageDetail .bottom-cta {
     max-width: 600px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     border-radius: 12px 12px 0 0;
     flex-direction: row;
     align-items: center;
@@ -4159,8 +4153,6 @@ textarea.form-control {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  max-width: 430px;
-  margin: 0 auto;
 }
 
 /* 顶部导航栏 - 对齐详情页 */
@@ -4720,10 +4712,9 @@ textarea.form-control {
 .shop-bottom-bar {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   width: 100%;
-  max-width: 430px;
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(20px);
   padding: 16px 20px;
