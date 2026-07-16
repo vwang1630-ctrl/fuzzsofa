@@ -384,6 +384,15 @@ export function ProductPageClient(
         "Rose Pink Linen": "colorRosePinkLinen"
     };
 
+    // 颜色选项到图片索引的映射（owl-sofa 专用）
+    const colorToImageIndex: Record<string, number> = {
+        "Snowy White Plush": 0,
+        "Dusty Pink Plush": 2,
+        "Black Leather": 3,
+        "Forest Green Velvet": 4,
+        "Rose Pink Linen": 5
+    };
+
     const handleShare = (platform: string) => {
         const url = `https://fuzzsofa.com/${product.slug}`;
         const text = `${productName} — Fuzz Sofa`;
@@ -589,16 +598,9 @@ export function ProductPageClient(
                                             onClick={() => {
                                                 setMaterialType(mat.type);
                                                 setMaterialOption(mat.options[0]);
-                                                let idx = 0;
-
-                                                for (const m of product.materialOptions!) {
-                                                    if (m.type === mat.type) {
-                                                        setActiveImage(idx);
-                                                        break;
-                                                    }
-
-                                                    idx += m.options.length;
-                                                }
+                                                // 使用颜色到图片索引的映射表
+                                                const firstOpt = mat.options[0];
+                                                setActiveImage(colorToImageIndex[firstOpt] ?? 0);
                                             }}
                                             className={`text-[12px] tracking-[0.06em] px-3 py-1 rounded-sm transition-all duration-300 ${isMatSel ? "text-[#E8B4B8] border border-[#E8B4B8]/50 bg-[#E8B4B8]/8" : "text-[#8A8580] border border-[#333] hover:border-[#555]"}`}>
                                             {t(matTypeKeyMap[mat.type] || "matTypeFabric" as TranslationKeys)}
@@ -632,7 +634,8 @@ export function ProductPageClient(
                                         {activeMat.options.map((opt, optIdx) => {
                                             const colorHex = activeMat.colors[optIdx];
                                             const isSelected = materialOption === opt;
-                                            const globalIdx = baseIdx + optIdx;
+                                            // 使用颜色到图片索引的映射表
+                                            const globalIdx = colorToImageIndex[opt] ?? (baseIdx + optIdx);
                                             const swatchImg = galleryImages[globalIdx];
 
                                             return (
@@ -1111,16 +1114,8 @@ export function ProductPageClient(
                                                     setMaterialType(mat.type);
                                                     const firstOpt = mat.options[0];
                                                     setMaterialOption(firstOpt);
-                                                    let idx = 0;
-
-                                                    for (const m of product.materialOptions!) {
-                                                        if (m.type === mat.type) {
-                                                            setActiveImage(idx);
-                                                            break;
-                                                        }
-
-                                                        idx += m.options.length;
-                                                    }
+                                                    // 使用颜色到图片索引的映射表
+                                                    setActiveImage(colorToImageIndex[firstOpt] ?? 0);
                                                 }}
                                                 className={`text-xs tracking-[0.08em] px-4 py-1.5 rounded-sm transition-all duration-300 ${isMatSelected ? "text-[#E8B4B8] border border-[#E8B4B8]/50 bg-[#E8B4B8]/8" : "text-[#8A8580] border border-[#333] hover:border-[#555] hover:text-[#F5F0EB]/60"}`}>
                                                 {t(matTypeKeyMap[mat.type] || "matTypeFabric" as TranslationKeys)}
@@ -1148,7 +1143,8 @@ export function ProductPageClient(
                                             {activeMat.options.map((opt, optIdx) => {
                                                 const colorHex = activeMat.colors[optIdx];
                                                 const isSelected = materialOption === opt;
-                                                const globalIdx = (isSingleFabric ? 0 : baseIdx) + optIdx;
+                                                // 使用颜色到图片索引的映射表
+                                                const globalIdx = colorToImageIndex[opt] ?? ((isSingleFabric ? 0 : baseIdx) + optIdx);
                                                 const swatchImage = galleryImages[globalIdx];
 
                                                 return (
