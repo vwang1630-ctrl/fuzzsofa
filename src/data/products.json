@@ -209,7 +209,7 @@
         "type": "Plush",
         "options": [
           "Snowy White Plush",
-          "Rose Pink Plush"
+          "Dusty Pink Plush"
         ],
         "colors": [
           "#F0EBE0",
@@ -245,7 +245,6 @@
       }
     ],
     "images": [
-      "/products/owl/snowy-white.png",
       "/products/owl/snowy-white.png",
       "/products/owl/dusty-pink-fur.png",
       "/products/owl/black-leather.png",

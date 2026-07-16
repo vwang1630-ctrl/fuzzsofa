@@ -376,7 +376,7 @@ export function ProductPageClient(
         "Agate Black Leather": "colorAgateBlackLeather",
         "Chestnut Brown Leather": "colorChestnutBrownLeather",
         "Snowy White Plush": "colorSnowyWhitePlush",
-        "Rose Pink Plush": "colorRosePinkPlush",
+        "Dusty Pink Plush": "colorDustyPinkPlush",
         "Warm Gray Linen": "colorWarmGrayLinen",
         "Oatmeal Linen": "colorOatmealLinen",
         "Forest Green Velvet": "colorForestGreenVelvet",

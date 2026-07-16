@@ -34,7 +34,7 @@ const OWL_DATA = {
         key: "black",
         label: "黑色 · 皮革",
         colorCode: "#1A1A1A",
-        imageIndex: 3,
+        imageIndex: 2,
         group: "Leather"
     }, {
         key: "snowy-white",
@@ -43,22 +43,22 @@ const OWL_DATA = {
         imageIndex: 0,
         group: "Plush"
     }, {
-        key: "rose-pink",
+        key: "dusty-pink",
         label: "玫瑰粉 · 长毛绒",
         colorCode: "#E8B4B8",
-        imageIndex: 2,
+        imageIndex: 1,
         group: "Plush"
     }, {
         key: "forest-green",
         label: "森林绿 · 天鹅绒",
         colorCode: "#2D5A3D",
-        imageIndex: 4,
+        imageIndex: 3,
         group: "Velvet"
     }, {
         key: "rose-pink-linen",
         label: "玫瑰粉 · 亚麻",
         colorCode: "#E8B4B8",
-        imageIndex: 5,
+        imageIndex: 4,
         group: "Linen"
     }],
 
