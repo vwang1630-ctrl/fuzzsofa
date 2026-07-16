@@ -1097,7 +1097,7 @@ export function ProductPageClient(
                                 <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />✦ 细节展示
                             </p>
                         </div>
-                        <div className="grid grid-cols-1 gap-4 max-w-[500px] mx-auto">
+                        <div className="grid grid-cols-1 gap-10 max-w-[500px] mx-auto">
                             {scenes.map((scene: { image: string; label: string }, idx: number) => (
                                 <div key={idx} className="relative bg-[#111] overflow-hidden">
                                     <div className="aspect-[5/8]">
