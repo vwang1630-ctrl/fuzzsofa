@@ -262,8 +262,11 @@ export function ProductPageClient(
     const productImages: Record<string, string[]> = {
         "owl-sofa": [
             "/products/owl/snowy-white.png",
-            "/products/owl/lifestyle-square.webp",
-            "/products/owl/dusty-pink-fur.png"
+            "/products/owl/rose-pink.png",
+            "/products/owl/forest-green.png",
+            "/products/owl/warm-gray.png",
+            "/products/owl/dusty-pink-fur.png",
+            "/products/owl/lifestyle-square.webp"
         ],
 
         "gorilla-sofa": [

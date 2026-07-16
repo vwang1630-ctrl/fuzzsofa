@@ -206,6 +206,15 @@
     ],
     "materialOptions": [
       {
+        "type": "Leather",
+        "options": [
+          "Black Leather"
+        ],
+        "colors": [
+          "#1A1A1A"
+        ]
+      },
+      {
         "type": "Plush",
         "options": [
           "Snowy White Plush",
@@ -217,45 +226,42 @@
         ]
       },
       {
-        "type": "Leather",
+        "type": "Linen",
         "options": [
-          "Black Leather"
+          "Warm Gray Linen",
+          "Oatmeal Linen"
         ],
         "colors": [
-          "#1A1A1A"
+          "#8A8580",
+          "#C4B9A4"
         ]
       },
       {
         "type": "Velvet",
         "options": [
-          "Forest Green Velvet"
+          "Forest Green Velvet",
+          "Burgundy Velvet"
         ],
         "colors": [
-          "#2D4A3E"
-        ]
-      },
-      {
-        "type": "Linen",
-        "options": [
-          "Pink Linen"
-        ],
-        "colors": [
-          "#E8B4B8"
+          "#5A7A5A",
+          "#722F37"
         ]
       }
     ],
     "images": [
       "/products/owl/snowy-white.png",
-      "/products/owl/lifestyle-square.webp",
       "/products/owl/dusty-pink-fur.png",
       "/products/owl/black-leather.png",
+      "/products/owl/rose-pink.png",
+      "/products/owl/warm-gray.png",
+      "/products/owl/warm-gray.png",
       "/products/owl/forest-green.png",
-      "/products/owl/pink-linen.png"
+      "/products/owl/rose-pink.png"
     ],
     "faq": [
       {
         "question": "Is the Owl Chair available in leather?",
-        "answer": "The Owl Chair is available in three material lines: Plush (Snowy White, Rose Pink), Leather (Black), and Velvet (Forest Green) — four colors in total. Each material brings a unique tactile character to the chair's organic form."
+        "answer": "The Owl Chair is available in four material lines: Leather (Agate Black, Chestnut Brown), Plush (Snowy White, Rose Pink), Linen (Warm Gray, Oatmeal), and Velvet (Forest Green, Burgundy) — eight colors in total. Each material brings a unique tactile character to the chair's organic form."
       },
       {
         "question": "Can the Owl Chair be used as a dining chair?",
