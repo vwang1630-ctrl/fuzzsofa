@@ -393,6 +393,28 @@ export function ProductPageClient(
         "Forest Green Velvet": 4,
         "Rose Pink Linen": 6
     };
+
+    // 图片索引到材质类型和颜色选项的反向映射（owl-sofa 专用）
+    const imageIndexToMaterial: Record<number, { type: string; option: string }> = {
+        0: { type: "Plush", option: "Snowy White Plush" },
+        1: { type: "Plush", option: "Snowy White Plush" },
+        2: { type: "Plush", option: "Dusty Pink Plush" },
+        3: { type: "Leather", option: "Black Leather" },
+        4: { type: "Velvet", option: "Forest Green Velvet" },
+        5: { type: "Velvet", option: "Forest Green Velvet" },
+        6: { type: "Linen", option: "Rose Pink Linen" }
+    };
+
+    // 点击缩略图时同步更新图片、材质类型和颜色选项
+    const handleThumbnailClick = useCallback((index: number) => {
+        setActiveImage(index);
+        if (product.slug === "owl-sofa" && imageIndexToMaterial[index]) {
+            const { type, option } = imageIndexToMaterial[index];
+            setMaterialType(type);
+            setMaterialOption(option);
+        }
+    }, [product.slug]);
+
     const handleShare = (platform: string) => {
         const url = `https://fuzzsofa.com/${product.slug}`;
         const text = `${productName} — Fuzz Sofa`;
@@ -961,7 +983,7 @@ export function ProductPageClient(
                                 }}>
                                 {galleryImages.map(img => <button
                                     key={img.id}
-                                    onClick={() => setActiveImage(img.id)}
+                                    onClick={() => handleThumbnailClick(img.id)}
                                     className={`w-[72px] h-[72px] flex-shrink-0 transition-all duration-300 bg-[#111] overflow-hidden rounded-sm ${activeImage === img.id ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "opacity-70 hover:opacity-100"}`}
                                     aria-label={`View ${img.id + 1}`}>
                                     {img.src ? <img src={img.src} alt="" className="w-full h-full object-cover" /> : <span
