@@ -380,7 +380,8 @@ export function ProductPageClient(
         "Warm Gray Linen": "colorWarmGrayLinen",
         "Oatmeal Linen": "colorOatmealLinen",
         "Forest Green Velvet": "colorForestGreenVelvet",
-        "Burgundy Velvet": "colorBurgundyVelvet"
+        "Burgundy Velvet": "colorBurgundyVelvet",
+        "Rose Pink Linen": "colorRosePinkLinen"
     };
 
     const handleShare = (platform: string) => {

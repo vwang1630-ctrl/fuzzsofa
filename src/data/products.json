@@ -206,15 +206,6 @@
     ],
     "materialOptions": [
       {
-        "type": "Leather",
-        "options": [
-          "Black Leather"
-        ],
-        "colors": [
-          "#1A1A1A"
-        ]
-      },
-      {
         "type": "Plush",
         "options": [
           "Snowy White Plush",
@@ -226,35 +217,38 @@
         ]
       },
       {
-        "type": "Linen",
+        "type": "Leather",
         "options": [
-          "Warm Gray Linen",
-          "Oatmeal Linen"
+          "Black Leather"
         ],
         "colors": [
-          "#8A8580",
-          "#C4B9A4"
+          "#1A1A1A"
         ]
       },
       {
         "type": "Velvet",
         "options": [
-          "Forest Green Velvet",
-          "Burgundy Velvet"
+          "Forest Green Velvet"
         ],
         "colors": [
-          "#5A7A5A",
-          "#722F37"
+          "#5A7A5A"
+        ]
+      },
+      {
+        "type": "Linen",
+        "options": [
+          "Rose Pink Linen"
+        ],
+        "colors": [
+          "#E8B4B8"
         ]
       }
     ],
     "images": [
       "/products/owl/snowy-white.png",
+      "/products/owl/snowy-white.png",
       "/products/owl/dusty-pink-fur.png",
       "/products/owl/black-leather.png",
-      "/products/owl/rose-pink.png",
-      "/products/owl/warm-gray.png",
-      "/products/owl/warm-gray.png",
       "/products/owl/forest-green.png",
       "/products/owl/rose-pink.png"
     ],

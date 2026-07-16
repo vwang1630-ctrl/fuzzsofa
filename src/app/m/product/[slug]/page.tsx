@@ -22,12 +22,10 @@ const OWL_DATA = {
     },
 
     images: [
-        "/products/owl/black-leather.png",
-        "/products/owl/dusty-pink-fur.png",
         "/products/owl/snowy-white.png",
-        "/products/owl/rose-pink.png",
-        "/products/owl/warm-gray.png",
-        "/products/owl/warm-gray.png",
+        "/products/owl/snowy-white.png",
+        "/products/owl/dusty-pink-fur.png",
+        "/products/owl/black-leather.png",
         "/products/owl/forest-green.png",
         "/products/owl/rose-pink.png"
     ],
@@ -36,44 +34,32 @@ const OWL_DATA = {
         key: "black",
         label: "黑色 · 皮革",
         colorCode: "#1A1A1A",
-        imageIndex: 0,
+        imageIndex: 3,
         group: "Leather"
     }, {
         key: "snowy-white",
         label: "雪山白 · 长毛绒",
         colorCode: "#F5F0EB",
-        imageIndex: 2,
+        imageIndex: 0,
         group: "Plush"
     }, {
         key: "rose-pink",
         label: "玫瑰粉 · 长毛绒",
         colorCode: "#E8B4B8",
-        imageIndex: 3,
+        imageIndex: 2,
         group: "Plush"
-    }, {
-        key: "warm-gray",
-        label: "暖灰 · 亚麻",
-        colorCode: "#8A8580",
-        imageIndex: 4,
-        group: "Linen"
-    }, {
-        key: "oatmeal",
-        label: "燕麦色 · 亚麻",
-        colorCode: "#C8BFA8",
-        imageIndex: 5,
-        group: "Linen"
     }, {
         key: "forest-green",
         label: "森林绿 · 天鹅绒",
         colorCode: "#2D5A3D",
-        imageIndex: 6,
+        imageIndex: 4,
         group: "Velvet"
     }, {
-        key: "burgundy",
-        label: "勃艮第红 · 天鹅绒",
-        colorCode: "#6B2D3E",
-        imageIndex: 7,
-        group: "Velvet"
+        key: "rose-pink-linen",
+        label: "玫瑰粉 · 亚麻",
+        colorCode: "#E8B4B8",
+        imageIndex: 5,
+        group: "Linen"
     }],
 
     fabrics: [{
