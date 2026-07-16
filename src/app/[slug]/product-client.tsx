@@ -560,7 +560,7 @@ export function ProductPageClient(
                         {/* Desktop gallery column — hidden on mobile */}
                         <div className="hidden sm:flex flex-col">
                             {}
-                            <div className="relative w-full max-w-[500px] mx-auto aspect-[5/8] bg-[#111] overflow-hidden">
+                            <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
                                 {galleryImages[activeImage]?.src ? <img
                                     src={galleryImages[activeImage].src}
                                     alt={productName}
@@ -1097,15 +1097,15 @@ export function ProductPageClient(
                                 <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />✦ 细节展示
                             </p>
                         </div>
-                        <div className="grid grid-cols-1 gap-4 max-w-[500px]">
+                        <div className="grid grid-cols-1 gap-4 max-w-[500px] mx-auto">
                             {scenes.map((scene: { image: string; label: string }, idx: number) => (
                                 <div key={idx} className="relative bg-[#111] overflow-hidden border border-[#1A1A1A]">
-                                    <div className="aspect-square">
+                                    <div className="aspect-[5/8]">
                                         <img
                                             src={scene.image}
                                             alt={scene.label}
                                             width={500}
-                                            height={500}
+                                            height={800}
                                             className="w-full h-full object-cover"
                                             loading="lazy"
                                         />
