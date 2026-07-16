@@ -23,7 +23,7 @@ const OWL_DATA = {
 
     images: [
         "/products/owl/snowy-white.png",
-        "/products/owl/snowy-white.png",
+        "/products/owl/snowy-white-side.png",
         "/products/owl/dusty-pink-fur.png",
         "/products/owl/black-leather.png",
         "/products/owl/forest-green.png",
