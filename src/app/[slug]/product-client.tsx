@@ -51,6 +51,36 @@ export function ProductPageClient(
         "silverback-sofa": "/products/silverback/story-sketch.jpg"
     };
 
+    const scenesMap: Record<string, { image: string; label: string }[]> = {
+        "owl-sofa": [
+            { image: "/products/owl/snowy-white.png", label: "静谧书房" },
+            { image: "/products/owl/forest-green.png", label: "自然角落" },
+            { image: "/products/owl/black-leather.png", label: "都会客厅" },
+        ],
+        "meteorite-ring-sofa": [
+            { image: "/products/meteorite-ring/detail-1.jpg", label: "陨石纹理" },
+            { image: "/products/meteorite-ring/detail-2.jpg", label: "环形设计" },
+            { image: "/products/meteorite-ring/detail-3.jpg", label: "金属质感" },
+        ],
+        "gorilla-sofa": [
+            { image: "/products/gorilla/detail-1.jpg", label: "力量线条" },
+            { image: "/products/gorilla/detail-2.jpg", label: "背部纹理" },
+            { image: "/products/gorilla/detail-3.jpg", label: "扶手细节" },
+        ],
+        "muscle-gorilla-sofa": [
+            { image: "/products/muscle-gorilla/detail-1.jpg", label: "肌肉曲线" },
+            { image: "/products/muscle-gorilla/detail-2.jpg", label: "皮革质感" },
+            { image: "/products/muscle-gorilla/detail-3.jpg", label: "缝合工艺" },
+        ],
+        "silverback-sofa": [
+            { image: "/products/silverback/detail-1.jpg", label: "银背纹理" },
+            { image: "/products/silverback/detail-2.jpg", label: "侧面轮廓" },
+            { image: "/products/silverback/detail-3.jpg", label: "底座细节" },
+        ],
+    };
+
+    const scenes = scenesMap[product.slug] || scenesMap["owl-sofa"];
+
     const materialsCardsMap: Record<string, Array<{titleKey: string; descKey: string; icon: string}>> = {
         "meteorite-ring-sofa": [
             { titleKey: "meteorGalvanizedSteelTitle", descKey: "meteorGalvanizedSteelDesc", icon: "frame" },
@@ -1057,6 +1087,37 @@ export function ProductPageClient(
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    {}
+                    {/* 细节展示 */}
+                    <div className="mt-8 md:mt-16 mb-8 md:mb-12">
+                        <div className="mb-4 md:mb-6">
+                            <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 flex items-center gap-2">
+                                <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />✦ 细节展示
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-1 gap-4 max-w-[500px]">
+                            {scenes.map((scene: { image: string; label: string }, idx: number) => (
+                                <div key={idx} className="relative bg-[#111] overflow-hidden border border-[#1A1A1A]">
+                                    <div className="aspect-square">
+                                        <img
+                                            src={scene.image}
+                                            alt={scene.label}
+                                            width={500}
+                                            height={500}
+                                            className="w-full h-full object-cover"
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
+                                    <div className="absolute bottom-3 left-3">
+                                        <span className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/60">
+                                            {scene.label}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                     {}
