@@ -5794,9 +5794,11 @@ textarea.form-control {
 }
 
 .interior-image {
-  width: 100%;
-  aspect-ratio: 5/8;
+  width: 400px;
+  max-width: 100%;
+  aspect-ratio: 1/1;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .interior-image img {
@@ -5813,8 +5815,6 @@ textarea.form-control {
 }
 
 .interior-item {
-  background: #111111;
-  border: 1px solid #1A1A1A;
   overflow: hidden;
 }
 

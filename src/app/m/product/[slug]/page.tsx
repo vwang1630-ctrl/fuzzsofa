@@ -463,11 +463,7 @@ export default function MobileProductPage(
                         {OWL_DATA.scenes.map((scene: { image: string; label: string; sub: string }, idx: number) => (
                             <div key={idx} className="interior-item">
                                 <div className="interior-image">
-                                    <img src={scene.image} alt={scene.label} loading="lazy" width={500} height={500} />
-                                    <div className="interior-overlay" />
-                                    <div className="interior-caption">
-                                        <span className="interior-scene-label">{scene.label}</span>
-                                    </div>
+                                    <img src={scene.image} alt={scene.label} loading="lazy" width={400} height={400} />
                                 </div>
                             </div>
                         ))}

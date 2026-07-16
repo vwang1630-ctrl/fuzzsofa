@@ -1099,7 +1099,7 @@ export function ProductPageClient(
                         </div>
                         <div className="grid grid-cols-1 gap-4 max-w-[500px] mx-auto">
                             {scenes.map((scene: { image: string; label: string }, idx: number) => (
-                                <div key={idx} className="relative bg-[#111] overflow-hidden border border-[#1A1A1A]">
+                                <div key={idx} className="relative bg-[#111] overflow-hidden">
                                     <div className="aspect-[5/8]">
                                         <img
                                             src={scene.image}
@@ -1109,12 +1109,6 @@ export function ProductPageClient(
                                             className="w-full h-full object-cover"
                                             loading="lazy"
                                         />
-                                    </div>
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
-                                    <div className="absolute bottom-3 left-3">
-                                        <span className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/60">
-                                            {scene.label}
-                                        </span>
                                     </div>
                                 </div>
                             ))}
