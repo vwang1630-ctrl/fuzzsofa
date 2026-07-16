@@ -33,16 +33,10 @@ const OWL_DATA = {
     ],
 
     colors: [{
-        key: "agate-black",
-        label: "玛瑙黑 · 皮革",
+        key: "black",
+        label: "黑色 · 皮革",
         colorCode: "#1A1A1A",
         imageIndex: 0,
-        group: "Leather"
-    }, {
-        key: "chestnut",
-        label: "栗棕 · 皮革",
-        colorCode: "#6B3A2A",
-        imageIndex: 1,
         group: "Leather"
     }, {
         key: "snowy-white",

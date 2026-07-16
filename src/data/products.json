@@ -208,12 +208,10 @@
       {
         "type": "Leather",
         "options": [
-          "Agate Black Leather",
-          "Chestnut Brown Leather"
+          "Black Leather"
         ],
         "colors": [
-          "#1A1A1A",
-          "#6B3A2A"
+          "#1A1A1A"
         ]
       },
       {
