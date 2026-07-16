@@ -392,7 +392,6 @@ export function ProductPageClient(
         "Forest Green Velvet": 4,
         "Rose Pink Linen": 5
     };
-
     const handleShare = (platform: string) => {
         const url = `https://fuzzsofa.com/${product.slug}`;
         const text = `${productName} — Fuzz Sofa`;
