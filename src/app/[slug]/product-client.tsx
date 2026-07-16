@@ -560,7 +560,7 @@ export function ProductPageClient(
                         {/* Desktop gallery column — hidden on mobile */}
                         <div className="hidden sm:flex flex-col">
                             {}
-                            <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
+                            <div className="relative w-full max-w-[500px] mx-auto aspect-[5/8] bg-[#111] overflow-hidden">
                                 {galleryImages[activeImage]?.src ? <img
                                     src={galleryImages[activeImage].src}
                                     alt={productName}
