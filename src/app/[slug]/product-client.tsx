@@ -53,9 +53,9 @@ export function ProductPageClient(
 
     const scenesMap: Record<string, { image: string; label: string }[]> = {
         "owl-sofa": [
-            { image: "/products/owl/detail-1.jpg", label: "静谧书房" },
-            { image: "/products/owl/forest-green.png", label: "自然角落" },
-            { image: "/products/owl/black-leather.png", label: "都会客厅" },
+            { image: "/products/owl/detail-1.jpg", label: "泡沫模型" },
+            { image: "/products/owl/detail-2.jpg", label: "工艺细节" },
+            { image: "/products/owl/detail-3.jpg", label: "材质特写" },
         ],
         "meteorite-ring-sofa": [
             { image: "/products/meteorite-ring/detail-1.jpg", label: "陨石纹理" },
