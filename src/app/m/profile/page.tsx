@@ -122,7 +122,6 @@ export default function MobileProfilePage() {
                         </div>
                         <div className="profile-user-info-new">
                             <h1 className="profile-user-name-new">{user.name}</h1>
-                            <span className="profile-member-badge">{user.memberLevel}</span>
                         </div>
                         <button className="profile-edit-btn-new" onClick={() => router.push("/m/profile/settings")}>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
