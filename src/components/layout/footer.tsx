@@ -54,11 +54,11 @@ export function Footer() {
           <h4 className="font-serif text-[14px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-4">{t("explore")}</h4>
           <ul className="space-y-3">
             <li><Link href="/about" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("aboutTheStudio" as TranslationKeys)}</Link></li>
-            <li><Link href="/studio" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("studio" as TranslationKeys)}</Link></li>
-            <li><Link href="/workshop" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("workshop" as TranslationKeys)}</Link></li>
+            <li><Link href="/journal" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("journal" as TranslationKeys)}</Link></li>
+            <li><Link href="/modern-residence" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("modernResidence" as TranslationKeys)}</Link></li>
+            <li><Link href="/sculpture-trends" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("sculptureTrends" as TranslationKeys)}</Link></li>
             <li><Link href="/luxury-villa-interior" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("luxuryVillaScene")}</Link></li>
             <li><Link href="/boutique-hotel-lobby" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("boutiqueHotelScene")}</Link></li>
-            <li><Link href="/contact" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link></li>
           </ul>
         </div>
 
@@ -66,6 +66,7 @@ export function Footer() {
         <div>
           <h4 className="font-serif text-[14px] font-light tracking-[0.15em] uppercase text-[#F5F0EB] mb-4">{t("support")}</h4>
           <ul className="space-y-3">
+            <li><Link href="/contact" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("contact")}</Link></li>
             <li><Link href="/shipping-policy" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("shippingPolicy" as TranslationKeys)}</Link></li>
             <li><Link href="/refund-policy" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("refundPolicy" as TranslationKeys)}</Link></li>
             <li><Link href="/warranty" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("warranty")}</Link></li>
