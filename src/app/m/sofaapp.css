@@ -5808,7 +5808,7 @@ textarea.form-control {
 
 .interior-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 16px;
   padding: 0 20px;
 }
