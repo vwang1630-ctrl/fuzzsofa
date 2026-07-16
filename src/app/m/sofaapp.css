@@ -5795,7 +5795,7 @@ textarea.form-control {
 
 .interior-image {
   width: 100%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 5/8;
   overflow: hidden;
 }
 
@@ -5810,7 +5810,6 @@ textarea.form-control {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
-  padding: 0 20px;
 }
 
 .interior-item {
