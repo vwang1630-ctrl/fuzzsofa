@@ -53,7 +53,7 @@ export function ProductPageClient(
 
     const scenesMap: Record<string, { image: string; label: string }[]> = {
         "owl-sofa": [
-            { image: "/products/owl/detail-1.png", label: "静谧书房" },
+            { image: "/products/owl/detail-1.jpg", label: "静谧书房" },
             { image: "/products/owl/forest-green.png", label: "自然角落" },
             { image: "/products/owl/black-leather.png", label: "都会客厅" },
         ],
