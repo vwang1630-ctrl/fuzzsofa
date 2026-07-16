@@ -53,6 +53,12 @@ const OWL_DATA = {
         colorCode: "#2D4A3E",
         imageIndex: 4,
         group: "Velvet"
+    }, {
+        key: "pink-linen",
+        label: "粉色 · 亚麻",
+        colorCode: "#E8B4B8",
+        imageIndex: 5,
+        group: "Linen"
     }],
 
     fabrics: [{

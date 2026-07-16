@@ -233,6 +233,15 @@
         "colors": [
           "#2D4A3E"
         ]
+      },
+      {
+        "type": "Linen",
+        "options": [
+          "Pink Linen"
+        ],
+        "colors": [
+          "#E8B4B8"
+        ]
       }
     ],
     "images": [
@@ -240,7 +249,8 @@
       "/products/owl/lifestyle-square.webp",
       "/products/owl/dusty-pink-fur.png",
       "/products/owl/black-leather.png",
-      "/products/owl/forest-green.png"
+      "/products/owl/forest-green.png",
+      "/products/owl/pink-linen.png"
     ],
     "faq": [
       {
