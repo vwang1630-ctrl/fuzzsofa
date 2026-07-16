@@ -293,29 +293,6 @@ export default function HomePage() {
                     ) : (
                       <div className="w-full h-full bg-[#1A1A1A]" />
                     )}
-                    {/* Hover overlay with quick action buttons */}
-                    <div className="absolute inset-0 bg-[#0A0A0A]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          // Add to cart logic
-                        }}
-                        className="bg-[#F5F0EB] text-[#0A0A0A] px-4 py-2 text-[12px] tracking-[0.1em] uppercase font-light hover:bg-[#E8B4B8] transition-colors duration-200"
-                      >
-                        Quick Add
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          // Quick view logic
-                        }}
-                        className="border border-[#F5F0EB] text-[#F5F0EB] px-4 py-2 text-[12px] tracking-[0.1em] uppercase font-light hover:bg-[#F5F0EB] hover:text-[#0A0A0A] transition-colors duration-200"
-                      >
-                        Quick View
-                      </button>
-                    </div>
                   </div>
                   <div className="pt-4 pb-2">
                     <h3 className="font-serif text-[16px] font-light text-[#F5F0EB] group-hover:text-[#E8B4B8] transition-colors duration-300">
