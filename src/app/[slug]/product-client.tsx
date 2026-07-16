@@ -53,7 +53,7 @@ export function ProductPageClient(
 
     const scenesMap: Record<string, { image: string; label: string }[]> = {
         "owl-sofa": [
-            { image: "/products/owl/snowy-white.png", label: "静谧书房" },
+            { image: "/products/owl/detail-1.jpg", label: "静谧书房" },
             { image: "/products/owl/forest-green.png", label: "自然角落" },
             { image: "/products/owl/black-leather.png", label: "都会客厅" },
         ],
@@ -1100,12 +1100,12 @@ export function ProductPageClient(
                         <div className="grid grid-cols-1 gap-10 max-w-[500px] mx-auto">
                             {scenes.map((scene: { image: string; label: string }, idx: number) => (
                                 <div key={idx} className="relative bg-[#111] overflow-hidden">
-                                    <div className="aspect-[5/8]">
+                                    <div className="aspect-square">
                                         <img
                                             src={scene.image}
                                             alt={scene.label}
                                             width={500}
-                                            height={800}
+                                            height={500}
                                             className="w-full h-full object-cover"
                                             loading="lazy"
                                         />
