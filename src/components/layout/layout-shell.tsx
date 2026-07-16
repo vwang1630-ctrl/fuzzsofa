@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/footer';
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isMobileRoute = pathname.startsWith('/m');
+  const isMobileRoute = pathname.startsWith('/m/') || pathname === '/m';
 
   if (isMobileRoute) {
     return <>{children}</>;
