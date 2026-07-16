@@ -24,7 +24,9 @@ const OWL_DATA = {
     images: [
         "/products/owl/snowy-white.png",
         "/products/owl/lifestyle-square.webp",
-        "/products/owl/dusty-pink-fur.png"
+        "/products/owl/dusty-pink-fur.png",
+        "/products/owl/black-leather.png",
+        "/products/owl/forest-green.png"
     ],
 
     colors: [{
@@ -39,6 +41,18 @@ const OWL_DATA = {
         colorCode: "#E8B4B8",
         imageIndex: 2,
         group: "Plush"
+    }, {
+        key: "black-leather",
+        label: "黑色 · 皮革",
+        colorCode: "#1A1A1A",
+        imageIndex: 3,
+        group: "Leather"
+    }, {
+        key: "forest-green",
+        label: "绿色 · 金丝绒",
+        colorCode: "#2D4A3E",
+        imageIndex: 4,
+        group: "Velvet"
     }],
 
     fabrics: [{
@@ -63,7 +77,7 @@ const OWL_DATA = {
     }, {
         num: "03",
         label: "多面性格",
-        desc: "8 种面料 × 4 种材质，从卧室到书房自由切换"
+        desc: "4 种颜色 × 3 种材质，从卧室到书房自由切换"
     }],
 
     storyTitle: "猫头鹰的凝视",
