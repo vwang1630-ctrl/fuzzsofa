@@ -949,10 +949,12 @@ export type TranslationKeys =
   | "colorBlackLeather"
   | "colorChestnutBrownLeather"
   | "colorSnowyWhitePlush"
+  | "colorDustyPinkPlush"
   | "colorRosePinkPlush"
   | "colorWarmGrayLinen"
   | "colorOatmealLinen"
   | "colorBurgundyVelvet"
+  | "colorRosePinkLinen"
   | "fabricMaterial"
   | "fabricColor"
   | "selectFabricHint"
@@ -1007,6 +1009,8 @@ export type TranslationKeys =
   | "specFooterNote"
   | "footerBrandDesc"
   | "aboutTheStudio"
+  | "modernResidence"
+  | "sculptureTrends"
   | "studio"
   | "workshop"
   | "shippingPolicy"
@@ -2055,7 +2059,6 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     matTypeBoucle: 'Bouclé Fabric',
     matTypeVelvet: 'Velvet Fabric',
     colorAgateBlackLeather: 'Agate Black',
-    colorBlackLeather: 'Black',
     colorBlackLeather: 'Black',
     colorChestnutBrownLeather: 'Chestnut Brown',
     colorSnowyWhitePlush: 'Snowy White',

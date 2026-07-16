@@ -266,6 +266,7 @@ export function ProductPageClient(
             "/products/owl/dusty-pink-fur.png",
             "/products/owl/black-leather.png",
             "/products/owl/forest-green.png",
+            "/products/owl/forest-green-side.png",
             "/products/owl/rose-pink.png"
         ],
 
@@ -390,7 +391,7 @@ export function ProductPageClient(
         "Dusty Pink Plush": 2,
         "Black Leather": 3,
         "Forest Green Velvet": 4,
-        "Rose Pink Linen": 5
+        "Rose Pink Linen": 6
     };
     const handleShare = (platform: string) => {
         const url = `https://fuzzsofa.com/${product.slug}`;
