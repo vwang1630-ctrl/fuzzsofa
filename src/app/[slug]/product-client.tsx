@@ -51,49 +51,108 @@ export function ProductPageClient(
         "silverback-sofa": "/products/silverback/story-sketch.jpg"
     };
 
-    const scenesMap: Record<string, { image: string; label: string }[]> = {
-        "owl-sofa": [
-            { image: "/products/owl/detail-1.jpg", label: "泡沫模型" },
-            { image: "/products/owl/detail-2.jpg", label: "工艺细节" },
-            { image: "/products/owl/detail-3.jpg", label: "材质特写" },
-        ],
-        "meteorite-ring-sofa": [
-            { image: "/products/meteorite-ring/detail-1.jpg", label: "陨石纹理" },
-            { image: "/products/meteorite-ring/detail-2.jpg", label: "环形设计" },
-            { image: "/products/meteorite-ring/detail-3.jpg", label: "金属质感" },
-        ],
-        "gorilla-sofa": [
-            { image: "/products/gorilla/detail-1.jpg", label: "力量线条" },
-            { image: "/products/gorilla/detail-2.jpg", label: "背部纹理" },
-            { image: "/products/gorilla/detail-3.jpg", label: "扶手细节" },
-        ],
-        "muscle-gorilla-sofa": [
-            { image: "/products/muscle-gorilla/detail-1.jpg", label: "肌肉曲线" },
-            { image: "/products/muscle-gorilla/detail-2.jpg", label: "皮革质感" },
-            { image: "/products/muscle-gorilla/detail-3.jpg", label: "缝合工艺" },
-        ],
-        "silverback-sofa": [
-            { image: "/products/silverback/detail-1.jpg", label: "银背纹理" },
-            { image: "/products/silverback/detail-2.jpg", label: "侧面轮廓" },
-            { image: "/products/silverback/detail-3.jpg", label: "底座细节" },
-        ],
+    const scenesMap: Record<string, {
+        image: string;
+        label: string;
+    }[]> = {
+        "owl-sofa": [{
+            image: "/products/owl/detail-1.jpg",
+            label: "泡沫模型"
+        }, {
+            image: "/products/owl/detail-2.jpg",
+            label: "工艺细节"
+        }, {
+            image: "/products/owl/detail-3.jpg",
+            label: "材质特写"
+        }],
+
+        "meteorite-ring-sofa": [{
+            image: "/products/meteorite-ring/detail-1.jpg",
+            label: "陨石纹理"
+        }, {
+            image: "/products/meteorite-ring/detail-2.jpg",
+            label: "环形设计"
+        }, {
+            image: "/products/meteorite-ring/detail-3.jpg",
+            label: "金属质感"
+        }],
+
+        "gorilla-sofa": [{
+            image: "/products/gorilla/detail-1.jpg",
+            label: "力量线条"
+        }, {
+            image: "/products/gorilla/detail-2.jpg",
+            label: "背部纹理"
+        }, {
+            image: "/products/gorilla/detail-3.jpg",
+            label: "扶手细节"
+        }],
+
+        "muscle-gorilla-sofa": [{
+            image: "/products/muscle-gorilla/detail-1.jpg",
+            label: "肌肉曲线"
+        }, {
+            image: "/products/muscle-gorilla/detail-2.jpg",
+            label: "皮革质感"
+        }, {
+            image: "/products/muscle-gorilla/detail-3.jpg",
+            label: "缝合工艺"
+        }],
+
+        "silverback-sofa": [{
+            image: "/products/silverback/detail-1.jpg",
+            label: "银背纹理"
+        }, {
+            image: "/products/silverback/detail-2.jpg",
+            label: "侧面轮廓"
+        }, {
+            image: "/products/silverback/detail-3.jpg",
+            label: "底座细节"
+        }]
     };
 
     const scenes = scenesMap[product.slug] || scenesMap["owl-sofa"];
 
-    const materialsCardsMap: Record<string, Array<{titleKey: string; descKey: string; icon: string}>> = {
-        "meteorite-ring-sofa": [
-            { titleKey: "meteorGalvanizedSteelTitle", descKey: "meteorGalvanizedSteelDesc", icon: "frame" },
-            { titleKey: "meteorHighDensityTitle", descKey: "meteorHighDensityDesc", icon: "cushion" },
-            { titleKey: "meteorUpholsteryTitle", descKey: "meteorUpholsteryDesc", icon: "fabric" },
-            { titleKey: "meteorIntegratedBaseTitle", descKey: "meteorIntegratedBaseDesc", icon: "base" },
-        ],
-        "owl-sofa": [
-            { titleKey: "owlSteelFrameTitle", descKey: "owlSteelFrameDesc", icon: "frame" },
-            { titleKey: "owlCushionCoreTitle", descKey: "owlCushionCoreDesc", icon: "cushion" },
-            { titleKey: "owlUpholsteryTitle", descKey: "owlUpholsteryDesc", icon: "fabric" },
-            { titleKey: "owlWalnutFeetTitle", descKey: "owlWalnutFeetDesc", icon: "base" },
-        ],
+    const materialsCardsMap: Record<string, Array<{
+        titleKey: string;
+        descKey: string;
+        icon: string;
+    }>> = {
+        "meteorite-ring-sofa": [{
+            titleKey: "meteorGalvanizedSteelTitle",
+            descKey: "meteorGalvanizedSteelDesc",
+            icon: "frame"
+        }, {
+            titleKey: "meteorHighDensityTitle",
+            descKey: "meteorHighDensityDesc",
+            icon: "cushion"
+        }, {
+            titleKey: "meteorUpholsteryTitle",
+            descKey: "meteorUpholsteryDesc",
+            icon: "fabric"
+        }, {
+            titleKey: "meteorIntegratedBaseTitle",
+            descKey: "meteorIntegratedBaseDesc",
+            icon: "base"
+        }],
+
+        "owl-sofa": [{
+            titleKey: "owlSteelFrameTitle",
+            descKey: "owlSteelFrameDesc",
+            icon: "frame"
+        }, {
+            titleKey: "owlCushionCoreTitle",
+            descKey: "owlCushionCoreDesc",
+            icon: "cushion"
+        }, {
+            titleKey: "owlUpholsteryTitle",
+            descKey: "owlUpholsteryDesc",
+            icon: "fabric"
+        }, {
+            titleKey: "owlWalnutFeetTitle",
+            descKey: "owlWalnutFeetDesc",
+            icon: "base"
+        }]
     };
 
     const madeBgMap: Record<string, string> = {
@@ -260,6 +319,7 @@ export function ProductPageClient(
 
     const handleTouchEnd = useCallback(() => {
         const diff = touchStartX.current - touchEndX.current;
+
         if (Math.abs(diff) > 50) {
             if (diff > 0 && activeImage < images.length - 1) {
                 setActiveImage(prev => prev + 1);
@@ -273,8 +333,13 @@ export function ProductPageClient(
         if (mobileGalleryRef.current) {
             const container = mobileGalleryRef.current;
             const slide = container.children[activeImage] as HTMLElement;
+
             if (slide) {
-                slide.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+                slide.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest",
+                    inline: "center"
+                });
             }
         }
     }, [activeImage]);
@@ -289,17 +354,32 @@ export function ProductPageClient(
     const animalKeyMap: Record<string, string> = {
         "Gorilla": "animalGorilla",
         "Owl": "animalOwl",
-        "Meteorite": "animalMeteorite",
+        "Meteorite": "animalMeteorite"
     };
-    const collectionName = `${t((animalKeyMap[product.animal] || "animalGorilla") as TranslationKeys)} ${t("collection").toUpperCase()}`;
 
-    const matTypeKeyMap: Record<string, string> = { "Plush Fur": "matTypePlushFur", "Leather": "matTypeLeather", "Plush": "matTypePlush", "Linen": "matTypeLinen", "Velvet": "matTypeVelvet" };
+    const collectionName = `${t(animalKeyMap[product.animal] || "animalGorilla" as TranslationKeys)} ${t("collection").toUpperCase()}`;
+
+    const matTypeKeyMap: Record<string, string> = {
+        "Plush Fur": "matTypePlushFur",
+        "Leather": "matTypeLeather",
+        "Plush": "matTypePlush",
+        "Linen": "matTypeLinen",
+        "Velvet": "matTypeVelvet"
+    };
+
     const colorNameKeyMap: Record<string, string> = {
-      "Storm Gray": "colorStormGray", "Ivory Cream": "colorIvoryCream", "Cognac Brown": "colorCognacBrown", "Obsidian Black": "colorObsidianBlack",
-      "Agate Black Leather": "colorAgateBlackLeather", "Chestnut Brown Leather": "colorChestnutBrownLeather",
-      "Snowy White Plush": "colorSnowyWhitePlush", "Rose Pink Plush": "colorRosePinkPlush",
-      "Warm Gray Linen": "colorWarmGrayLinen", "Oatmeal Linen": "colorOatmealLinen",
-      "Forest Green Velvet": "colorForestGreenVelvet", "Burgundy Velvet": "colorBurgundyVelvet",
+        "Storm Gray": "colorStormGray",
+        "Ivory Cream": "colorIvoryCream",
+        "Cognac Brown": "colorCognacBrown",
+        "Obsidian Black": "colorObsidianBlack",
+        "Agate Black Leather": "colorAgateBlackLeather",
+        "Chestnut Brown Leather": "colorChestnutBrownLeather",
+        "Snowy White Plush": "colorSnowyWhitePlush",
+        "Rose Pink Plush": "colorRosePinkPlush",
+        "Warm Gray Linen": "colorWarmGrayLinen",
+        "Oatmeal Linen": "colorOatmealLinen",
+        "Forest Green Velvet": "colorForestGreenVelvet",
+        "Burgundy Velvet": "colorBurgundyVelvet"
     };
 
     const handleShare = (platform: string) => {
@@ -362,19 +442,81 @@ export function ProductPageClient(
                 }} />
             {}
             <section className="bg-[#0A0A0A]">
-                <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
-                    {/* Mobile Gallery — swipeable, full-bleed */}
+                <div
+                    className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
+                    {}
                     <div className="sm:hidden relative">
-                        {/* Fixed Share & Wishlist overlay */}
+                        {}
                         <div className="absolute top-3 right-3 flex items-center gap-1.5 z-20">
                             <div className="relative">
-                                <button onClick={() => setShowShareMenu(!showShareMenu)} className="group flex items-center justify-center w-9 h-9 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 transition-all duration-300" aria-label="Share">
-                                    <svg className="transition-transform duration-300 group-hover:scale-110" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
+                                <button
+                                    onClick={() => setShowShareMenu(!showShareMenu)}
+                                    className="group flex items-center justify-center w-9 h-9 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 transition-all duration-300"
+                                    aria-label="Share">
+                                    <svg
+                                        className="transition-transform duration-300 group-hover:scale-110"
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="#E8B4B8"
+                                        strokeWidth="1.5"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>
                                 </button>
                                 {showShareMenu && <div
                                     className="absolute right-0 top-full mt-1.5 flex items-center gap-1 rounded-sm py-1.5 px-2 z-50"
-                                    style={{ background: "#0A0A0A", border: "1px solid rgba(232,180,184,0.25)", boxShadow: "0 4px 16px rgba(0,0,0,0.6)" }}>
-                                    {[{name:"Pinterest",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="12" r="10"/></svg>},{name:"Facebook",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>},{name:"Instagram",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>},{name:"YouTube",icon:<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E8B4B8" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="none" stroke="#E8B4B8"/></svg>}].map(platform => <button
+                                    style={{
+                                        background: "#0A0A0A",
+                                        border: "1px solid rgba(232,180,184,0.25)",
+                                        boxShadow: "0 4px 16px rgba(0,0,0,0.6)"
+                                    }}>
+                                    {[{
+                                        name: "Pinterest",
+
+                                        icon: <svg
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#E8B4B8"
+                                            strokeWidth="1.5"><path
+                                                d="M8 12a4 4 0 118 0c0 2.5-1.5 4-3 4s-1.5-1-1.5-1l-1 4"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round" /><circle cx="12" cy="12" r="10" /></svg>
+                                    }, {
+                                        name: "Facebook",
+
+                                        icon: <svg
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#E8B4B8"
+                                            strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
+                                    }, {
+                                        name: "Instagram",
+
+                                        icon: <svg
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#E8B4B8"
+                                            strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" /></svg>
+                                    }, {
+                                        name: "YouTube",
+
+                                        icon: <svg
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#E8B4B8"
+                                            strokeWidth="1.5"><path
+                                                d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" /><polygon
+                                                points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"
+                                                fill="none"
+                                                stroke="#E8B4B8" /></svg>
+                                    }].map(platform => <button
                                         key={platform.name}
                                         onClick={() => handleShare(platform.name)}
                                         className="flex items-center justify-center w-8 h-8 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 transition-all duration-300"
@@ -383,172 +525,338 @@ export function ProductPageClient(
                                     </button>)}
                                 </div>}
                             </div>
-                            <button onClick={() => setSaved(!saved)} className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300" aria-label="Save">
-                                <svg className="transition-transform duration-300 group-hover:scale-110" width="16" height="16" viewBox="0 0 24 24" fill={saved ? "#E8B4B8" : "none"} stroke="#E8B4B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
+                            <button
+                                onClick={() => setSaved(!saved)}
+                                className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#333] hover:border-[#E8B4B8]/25 hover:bg-[#E8B4B8]/8 transition-all duration-300"
+                                aria-label="Save">
+                                <svg
+                                    className="transition-transform duration-300 group-hover:scale-110"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill={saved ? "#E8B4B8" : "none"}
+                                    stroke="#E8B4B8"
+                                    strokeWidth="1.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"><path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
                             </button>
                         </div>
                         <div
                             ref={mobileGalleryRef}
                             className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
-                            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                            style={{
+                                scrollbarWidth: "none",
+                                msOverflowStyle: "none"
+                            }}
                             onTouchStart={handleTouchStart}
                             onTouchMove={handleTouchMove}
                             onTouchEnd={handleTouchEnd}>
-                            {galleryImages.map((img, idx) => (
-                                <div key={img.id} className="w-full flex-shrink-0 snap-center">
+                            {galleryImages.map(
+                                (img, idx) => <div key={img.id} className="w-full flex-shrink-0 snap-center">
                                     <div className="relative w-full aspect-square overflow-hidden">
-                                        {img.src ? <img src={img.src} alt={productName} className="absolute inset-0 w-full h-full object-cover" /> : <div className="flex items-center justify-center py-20"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
+                                        {img.src ? <img
+                                            src={img.src}
+                                            alt={productName}
+                                            className="absolute inset-0 w-full h-full object-cover" /> : <div className="flex items-center justify-center py-20"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
                                     </div>
                                 </div>
-                            ))}
+                            )}
                         </div>
-                        {/* Dots indicator */}
+                        {}
                         {galleryImages.length > 1 && <div className="flex items-center justify-center gap-2 py-2">
-                            {galleryImages.map((_, idx) => (
-                                <span key={idx} className={`block rounded-full transition-all duration-300 ${idx === activeImage ? "w-5 h-[5px] bg-[#E8B4B8]" : "w-[5px] h-[5px] bg-white/20"}`} />
-                            ))}
+                            {galleryImages.map((_, idx) => <span
+                                key={idx}
+                                className={`block rounded-full transition-all duration-300 ${idx === activeImage ? "w-5 h-[5px] bg-[#E8B4B8]" : "w-[5px] h-[5px] bg-white/20"}`} />)}
                         </div>}
+                        {}
+                        {product.materialOptions && product.materialOptions.length > 0 && <div className="px-4 pt-0.5 pb-2">
+                            {}
+                            <div
+                                className="flex items-center justify-center gap-2 mb-2 overflow-x-auto scrollbar-hide"
+                                style={{
+                                    scrollbarWidth: "none",
+                                    msOverflowStyle: "none"
+                                }}>
+                                {product.materialOptions.map(mat => {
+                                    const isMatSel = materialType === mat.type;
 
-                        {/* Mobile color selector — unified 3-row layout */}
-                        {product.materialOptions && product.materialOptions.length > 0 && (
-                            <div className="px-4 pt-0.5 pb-2">
-                                {/* Row 1: Material type text buttons */}
-                                <div className="flex items-center justify-center gap-2 mb-2 overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                                    {product.materialOptions.map(mat => {
-                                        const isMatSel = materialType === mat.type;
-                                        return (
-                                            <button key={mat.type} onClick={() => {
+                                    return (
+                                        <button
+                                            key={mat.type}
+                                            onClick={() => {
                                                 setMaterialType(mat.type);
                                                 setMaterialOption(mat.options[0]);
                                                 let idx = 0;
+
                                                 for (const m of product.materialOptions!) {
-                                                    if (m.type === mat.type) { setActiveImage(idx); break; }
+                                                    if (m.type === mat.type) {
+                                                        setActiveImage(idx);
+                                                        break;
+                                                    }
+
                                                     idx += m.options.length;
                                                 }
                                             }}
-                                                className={`text-[12px] tracking-[0.06em] px-3 py-1 rounded-sm transition-all duration-300 ${isMatSel ? "text-[#E8B4B8] border border-[#E8B4B8]/50 bg-[#E8B4B8]/8" : "text-[#8A8580] border border-[#333] hover:border-[#555]"}`}>
-                                                {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-                                {/* Row 2+3: Thumbnails with color names below */}
-                                {(() => {
-                                    const activeMat = product.materialOptions.find(m => m.type === materialType);
-                                    if (!activeMat) return null;
-                                    let baseIdx = 0;
-                                    for (const m of product.materialOptions) {
-                                        if (m.type === materialType) break;
-                                        baseIdx += m.options.length;
-                                    }
-                                    return (
-                                        <div className="flex items-center justify-center gap-4 overflow-x-auto scrollbar-hide py-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                                            {activeMat.options.map((opt, optIdx) => {
-                                                const colorHex = activeMat.colors[optIdx];
-                                                const isSelected = materialOption === opt;
-                                                const globalIdx = baseIdx + optIdx;
-                                                const swatchImg = galleryImages[globalIdx];
-                                                return (
-                                                    <button key={opt} onClick={() => { setMaterialOption(opt); setActiveImage(globalIdx); }}
-                                                        className="flex flex-col items-center gap-0.5">
-                                                        <span className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
-                                                            {swatchImg ? <img src={swatchImg.src} alt={opt} width={44} height={44} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
-                                                        </span>
-                                                        <span className={`text-[12px] tracking-[0.03em] max-w-[64px] truncate ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>
-                                                            {t((colorNameKeyMap[opt] || "colorSelectColor") as TranslationKeys)}
-                                                        </span>
-                                                    </button>
-                                                );
-                                            })}
-                                        </div>
+                                            className={`text-[12px] tracking-[0.06em] px-3 py-1 rounded-sm transition-all duration-300 ${isMatSel ? "text-[#E8B4B8] border border-[#E8B4B8]/50 bg-[#E8B4B8]/8" : "text-[#8A8580] border border-[#333] hover:border-[#555]"}`}>
+                                            {t(matTypeKeyMap[mat.type] || "matTypeFabric" as TranslationKeys)}
+                                        </button>
                                     );
-                                })()}
-                                {/* Selection indicated by pink ring only */}
+                                })}
                             </div>
-                        )}
-                    </div>
+                            {}
+                            {(() => {
+                                const activeMat = product.materialOptions.find(m => m.type === materialType);
 
-                    {/* Mobile info panel — title+price, features, details */}
+                                if (!activeMat)
+                                    return null;
+
+                                let baseIdx = 0;
+
+                                for (const m of product.materialOptions) {
+                                    if (m.type === materialType)
+                                        break;
+
+                                    baseIdx += m.options.length;
+                                }
+
+                                return (
+                                    <div
+                                        className="flex items-center justify-center gap-4 overflow-x-auto scrollbar-hide py-0.5"
+                                        style={{
+                                            scrollbarWidth: "none",
+                                            msOverflowStyle: "none"
+                                        }}>
+                                        {activeMat.options.map((opt, optIdx) => {
+                                            const colorHex = activeMat.colors[optIdx];
+                                            const isSelected = materialOption === opt;
+                                            const globalIdx = baseIdx + optIdx;
+                                            const swatchImg = galleryImages[globalIdx];
+
+                                            return (
+                                                <button
+                                                    key={opt}
+                                                    onClick={() => {
+                                                        setMaterialOption(opt);
+                                                        setActiveImage(globalIdx);
+                                                    }}
+                                                    className="flex flex-col items-center gap-0.5">
+                                                    <span
+                                                        className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A] scale-110" : "border border-white/15"}`}>
+                                                        {swatchImg ? <img
+                                                            src={swatchImg.src}
+                                                            alt={opt}
+                                                            width={44}
+                                                            height={44}
+                                                            className="w-full h-full object-cover" /> : <span
+                                                            className="w-full h-full block"
+                                                            style={{
+                                                                backgroundColor: colorHex
+                                                            }} />}
+                                                    </span>
+                                                    <span
+                                                        className={`text-[12px] tracking-[0.03em] max-w-[64px] truncate ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>
+                                                        {t(colorNameKeyMap[opt] || "colorSelectColor" as TranslationKeys)}
+                                                    </span>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                );
+                            })()}
+                            {}
+                        </div>}
+                    </div>
+                    {}
                     <div className="sm:hidden px-4 pt-2.5 pb-4 bg-[#111]">
-                        {/* Collection label */}
+                        {}
                         <p className="text-[12px] text-[#8A8580] tracking-[0.25em] uppercase mb-1.5">{collectionName}</p>
-                        {/* Title + Price row */}
+                        {}
                         <div className="flex items-baseline justify-between gap-2 mb-2">
-                            <h1 className="font-serif text-[18px] font-light text-[#F5F0EB] leading-[1.15] tracking-[0.02em]">{productName}</h1>
-                            <span className="font-serif text-[16px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</span>
+                            <h1
+                                className="font-serif text-[18px] font-light text-[#F5F0EB] leading-[1.15] tracking-[0.02em]">{productName}</h1>
+                            <span
+                                className="font-serif text-[16px] font-light text-[#E8B4B8] flex-shrink-0">{displayPrice}</span>
                         </div>
-                        {/* Tagline */}
+                        {}
                         <p className="text-[12px] text-[#8A8580] leading-[1.5] mb-3">{productTagline}</p>
-                        {/* Feature cards */}
+                        {}
                         <div className="space-y-2 mb-3">
                             {(() => {
-                                const featureData: Record<string, Array<{titleKey: string; descKey: string; fallbackTitle: string; fallbackDesc: string}>> = {
-                                    "gorilla-sofa": [
-                                        {titleKey:"gorillaFeat1",descKey:"gorillaFeat1Desc",fallbackTitle:"Comfort Support Structure",fallbackDesc:"Ergonomic curved support for long-hour comfortable seating"},
-                                        {titleKey:"gorillaFeat2",descKey:"gorillaFeat2Desc",fallbackTitle:"High Density Shaped Foam",fallbackDesc:"Custom molded foam, no deformation after years of use"},
-                                        {titleKey:"gorillaFeat3",descKey:"gorillaFeat3Desc",fallbackTitle:"Galvanized Steel Frame",fallbackDesc:"Rust-proof solid metal internal support structure"},
-                                        {titleKey:"gorillaFeat4",descKey:"gorillaFeat4Desc",fallbackTitle:"Matches Luxury Living Rooms",fallbackDesc:"Sculptural design fits villa, hotel & minimalist space"},
-                                    ],
-                                    "owl-sofa": [
-                                        {titleKey:"owlFeat1",descKey:"owlFeat1Desc",fallbackTitle:"Owl-Inspired Ergonomic Curve",fallbackDesc:"Wrap-around backrest inspired by owl wings for full support"},
-                                        {titleKey:"owlFeat2",descKey:"owlFeat2Desc",fallbackTitle:"Premium Velvet Upholstery",fallbackDesc:"Stain-resistant velvet with rich texture and color depth"},
-                                        {titleKey:"owlFeat3",descKey:"owlFeat3Desc",fallbackTitle:"Solid Wood Base",fallbackDesc:"Natural walnut wood legs with anti-scratch pads"},
-                                        {titleKey:"owlFeat4",descKey:"owlFeat4Desc",fallbackTitle:"Modular Design",fallbackDesc:"Configurable left/right orientation for any room layout"},
-                                    ],
-                                    "silverback-sofa": [
-                                        {titleKey:"silverbackFeat1",descKey:"silverbackFeat1Desc",fallbackTitle:"Dominant Presence",fallbackDesc:"Oversized sculptural silhouette commands any space"},
-                                        {titleKey:"silverbackFeat2",descKey:"silverbackFeat2Desc",fallbackTitle:"Reinforced Steel Core",fallbackDesc:"Commercial-grade frame for heavy-duty long-term use"},
-                                    ],
-                                    "meteorite-ring-sofa": [
-                                        {titleKey:"meteorFeat1",descKey:"meteorFeat1Desc",fallbackTitle:"Comfort Support Structure",fallbackDesc:"Ergonomic curved support for long-hour comfortable seating"},
-                                        {titleKey:"meteorFeat2",descKey:"meteorFeat2Desc",fallbackTitle:"High Density Shaped Foam",fallbackDesc:"Custom molded foam, no deformation after years of use"},
-                                        {titleKey:"meteorFeat3",descKey:"meteorFeat3Desc",fallbackTitle:"Galvanized Steel Frame",fallbackDesc:"Rust-proof solid metal internal support structure"},
-                                        {titleKey:"meteorFeat4",descKey:"meteorFeat4Desc",fallbackTitle:"Matches Luxury Living Rooms",fallbackDesc:"Sculptural design fits villa, hotel & minimalist space"},
-                                        {titleKey:"meteorFeat5",descKey:"meteorFeat5Desc",fallbackTitle:"Long-Term Anti-Collapse",fallbackDesc:"Multi-layer filling structure to avoid sinking & sagging"},
-                                    ],
-                                    "muscle-gorilla-sofa": [
-                                        {titleKey:"muscleGorillaFeat1",descKey:"muscleGorillaFeat1Desc",fallbackTitle:"Power Ergonomics",fallbackDesc:"Dynamic lumbar support inspired by gorilla posture"},
-                                        {titleKey:"muscleGorillaFeat2",descKey:"muscleGorillaFeat2Desc",fallbackTitle:"High-Density Memory Foam",fallbackDesc:"Pressure-responsive foam for personalized comfort"},
-                                        {titleKey:"muscleGorillaFeat3",descKey:"muscleGorillaFeat3Desc",fallbackTitle:"Carbon Steel Skeleton",fallbackDesc:"Ultra-strong frame with 10-year structural warranty"},
-                                        {titleKey:"muscleGorillaFeat4",descKey:"muscleGorillaFeat4Desc",fallbackTitle:"Statement Sculpture",fallbackDesc:"Museum-worthy design that transforms any interior"},
-                                    ],
+                                const featureData: Record<string, Array<{
+                                    titleKey: string;
+                                    descKey: string;
+                                    fallbackTitle: string;
+                                    fallbackDesc: string;
+                                }>> = {
+                                    "gorilla-sofa": [{
+                                        titleKey: "gorillaFeat1",
+                                        descKey: "gorillaFeat1Desc",
+                                        fallbackTitle: "Comfort Support Structure",
+                                        fallbackDesc: "Ergonomic curved support for long-hour comfortable seating"
+                                    }, {
+                                        titleKey: "gorillaFeat2",
+                                        descKey: "gorillaFeat2Desc",
+                                        fallbackTitle: "High Density Shaped Foam",
+                                        fallbackDesc: "Custom molded foam, no deformation after years of use"
+                                    }, {
+                                        titleKey: "gorillaFeat3",
+                                        descKey: "gorillaFeat3Desc",
+                                        fallbackTitle: "Galvanized Steel Frame",
+                                        fallbackDesc: "Rust-proof solid metal internal support structure"
+                                    }, {
+                                        titleKey: "gorillaFeat4",
+                                        descKey: "gorillaFeat4Desc",
+                                        fallbackTitle: "Matches Luxury Living Rooms",
+                                        fallbackDesc: "Sculptural design fits villa, hotel & minimalist space"
+                                    }],
+
+                                    "owl-sofa": [{
+                                        titleKey: "owlFeat1",
+                                        descKey: "owlFeat1Desc",
+                                        fallbackTitle: "Owl-Inspired Ergonomic Curve",
+                                        fallbackDesc: "Wrap-around backrest inspired by owl wings for full support"
+                                    }, {
+                                        titleKey: "owlFeat2",
+                                        descKey: "owlFeat2Desc",
+                                        fallbackTitle: "Premium Velvet Upholstery",
+                                        fallbackDesc: "Stain-resistant velvet with rich texture and color depth"
+                                    }, {
+                                        titleKey: "owlFeat3",
+                                        descKey: "owlFeat3Desc",
+                                        fallbackTitle: "Solid Wood Base",
+                                        fallbackDesc: "Natural walnut wood legs with anti-scratch pads"
+                                    }, {
+                                        titleKey: "owlFeat4",
+                                        descKey: "owlFeat4Desc",
+                                        fallbackTitle: "Modular Design",
+                                        fallbackDesc: "Configurable left/right orientation for any room layout"
+                                    }],
+
+                                    "silverback-sofa": [{
+                                        titleKey: "silverbackFeat1",
+                                        descKey: "silverbackFeat1Desc",
+                                        fallbackTitle: "Dominant Presence",
+                                        fallbackDesc: "Oversized sculptural silhouette commands any space"
+                                    }, {
+                                        titleKey: "silverbackFeat2",
+                                        descKey: "silverbackFeat2Desc",
+                                        fallbackTitle: "Reinforced Steel Core",
+                                        fallbackDesc: "Commercial-grade frame for heavy-duty long-term use"
+                                    }],
+
+                                    "meteorite-ring-sofa": [{
+                                        titleKey: "meteorFeat1",
+                                        descKey: "meteorFeat1Desc",
+                                        fallbackTitle: "Comfort Support Structure",
+                                        fallbackDesc: "Ergonomic curved support for long-hour comfortable seating"
+                                    }, {
+                                        titleKey: "meteorFeat2",
+                                        descKey: "meteorFeat2Desc",
+                                        fallbackTitle: "High Density Shaped Foam",
+                                        fallbackDesc: "Custom molded foam, no deformation after years of use"
+                                    }, {
+                                        titleKey: "meteorFeat3",
+                                        descKey: "meteorFeat3Desc",
+                                        fallbackTitle: "Galvanized Steel Frame",
+                                        fallbackDesc: "Rust-proof solid metal internal support structure"
+                                    }, {
+                                        titleKey: "meteorFeat4",
+                                        descKey: "meteorFeat4Desc",
+                                        fallbackTitle: "Matches Luxury Living Rooms",
+                                        fallbackDesc: "Sculptural design fits villa, hotel & minimalist space"
+                                    }, {
+                                        titleKey: "meteorFeat5",
+                                        descKey: "meteorFeat5Desc",
+                                        fallbackTitle: "Long-Term Anti-Collapse",
+                                        fallbackDesc: "Multi-layer filling structure to avoid sinking & sagging"
+                                    }],
+
+                                    "muscle-gorilla-sofa": [{
+                                        titleKey: "muscleGorillaFeat1",
+                                        descKey: "muscleGorillaFeat1Desc",
+                                        fallbackTitle: "Power Ergonomics",
+                                        fallbackDesc: "Dynamic lumbar support inspired by gorilla posture"
+                                    }, {
+                                        titleKey: "muscleGorillaFeat2",
+                                        descKey: "muscleGorillaFeat2Desc",
+                                        fallbackTitle: "High-Density Memory Foam",
+                                        fallbackDesc: "Pressure-responsive foam for personalized comfort"
+                                    }, {
+                                        titleKey: "muscleGorillaFeat3",
+                                        descKey: "muscleGorillaFeat3Desc",
+                                        fallbackTitle: "Carbon Steel Skeleton",
+                                        fallbackDesc: "Ultra-strong frame with 10-year structural warranty"
+                                    }, {
+                                        titleKey: "muscleGorillaFeat4",
+                                        descKey: "muscleGorillaFeat4Desc",
+                                        fallbackTitle: "Statement Sculpture",
+                                        fallbackDesc: "Museum-worthy design that transforms any interior"
+                                    }]
                                 };
+
                                 const feats = featureData[product.slug] || [];
-                                return feats.map((feat, i) => (
-                                    <div key={i} className="flex items-start gap-2">
-                                        <span className="text-[#E8B4B8] text-[12px] mt-0.5 flex-shrink-0">✦</span>
-                                        <div>
-                                            <h4 className="text-[12px] text-[#F5F0EB] tracking-[0.04em] font-light leading-[1.3]">{(() => { const v = t(feat.titleKey as TranslationKeys); return v === feat.titleKey ? feat.fallbackTitle : v; })()}</h4>
-                                            <p className="text-[12px] text-[#8A8580] leading-[1.5]">{(() => { const v = t(feat.descKey as TranslationKeys); return v === feat.descKey ? feat.fallbackDesc : v; })()}</p>
-                                        </div>
+
+                                return feats.map((feat, i) => <div key={i} className="flex items-start gap-2">
+                                    <span className="text-[#E8B4B8] text-[12px] mt-0.5 flex-shrink-0">✦</span>
+                                    <div>
+                                        <h4
+                                            className="text-[12px] text-[#F5F0EB] tracking-[0.04em] font-light leading-[1.3]">{(() => {
+                                                const v = t(feat.titleKey as TranslationKeys);
+                                                return v === feat.titleKey ? feat.fallbackTitle : v;
+                                            })()}</h4>
+                                        <p className="text-[12px] text-[#8A8580] leading-[1.5]">{(() => {
+                                                const v = t(feat.descKey as TranslationKeys);
+                                                return v === feat.descKey ? feat.fallbackDesc : v;
+                                            })()}</p>
                                     </div>
-                                ));
+                                </div>);
                             })()}
                         </div>
-                        {/* Dimensions */}
+                        {}
                         {product.specifications && <div className="pt-2.5 border-t border-white/[0.06]">
                             <div className="flex items-center justify-between mb-0.5">
                                 <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase">{t("dimensionsLabel" as TranslationKeys)}</label>
-                                <button onClick={() => setUseCm(!useCm)} className="text-[12px] tracking-[0.12em] uppercase text-[#8A8580] border border-white/10 px-1.5 py-0.5 rounded-sm">{useCm ? "IN" : "CM"}</button>
+                                <button
+                                    onClick={() => setUseCm(!useCm)}
+                                    className="text-[12px] tracking-[0.12em] uppercase text-[#8A8580] border border-white/10 px-1.5 py-0.5 rounded-sm">{useCm ? "IN" : "CM"}</button>
                             </div>
                             <p className="text-[12px] text-[#F5F0EB]/50 tracking-[0.02em]">
-                                {(() => { const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`; return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`; })()}
+                                {(() => {
+                                    const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
+                                    return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)}`;
+                                })()}
                             </p>
                         </div>}
-                        {/* Materials */}
+                        {}
                         {product.materials && product.materials.length > 0 && <div className="mt-2 pt-2 border-t border-white/[0.06]">
-                            <label className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-0.5">{t("materialsLabel" as TranslationKeys)}</label>
+                            <label
+                                className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-0.5">{t("materialsLabel" as TranslationKeys)}</label>
                             <div className="flex flex-wrap gap-x-2 gap-y-0.5">
                                 {product.materials.map((mat, i) => {
-                                    const matKeyMap: Record<string, string[]> = { "gorilla-sofa": ["gorillaMat1", "gorillaMat2", "gorillaMat3", "gorillaMat4"], "owl-sofa": ["owlMat1", "owlMat2", "owlMat3", "owlMat4"], "silverback-sofa": ["silverbackMat1", "silverbackMat2"], "meteorite-ring-sofa": ["meteorMat1", "meteorMat2", "meteorMat3", "meteorMat4"], "muscle-gorilla-sofa": ["muscleGorillaMat1", "muscleGorillaMat2", "muscleGorillaMat3", "muscleGorillaMat4"] };
+                                    const matKeyMap: Record<string, string[]> = {
+                                        "gorilla-sofa": ["gorillaMat1", "gorillaMat2", "gorillaMat3", "gorillaMat4"],
+                                        "owl-sofa": ["owlMat1", "owlMat2", "owlMat3", "owlMat4"],
+                                        "silverback-sofa": ["silverbackMat1", "silverbackMat2"],
+                                        "meteorite-ring-sofa": ["meteorMat1", "meteorMat2", "meteorMat3", "meteorMat4"],
+
+                                        "muscle-gorilla-sofa": [
+                                            "muscleGorillaMat1",
+                                            "muscleGorillaMat2",
+                                            "muscleGorillaMat3",
+                                            "muscleGorillaMat4"
+                                        ]
+                                    };
+
                                     const keys = matKeyMap[product.slug];
                                     const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
                                     return <span key={i} className="text-[12px] text-[#F5F0EB]/40">{i18nMat}{i < product.materials.length - 1 && <span className="mx-1 text-[#8A8580]/30">·</span>}</span>;
                                 })}
                             </div>
                         </div>}
-                        {/* Delivery info */}
-                        <div className="mt-2 pt-2 border-t border-white/[0.06] flex items-center gap-2 text-[12px] text-[#8A8580]/60">
+                        {}
+                        <div
+                            className="mt-2 pt-2 border-t border-white/[0.06] flex items-center gap-2 text-[12px] text-[#8A8580]/60">
                             <span>{t("leadTimeShort" as TranslationKeys)}</span>
                             <span className="text-white/10">·</span>
                             <span>{t("freeWhiteGloveShort" as TranslationKeys)}</span>
@@ -556,8 +864,9 @@ export function ProductPageClient(
                             <span>{t("madeToOrderShort" as TranslationKeys)}</span>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-[1fr_340px] xl:grid-cols-[1fr_400px] gap-8 md:gap-8 xl:gap-12">
-                        {/* Desktop gallery column — hidden on mobile */}
+                    <div
+                        className="grid grid-cols-1 sm:grid-cols-[1fr_340px] xl:grid-cols-[1fr_400px] gap-8 md:gap-8 xl:gap-12">
+                        {}
                         <div className="hidden sm:flex flex-col">
                             {}
                             <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
@@ -580,7 +889,7 @@ export function ProductPageClient(
                                             color: "#E8B4B8",
                                             border: "1px solid rgba(232,180,184,0.25)"
                                         }}>{t("previewInYourRoom" as TranslationKeys)}
-                                                                                                                                                                                  </span>
+                                    </span>
                                     <button
                                         onClick={() => setShowRoomViz(true)}
                                         className="relative flex items-center justify-center w-[60px] h-[60px] rounded-full transition-all duration-500 hover:scale-[1.08] active:scale-95"
@@ -788,10 +1097,11 @@ export function ProductPageClient(
                             <div className="h-px bg-[#333] my-5 hidden sm:block" />
                             {}
                             {product.materialOptions && product.materialOptions.length > 0 && <div className="mb-5 hidden sm:block">
-                                {/* Row 1: Material type text buttons */}
+                                {}
                                 {product.materialOptions.length > 1 && <div className="flex flex-wrap gap-3 mb-4">
                                     {product.materialOptions.map(mat => {
                                         const isMatSelected = materialType === mat.type;
+
                                         return (
                                             <button
                                                 key={mat.type}
@@ -800,30 +1110,37 @@ export function ProductPageClient(
                                                     const firstOpt = mat.options[0];
                                                     setMaterialOption(firstOpt);
                                                     let idx = 0;
+
                                                     for (const m of product.materialOptions!) {
-                                                        if (m.type === mat.type) { setActiveImage(idx); break; }
+                                                        if (m.type === mat.type) {
+                                                            setActiveImage(idx);
+                                                            break;
+                                                        }
+
                                                         idx += m.options.length;
                                                     }
                                                 }}
                                                 className={`text-xs tracking-[0.08em] px-4 py-1.5 rounded-sm transition-all duration-300 ${isMatSelected ? "text-[#E8B4B8] border border-[#E8B4B8]/50 bg-[#E8B4B8]/8" : "text-[#8A8580] border border-[#333] hover:border-[#555] hover:text-[#F5F0EB]/60"}`}>
-                                                {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
+                                                {t(matTypeKeyMap[mat.type] || "matTypeFabric" as TranslationKeys)}
                                             </button>
                                         );
                                     })}
                                 </div>}
-                                {/* Row 2 & 3: Product circular thumbnails + color name text */}
+                                {}
                                 {(() => {
-                                    const activeMat = product.materialOptions.length > 1
-                                        ? product.materialOptions.find(m => m.type === materialType) || product.materialOptions[0]
-                                        : product.materialOptions[0];
+                                    const activeMat = product.materialOptions.length > 1 ? product.materialOptions.find(m => m.type === materialType) || product.materialOptions[0] : product.materialOptions[0];
                                     const isSingleFabric = product.materialOptions.length <= 1;
                                     let baseIdx = 0;
+
                                     if (!isSingleFabric) {
                                         for (const m of product.materialOptions) {
-                                            if (m.type === materialType) break;
+                                            if (m.type === materialType)
+                                                break;
+
                                             baseIdx += m.options.length;
                                         }
                                     }
+
                                     return (
                                         <div className="flex flex-wrap gap-x-4 gap-y-1">
                                             {activeMat.options.map((opt, optIdx) => {
@@ -831,14 +1148,32 @@ export function ProductPageClient(
                                                 const isSelected = materialOption === opt;
                                                 const globalIdx = (isSingleFabric ? 0 : baseIdx) + optIdx;
                                                 const swatchImage = galleryImages[globalIdx];
+
                                                 return (
-                                                    <button key={opt} onClick={() => { setMaterialType(activeMat.type); setMaterialOption(opt); setActiveImage(globalIdx); }}
+                                                    <button
+                                                        key={opt}
+                                                        onClick={() => {
+                                                            setMaterialType(activeMat.type);
+                                                            setMaterialOption(opt);
+                                                            setActiveImage(globalIdx);
+                                                        }}
                                                         className="flex flex-col items-center transition-all duration-300 group min-w-[60px]">
-                                                        <span className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
-                                                            {swatchImage ? <img src={swatchImage.src} alt={opt} width={44} height={44} className="w-full h-full object-cover" /> : <span className="w-full h-full block" style={{ backgroundColor: colorHex }} />}
+                                                        <span
+                                                            className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
+                                                            {swatchImage ? <img
+                                                                src={swatchImage.src}
+                                                                alt={opt}
+                                                                width={44}
+                                                                height={44}
+                                                                className="w-full h-full object-cover" /> : <span
+                                                                className="w-full h-full block"
+                                                                style={{
+                                                                    backgroundColor: colorHex
+                                                                }} />}
                                                         </span>
-                                                        <span className={`text-[12px] tracking-[0.04em] mt-1.5 whitespace-nowrap ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
-                                                            {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
+                                                        <span
+                                                            className={`text-[12px] tracking-[0.04em] mt-1.5 whitespace-nowrap ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
+                                                            {t(colorNameKeyMap[opt] || "matTypeFabric" as TranslationKeys)}
                                                         </span>
                                                     </button>
                                                 );
@@ -846,8 +1181,7 @@ export function ProductPageClient(
                                         </div>
                                     );
                                 })()}
-                            </div>
-                            }
+                            </div>}
                             {}
                             <div className="h-px bg-[#333] mb-5" />
                             {}
@@ -871,7 +1205,7 @@ export function ProductPageClient(
                             {product.materials && product.materials.length > 0 && product.materialOptions && product.materialOptions.length <= 1 && <div className="mb-5">
                                 <label
                                     className="text-[12px] text-[#8A8580] tracking-[0.2em] uppercase block mb-2">{t("materialsLabel" as TranslationKeys)}
-                                                                                                                                                                  </label>
+                                </label>
                                 <div className="space-y-0.5">
                                     {product.materials.map((mat, i) => {
                                         const matKeyMap: Record<string, string[]> = {
@@ -879,15 +1213,26 @@ export function ProductPageClient(
                                             "owl-sofa": ["owlMat1", "owlMat2", "owlMat3", "owlMat4"],
                                             "silverback-sofa": ["silverbackMat1", "silverbackMat2"],
                                             "meteorite-ring-sofa": ["meteorMat1", "meteorMat2", "meteorMat3", "meteorMat4"],
-                                            "muscle-gorilla-sofa": ["muscleGorillaMat1", "muscleGorillaMat2", "muscleGorillaMat3", "muscleGorillaMat4"],
+
+                                            "muscle-gorilla-sofa": [
+                                                "muscleGorillaMat1",
+                                                "muscleGorillaMat2",
+                                                "muscleGorillaMat3",
+                                                "muscleGorillaMat4"
+                                            ]
                                         };
+
                                         const keys = matKeyMap[product.slug];
                                         const i18nMat = keys?.[i] ? t(keys[i] as TranslationKeys) : mat;
-                                        return <p
-                                        key={i}
-                                        className="text-[14px] text-[#F5F0EB]/50 tracking-[0.02em] leading-[1.5]">
-                                        {i18nMat}
-                                    </p>})}
+
+                                        return (
+                                            <p
+                                                key={i}
+                                                className="text-[14px] text-[#F5F0EB]/50 tracking-[0.02em] leading-[1.5]">
+                                                {i18nMat}
+                                            </p>
+                                        );
+                                    })}
                                 </div>
                             </div>}
                             {}
@@ -908,7 +1253,7 @@ export function ProductPageClient(
                                     border: "1px solid #E8B4B8"
                                 }}
                                 onClick={handleBuyNow}>{t("buyNow" as TranslationKeys)}
-                                                                                                                                              </button>
+                            </button>
                             {}
                             <div
                                 className="hidden sm:flex items-center gap-1 mt-4 text-[12px] text-[#8A8580]/70 tracking-[0.04em]">
@@ -935,7 +1280,7 @@ export function ProductPageClient(
                                         d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                                     <circle cx="12" cy="13" r="4" />
                                 </svg>{t("previewInYourRoom" as TranslationKeys)}
-                                                                                                                                              </button>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -955,10 +1300,18 @@ export function ProductPageClient(
                         </h2>
                     </div>
                     {}
-                    <div className="flex sm:grid sm:grid-cols-3 gap-2.5 md:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 sm:mx-0 sm:px-0 pb-1 sm:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                        {spaceImages.map((space, idx) => <div key={idx} className="group cursor-pointer flex-shrink-0 w-[80vw] sm:w-auto snap-start">
+                    <div
+                        className="flex sm:grid sm:grid-cols-3 gap-2.5 md:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 sm:mx-0 sm:px-0 pb-1 sm:pb-0"
+                        style={{
+                            scrollbarWidth: "none",
+                            msOverflowStyle: "none"
+                        }}>
+                        {spaceImages.map((space, idx) => <div
+                            key={idx}
+                            className="group cursor-pointer flex-shrink-0 w-[80vw] sm:w-auto snap-start">
                             {}
-                            <div className="relative aspect-[4/3] bg-[#111] overflow-hidden mb-2 md:mb-4 rounded-sm">
+                            <div
+                                className="relative aspect-[4/3] bg-[#111] overflow-hidden mb-2 md:mb-4 rounded-sm">
                                 {space.image ? <img
                                     src={space.image}
                                     alt={`${productName} in ${space.title}`}
@@ -970,22 +1323,22 @@ export function ProductPageClient(
                                 {}
                                 <div
                                     className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
-                                {/* Mobile: title overlay on image */}
+                                {}
                                 <div className="absolute bottom-0 left-0 right-0 p-3 sm:hidden">
                                     <p className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/60">
                                         {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
                                     </p>
                                 </div>
                             </div>
-                            {/* Desktop: title & description below image */}
+                            {}
                             <div className="hidden sm:block">
-                            <p
-                                className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
-                                {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
-                            </p>
-                            <p className="text-[14px] text-[#8A8580] leading-[1.6]">
-                                {t(space.descKey as TranslationKeys)}
-                            </p>
+                                <p
+                                    className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
+                                    {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
+                                </p>
+                                <p className="text-[14px] text-[#8A8580] leading-[1.6]">
+                                    {t(space.descKey as TranslationKeys)}
+                                </p>
                             </div>
                         </div>)}
                     </div>
@@ -1003,29 +1356,27 @@ export function ProductPageClient(
                             <p
                                 className="text-[12px] md:text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-1.5 md:mb-3 flex items-center gap-2">
                                 <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
-                                                            </p>
+                            </p>
                             <h3
                                 className="font-serif text-[22px] md:text-[40px] font-light text-[#F5F0EB] leading-[1.15] mb-1.5 md:mb-3">
                                 {productName}
                             </h3>
-                            <p className="text-[14px] md:text-[20px] text-[#E8B4B8]/50 italic mb-3 md:mb-5 font-serif">
+                            <p
+                                className="text-[14px] md:text-[20px] text-[#E8B4B8]/50 italic mb-3 md:mb-5 font-serif">
                                 {productTagline}
                             </p>
-                            <div className="text-[12px] md:text-[14px] font-light text-[#F5F0EB]/70 leading-[1.9]">
+                            <div
+                                className="text-[12px] md:text-[14px] font-light text-[#F5F0EB]/70 leading-[1.9]">
                                 <p>{productConcept}</p>
                                 <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
                             </div>
                             <div
                                 className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
                                 <p className="text-[14px] text-[#E8B4B8]/70 italic leading-[1.8] font-serif">
-                                    {product.slug === "meteorite-ring-sofa" ? (
-                                        <>{t("testedLoadCapacity" as TranslationKeys)}</>
-                                    ) : (
-                                        <>{t("specWeight" as TranslationKeys).replace("{weight}", String(product.specifications.weight))} <span className="opacity-40">·</span>{t("specWeightWithPkg" as TranslationKeys)} <span className="opacity-40">·</span>{t("specLoadCapacity" as TranslationKeys).replace("{capacity}", String(product.specifications.capacity))}</>
-                                    )}
-                                                                    </p>
+                                    {product.slug === "meteorite-ring-sofa" ? <>{t("testedLoadCapacity" as TranslationKeys)}</> : <>{t("specWeight" as TranslationKeys).replace("{weight}", String(product.specifications.weight))} <span className="opacity-40">·</span>{t("specWeightWithPkg" as TranslationKeys)} <span className="opacity-40">·</span>{t("specLoadCapacity" as TranslationKeys).replace("{capacity}", String(product.specifications.capacity))}</>}
+                                </p>
                                 <p className="text-[12px] font-light text-[#8A8580]/70 leading-[1.6] mt-2">{t("specDisclaimer" as TranslationKeys)}
-                                                                    </p>
+                                </p>
                             </div>
                         </div>
                         {}
@@ -1090,34 +1441,39 @@ export function ProductPageClient(
                         </div>
                     </div>
                     {}
-                    {/* 细节展示 */}
+                    {}
                     <div className="mt-8 md:mt-16 mb-8 md:mb-12">
                         <div className="mb-4 md:mb-6">
-                            <p className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 flex items-center gap-2">
+                            <p
+                                className="text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 flex items-center gap-2">
                                 <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />✦ 细节展示
-                            </p>
+                                                            </p>
                         </div>
                         <div className="grid grid-cols-1 gap-10 max-w-[500px] mx-auto">
-                            {scenes.map((scene: { image: string; label: string }, idx: number) => (
-                                <div key={idx} className="relative bg-[#111] overflow-hidden">
-                                    <div className="aspect-square">
-                                        <img
-                                            src={scene.image}
-                                            alt={scene.label}
-                                            width={500}
-                                            height={500}
-                                            className="w-full h-full object-cover"
-                                            loading="lazy"
-                                        />
-                                    </div>
+                            {scenes.map((
+                                scene: {
+                                    image: string;
+                                    label: string;
+                                },
+                                idx: number
+                            ) => <div key={idx} className="relative bg-[#111] overflow-hidden">
+                                <div className="aspect-square">
+                                    <img
+                                        src={scene.image}
+                                        alt={scene.label}
+                                        width={500}
+                                        height={500}
+                                        className="w-full h-full object-cover"
+                                        loading="lazy" />
                                 </div>
-                            ))}
+                            </div>)}
                         </div>
                     </div>
                     {}
                     <div className="sm:hidden">
                         {}
-                        <div className="relative w-full aspect-[16/10] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
+                        <div
+                            className="relative w-full aspect-[16/10] bg-gradient-to-b from-[#111] to-[#090909] overflow-hidden">
                             {madeBg ? <img
                                 src={madeBg}
                                 alt={`${productName} craftsmanship`}
@@ -1132,33 +1488,147 @@ export function ProductPageClient(
                                     {product.animal.charAt(0)}
                                 </span>
                             </div>}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/30 to-transparent" />
+                            <div
+                                className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/30 to-transparent" />
                         </div>
                         {}
                         <div className="px-4 py-3 bg-[#090909]">
-                            <p className="font-serif text-[14px] font-light text-[#F5F0EB] leading-[1.2] text-center mb-2">
+                            <p
+                                className="font-serif text-[14px] font-light text-[#F5F0EB] leading-[1.2] text-center mb-2">
                                 <span className="opacity-20 mr-2">—</span>{t("materialsCraftsmanship" as TranslationKeys)}<span className="opacity-20 ml-2">—</span>
                             </p>
                             <div
-                                className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-5 px-5 pb-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                                className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-5 px-5 pb-0.5"
+                                style={{
+                                    scrollbarWidth: "none",
+                                    msOverflowStyle: "none"
+                                }}>
                                 {(() => {
                                     const cards = materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"];
-                                    return cards.map((card: { titleKey: string; descKey: string; icon: string }, idx: number) => (
+
+                                    return cards.map((
+                                        card: {
+                                            titleKey: string;
+                                            descKey: string;
+                                            icon: string;
+                                        },
+                                        idx: number
+                                    ) => <div
+                                        key={idx}
+                                        className="flex-shrink-0 w-[72vw] snap-start text-center py-4 px-4 border border-white/[0.04] bg-[#0D0D0D]/40 rounded-sm">
                                         <div
-                                            key={idx}
-                                            className="flex-shrink-0 w-[72vw] snap-start text-center py-4 px-4 border border-white/[0.04] bg-[#0D0D0D]/40 rounded-sm">
-                                            <div className="w-9 h-9 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: "rgba(232,180,184,0.08)", border: "1px solid rgba(232,180,184,0.18)" }}>
-                                                <svg viewBox="0 0 24 24" className="w-4 h-4">
-                                                    {card.icon === "fabric" && <><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><line x1="3" y1="9" x2="21" y2="9" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="3" y1="15" x2="21" y2="15" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
-                                                    {card.icon === "frame" && <><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><line x1="9" y1="3" x2="9" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><line x1="15" y1="3" x2="15" y2="21" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
-                                                    {card.icon === "cushion" && <><path d="M3 3h18v18H3z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M3 9h18" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /><path d="M9 3v18" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" /></>}
-                                                    {card.icon === "detail" && <><path d="M2 20 L6 20 L6 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M22 20 L18 20 L18 16" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M6 16 L18 16 L18 4 L6 4 Z" fill="none" stroke="#E8B4B8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></>}
-                                                </svg>
-                                            </div>
-                                            <h4 className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1">{t(card.titleKey as TranslationKeys)}</h4>
-                                            <p className="text-[12px] font-light text-[#8A8580] leading-[1.6]">{t(card.descKey as TranslationKeys)}</p>
+                                            className="w-9 h-9 rounded-full mx-auto mb-3 flex items-center justify-center"
+                                            style={{
+                                                background: "rgba(232,180,184,0.08)",
+                                                border: "1px solid rgba(232,180,184,0.18)"
+                                            }}>
+                                            <svg viewBox="0 0 24 24" className="w-4 h-4">
+                                                {card.icon === "fabric" && <><rect
+                                                        x="3"
+                                                        y="3"
+                                                        width="18"
+                                                        height="18"
+                                                        rx="2"
+                                                        fill="none"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round" /><line
+                                                        x1="3"
+                                                        y1="9"
+                                                        x2="21"
+                                                        y2="9"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round" /><line
+                                                        x1="3"
+                                                        y1="15"
+                                                        x2="21"
+                                                        y2="15"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round" /><line
+                                                        x1="9"
+                                                        y1="3"
+                                                        x2="9"
+                                                        y2="21"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round" /><line
+                                                        x1="15"
+                                                        y1="3"
+                                                        x2="15"
+                                                        y2="21"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round" /></>}
+                                                {card.icon === "frame" && <><rect
+                                                        x="3"
+                                                        y="3"
+                                                        width="18"
+                                                        height="18"
+                                                        rx="2"
+                                                        fill="none"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round" /><line
+                                                        x1="9"
+                                                        y1="3"
+                                                        x2="9"
+                                                        y2="21"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round" /><line
+                                                        x1="15"
+                                                        y1="3"
+                                                        x2="15"
+                                                        y2="21"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round" /></>}
+                                                {card.icon === "cushion" && <><path
+                                                        d="M3 3h18v18H3z"
+                                                        fill="none"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round" /><path
+                                                        d="M3 9h18"
+                                                        fill="none"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round" /><path
+                                                        d="M9 3v18"
+                                                        fill="none"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round" /></>}
+                                                {card.icon === "detail" && <><path
+                                                        d="M2 20 L6 20 L6 16"
+                                                        fill="none"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round" /><path
+                                                        d="M22 20 L18 20 L18 16"
+                                                        fill="none"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round" /><path
+                                                        d="M6 16 L18 16 L18 4 L6 4 Z"
+                                                        fill="none"
+                                                        stroke="#E8B4B8"
+                                                        strokeWidth="1.2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round" /></>}
+                                            </svg>
                                         </div>
-                                    ));
+                                        <h4
+                                            className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-1">{t(card.titleKey as TranslationKeys)}</h4>
+                                        <p className="text-[12px] font-light text-[#8A8580] leading-[1.6]">{t(card.descKey as TranslationKeys)}</p>
+                                    </div>);
                                 })()}
                             </div>
                         </div>
@@ -1196,9 +1666,10 @@ export function ProductPageClient(
                             <p
                                 className="font-serif text-2xl md:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] text-center mb-5 relative">
                                 <span className="opacity-30 mr-3">—</span>{t("materialsCraftsmanship" as TranslationKeys)}
-                                                                                                                                <span className="opacity-30 ml-3">—</span>
+                                <span className="opacity-30 ml-3">—</span>
                             </p>
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-5 max-w-[780px] mx-auto mb-11 relative">
+                            <div
+                                className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-5 max-w-[780px] mx-auto mb-11 relative">
                                 {}
                                 <div
                                     className="text-center py-6 px-3 pb-5 border border-white/5 bg-[#0D0D0D]/60 relative transition-colors duration-300 hover:border-[#E8B4B8]/25 rounded-sm">
@@ -1259,8 +1730,12 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].descKey as TranslationKeys)}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t(
+                                            (materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].titleKey as TranslationKeys
+                                        )}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t(
+                                            (materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[0].descKey as TranslationKeys
+                                        )}</p>
                                 </div>
                                 {}
                                 <div
@@ -1288,8 +1763,12 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].descKey as TranslationKeys)}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t(
+                                            (materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].titleKey as TranslationKeys
+                                        )}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t(
+                                            (materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[1].descKey as TranslationKeys
+                                        )}</p>
                                 </div>
                                 {}
                                 <div
@@ -1327,8 +1806,12 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].descKey as TranslationKeys)}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t(
+                                            (materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].titleKey as TranslationKeys
+                                        )}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t(
+                                            (materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[2].descKey as TranslationKeys
+                                        )}</p>
                                 </div>
                                 {}
                                 <div
@@ -1375,8 +1858,12 @@ export function ProductPageClient(
                                         </svg>
                                     </div>
                                     <h4
-                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].titleKey as TranslationKeys)}</h4>
-                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t((materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].descKey as TranslationKeys)}</p>
+                                        className="text-[12px] font-light tracking-[0.12em] uppercase text-[#F5F0EB] mb-[6px]">{t(
+                                            (materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].titleKey as TranslationKeys
+                                        )}</h4>
+                                    <p className="text-[12px] font-light text-[#8A8580] leading-[1.5]">{t(
+                                            (materialsCardsMap[product.slug] || materialsCardsMap["owl-sofa"])[3].descKey as TranslationKeys
+                                        )}</p>
                                 </div>
                             </div>
                         </div>
@@ -1394,20 +1881,28 @@ export function ProductPageClient(
                     <div
                         className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 via-[#0A0A0A]/35 to-[#0A0A0A]/60" />
                 </div>
-                <div className="relative max-w-[700px] mx-auto px-5 py-10 md:py-[140px] text-center">
-                    <p className="text-[12px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2.5 md:mb-5">
+                <div
+                    className="relative max-w-[700px] mx-auto px-5 py-10 md:py-[140px] text-center">
+                    <p
+                        className="text-[12px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-2.5 md:mb-5">
                         {t("freeWhiteGlove")}
                     </p>
                     <h2
                         className="font-serif text-xl md:text-[2.5rem] font-light text-[#F5F0EB] leading-[1.2] mb-4 md:mb-6">
                         {t("deliveredWorldwide" as TranslationKeys)}
                     </h2>
-                    <p className="text-[#8A8580] leading-[1.8] text-[14px] md:text-[14px] mb-8 md:mb-10">
+                    <p
+                        className="text-[#8A8580] leading-[1.8] text-[14px] md:text-[14px] mb-8 md:mb-10">
                         {t("deliveryDesc" as TranslationKeys)}
                     </p>
                     <div
-                        className="flex sm:grid sm:grid-cols-4 gap-4 md:gap-8 max-w-[700px] mx-auto overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 sm:mx-0 sm:px-0 pb-1 sm:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] sm:w-auto snap-start">
+                        className="flex sm:grid sm:grid-cols-4 gap-4 md:gap-8 max-w-[700px] mx-auto overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-6 px-6 sm:mx-0 sm:px-0 pb-1 sm:pb-0"
+                        style={{
+                            scrollbarWidth: "none",
+                            msOverflowStyle: "none"
+                        }}>
+                        <div
+                            className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] sm:w-auto snap-start">
                             <div
                                 className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center"
                                 style={{
@@ -1441,7 +1936,8 @@ export function ProductPageClient(
                             <span
                                 className="text-[12px] text-[#8A8580] tracking-[0.1em] uppercase text-center leading-[1.4]">{t("handcraftedShort" as TranslationKeys)}</span>
                         </div>
-                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
+                        <div
+                            className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
                             <div
                                 className="w-10 h-10 rounded-full flex items-center justify-center"
                                 style={{
@@ -1470,7 +1966,8 @@ export function ProductPageClient(
                             <span
                                 className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("leadTimeShort" as TranslationKeys)}</span>
                         </div>
-                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
+                        <div
+                            className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
                             <div
                                 className="w-10 h-10 rounded-full flex items-center justify-center"
                                 style={{
@@ -1490,7 +1987,8 @@ export function ProductPageClient(
                             <span
                                 className="text-[12px] text-[#8A8580] tracking-[0.12em] uppercase text-center">{t("madeToOrderShort" as TranslationKeys)}</span>
                         </div>
-                        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
+                        <div
+                            className="flex flex-col items-center gap-2 flex-shrink-0 w-[42vw] md:w-auto snap-start">
                             <div
                                 className="w-10 h-10 rounded-full flex items-center justify-center"
                                 style={{
@@ -1534,14 +2032,20 @@ export function ProductPageClient(
             {}
             {relatedProducts.length > 0 && <section className="bg-[#080808]">
                 <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-5 md:py-12">
-                    <p className="text-[12px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 md:mb-2">
+                    <p
+                        className="text-[12px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 md:mb-2">
                         {t("youMayAlsoLike" as TranslationKeys)}
                     </p>
                     <h2
                         className="font-serif text-lg md:text-3xl font-light text-[#F5F0EB] mb-3 md:mb-8">
                         {t("relatedProducts")}
                     </h2>
-                    <div className="flex sm:grid sm:grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 sm:mx-0 sm:px-0 pb-1 sm:pb-0" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                    <div
+                        className="flex sm:grid sm:grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 px-5 sm:mx-0 sm:px-0 pb-1 sm:pb-0"
+                        style={{
+                            scrollbarWidth: "none",
+                            msOverflowStyle: "none"
+                        }}>
                         {relatedProducts.map(rp => {
                             const rpPrefix = slugToPrefix[rp.slug] || "";
                             const rpName = rpPrefix ? t(`${rpPrefix}Name` as TranslationKeys) : rp.name;
@@ -1566,12 +2070,16 @@ export function ProductPageClient(
                                         </div>}
                                     </div>
                                     <div className="pt-2 pb-0.5 sm:p-5">
-                                        <p className="text-[12px] sm:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5 sm:mb-1">
-                                            {t((animalKeyMap[rp.animal] || "animalGorilla") as TranslationKeys)} {t("collection").toUpperCase()}
+                                        <p
+                                            className="text-[12px] sm:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5 sm:mb-1">
+                                            {t(animalKeyMap[rp.animal] || "animalGorilla" as TranslationKeys)} {t("collection").toUpperCase()}
                                         </p>
-                                        <h3 className="font-serif text-[14px] sm:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
-                                        <p className="text-[12px] sm:text-[14px] text-[#8A8580] mt-0.5 sm:mt-1 mb-0.5 sm:mb-3 line-clamp-1">{rpTagline}</p>
-                                        <p className="font-serif text-[12px] sm:text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
+                                        <h3
+                                            className="font-serif text-[14px] sm:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
+                                        <p
+                                            className="text-[12px] sm:text-[14px] text-[#8A8580] mt-0.5 sm:mt-1 mb-0.5 sm:mb-3 line-clamp-1">{rpTagline}</p>
+                                        <p
+                                            className="font-serif text-[12px] sm:text-lg font-light text-[#F5F0EB]/70">{rpPrice}</p>
                                     </div>
                                 </Link>
                             );
@@ -1618,23 +2126,33 @@ export function ProductPageClient(
                     <p className="mt-6 text-[12px] text-[#8A8580]/50 leading-relaxed">{t("specFooterNote" as TranslationKeys)}</p>
                 </div>
             </section>
-            {/* Cosmic Inspiration - only for meteorite product */}
-            {product.slug === 'meteorite-ring-sofa' && (
-                <CosmicInspiration lang={lang} />
-            )}
-            {/* Mobile Sticky CTA — left text + right glow button */}
-            <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "#0A0A0A" }}>
+            {}
+            {product.slug === "meteorite-ring-sofa" && <CosmicInspiration lang={lang} />}
+            {}
+            <div
+                className="sm:hidden fixed bottom-0 left-0 right-0 z-40"
+                style={{
+                    paddingBottom: "env(safe-area-inset-bottom, 0px)",
+                    background: "#0A0A0A"
+                }}>
                 <div className="px-4 pt-2.5 pb-2.5 flex items-center justify-between gap-3">
                     <div className="min-w-0">
                         <p className="text-[12px] font-light text-[#F5F0EB] truncate leading-tight">{productName}</p>
                         <p className="text-[14px] font-light text-[#E8B4B8] mt-0.5">{displayPrice}</p>
                     </div>
                     <div className="relative flex-shrink-0">
-                        <div className="absolute -inset-1 rounded-full opacity-30 pointer-events-none" style={{ background: "radial-gradient(circle, #E8B4B8 0%, transparent 70%)", filter: "blur(6px)" }} />
+                        <div
+                            className="absolute -inset-1 rounded-full opacity-30 pointer-events-none"
+                            style={{
+                                background: "radial-gradient(circle, #E8B4B8 0%, transparent 70%)",
+                                filter: "blur(6px)"
+                            }} />
                         <button
                             onClick={handleBuyNow}
                             className="relative flex items-center gap-1.5 px-5 py-2 text-[#0A0A0A] text-[15px] tracking-[0.15em] uppercase font-medium rounded-full active:scale-[0.97] transition-transform"
-                            style={{ background: "#E8B4B8" }}>
+                            style={{
+                                background: "#E8B4B8"
+                            }}>
                             {t("buyNow" as TranslationKeys)}
                             <svg aria-hidden="true" viewBox="0 0 10 10" width="9" height="9" fill="none">
                                 <path d="M0 5h7" stroke="currentColor" strokeWidth="1.2" />
