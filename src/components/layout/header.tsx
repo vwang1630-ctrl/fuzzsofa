@@ -122,7 +122,7 @@ export function Header() {
                     <Link
                         href="/magazine"
                         className={`${isProductPage ? "text-white/60" : "text-[#8A8580]"} hover:text-[#E8B4B8] transition-colors duration-300`}>
-                        Fuzz Sofa World
+                        The Gallery
                     </Link>
                     <Link
                         href="/about"
@@ -273,7 +273,7 @@ export function Header() {
                 <Link
                     href="/magazine"
                     onClick={() => setMobileOpen(false)}
-                    className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">Fuzz Sofa World</Link>
+                    className="text-[#8A8580] hover:text-[#E8B4B8] transition-colors">The Gallery</Link>
                 <Link
                     href="/about"
                     onClick={() => setMobileOpen(false)}

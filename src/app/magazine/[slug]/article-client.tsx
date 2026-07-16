@@ -46,7 +46,7 @@ export function ArticleDetailClient({ article }: Props) {
           className="inline-flex items-center gap-2 text-xs sm:text-sm tracking-[0.1em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors uppercase"
         >
           <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          <span>Back to Fuzz Sofa World</span>
+          <span>Back to The Gallery</span>
         </Link>
       </div>
 

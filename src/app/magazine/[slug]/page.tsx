@@ -16,10 +16,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!article) return { title: "Article Not Found" };
 
   return {
-    title: `${article.title} — Fuzz Sofa World`,
+    title: `${article.title} — The Gallery`,
     description: article.subtitle,
     openGraph: {
-      title: `${article.title} — Fuzz Sofa World`,
+      title: `${article.title} — The Gallery`,
       description: article.subtitle,
       images: [{ url: article.heroImage, width: 1200, height: 630 }],
     },
