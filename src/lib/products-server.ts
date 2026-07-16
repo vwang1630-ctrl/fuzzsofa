@@ -34,7 +34,7 @@ export function getPrice(product: Product, region: Region): number {
   const mapping: Record<string, Record<Region, number>> = {
     "gorilla-sofa": { americas: 7200, europe: 7200, middle_east: 6800, se_asia: 6200 },
     "gorilla-leather": { americas: 9800, europe: 9800, middle_east: 9200, se_asia: 8500 },
-    "owl-sofa": { americas: 2800, europe: 2800, middle_east: 2650, se_asia: 2500 },
+    "owl-sofa": { americas: 4800, europe: 4800, middle_east: 4800, se_asia: 4800 },
     "silverback-sofa": { americas: 7800, europe: 7800, middle_east: 7400, se_asia: 6800 },
     "meteorite-ring-sofa": { americas: 3500, europe: 3500, middle_east: 3500, se_asia: 3500 },
     "muscle-gorilla-sofa": { americas: 9800, europe: 9800, middle_east: 9200, se_asia: 8500 },

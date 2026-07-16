@@ -15,10 +15,10 @@ const OWL_DATA = {
     description: "The Owl Chair captures the alert, watchful essence of an owl at rest. Its compact scale and distinctive rounded backrest make it the most versatile piece in the Fuzz Sofa collection — a statement chair that transforms any corner into a place of contemplation and style.",
 
     priceRange: {
-        americas: [3500, 5200] as [number, number],
-        europe: [3200, 4800] as [number, number],
-        middle_east: [3400, 5100] as [number, number],
-        se_asia: [2800, 4200] as [number, number]
+        americas: [4800, 4800] as [number, number],
+        europe: [4800, 4800] as [number, number],
+        middle_east: [4800, 4800] as [number, number],
+        se_asia: [4800, 4800] as [number, number]
     },
 
     images: [
