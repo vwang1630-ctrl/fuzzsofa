@@ -13,6 +13,7 @@ const OWL_DATA = {
     brand: "FUZZ SOFA",
     tagline: "Wisdom and Watchfulness",
     description: "The Owl Chair captures the alert, watchful essence of an owl at rest. Its compact scale and distinctive rounded backrest make it the most versatile piece in the Fuzz Sofa collection — a statement chair that transforms any corner into a place of contemplation and style.",
+    sketchImage: "/products/owl/story-sketch.webp",
 
     priceRange: {
         americas: [4800, 4800] as [number, number],
@@ -458,7 +459,7 @@ export default function MobileProductPage(
                     <div className="section-label">设计故事</div>
                     <div className="story-grid">
                         <div className="story-image">
-                            <img src={OWL_DATA.images[2]} alt="Design sketch" loading="lazy" />
+                            <img src={OWL_DATA.sketchImage} alt="Design sketch" loading="lazy" />
                             <span className="sketch-tag">✧ 手稿 · 概念设计</span>
                         </div>
                         <div className="story-text">
