@@ -221,12 +221,12 @@ export default function MobileHomePage() {
       {/* Log Preview */}
       {firstLog && firstLog.image && (
         <Link href={`/m/log/${firstLog.id}`} className="log-preview" id="homeLogPreview">
-          <div className="log-preview-image" id="homeLogImg">
-            <img src={firstLog.image} alt="日志封面" />
-          </div>
           <div className="log-preview-content">
             <div className="log-tag">✧ 日志</div>
             <h3 id="homeLogTitle">{firstLog.title}</h3>
+            <div className="log-preview-image" id="homeLogImg">
+              <img src={firstLog.image} alt="日志封面" />
+            </div>
             <div className="summary" id="homeLogSummary">
               {firstLog.summary}
             </div>
