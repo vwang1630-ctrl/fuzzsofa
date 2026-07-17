@@ -1733,7 +1733,6 @@ html, body {
   max-width: 180px;
   flex-shrink: 0;
   scroll-snap-align: start;
-  background: #121212;
   overflow: hidden;
 }
 #pageDetail .scene-card img {
