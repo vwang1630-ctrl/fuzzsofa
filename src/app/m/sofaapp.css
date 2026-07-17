@@ -485,7 +485,7 @@ html, body {
   background: #E8B4B8;
 }
 .brand-philosophy {
-  padding: 16px 16px 8px;
+  padding: 24px 16px 16px;
   text-align: center;
   font-size: 14px;
   color: #8A8580;
@@ -494,7 +494,7 @@ html, body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 .media-quote {
-  padding: 16px 16px;
+  padding: 24px 16px;
   background: rgba(255, 255, 255, 0.01);
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   display: flex;
@@ -522,7 +522,7 @@ html, body {
   margin-top: 8px;
 }
 .featured-works {
-  padding: 24px 16px 16px;
+  padding: 32px 16px 24px;
 }
 .section-header {
   display: flex;
@@ -601,7 +601,7 @@ html, body {
   font-family: 'Cormorant Garamond', Georgia, serif;
 }
 .log-preview {
-  margin: 16px 16px 32px;
+  margin: 24px 16px 40px;
   display: flex;
   flex-direction: column;
   gap: 0;
