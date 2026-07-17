@@ -1363,7 +1363,7 @@ export function ProductPageClient(
                                     className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-0.5 group-hover:text-[#E8B4B8] transition-colors duration-300">
                                     {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
                                 </p>
-                                <p className="text-[14px] text-[#8A8580] leading-[1.6]">
+                                <p className="text-[12px] text-[#8A8580] leading-[1.6]">
                                     {t(space.descKey as TranslationKeys)}
                                 </p>
                             </div>
