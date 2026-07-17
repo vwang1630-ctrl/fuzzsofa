@@ -1394,8 +1394,7 @@ export function ProductPageClient(
                             </p>
                             <div
                                 className="text-[12px] md:text-[14px] font-light text-[#F5F0EB]/70 leading-[1.9]">
-                                <p>{productConcept}</p>
-                                <p className="mt-5">{prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
+                                <p>{productConcept} {prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
                             </div>
                             <div
                                 className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">
