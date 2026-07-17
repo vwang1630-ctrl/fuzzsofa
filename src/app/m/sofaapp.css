@@ -1750,10 +1750,11 @@ html, body {
   letter-spacing: 0.04em;
 }
 #pageDetail .scene-card .sub {
-  font-size: 10px;
-  color: #6A6560;
+  font-size: 12px;
+  color: #8A8580;
   font-weight: 300;
   font-style: italic;
+  padding: 0 0 10px;
 }
 #pageDetail .explore-more {
   padding-top: 28px;
