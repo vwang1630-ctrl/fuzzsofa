@@ -529,17 +529,6 @@ export default function MobileProductPage(
                     </div>)}
                 </div>
                 {}
-                <div className="craft">
-                    <div className="section-label">材质与工艺</div>
-                    <div className="craft-list">
-                        {OWL_DATA.crafts.map(c => <div key={c.name} className="craft-item">
-                            <span className="line" />
-                            <span className="name">{c.name}</span>
-                            <span className="detail">{c.detail}</span>
-                        </div>)}
-                    </div>
-                </div>
-                {}
                 <div className="features">
                     {OWL_DATA.features.map(f => <div key={f.num} className="feature-row">
                         <span className="num">{f.num}</span>
