@@ -14,6 +14,15 @@ const OWL_DATA = {
     tagline: "Wisdom and Watchfulness",
     description: "The Owl Chair captures the alert, watchful essence of an owl at rest. Its compact scale and distinctive rounded backrest make it the most versatile piece in the Fuzz Sofa collection — a statement chair that transforms any corner into a place of contemplation and style.",
     sketchImage: "/products/owl/story-sketch.webp",
+    cutoutImages: [
+        "/products/cutout/owl-cutout-1.png",
+        "/products/cutout/owl-cutout-2.png",
+        "/products/cutout/owl-cutout-3.png",
+        "/products/cutout/owl-cutout-4.png",
+        "/products/cutout/owl-cutout-5.png",
+        "/products/cutout/owl-cutout-6.png",
+        "/products/cutout/owl-cutout-7.png"
+    ],
 
     priceRange: {
         americas: [4800, 4800] as [number, number],
@@ -28,6 +37,7 @@ const OWL_DATA = {
         "/products/owl/dusty-pink-fur.png",
         "/products/owl/black-leather.png",
         "/products/owl/forest-green.png",
+        "/products/owl/forest-green-side.png",
         "/products/owl/rose-pink.png"
     ],
 
@@ -708,7 +718,7 @@ export default function MobileProductPage(
                         <p>将 {OWL_DATA.name}放入您的空间</p>
                     </div>
                     <div className="ai-preview">
-                        <img src={OWL_DATA.images[0]} alt={OWL_DATA.name} />
+                        <img src={OWL_DATA.cutoutImages[0]} alt={OWL_DATA.name} />
                         <div className="ai-hint">点击相机按钮，拍摄您的空间</div>
                     </div>
                     <div className="ai-controls">
