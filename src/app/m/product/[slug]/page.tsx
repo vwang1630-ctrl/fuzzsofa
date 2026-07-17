@@ -83,8 +83,12 @@ const OWL_DATA = {
         desc: "紧凑比例，任何角落都能成为沉思之地"
     }, {
         num: "03",
-        label: "多面性格",
-        desc: "8 种面料 × 4 种材质，从卧室到书房自由切换"
+        label: "手工打造",
+        desc: "每件作品均由资深工匠精心手工制作，融合传统工艺与现代设计"
+    }, {
+        num: "04",
+        label: "原料采购 · 质检",
+        desc: "所有材料均来自认证供应商，每批原料在进入生产前都经过严格的质量检验"
     }],
 
     storyTitle: "猫头鹰的凝视",
@@ -136,17 +140,17 @@ const OWL_DATA = {
     }],
 
     scenes: [{
-        image: "/products/owl/snowy-white.png",
-        label: "静谧书房",
-        sub: "阅读角的独处时光"
+        image: "/products/spaces/owl-space-1.png",
+        label: "理想之家",
+        sub: "The Owl Chair turns away from the open-plan living room, creating an intimate retreat within the grand space."
     }, {
-        image: "/products/owl/forest-green.png",
-        label: "自然角落",
-        sub: "森林绿 · 沉思 · 惬意"
+        image: "/products/spaces/owl-space-2.png",
+        label: "私人书房",
+        sub: "Surrounded by books and silence, the Owl Chair wraps you in its wide wings."
     }, {
-        image: "/products/owl/black-leather.png",
-        label: "都会客厅",
-        sub: "皮革质感 · 精致空间"
+        image: "/products/spaces/owl-space-3.png",
+        label: "精品酒店",
+        sub: "With its compact footprint, the Owl Chair fits seamlessly into hotel corners and lounge spaces."
     }],
 
     explore: [{
