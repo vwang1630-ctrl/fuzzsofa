@@ -934,46 +934,34 @@ export function ProductPageClient(
                                         aria-label={t("previewInYourRoom" as TranslationKeys)}>
                                         {}
                                         <svg
-                                            width="34"
-                                            height="34"
-                                            viewBox="0 0 32 32"
+                                            width="28"
+                                            height="28"
+                                            viewBox="0 0 24 24"
                                             fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             {}
-                                            <path d="M2 17L16 4L30 17V28H2V17Z" fill="#E8B4B8" />
-                                            {}
                                             <path
-                                                d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28H7Z"
-                                                fill="#0A0A0A" />
-                                            {}
-                                            <path
-                                                d="M7 28V19C7 15.8 9 13.5 12 13.5H20C23 13.5 25 15.8 25 19V28"
+                                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
                                                 stroke="#E8B4B8"
-                                                strokeWidth="1.8"
+                                                strokeWidth="1.5"
                                                 strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                fill="none" />
+                                                strokeLinejoin="round" />
                                             {}
-                                            <path
-                                                d="M9.5 20C9.5 18 11 16.5 13 16.5H19C21 16.5 22.5 18 22.5 20"
+                                            <polyline
+                                                points="3.27 6.96 12 12.01 20.73 6.96"
                                                 stroke="#E8B4B8"
-                                                strokeWidth="1.3"
+                                                strokeWidth="1.5"
                                                 strokeLinecap="round"
-                                                fill="none"
-                                                strokeOpacity="0.8" />
+                                                strokeLinejoin="round" />
                                             {}
-                                            <path
-                                                d="M12 14V13C12 12.4 12.4 12 13 12H19C19.6 12 20 12.4 20 13V14"
+                                            <line
+                                                x1="12"
+                                                y1="22.08"
+                                                x2="12"
+                                                y2="12"
                                                 stroke="#E8B4B8"
-                                                strokeWidth="1.1"
-                                                strokeLinecap="round"
-                                                fill="none"
-                                                strokeOpacity="0.55" />
-                                            {}
-                                            <path
-                                                d="M24 5L24.8 7L27 7.8L24.8 8.6L24 10.6L23.2 8.6L21 7.8L23.2 7Z"
-                                                fill="#E8B4B8"
-                                                fillOpacity="0.95" />
+                                                strokeWidth="1.5"
+                                                strokeLinecap="round" />
                                         </svg>
                                         {}
                                         <span
