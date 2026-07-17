@@ -14,7 +14,6 @@ const OWL_DATA = {
     tagline: "Wisdom and Watchfulness",
     description: "The Owl Chair captures the alert, watchful essence of an owl at rest. Its compact scale and distinctive rounded backrest make it the most versatile piece in the Fuzz Sofa collection — a statement chair that transforms any corner into a place of contemplation and style.",
     sketchImage: "/products/owl/story-sketch.webp",
-
     cutoutImages: [
         "/products/cutout/owl-cutout-1.png",
         "/products/cutout/owl-cutout-2.png",
@@ -221,88 +220,65 @@ export default function MobileProductPage(
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [unit, setUnit] = useState<"cm" | "in">("cm");
     const [faved, setFaved] = useState(false);
-
-    const imageIndexToMaterial: Record<number, {
-        type: string;
-        option: string;
-    }> = {
-        0: {
-            type: "Plush",
-            option: "snowy-white"
-        },
-
-        1: {
-            type: "Plush",
-            option: "snowy-white"
-        },
-
-        2: {
-            type: "Plush",
-            option: "dusty-pink"
-        },
-
-        3: {
-            type: "Leather",
-            option: "black"
-        },
-
-        4: {
-            type: "Velvet",
-            option: "forest-green"
-        },
-
-        5: {
-            type: "Velvet",
-            option: "forest-green"
-        },
-
-        6: {
-            type: "Linen",
-            option: "rose-pink-linen"
-        }
+    
+    // 图片索引到材质的映射关系
+    const imageIndexToMaterial: Record<number, { type: string; option: string }> = {
+        0: { type: "Plush", option: "snowy-white" },
+        1: { type: "Plush", option: "snowy-white" },
+        2: { type: "Plush", option: "dusty-pink" },
+        3: { type: "Leather", option: "black" },
+        4: { type: "Velvet", option: "forest-green" },
+        5: { type: "Velvet", option: "forest-green" },
+        6: { type: "Linen", option: "rose-pink-linen" }
     };
 
+    // 触摸滑动相关状态
     const touchStartX = useRef<number>(0);
     const touchEndX = useRef<number>(0);
     const heroImageRef = useRef<HTMLDivElement>(null);
 
+    // 处理触摸开始
     const handleTouchStart = (e: React.TouchEvent) => {
         touchStartX.current = e.touches[0].clientX;
     };
 
+    // 处理触摸移动
     const handleTouchMove = (e: React.TouchEvent) => {
         touchEndX.current = e.touches[0].clientX;
     };
 
+    // 处理触摸结束
     const handleTouchEnd = () => {
-        const swipeThreshold = 50;
+        const swipeThreshold = 50; // 滑动阈值（像素）
         const diff = touchStartX.current - touchEndX.current;
-
+        
         if (Math.abs(diff) > swipeThreshold) {
             if (diff > 0) {
+                // 向左滑动，显示下一张图片
                 setCurrentImageIndex(prev => (prev + 1) % OWL_DATA.images.length);
             } else {
+                // 向右滑动，显示上一张图片
                 setCurrentImageIndex(prev => (prev - 1 + OWL_DATA.images.length) % OWL_DATA.images.length);
             }
         }
     };
 
+    // 当图片索引改变时，同步更新材质和颜色选择器
     useEffect(() => {
         const materialInfo = imageIndexToMaterial[currentImageIndex];
-
         if (materialInfo) {
             setSelectedMaterial(materialInfo.type);
             setSelectedColor(materialInfo.option);
         }
     }, [currentImageIndex]);
-
+    
+    // 从 localStorage 读取收藏状态
     useEffect(() => {
         if (typeof window !== "undefined") {
             const favs = JSON.parse(localStorage.getItem("fuzz_favs") || "[]");
             setFaved(favs.includes(OWL_DATA.slug));
         }
     }, []);
-
     const [showShare, setShowShare] = useState(false);
     const [showPurchasePanel, setShowPurchasePanel] = useState(false);
     const [purchaseSource, setPurchaseSource] = useState<"cart" | "buy">("cart");
@@ -362,7 +338,6 @@ export default function MobileProductPage(
     const handleMaterialSelect = (materialKey: string) => {
         setSelectedMaterial(materialKey);
         const firstColorInGroup = OWL_DATA.colors.find(c => c.group === materialKey);
-
         if (firstColorInGroup) {
             setCurrentImageIndex(firstColorInGroup.imageIndex);
             setSelectedColor(firstColorInGroup.key);
@@ -379,8 +354,8 @@ export default function MobileProductPage(
         <div className="page active" id="pageDetail">
             <div className="container">
                 {}
-                <div
-                    className="hero-image"
+                <div 
+                    className="hero-image" 
                     id="detailHeroImage"
                     ref={heroImageRef}
                     onTouchStart={handleTouchStart}
@@ -447,22 +422,18 @@ export default function MobileProductPage(
                             onClick={() => {
                                 const newFaved = !faved;
                                 setFaved(newFaved);
-
                                 if (typeof window !== "undefined") {
                                     const favs = JSON.parse(localStorage.getItem("fuzz_favs") || "[]");
-
                                     if (newFaved) {
                                         if (!favs.includes(OWL_DATA.slug)) {
                                             favs.push(OWL_DATA.slug);
                                         }
                                     } else {
                                         const idx = favs.indexOf(OWL_DATA.slug);
-
                                         if (idx > -1) {
                                             favs.splice(idx, 1);
                                         }
                                     }
-
                                     localStorage.setItem("fuzz_favs", JSON.stringify(favs));
                                 }
                             }}>
@@ -529,31 +500,21 @@ export default function MobileProductPage(
                 <div className="features">
                     {OWL_DATA.features.map(f => <div key={f.num} className="feature-row">
                         <span className="num">{f.num}</span>
-                        <span className="label">原料质检</span>
-                        <span className="desc">每件作品工匠精心手工制作，融合传统工艺与现代设计</span>
+                        <span className="label">{f.label}</span>
+                        <span className="desc">{f.desc}</span>
                     </div>)}
                 </div>
                 {}
-                {}
+                {/* Interior Inspiration */}
                 <div className="interior-inspiration">
                     <div className="interior-grid">
-                        {OWL_DATA.scenes.map((
-                            scene: {
-                                image: string;
-                                label: string;
-                                sub: string;
-                            },
-                            idx: number
-                        ) => <div key={idx} className="interior-item">
-                            <div className="interior-image">
-                                <img
-                                    src={scene.image}
-                                    alt={scene.label}
-                                    loading="lazy"
-                                    width={400}
-                                    height={400} />
+                        {OWL_DATA.scenes.map((scene: { image: string; label: string; sub: string }, idx: number) => (
+                            <div key={idx} className="interior-item">
+                                <div className="interior-image">
+                                    <img src={scene.image} alt={scene.label} loading="lazy" width={400} height={400} />
+                                </div>
                             </div>
-                        </div>)}
+                        ))}
                     </div>
                 </div>
                 {}
@@ -665,19 +626,17 @@ export default function MobileProductPage(
                 }}>
                 <div className="new-bottom-sheet-panel">
                     <div className="new-bottom-sheet-content">
-                        {}
+                        {/* Header with close button */}
                         <div className="new-sheet-header">
                             <button className="new-sheet-close" onClick={() => setShowPurchasePanel(false)}>×</button>
                         </div>
-                        {}
+                        
+                        {/* Material selection */}
                         <div className="new-sheet-section">
                             <div className="new-sheet-material-tabs">
                                 {MATERIAL_GROUPS.map(mg => {
                                     const hasColorsInGroup = OWL_DATA.colors.some(c => c.group === mg.key);
-
-                                    if (!hasColorsInGroup)
-                                        return null;
-
+                                    if (!hasColorsInGroup) return null;
                                     return (
                                         <button
                                             key={mg.key}
@@ -685,7 +644,6 @@ export default function MobileProductPage(
                                             onClick={() => {
                                                 setSelectedMaterial(mg.key);
                                                 const firstColorInGroup = OWL_DATA.colors.find(c => c.group === mg.key);
-
                                                 if (firstColorInGroup) {
                                                     setPanelColor(firstColorInGroup.key);
                                                 }
@@ -696,19 +654,22 @@ export default function MobileProductPage(
                                 })}
                             </div>
                             <div className="new-sheet-color-circles">
-                                {OWL_DATA.colors.filter(c => c.group === selectedMaterial).map(c => <button
-                                    key={c.key}
-                                    className={`new-sheet-color-circle${panelColor === c.key ? " selected" : ""}`}
-                                    onClick={() => setPanelColor(c.key)}>
-                                    <img
-                                        src={OWL_DATA.images[c.imageIndex]}
-                                        alt={c.label}
-                                        className="new-sheet-circle-thumb" />
-                                    {panelColor === c.key && <span className="new-sheet-selected-dot" />}
-                                </button>)}
+                                {OWL_DATA.colors.filter(c => c.group === selectedMaterial).map(c => (
+                                    <button
+                                        key={c.key}
+                                        className={`new-sheet-color-circle${panelColor === c.key ? " selected" : ""}`}
+                                        onClick={() => setPanelColor(c.key)}>
+                                        <img
+                                            src={OWL_DATA.images[c.imageIndex]}
+                                            alt={c.label}
+                                            className="new-sheet-circle-thumb" />
+                                        {panelColor === c.key && <span className="new-sheet-selected-dot" />}
+                                    </button>
+                                ))}
                             </div>
                         </div>
-                        {}
+                        
+                        {/* Quantity */}
                         <div className="new-sheet-section new-sheet-quantity-row">
                             <span className="new-sheet-qty-label">Quantity</span>
                             <div className="new-sheet-qty-controls">
@@ -719,17 +680,18 @@ export default function MobileProductPage(
                                 <button className="new-sheet-qty-btn" onClick={() => setQuantity(quantity + 1)}>+</button>
                             </div>
                         </div>
-                        {}
+                        
+                        {/* Price summary */}
                         <div className="new-sheet-section new-sheet-price-row">
                             <span className="new-sheet-summary-label">Total</span>
                             <span className="new-sheet-summary-price">${(OWL_DATA.priceRange.americas[0] * quantity).toLocaleString()}USD</span>
                         </div>
-                        {}
+                        
+                        {/* Confirm button */}
                         <button
                             className="new-sheet-confirm-btn"
                             onClick={() => {
                                 const selectedColorData = OWL_DATA.colors.find(c => c.key === panelColor);
-
                                 if (purchaseSource === "cart") {
                                     addItem({
                                         product: {
@@ -738,14 +700,12 @@ export default function MobileProductPage(
                                             priceRange: OWL_DATA.priceRange,
                                             images: OWL_DATA.images
                                         },
-
                                         quantity: quantity,
                                         materialType: selectedMaterial,
                                         materialOption: selectedColorData?.label || panelColor,
                                         region: "americas",
                                         selected: true
                                     });
-
                                     setShowPurchasePanel(false);
                                     setShowCartSuccess(true);
                                     setTimeout(() => setShowCartSuccess(false), 3000);
@@ -754,18 +714,16 @@ export default function MobileProductPage(
                                     const priceRange = OWL_DATA.priceRange.americas;
                                     const price = priceRange[0];
                                     const orderId = `FZ-${Date.now()}`;
-
                                     const items = [{
                                         name: OWL_DATA.name,
                                         color: selectedColorData?.label || panelColor,
                                         quantity: quantity,
                                         price: price
                                     }];
-
                                     const total = (price * quantity).toFixed(2);
-                                    sessionStorage.setItem("paymentOrderId", orderId);
-                                    sessionStorage.setItem("paymentItems", JSON.stringify(items));
-                                    sessionStorage.setItem("paymentTotal", total);
+                                    sessionStorage.setItem('paymentOrderId', orderId);
+                                    sessionStorage.setItem('paymentItems', JSON.stringify(items));
+                                    sessionStorage.setItem('paymentTotal', total);
                                     setShowPurchasePanel(false);
                                     router.push("/m/payment");
                                 }
@@ -829,7 +787,7 @@ export default function MobileProductPage(
                                     d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                                 <circle cx="12" cy="13" r="4" />
                             </svg>拍摄空间
-                                                                                                                              </button>
+                                                                                                  </button>
                     </div>
                 </div>
             </div>}
@@ -858,7 +816,7 @@ export default function MobileProductPage(
                     </div>
                     <div className="ar-product-label">
                         <strong>{OWL_DATA.name}</strong>· 拖拽调整位置
-                                                                                                            </div>
+                                                                                    </div>
                     <div className="ar-hint">👆 双指缩放 · 单指旋转 <span className="hint-sub">点击产品可切换角度</span>
                     </div>
                     <div className="ar-controls">
