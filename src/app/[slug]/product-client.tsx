@@ -1381,7 +1381,7 @@ export function ProductPageClient(
                         {}
                         <div className="flex-1">
                             <p
-                                className="text-[12px] md:text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-1.5 md:mb-3 flex items-center gap-2">
+                                className="text-[12px] md:text-[12px] tracking-[0.25em] uppercase text-[#E8B4B8]/60 mb-3 md:mb-5 flex items-center gap-2">
                                 <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />{t("theStory" as TranslationKeys)}
                             </p>
                             <h3
