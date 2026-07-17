@@ -505,10 +505,6 @@ export default function MobileProductPage(
                     </div>)}
                 </div>
                 {}
-                <div className="description">
-                    <p>{OWL_DATA.description}</p>
-                </div>
-                {}
                 {/* Interior Inspiration */}
                 <div className="interior-inspiration">
                     <div className="interior-grid">
