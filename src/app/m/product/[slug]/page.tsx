@@ -511,9 +511,6 @@ export default function MobileProductPage(
                 {}
                 {/* Interior Inspiration */}
                 <div className="interior-inspiration">
-                    <div className="interior-header">
-                        <span className="interior-label">✦ 细节展示</span>
-                    </div>
                     <div className="interior-grid">
                         {OWL_DATA.scenes.map((scene: { image: string; label: string; sub: string }, idx: number) => (
                             <div key={idx} className="interior-item">
