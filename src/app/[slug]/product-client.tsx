@@ -1338,11 +1338,11 @@ export function ProductPageClient(
                             className="group cursor-pointer flex-shrink-0 w-[80vw] sm:w-auto snap-start">
                             {}
                             <div
-                                className="relative aspect-[3/2] bg-[#111] overflow-hidden mb-1.5 md:mb-2.5 rounded-sm">
+                                className="relative bg-[#111] overflow-hidden mb-1.5 md:mb-2.5 rounded-sm">
                                 {space.image ? <img
                                     src={space.image}
                                     alt={`${productName} in ${space.title}`}
-                                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" /> : <div className="w-full h-full flex items-center justify-center">
+                                    className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.03]" /> : <div className="w-full aspect-[3/2] flex items-center justify-center">
                                     <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
                                         {product.animal.charAt(0)}
                                     </span>
