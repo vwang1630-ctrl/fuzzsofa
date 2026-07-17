@@ -291,6 +291,109 @@ export default function MobileProductPage(
     const [arOpacity, setArOpacity] = useState(90);
     const [showCartSuccess, setShowCartSuccess] = useState(false);
 
+    // AI 试用相关状态
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
+    const [capturedImage, setCapturedImage] = useState<string | null>(null);
+    const [isCameraActive, setIsCameraActive] = useState(false);
+    const [productPosition, setProductPosition] = useState({ x: 50, y: 50 });
+    const [productSize, setProductSize] = useState(30);
+
+    // 打开摄像头
+    const startCamera = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } }
+            });
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+                setCameraStream(stream);
+                setIsCameraActive(true);
+            }
+        } catch (err) {
+            console.error("无法访问摄像头:", err);
+            alert("无法访问摄像头，请确保已授予摄像头权限");
+        }
+    };
+
+    // 关闭摄像头
+    const stopCamera = () => {
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(track => track.stop());
+            setCameraStream(null);
+            setIsCameraActive(false);
+        }
+    };
+
+    // 拍照
+    const takePhoto = () => {
+        if (videoRef.current && canvasRef.current) {
+            const video = videoRef.current;
+            const canvas = canvasRef.current;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+                ctx.drawImage(video, 0, 0);
+                const imageData = canvas.toDataURL("image/png");
+                setCapturedImage(imageData);
+                stopCamera();
+            }
+        }
+    };
+
+    // 保存合成图片
+    const saveCompositedImage = () => {
+        if (canvasRef.current && capturedImage) {
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+                // 创建背景图片
+                const bgImg = new Image();
+                bgImg.crossOrigin = "anonymous";
+                bgImg.onload = () => {
+                    canvas.width = bgImg.width;
+                    canvas.height = bgImg.height;
+                    ctx.drawImage(bgImg, 0, 0);
+
+                    // 创建产品图片
+                    const productImg = new Image();
+                    productImg.crossOrigin = "anonymous";
+                    productImg.onload = () => {
+                        const productWidth = (canvas.width * productSize) / 100;
+                        const productHeight = (productImg.height / productImg.width) * productWidth;
+                        const x = (canvas.width * productPosition.x) / 100 - productWidth / 2;
+                        const y = (canvas.height * productPosition.y) / 100 - productHeight / 2;
+                        ctx.drawImage(productImg, x, y, productWidth, productHeight);
+
+                        // 下载图片
+                        const link = document.createElement("a");
+                        link.download = "ai-tryon.png";
+                        link.href = canvas.toDataURL("image/png");
+                        link.click();
+                    };
+                    productImg.src = OWL_DATA.cutoutImages[0];
+                };
+                bgImg.src = capturedImage;
+            }
+        }
+    };
+
+    // 重置 AI 试用
+    const resetAITryon = () => {
+        setCapturedImage(null);
+        stopCamera();
+    };
+
+    // 当 AI 覆盖层关闭时，清理摄像头
+    useEffect(() => {
+        if (!showAIOverlay) {
+            stopCamera();
+            setCapturedImage(null);
+        }
+    }, [showAIOverlay]);
+
     if (slug && slug !== "owl-sofa" && slug !== "owl") {
         return (
             <div className="page active" id="pageDetail">
@@ -760,11 +863,53 @@ export default function MobileProductPage(
                         <p>将 {OWL_DATA.name}放入您的空间</p>
                     </div>
                     <div className="ai-preview">
-                        <img src={OWL_DATA.cutoutImages[0]} alt={OWL_DATA.name} />
-                        <div className="ai-hint">点击相机按钮，拍摄您的空间</div>
+                        {/* 摄像头预览 */}
+                        {isCameraActive && <video
+                            ref={videoRef}
+                            autoPlay
+                            playsInline
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                                borderRadius: 8
+                            }} />}
+                        {/* 拍摄的照片 */}
+                        {capturedImage && !isCameraActive && <div style={{ position: "relative", width: "100%", height: "100%" }}>
+                            <img
+                                src={capturedImage}
+                                alt="拍摄的空间"
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    borderRadius: 8
+                                }} />
+                            {/* 产品叠加层 */}
+                            <img
+                                src={OWL_DATA.cutoutImages[0]}
+                                alt={OWL_DATA.name}
+                                draggable={false}
+                                style={{
+                                    position: "absolute",
+                                    left: `${productPosition.x}%`,
+                                    top: `${productPosition.y}%`,
+                                    width: `${productSize}%`,
+                                    height: "auto",
+                                    transform: "translate(-50%, -50%)",
+                                    pointerEvents: "none",
+                                    filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.3))"
+                                }} />
+                        </div>}
+                        {/* 初始状态 */}
+                        {!isCameraActive && !capturedImage && <>
+                            <img src={OWL_DATA.cutoutImages[0]} alt={OWL_DATA.name} />
+                            <div className="ai-hint">点击相机按钮，拍摄您的空间</div>
+                        </>}
                     </div>
                     <div className="ai-controls">
-                        <button className="ai-camera-btn">
+                        {/* 初始状态：打开摄像头 */}
+                        {!isCameraActive && !capturedImage && <button className="ai-camera-btn" onClick={startCamera}>
                             <svg
                                 viewBox="0 0 24 24"
                                 width="24"
@@ -776,8 +921,98 @@ export default function MobileProductPage(
                                     d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                                 <circle cx="12" cy="13" r="4" />
                             </svg>拍摄空间
-                                                                                                  </button>
+                        </button>}
+                        {/* 摄像头激活：拍照按钮 */}
+                        {isCameraActive && <button className="ai-camera-btn" onClick={takePhoto}>
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="24"
+                                height="24"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                fill="none">
+                                <circle cx="12" cy="12" r="10" />
+                                <circle cx="12" cy="12" r="6" fill="currentColor" />
+                            </svg>拍照
+                        </button>}
+                        {/* 已拍照：调整和控制按钮 */}
+                        {capturedImage && !isCameraActive && <>
+                            <div style={{
+                                display: "flex",
+                                gap: 12,
+                                marginBottom: 12,
+                                alignItems: "center"
+                            }}>
+                                <label style={{ fontSize: 12, color: "#8A8580" }}>大小</label>
+                                <input
+                                    type="range"
+                                    min={10}
+                                    max={60}
+                                    value={productSize}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductSize(Number(e.target.value))}
+                                    style={{ flex: 1 }} />
+                            </div>
+                            <div style={{
+                                display: "flex",
+                                gap: 12,
+                                marginBottom: 12,
+                                alignItems: "center"
+                            }}>
+                                <label style={{ fontSize: 12, color: "#8A8580" }}>水平</label>
+                                <input
+                                    type="range"
+                                    min={10}
+                                    max={90}
+                                    value={productPosition.x}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductPosition(prev => ({ ...prev, x: Number(e.target.value) }))}
+                                    style={{ flex: 1 }} />
+                            </div>
+                            <div style={{
+                                display: "flex",
+                                gap: 12,
+                                marginBottom: 12,
+                                alignItems: "center"
+                            }}>
+                                <label style={{ fontSize: 12, color: "#8A8580" }}>垂直</label>
+                                <input
+                                    type="range"
+                                    min={10}
+                                    max={90}
+                                    value={productPosition.y}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProductPosition(prev => ({ ...prev, y: Number(e.target.value) }))}
+                                    style={{ flex: 1 }} />
+                            </div>
+                            <div style={{ display: "flex", gap: 12 }}>
+                                <button className="ai-camera-btn" onClick={resetAITryon} style={{ flex: 1 }}>
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        width="20"
+                                        height="20"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        fill="none">
+                                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                                        <path d="M3 3v5h5" />
+                                    </svg>重拍
+                                </button>
+                                <button className="ai-camera-btn" onClick={saveCompositedImage} style={{ flex: 1, background: "#E8B4B8", color: "#0A0A0A" }}>
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        width="20"
+                                        height="20"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        fill="none">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg>保存
+                                </button>
+                            </div>
+                        </>}
                     </div>
+                    {/* 隐藏的 canvas 用于图片合成 */}
+                    <canvas ref={canvasRef} style={{ display: "none" }} />
                 </div>
             </div>}
             {}
