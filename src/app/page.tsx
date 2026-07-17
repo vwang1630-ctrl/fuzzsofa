@@ -326,7 +326,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-5">
             {[
               { href: "/luxury-villa-interior", title: t("luxuryVillas"), accent: "from-[#1A1510] to-[#0A0A0A]", label: t("luxuryVillaScene") },
-              { href: "/boutique-hotel-lobby", title: t("boutiqueHotels"), accent: "from-[#101518] to-[#0A0A0A]", label: t("boutiqueHotelScene") },
+              { href: "/boutique-hotel-lobby", title: t("boutiqueHotels"), accent: "from-[#101518] to-[#0A0A0A]", label: t("boutiqueHotelScene"), image: "/interiors/boutique-hotel-owl.png" },
               { href: "/statement-furniture", title: t("contemporaryHomes"), accent: "from-[#151015] to-[#0A0A0A]", label: t("statementFurnitureScene") },
               { href: "/meteorite-ring-sofa", title: t("sculpturalTrend"), accent: "from-[#0A0A1A] to-[#0A0A0A]", label: t("sculpturalTrendScene"), image: "/products/meteorite-ring-sofa/sculptural-trend.png" },
             ].map((interior) => (
