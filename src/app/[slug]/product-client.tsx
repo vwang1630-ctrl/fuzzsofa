@@ -1314,7 +1314,7 @@ export function ProductPageClient(
             </section>
             {}
             <section className="bg-[#0F0E0E]">
-                <div className="max-w-[1200px] mx-auto px-4 md:px-6 pt-9 md:pt-12 pb-6 md:pb-10">
+                <div className="max-w-[1200px] mx-auto px-4 md:px-6 pt-9 md:pt-[68px] pb-6 md:pb-10">
                     {}
                     <div className="mb-2 md:mb-4">
                         <p
