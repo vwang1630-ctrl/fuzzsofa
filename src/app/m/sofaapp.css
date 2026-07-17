@@ -1643,25 +1643,27 @@ img[loading="lazy"] {
   font-size: 14px;
   color: #8A8580;
   font-weight: 300;
-  padding: 5px 0;
+  padding: 8px 0;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.02);
 }
 #pageDetail .feature-row .num {
-  font-size: 10px;
+  font-size: 12px;
   color: #E8B4B8;
   font-weight: 400;
-  width: 18px;
+  width: 20px;
   flex-shrink: 0;
   font-family: 'Cormorant Garamond', Georgia, serif;
 }
 #pageDetail .feature-row .label {
-  font-weight: 400;
+  font-weight: 500;
   color: #F5F0EB;
-  margin-right: 4px;
+  margin-right: 8px;
+  font-size: 14px;
 }
 #pageDetail .feature-row .desc {
-  color: #6A6560;
+  color: #8A8580;
   font-size: 13px;
+  line-height: 1.6;
 }
 #pageDetail .description {
   margin-bottom: 40px;
