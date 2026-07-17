@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/products";
@@ -221,6 +221,57 @@ export default function MobileProductPage(
     const [unit, setUnit] = useState<"cm" | "in">("cm");
     const [faved, setFaved] = useState(false);
     
+    // 图片索引到材质的映射关系
+    const imageIndexToMaterial: Record<number, { type: string; option: string }> = {
+        0: { type: "Plush", option: "snowy-white" },
+        1: { type: "Plush", option: "snowy-white" },
+        2: { type: "Plush", option: "dusty-pink" },
+        3: { type: "Leather", option: "black" },
+        4: { type: "Velvet", option: "forest-green" },
+        5: { type: "Velvet", option: "forest-green" },
+        6: { type: "Linen", option: "rose-pink-linen" }
+    };
+
+    // 触摸滑动相关状态
+    const touchStartX = useRef<number>(0);
+    const touchEndX = useRef<number>(0);
+    const heroImageRef = useRef<HTMLDivElement>(null);
+
+    // 处理触摸开始
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    // 处理触摸移动
+    const handleTouchMove = (e: React.TouchEvent) => {
+        touchEndX.current = e.touches[0].clientX;
+    };
+
+    // 处理触摸结束
+    const handleTouchEnd = () => {
+        const swipeThreshold = 50; // 滑动阈值（像素）
+        const diff = touchStartX.current - touchEndX.current;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // 向左滑动，显示下一张图片
+                setCurrentImageIndex(prev => (prev + 1) % OWL_DATA.images.length);
+            } else {
+                // 向右滑动，显示上一张图片
+                setCurrentImageIndex(prev => (prev - 1 + OWL_DATA.images.length) % OWL_DATA.images.length);
+            }
+        }
+    };
+
+    // 当图片索引改变时，同步更新材质和颜色选择器
+    useEffect(() => {
+        const materialInfo = imageIndexToMaterial[currentImageIndex];
+        if (materialInfo) {
+            setSelectedMaterial(materialInfo.type);
+            setSelectedColor(materialInfo.option);
+        }
+    }, [currentImageIndex]);
+    
     // 从 localStorage 读取收藏状态
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -279,8 +330,18 @@ export default function MobileProductPage(
         setSelectedColor(colorKey);
         const c = OWL_DATA.colors.find(cl => cl.key === colorKey);
 
-        if (c)
+        if (c) {
             setCurrentImageIndex(c.imageIndex);
+        }
+    };
+
+    const handleMaterialSelect = (materialKey: string) => {
+        setSelectedMaterial(materialKey);
+        const firstColorInGroup = OWL_DATA.colors.find(c => c.group === materialKey);
+        if (firstColorInGroup) {
+            setCurrentImageIndex(firstColorInGroup.imageIndex);
+            setSelectedColor(firstColorInGroup.key);
+        }
     };
 
     const fabricMap: Record<string, string> = {
@@ -293,7 +354,13 @@ export default function MobileProductPage(
         <div className="page active" id="pageDetail">
             <div className="container">
                 {}
-                <div className="hero-image" id="detailHeroImage">
+                <div 
+                    className="hero-image" 
+                    id="detailHeroImage"
+                    ref={heroImageRef}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}>
                     <img
                         src={OWL_DATA.images[currentImageIndex]}
                         alt={OWL_DATA.name}
@@ -398,14 +465,7 @@ export default function MobileProductPage(
                                 <button
                                     key={mg.key}
                                     className={`material-tab${selectedMaterial === mg.key ? " active" : ""}`}
-                                    onClick={() => {
-                                        setSelectedMaterial(mg.key);
-                                        const firstColorInGroup = OWL_DATA.colors.find(c => c.group === mg.key);
-
-                                        if (firstColorInGroup) {
-                                            setCurrentImageIndex(firstColorInGroup.imageIndex);
-                                        }
-                                    }}>
+                                    onClick={() => handleMaterialSelect(mg.key)}>
                                     {mg.label}
                                 </button>
                             );

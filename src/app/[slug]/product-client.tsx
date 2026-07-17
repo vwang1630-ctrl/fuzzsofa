@@ -358,7 +358,7 @@ export function ProductPageClient(
         "Meteorite": "animalMeteorite"
     };
 
-    const collectionName = `${t(animalKeyMap[product.animal] || "animalGorilla" as TranslationKeys)} ${t("collection").toUpperCase()}`;
+    const collectionName = `${t((animalKeyMap[product.animal] || "animalGorilla") as TranslationKeys)} ${t("collection").toUpperCase()}`;
 
     const matTypeKeyMap: Record<string, string> = {
         "Plush Fur": "matTypePlushFur",
@@ -632,7 +632,7 @@ export function ProductPageClient(
                                                 setActiveImage(colorToImageIndex[firstOpt] ?? 0);
                                             }}
                                             className={`text-[12px] tracking-[0.06em] px-3 py-1 rounded-sm transition-all duration-300 ${isMatSel ? "text-[#E8B4B8] border border-[#E8B4B8]/50 bg-[#E8B4B8]/8" : "text-[#8A8580] border border-[#333] hover:border-[#555]"}`}>
-                                            {t(matTypeKeyMap[mat.type] || "matTypeFabric" as TranslationKeys)}
+                                            {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
                                         </button>
                                     );
                                 })}
@@ -690,7 +690,7 @@ export function ProductPageClient(
                                                     </span>
                                                     <span
                                                         className={`text-[12px] tracking-[0.03em] max-w-[64px] truncate ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580]"}`}>
-                                                        {t(colorNameKeyMap[opt] || "colorSelectColor" as TranslationKeys)}
+                                                        {t((colorNameKeyMap[opt] || "colorSelectColor") as TranslationKeys)}
                                                     </span>
                                                 </button>
                                             );
@@ -1147,7 +1147,7 @@ export function ProductPageClient(
                                                     setActiveImage(colorToImageIndex[firstOpt] ?? 0);
                                                 }}
                                                 className={`text-xs tracking-[0.08em] px-4 py-1.5 rounded-sm transition-all duration-300 ${isMatSelected ? "text-[#E8B4B8] border border-[#E8B4B8]/50 bg-[#E8B4B8]/8" : "text-[#8A8580] border border-[#333] hover:border-[#555] hover:text-[#F5F0EB]/60"}`}>
-                                                {t(matTypeKeyMap[mat.type] || "matTypeFabric" as TranslationKeys)}
+                                                {t((matTypeKeyMap[mat.type] || "matTypeFabric") as TranslationKeys)}
                                             </button>
                                         );
                                     })}
@@ -1200,7 +1200,7 @@ export function ProductPageClient(
                                                         </span>
                                                         <span
                                                             className={`text-[12px] tracking-[0.04em] mt-1.5 whitespace-nowrap ${isSelected ? "text-[#E8B4B8]" : "text-[#8A8580] group-hover:text-[#F5F0EB]/60"}`}>
-                                                            {t(colorNameKeyMap[opt] || "matTypeFabric" as TranslationKeys)}
+                                                            {t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)}
                                                         </span>
                                                     </button>
                                                 );
@@ -2098,7 +2098,7 @@ export function ProductPageClient(
                                     <div className="pt-2 pb-0.5 sm:p-5">
                                         <p
                                             className="text-[12px] sm:text-[12px] text-[#8A8580] tracking-[0.12em] uppercase mb-0.5 sm:mb-1">
-                                            {t(animalKeyMap[rp.animal] || "animalGorilla" as TranslationKeys)} {t("collection").toUpperCase()}
+                                            {t((animalKeyMap[rp.animal] || "animalGorilla") as TranslationKeys)} {t("collection").toUpperCase()}
                                         </p>
                                         <h3
                                             className="font-serif text-[14px] sm:text-xl font-light text-[#F5F0EB] leading-snug">{rpName}</h3>
