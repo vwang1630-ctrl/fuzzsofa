@@ -5,6 +5,162 @@ html, body {
   background: #000000 !important;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  /* 防止 iOS Safari 橡皮筋效果 */
+  overscroll-behavior-y: contain;
+  /* 防止双击缩放 */
+  touch-action: manipulation;
+}
+
+/* ===== 视口适配 ===== */
+/* 确保在横屏和小屏幕上正常显示 */
+@supports (width: 100vw) {
+  .app {
+    width: 100vw;
+    max-width: 100%;
+  }
+}
+
+/* ===== 安全区域适配 ===== */
+/* 适配刘海屏和底部安全区 */
+@supports (padding: env(safe-area-inset-top)) {
+  .app {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+  
+  .navbar {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .bottom-nav {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ===== 触摸反馈优化 ===== */
+/* 所有可点击元素添加触摸反馈 */
+.app button,
+.app a,
+.app [role="button"],
+.app input[type="button"],
+.app input[type="submit"] {
+  /* 移除点击高亮 */
+  -webkit-tap-highlight-color: transparent;
+  /* 添加触摸反馈 */
+  transition: transform 0.1s ease, opacity 0.1s ease;
+  /* 防止文本选择 */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 触摸时的视觉反馈 */
+.app button:active,
+.app a:active,
+.app [role="button"]:active {
+  transform: scale(0.96);
+  opacity: 0.8;
+}
+
+/* ===== 滚动行为优化 ===== */
+/* 平滑滚动 */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* 滚动容器优化 */
+.scroll-container,
+.scene-scroll,
+.explore-scroll,
+.product-scroll {
+  /* 启用惯性滚动 */
+  -webkit-overflow-scrolling: touch;
+  /* 滚动吸附 */
+  scroll-snap-type: x mandatory;
+  /* 隐藏滚动条但保持可滚动 */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-container::-webkit-scrollbar,
+.scene-scroll::-webkit-scrollbar,
+.explore-scroll::-webkit-scrollbar,
+.product-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* 滚动吸附子元素 */
+.scroll-container > *,
+.scene-scroll > *,
+.explore-scroll > *,
+.product-scroll > * {
+  scroll-snap-align: start;
+}
+
+/* ===== 性能优化 ===== */
+/* 使用 transform 和 opacity 进行动画，避免重排 */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+  will-change: opacity;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+  will-change: transform;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 图片懒加载优化 */
+img[loading="lazy"] {
+  content-visibility: auto;
+}
+
+/* ===== 可访问性优化 ===== */
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 焦点可见性 */
+.app button:focus-visible,
+.app a:focus-visible,
+.app input:focus-visible,
+.app select:focus-visible,
+.app textarea:focus-visible {
+  outline: 2px solid #E8B4B8;
+  outline-offset: 2px;
+}
+
+/* ===== 防止字体闪烁 ===== */
+@font-face {
+  font-display: swap;
 }
 
 /* ===== 全局底部固定元素安全规则 ===== */
