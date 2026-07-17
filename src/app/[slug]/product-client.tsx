@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import CosmicInspiration from "@/components/cosmic-inspiration";
 import type { Product } from "@/lib/products";
 import { getPrice, formatPrice } from "@/lib/products";
-import { productJsonLd, faqJsonLd, breadcrumbJsonLd, itemPageJsonLd } from "@/lib/seo";
+import { productJsonLd, faqJsonLd, breadcrumbJsonLd, itemPageJsonLd, spaceImagesJsonLd } from "@/lib/seo";
 import { useCart } from "@/lib/cart-context";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
@@ -473,6 +473,13 @@ export function ProductPageClient(
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify(itemPageJsonLd(product))
                 }} />
+            {product.slug === "owl-sofa" && spaceImages && spaceImages.length > 0 && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(spaceImagesJsonLd(product, spaceImages))
+                    }} />
+            )}
             {}
             <section className="bg-[#0A0A0A]">
                 <div

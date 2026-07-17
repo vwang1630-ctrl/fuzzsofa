@@ -213,3 +213,25 @@ export function imageObjectJsonLd(url: string, caption: string, width = 1200, he
     height,
   };
 }
+
+export function spaceImagesJsonLd(product: Product, spaceImages: { image: string; titleKey?: string; title?: string; descKey: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: spaceImages.map((space, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "ImageObject",
+        name: `${product.name} in ${space.titleKey || space.title || "Interior Space"}`,
+        description: space.descKey,
+        contentUrl: `${SITE_URL}${space.image}`,
+        about: {
+          "@type": "Product",
+          name: product.name,
+          description: product.metaDescription,
+        },
+      },
+    })),
+  };
+}
