@@ -2593,7 +2593,7 @@ export const translations: Record<Locale, Record<TranslationKeys, string>> = {
     fromShanghai: "从上海到世界",
     articles: "文章",
     shareComingSoon: "分享功能即将上线",
-    luxuryVillas: "豪华别墅",
+    luxuryVillas: "理想之家",
     boutiqueHotels: "精品酒店",
     contemporaryHomes: "现代住宅",
     sculpturalTrend: "雕塑趋势",
