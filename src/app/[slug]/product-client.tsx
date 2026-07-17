@@ -1314,11 +1314,11 @@ export function ProductPageClient(
             </section>
             {}
             <section className="bg-[#0F0E0E]">
-                <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-3 md:py-6">
+                <div className="max-w-[1200px] mx-auto px-4 md:px-6 pt-3 md:pt-6 pb-6 md:pb-10">
                     {}
-                    <div className="mb-3 md:mb-6">
+                    <div className="mb-2 md:mb-4">
                         <p
-                            className="text-[12px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1.5 md:mb-3 flex items-center gap-2">
+                            className="text-[12px] md:text-[12px] text-[#E8B4B8]/60 tracking-[0.2em] uppercase mb-1 md:mb-2 flex items-center gap-2">
                             <span className="inline-block w-6 h-px bg-[#E8B4B8]/40" />{t("interiorInspiration" as TranslationKeys)}
                         </p>
                         <h2
@@ -1338,7 +1338,7 @@ export function ProductPageClient(
                             className="group cursor-pointer flex-shrink-0 w-[80vw] sm:w-auto snap-start">
                             {}
                             <div
-                                className="relative aspect-[4/3] bg-[#111] overflow-hidden mb-2 md:mb-4 rounded-sm">
+                                className="relative aspect-[3/2] bg-[#111] overflow-hidden mb-1.5 md:mb-2.5 rounded-sm">
                                 {space.image ? <img
                                     src={space.image}
                                     alt={`${productName} in ${space.title}`}
@@ -1360,7 +1360,7 @@ export function ProductPageClient(
                             {}
                             <div className="hidden sm:block">
                                 <p
-                                    className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-1 group-hover:text-[#E8B4B8] transition-colors duration-300">
+                                    className="text-[12px] tracking-[0.15em] uppercase text-[#F5F0EB]/50 mb-0.5 group-hover:text-[#E8B4B8] transition-colors duration-300">
                                     {space.titleKey ? t(space.titleKey as TranslationKeys) : space.title}
                                 </p>
                                 <p className="text-[14px] text-[#8A8580] leading-[1.6]">
