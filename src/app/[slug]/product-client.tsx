@@ -169,15 +169,15 @@ export function ProductPageClient(
         descKey: string;
     }[]> = {
         "owl-sofa": [{
-            image: "/products/spaces/owl-space-1.jpg",
+            image: "/products/spaces/owl-space-1.png",
             titleKey: "luxuryVillas",
             descKey: "owlSpace1Desc"
         }, {
-            image: "/products/spaces/owl-space-2.jpg",
+            image: "/products/spaces/owl-space-2.png",
             titleKey: "privateLibraries",
             descKey: "owlSpace2Desc"
         }, {
-            image: "/products/spaces/owl-space-3.jpg",
+            image: "/products/spaces/owl-space-3.png",
             titleKey: "boutiqueHotels",
             descKey: "owlSpace3Desc"
         }],
