@@ -434,7 +434,7 @@ html, body {
 }
 .hero-overlay .hero-sub {
   font-size: 14px;
-  color: #A8A8A0;
+  color: #8A8580;
   font-weight: 400;
   letter-spacing: 0.04em;
   margin-bottom: 16px;
@@ -488,7 +488,7 @@ html, body {
   padding: 16px 16px 8px;
   text-align: center;
   font-size: 14px;
-  color: #A8A8A0;
+  color: #8A8580;
   font-weight: 400;
   letter-spacing: 0.06em;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
@@ -509,7 +509,7 @@ html, body {
 .media-quote blockquote {
   font-size: 14px;
   font-style: italic;
-  color: #A8A8A0;
+  color: #8A8580;
   font-weight: 400;
   line-height: 1.6;
   margin: 0;
@@ -583,7 +583,7 @@ html, body {
 }
 .product-card .info .name {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: #F5F0EB;
   letter-spacing: 0.03em;
@@ -648,7 +648,7 @@ html, body {
 .log-preview-content .summary {
   font-size: 14px;
   line-height: 1.7;
-  color: #A8A8A0;
+  color: #8A8580;
   font-weight: 400;
   margin-bottom: 8px;
   display: -webkit-box;
@@ -660,7 +660,7 @@ html, body {
   background: none;
   border: none;
   color: #E8B4B8;
-  font-size: 13px;
+  font-size: 12px;
   font-family: inherit;
   letter-spacing: 0.04em;
   cursor: pointer;
