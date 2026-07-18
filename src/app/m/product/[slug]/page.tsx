@@ -851,7 +851,7 @@ export default function MobileProductPage(
             </div>}
             {}
             {showAIOverlay && <div
-                className="ai-overlay"
+                className="ai-overlay open"
                 onClick={(e: React.MouseEvent<HTMLDivElement>) => {
                     if (e.target === e.currentTarget)
                         setShowAIOverlay(false);
