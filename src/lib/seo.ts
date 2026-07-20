@@ -13,7 +13,7 @@ export function productJsonLd(product: Product) {
     "@type": "Product",
     name: isOwlChair ? "Owl Chair" : product.name,
     description: isOwlChair
-      ? "Handcrafted owl-inspired sculptural reading chair with wrap-around backrest inspired by owl wings. Solid walnut wood frame, premium velvet upholstery, made to order."
+      ? "猫头鹰椅 — 雕塑感阅读椅，灵感源自猫头鹰展翅的姿态。圆润椅背营造180°环抱感，紧凑比例适合任何角落。手工打造，多种材质和颜色可选。"
       : product.metaDescription,
     brand: {
       "@type": "Brand",
@@ -26,12 +26,12 @@ export function productJsonLd(product: Product) {
     },
     category: isOwlChair ? "Sculptural Reading Chair" : "Sculptural Furniture / Contemporary Sofa",
     material: isOwlChair
-      ? ["Solid Walnut Wood", "High-Density Foam", "Down Feather", "Velvet Upholstery"]
+      ? ["实木框架", "高密度海绵", "面料可选"]
       : (Array.isArray(product.materials) ? product.materials : [product.materials]),
-    width: isOwlChair ? "86 cm" : undefined,
-    depth: isOwlChair ? "82 cm" : undefined,
-    height: isOwlChair ? "76 cm" : undefined,
-    weight: isOwlChair ? "60 kg" : undefined,
+    width: isOwlChair ? "88 cm" : undefined,
+    depth: isOwlChair ? "85 cm" : undefined,
+    height: isOwlChair ? "92 cm" : undefined,
+    weight: isOwlChair ? "28 kg" : undefined,
     additionalProperty: product.slug === "meteorite-ring-sofa" ? [
       { "@type": "PropertyValue", name: "Design", value: "360-degree conversation sofa" },
       { "@type": "PropertyValue", name: "Style", value: "Sculptural furniture" },
@@ -41,9 +41,9 @@ export function productJsonLd(product: Product) {
     offers: {
       "@type": "Offer",
       priceCurrency: "USD",
-      price: isOwlChair ? "4800" : product.priceRange.americas[0],
+      price: isOwlChair ? "3500" : product.priceRange.americas[0],
       availability: isOwlChair ? "https://schema.org/MadeToOrder" : "https://schema.org/PreOrder",
-      url: `${SITE_URL}/${product.slug}`,
+      url: isOwlChair ? `${SITE_URL}/m/product/owl-sofa` : `${SITE_URL}/${product.slug}`,
       description: "Made-to-order production only. Each piece is individually produced after order confirmation.",
       seller: {
         "@type": "Organization",
