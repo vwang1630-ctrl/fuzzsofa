@@ -305,12 +305,20 @@ export function ProductPageClient(
 
     const images = productImages[product.slug] || [];
 
+    // Alt text keys for owl-sofa product images
+    const owlImageAltKeys = [
+        "owlImg1Alt", "owlImg2Alt", "owlImg3Alt", "owlImg4Alt",
+        "owlImg5Alt", "owlImg6Alt", "owlImg7Alt"
+    ];
+
     const galleryImages = images.length > 0 ? images.map((src, i) => ({
         id: i,
-        src
+        src,
+        altTextKey: product.slug === "owl-sofa" ? owlImageAltKeys[i] : null
     })) : [{
         id: 0,
-        src: ""
+        src: "",
+        altTextKey: null
     }];
 
     const displayPrice = formatPrice(getPrice(product, region), region);
@@ -602,7 +610,7 @@ export function ProductPageClient(
                                     <div className="relative w-full aspect-square overflow-hidden">
                                         {img.src ? <img
                                             src={img.src}
-                                            alt={productName}
+                                            alt={img.altTextKey ? t(img.altTextKey as TranslationKeys) : productName}
                                             className="absolute inset-0 w-full h-full object-cover" /> : <div className="flex items-center justify-center py-20"><span className="font-serif text-[10rem] text-[#F5F0EB]/[0.04] select-none">{product.animal.charAt(0)}</span></div>}
                                     </div>
                                 </div>
@@ -911,7 +919,7 @@ export function ProductPageClient(
                             <div className="relative w-full aspect-square bg-[#111] overflow-hidden">
                                 {galleryImages[activeImage]?.src ? <img
                                     src={galleryImages[activeImage].src}
-                                    alt={productName}
+                                    alt={galleryImages[activeImage].altTextKey ? t(galleryImages[activeImage].altTextKey as TranslationKeys) : productName}
                                     className="w-full h-full object-contain" /> : <div className="absolute inset-0 flex items-center justify-center">
                                     <span
                                         className="font-serif text-[10rem] md:text-[15rem] text-[#F5F0EB]/[0.04] select-none">
