@@ -501,16 +501,34 @@ export default function MobileProductPage(
                                 <span>复制链接</span>
                             </button>
                             <div className="menu-divider" />
-                            <button className="menu-item" onClick={() => setShowShare(false)}>
+                            <button className="menu-item" onClick={() => {
+                                window.open(`https://instagram.com/fuzzsofa`, "_blank");
+                                setShowShare(false);
+                            }}>
                                 <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
                                 <span>Instagram</span>
                             </button>
-                            <button className="menu-item" onClick={() => setShowShare(false)}>
+                            <button className="menu-item" onClick={() => {
+                                const url = window.location.href;
+                                const text = `${OWL_DATA.name} — Fuzz Sofa`;
+                                window.open(
+                                    `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(text)}`,
+                                    "_blank"
+                                );
+                                setShowShare(false);
+                            }}>
                                 <svg viewBox="0 0 24 24"><path
                                         d="M12 2C6.48 2 2 6.48 2 12c0 3.85 2.14 7.2 5.27 8.94-.07-.75-.14-1.9.03-2.72.16-.74 1.04-4.4 1.04-4.4s-.26-.54-.26-1.33c0-1.25.72-2.18 1.62-2.18.77 0 1.14.58 1.14 1.27 0 .77-.49 1.93-.74 3.01-.21.9.45 1.64 1.34 1.64 1.61 0 2.85-1.7 2.85-4.14 0-2.16-1.55-3.68-3.77-3.68-2.57 0-4.07 1.93-4.07 3.92 0 .78.3 1.61.67 2.06.08.08.1.16.07.24-.07.29-.22.9-.25.92-.04.15-.12.18-.24.11-1.8-.83-2.92-3.43-2.92-5.52C7.52 6.8 10.47 4 14.05 4c3.03 0 5.38 2.16 5.38 5.04 0 3.01-1.9 5.43-4.53 5.43-.89 0-1.72-.46-2-1.01 0 0-.44 1.67-.55 2.08-.2.76-.74 1.73-1.1 2.31.82.25 1.7.4 2.62.4 5.52 0 10-4.48 10-10S17.52 2 12 2z" /></svg>
                                 <span>Pinterest</span>
                             </button>
-                            <button className="menu-item" onClick={() => setShowShare(false)}>
+                            <button className="menu-item" onClick={() => {
+                                const url = window.location.href;
+                                window.open(
+                                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                                    "_blank"
+                                );
+                                setShowShare(false);
+                            }}>
                                 <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
                                 <span>Facebook</span>
                             </button>
