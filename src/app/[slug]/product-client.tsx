@@ -167,23 +167,24 @@ export function ProductPageClient(
         titleKey?: string;
         title?: string;
         descKey: string;
+        altTextKey?: string;
         altText?: string;
     }[]> = {
         "owl-sofa": [{
             image: "/products/spaces/owl-space-1.png",
             titleKey: "luxuryVillas",
             descKey: "owlSpace1Desc",
-            altText: "White Owl Chair in a stone castle tower, snow falling outside arched window, sculptural reading armchair by Fuzz Sofa Studio"
+            altTextKey: "owlSpace1Alt"
         }, {
             image: "/products/spaces/owl-space-2.png",
             titleKey: "privateLibraries",
             descKey: "owlSpace2Desc",
-            altText: "Green velvet Owl Chair in a vintage conservatory library, surrounded by ferns and books, Fuzz Sofa Studio"
+            altTextKey: "owlSpace2Alt"
         }, {
             image: "/products/spaces/owl-space-3.png",
             titleKey: "boutiqueHotels",
             descKey: "owlSpace3Desc",
-            altText: "Pink velvet Owl Chair in a boutique hotel suite, warm lighting and city view, Fuzz Sofa Studio"
+            altTextKey: "owlSpace3Alt"
         }],
 
         "meteorite-ring-sofa": [{
@@ -1333,7 +1334,7 @@ export function ProductPageClient(
                                 className="relative bg-[#111] overflow-hidden mb-1.5 md:mb-2.5 rounded-sm">
                                 {space.image ? <img
                                     src={space.image}
-                                    alt={space.altText || `${productName} in ${space.title}`}
+                                    alt={space.altTextKey ? t(space.altTextKey as TranslationKeys) : (space.altText || `${productName} in ${space.title}`)}
                                     className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.03]" /> : <div className="w-full aspect-[3/2] flex items-center justify-center">
                                     <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
                                         {product.animal.charAt(0)}
