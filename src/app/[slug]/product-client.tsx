@@ -167,19 +167,23 @@ export function ProductPageClient(
         titleKey?: string;
         title?: string;
         descKey: string;
+        altText?: string;
     }[]> = {
         "owl-sofa": [{
             image: "/products/spaces/owl-space-1.png",
             titleKey: "luxuryVillas",
-            descKey: "owlSpace1Desc"
+            descKey: "owlSpace1Desc",
+            altText: "White Owl Chair in a stone castle tower, snow falling outside arched window, sculptural reading armchair by Fuzz Sofa Studio"
         }, {
             image: "/products/spaces/owl-space-2.png",
             titleKey: "privateLibraries",
-            descKey: "owlSpace2Desc"
+            descKey: "owlSpace2Desc",
+            altText: "Green velvet Owl Chair in a vintage conservatory library, surrounded by ferns and books, Fuzz Sofa Studio"
         }, {
             image: "/products/spaces/owl-space-3.png",
             titleKey: "boutiqueHotels",
-            descKey: "owlSpace3Desc"
+            descKey: "owlSpace3Desc",
+            altText: "Pink velvet Owl Chair in a boutique hotel suite, warm lighting and city view, Fuzz Sofa Studio"
         }],
 
         "meteorite-ring-sofa": [{
@@ -1329,7 +1333,7 @@ export function ProductPageClient(
                                 className="relative bg-[#111] overflow-hidden mb-1.5 md:mb-2.5 rounded-sm">
                                 {space.image ? <img
                                     src={space.image}
-                                    alt={`${productName} in ${space.title}`}
+                                    alt={space.altText || `${productName} in ${space.title}`}
                                     className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.03]" /> : <div className="w-full aspect-[3/2] flex items-center justify-center">
                                     <span className="font-serif text-[8rem] text-[#F5F0EB]/[0.04] select-none">
                                         {product.animal.charAt(0)}
@@ -2201,6 +2205,19 @@ export function ProductPageClient(
                     </Link>
                 </div>
             </div>}
+            {}
+            <script type="application/ld+json" dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Organization",
+                    "name": "Fuzz Sofa Studio",
+                    "url": typeof window !== 'undefined' ? window.location.origin : "https://fuzzsofa.com",
+                    "sameAs": [
+                        "https://www.instagram.com/fuzzsofa/",
+                        "https://www.pinterest.com/fuzzsofa/"
+                    ]
+                })
+            }} />
         </>
     );
 }
