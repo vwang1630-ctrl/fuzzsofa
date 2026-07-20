@@ -18,11 +18,16 @@ export async function generateMetadata({ params }: PageProps) {
   const product = getProduct(slug);
   if (!product) return { title: "Not Found" };
 
+  // Custom title for Owl Chair
+  const title = slug === "owl-sofa"
+    ? "Owl Chair | Sculptural Reading Armchair | Fuzz Sofa Studio"
+    : `${product.name} | Sculptural Circular Sofa | Fuzz Sofa`;
+
   return {
-    title: `${product.name} | Sculptural Circular Sofa | Fuzz Sofa`,
+    title,
     description: product.metaDescription,
     openGraph: {
-      title: `${product.name} | Sculptural Circular Sofa | Fuzz Sofa`,
+      title,
       description: product.metaDescription,
       url: `https://fuzzsofa.com/${product.slug}`,
       type: "website",
@@ -30,7 +35,7 @@ export async function generateMetadata({ params }: PageProps) {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} | Sculptural Circular Sofa | Fuzz Sofa`,
+      title,
       description: product.metaDescription,
     },
   };

@@ -5,26 +5,33 @@ const SITE_URL = "https://fuzzsofa.com";
 const SITE_NAME = "Fuzz Sofa Studio";
 
 export function productJsonLd(product: Product) {
+  // Custom data for Owl Chair
+  const isOwlChair = product.slug === "owl-sofa";
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: product.name,
-    description: product.metaDescription,
+    name: isOwlChair ? "Owl Chair" : product.name,
+    description: isOwlChair
+      ? "Handcrafted owl-inspired sculptural reading chair with wrap-around backrest inspired by owl wings. Solid walnut wood frame, premium velvet upholstery, made to order."
+      : product.metaDescription,
     brand: {
       "@type": "Brand",
       name: SITE_NAME,
     },
+    sku: isOwlChair ? "OWL-CHAIR-01" : undefined,
     manufacturer: {
-      "@type": "Organization",
+      "@type": "Manufacturer",
       name: SITE_NAME,
-      description: "A made-to-order sculptural furniture studio",
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "CN",
-      },
     },
-    category: "Sculptural Furniture / Contemporary Sofa",
-    material: Array.isArray(product.materials) ? product.materials : [product.materials],
+    category: isOwlChair ? "Sculptural Reading Chair" : "Sculptural Furniture / Contemporary Sofa",
+    material: isOwlChair
+      ? ["Solid Walnut Wood", "High-Density Foam", "Down Feather", "Velvet Upholstery"]
+      : (Array.isArray(product.materials) ? product.materials : [product.materials]),
+    width: isOwlChair ? "86 cm" : undefined,
+    depth: isOwlChair ? "82 cm" : undefined,
+    height: isOwlChair ? "76 cm" : undefined,
+    weight: isOwlChair ? "60 kg" : undefined,
     additionalProperty: product.slug === "meteorite-ring-sofa" ? [
       { "@type": "PropertyValue", name: "Design", value: "360-degree conversation sofa" },
       { "@type": "PropertyValue", name: "Style", value: "Sculptural furniture" },
@@ -32,11 +39,11 @@ export function productJsonLd(product: Product) {
     productionMode: "MadeToOrder",
     customizable: true,
     offers: {
-      "@type": "AggregateOffer",
-      lowPrice: product.priceRange.americas[0],
-      highPrice: product.priceRange.americas[1],
+      "@type": "Offer",
       priceCurrency: "USD",
-      availability: "https://schema.org/PreOrder",
+      price: isOwlChair ? "4800" : product.priceRange.americas[0],
+      availability: isOwlChair ? "https://schema.org/MadeToOrder" : "https://schema.org/PreOrder",
+      url: `${SITE_URL}/${product.slug}`,
       description: "Made-to-order production only. Each piece is individually produced after order confirmation.",
       seller: {
         "@type": "Organization",
@@ -66,7 +73,17 @@ export function productJsonLd(product: Product) {
         },
       },
     },
-    image: `${SITE_URL}/${product.slug}.jpg`,
+    image: isOwlChair
+      ? [
+          `${SITE_URL}/products/owl/owl-1.jpg`,
+          `${SITE_URL}/products/owl/owl-2.jpg`,
+          `${SITE_URL}/products/owl/owl-3.jpg`,
+          `${SITE_URL}/products/owl/owl-4.jpg`,
+          `${SITE_URL}/products/owl/owl-5.jpg`,
+          `${SITE_URL}/products/owl/owl-6.jpg`,
+          `${SITE_URL}/products/owl/owl-7.jpg`,
+        ]
+      : `${SITE_URL}/${product.slug}.jpg`,
     url: `${SITE_URL}/${product.slug}`,
   };
 }
