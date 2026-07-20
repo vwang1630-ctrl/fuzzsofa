@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// 产品 slug 列表
+const PRODUCT_SLUGS = [
+  'gorilla-sofa',
+  'owl-sofa',
+  'silverback-sofa',
+  'meteorite-ring-sofa',
+  'muscle-gorilla-sofa',
+];
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
@@ -23,7 +32,22 @@ export function middleware(request: NextRequest) {
   
   // 如果是手机端设备且没有桌面版偏好，重定向到手机端版本
   if (isMobile && !preferDesktop) {
-    const mobileUrl = new URL(`/m${pathname}`, request.url);
+    let mobilePath = '';
+    
+    // 产品详情页：/[slug] -> /m/product/[slug]
+    if (PRODUCT_SLUGS.includes(pathname.slice(1))) {
+      mobilePath = `/m/product${pathname}`;
+    } 
+    // 首页
+    else if (pathname === '/') {
+      mobilePath = '/m';
+    }
+    // 其他路由：/[path] -> /m/[path]
+    else {
+      mobilePath = `/m${pathname}`;
+    }
+    
+    const mobileUrl = new URL(mobilePath, request.url);
     mobileUrl.search = request.nextUrl.search;
     return NextResponse.redirect(mobileUrl);
   }
