@@ -71,6 +71,8 @@ export function Footer() {
             <li><Link href="/refund-policy" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("refundPolicy" as TranslationKeys)}</Link></li>
             <li><Link href="/warranty" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("warranty")}</Link></li>
             <li><Link href="/privacy" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("privacy")}</Link></li>
+            <li><Link href="/terms" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("termsOfService" as TranslationKeys)}</Link></li>
+            <li><Link href="/cookie-policy" className="text-[12px] font-light tracking-[0.05em] text-[#8A8580] hover:text-[#E8B4B8] transition-colors">{t("cookiePolicy" as TranslationKeys)}</Link></li>
           </ul>
         </div>
       </div>
@@ -82,10 +84,23 @@ export function Footer() {
             Payments are securely processed by international payment providers.
           </p>
           <div className="flex items-center gap-4">
-            <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50">VISA</span>
-            <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50">MC</span>
-            <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50">AMEX</span>
-            <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50">Apple Pay</span>
+            {/* Payment Methods */}
+            <div className="flex items-center gap-3">
+              <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50 font-medium">VISA</span>
+              <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50 font-medium">MC</span>
+              <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50 font-medium">AMEX</span>
+              <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50 font-medium">Apple Pay</span>
+              <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50 font-medium">PayPal</span>
+              <span className="text-[12px] tracking-[0.05em] text-[#8A8580]/50 font-medium">Klarna</span>
+            </div>
+            {/* SSL Secure Badge */}
+            <div className="flex items-center gap-1.5 pl-3 border-l border-[#1A1A1A]">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#8A8580]/50">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+              </svg>
+              <span className="text-[11px] tracking-[0.05em] text-[#8A8580]/50 uppercase">SSL Secure</span>
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.cn/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
 
 /* ===== Global Root Container Reset ===== */
 html, body {
@@ -1788,7 +1788,7 @@ img[loading="lazy"] {
 #pageDetail .specs-header .unit-toggle button {
   background: transparent;
   border: none;
-  padding: 4px 12px;
+  padding: 10px 16px;
   font-size: 12px;
   font-family: inherit;
   color: #8A8580;
@@ -1796,7 +1796,11 @@ img[loading="lazy"] {
   transition: all 0.25s ease;
   font-weight: 300;
   letter-spacing: 0.05em;
-  min-width: 36px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #pageDetail .specs-header .unit-toggle button.active {
   background: rgba(232, 180, 184, 0.1);

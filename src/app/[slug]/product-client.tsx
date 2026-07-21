@@ -1185,6 +1185,9 @@ export function ProductPageClient(
                                                             setMaterialOption(opt);
                                                             setActiveImage(globalIdx);
                                                         }}
+                                                        role="radio"
+                                                        aria-checked={isSelected}
+                                                        aria-label={`Select ${t((colorNameKeyMap[opt] || "matTypeFabric") as TranslationKeys)} ${activeMat.type}`}
                                                         className="flex flex-col items-center transition-all duration-300 group min-w-[60px]">
                                                         <span
                                                             className={`w-11 h-11 rounded-full flex-shrink-0 transition-all duration-300 overflow-hidden ${isSelected ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "border border-[#333] group-hover:border-[#555]"}`}>
@@ -1225,7 +1228,14 @@ export function ProductPageClient(
                                 <p className="text-[14px] text-[#F5F0EB]/60">
                                     {(() => {
                                         const f = (val: string) => useCm ? `${val}cm` : `${(parseFloat(val) / 2.54).toFixed(1)}"`;
-                                        return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)} · ${t("seatHeightLabel" as TranslationKeys)}${f(product.specifications.seatHeight)}`;
+                                        const weightKg = parseFloat(product.specifications.weight);
+                                        const weightDisplay = useCm ? `${weightKg} kg` : `${(weightKg * 2.205).toFixed(0)} lbs`;
+                                        const capacityMatch = product.specifications.capacity.match(/up to (\d+) kg/);
+                                        const capacityKg = capacityMatch ? parseInt(capacityMatch[1]) : 150;
+                                        const capacityDisplay = useCm 
+                                            ? product.specifications.capacity 
+                                            : product.specifications.capacity.replace(/up to \d+ kg/, `up to ${Math.round(capacityKg * 2.205)} lbs`);
+                                        return `${t("dimensionsW" as TranslationKeys)}${f(product.specifications.width)} × ${t("dimensionsD" as TranslationKeys)}${f(product.specifications.depth)} × ${t("dimensionsH" as TranslationKeys)}${f(product.specifications.height)} · ${t("seatHeightLabel" as TranslationKeys)}${f(product.specifications.seatHeight)} · ${t("weightLabel" as TranslationKeys)}${weightDisplay} · ${t("capacityLabel" as TranslationKeys)}${capacityDisplay}`;
                                     })()}
                                 </p>
                             </div>}

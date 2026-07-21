@@ -37,12 +37,21 @@ export const metadata: Metadata = {
     siteName: "Fuzz Sofa Studio",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "https://fuzzsofa.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Fuzz Sofa Studio - Sculptural Furniture Collection",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Fuzz Sofa Studio — Made-to-Order Sculptural Furniture",
     description:
       "A design-led furniture studio specializing in sculptural sofas produced through a made-to-order system. Each piece is individually produced after order confirmation.",
+    images: ["https://fuzzsofa.com/og-image.jpg"],
   },
   robots: {
     index: true,
