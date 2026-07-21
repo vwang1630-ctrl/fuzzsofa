@@ -13,8 +13,8 @@ const PRODUCT_SLUGS = [
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // 如果已经是手机端路由，直接放行
-  if (pathname.startsWith('/m/') || pathname === '/m') {
+  // 如果已经是手机端路由或管理后台路由，直接放行
+  if (pathname.startsWith('/m/') || pathname === '/m' || pathname.startsWith('/admin')) {
     return NextResponse.next();
   }
   
