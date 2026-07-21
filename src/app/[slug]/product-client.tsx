@@ -495,7 +495,14 @@ export function ProductPageClient(
                         __html: JSON.stringify(spaceImagesJsonLd(product, spaceImages))
                     }} />
             )}
-            {}
+            {/* Breadcrumb */}
+            <div className="max-w-[1200px] mx-auto px-6 pt-8 pb-4 text-[10px] tracking-[0.12em] uppercase text-[#555]">
+                <Link href="/" className="hover:text-[#E8B4B8] transition-colors">Home</Link>
+                <span className="mx-2">/</span>
+                <Link href="/animal-sofa-collection" className="hover:text-[#E8B4B8] transition-colors">Collection</Link>
+                <span className="mx-2">/</span>
+                <span className="text-[#8A8580]">{product.name}</span>
+            </div>
             <section className="bg-[#0A0A0A]">
                 <div
                     className="max-w-[1200px] mx-auto px-4 md:px-8 pt-4 md:pt-12 pb-8 md:pb-12">
