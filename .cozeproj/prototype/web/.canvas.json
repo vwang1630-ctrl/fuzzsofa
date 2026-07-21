@@ -3,17 +3,33 @@
     {
       "type": "html",
       "options": {
-        "path": ".cozeproj/prototype/web/magazine.html"
+        "path": ".cozeproj/prototype/web/admin.html"
       },
-      "title": "Magazine Space",
+      "title": "仪表盘",
       "size": "web"
     },
     {
       "type": "html",
       "options": {
-        "path": ".cozeproj/prototype/web/magazine-detail.html"
+        "path": ".cozeproj/prototype/web/admin-products.html"
       },
-      "title": "Article Detail",
+      "title": "商品管理",
+      "size": "web"
+    },
+    {
+      "type": "html",
+      "options": {
+        "path": ".cozeproj/prototype/web/admin-orders.html"
+      },
+      "title": "订单管理",
+      "size": "web"
+    },
+    {
+      "type": "html",
+      "options": {
+        "path": ".cozeproj/prototype/web/admin-api-docs.html"
+      },
+      "title": "API文档",
       "size": "web"
     }
   ]

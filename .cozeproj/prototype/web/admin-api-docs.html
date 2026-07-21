@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 字体 -->
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #2F6BFF;
+      --color-primary-container:    #EBF1FF;
+      --color-on-primary:           #ffffff;
+      /* === 背景 / 表面 === */
+      --color-background:                 #F6F8FB;
+      --color-surface-container-lowest:   #FFFFFF;
+      --color-surface:                    #FFFFFF;
+      --color-surface-container:          #EDF0F5;
+      --color-surface-container-high:     #E6EAF2;
+      --color-surface-container-highest:  #DDE1EA;
+      /* === 文字 === */
+      --color-on-surface:           #152033;
+      --color-on-surface-variant:   #637089;
+      /* === 功能色 === */
+      --color-success:  #16A37B;
+      --color-error:    #EF4444;
+      --color-warning:  #F59E0B;
+      /* === 边框 === */
+      --color-outline:          #E6EAF2;
+      --color-outline-variant:  #EDF0F5;
+      /* === 圆角 === */
+      --radius-sm:   0.25rem;
+      --radius-md:   0.375rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.75rem;
+      --radius-2xl:  1rem;
+      --radius-full: 9999px;
+      /* === 阴影 === */
+      --shadow-card:   0 1px 3px rgba(0,0,0,0.06);
+      --shadow-float:  0 4px 12px rgba(0,0,0,0.08);
+      --shadow-dialog: 0 16px 48px rgba(0,0,0,0.12);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+    }
+
+    @theme {
+      --color-method-get: #16A37B;
+      --color-method-get-bg: #ECFDF5;
+      --color-method-post: #2F6BFF;
+      --color-method-post-bg: #EBF1FF;
+      --color-method-put: #F59E0B;
+      --color-method-put-bg: #FFFBEB;
+      --color-method-delete: #EF4444;
+      --color-method-delete-bg: #FEF2F2;
+      --color-code-bg: #1E293B;
+      --color-code-text: #E2E8F0;
+    }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%239ca3af" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+</head>
+
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- @nav:start 导航组件 -->
+  <!-- Top Header -->
+  <header class="bg-surface sticky top-0 z-40 h-14 flex items-center justify-between px-6 border-b border-outline/20">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <i data-lucide="paw-print" class="w-4 h-4 text-on-primary"></i>
+      </div>
+      <span class="font-semibold text-base text-on-surface">Animal Sofa</span>
+      <span class="text-xs text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-md ml-1">Admin</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-md transition-colors">
+        <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+      </button>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center">
+          <span class="text-xs font-medium text-primary">初</span>
+        </div>
+        <span class="text-sm font-medium text-on-surface">小初</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex" style="height: calc(100vh - 3.5rem)">
+    <!-- Sidebar -->
+    <aside class="w-56 shrink-0 bg-surface border-r border-outline/20 overflow-y-auto">
+      <nav class="p-3 space-y-0.5">
+        <a href="admin.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="gauge" class="w-4 h-4"></i>仪表盘
+        </a>
+        <a href="admin-products.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="package" class="w-4 h-4"></i>商品管理
+        </a>
+        <a href="admin-orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>订单管理
+        </a>
+        <div class="pt-3 mt-3 border-t border-outline/20">
+          <a href="admin-api-docs.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md bg-primary/10 text-primary font-medium text-sm" aria-current="page">
+            <i data-lucide="braces" class="w-4 h-4"></i>API 文档
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- @nav:end 导航组件 -->
+
+    <!-- @main-content:start -->
+    <main class="flex-1 min-w-0 overflow-y-auto bg-background">
+      <div class="max-w-7xl mx-auto px-6 py-8">
+
+        <!-- 页面标题区 -->
+        <div class="flex items-start justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold text-on-surface">API 文档</h1>
+            <p class="text-sm text-on-surface-variant mt-1.5">前台项目对接接口文档</p>
+          </div>
+          <button id="btn-copy-base-url" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center gap-2">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            复制 Base URL
+          </button>
+        </div>
+
+        <!-- 顶部信息栏 -->
+        <div class="bg-surface rounded-lg shadow-card p-5 mb-8">
+          <div class="grid grid-cols-3 gap-6">
+            <div>
+              <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-2">Base URL</div>
+              <div class="flex items-center gap-2">
+                <code class="text-sm font-mono text-on-surface bg-surface-container px-2.5 py-1 rounded-md">https://api.animalsofa.com</code>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-2">认证方式</div>
+              <div class="flex items-center gap-2">
+                <code class="text-sm font-mono text-on-surface bg-surface-container px-2.5 py-1 rounded-md">Bearer Token</code>
+                <span class="text-xs text-on-surface-variant">via</span>
+                <code class="text-sm font-mono text-on-surface bg-surface-container px-2.5 py-1 rounded-md">x-session</code>
+                <span class="text-xs text-on-surface-variant">header</span>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-2">API 版本</div>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">v1.0</span>
+                <span class="text-xs text-on-surface-variant">稳定版本</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 主体区域：左侧目录 + 右侧接口详情 -->
+        <div class="flex gap-8">
+
+          <!-- 左侧目录导航（sticky） -->
+          <aside class="w-52 shrink-0">
+            <div class="sticky top-6">
+              <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3 px-3">接口目录</div>
+              <nav class="space-y-1">
+                <!-- 商品接口模块 -->
+                <div class="mb-3">
+                  <div class="text-xs font-semibold text-on-surface/70 uppercase tracking-wide px-3 mb-1">商品接口</div>
+                  <a href="#api-get-products" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="text-[10px] font-bold text-method-get font-mono">GET</span>
+                    <span class="truncate">获取商品列表</span>
+                  </a>
+                  <a href="#api-get-product-detail" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="text-[10px] font-bold text-method-get font-mono">GET</span>
+                    <span class="truncate">获取商品详情</span>
+                  </a>
+                </div>
+                <!-- 订单接口模块 -->
+                <div class="mb-3">
+                  <div class="text-xs font-semibold text-on-surface/70 uppercase tracking-wide px-3 mb-1">订单接口</div>
+                  <a href="#api-get-orders" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="text-[10px] font-bold text-method-get font-mono">GET</span>
+                    <span class="truncate">获取订单列表</span>
+                  </a>
+                  <a href="#api-post-orders" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="text-[10px] font-bold text-method-post font-mono">POST</span>
+                    <span class="truncate">创建订单</span>
+                  </a>
+                </div>
+                <!-- 购物车接口模块 -->
+                <div class="mb-3">
+                  <div class="text-xs font-semibold text-on-surface/70 uppercase tracking-wide px-3 mb-1">购物车接口</div>
+                  <a href="#api-get-cart" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="text-[10px] font-bold text-method-get font-mono">GET</span>
+                    <span class="truncate">获取购物车</span>
+                  </a>
+                  <a href="#api-post-cart-items" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="text-[10px] font-bold text-method-post font-mono">POST</span>
+                    <span class="truncate">添加购物车商品</span>
+                  </a>
+                </div>
+                <!-- 用户接口模块 -->
+                <div class="mb-3">
+                  <div class="text-xs font-semibold text-on-surface/70 uppercase tracking-wide px-3 mb-1">用户接口</div>
+                  <a href="#api-get-products" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="text-xs text-on-surface-variant/50">即将开放</span>
+                  </a>
+                </div>
+                <!-- 收藏接口模块 -->
+                <div class="mb-3">
+                  <div class="text-xs font-semibold text-on-surface/70 uppercase tracking-wide px-3 mb-1">收藏接口</div>
+                  <a href="#api-get-products" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="text-xs text-on-surface-variant/50">即将开放</span>
+                  </a>
+                </div>
+                <!-- 地址接口模块 -->
+                <div>
+                  <div class="text-xs font-semibold text-on-surface/70 uppercase tracking-wide px-3 mb-1">地址接口</div>
+                  <a href="#api-get-products" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+                    <span class="text-xs text-on-surface-variant/50">即将开放</span>
+                  </a>
+                </div>
+              </nav>
+            </div>
+          </aside>
+
+          <!-- 右侧接口详情区域 -->
+          <div class="flex-1 min-w-0 space-y-6">
+
+            <!-- 接口卡片 1: GET /api/products -->
+            <div id="api-get-products" class="bg-surface rounded-lg shadow-card overflow-hidden scroll-mt-6">
+              <!-- 卡片头部 -->
+              <div id="header-get-products" class="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-surface-container/30 transition-colors">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold font-mono bg-method-get-bg text-method-get">GET</span>
+                  <code class="text-sm font-mono font-medium text-on-surface">/api/products</code>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-on-surface-variant">获取商品列表</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-on-surface-variant transition-transform" id="icon-get-products"></i>
+                </div>
+              </div>
+              <!-- 卡片内容 -->
+              <div id="body-get-products" class="border-t border-outline/20">
+                <!-- 描述 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <p class="text-sm text-on-surface-variant">获取前台商品列表，支持分页、分类筛选和关键词搜索。返回商品基本信息，不含详细描述。</p>
+                </div>
+                <!-- 请求参数 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3">请求参数（Query）</div>
+                  <div class="bg-surface-container rounded-lg overflow-hidden">
+                    <div class="grid grid-cols-12 px-4 py-2.5 text-xs font-semibold text-on-surface-variant uppercase tracking-wide bg-surface-container-high">
+                      <span class="col-span-3">参数名</span>
+                      <span class="col-span-2">类型</span>
+                      <span class="col-span-2">必填</span>
+                      <span class="col-span-5">说明</span>
+                    </div>
+                    <div class="divide-y divide-outline/10">
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">page</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">integer</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">页码，默认 1</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">per_page</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">integer</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">每页数量，默认 20，最大 50</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">category</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">string</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">商品分类 slug，如 "dog-food"</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">q</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">string</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">搜索关键词，模糊匹配商品名称</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 响应示例 -->
+                <div class="px-5 py-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide">响应示例</div>
+                    <button id="btn-copy-get-products" class="inline-flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-on-surface transition-colors px-2 py-1 rounded-md hover:bg-surface-container">
+                      <i data-lucide="copy" class="w-3 h-3"></i>
+                      复制
+                    </button>
+                  </div>
+                  <pre class="bg-code-bg rounded-lg p-4 overflow-x-auto"><code class="text-code-text text-xs font-mono leading-relaxed">{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "total": 128,
+    "page": 1,
+    "per_page": 20,
+    "items": [
+      {
+        "id": 1,
+        "slug": "organic-dog-food-premium",
+        "name": "有机犬粮-高端配方",
+        "price": 299.00,
+        "original_price": 399.00,
+        "image": "https://images.unsplash.com/photo-1589924691994-45501a215ca5",
+        "category": { "id": 1, "name": "犬粮", "slug": "dog-food" },
+        "stock": 56,
+        "status": "active"
+      }
+    ]
+  }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 接口卡片 2: GET /api/products/[slug] -->
+            <div id="api-get-product-detail" class="bg-surface rounded-lg shadow-card overflow-hidden scroll-mt-6">
+              <!-- 卡片头部 -->
+              <div id="header-get-product-detail" class="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-surface-container/30 transition-colors">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold font-mono bg-method-get-bg text-method-get">GET</span>
+                  <code class="text-sm font-mono font-medium text-on-surface">/api/products/[slug]</code>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-on-surface-variant">获取商品详情</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-on-surface-variant transition-transform" id="icon-get-product-detail"></i>
+                </div>
+              </div>
+              <!-- 卡片内容 -->
+              <div id="body-get-product-detail" class="border-t border-outline/20">
+                <!-- 描述 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <p class="text-sm text-on-surface-variant">根据商品 slug 获取完整商品详情，包含描述、规格参数、SKU 列表、图片集等完整信息。</p>
+                </div>
+                <!-- 请求参数 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3">路径参数</div>
+                  <div class="bg-surface-container rounded-lg overflow-hidden">
+                    <div class="grid grid-cols-12 px-4 py-2.5 text-xs font-semibold text-on-surface-variant uppercase tracking-wide bg-surface-container-high">
+                      <span class="col-span-3">参数名</span>
+                      <span class="col-span-2">类型</span>
+                      <span class="col-span-2">必填</span>
+                      <span class="col-span-5">说明</span>
+                    </div>
+                    <div class="divide-y divide-outline/10">
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">slug</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">string</span>
+                        <span class="col-span-2"><span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-xs font-medium bg-error/15 text-error">必填</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">商品唯一标识符，如 "organic-dog-food-premium"</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 响应示例 -->
+                <div class="px-5 py-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide">响应示例</div>
+                    <button id="btn-copy-get-product-detail" class="inline-flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-on-surface transition-colors px-2 py-1 rounded-md hover:bg-surface-container">
+                      <i data-lucide="copy" class="w-3 h-3"></i>
+                      复制
+                    </button>
+                  </div>
+                  <pre class="bg-code-bg rounded-lg p-4 overflow-x-auto"><code class="text-code-text text-xs font-mono leading-relaxed">{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "id": 1,
+    "slug": "organic-dog-food-premium",
+    "name": "有机犬粮-高端配方",
+    "description": "采用天然有机原料，专为中大型犬设计...",
+    "price": 299.00,
+    "original_price": 399.00,
+    "images": [
+      "https://images.unsplash.com/photo-1589924691994-45501a215ca5",
+      "https://images.unsplash.com/photo-1568640347023-a616a30bc503"
+    ],
+    "category": { "id": 1, "name": "犬粮", "slug": "dog-food" },
+    "specs": [
+      { "name": "重量", "value": "10kg" },
+      { "name": "适用体型", "value": "中大型犬" },
+      { "name": "保质期", "value": "18个月" }
+    ],
+    "skus": [
+      { "id": 101, "name": "10kg装", "price": 299.00, "stock": 56 }
+    ],
+    "stock": 56,
+    "status": "active"
+  }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 接口卡片 3: GET /api/orders -->
+            <div id="api-get-orders" class="bg-surface rounded-lg shadow-card overflow-hidden scroll-mt-6">
+              <!-- 卡片头部 -->
+              <div id="header-get-orders" class="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-surface-container/30 transition-colors">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold font-mono bg-method-get-bg text-method-get">GET</span>
+                  <code class="text-sm font-mono font-medium text-on-surface">/api/orders</code>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-on-surface-variant">获取订单列表</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-on-surface-variant transition-transform" id="icon-get-orders"></i>
+                </div>
+              </div>
+              <!-- 卡片内容 -->
+              <div id="body-get-orders" class="border-t border-outline/20">
+                <!-- 描述 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <p class="text-sm text-on-surface-variant">获取当前用户的订单列表，支持按状态筛选和分页查询。需要认证。</p>
+                </div>
+                <!-- 请求参数 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3">请求参数（Query）</div>
+                  <div class="bg-surface-container rounded-lg overflow-hidden">
+                    <div class="grid grid-cols-12 px-4 py-2.5 text-xs font-semibold text-on-surface-variant uppercase tracking-wide bg-surface-container-high">
+                      <span class="col-span-3">参数名</span>
+                      <span class="col-span-2">类型</span>
+                      <span class="col-span-2">必填</span>
+                      <span class="col-span-5">说明</span>
+                    </div>
+                    <div class="divide-y divide-outline/10">
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">status</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">string</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">订单状态：pending / paid / shipped / completed / cancelled</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">page</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">integer</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">页码，默认 1</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">per_page</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">integer</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">每页数量，默认 10</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 响应示例 -->
+                <div class="px-5 py-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide">响应示例</div>
+                    <button id="btn-copy-get-orders" class="inline-flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-on-surface transition-colors px-2 py-1 rounded-md hover:bg-surface-container">
+                      <i data-lucide="copy" class="w-3 h-3"></i>
+                      复制
+                    </button>
+                  </div>
+                  <pre class="bg-code-bg rounded-lg p-4 overflow-x-auto"><code class="text-code-text text-xs font-mono leading-relaxed">{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "total": 5,
+    "page": 1,
+    "items": [
+      {
+        "id": "ORD-20240115-001",
+        "status": "paid",
+        "total_amount": 598.00,
+        "items_count": 2,
+        "created_at": "2024-01-15T10:30:00Z",
+        "address": {
+          "name": "张三",
+          "phone": "138****5678",
+          "city": "上海市"
+        }
+      }
+    ]
+  }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 接口卡片 4: POST /api/orders -->
+            <div id="api-post-orders" class="bg-surface rounded-lg shadow-card overflow-hidden scroll-mt-6">
+              <!-- 卡片头部 -->
+              <div id="header-post-orders" class="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-surface-container/30 transition-colors">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold font-mono bg-method-post-bg text-method-post">POST</span>
+                  <code class="text-sm font-mono font-medium text-on-surface">/api/orders</code>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-on-surface-variant">创建订单</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-on-surface-variant transition-transform" id="icon-post-orders"></i>
+                </div>
+              </div>
+              <!-- 卡片内容 -->
+              <div id="body-post-orders" class="border-t border-outline/20">
+                <!-- 描述 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <p class="text-sm text-on-surface-variant">基于购物车内容创建新订单。提交后将清空对应购物车项。需要认证。</p>
+                </div>
+                <!-- 请求参数 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3">请求体（JSON Body）</div>
+                  <div class="bg-surface-container rounded-lg overflow-hidden">
+                    <div class="grid grid-cols-12 px-4 py-2.5 text-xs font-semibold text-on-surface-variant uppercase tracking-wide bg-surface-container-high">
+                      <span class="col-span-3">参数名</span>
+                      <span class="col-span-2">类型</span>
+                      <span class="col-span-2">必填</span>
+                      <span class="col-span-5">说明</span>
+                    </div>
+                    <div class="divide-y divide-outline/10">
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">address_id</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">integer</span>
+                        <span class="col-span-2"><span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-xs font-medium bg-error/15 text-error">必填</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">收货地址 ID</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">cart_item_ids</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">array</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">指定购物车项 ID 列表，为空则提交全部购物车</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">remark</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">string</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">订单备注，最大 200 字符</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">payment_method</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">string</span>
+                        <span class="col-span-2"><span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-xs font-medium bg-error/15 text-error">必填</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">支付方式：wechat / alipay / balance</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 响应示例 -->
+                <div class="px-5 py-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide">响应示例</div>
+                    <button id="btn-copy-post-orders" class="inline-flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-on-surface transition-colors px-2 py-1 rounded-md hover:bg-surface-container">
+                      <i data-lucide="copy" class="w-3 h-3"></i>
+                      复制
+                    </button>
+                  </div>
+                  <pre class="bg-code-bg rounded-lg p-4 overflow-x-auto"><code class="text-code-text text-xs font-mono leading-relaxed">{
+  "code": 201,
+  "message": "订单创建成功",
+  "data": {
+    "id": "ORD-20240120-003",
+    "status": "pending",
+    "total_amount": 897.00,
+    "items": [
+      {
+        "product_id": 1,
+        "name": "有机犬粮-高端配方",
+        "quantity": 2,
+        "price": 299.00
+      },
+      {
+        "product_id": 5,
+        "name": "猫咪自动饮水机",
+        "quantity": 1,
+        "price": 299.00
+      }
+    ],
+    "payment_url": "https://pay.animalsofa.com/checkout/xxx",
+    "created_at": "2024-01-20T14:22:00Z"
+  }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 接口卡片 5: GET /api/cart -->
+            <div id="api-get-cart" class="bg-surface rounded-lg shadow-card overflow-hidden scroll-mt-6">
+              <!-- 卡片头部 -->
+              <div id="header-get-cart" class="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-surface-container/30 transition-colors">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold font-mono bg-method-get-bg text-method-get">GET</span>
+                  <code class="text-sm font-mono font-medium text-on-surface">/api/cart</code>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-on-surface-variant">获取购物车</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-on-surface-variant transition-transform" id="icon-get-cart"></i>
+                </div>
+              </div>
+              <!-- 卡片内容 -->
+              <div id="body-get-cart" class="border-t border-outline/20">
+                <!-- 描述 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <p class="text-sm text-on-surface-variant">获取当前用户的购物车内容，包含已添加商品的最新价格和库存状态。需要认证。</p>
+                </div>
+                <!-- 请求参数 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3">请求参数</div>
+                  <p class="text-sm text-on-surface-variant">无请求参数，通过认证 Token 识别用户身份。</p>
+                </div>
+                <!-- 响应示例 -->
+                <div class="px-5 py-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide">响应示例</div>
+                    <button id="btn-copy-get-cart" class="inline-flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-on-surface transition-colors px-2 py-1 rounded-md hover:bg-surface-container">
+                      <i data-lucide="copy" class="w-3 h-3"></i>
+                      复制
+                    </button>
+                  </div>
+                  <pre class="bg-code-bg rounded-lg p-4 overflow-x-auto"><code class="text-code-text text-xs font-mono leading-relaxed">{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "items_count": 3,
+    "total_amount": 897.00,
+    "items": [
+      {
+        "id": 101,
+        "product": {
+          "id": 1,
+          "slug": "organic-dog-food-premium",
+          "name": "有机犬粮-高端配方",
+          "image": "https://images.unsplash.com/photo-1589924691994-45501a215ca5",
+          "price": 299.00
+        },
+        "quantity": 2,
+        "subtotal": 598.00
+      },
+      {
+        "id": 102,
+        "product": {
+          "id": 5,
+          "slug": "cat-auto-water-fountain",
+          "name": "猫咪自动饮水机",
+          "image": "https://images.unsplash.com/photo-1541591204360-b6c4ec3d4206",
+          "price": 299.00
+        },
+        "quantity": 1,
+        "subtotal": 299.00
+      }
+    ]
+  }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- 接口卡片 6: POST /api/cart/items -->
+            <div id="api-post-cart-items" class="bg-surface rounded-lg shadow-card overflow-hidden scroll-mt-6">
+              <!-- 卡片头部 -->
+              <div id="header-post-cart-items" class="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-surface-container/30 transition-colors">
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold font-mono bg-method-post-bg text-method-post">POST</span>
+                  <code class="text-sm font-mono font-medium text-on-surface">/api/cart/items</code>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-on-surface-variant">添加购物车商品</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-on-surface-variant transition-transform" id="icon-post-cart-items"></i>
+                </div>
+              </div>
+              <!-- 卡片内容 -->
+              <div id="body-post-cart-items" class="border-t border-outline/20">
+                <!-- 描述 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <p class="text-sm text-on-surface-variant">向购物车添加商品。如果商品已存在则累加数量。需要认证。</p>
+                </div>
+                <!-- 请求参数 -->
+                <div class="px-5 py-4 border-b border-outline/10">
+                  <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3">请求体（JSON Body）</div>
+                  <div class="bg-surface-container rounded-lg overflow-hidden">
+                    <div class="grid grid-cols-12 px-4 py-2.5 text-xs font-semibold text-on-surface-variant uppercase tracking-wide bg-surface-container-high">
+                      <span class="col-span-3">参数名</span>
+                      <span class="col-span-2">类型</span>
+                      <span class="col-span-2">必填</span>
+                      <span class="col-span-5">说明</span>
+                    </div>
+                    <div class="divide-y divide-outline/10">
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">product_id</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">integer</span>
+                        <span class="col-span-2"><span class="inline-flex items-center px-1.5 py-0.5 rounded-sm text-xs font-medium bg-error/15 text-error">必填</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">商品 ID</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">sku_id</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">integer</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">SKU ID，不传则使用默认 SKU</span>
+                      </div>
+                      <div class="grid grid-cols-12 px-4 py-2.5">
+                        <span class="col-span-3 text-sm font-mono text-on-surface">quantity</span>
+                        <span class="col-span-2 text-sm text-on-surface-variant">integer</span>
+                        <span class="col-span-2"><span class="text-xs text-on-surface-variant">否</span></span>
+                        <span class="col-span-5 text-sm text-on-surface-variant">数量，默认 1，最大 99</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 响应示例 -->
+                <div class="px-5 py-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide">响应示例</div>
+                    <button id="btn-copy-post-cart-items" class="inline-flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-on-surface transition-colors px-2 py-1 rounded-md hover:bg-surface-container">
+                      <i data-lucide="copy" class="w-3 h-3"></i>
+                      复制
+                    </button>
+                  </div>
+                  <pre class="bg-code-bg rounded-lg p-4 overflow-x-auto"><code class="text-code-text text-xs font-mono leading-relaxed">{
+  "code": 200,
+  "message": "已添加到购物车",
+  "data": {
+    "cart_item_id": 103,
+    "product": {
+      "id": 8,
+      "name": "猫砂-豆腐猫砂 6L",
+      "price": 59.90
+    },
+    "quantity": 3,
+    "cart_total": 956.90
+  }
+}</code></pre>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+    <!-- @main-content:end -->
+  </div>
+
+  <script>lucide.createIcons();</script>
+
+  <script>
+  $(function() {
+    // 复制 Base URL
+    $('#btn-copy-base-url').on('click', function() {
+      const text = 'https://api.animalsofa.com';
+      navigator.clipboard.writeText(text).then(function() {
+        const $btn = $('#btn-copy-base-url');
+        const originalHtml = $btn.html();
+        $btn.html('<i data-lucide="check" class="w-3.5 h-3.5"></i>已复制');
+        lucide.createIcons();
+        setTimeout(function() {
+          $btn.html(originalHtml);
+          lucide.createIcons();
+        }, 2000);
+      });
+    });
+
+    // 接口卡片折叠/展开
+    var apiCards = [
+      { header: '#header-get-products', body: '#body-get-products', icon: '#icon-get-products' },
+      { header: '#header-get-product-detail', body: '#body-get-product-detail', icon: '#icon-get-product-detail' },
+      { header: '#header-get-orders', body: '#body-get-orders', icon: '#icon-get-orders' },
+      { header: '#header-post-orders', body: '#body-post-orders', icon: '#icon-post-orders' },
+      { header: '#header-get-cart', body: '#body-get-cart', icon: '#icon-get-cart' },
+      { header: '#header-post-cart-items', body: '#body-post-cart-items', icon: '#icon-post-cart-items' }
+    ];
+
+    $.each(apiCards, function(i, card) {
+      $(card.header).on('click', function() {
+        var $body = $(card.body);
+        var $icon = $(card.icon);
+        if ($body.is(':visible')) {
+          $body.slideUp(200);
+          $icon.css('transform', 'rotate(-90deg)');
+        } else {
+          $body.slideDown(200);
+          $icon.css('transform', 'rotate(0deg)');
+        }
+      });
+    });
+
+    // 复制响应示例代码
+    function bindCopyButton(btnId, preSelector) {
+      $(btnId).on('click', function() {
+        var codeText = $(preSelector).find('code').text();
+        navigator.clipboard.writeText(codeText).then(function() {
+          var $btn = $(btnId);
+          var originalHtml = $btn.html();
+          $btn.html('<i data-lucide="check" class="w-3 h-3"></i>已复制');
+          lucide.createIcons();
+          setTimeout(function() {
+            $btn.html(originalHtml);
+            lucide.createIcons();
+          }, 2000);
+        });
+      });
+    }
+
+    bindCopyButton('#btn-copy-get-products', '#api-get-products pre');
+    bindCopyButton('#btn-copy-get-product-detail', '#api-get-product-detail pre');
+    bindCopyButton('#btn-copy-get-orders', '#api-get-orders pre');
+    bindCopyButton('#btn-copy-post-orders', '#api-post-orders pre');
+    bindCopyButton('#btn-copy-get-cart', '#api-get-cart pre');
+    bindCopyButton('#btn-copy-post-cart-items', '#api-post-cart-items pre');
+
+    // 左侧目录高亮跟随滚动
+    var $main = $('main');
+    var sections = ['api-get-products', 'api-get-product-detail', 'api-get-orders', 'api-post-orders', 'api-get-cart', 'api-post-cart-items'];
+
+    $main.on('scroll', function() {
+      var scrollTop = $main.scrollTop() + 100;
+      var currentSection = '';
+      $.each(sections, function(i, id) {
+        var $el = $('#' + id);
+        if ($el.length && $el[0].offsetTop <= scrollTop) {
+          currentSection = id;
+        }
+      });
+      // 更新左侧导航高亮
+      $('aside nav a').removeClass('text-primary bg-primary/10 font-medium').addClass('text-on-surface-variant');
+      if (currentSection) {
+        $('aside nav a[href="#' + currentSection + '"]').removeClass('text-on-surface-variant').addClass('text-primary bg-primary/10 font-medium');
+      }
+    });
+  });
+  </script>
+</body>
+
+</html>

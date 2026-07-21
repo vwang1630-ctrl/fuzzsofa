@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 字体 -->
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #2F6BFF;
+      --color-primary-container:    #EBF1FF;
+      --color-on-primary:           #ffffff;
+      /* === 背景 / 表面 === */
+      --color-background:                 #F6F8FB;
+      --color-surface-container-lowest:   #FFFFFF;
+      --color-surface:                    #FFFFFF;
+      --color-surface-container:          #EDF0F5;
+      --color-surface-container-high:     #E6EAF2;
+      --color-surface-container-highest:  #DDE1EA;
+      /* === 文字 === */
+      --color-on-surface:           #152033;
+      --color-on-surface-variant:   #637089;
+      /* === 功能色 === */
+      --color-success:  #16A37B;
+      --color-error:    #EF4444;
+      --color-warning:  #F59E0B;
+      /* === 边框 === */
+      --color-outline:          #E6EAF2;
+      --color-outline-variant:  #EDF0F5;
+      /* === 圆角 === */
+      --radius-sm:   0.25rem;
+      --radius-md:   0.375rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.75rem;
+      --radius-2xl:  1rem;
+      --radius-full: 9999px;
+      /* === 阴影 === */
+      --shadow-card:   0 1px 3px rgba(0,0,0,0.06);
+      --shadow-float:  0 4px 12px rgba(0,0,0,0.08);
+      --shadow-dialog: 0 16px 48px rgba(0,0,0,0.12);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+    }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%239ca3af" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+</head>
+
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- @nav:start 导航组件 -->
+  <!-- Top Header -->
+  <header class="bg-surface sticky top-0 z-40 h-14 flex items-center justify-between px-6 border-b border-outline/20">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <i data-lucide="paw-print" class="w-4 h-4 text-on-primary"></i>
+      </div>
+      <span class="font-semibold text-base text-on-surface">Animal Sofa</span>
+      <span class="text-xs text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-md ml-1">Admin</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-md transition-colors">
+        <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+      </button>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center">
+          <span class="text-xs font-medium text-primary">初</span>
+        </div>
+        <span class="text-sm font-medium text-on-surface">小初</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex" style="height: calc(100vh - 3.5rem)">
+    <!-- Sidebar -->
+    <aside class="w-56 shrink-0 bg-surface border-r border-outline/20 overflow-y-auto">
+      <nav class="p-3 space-y-0.5">
+        <a href="admin.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="gauge" class="w-4 h-4"></i>仪表盘
+        </a>
+        <a href="admin-products.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="package" class="w-4 h-4"></i>商品管理
+        </a>
+        <a href="admin-orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md bg-primary/10 text-primary font-medium text-sm" aria-current="page">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>订单管理
+        </a>
+        <div class="pt-3 mt-3 border-t border-outline/20">
+          <a href="admin-api-docs.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+            <i data-lucide="braces" class="w-4 h-4"></i>API 文档
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- @nav:end 导航组件 -->
+
+    <!-- @main-content:start -->
+    <main class="flex-1 min-w-0 overflow-y-auto bg-background p-6">
+
+      <!-- 页面标题区 -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold text-on-surface">订单管理</h1>
+        <p class="text-sm text-on-surface-variant mt-1">查看和处理所有客户订单</p>
+      </div>
+
+      <!-- 统计标签条 -->
+      <div class="flex items-center gap-2 mb-5" id="stat-tabs">
+        <button id="stat-all" class="stat-tab inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary text-sm font-medium transition-colors" data-status="all">
+          <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+          全部订单
+          <span class="bg-primary/15 text-primary text-xs font-semibold px-1.5 py-0.5 rounded-md">156</span>
+        </button>
+        <button id="stat-pending" class="stat-tab inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-colors" data-status="pending">
+          <i data-lucide="clock" class="w-4 h-4"></i>
+          待付款
+          <span class="bg-warning/15 text-warning text-xs font-semibold px-1.5 py-0.5 rounded-md">12</span>
+        </button>
+        <button id="stat-shipped" class="stat-tab inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-colors" data-status="shipped">
+          <i data-lucide="truck" class="w-4 h-4"></i>
+          已发货
+          <span class="bg-success/15 text-success text-xs font-semibold px-1.5 py-0.5 rounded-md">38</span>
+        </button>
+        <button id="stat-completed" class="stat-tab inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-colors" data-status="completed">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          已完成
+          <span class="bg-surface-container-high text-on-surface-variant text-xs font-semibold px-1.5 py-0.5 rounded-md">98</span>
+        </button>
+      </div>
+
+      <!-- 筛选栏 -->
+      <div class="bg-surface rounded-lg shadow-card p-4 mb-5">
+        <div class="flex items-center gap-3 flex-wrap">
+          <!-- 搜索框 -->
+          <div class="relative flex-1 min-w-[220px]">
+            <i data-lucide="search" class="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+            <input id="search-input" type="text" placeholder="搜索订单号 / 客户名"
+              class="w-full bg-surface-container border-none rounded-md pl-9 pr-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors" />
+          </div>
+          <!-- 日期范围 -->
+          <div class="flex items-center gap-2">
+            <div class="relative">
+              <i data-lucide="calendar" class="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              <input id="date-start" type="date" placeholder="开始日期"
+                class="bg-surface-container border-none rounded-md pl-9 pr-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors" />
+            </div>
+            <span class="text-on-surface-variant text-sm">至</span>
+            <div class="relative">
+              <i data-lucide="calendar" class="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              <input id="date-end" type="date" placeholder="结束日期"
+                class="bg-surface-container border-none rounded-md pl-9 pr-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors" />
+            </div>
+          </div>
+          <!-- 支付方式筛选 -->
+          <select id="filter-payment" class="bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors appearance-none cursor-pointer">
+            <option value="">全部支付方式</option>
+            <option value="wechat">微信支付</option>
+            <option value="alipay">支付宝</option>
+            <option value="card">银行卡</option>
+          </select>
+          <!-- 重置按钮 -->
+          <button id="btn-reset-filter" class="inline-flex items-center gap-1.5 px-3 py-2 text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-md transition-colors">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            重置
+          </button>
+        </div>
+      </div>
+
+      <!-- 订单列表表格 -->
+      <div class="bg-surface rounded-lg shadow-card overflow-hidden">
+        <!-- 表头 -->
+        <div class="grid grid-cols-[1.2fr_0.8fr_1.2fr_0.8fr_0.7fr_1fr_0.8fr_0.6fr] px-4 py-3 bg-surface-container text-xs font-semibold text-on-surface-variant uppercase tracking-wide">
+          <span>订单号</span>
+          <span>客户姓名</span>
+          <span>商品摘要</span>
+          <span>总金额</span>
+          <span>支付方式</span>
+          <span>订单状态</span>
+          <span>下单时间</span>
+          <span>操作</span>
+        </div>
+
+        <!-- 表格内容 -->
+        <div id="order-table-body" class="divide-y divide-outline-variant/50">
+
+          <!-- 列表-订单1：待付款 -->
+          <div class="order-row grid grid-cols-[1.2fr_0.8fr_1.2fr_0.8fr_0.7fr_1fr_0.8fr_0.6fr] px-4 py-3 items-center hover:bg-surface-container/50 transition-colors" data-status="pending" data-id="ORD-2024-001">
+            <span class="text-sm font-medium text-primary">ORD-2024-001</span>
+            <span class="text-sm text-on-surface">张小美</span>
+            <span class="text-sm text-on-surface-variant">北欧风沙发 +3件商品</span>
+            <span class="text-sm font-semibold text-on-surface">¥12,680.00</span>
+            <span class="text-sm text-on-surface-variant">微信支付</span>
+            <span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning">待付款</span>
+            </span>
+            <span class="text-sm text-on-surface-variant">2024-12-18</span>
+            <button class="btn-view-detail text-primary text-sm font-medium hover:underline w-fit" data-id="ORD-2024-001">查看详情</button>
+          </div>
+
+          <!-- 列表-订单2：已付款 -->
+          <div class="order-row grid grid-cols-[1.2fr_0.8fr_1.2fr_0.8fr_0.7fr_1fr_0.8fr_0.6fr] px-4 py-3 items-center hover:bg-surface-container/50 transition-colors" data-status="paid" data-id="ORD-2024-002">
+            <span class="text-sm font-medium text-primary">ORD-2024-002</span>
+            <span class="text-sm text-on-surface">李晓华</span>
+            <span class="text-sm text-on-surface-variant">实木餐桌 +1件商品</span>
+            <span class="text-sm font-semibold text-on-surface">¥5,980.00</span>
+            <span class="text-sm text-on-surface-variant">支付宝</span>
+            <span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/15 text-primary">已付款</span>
+            </span>
+            <span class="text-sm text-on-surface-variant">2024-12-17</span>
+            <button class="btn-view-detail text-primary text-sm font-medium hover:underline w-fit" data-id="ORD-2024-002">查看详情</button>
+          </div>
+
+          <!-- 列表-订单3：已发货 -->
+          <div class="order-row grid grid-cols-[1.2fr_0.8fr_1.2fr_0.8fr_0.7fr_1fr_0.8fr_0.6fr] px-4 py-3 items-center hover:bg-surface-container/50 transition-colors" data-status="shipped" data-id="ORD-2024-003">
+            <span class="text-sm font-medium text-primary">ORD-2024-003</span>
+            <span class="text-sm text-on-surface">王大明</span>
+            <span class="text-sm text-on-surface-variant">智能床垫 +2件商品</span>
+            <span class="text-sm font-semibold text-on-surface">¥8,460.00</span>
+            <span class="text-sm text-on-surface-variant">银行卡</span>
+            <span>
+              <span class="inline-flex items-center gap-1.5">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">已发货</span>
+                <span class="text-xs text-on-surface-variant">SF1234567890</span>
+              </span>
+            </span>
+            <span class="text-sm text-on-surface-variant">2024-12-15</span>
+            <button class="btn-view-detail text-primary text-sm font-medium hover:underline w-fit" data-id="ORD-2024-003">查看详情</button>
+          </div>
+
+          <!-- 列表-订单4：已完成 -->
+          <div class="order-row grid grid-cols-[1.2fr_0.8fr_1.2fr_0.8fr_0.7fr_1fr_0.8fr_0.6fr] px-4 py-3 items-center hover:bg-surface-container/50 transition-colors" data-status="completed" data-id="ORD-2024-004">
+            <span class="text-sm font-medium text-primary">ORD-2024-004</span>
+            <span class="text-sm text-on-surface">赵婉清</span>
+            <span class="text-sm text-on-surface-variant">布艺沙发组合 +4件商品</span>
+            <span class="text-sm font-semibold text-on-surface">¥18,320.00</span>
+            <span class="text-sm text-on-surface-variant">微信支付</span>
+            <span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-on-surface-variant/15 text-on-surface-variant">已完成</span>
+            </span>
+            <span class="text-sm text-on-surface-variant">2024-12-12</span>
+            <button class="btn-view-detail text-primary text-sm font-medium hover:underline w-fit" data-id="ORD-2024-004">查看详情</button>
+          </div>
+
+          <!-- 列表-订单5：已取消 -->
+          <div class="order-row grid grid-cols-[1.2fr_0.8fr_1.2fr_0.8fr_0.7fr_1fr_0.8fr_0.6fr] px-4 py-3 items-center hover:bg-surface-container/50 transition-colors" data-status="cancelled" data-id="ORD-2024-005">
+            <span class="text-sm font-medium text-primary">ORD-2024-005</span>
+            <span class="text-sm text-on-surface">陈志强</span>
+            <span class="text-sm text-on-surface-variant">办公书桌 +1件商品</span>
+            <span class="text-sm font-semibold text-on-surface">¥3,280.00</span>
+            <span class="text-sm text-on-surface-variant">支付宝</span>
+            <span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-error/15 text-error">已取消</span>
+            </span>
+            <span class="text-sm text-on-surface-variant">2024-12-10</span>
+            <button class="btn-view-detail text-primary text-sm font-medium hover:underline w-fit" data-id="ORD-2024-005">查看详情</button>
+          </div>
+
+          <!-- 列表-订单6：已发货 -->
+          <div class="order-row grid grid-cols-[1.2fr_0.8fr_1.2fr_0.8fr_0.7fr_1fr_0.8fr_0.6fr] px-4 py-3 items-center hover:bg-surface-container/50 transition-colors" data-status="shipped" data-id="ORD-2024-006">
+            <span class="text-sm font-medium text-primary">ORD-2024-006</span>
+            <span class="text-sm text-on-surface">孙丽娜</span>
+            <span class="text-sm text-on-surface-variant">儿童学习椅 +2件商品</span>
+            <span class="text-sm font-semibold text-on-surface">¥4,560.00</span>
+            <span class="text-sm text-on-surface-variant">微信支付</span>
+            <span>
+              <span class="inline-flex items-center gap-1.5">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">已发货</span>
+                <span class="text-xs text-on-surface-variant">YT9876543210</span>
+              </span>
+            </span>
+            <span class="text-sm text-on-surface-variant">2024-12-08</span>
+            <button class="btn-view-detail text-primary text-sm font-medium hover:underline w-fit" data-id="ORD-2024-006">查看详情</button>
+          </div>
+
+          <!-- 列表-订单7：待付款 -->
+          <div class="order-row grid grid-cols-[1.2fr_0.8fr_1.2fr_0.8fr_0.7fr_1fr_0.8fr_0.6fr] px-4 py-3 items-center hover:bg-surface-container/50 transition-colors" data-status="pending" data-id="ORD-2024-007">
+            <span class="text-sm font-medium text-primary">ORD-2024-007</span>
+            <span class="text-sm text-on-surface">周建国</span>
+            <span class="text-sm text-on-surface-variant">全屋定制衣柜 +5件商品</span>
+            <span class="text-sm font-semibold text-on-surface">¥26,800.00</span>
+            <span class="text-sm text-on-surface-variant">银行卡</span>
+            <span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning">待付款</span>
+            </span>
+            <span class="text-sm text-on-surface-variant">2024-12-06</span>
+            <button class="btn-view-detail text-primary text-sm font-medium hover:underline w-fit" data-id="ORD-2024-007">查看详情</button>
+          </div>
+
+          <!-- 列表-订单8：已完成 -->
+          <div class="order-row grid grid-cols-[1.2fr_0.8fr_1.2fr_0.8fr_0.7fr_1fr_0.8fr_0.6fr] px-4 py-3 items-center hover:bg-surface-container/50 transition-colors" data-status="completed" data-id="ORD-2024-008">
+            <span class="text-sm font-medium text-primary">ORD-2024-008</span>
+            <span class="text-sm text-on-surface">吴佳琪</span>
+            <span class="text-sm text-on-surface-variant">简约书架 +3件商品</span>
+            <span class="text-sm font-semibold text-on-surface">¥6,920.00</span>
+            <span class="text-sm text-on-surface-variant">支付宝</span>
+            <span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-on-surface-variant/15 text-on-surface-variant">已完成</span>
+            </span>
+            <span class="text-sm text-on-surface-variant">2024-12-03</span>
+            <button class="btn-view-detail text-primary text-sm font-medium hover:underline w-fit" data-id="ORD-2024-008">查看详情</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 分页控件 -->
+      <div class="flex items-center justify-between mt-4 px-1">
+        <span class="text-sm text-on-surface-variant">共 156 条记录，第 1 / 20 页</span>
+        <div class="flex items-center gap-1">
+          <button id="page-prev" class="px-3 py-1.5 text-sm text-on-surface-variant bg-surface-container rounded-md hover:bg-surface-container-high transition-colors disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          </button>
+          <button class="page-btn px-3 py-1.5 text-sm font-medium bg-primary text-on-primary rounded-md">1</button>
+          <button class="page-btn px-3 py-1.5 text-sm font-medium text-on-surface-variant bg-surface-container hover:bg-surface-container-high rounded-md transition-colors">2</button>
+          <button class="page-btn px-3 py-1.5 text-sm font-medium text-on-surface-variant bg-surface-container hover:bg-surface-container-high rounded-md transition-colors">3</button>
+          <span class="px-2 text-sm text-on-surface-variant">...</span>
+          <button class="page-btn px-3 py-1.5 text-sm font-medium text-on-surface-variant bg-surface-container hover:bg-surface-container-high rounded-md transition-colors">20</button>
+          <button id="page-next" class="px-3 py-1.5 text-sm text-on-surface-variant bg-surface-container rounded-md hover:bg-surface-container-high transition-colors">
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 订单详情抽屉（Drawer） -->
+      <div id="drawer-overlay" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity"></div>
+      <div id="order-drawer" class="fixed top-0 right-0 h-full w-[480px] bg-surface shadow-dialog z-50 translate-x-full transition-transform duration-300 flex flex-col">
+
+        <!-- 抽屉头部 -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-outline/20">
+          <div>
+            <h2 id="drawer-order-id" class="text-base font-semibold text-on-surface">ORD-2024-003</h2>
+            <p class="text-xs text-on-surface-variant mt-0.5">下单时间：2024-12-15 14:32</p>
+          </div>
+          <button id="btn-close-drawer" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-md transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- 抽屉内容 -->
+        <div class="flex-1 overflow-y-auto px-6 py-5 space-y-6">
+
+          <!-- 订单状态 -->
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-sm font-medium bg-success/15 text-success">已发货</span>
+            <span class="text-sm text-on-surface-variant">物流单号：SF1234567890</span>
+          </div>
+
+          <!-- 收货地址 -->
+          <div>
+            <h3 class="text-sm font-semibold text-on-surface mb-2 flex items-center gap-1.5">
+              <i data-lucide="map-pin" class="w-4 h-4 text-on-surface-variant"></i>
+              收货地址
+            </h3>
+            <div class="bg-surface-container rounded-lg p-3">
+              <p class="text-sm text-on-surface font-medium">王大明</p>
+              <p class="text-sm text-on-surface-variant mt-1">浙江省杭州市西湖区文三路 478 号天苑大厦 12 楼 A 座</p>
+              <p class="text-sm text-on-surface-variant mt-0.5">联系电话：138****6789</p>
+            </div>
+          </div>
+
+          <!-- 商品清单 -->
+          <div>
+            <h3 class="text-sm font-semibold text-on-surface mb-2 flex items-center gap-1.5">
+              <i data-lucide="package" class="w-4 h-4 text-on-surface-variant"></i>
+              商品清单
+            </h3>
+            <div class="space-y-3">
+              <!-- 商品1 -->
+              <div class="flex items-center gap-3 bg-surface-container rounded-lg p-3">
+                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=80&h=80&fit=crop" alt="智能弹簧床垫" data-category="商业科技" class="w-14 h-14 rounded-md object-cover shrink-0" />
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-on-surface truncate">智能弹簧床垫 1.8m</p>
+                  <p class="text-xs text-on-surface-variant mt-0.5">x1</p>
+                </div>
+                <span class="text-sm font-semibold text-on-surface shrink-0">¥4,980.00</span>
+              </div>
+              <!-- 商品2 -->
+              <div class="flex items-center gap-3 bg-surface-container rounded-lg p-3">
+                <img src="https://images.unsplash.com/photo-1505693314120-0d4f3e44108c?w=80&h=80&fit=crop" alt="乳胶枕头" data-category="商业科技" class="w-14 h-14 rounded-md object-cover shrink-0" />
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-on-surface truncate">泰国乳胶枕头</p>
+                  <p class="text-xs text-on-surface-variant mt-0.5">x2</p>
+                </div>
+                <span class="text-sm font-semibold text-on-surface shrink-0">¥580.00</span>
+              </div>
+            </div>
+            <!-- 合计 -->
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-outline/20">
+              <span class="text-sm text-on-surface-variant">共 2 种商品，3 件</span>
+              <span class="text-base font-bold text-on-surface">合计：¥8,460.00</span>
+            </div>
+          </div>
+
+          <!-- 物流信息 -->
+          <div>
+            <h3 class="text-sm font-semibold text-on-surface mb-2 flex items-center gap-1.5">
+              <i data-lucide="truck" class="w-4 h-4 text-on-surface-variant"></i>
+              物流信息
+            </h3>
+            <div class="bg-surface-container rounded-lg p-3 space-y-3">
+              <div class="flex items-start gap-3">
+                <div class="w-2 h-2 bg-success rounded-full mt-1.5 shrink-0"></div>
+                <div>
+                  <p class="text-sm text-on-surface font-medium">已签收</p>
+                  <p class="text-xs text-on-surface-variant mt-0.5">2024-12-17 10:23 · 杭州西湖营业部</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-2 h-2 bg-success rounded-full mt-1.5 shrink-0"></div>
+                <div>
+                  <p class="text-sm text-on-surface font-medium">派送中</p>
+                  <p class="text-xs text-on-surface-variant mt-0.5">2024-12-17 08:15 · 快递员张师傅 131****5678</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-2 h-2 bg-on-surface-variant/40 rounded-full mt-1.5 shrink-0"></div>
+                <div>
+                  <p class="text-sm text-on-surface-variant">运输中</p>
+                  <p class="text-xs text-on-surface-variant mt-0.5">2024-12-16 14:00 · 已到达杭州转运中心</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-2 h-2 bg-on-surface-variant/40 rounded-full mt-1.5 shrink-0"></div>
+                <div>
+                  <p class="text-sm text-on-surface-variant">已发货</p>
+                  <p class="text-xs text-on-surface-variant mt-0.5">2024-12-15 16:45 · 深圳南山仓库已发出</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 支付信息 -->
+          <div>
+            <h3 class="text-sm font-semibold text-on-surface mb-2 flex items-center gap-1.5">
+              <i data-lucide="credit-card" class="w-4 h-4 text-on-surface-variant"></i>
+              支付信息
+            </h3>
+            <div class="bg-surface-container rounded-lg p-3 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-on-surface-variant">支付方式</span>
+                <span class="text-sm text-on-surface font-medium">银行卡</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-on-surface-variant">支付时间</span>
+                <span class="text-sm text-on-surface font-medium">2024-12-15 14:35</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-on-surface-variant">交易流水号</span>
+                <span class="text-sm text-on-surface font-medium font-mono">TXN20241215143527</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 抽屉底部操作按钮 -->
+        <div class="px-6 py-4 border-t border-outline/20 flex items-center gap-3">
+          <button id="btn-ship-order" class="flex-1 bg-primary text-on-primary px-4 py-2.5 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2">
+            <i data-lucide="truck" class="w-4 h-4"></i>
+            确认发货
+          </button>
+          <button id="btn-cancel-order" class="flex-1 bg-surface-container text-on-surface px-4 py-2.5 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2">
+            <i data-lucide="x-circle" class="w-4 h-4"></i>
+            取消订单
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+    <!-- @main-content:end -->
+  </div>
+
+  <script>
+  $(function() {
+    // 统计标签切换
+    $('#stat-tabs').on('click', '.stat-tab', function() {
+      var $this = $(this);
+      var status = $this.data('status');
+
+      // 更新标签样式
+      $('.stat-tab').each(function() {
+        $(this)
+          .removeClass('bg-primary/10 text-primary')
+          .addClass('bg-surface-container text-on-surface-variant hover:bg-surface-container-high');
+      });
+      $this
+        .removeClass('bg-surface-container text-on-surface-variant hover:bg-surface-container-high')
+        .addClass('bg-primary/10 text-primary');
+
+      // 根据状态筛选表格行
+      $('.order-row').each(function() {
+        if (status === 'all') {
+          $(this).show();
+        } else {
+          var rowStatus = $(this).data('status');
+          if (rowStatus === status) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        }
+      });
+    });
+
+    // 打开订单详情抽屉
+    $('#order-table-body').on('click', '.btn-view-detail', function() {
+      var orderId = $(this).data('id');
+      $('#drawer-order-id').text(orderId);
+      $('#drawer-overlay').removeClass('hidden');
+      $('#order-drawer').removeClass('translate-x-full').addClass('translate-x-0');
+    });
+
+    // 关闭抽屉
+    $('#btn-close-drawer').on('click', function() {
+      $('#drawer-overlay').addClass('hidden');
+      $('#order-drawer').removeClass('translate-x-0').addClass('translate-x-full');
+    });
+
+    // 点击遮罩关闭抽屉
+    $('#drawer-overlay').on('click', function() {
+      $(this).addClass('hidden');
+      $('#order-drawer').removeClass('translate-x-0').addClass('translate-x-full');
+    });
+
+    // 确认发货按钮
+    $('#btn-ship-order').on('click', function() {
+      // 后续应实现：
+      // 1. 弹出确认对话框，提示"确认发货？发货后将通知客户"
+      // 2. 确认后调用后端发货接口，传入订单号
+      // 3. 成功后更新该订单状态为"已发货"，显示物流单号输入框
+      // 4. 关闭抽屉并刷新列表
+      console.log('确认发货:', $('#drawer-order-id').text());
+    });
+
+    // 取消订单按钮
+    $('#btn-cancel-order').on('click', function() {
+      // 后续应实现：
+      // 1. 弹出确认对话框，提示"确认取消此订单？取消后需退款"
+      // 2. 要求填写取消原因（下拉选择 + 文本输入）
+      // 3. 确认后调用后端取消接口
+      // 4. 成功后更新该订单状态为"已取消"
+      // 5. 关闭抽屉并刷新列表
+      console.log('取消订单:', $('#drawer-order-id').text());
+    });
+
+    // 重置筛选
+    $('#btn-reset-filter').on('click', function() {
+      $('#search-input').val('');
+      $('#date-start').val('');
+      $('#date-end').val('');
+      $('#filter-payment').val('');
+      $('.order-row').show();
+      // 重置统计标签到全部
+      $('.stat-tab').each(function() {
+        $(this)
+          .removeClass('bg-primary/10 text-primary')
+          .addClass('bg-surface-container text-on-surface-variant hover:bg-surface-container-high');
+      });
+      $('#stat-all')
+        .removeClass('bg-surface-container text-on-surface-variant hover:bg-surface-container-high')
+        .addClass('bg-primary/10 text-primary');
+    });
+
+    // 分页按钮点击
+    $('#page-next').on('click', function() {
+      // 后续应实现：加载下一页数据，更新分页状态
+      console.log('翻到下一页');
+    });
+    $('#page-prev').on('click', function() {
+      // 后续应实现：加载上一页数据，更新分页状态
+      console.log('翻到上一页');
+    });
+
+    // 搜索框实时搜索
+    $('#search-input').on('input', function() {
+      var keyword = $(this).val().toLowerCase();
+      $('.order-row').each(function() {
+        var orderId = $(this).data('id').toString().toLowerCase();
+        var customerName = $(this).find('span').eq(1).text().toLowerCase();
+        if (orderId.indexOf(keyword) > -1 || customerName.indexOf(keyword) > -1) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    });
+
+    // 初始化 Lucide 图标
+    lucide.createIcons();
+  });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 字体 -->
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #2F6BFF;
+      --color-primary-container:    #EBF1FF;
+      --color-on-primary:           #ffffff;
+      /* === 背景 / 表面 === */
+      --color-background:                 #F6F8FB;
+      --color-surface-container-lowest:   #FFFFFF;
+      --color-surface:                    #FFFFFF;
+      --color-surface-container:          #EDF0F5;
+      --color-surface-container-high:     #E6EAF2;
+      --color-surface-container-highest:  #DDE1EA;
+      /* === 文字 === */
+      --color-on-surface:           #152033;
+      --color-on-surface-variant:   #637089;
+      /* === 功能色 === */
+      --color-success:  #16A37B;
+      --color-error:    #EF4444;
+      --color-warning:  #F59E0B;
+      /* === 边框 === */
+      --color-outline:          #E6EAF2;
+      --color-outline-variant:  #EDF0F5;
+      /* === 圆角 === */
+      --radius-sm:   0.25rem;
+      --radius-md:   0.375rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.75rem;
+      --radius-2xl:  1rem;
+      --radius-full: 9999px;
+      /* === 阴影 === */
+      --shadow-card:   0 1px 3px rgba(0,0,0,0.06);
+      --shadow-float:  0 4px 12px rgba(0,0,0,0.08);
+      --shadow-dialog: 0 16px 48px rgba(0,0,0,0.12);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+    }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%239ca3af" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+</head>
+
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- @nav:start 导航组件 -->
+  <!-- Top Header -->
+  <header class="bg-surface sticky top-0 z-40 h-14 flex items-center justify-between px-6 border-b border-outline/20">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <i data-lucide="paw-print" class="w-4 h-4 text-on-primary"></i>
+      </div>
+      <span class="font-semibold text-base text-on-surface">Animal Sofa</span>
+      <span class="text-xs text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-md ml-1">Admin</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-md transition-colors">
+        <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+      </button>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center">
+          <span class="text-xs font-medium text-primary">初</span>
+        </div>
+        <span class="text-sm font-medium text-on-surface">小初</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex" style="height: calc(100vh - 3.5rem)">
+    <!-- Sidebar -->
+    <aside class="w-56 shrink-0 bg-surface border-r border-outline/20 overflow-y-auto">
+      <nav class="p-3 space-y-0.5">
+        <a href="admin.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="gauge" class="w-4 h-4"></i>仪表盘
+        </a>
+        <a href="admin-products.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md bg-primary/10 text-primary font-medium text-sm" aria-current="page">
+          <i data-lucide="package" class="w-4 h-4"></i>商品管理
+        </a>
+        <a href="admin-orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>订单管理
+        </a>
+        <div class="pt-3 mt-3 border-t border-outline/20">
+          <a href="admin-api-docs.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+            <i data-lucide="braces" class="w-4 h-4"></i>API 文档
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- @nav:end 导航组件 -->
+
+    <!-- @main-content:start -->
+    <main class="flex-1 min-w-0 overflow-y-auto bg-background p-6">
+
+      <!-- 页面标题区 -->
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-on-surface">商品管理</h1>
+          <p class="text-sm text-on-surface-variant mt-1">管理所有动物灵感家具产品</p>
+        </div>
+        <button id="btn-add-product" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center gap-2">
+          <i data-lucide="plus" class="w-3.5 h-3.5"></i>新增商品
+        </button>
+      </div>
+
+      <!-- 筛选栏 -->
+      <div class="bg-surface rounded-lg shadow-card p-4 mb-4">
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- 搜索框 -->
+          <div class="relative flex-1 min-w-[220px]">
+            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant/50"></i>
+            <input id="search-input" type="text" placeholder="搜索商品名称 / Slug..." class="w-full bg-surface-container border-none rounded-md pl-9 pr-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+          </div>
+          <!-- 动物类型筛选 -->
+          <select id="filter-animal" class="bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors cursor-pointer">
+            <option value="all">全部动物类型</option>
+            <option value="gorilla">大猩猩</option>
+            <option value="owl">猫头鹰</option>
+            <option value="polar-bear">北极熊</option>
+            <option value="hedgehog">刺猬</option>
+          </select>
+          <!-- 状态筛选 -->
+          <select id="filter-status" class="bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors cursor-pointer">
+            <option value="all">全部状态</option>
+            <option value="active">上架</option>
+            <option value="inactive">下架</option>
+          </select>
+          <!-- 排序方式 -->
+          <select id="filter-sort" class="bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors cursor-pointer">
+            <option value="default">默认排序</option>
+            <option value="price-asc">价格从低到高</option>
+            <option value="price-desc">价格从高到低</option>
+            <option value="name-asc">名称 A-Z</option>
+            <option value="name-desc">名称 Z-A</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 商品统计 -->
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-sm text-on-surface-variant">共 <span id="product-count">24</span> 件商品</span>
+      </div>
+
+      <!-- 商品列表表格 -->
+      <div class="bg-surface rounded-lg shadow-card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-surface-container border-b border-outline/20">
+                <th class="w-10 px-4 py-3 text-left">
+                  <input id="select-all" type="checkbox" class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/30 cursor-pointer"/>
+                </th>
+                <th class="w-[68px] px-2 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wide">图片</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wide">商品名称</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wide">动物类型</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wide">Slug</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wide">价格 (AMER)</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wide">库存状态</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wide">上架状态</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-on-surface-variant uppercase tracking-wide">操作</th>
+              </tr>
+            </thead>
+            <tbody id="product-table-body" class="divide-y divide-outline-variant/50">
+
+              <!-- 列表-商品1: Gorilla Sofa -->
+              <tr class="hover:bg-surface-container/50 transition-colors" data-id="1" data-animal="gorilla" data-price="2499">
+                <td class="px-4 py-3">
+                  <input type="checkbox" class="row-checkbox w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/30 cursor-pointer"/>
+                </td>
+                <td class="px-2 py-3">
+                  <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=60&h=60&fit=crop" alt="深绿色大猩猩造型沙发" data-category="其他" class="w-[60px] h-[60px] rounded-md object-cover"/>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-name text-sm font-medium text-on-surface">Gorilla Sofa</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary">大猩猩</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-slug text-sm text-on-surface-variant font-mono">gorilla-sofa</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="text-sm font-medium text-on-surface">$2,499 – $3,299</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">有库存 (42)</span>
+                </td>
+                <td class="px-4 py-3">
+                  <label class="status-switch relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="switch-1" class="sr-only peer" checked/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+                    <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 列表-商品2: Owl Sofa -->
+              <tr class="hover:bg-surface-container/50 transition-colors" data-id="2" data-animal="owl" data-price="1899">
+                <td class="px-4 py-3">
+                  <input type="checkbox" class="row-checkbox w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/30 cursor-pointer"/>
+                </td>
+                <td class="px-2 py-3">
+                  <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=60&h=60&fit=crop" alt="橙棕色猫头鹰造型沙发" data-category="其他" class="w-[60px] h-[60px] rounded-md object-cover"/>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-name text-sm font-medium text-on-surface">Owl Sofa</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning">猫头鹰</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-slug text-sm text-on-surface-variant font-mono">owl-sofa</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="text-sm font-medium text-on-surface">$1,899 – $2,499</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">有库存 (28)</span>
+                </td>
+                <td class="px-4 py-3">
+                  <label class="status-switch relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="switch-2" class="sr-only peer" checked/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+                    <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 列表-商品3: Silverback Sofa -->
+              <tr class="hover:bg-surface-container/50 transition-colors" data-id="3" data-animal="gorilla" data-price="3299">
+                <td class="px-4 py-3">
+                  <input type="checkbox" class="row-checkbox w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/30 cursor-pointer"/>
+                </td>
+                <td class="px-2 py-3">
+                  <img src="https://images.unsplash.com/photo-1550254478-ead40cc54513?w=60&h=60&fit=crop" alt="深棕色银背大猩猩沙发" data-category="其他" class="w-[60px] h-[60px] rounded-md object-cover"/>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-name text-sm font-medium text-on-surface">Silverback Sofa</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary">大猩猩</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-slug text-sm text-on-surface-variant font-mono">silverback-sofa</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="text-sm font-medium text-on-surface">$3,299 – $4,599</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning">低库存 (5)</span>
+                </td>
+                <td class="px-4 py-3">
+                  <label class="status-switch relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="switch-3" class="sr-only peer" checked/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+                    <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 列表-商品4: Meteorite Ring Sofa -->
+              <tr class="hover:bg-surface-container/50 transition-colors" data-id="4" data-animal="polar-bear" data-price="2799">
+                <td class="px-4 py-3">
+                  <input type="checkbox" class="row-checkbox w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/30 cursor-pointer"/>
+                </td>
+                <td class="px-2 py-3">
+                  <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=60&h=60&fit=crop" alt="白色陨石环形北极熊沙发" data-category="其他" class="w-[60px] h-[60px] rounded-md object-cover"/>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-name text-sm font-medium text-on-surface">Meteorite Ring Sofa</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">北极熊</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-slug text-sm text-on-surface-variant font-mono">meteorite-ring-sofa</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="text-sm font-medium text-on-surface">$2,799 – $3,699</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">有库存 (18)</span>
+                </td>
+                <td class="px-4 py-3">
+                  <label class="status-switch relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="switch-4" class="sr-only peer"/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+                    <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 列表-商品5: Polar Bear Loveseat -->
+              <tr class="hover:bg-surface-container/50 transition-colors" data-id="5" data-animal="polar-bear" data-price="2199">
+                <td class="px-4 py-3">
+                  <input type="checkbox" class="row-checkbox w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/30 cursor-pointer"/>
+                </td>
+                <td class="px-2 py-3">
+                  <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=60&h=60&fit=crop" alt="白色北极熊双人沙发" data-category="其他" class="w-[60px] h-[60px] rounded-md object-cover"/>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-name text-sm font-medium text-on-surface">Polar Bear Loveseat</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">北极熊</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-slug text-sm text-on-surface-variant font-mono">polar-bear-loveseat</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="text-sm font-medium text-on-surface">$2,199 – $2,899</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">有库存 (35)</span>
+                </td>
+                <td class="px-4 py-3">
+                  <label class="status-switch relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="switch-5" class="sr-only peer" checked/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+                    <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- 列表-商品6: Hedgehog Accent Chair -->
+              <tr class="hover:bg-surface-container/50 transition-colors" data-id="6" data-animal="hedgehog" data-price="1499">
+                <td class="px-4 py-3">
+                  <input type="checkbox" class="row-checkbox w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/30 cursor-pointer"/>
+                </td>
+                <td class="px-2 py-3">
+                  <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=60&h=60&fit=crop" alt="刺猬造型休闲扶手椅" data-category="其他" class="w-[60px] h-[60px] rounded-md object-cover"/>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-name text-sm font-medium text-on-surface">Hedgehog Accent Chair</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-error/15 text-error">刺猬</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="product-slug text-sm text-on-surface-variant font-mono">hedgehog-accent-chair</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="text-sm font-medium text-on-surface">$1,499 – $1,999</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-error/15 text-error">缺货 (0)</span>
+                </td>
+                <td class="px-4 py-3">
+                  <label class="status-switch relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="switch-6" class="sr-only peer"/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <button class="btn-edit text-primary text-sm font-medium hover:underline">编辑</button>
+                    <button class="btn-delete text-error text-sm font-medium hover:underline">删除</button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 分页控件 -->
+        <div id="pagination" class="flex items-center justify-between px-6 py-3 border-t border-outline/20">
+          <span class="text-sm text-on-surface-variant">显示 1-6 / 共 24 件</span>
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1.5">
+              <select id="page-size" class="bg-surface-container border-none rounded-md px-2 py-1 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer">
+                <option>6 条/页</option>
+                <option>12 条/页</option>
+                <option>24 条/页</option>
+              </select>
+            </div>
+            <div class="flex items-center gap-1">
+              <button id="btn-prev-page" class="px-2 py-1 text-on-surface-variant hover:bg-surface-container rounded-md transition-colors">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              </button>
+              <button class="page-btn px-2.5 py-1 text-sm bg-primary/10 text-primary rounded-md font-medium">1</button>
+              <button class="page-btn px-2.5 py-1 text-sm text-on-surface-variant hover:bg-surface-container rounded-md transition-colors">2</button>
+              <button class="page-btn px-2.5 py-1 text-sm text-on-surface-variant hover:bg-surface-container rounded-md transition-colors">3</button>
+              <button class="page-btn px-2.5 py-1 text-sm text-on-surface-variant hover:bg-surface-container rounded-md transition-colors">4</button>
+              <button id="btn-next-page" class="px-2 py-1 text-on-surface-variant hover:bg-surface-container rounded-md transition-colors">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+    <!-- @main-content:end -->
+  </div>
+
+  <script>
+  $(function() {
+    // 搜索筛选 - 根据输入文字过滤表格行，匹配商品名称或slug
+    $('#search-input').on('input', function() {
+      const query = $(this).val().toLowerCase();
+      $('#product-table-body tr').each(function() {
+        const name = $(this).find('.product-name').text().toLowerCase();
+        const slug = $(this).find('.product-slug').text().toLowerCase();
+        $(this).toggle(name.indexOf(query) !== -1 || slug.indexOf(query) !== -1);
+      });
+    });
+
+    // 动物类型筛选 - 根据选中的动物类型过滤表格行
+    $('#filter-animal').on('change', function() {
+      const type = $(this).val();
+      $('#product-table-body tr').each(function() {
+        if (type === 'all') {
+          $(this).show();
+        } else {
+          $(this).toggle($(this).data('animal') === type);
+        }
+      });
+    });
+
+    // 上架状态筛选 - 根据switch开关状态过滤表格行
+    $('#filter-status').on('change', function() {
+      const status = $(this).val();
+      $('#product-table-body tr').each(function() {
+        if (status === 'all') {
+          $(this).show();
+        } else {
+          var isActive = $(this).find('.status-switch input').is(':checked');
+          $(this).toggle(status === 'active' ? isActive : !isActive);
+        }
+      });
+    });
+
+    // 排序方式 - 选择排序后应实现：
+    // 1. 读取所有行的排序字段值（价格/名称）
+    // 2. 按选中方式对行进行排序
+    // 3. 重新排列 tbody 中的行顺序
+    // 4. 更新排序按钮的激活状态
+    $('#filter-sort').on('change', function() {
+      var sortType = $(this).val();
+      console.log('排序方式:', sortType);
+    });
+
+    // 全选/取消全选复选框
+    $('#select-all').on('change', function() {
+      var isChecked = $(this).is(':checked');
+      $('.row-checkbox').prop('checked', isChecked);
+    });
+
+    // 上架状态切换 - 切换switch后应实现：
+    // 1. 发送 API 请求更新商品上架状态
+    // 2. 更新成功后显示 toast 提示
+    // 3. 如果失败，恢复 switch 状态并显示错误提示
+    $('#product-table-body').on('change', '.status-switch input', function() {
+      var productName = $(this).closest('tr').find('.product-name').text();
+      var isActive = $(this).is(':checked');
+      console.log('商品 "' + productName + '" ' + (isActive ? '上架' : '下架'));
+    });
+
+    // 编辑按钮 - 点击后应实现：
+    // 1. 跳转到商品编辑页面，传递商品 ID 参数
+    // 2. 编辑页面加载该商品的完整信息进行编辑
+    $('#product-table-body').on('click', '.btn-edit', function() {
+      var productId = $(this).closest('tr').data('id');
+      console.log('编辑商品:', productId);
+      // window.location.href = 'admin-product-edit.html?id=' + productId;
+    });
+
+    // 删除按钮 - 点击后应实现：
+    // 1. 弹出确认对话框，显示商品名称
+    // 2. 用户确认后，发送 API 删除请求
+    // 3. 删除成功后，从 DOM 中移除该行（带淡出动画）
+    // 4. 更新表格上方的商品总数
+    // 5. 如果当前页无数据，自动跳转到上一页
+    $('#product-table-body').on('click', '.btn-delete', function() {
+      var row = $(this).closest('tr');
+      var productName = row.find('.product-name').text();
+      if (confirm('确定要删除商品 "' + productName + '" 吗？此操作不可撤销。')) {
+        row.fadeOut(300, function() {
+          $(this).remove();
+        });
+      }
+    });
+
+    // 新增商品按钮 - 点击后应跳转到商品新增页面
+    $('#btn-add-product').on('click', function() {
+      console.log('新增商品');
+      // window.location.href = 'admin-product-edit.html';
+    });
+
+    // 分页按钮 - 点击页码后应实现：
+    // 1. 高亮当前页码，取消其他页码高亮
+    // 2. 根据页码和每页条数计算数据偏移量
+    // 3. 发送 API 请求获取对应页的数据
+    // 4. 更新表格内容和分页信息
+    $('#pagination').on('click', '.page-btn', function() {
+      $('.page-btn').removeClass('bg-primary/10 text-primary font-medium').addClass('text-on-surface-variant');
+      $(this).removeClass('text-on-surface-variant').addClass('bg-primary/10 text-primary font-medium');
+    });
+
+    // 上一页/下一页按钮
+    $('#btn-prev-page').on('click', function() {
+      console.log('上一页');
+    });
+    $('#btn-next-page').on('click', function() {
+      console.log('下一页');
+    });
+
+    // 每页条数切换
+    $('#page-size').on('change', function() {
+      console.log('每页条数:', $(this).val());
+    });
+  });
+  </script>
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>

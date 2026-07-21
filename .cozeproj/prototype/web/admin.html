@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 字体 -->
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #2F6BFF;
+      --color-primary-container:    #EBF1FF;
+      --color-on-primary:           #ffffff;
+      /* === 背景 / 表面 === */
+      --color-background:                 #F6F8FB;
+      --color-surface-container-lowest:   #FFFFFF;
+      --color-surface:                    #FFFFFF;
+      --color-surface-container:          #EDF0F5;
+      --color-surface-container-high:     #E6EAF2;
+      --color-surface-container-highest:  #DDE1EA;
+      /* === 文字 === */
+      --color-on-surface:           #152033;
+      --color-on-surface-variant:   #637089;
+      /* === 功能色 === */
+      --color-success:  #16A37B;
+      --color-error:    #EF4444;
+      --color-warning:  #F59E0B;
+      /* === 边框 === */
+      --color-outline:          #E6EAF2;
+      --color-outline-variant:  #EDF0F5;
+      /* === 圆角 === */
+      --radius-sm:   0.25rem;
+      --radius-md:   0.375rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.75rem;
+      --radius-2xl:  1rem;
+      --radius-full: 9999px;
+      /* === 阴影 === */
+      --shadow-card:   0 1px 3px rgba(0,0,0,0.06);
+      --shadow-float:  0 4px 12px rgba(0,0,0,0.08);
+      --shadow-dialog: 0 16px 48px rgba(0,0,0,0.12);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+    }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%239ca3af" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+</head>
+
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- @nav:start 导航组件 -->
+  <!-- Top Header -->
+  <header class="bg-surface sticky top-0 z-40 h-14 flex items-center justify-between px-6 border-b border-outline/20">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <i data-lucide="paw-print" class="w-4 h-4 text-on-primary"></i>
+      </div>
+      <span class="font-semibold text-base text-on-surface">Animal Sofa</span>
+      <span class="text-xs text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-md ml-1">Admin</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-md transition-colors">
+        <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+      </button>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center">
+          <span class="text-xs font-medium text-primary">初</span>
+        </div>
+        <span class="text-sm font-medium text-on-surface">小初</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex" style="height: calc(100vh - 3.5rem)">
+    <!-- Sidebar -->
+    <aside class="w-56 shrink-0 bg-surface border-r border-outline/20 overflow-y-auto">
+      <nav class="p-3 space-y-0.5">
+        <a href="admin.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md bg-primary/10 text-primary font-medium text-sm" aria-current="page">
+          <i data-lucide="gauge" class="w-4 h-4"></i>仪表盘
+        </a>
+        <a href="admin-products.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="package" class="w-4 h-4"></i>商品管理
+        </a>
+        <a href="admin-orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>订单管理
+        </a>
+        <div class="pt-3 mt-3 border-t border-outline/20">
+          <a href="admin-api-docs.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+            <i data-lucide="braces" class="w-4 h-4"></i>API 文档
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- @nav:end 导航组件 -->
+
+    <!-- @main-content:start -->
+    <main class="flex-1 min-w-0 overflow-y-auto bg-background p-6">
+      <!-- 页面标题区域 -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold text-on-surface">仪表盘</h1>
+        <p class="text-sm text-on-surface-variant mt-1">数据概览</p>
+      </div>
+
+      <!-- 指标卡片区域 -->
+      <div class="grid grid-cols-4 gap-4 mb-6">
+        <!-- 指标卡片-总销售额 -->
+        <div id="card-sales" class="bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+              <i data-lucide="banknote" class="w-5 h-5 text-primary"></i>
+            </div>
+            <div class="flex items-center gap-1 text-success">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+              <span class="text-xs font-medium">+12.5%</span>
+            </div>
+          </div>
+          <p class="text-2xl font-bold text-on-surface">¥128,430</p>
+          <p class="text-sm text-on-surface-variant mt-1">总销售额</p>
+        </div>
+
+        <!-- 指标卡片-订单总数 -->
+        <div id="card-orders" class="bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-warning/10 rounded-lg flex items-center justify-center">
+              <i data-lucide="shopping-cart" class="w-5 h-5 text-warning"></i>
+            </div>
+            <div class="flex items-center gap-1 text-success">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+              <span class="text-xs font-medium">+8.2%</span>
+            </div>
+          </div>
+          <p class="text-2xl font-bold text-on-surface">1,286</p>
+          <p class="text-sm text-on-surface-variant mt-1">订单总数</p>
+        </div>
+
+        <!-- 指标卡片-商品总数 -->
+        <div id="card-products" class="bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-success/10 rounded-lg flex items-center justify-center">
+              <i data-lucide="package" class="w-5 h-5 text-success"></i>
+            </div>
+            <div class="flex items-center gap-1 text-error">
+              <i data-lucide="trending-down" class="w-3.5 h-3.5"></i>
+              <span class="text-xs font-medium">-2.1%</span>
+            </div>
+          </div>
+          <p class="text-2xl font-bold text-on-surface">356</p>
+          <p class="text-sm text-on-surface-variant mt-1">商品总数</p>
+        </div>
+
+        <!-- 指标卡片-本月新增用户 -->
+        <div id="card-users" class="bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+              <i data-lucide="users" class="w-5 h-5 text-primary"></i>
+            </div>
+            <div class="flex items-center gap-1 text-success">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+              <span class="text-xs font-medium">+18.7%</span>
+            </div>
+          </div>
+          <p class="text-2xl font-bold text-on-surface">892</p>
+          <p class="text-sm text-on-surface-variant mt-1">本月新增用户</p>
+        </div>
+      </div>
+
+      <!-- 图表 + 订单列表区域 -->
+      <div class="grid grid-cols-3 gap-4 mb-6">
+        <!-- 左侧：近7天销售趋势折线图 -->
+        <div id="chart-sales-trend" class="col-span-2 bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-semibold text-on-surface">近7天销售趋势</h2>
+            <span class="text-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded-md">最近7天</span>
+          </div>
+          <!-- SVG 折线图 -->
+          <div class="relative">
+            <svg viewBox="0 0 600 220" class="w-full" style="height: 220px;">
+              <!-- 网格线 -->
+              <line x1="50" y1="20" x2="50" y2="180" stroke="#EDF0F5" stroke-width="1"/>
+              <line x1="50" y1="180" x2="580" y2="180" stroke="#EDF0F5" stroke-width="1"/>
+              <line x1="50" y1="140" x2="580" y2="140" stroke="#EDF0F5" stroke-width="0.5" stroke-dasharray="4,4"/>
+              <line x1="50" y1="100" x2="580" y2="100" stroke="#EDF0F5" stroke-width="0.5" stroke-dasharray="4,4"/>
+              <line x1="50" y1="60" x2="580" y2="60" stroke="#EDF0F5" stroke-width="0.5" stroke-dasharray="4,4"/>
+              <line x1="50" y1="20" x2="580" y2="20" stroke="#EDF0F5" stroke-width="0.5" stroke-dasharray="4,4"/>
+
+              <!-- Y轴标签 -->
+              <text x="40" y="184" text-anchor="end" font-size="11" fill="#637089">0</text>
+              <text x="40" y="144" text-anchor="end" font-size="11" fill="#637089">5k</text>
+              <text x="40" y="104" text-anchor="end" font-size="11" fill="#637089">10k</text>
+              <text x="40" y="64" text-anchor="end" font-size="11" fill="#637089">15k</text>
+              <text x="40" y="24" text-anchor="end" font-size="11" fill="#637089">20k</text>
+
+              <!-- X轴标签 -->
+              <text x="126" y="200" text-anchor="middle" font-size="11" fill="#637089">1/10</text>
+              <text x="202" y="200" text-anchor="middle" font-size="11" fill="#637089">1/11</text>
+              <text x="278" y="200" text-anchor="middle" font-size="11" fill="#637089">1/12</text>
+              <text x="354" y="200" text-anchor="middle" font-size="11" fill="#637089">1/13</text>
+              <text x="430" y="200" text-anchor="middle" font-size="11" fill="#637089">1/14</text>
+              <text x="506" y="200" text-anchor="middle" font-size="11" fill="#637089">1/15</text>
+              <text x="580" y="200" text-anchor="middle" font-size="11" fill="#637089">1/16</text>
+
+              <!-- 面积填充 -->
+              <defs>
+                <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2F6BFF" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="#2F6BFF" stop-opacity="0.01"/>
+                </linearGradient>
+              </defs>
+              <path d="M126,108 L202,72 L278,124 L354,56 L430,88 L506,44 L580,68 L580,180 L126,180 Z" fill="url(#areaGradient)"/>
+
+              <!-- 折线 -->
+              <polyline points="126,108 202,72 278,124 354,56 430,88 506,44 580,68" fill="none" stroke="#2F6BFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <!-- 数据点 -->
+              <circle cx="126" cy="108" r="4" fill="#ffffff" stroke="#2F6BFF" stroke-width="2"/>
+              <circle cx="202" cy="72" r="4" fill="#ffffff" stroke="#2F6BFF" stroke-width="2"/>
+              <circle cx="278" cy="124" r="4" fill="#ffffff" stroke="#2F6BFF" stroke-width="2"/>
+              <circle cx="354" cy="56" r="4" fill="#ffffff" stroke="#2F6BFF" stroke-width="2"/>
+              <circle cx="430" cy="88" r="4" fill="#ffffff" stroke="#2F6BFF" stroke-width="2"/>
+              <circle cx="506" cy="44" r="4" fill="#ffffff" stroke="#2F6BFF" stroke-width="2"/>
+              <circle cx="580" cy="68" r="4" fill="#ffffff" stroke="#2F6BFF" stroke-width="2"/>
+
+              <!-- 数据标签 -->
+              <text x="126" y="98" text-anchor="middle" font-size="10" fill="#637089">9.2k</text>
+              <text x="202" y="62" text-anchor="middle" font-size="10" fill="#637089">13.5k</text>
+              <text x="278" y="118" text-anchor="middle" font-size="10" fill="#637089">7.0k</text>
+              <text x="354" y="46" text-anchor="middle" font-size="10" fill="#637089">15.5k</text>
+              <text x="430" y="78" text-anchor="middle" font-size="10" fill="#637089">11.5k</text>
+              <text x="506" y="34" text-anchor="middle" font-size="10" fill="#637089">17.0k</text>
+              <text x="580" y="58" text-anchor="middle" font-size="10" fill="#637089">14.0k</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 右侧：最近订单列表 -->
+        <div id="card-recent-orders" class="bg-surface rounded-lg shadow-card p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-semibold text-on-surface">最近订单</h2>
+            <a href="admin-orders.html" id="link-view-all-orders" class="text-xs text-primary font-medium hover:underline">查看全部</a>
+          </div>
+          <div class="space-y-3">
+            <!-- 订单-1 -->
+            <div id="order-item-1" class="flex items-center justify-between py-2.5 border-b border-outline-variant/50">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-on-surface truncate">#ORD-20240116</p>
+                <p class="text-xs text-on-surface-variant mt-0.5">张明辉</p>
+              </div>
+              <div class="text-right ml-3">
+                <p class="text-sm font-semibold text-on-surface">¥2,380</p>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success mt-0.5">已完成</span>
+              </div>
+            </div>
+            <!-- 订单-2 -->
+            <div id="order-item-2" class="flex items-center justify-between py-2.5 border-b border-outline-variant/50">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-on-surface truncate">#ORD-20240115</p>
+                <p class="text-xs text-on-surface-variant mt-0.5">李思雨</p>
+              </div>
+              <div class="text-right ml-3">
+                <p class="text-sm font-semibold text-on-surface">¥1,560</p>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/15 text-primary mt-0.5">已发货</span>
+              </div>
+            </div>
+            <!-- 订单-3 -->
+            <div id="order-item-3" class="flex items-center justify-between py-2.5 border-b border-outline-variant/50">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-on-surface truncate">#ORD-20240115</p>
+                <p class="text-xs text-on-surface-variant mt-0.5">王建国</p>
+              </div>
+              <div class="text-right ml-3">
+                <p class="text-sm font-semibold text-on-surface">¥890</p>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning mt-0.5">已付款</span>
+              </div>
+            </div>
+            <!-- 订单-4 -->
+            <div id="order-item-4" class="flex items-center justify-between py-2.5 border-b border-outline-variant/50">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-on-surface truncate">#ORD-20240114</p>
+                <p class="text-xs text-on-surface-variant mt-0.5">赵小燕</p>
+              </div>
+              <div class="text-right ml-3">
+                <p class="text-sm font-semibold text-on-surface">¥3,120</p>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-error/15 text-error mt-0.5">待付款</span>
+              </div>
+            </div>
+            <!-- 订单-5 -->
+            <div id="order-item-5" class="flex items-center justify-between py-2.5">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-on-surface truncate">#ORD-20240114</p>
+                <p class="text-xs text-on-surface-variant mt-0.5">陈志强</p>
+              </div>
+              <div class="text-right ml-3">
+                <p class="text-sm font-semibold text-on-surface">¥670</p>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success mt-0.5">已完成</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部：热门商品 TOP5 -->
+      <div id="card-top-products" class="bg-surface rounded-lg shadow-card p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-semibold text-on-surface">热门商品 TOP5</h2>
+          <a href="admin-products.html" id="link-view-all-products" class="text-xs text-primary font-medium hover:underline">查看全部</a>
+        </div>
+        <div class="divide-y divide-outline-variant/50">
+          <!-- 热门商品-1 -->
+          <div id="top-product-1" class="flex items-center gap-4 py-3">
+            <span class="text-sm font-bold text-primary w-6 text-center">1</span>
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=80&h=80&fit=crop" alt="简约白色智能手表产品图" data-category="商业科技" class="w-12 h-12 rounded-lg object-cover shrink-0"/>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-on-surface truncate">智能运动手表 Pro</p>
+              <p class="text-xs text-on-surface-variant mt-0.5">销量 1,286 件</p>
+            </div>
+            <div class="text-right">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">库存充足</span>
+            </div>
+          </div>
+          <!-- 热门商品-2 -->
+          <div id="top-product-2" class="flex items-center gap-4 py-3">
+            <span class="text-sm font-bold text-primary w-6 text-center">2</span>
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=80&h=80&fit=crop" alt="黑色头戴式无线耳机产品图" data-category="商业科技" class="w-12 h-12 rounded-lg object-cover shrink-0"/>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-on-surface truncate">无线降噪耳机 X3</p>
+              <p class="text-xs text-on-surface-variant mt-0.5">销量 986 件</p>
+            </div>
+            <div class="text-right">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">库存充足</span>
+            </div>
+          </div>
+          <!-- 热门商品-3 -->
+          <div id="top-product-3" class="flex items-center gap-4 py-3">
+            <span class="text-sm font-bold text-primary w-6 text-center">3</span>
+            <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=80&h=80&fit=crop" alt="白色时尚运动鞋产品图" data-category="服饰时尚" class="w-12 h-12 rounded-lg object-cover shrink-0"/>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-on-surface truncate">经典休闲运动鞋</p>
+              <p class="text-xs text-on-surface-variant mt-0.5">销量 752 件</p>
+            </div>
+            <div class="text-right">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning">库存紧张</span>
+            </div>
+          </div>
+          <!-- 热门商品-4 -->
+          <div id="top-product-4" class="flex items-center gap-4 py-3">
+            <span class="text-sm font-bold text-on-surface-variant w-6 text-center">4</span>
+            <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=80&h=80&fit=crop" alt="复古胶片相机产品图" data-category="商业科技" class="w-12 h-12 rounded-lg object-cover shrink-0"/>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-on-surface truncate">复古胶片相机</p>
+              <p class="text-xs text-on-surface-variant mt-0.5">销量 634 件</p>
+            </div>
+            <div class="text-right">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">库存充足</span>
+            </div>
+          </div>
+          <!-- 热门商品-5 -->
+          <div id="top-product-5" class="flex items-center gap-4 py-3">
+            <span class="text-sm font-bold text-on-surface-variant w-6 text-center">5</span>
+            <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=80&h=80&fit=crop" alt="男士淡香水瓶装产品图" data-category="服饰时尚" class="w-12 h-12 rounded-lg object-cover shrink-0"/>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-on-surface truncate">清新淡香水 50ml</p>
+              <p class="text-xs text-on-surface-variant mt-0.5">销量 521 件</p>
+            </div>
+            <div class="text-right">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-error/15 text-error">库存不足</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- @main-content:end -->
+  </div>
+
+  <script>
+    $(function() {
+      // 指标卡片点击 - 跳转到对应详情页面
+      $('#card-sales').on('click', function() {
+        console.log('查看销售额详情');
+        window.location.href = 'admin-orders.html?tab=sales';
+      }).css('cursor', 'pointer');
+
+      $('#card-orders').on('click', function() {
+        console.log('查看订单详情');
+        window.location.href = 'admin-orders.html';
+      }).css('cursor', 'pointer');
+
+      $('#card-products').on('click', function() {
+        console.log('查看商品详情');
+        window.location.href = 'admin-products.html';
+      }).css('cursor', 'pointer');
+
+      $('#card-users').on('click', function() {
+        console.log('查看用户详情');
+      }).css('cursor', 'pointer');
+
+      // 订单项点击 - 跳转到订单详情
+      $('#card-recent-orders').on('click', '[id^="order-item-"]', function() {
+        var orderId = $(this).attr('id').replace('order-item-', '');
+        console.log('查看订单:', orderId);
+        window.location.href = 'admin-orders.html?order_id=' + orderId;
+      }).find('[id^="order-item-"]').css('cursor', 'pointer');
+
+      // 热门商品点击 - 跳转到商品详情
+      $('#card-top-products').on('click', '[id^="top-product-"]', function() {
+        var productId = $(this).attr('id').replace('top-product-', '');
+        console.log('查看商品:', productId);
+        window.location.href = 'admin-products.html?product_id=' + productId;
+      }).find('[id^="top-product-"]').css('cursor', 'pointer');
+    });
+  </script>
+
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>

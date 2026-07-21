@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- 字体 -->
-  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/google-all-fonts.css" rel="stylesheet"/>
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
   <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
   <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
@@ -15,40 +15,39 @@
   <style type="text/tailwindcss">
     @theme {
       /* === 品牌色 === */
-      --color-primary:              #E8B4B8;
-      --color-primary-container:    #3D2A2E;
-      --color-on-primary:           #0A0A0A;
+      --color-primary:              #2F6BFF;
+      --color-primary-container:    #EBF1FF;
+      --color-on-primary:           #ffffff;
       /* === 背景 / 表面 === */
-      --color-background:                 #0A0A0A;
-      --color-surface-container-lowest:   #0E0E0E;
-      --color-surface:                    #111111;
-      --color-surface-container:          #1A1A1A;
-      --color-surface-container-high:     #1F1F1F;
-      --color-surface-container-highest:  #252525;
+      --color-background:                 #F6F8FB;
+      --color-surface-container-lowest:   #FFFFFF;
+      --color-surface:                    #FFFFFF;
+      --color-surface-container:          #EDF0F5;
+      --color-surface-container-high:     #E6EAF2;
+      --color-surface-container-highest:  #DDE1EA;
       /* === 文字 === */
-      --color-on-surface:           #F5F0EB;
-      --color-on-surface-variant:   #8A8580;
+      --color-on-surface:           #152033;
+      --color-on-surface-variant:   #637089;
       /* === 功能色 === */
-      --color-success:  #22c55e;
-      --color-error:    #ef4444;
-      --color-warning:  #f59e0b;
+      --color-success:  #16A37B;
+      --color-error:    #EF4444;
+      --color-warning:  #F59E0B;
       /* === 边框 === */
-      --color-outline:          #333333;
-      --color-outline-variant:  #1A1A1A;
-      /* === 圆角（最大8px，保持锐利几何感） === */
-      --radius-sm:   0.125rem;
-      --radius-md:   0.25rem;
+      --color-outline:          #E6EAF2;
+      --color-outline-variant:  #EDF0F5;
+      /* === 圆角 === */
+      --radius-sm:   0.25rem;
+      --radius-md:   0.375rem;
       --radius-lg:   0.5rem;
-      --radius-xl:   0.5rem;
-      --radius-2xl:  0.5rem;
+      --radius-xl:   0.75rem;
+      --radius-2xl:  1rem;
       --radius-full: 9999px;
-      /* === 阴影（纯黑阴影） === */
-      --shadow-card:   0 2px 8px rgba(0,0,0,0.3);
-      --shadow-float:  0 10px 25px rgba(0,0,0,0.4);
-      --shadow-dialog: 0 25px 50px rgba(0,0,0,0.5);
+      /* === 阴影 === */
+      --shadow-card:   0 1px 3px rgba(0,0,0,0.06);
+      --shadow-float:  0 4px 12px rgba(0,0,0,0.08);
+      --shadow-dialog: 0 16px 48px rgba(0,0,0,0.12);
       /* === 字体 === */
       --font-sans: "Inter", system-ui, sans-serif;
-      --font-serif: "Cormorant Garamond", Georgia, serif;
     }
   </style>
 
@@ -65,7 +64,7 @@
       const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
       const icon = icons[cat] || '🖼';
       const w = img.width || 400, h = img.height || 300;
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23111111"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%238A8580" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%239ca3af" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
       img.src = 'data:image/svg+xml,' + svg;
     }, true);
   </script>
@@ -74,23 +73,58 @@
 <body class="bg-background text-on-surface font-sans">
 
   <!-- @nav:start 导航组件 -->
-  <header class="fixed top-0 left-0 right-0 z-40 h-[60px] flex items-center justify-between px-6 bg-background/80 backdrop-blur-[8px] border-b border-outline-variant/30">
-    <div class="max-w-7xl w-full mx-auto flex items-center justify-between">
-      <a href="magazine.html" class="font-serif text-xl tracking-[0.1em] text-on-surface">FUZZ SOFA</a>
-      <nav class="flex items-center gap-8">
-        <a href="magazine.html" class="text-sm tracking-[0.1em] text-primary uppercase" aria-current="page">Magazine</a>
-        <a href="#" class="text-sm tracking-[0.1em] text-on-surface-variant uppercase hover:text-on-surface transition-colors">Collection</a>
-        <a href="#" class="text-sm tracking-[0.1em] text-on-surface-variant uppercase hover:text-on-surface transition-colors">Scenes</a>
-        <a href="#" class="text-sm tracking-[0.1em] text-on-surface-variant uppercase hover:text-on-surface transition-colors">Account</a>
-      </nav>
+  <!-- Top Header -->
+  <header class="bg-surface sticky top-0 z-40 h-14 flex items-center justify-between px-6 border-b border-outline/20">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <i data-lucide="paw-print" class="w-4 h-4 text-on-primary"></i>
+      </div>
+      <span class="font-semibold text-base text-on-surface">Animal Sofa</span>
+      <span class="text-xs text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-md ml-1">Admin</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-md transition-colors">
+        <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+      </button>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center">
+          <span class="text-xs font-medium text-primary">初</span>
+        </div>
+        <span class="text-sm font-medium text-on-surface">小初</span>
+      </div>
     </div>
   </header>
-  <!-- @nav:end 导航组件 -->
 
-  <main class="max-w-7xl mx-auto pt-[60px]">
+  <div class="flex" style="height: calc(100vh - 3.5rem)">
+    <!-- Sidebar -->
+    <aside class="w-56 shrink-0 bg-surface border-r border-outline/20 overflow-y-auto">
+      <nav class="p-3 space-y-0.5">
+        <a href="admin.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md bg-primary/10 text-primary font-medium text-sm" aria-current="page">
+          <i data-lucide="gauge" class="w-4 h-4"></i>仪表盘
+        </a>
+        <a href="admin-products.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="package" class="w-4 h-4"></i>商品管理
+        </a>
+        <a href="admin-orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>订单管理
+        </a>
+        <div class="pt-3 mt-3 border-t border-outline/20">
+          <a href="admin-api-docs.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+            <i data-lucide="braces" class="w-4 h-4"></i>API 文档
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- @nav:end 导航组件 -->
+
     <!-- @main-content:start -->
+    <main class="flex-1 min-w-0 overflow-y-auto bg-background p-6">
+      <!-- 页面内容 -->
+    </main>
     <!-- @main-content:end -->
-  </main>
+  </div>
 
   <script>lucide.createIcons();</script>
 </body>
