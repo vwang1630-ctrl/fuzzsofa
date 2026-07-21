@@ -1396,6 +1396,9 @@ export function ProductPageClient(
                             <div
                                 className="text-[12px] md:text-[14px] font-light text-[#F5F0EB]/70 leading-[1.9]">
                                 <p>{productConcept} {prefix ? t(`${prefix}InteriorContext` as TranslationKeys) : product.interiorContext}</p>
+                                {product.slug === "owl-sofa" && (
+                                    <p className="mt-4 text-[#E8B4B8]/60 italic font-serif">{t("owlChairBrandStory" as TranslationKeys)}</p>
+                                )}
                             </div>
                             <div
                                 className="border border-dashed border-[#E8B4B8]/30 rounded-sm p-4 mt-6 max-w-[520px]">

@@ -32,7 +32,13 @@ export function productJsonLd(product: Product) {
     depth: isOwlChair ? "82 cm" : undefined,
     height: isOwlChair ? "76 cm" : undefined,
     weight: isOwlChair ? "60 kg" : undefined,
-    additionalProperty: product.slug === "meteorite-ring-sofa" ? [
+    additionalProperty: isOwlChair ? [
+      { "@type": "PropertyValue", name: "Design", value: "180° wraparound wing backrest" },
+      { "@type": "PropertyValue", name: "Style", value: "Sculptural reading chair" },
+      { "@type": "PropertyValue", name: "design inspiration", value: "Harry Potter magic, owl symbolism, Hogwarts library atmosphere" },
+      { "@type": "PropertyValue", name: "vibe keywords", value: "magical reading corner, cozy nook, mysterious library, gothic academia" },
+      { "@type": "PropertyValue", name: "recommended spaces", value: "private library, magical reading nook, boutique hotel suite, cozy bedroom corner" },
+    ] : product.slug === "meteorite-ring-sofa" ? [
       { "@type": "PropertyValue", name: "Design", value: "360-degree conversation sofa" },
       { "@type": "PropertyValue", name: "Style", value: "Sculptural furniture" },
     ] : undefined,
@@ -148,6 +154,7 @@ export function organizationJsonLd() {
       "Custom Furniture",
       "Made-to-order Production",
       "Studio Furniture Design",
+      "Magical Reading Chair",
     ],
     sameAs: [
       "https://www.pinterest.com/fuzzsofa",

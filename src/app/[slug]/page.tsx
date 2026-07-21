@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps) {
 
   // Custom title for Owl Chair
   const title = slug === "owl-sofa"
-    ? "Owl Chair | Sculptural Reading Armchair | Fuzz Sofa Studio"
+    ? "Owl Chair — Magical Reading Chair | Fuzz Sofa Studio"
     : `${product.name} | Sculptural Circular Sofa | Fuzz Sofa`;
 
   return {
