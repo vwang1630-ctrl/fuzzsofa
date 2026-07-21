@@ -153,15 +153,18 @@ const OWL_DATA = {
     scenes: [{
         image: "/products/spaces/owl-space-1.png",
         label: "理想之家",
-        sub: "The Owl Chair turns away from the open-plan living room, creating an intimate retreat within the grand space."
+        sub: "The Owl Chair turns away from the open-plan living room, creating an intimate retreat within the grand space.",
+        alt: "White Owl Chair in a snowy Hogwarts tower library, sculptural wingback armchair facing an arched window with falling snow, wrapped wing silhouette creates intimate reading sanctuary, magical academia atmosphere, Fuzz Sofa Studio Hedwig collection"
     }, {
         image: "/products/spaces/owl-space-2.png",
         label: "私人书房",
-        sub: "Surrounded by books and silence, the Owl Chair wraps you in its wide wings."
+        sub: "Surrounded by books and silence, the Owl Chair wraps you in its wide wings.",
+        alt: "Emerald green velvet Owl Chair in a Hogwarts Room of Requirement library, surrounded by dark oak bookshelves with gold-embossed ancient books, gothic window, dignified witch's study, Fuzz Sofa Studio Bowtruckle collection"
     }, {
         image: "/products/spaces/owl-space-3.png",
         label: "精品酒店",
-        sub: "With its compact footprint, the Owl Chair fits seamlessly into hotel corners and lounge spaces."
+        sub: "With its compact footprint, the Owl Chair fits seamlessly into hotel corners and lounge spaces.",
+        alt: "Pink velvet Owl Chair in a Honeydukes attic bedroom, dormer window overlooking snowy Hogsmeade, candy jars and warm candlelight, cozy magical retreat, Fuzz Sofa Studio Tonks collection"
     }],
 
     explore: [{
@@ -612,7 +615,7 @@ export default function MobileProductPage(
                     <div className="section-label">实景灵感</div>
                     <div className="scene-scroll">
                         {OWL_DATA.scenes.map((s, i) => <div key={i} className="scene-card">
-                            <img src={s.image} alt="" loading="lazy" />
+                            <img src={s.image} alt={s.alt} loading="lazy" />
                             <div className="label">{s.label}</div>
                             <div className="sub">{s.sub}</div>
                         </div>)}

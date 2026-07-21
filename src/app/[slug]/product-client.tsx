@@ -994,7 +994,7 @@ export function ProductPageClient(
                                     onClick={() => handleThumbnailClick(img.id)}
                                     className={`w-[72px] h-[72px] flex-shrink-0 transition-all duration-300 bg-[#111] overflow-hidden rounded-sm ${activeImage === img.id ? "ring-2 ring-[#E8B4B8] ring-offset-2 ring-offset-[#0A0A0A]" : "opacity-70 hover:opacity-100"}`}
                                     aria-label={`View ${img.id + 1}`}>
-                                    {img.src ? <img src={img.src} alt="" className="w-full h-full object-cover" /> : <span
+                                    {img.src ? <img src={img.src} alt={img.altTextKey ? t(img.altTextKey as TranslationKeys) : `${product.name} image ${img.id + 1}`} className="w-full h-full object-cover" /> : <span
                                         className="font-serif text-sm text-[#F5F0EB]/15 flex items-center justify-center w-full h-full">
                                         {product.animal.charAt(0)}
                                     </span>}
@@ -1915,7 +1915,7 @@ export function ProductPageClient(
                 <div className="absolute inset-0">
                     <Image
                         src={product.slug === "owl-sofa" ? "/products/owl/delivery-bg.webp" : product.slug === "meteorite-ring-sofa" ? "/products/meteorite-ring-sofa/delivery-bg.webp" : `/products/${product.slug}/hero-1.jpg`}
-                        alt=""
+                        alt={`${product.name} delivery and shipping`}
                         fill
                         className="object-cover opacity-65" />
                     <div
