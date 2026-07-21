@@ -26,7 +26,7 @@ export function productJsonLd(product: Product) {
     },
     category: isOwlChair ? "Sculptural Reading Chair" : "Sculptural Furniture / Contemporary Sofa",
     material: isOwlChair
-      ? ["Solid Hardwood Frame", "High-density Foam", "Down Feather Wrap", "Premium Fabric Upholstery"]
+      ? ["Galvanized steel tube frame", "Powder-coated finish", "High-density foam core", "Leather upholstery", "Plush fabric upholstery", "Linen fabric upholstery", "Velvet fabric upholstery"]
       : (Array.isArray(product.materials) ? product.materials : [product.materials]),
     width: isOwlChair ? "86 cm" : undefined,
     depth: isOwlChair ? "82 cm" : undefined,

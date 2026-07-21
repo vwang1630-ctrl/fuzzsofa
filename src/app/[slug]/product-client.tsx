@@ -771,8 +771,8 @@ export function ProductPageClient(
                                     }, {
                                         titleKey: "owlFeat3",
                                         descKey: "owlFeat3Desc",
-                                        fallbackTitle: "Solid Wood Base",
-                                        fallbackDesc: "Natural walnut wood legs with anti-scratch pads"
+                                        fallbackTitle: "Durable Steel Frame",
+                                        fallbackDesc: "Powder-coated galvanized steel frame with anti-scratch pads"
                                     }, {
                                         titleKey: "owlFeat4",
                                         descKey: "owlFeat4Desc",
