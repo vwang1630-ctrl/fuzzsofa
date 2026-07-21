@@ -168,6 +168,53 @@ export function websiteJsonLd() {
   };
 }
 
+export function featuredCollectionJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Fuzz Sofa Studio Featured Collection",
+    description: "Sculptural furniture collection including the signature Owl Chair, Gorilla Sofa, Meteorite Ring Sofa, and Muscle Gorilla Sofa.",
+    numberOfItems: 5,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Owl Chair",
+        url: `${SITE_URL}/owl-sofa`,
+        description: "Sculptural reading chair with 180° wraparound wing backrest, inspired by the quiet wisdom of owls."
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Gorilla Sofa",
+        url: `${SITE_URL}/gorilla-sofa`,
+        description: "Sculptural circular sofa inspired by the gentle strength of gorillas."
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "Meteorite Ring Sofa",
+        url: `${SITE_URL}/meteorite-ring-sofa`,
+        description: "360-degree conversation sofa with organic cosmic form."
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: "Silverback Sofa",
+        url: `${SITE_URL}/silverback-sofa`,
+        description: "Sculptural sofa inspired by the majestic silverback gorilla."
+      },
+      {
+        "@type": "ListItem",
+        position: 5,
+        name: "Muscle Gorilla Sofa",
+        url: `${SITE_URL}/muscle-gorilla-sofa`,
+        description: "Bold sculptural sofa celebrating raw power and form."
+      }
+    ]
+  };
+}
+
 export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
   return {
     "@context": "https://schema.org",

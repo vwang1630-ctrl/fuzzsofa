@@ -6,7 +6,7 @@ import type { Product } from "@/lib/products";
 import { journalArticles } from "@/lib/journal";
 import { useLanguage } from "@/lib/language-context";
 import type { TranslationKeys } from "@/lib/i18n";
-import { websiteJsonLd } from "@/lib/seo";
+import { websiteJsonLd, featuredCollectionJsonLd } from "@/lib/seo";
 import { AiRoomCompositeModal } from "@/components/ai-room-composite-modal";
 
 const slugToPrefix: Record<string, string> = {
@@ -20,7 +20,7 @@ const slugToPrefix: Record<string, string> = {
 const heroScenes = [
   {
     src: "/hero-scene-1.jpg",
-    alt: "Gorilla sofa in cinematic billionaire library interior",
+    alt: "Fuzz Sofa Studio sculptural furniture collection including Gorilla Sofa in luxury cinematic library interior, handcrafted made-to-order",
     objectPosition: "center 20%",
     keys: {
       subtitle: "heroSubtitle" as const,
@@ -37,7 +37,7 @@ const heroScenes = [
   },
   {
     src: "/hero-scene-2.jpg",
-    alt: "Pink owl chair in dark punk concrete interior with neon lighting",
+    alt: "Fuzz Sofa Studio Owl Chair sculptural reading chair in dark contemporary interior, pink velvet wingback armchair, handcrafted in Shanghai atelier",
     objectPosition: "center 25%",
     keys: {
       subtitle: "hero2Subtitle" as const,
@@ -113,6 +113,10 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(featuredCollectionJsonLd()) }}
       />
 
       <AiRoomCompositeModal
@@ -240,6 +244,13 @@ export default function HomePage() {
       {/* ─── 4. FEATURED WORKS ─── */}
       <section id="featured-works" className="bg-[#090909] pt-8 md:pt-14 pb-10 md:pb-24">
         <div className="max-w-[1200px] mx-auto px-5 md:px-6">
+          {/* Brand Story - Owl Chair Signature Piece */}
+          <div className="mb-6 md:mb-10 max-w-[700px]">
+            <p className="text-[12px] md:text-[13px] font-light leading-[1.7] text-[#8A8580] tracking-[0.02em]">
+              {t('homepageBrandStory' as TranslationKeys)}
+            </p>
+          </div>
+
           <div className="mb-6 md:mb-12 flex items-end justify-between">
             <div>
               <p className="sm:hidden text-[12px] text-[#E8B4B8]/60 tracking-[0.25em] uppercase mb-1.5 md:mb-2">Collection</p>

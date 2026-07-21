@@ -8,11 +8,11 @@ import { SupabaseConfigProvider } from "@/lib/supabase-config-inject";
 
 export const metadata: Metadata = {
   title: {
-    default: "Fuzz Sofa Studio | Made-to-Order Sculptural Furniture",
+    default: "Fuzz Sofa Studio | Sculptural Furniture & Owl Chair | Made-to-Order",
     template: "%s | Fuzz Sofa Studio",
   },
   description:
-    "Fuzz Sofa Studio is a design-led furniture studio specializing in sculptural sofas produced through a made-to-order system. Each piece is individually produced after order confirmation. No inventory. No mass production.",
+    "Fuzz Sofa Studio is a design-led furniture studio specializing in sculptural sofas and the signature Owl Chair. Each piece is handcrafted through a made-to-order system in our Shanghai atelier. No inventory. No mass production.",
   keywords: [
     "sculptural furniture",
     "made-to-order sofa",
@@ -24,6 +24,9 @@ export const metadata: Metadata = {
     "fuzz sofa studio",
     "custom sofa",
     "bespoke furniture",
+    "owl chair",
+    "sculptural reading chair",
+    "animal inspired furniture",
   ],
   authors: [{ name: "Fuzz Sofa Studio", url: "https://fuzzsofa.com" }],
   openGraph: {
