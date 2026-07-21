@@ -128,12 +128,12 @@ const OWL_DATA = {
         inch: "16.5"
     }, {
         label: "重量",
-        cm: "28",
-        inch: "61.7"
+        cm: "28 kg",
+        inch: "61.7 lbs"
     }, {
         label: "承重",
-        cm: "1 人",
-        inch: "1 person"
+        cm: "150 kg",
+        inch: "330 lbs"
     }],
 
     crafts: [{
@@ -646,7 +646,7 @@ export default function MobileProductPage(
                 <div className="specs" id="detailSpecsContainer">
                     {OWL_DATA.specs.map(s => <div key={s.label} className="spec-item">
                         <span className="l">{s.label}</span>
-                        <span className="v">{unit === "cm" ? `${s.cm} cm` : `${s.inch} in`}</span>
+                        <span className="v">{s.label === "重量" || s.label === "承重" ? (unit === "cm" ? s.cm : s.inch) : (unit === "cm" ? `${s.cm} cm` : `${s.inch} in`)}</span>
                     </div>)}
                 </div>
                 {}
