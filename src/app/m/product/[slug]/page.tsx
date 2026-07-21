@@ -43,19 +43,19 @@ const OWL_DATA = {
 
     colors: [{
         key: "black",
-        label: "黑色 · 皮革",
+        label: "Black · Leather",
         colorCode: "#1A1A1A",
         imageIndex: 3,
         group: "Leather"
     }, {
         key: "snowy-white",
-        label: "雪山白 · 长毛绒",
+        label: "Snow White · Bouclé",
         colorCode: "#F5F0EB",
         imageIndex: 0,
         group: "Plush"
     }, {
         key: "dusty-pink",
-        label: "玫瑰粉 · 长毛绒",
+        label: "Rose Pink · Bouclé",
         colorCode: "#E8B4B8",
         imageIndex: 2,
         group: "Plush"
@@ -86,20 +86,20 @@ const OWL_DATA = {
 
     features: [{
         num: "01",
-        label: "守望之姿",
-        desc: "圆润椅背如猫头鹰展翅，180° 环绕拥抱感"
+        label: "Vigilant Silhouette",
+        desc: "Rounded backrest inspired by owl wings, 180° wraparound embrace"
     }, {
         num: "02",
-        label: "精巧尺度",
-        desc: "紧凑比例，任何角落都能成为沉思之地"
+        label: "Compact Scale",
+        desc: "Compact proportions, any corner becomes a place for contemplation"
     }, {
         num: "03",
-        label: "手工打造",
-        desc: "每件作品精心手工制作，传统工艺与现代设计融合"
+        label: "Handcrafted",
+        desc: "Each piece meticulously handcrafted, blending traditional craftsmanship with modern design"
     }, {
         num: "04",
-        label: "材料质检",
-        desc: "材料严格通过质量检验，同时符合欧美出口标准质检"
+        label: "Quality Assured",
+        desc: "Materials rigorously quality tested, meeting European and American export standards"
     }],
 
     storyTitle: "猫头鹰的凝视",
@@ -127,11 +127,11 @@ const OWL_DATA = {
         cm: "42",
         inch: "16.5"
     }, {
-        label: "重量",
+        label: "Weight",
         cm: "28 kg",
         inch: "61.7 lbs"
     }, {
-        label: "承重",
+        label: "Capacity",
         cm: "150 kg",
         inch: "330 lbs"
     }],
@@ -141,10 +141,10 @@ const OWL_DATA = {
         detail: "高强度钢架支撑，稳固耐用"
     }, {
         name: "坐垫核心",
-        detail: "高密度海绵填充，舒适支撑"
+        detail: "High-density foam filling, comfortable support"
     }, {
-        name: "手工打造",
-        detail: "每件作品均由资深工匠精心手工制作，融合传统工艺与现代设计"
+        name: "Handcrafted",
+        detail: "Each piece meticulously handcrafted by skilled artisans, blending traditional craftsmanship with modern design"
     }, {
         name: "原料采购 · 质检",
         detail: "所有材料均来自认证供应商，每批原料在进入生产前都经过严格的质量检验"
@@ -152,7 +152,7 @@ const OWL_DATA = {
 
     scenes: [{
         image: "/products/spaces/owl-space-1.png",
-        label: "理想之家",
+        label: "Sanctuary",
         sub: "The Owl Chair turns away from the open-plan living room, creating an intimate retreat within the grand space.",
         alt: "White Owl Chair in a snowy Hogwarts tower library, sculptural wingback armchair facing an arched window with falling snow, wrapped wing silhouette creates intimate reading sanctuary, magical academia atmosphere, Fuzz Sofa Studio Hedwig collection"
     }, {
@@ -206,16 +206,16 @@ export default function MobileProductPage(
 
     const MATERIAL_GROUPS = [{
         key: "Leather",
-        label: "皮革"
+        label: "Leather"
     }, {
         key: "Plush",
-        label: "长毛绒"
+        label: "Bouclé"
     }, {
         key: "Linen",
-        label: "亚麻"
+        label: "Linen"
     }, {
         key: "Velvet",
-        label: "天鹅绒"
+        label: "Velvet"
     }];
 
     const [selectedMaterial, setSelectedMaterial] = useState(MATERIAL_GROUPS[0].key);
@@ -612,7 +612,7 @@ export default function MobileProductPage(
                 {}
                 {/* Interior Inspiration */}
                 <div className="inspiration">
-                    <div className="section-label">实景灵感</div>
+                    <div className="section-label">Inspiration</div>
                     <div className="scene-scroll">
                         {OWL_DATA.scenes.map((s, i) => <div key={i} className="scene-card">
                             <img src={s.image} alt={s.alt} loading="lazy" />
@@ -623,24 +623,24 @@ export default function MobileProductPage(
                 </div>
                 {}
                 <div className="story">
-                    <div className="section-label">设计故事</div>
+                    <div className="section-label">Design Story</div>
                     <div className="story-grid">
                         <div className="story-image">
                             <img src={OWL_DATA.sketchImage} alt="Design sketch" loading="lazy" />
-                            <span className="sketch-tag">✧ 手稿 · 概念设计</span>
+                            <span className="sketch-tag">✧ Sketch · Concept Design</span>
                         </div>
                         <div className="story-text">
                             <div className="title">
                                 {OWL_DATA.storyTitle} <span className="light">✦</span>
                             </div>
                             {OWL_DATA.storyText.map((t: string, i: number) => <p key={i}>{t}</p>)}
-                            <p className="spec-note">* 手工制作 · 尺寸可能存在 ±1-3cm 差异 · 重量因面料批次略有浮动</p>
+                            <p className="spec-note">* Handcrafted · Dimensions may vary ±1-3cm · Weight varies by fabric batch</p>
                         </div>
                     </div>
                 </div>
                 {}
                 <div className="specs-header">
-                    <span className="label">尺寸</span>
+                    <span className="label">Dimensions</span>
                     <div className="unit-toggle" id="detailUnitToggle">
                         <button className={unit === "cm" ? "active" : ""} onClick={() => setUnit("cm")}>cm</button>
                         <button className={unit === "in" ? "active" : ""} onClick={() => setUnit("in")}>in</button>
@@ -649,7 +649,7 @@ export default function MobileProductPage(
                 <div className="specs" id="detailSpecsContainer">
                     {OWL_DATA.specs.map(s => <div key={s.label} className="spec-item">
                         <span className="l">{s.label}</span>
-                        <span className="v">{s.label === "重量" || s.label === "承重" ? (unit === "cm" ? s.cm : s.inch) : (unit === "cm" ? `${s.cm} cm` : `${s.inch} in`)}</span>
+                        <span className="v">{s.label === "Weight" || s.label === "Capacity" ? (unit === "cm" ? s.cm : s.inch) : (unit === "cm" ? `${s.cm} cm` : `${s.inch} in`)}</span>
                     </div>)}
                 </div>
                 {}
@@ -675,8 +675,8 @@ export default function MobileProductPage(
                 {}
                 <div className="explore-more">
                     <div className="explore-header">
-                        <span className="explore-label">发现更多</span>
-                        <Link href="/m/collection" className="explore-view-all">查看全部 →</Link>
+                        <span className="explore-label">Explore Collection</span>
+                        <Link href="/m/collection" className="explore-view-all">View All →</Link>
                     </div>
                     <div className="explore-scroll">
                         {OWL_DATA.explore.map(
@@ -721,13 +721,13 @@ export default function MobileProductPage(
                         onClick={() => {
                             setPurchaseSource("cart");
                             setShowPurchasePanel(true);
-                        }}>加入购物车</button>
+                        }}>Add to Cart</button>
                     <button
                         className="btn-buy"
                         onClick={() => {
                             setPurchaseSource("buy");
                             setShowPurchasePanel(true);
-                        }}>立即购买</button>
+                        }}>Buy Now</button>
                 </div>
             </div>
             {}
@@ -863,10 +863,10 @@ export default function MobileProductPage(
                             <polyline points="20 6 9 17 4 12" />
                         </svg>
                     </div>
-                    <p className="success-text">{OWL_DATA.name}已成功加入购物车</p>
+                    <p className="success-text">{OWL_DATA.name} has been added to cart</p>
                     <div className="success-buttons">
-                        <button className="btn-view-cart" onClick={() => router.push("/m/cart")}>查看购物车</button>
-                        <button className="btn-continue" onClick={() => setShowCartSuccess(false)}>继续浏览</button>
+                        <button className="btn-view-cart" onClick={() => router.push("/m/cart")}>View Cart</button>
+                        <button className="btn-continue" onClick={() => setShowCartSuccess(false)}>Continue</button>
                     </div>
                 </div>
             </div>}
@@ -964,7 +964,7 @@ export default function MobileProductPage(
                                 marginBottom: 12,
                                 alignItems: "center"
                             }}>
-                                <label style={{ fontSize: 12, color: "#8A8580" }}>大小</label>
+                                <label style={{ fontSize: 12, color: "#8A8580" }}>Size</label>
                                 <input
                                     type="range"
                                     min={10}
@@ -1060,13 +1060,13 @@ export default function MobileProductPage(
                         <img src={OWL_DATA.images[0]} alt={OWL_DATA.name} />
                     </div>
                     <div className="ar-product-label">
-                        <strong>{OWL_DATA.name}</strong>· 拖拽调整位置
+                        <strong>{OWL_DATA.name}</strong>· Drag to reposition
                                                                                     </div>
-                    <div className="ar-hint">👆 双指缩放 · 单指旋转 <span className="hint-sub">点击产品可切换角度</span>
+                    <div className="ar-hint">👆 Pinch to zoom · Single finger to rotate <span className="hint-sub">Tap product to switch angle</span>
                     </div>
                     <div className="ar-controls">
                         <div className="control-item">
-                            <span className="ctrl-label">大小</span>
+                            <span className="ctrl-label">Size</span>
                             <span className="ctrl-value">{arSize}%</span>
                             <input
                                 type="range"
