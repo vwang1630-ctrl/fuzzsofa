@@ -15,12 +15,14 @@ import RoomVisualizationModal from "@/components/room-visualization-modal";
 interface Props {
     product: Product;
     relatedProducts?: Product[];
+    breadcrumb?: string;
 }
 
 export function ProductPageClient(
     {
         product,
-        relatedProducts: relatedProductsProp = []
+        relatedProducts: relatedProductsProp = [],
+        breadcrumb = "Owl Chair"
     }: Props
 ) {
     const {
