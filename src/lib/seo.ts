@@ -11,22 +11,22 @@ export function productJsonLd(product: Product) {
   return {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: isOwlChair ? "Owl Chair" : product.name,
+    name: isOwlChair ? "The Owl Chair" : product.name,
     description: isOwlChair
-      ? "A sculptural reading chair inspired by the magic of Hogwarts. Features a 180° wraparound wing backrest, solid wood frame, and premium upholstery. Available in four magical colorways."
+      ? "A design-led, handcrafted made-to-order sculptural reading chair inspired by an owl's stance, featuring a 180-degree curved backrest. Handcrafted individually in our atelier."
       : product.metaDescription,
+    sku: isOwlChair ? "FUZZ-OWL-CHAIR-01" : undefined,
     brand: {
       "@type": "Brand",
       name: SITE_NAME,
     },
-    sku: isOwlChair ? "OWL-CHAIR-01" : undefined,
     manufacturer: {
       "@type": "Manufacturer",
       name: SITE_NAME,
     },
     category: isOwlChair ? "Sculptural Reading Chair" : "Sculptural Furniture / Contemporary Sofa",
     material: isOwlChair
-      ? ["Galvanized steel tube frame", "Powder-coated finish", "High-density foam core", "Leather upholstery", "Plush fabric upholstery", "Linen fabric upholstery", "Velvet fabric upholstery"]
+      ? "Plush Fur, Leather, Linen, Velvet"
       : (Array.isArray(product.materials) ? product.materials : [product.materials]),
     width: isOwlChair ? "86 cm" : undefined,
     depth: isOwlChair ? "82 cm" : undefined,
@@ -47,9 +47,11 @@ export function productJsonLd(product: Product) {
     offers: {
       "@type": "Offer",
       priceCurrency: "USD",
-      price: isOwlChair ? "4800" : product.priceRange.americas[0],
-      availability: isOwlChair ? "https://schema.org/MadeToOrder" : "https://schema.org/PreOrder",
-      url: isOwlChair ? `${SITE_URL}/m/product/owl-sofa` : `${SITE_URL}/${product.slug}`,
+      price: isOwlChair ? "3200" : product.priceRange.americas[0],
+      priceValidUntil: "2026-12-31",
+      itemCondition: "https://schema.org/NewCondition",
+      availability: isOwlChair ? "https://schema.org/InStock" : "https://schema.org/PreOrder",
+      url: isOwlChair ? `${SITE_URL}/m/product/owl` : `${SITE_URL}/${product.slug}`,
       description: "Made-to-order production only. Each piece is individually produced after order confirmation.",
       seller: {
         "@type": "Organization",
@@ -57,22 +59,20 @@ export function productJsonLd(product: Product) {
       },
       shippingDetails: {
         "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: "0",
+          currency: "USD",
+        },
         shippingDestination: {
           "@type": "DefinedRegion",
-          addressCountry: "*",
+          addressCountry: ["US", "GB", "DE", "FR", "AE", "SA"],
         },
         deliveryTime: {
           "@type": "ShippingDeliveryTime",
           handlingTime: {
             "@type": "QuantitativeValue",
-            minValue: 7,
-            maxValue: 14,
-            unitCode: "DAY",
-            description: "Production time: 1–2 weeks. Each piece is individually produced after order confirmation.",
-          },
-          transitTime: {
-            "@type": "QuantitativeValue",
-            minValue: 7,
+            minValue: 14,
             maxValue: 21,
             unitCode: "DAY",
           },
@@ -81,13 +81,7 @@ export function productJsonLd(product: Product) {
     },
     image: isOwlChair
       ? [
-          `${SITE_URL}/products/owl/owl-1.jpg`,
-          `${SITE_URL}/products/owl/owl-2.jpg`,
-          `${SITE_URL}/products/owl/owl-3.jpg`,
-          `${SITE_URL}/products/owl/owl-4.jpg`,
-          `${SITE_URL}/products/owl/owl-5.jpg`,
-          `${SITE_URL}/products/owl/owl-6.jpg`,
-          `${SITE_URL}/products/owl/owl-7.jpg`,
+          `${SITE_URL}/products/owl/snowy-white.png`,
         ]
       : `${SITE_URL}/${product.slug}.jpg`,
     url: `${SITE_URL}/${product.slug}`,
