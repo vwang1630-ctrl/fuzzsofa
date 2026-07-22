@@ -1,965 +1,550 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
 import {
-  LayoutGrid, Image as ImageIcon, Package, FolderOpen, FileText,
-  Plus, Trash2, Edit2, GripVertical, ChevronUp, ChevronDown,
-  Save, X, AlertCircle, Check
+  Loader2,
+  AlertCircle,
+  Image as ImageIcon,
+  Upload,
+  Save,
+  LayoutDashboard,
+  Package,
+  ShoppingBag,
+  Braces,
+  Home,
+  PawPrint,
 } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
-const ADMIN_TOKEN_KEY = 'admin_token';
+const navItems = [
+  { label: '仪表盘', href: '/admin', icon: LayoutDashboard },
+  { label: '商品管理', href: '/admin/products', icon: Package },
+  { label: '订单管理', href: '/admin/orders', icon: ShoppingBag },
+  { label: '首页装修', href: '/admin/homepage', icon: Home },
+];
 
-type SectionType = 'header' | 'banner' | 'featured' | 'cases' | 'posts';
-
-interface NavItem {
+// 图片上传预览组件
+function ImageUploadPreview({
+  label,
+  value,
+  onChange,
+  aspectRatio = 'aspect-video',
+}: {
   label: string;
-  href: string;
-}
+  value: string;
+  onChange: (url: string) => void;
+  aspectRatio?: string;
+}) {
+  const [uploading, setUploading] = useState(false);
 
-interface HeaderConfig {
-  siteName: string;
-  logo: string;
-  logoText: string;
-  navItems: NavItem[];
-  languages: { code: string; label: string }[];
-  defaultLanguage: string;
-}
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-interface Banner {
-  id: string;
-  title: string;
-  subtitle: string;
-  imageUrl: string;
-  linkUrl: string;
-  buttonText: string;
-  sortOrder: number;
-  isActive: boolean;
-}
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
 
-interface FeaturedProduct {
-  id: string;
-  productSlug: string;
-  displayOrder: number;
-  tag: string;
-  customTitle: string;
-  customSubtitle: string;
-  isActive: boolean;
-  productName?: string;
-  productImage?: string;
-}
+      const response = await fetch('/api/admin/assets', {
+        method: 'POST',
+        headers: {
+          'x-session': localStorage.getItem('admin_token') || '',
+        },
+        body: formData,
+      });
 
-interface DesignCase {
-  id: string;
-  title: string;
-  subtitle: string;
-  imageUrl: string;
-  linkUrl: string;
-  displayOrder: number;
-  isActive: boolean;
-}
-
-interface Post {
-  id: string;
-  postSlug: string;
-  displayOrder: number;
-  isActive: boolean;
-  postTitle?: string;
-  postExcerpt?: string;
-  postCategory?: string;
-}
-
-const sectionConfig: Record<SectionType, { label: string; icon: React.ElementType }> = {
-  header: { label: '网站头部', icon: LayoutGrid },
-  banner: { label: '轮播图', icon: ImageIcon },
-  featured: { label: '主推商品', icon: Package },
-  cases: { label: '设计案例', icon: FolderOpen },
-  posts: { label: '最新动态', icon: FileText },
-};
-
-export default function HomepageManagePage() {
-  const [activeSection, setActiveSection] = useState<SectionType>('header');
-  const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-
-  // Header config
-  const [headerConfig, setHeaderConfig] = useState<HeaderConfig>({
-    siteName: 'FUZZ SOFA',
-    logo: '',
-    logoText: 'FUZZ SOFA',
-    navItems: [
-      { label: 'Products', href: '/products' },
-      { label: 'About', href: '/about' },
-      { label: 'Magazine', href: '/magazine' },
-      { label: 'Contact', href: '/contact' },
-    ],
-    languages: [
-      { code: 'en', label: 'English' },
-      { code: 'zh', label: '中文' },
-    ],
-    defaultLanguage: 'en',
-  });
-
-  // Data
-  const [banners, setBanners] = useState<Banner[]>([]);
-  const [featuredProducts, setFeaturedProducts] = useState<FeaturedProduct[]>([]);
-  const [designCases, setDesignCases] = useState<DesignCase[]>([]);
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [allProducts, setAllProducts] = useState<{ slug: string; name: string; image?: string }[]>([]);
-
-  // Edit states
-  const [editingBanner, setEditingBanner] = useState<Banner | null>(null);
-  const [editingCase, setEditingCase] = useState<DesignCase | null>(null);
-  const [showProductPicker, setShowProductPicker] = useState(false);
-  const [showPostPicker, setShowPostPicker] = useState(false);
-  const [productSearch, setProductSearch] = useState('');
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const authHeaders = (): Record<string, string> => {
-    const token = localStorage.getItem(ADMIN_TOKEN_KEY);
-    return token ? { 'x-session': token } : {};
+      if (response.ok) {
+        const data = await response.json();
+        onChange(data.url || data.key);
+      }
+    } catch (err) {
+      console.error('Upload failed:', err);
+    } finally {
+      setUploading(false);
+    }
   };
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const [configRes, bannersRes, featuredRes, casesRes, postsRes, productsRes] = await Promise.all([
-        fetch('/api/admin/homepage/config', { headers: authHeaders() }),
-        fetch('/api/admin/homepage/banners', { headers: authHeaders() }),
-        fetch('/api/admin/homepage/featured', { headers: authHeaders() }),
-        fetch('/api/admin/homepage/cases', { headers: authHeaders() }),
-        fetch('/api/admin/homepage/posts', { headers: authHeaders() }),
-        fetch('/api/admin/products', { headers: authHeaders() }),
-      ]);
+  return (
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-[#152033]">{label}</label>
+      <div className={`relative ${aspectRatio} bg-[#F6F8FB] rounded-lg border-2 border-dashed border-[#E6EAF2] overflow-hidden group`}>
+        {value ? (
+          <>
+            <img src={value} alt={label} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <label className="cursor-pointer bg-white text-[#152033] px-4 py-2 rounded-md text-sm font-medium hover:bg-[#F6F8FB] transition-colors">
+                更换图片
+                <input type="file" accept="image/*" className="hidden" onChange={handleUpload} />
+              </label>
+            </div>
+          </>
+        ) : (
+          <label className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer hover:bg-[#E6EAF2]/50 transition-colors">
+            {uploading ? (
+              <Loader2 className="w-8 h-8 text-[#637089] animate-spin" />
+            ) : (
+              <>
+                <Upload className="w-8 h-8 text-[#637089] mb-2" />
+                <span className="text-sm text-[#637089]">点击上传图片</span>
+                <span className="text-xs text-[#637089]/60 mt-1">支持 JPG、PNG、WebP</span>
+              </>
+            )}
+            <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploading} />
+          </label>
+        )}
+      </div>
+    </div>
+  );
+}
 
-      if (configRes.ok) {
-        const config = await configRes.json();
-        if (config.header) setHeaderConfig(config.header);
+// 输入框组件
+function InputField({
+  label,
+  value,
+  onChange,
+  placeholder,
+  multiline = false,
+}: {
+  label: string;
+  value: string;
+  onChange: (val: string) => void;
+  placeholder?: string;
+  multiline?: boolean;
+}) {
+  return (
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-[#152033]">{label}</label>
+      {multiline ? (
+        <textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          rows={4}
+          className="w-full px-3 py-2 border border-[#E6EAF2] rounded-md text-sm text-[#152033] placeholder:text-[#637089]/50 focus:outline-none focus:ring-2 focus:ring-[#2F6BFF]/30 focus:border-[#2F6BFF] resize-none"
+        />
+      ) : (
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="w-full px-3 py-2 border border-[#E6EAF2] rounded-md text-sm text-[#152033] placeholder:text-[#637089]/50 focus:outline-none focus:ring-2 focus:ring-[#2F6BFF]/30 focus:border-[#2F6BFF]"
+        />
+      )}
+    </div>
+  );
+}
+
+// 卡片容器组件
+function ConfigCard({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="bg-white rounded-lg border border-[#E6EAF2] p-6">
+      <h3 className="text-base font-semibold text-[#152033] mb-5">{title}</h3>
+      {children}
+    </div>
+  );
+}
+
+interface HomepageConfig {
+  hero: {
+    image: string;
+    title: string;
+    subtitle: string;
+    buttonText: string;
+  };
+  brand: {
+    title: string;
+    description: string;
+    image: string;
+  };
+  features: {
+    title: string;
+    intro: string;
+    items: Array<{ title: string; description: string }>;
+  };
+  scene: {
+    title: string;
+    image: string;
+  };
+  footer: {
+    line1: string;
+    line2: string;
+  };
+  journalBanner: {
+    image: string;
+    title: string;
+  };
+}
+
+const defaultConfig: HomepageConfig = {
+  hero: {
+    image: '',
+    title: 'Crafted by Nature',
+    subtitle: 'Where wild inspiration meets refined comfort',
+    buttonText: 'Explore Collection',
+  },
+  brand: {
+    title: 'Our Story',
+    description: 'Founded in 2019, FUZZ SOFA brings the untamed beauty of the animal kingdom into modern living spaces...',
+    image: '',
+  },
+  features: {
+    title: 'Why Choose FUZZ',
+    intro: 'Every piece tells a story of nature-inspired design',
+    items: [
+      { title: 'Animal-Inspired Design', description: 'Each piece draws from the unique characteristics of wildlife' },
+      { title: 'Premium Materials', description: 'Full-grain leather and premium velvet from sustainable sources' },
+      { title: 'Handcrafted Quality', description: 'Master artisans bring each design to life with precision' },
+    ],
+  },
+  scene: {
+    title: 'In Your Space',
+    image: '',
+  },
+  footer: {
+    line1: '© 2026 FUZZ SOFA. All rights reserved.',
+    line2: 'Crafted with nature in mind.',
+  },
+  journalBanner: {
+    image: '',
+    title: 'The Journal',
+  },
+};
+
+export default function HomepageConfigPage() {
+  const pathname = usePathname();
+  const [config, setConfig] = useState<HomepageConfig>(defaultConfig);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    fetchConfig();
+  }, []);
+
+  const fetchConfig = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/admin/homepage/config', {
+        headers: {
+          'x-session': localStorage.getItem('admin_token') || '',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.config) {
+          setConfig({ ...defaultConfig, ...data.config });
+        }
       }
-      if (bannersRes.ok) setBanners(await bannersRes.json());
-      if (featuredRes.ok) setFeaturedProducts(await featuredRes.json());
-      if (casesRes.ok) setDesignCases(await casesRes.json());
-      if (postsRes.ok) setPosts(await postsRes.json());
-      if (productsRes.ok) {
-        const products = await productsRes.json();
-        setAllProducts(products.map((p: { slug: string; name: string; images?: { hero?: string } }) => ({
-          slug: p.slug,
-          name: p.name,
-          image: p.images?.hero,
-        })));
-      }
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
+    } catch (err) {
+      console.error('Failed to fetch config:', err);
+      setError('加载配置失败');
     } finally {
       setLoading(false);
     }
   };
 
-  const showToast = (type: 'success' | 'error', message: string) => {
-    setToast({ type, message });
-    setTimeout(() => setToast(null), 3000);
-  };
-
-  const saveHeaderConfig = async () => {
+  const handleSave = async () => {
     setSaving(true);
+    setSuccess(false);
     try {
-      const res = await fetch('/api/admin/homepage/config', {
+      const response = await fetch('/api/admin/homepage/config', {
         method: 'PUT',
-        headers: { ...authHeaders(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({ header: headerConfig }),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-session': localStorage.getItem('admin_token') || '',
+        },
+        body: JSON.stringify(config),
       });
-      if (res.ok) {
-        showToast('success', '网站头部配置已保存');
+
+      if (response.ok) {
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
       } else {
-        showToast('error', '保存失败');
+        setError('保存失败');
       }
-    } catch {
-      showToast('error', '保存失败');
+    } catch (err) {
+      console.error('Failed to save config:', err);
+      setError('保存失败');
     } finally {
       setSaving(false);
     }
   };
 
-  const addNavItem = () => {
-    setHeaderConfig({
-      ...headerConfig,
-      navItems: [...headerConfig.navItems, { label: 'New Item', href: '/' }],
+  const updateConfig = (path: string[], value: string) => {
+    setConfig((prev) => {
+      const newConfig = { ...prev };
+      let current: Record<string, unknown> = newConfig;
+      for (let i = 0; i < path.length - 1; i++) {
+        current = current[path[i]] as Record<string, unknown>;
+      }
+      current[path[path.length - 1]] = value;
+      return newConfig;
     });
   };
 
-  const updateNavItem = (index: number, field: keyof NavItem, value: string) => {
-    const newItems = [...headerConfig.navItems];
-    newItems[index] = { ...newItems[index], [field]: value };
-    setHeaderConfig({ ...headerConfig, navItems: newItems });
-  };
-
-  const removeNavItem = (index: number) => {
-    setHeaderConfig({
-      ...headerConfig,
-      navItems: headerConfig.navItems.filter((_, i) => i !== index),
-    });
-  };
-
-  const moveNavItem = (index: number, direction: 'up' | 'down') => {
-    const newItems = [...headerConfig.navItems];
-    const newIndex = direction === 'up' ? index - 1 : index + 1;
-    if (newIndex < 0 || newIndex >= newItems.length) return;
-    [newItems[index], newItems[newIndex]] = [newItems[newIndex], newItems[index]];
-    setHeaderConfig({ ...headerConfig, navItems: newItems });
-  };
-
-  // Banner operations
-  const saveBanner = async (banner: Partial<Banner>) => {
-    setSaving(true);
-    try {
-      const method = banner.id ? 'PUT' : 'POST';
-      const url = banner.id ? `/api/admin/homepage/banners/${banner.id}` : '/api/admin/homepage/banners';
-      const res = await fetch(url, {
-        method,
-        headers: { ...authHeaders(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(banner),
-      });
-      if (res.ok) {
-        showToast('success', banner.id ? '轮播图已更新' : '轮播图已添加');
-        setEditingBanner(null);
-        fetchData();
-      } else {
-        showToast('error', '保存失败');
-      }
-    } catch {
-      showToast('error', '保存失败');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const deleteBanner = async (id: string) => {
-    if (!confirm('确定要删除这个轮播图吗？')) return;
-    try {
-      const res = await fetch(`/api/admin/homepage/banners/${id}`, {
-        method: 'DELETE',
-        headers: authHeaders(),
-      });
-      if (res.ok) {
-        showToast('success', '轮播图已删除');
-        fetchData();
-      }
-    } catch {
-      showToast('error', '删除失败');
-    }
-  };
-
-  // Featured products operations
-  const saveFeaturedProducts = async () => {
-    setSaving(true);
-    try {
-      const res = await fetch('/api/admin/homepage/featured', {
-        method: 'PUT',
-        headers: { ...authHeaders(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: featuredProducts }),
-      });
-      if (res.ok) {
-        showToast('success', '主推商品已保存');
-      } else {
-        showToast('error', '保存失败');
-      }
-    } catch {
-      showToast('error', '保存失败');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const addFeaturedProduct = (product: { slug: string; name: string; image?: string }) => {
-    if (featuredProducts.some(p => p.productSlug === product.slug)) return;
-    setFeaturedProducts([
-      ...featuredProducts,
-      {
-        id: `temp-${Date.now()}`,
-        productSlug: product.slug,
-        displayOrder: featuredProducts.length + 1,
-        tag: 'NEW',
-        customTitle: product.name,
-        customSubtitle: '',
-        isActive: true,
-        productName: product.name,
-        productImage: product.image,
+  const updateFeatureItem = (index: number, field: 'title' | 'description', value: string) => {
+    setConfig((prev) => ({
+      ...prev,
+      features: {
+        ...prev.features,
+        items: prev.features.items.map((item, i) =>
+          i === index ? { ...item, [field]: value } : item
+        ),
       },
-    ]);
+    }));
   };
-
-  const removeFeaturedProduct = (id: string) => {
-    setFeaturedProducts(featuredProducts.filter(p => p.id !== id));
-  };
-
-  const updateFeaturedProduct = (id: string, field: keyof FeaturedProduct, value: string | boolean) => {
-    setFeaturedProducts(featuredProducts.map(p =>
-      p.id === id ? { ...p, [field]: value } : p
-    ));
-  };
-
-  // Design cases operations
-  const saveCase = async (caseItem: Partial<DesignCase>) => {
-    setSaving(true);
-    try {
-      const method = caseItem.id ? 'PUT' : 'POST';
-      const url = caseItem.id ? `/api/admin/homepage/cases/${caseItem.id}` : '/api/admin/homepage/cases';
-      const res = await fetch(url, {
-        method,
-        headers: { ...authHeaders(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(caseItem),
-      });
-      if (res.ok) {
-        showToast('success', caseItem.id ? '案例已更新' : '案例已添加');
-        setEditingCase(null);
-        fetchData();
-      } else {
-        showToast('error', '保存失败');
-      }
-    } catch {
-      showToast('error', '保存失败');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const deleteCase = async (id: string) => {
-    if (!confirm('确定要删除这个案例吗？')) return;
-    try {
-      const res = await fetch(`/api/admin/homepage/cases/${id}`, {
-        method: 'DELETE',
-        headers: authHeaders(),
-      });
-      if (res.ok) {
-        showToast('success', '案例已删除');
-        fetchData();
-      }
-    } catch {
-      showToast('error', '删除失败');
-    }
-  };
-
-  // Posts operations
-  const savePosts = async () => {
-    setSaving(true);
-    try {
-      const res = await fetch('/api/admin/homepage/posts', {
-        method: 'PUT',
-        headers: { ...authHeaders(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: posts }),
-      });
-      if (res.ok) {
-        showToast('success', '最新动态已保存');
-      } else {
-        showToast('error', '保存失败');
-      }
-    } catch {
-      showToast('error', '保存失败');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const filteredProducts = allProducts.filter(p =>
-    p.name.toLowerCase().includes(productSearch.toLowerCase()) ||
-    p.slug.toLowerCase().includes(productSearch.toLowerCase())
-  );
-
-  const sectionIcons = {
-    header: LayoutGrid,
-    banner: ImageIcon,
-    featured: Package,
-    cases: FolderOpen,
-    posts: FileText,
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2F6BFF]" />
-      </div>
-    );
-  }
 
   return (
-    <div className="flex h-[calc(100vh-4rem)]">
-      {/* Toast */}
-      {toast && (
-        <div className={`fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg ${
-          toast.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-        }`}>
-          {toast.type === 'success' ? <Check className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
-          {toast.message}
+    <div className="flex h-screen bg-[#F6F8FB]">
+      {/* Sidebar */}
+      <aside className="w-56 shrink-0 bg-white border-r border-[#E6EAF2]">
+        <div className="h-14 flex items-center gap-3 px-4 border-b border-[#E6EAF2]">
+          <div className="w-8 h-8 bg-[#2F6BFF] rounded-lg flex items-center justify-center">
+            <PawPrint className="w-4 h-4 text-white" />
+          </div>
+          <span className="font-semibold text-sm text-[#152033]">FUZZ SOFA</span>
+          <span className="text-xs text-[#637089] bg-[#EDF0F5] px-2 py-0.5 rounded-md">Admin</span>
         </div>
-      )}
-
-      {/* Left Sidebar - Section Navigator */}
-      <div className="w-64 bg-white border-r border-[#E6EAF2] flex flex-col">
-        <div className="p-4 border-b border-[#E6EAF2]">
-          <h2 className="text-lg font-semibold text-[#152033]">首页装修</h2>
-          <p className="text-sm text-[#637089] mt-1">管理首页各模块内容</p>
-        </div>
-        <nav className="flex-1 overflow-y-auto p-2">
-          {(['header', 'banner', 'featured', 'cases', 'posts'] as SectionType[]).map((section) => {
-            const Icon = sectionConfig[section].icon;
+        <nav className="p-3 space-y-0.5">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
             return (
-              <button
-                key={section}
-                onClick={() => setActiveSection(section)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
-                  activeSection === section
-                    ? 'bg-[#2F6BFF] text-white'
-                    : 'text-[#152033] hover:bg-[#F6F8FB]'
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-md font-medium text-sm transition-colors ${
+                  isActive
+                    ? 'bg-[#2F6BFF]/10 text-[#2F6BFF]'
+                    : 'text-[#637089] hover:bg-[#EDF0F5] hover:text-[#152033]'
                 }`}
+                aria-current={isActive ? 'page' : undefined}
               >
-                <Icon className="w-5 h-5" />
-                <span className="font-medium">{sectionConfig[section].label}</span>
-              </button>
+                <item.icon className="w-4 h-4" />
+                {item.label}
+              </Link>
             );
           })}
+          <div className="pt-3 mt-3 border-t border-[#E6EAF2]">
+            <Link
+              href="/admin/api-docs"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-md text-[#637089] hover:bg-[#EDF0F5] hover:text-[#152033] font-medium text-sm transition-colors"
+            >
+              <Braces className="w-4 h-4" />
+              API 文档
+            </Link>
+          </div>
         </nav>
-        <div className="p-4 border-t border-[#E6EAF2]">
-          <Button
-            onClick={() => fetchData()}
-            variant="outline"
-            className="w-full"
-          >
-            刷新数据
-          </Button>
-        </div>
-      </div>
+      </aside>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto bg-[#F6F8FB] p-6">
-        {/* Header Section */}
-        {activeSection === 'header' && (
-          <div className="max-w-3xl">
-            <div className="bg-white rounded-xl shadow-sm border border-[#E6EAF2] p-6">
-              <h3 className="text-lg font-semibold text-[#152033] mb-6">网站头部配置</h3>
+      <main className="flex-1 overflow-y-auto">
+        <div className="max-w-3xl mx-auto px-6 py-8">
+          {/* Page Title */}
+          <div className="mb-8">
+            <h1 className="text-2xl font-semibold text-[#152033]">首页装修</h1>
+            <p className="text-sm text-[#637089] mt-1">配置首页各模块的内容和展示效果</p>
+          </div>
 
-              <div className="space-y-6">
-                <div>
-                  <Label className="text-[#152033]">站点名称</Label>
-                  <Input
-                    value={headerConfig.siteName}
-                    onChange={(e) => setHeaderConfig({ ...headerConfig, siteName: e.target.value })}
-                    className="mt-1"
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 bg-[#EF4444]/10 border border-[#EF4444]/20 rounded-lg flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-[#EF4444]" />
+              <p className="text-sm text-[#EF4444]">{error}</p>
+            </div>
+          )}
+
+          {/* Success Message */}
+          {success && (
+            <div className="mb-6 p-4 bg-[#16A37B]/10 border border-[#16A37B]/20 rounded-lg flex items-center gap-3">
+              <Save className="w-5 h-5 text-[#16A37B]" />
+              <p className="text-sm text-[#16A37B]">配置已保存</p>
+            </div>
+          )}
+
+          {/* Loading State */}
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="w-8 h-8 text-[#2F6BFF] animate-spin" />
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {/* 1. Hero 横幅配置 */}
+              <ConfigCard title="Hero 横幅配置">
+                <div className="space-y-5">
+                  <ImageUploadPreview
+                    label="横幅图片"
+                    value={config.hero.image}
+                    onChange={(url) => updateConfig(['hero', 'image'], url)}
+                    aspectRatio="aspect-[21/9]"
+                  />
+                  <InputField
+                    label="主标题"
+                    value={config.hero.title}
+                    onChange={(val) => updateConfig(['hero', 'title'], val)}
+                    placeholder="Crafted by Nature"
+                  />
+                  <InputField
+                    label="副标题"
+                    value={config.hero.subtitle}
+                    onChange={(val) => updateConfig(['hero', 'subtitle'], val)}
+                    placeholder="Where wild inspiration meets refined comfort"
+                  />
+                  <InputField
+                    label="按钮文字"
+                    value={config.hero.buttonText}
+                    onChange={(val) => updateConfig(['hero', 'buttonText'], val)}
+                    placeholder="Explore Collection"
                   />
                 </div>
+              </ConfigCard>
 
-                <div>
-                  <Label className="text-[#152033]">Logo URL（可选）</Label>
-                  <Input
-                    value={headerConfig.logo}
-                    onChange={(e) => setHeaderConfig({ ...headerConfig, logo: e.target.value })}
-                    placeholder="https://example.com/logo.png"
-                    className="mt-1"
+              {/* 2. 品牌介绍配置 */}
+              <ConfigCard title="品牌介绍配置">
+                <div className="space-y-5">
+                  <InputField
+                    label="标题"
+                    value={config.brand.title}
+                    onChange={(val) => updateConfig(['brand', 'title'], val)}
+                    placeholder="Our Story"
                   />
-                  {headerConfig.logo && (
-                    <img src={headerConfig.logo} alt="Logo preview" className="mt-2 h-10 object-contain" />
-                  )}
-                </div>
-
-                <div>
-                  <Label className="text-[#152033]">Logo 文字（当无 Logo 图片时显示）</Label>
-                  <Input
-                    value={headerConfig.logoText}
-                    onChange={(e) => setHeaderConfig({ ...headerConfig, logoText: e.target.value })}
-                    className="mt-1"
+                  <InputField
+                    label="介绍文本"
+                    value={config.brand.description}
+                    onChange={(val) => updateConfig(['brand', 'description'], val)}
+                    placeholder="品牌故事描述..."
+                    multiline
+                  />
+                  <ImageUploadPreview
+                    label="配图"
+                    value={config.brand.image}
+                    onChange={(url) => updateConfig(['brand', 'image'], url)}
+                    aspectRatio="aspect-[4/3]"
                   />
                 </div>
+              </ConfigCard>
 
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <Label className="text-[#152033]">导航菜单</Label>
-                    <Button onClick={addNavItem} size="sm" variant="outline">
-                      <Plus className="w-4 h-4 mr-1" />
-                      添加菜单
-                    </Button>
-                  </div>
-                  <div className="space-y-2">
-                    {headerConfig.navItems.map((item, index) => (
-                      <div key={index} className="flex items-center gap-2 p-3 bg-[#F6F8FB] rounded-lg">
-                        <GripVertical className="w-4 h-4 text-[#637089] cursor-grab" />
-                        <Input
-                          value={item.label}
-                          onChange={(e) => updateNavItem(index, 'label', e.target.value)}
-                          className="flex-1"
-                          placeholder="菜单名称"
+              {/* 3. 产品特色配置 */}
+              <ConfigCard title="产品特色配置">
+                <div className="space-y-5">
+                  <InputField
+                    label="大标题"
+                    value={config.features.title}
+                    onChange={(val) => updateConfig(['features', 'title'], val)}
+                    placeholder="Why Choose FUZZ"
+                  />
+                  <InputField
+                    label="导语"
+                    value={config.features.intro}
+                    onChange={(val) => updateConfig(['features', 'intro'], val)}
+                    placeholder="Every piece tells a story..."
+                  />
+                  <div className="space-y-4 pt-2">
+                    {config.features.items.map((item, index) => (
+                      <div key={index} className="p-4 bg-[#F6F8FB] rounded-lg space-y-3">
+                        <span className="text-xs font-medium text-[#637089]">特色 {index + 1}</span>
+                        <InputField
+                          label="标题"
+                          value={item.title}
+                          onChange={(val) => updateFeatureItem(index, 'title', val)}
+                          placeholder="特色标题"
                         />
-                        <Input
-                          value={item.href}
-                          onChange={(e) => updateNavItem(index, 'href', e.target.value)}
-                          className="flex-1"
-                          placeholder="链接地址"
+                        <InputField
+                          label="描述"
+                          value={item.description}
+                          onChange={(val) => updateFeatureItem(index, 'description', val)}
+                          placeholder="特色描述"
                         />
-                        <div className="flex items-center gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => moveNavItem(index, 'up')}
-                            disabled={index === 0}
-                          >
-                            <ChevronUp className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => moveNavItem(index, 'down')}
-                            disabled={index === headerConfig.navItems.length - 1}
-                          >
-                            <ChevronDown className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => removeNavItem(index)}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
+              </ConfigCard>
 
-                <div>
-                  <Label className="text-[#152033]">默认语言</Label>
-                  <select
-                    value={headerConfig.defaultLanguage}
-                    onChange={(e) => setHeaderConfig({ ...headerConfig, defaultLanguage: e.target.value })}
-                    className="mt-1 w-full px-3 py-2 border border-[#E6EAF2] rounded-lg"
-                  >
-                    {headerConfig.languages.map((lang) => (
-                      <option key={lang.code} value={lang.code}>
-                        {lang.label}
-                      </option>
-                    ))}
-                  </select>
+              {/* 4. 场景展示配置 */}
+              <ConfigCard title="场景展示配置">
+                <div className="space-y-5">
+                  <InputField
+                    label="标题"
+                    value={config.scene.title}
+                    onChange={(val) => updateConfig(['scene', 'title'], val)}
+                    placeholder="In Your Space"
+                  />
+                  <ImageUploadPreview
+                    label="场景大图"
+                    value={config.scene.image}
+                    onChange={(url) => updateConfig(['scene', 'image'], url)}
+                    aspectRatio="aspect-[16/9]"
+                  />
                 </div>
+              </ConfigCard>
 
-                <Button
-                  onClick={saveHeaderConfig}
+              {/* 5. 底部全局配置 */}
+              <ConfigCard title="底部全局配置">
+                <div className="space-y-5">
+                  <InputField
+                    label="第一行文字"
+                    value={config.footer.line1}
+                    onChange={(val) => updateConfig(['footer', 'line1'], val)}
+                    placeholder="© 2026 FUZZ SOFA. All rights reserved."
+                  />
+                  <InputField
+                    label="第二行文字"
+                    value={config.footer.line2}
+                    onChange={(val) => updateConfig(['footer', 'line2'], val)}
+                    placeholder="Crafted with nature in mind."
+                  />
+                </div>
+              </ConfigCard>
+
+              {/* 6. 日志页 Banner 配置 */}
+              <ConfigCard title="日志页 Banner 配置">
+                <div className="space-y-5">
+                  <ImageUploadPreview
+                    label="Banner 图片"
+                    value={config.journalBanner.image}
+                    onChange={(url) => updateConfig(['journalBanner', 'image'], url)}
+                    aspectRatio="aspect-[21/9]"
+                  />
+                  <InputField
+                    label="标题"
+                    value={config.journalBanner.title}
+                    onChange={(val) => updateConfig(['journalBanner', 'title'], val)}
+                    placeholder="The Journal"
+                  />
+                </div>
+              </ConfigCard>
+
+              {/* 保存按钮 */}
+              <div className="flex justify-end pt-4 pb-8">
+                <button
+                  onClick={handleSave}
                   disabled={saving}
-                  className="w-full bg-[#2F6BFF] hover:bg-[#2558D6]"
+                  className="flex items-center gap-2 px-6 py-3 bg-[#2F6BFF] text-white font-medium text-sm rounded-md hover:bg-[#2F6BFF]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Save className="w-4 h-4 mr-2" />
-                  {saving ? '保存中...' : '保存配置'}
-                </Button>
+                  {saving ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4" />
+                  )}
+                  保存全部配置
+                </button>
               </div>
             </div>
-          </div>
-        )}
-
-        {/* Banner Section */}
-        {activeSection === 'banner' && (
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-lg font-semibold text-[#152033]">轮播图管理</h3>
-                <p className="text-sm text-[#637089]">共 {banners.length} 张轮播图</p>
-              </div>
-              <Button onClick={() => setEditingBanner({} as Banner)} className="bg-[#2F6BFF] hover:bg-[#2558D6]">
-                <Plus className="w-4 h-4 mr-2" />
-                添加轮播图
-              </Button>
-            </div>
-
-            <div className="grid gap-4">
-              {banners.map((banner) => (
-                <div key={banner.id} className="bg-white rounded-xl shadow-sm border border-[#E6EAF2] p-4 flex items-center gap-4">
-                  <img
-                    src={banner.imageUrl || '/placeholder-banner.png'}
-                    alt={banner.title}
-                    className="w-32 h-20 object-cover rounded-lg"
-                  />
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-[#152033]">{banner.title}</h4>
-                    <p className="text-sm text-[#637089]">{banner.subtitle}</p>
-                    <p className="text-xs text-[#637089] mt-1">链接: {banner.linkUrl}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Switch
-                      checked={banner.isActive}
-                      onCheckedChange={(checked) => saveBanner({ ...banner, isActive: checked })}
-                    />
-                    <Button variant="ghost" size="icon" onClick={() => setEditingBanner(banner)}>
-                      <Edit2 className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => deleteBanner(banner.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Edit Banner Modal */}
-            {editingBanner && (
-              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h4 className="text-lg font-semibold text-[#152033]">
-                      {editingBanner.id ? '编辑轮播图' : '添加轮播图'}
-                    </h4>
-                    <Button variant="ghost" size="icon" onClick={() => setEditingBanner(null)}>
-                      <X className="w-5 h-5" />
-                    </Button>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <Label>标题</Label>
-                      <Input
-                        value={editingBanner.title || ''}
-                        onChange={(e) => setEditingBanner({ ...editingBanner, title: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                    <div>
-                      <Label>副标题</Label>
-                      <Textarea
-                        value={editingBanner.subtitle || ''}
-                        onChange={(e) => setEditingBanner({ ...editingBanner, subtitle: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                    <div>
-                      <Label>图片 URL</Label>
-                      <Input
-                        value={editingBanner.imageUrl || ''}
-                        onChange={(e) => setEditingBanner({ ...editingBanner, imageUrl: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                    <div>
-                      <Label>链接地址</Label>
-                      <Input
-                        value={editingBanner.linkUrl || ''}
-                        onChange={(e) => setEditingBanner({ ...editingBanner, linkUrl: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                    <div>
-                      <Label>按钮文字</Label>
-                      <Input
-                        value={editingBanner.buttonText || ''}
-                        onChange={(e) => setEditingBanner({ ...editingBanner, buttonText: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                    <Button
-                      onClick={() => saveBanner(editingBanner)}
-                      disabled={saving}
-                      className="w-full bg-[#2F6BFF] hover:bg-[#2558D6]"
-                    >
-                      {saving ? '保存中...' : '保存'}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Featured Products Section */}
-        {activeSection === 'featured' && (
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-lg font-semibold text-[#152033]">主推商品</h3>
-                <p className="text-sm text-[#637089]">共 {featuredProducts.length} 件商品</p>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" onClick={() => setShowProductPicker(true)}>
-                  <Plus className="w-4 h-4 mr-2" />
-                  添加商品
-                </Button>
-                <Button onClick={saveFeaturedProducts} disabled={saving} className="bg-[#2F6BFF] hover:bg-[#2558D6]">
-                  <Save className="w-4 h-4 mr-2" />
-                  保存
-                </Button>
-              </div>
-            </div>
-
-            <div className="grid gap-4">
-              {featuredProducts.map((product, index) => (
-                <div key={product.id} className="bg-white rounded-xl shadow-sm border border-[#E6EAF2] p-4">
-                  <div className="flex items-center gap-4">
-                    <span className="text-lg font-semibold text-[#637089] w-8">#{index + 1}</span>
-                    {product.productImage && (
-                      <img
-                        src={product.productImage}
-                        alt={product.customTitle}
-                        className="w-16 h-16 object-cover rounded-lg"
-                      />
-                    )}
-                    <div className="flex-1 grid grid-cols-3 gap-4">
-                      <div>
-                        <Label className="text-xs text-[#637089]">商品</Label>
-                        <p className="font-medium text-[#152033]">{product.productName || product.customTitle}</p>
-                        <p className="text-sm text-[#637089]">{product.productSlug}</p>
-                      </div>
-                      <div>
-                        <Label className="text-xs text-[#637089]">标签</Label>
-                        <select
-                          value={product.tag}
-                          onChange={(e) => updateFeaturedProduct(product.id, 'tag', e.target.value)}
-                          className="mt-1 w-full px-2 py-1 border border-[#E6EAF2] rounded text-sm"
-                        >
-                          <option value="BESTSELLER">BESTSELLER</option>
-                          <option value="NEW">NEW</option>
-                          <option value="TRENDING">TRENDING</option>
-                          <option value="HOT">HOT</option>
-                          <option value="">无标签</option>
-                        </select>
-                      </div>
-                      <div>
-                        <Label className="text-xs text-[#637089]">显示状态</Label>
-                        <div className="mt-1">
-                          <Switch
-                            checked={product.isActive}
-                            onCheckedChange={(checked) => updateFeaturedProduct(product.id, 'isActive', checked)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => removeFeaturedProduct(product.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Product Picker Modal */}
-            {showProductPicker && (
-              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-hidden flex flex-col">
-                  <div className="flex items-center justify-between p-4 border-b border-[#E6EAF2]">
-                    <h4 className="text-lg font-semibold text-[#152033]">选择商品</h4>
-                    <Button variant="ghost" size="icon" onClick={() => setShowProductPicker(false)}>
-                      <X className="w-5 h-5" />
-                    </Button>
-                  </div>
-                  <div className="p-4 border-b border-[#E6EAF2]">
-                    <Input
-                      placeholder="搜索商品..."
-                      value={productSearch}
-                      onChange={(e) => setProductSearch(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex-1 overflow-y-auto p-4">
-                    <div className="grid gap-2">
-                      {filteredProducts.map((product) => {
-                        const isAdded = featuredProducts.some(p => p.productSlug === product.slug);
-                        return (
-                          <div
-                            key={product.slug}
-                            className={`flex items-center gap-3 p-3 rounded-lg border ${
-                              isAdded ? 'border-green-500 bg-green-50' : 'border-[#E6EAF2] hover:bg-[#F6F8FB]'
-                            }`}
-                          >
-                            {product.image && (
-                              <img src={product.image} alt={product.name} className="w-12 h-12 object-cover rounded" />
-                            )}
-                            <div className="flex-1">
-                              <p className="font-medium text-[#152033]">{product.name}</p>
-                              <p className="text-sm text-[#637089]">{product.slug}</p>
-                            </div>
-                            <Button
-                              size="sm"
-                              variant={isAdded ? 'outline' : 'default'}
-                              onClick={() => addFeaturedProduct(product)}
-                              disabled={isAdded}
-                              className={isAdded ? '' : 'bg-[#2F6BFF] hover:bg-[#2558D6]'}
-                            >
-                              {isAdded ? '已添加' : '添加'}
-                            </Button>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Design Cases Section */}
-        {activeSection === 'cases' && (
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-lg font-semibold text-[#152033]">设计案例</h3>
-                <p className="text-sm text-[#637089]">共 {designCases.length} 个案例</p>
-              </div>
-              <Button onClick={() => setEditingCase({} as DesignCase)} className="bg-[#2F6BFF] hover:bg-[#2558D6]">
-                <Plus className="w-4 h-4 mr-2" />
-                添加案例
-              </Button>
-            </div>
-
-            <div className="grid gap-4">
-              {designCases.map((caseItem) => (
-                <div key={caseItem.id} className="bg-white rounded-xl shadow-sm border border-[#E6EAF2] p-4 flex items-center gap-4">
-                  <img
-                    src={caseItem.imageUrl || '/placeholder-case.png'}
-                    alt={caseItem.title}
-                    className="w-32 h-20 object-cover rounded-lg"
-                  />
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-[#152033]">{caseItem.title}</h4>
-                    <p className="text-sm text-[#637089]">{caseItem.subtitle}</p>
-                    <p className="text-xs text-[#637089] mt-1">链接: {caseItem.linkUrl}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Switch
-                      checked={caseItem.isActive}
-                      onCheckedChange={(checked) => saveCase({ ...caseItem, isActive: checked })}
-                    />
-                    <Button variant="ghost" size="icon" onClick={() => setEditingCase(caseItem)}>
-                      <Edit2 className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => deleteCase(caseItem.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Edit Case Modal */}
-            {editingCase && (
-              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h4 className="text-lg font-semibold text-[#152033]">
-                      {editingCase.id ? '编辑案例' : '添加案例'}
-                    </h4>
-                    <Button variant="ghost" size="icon" onClick={() => setEditingCase(null)}>
-                      <X className="w-5 h-5" />
-                    </Button>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <Label>标题</Label>
-                      <Input
-                        value={editingCase.title || ''}
-                        onChange={(e) => setEditingCase({ ...editingCase, title: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                    <div>
-                      <Label>副标题</Label>
-                      <Textarea
-                        value={editingCase.subtitle || ''}
-                        onChange={(e) => setEditingCase({ ...editingCase, subtitle: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                    <div>
-                      <Label>图片 URL</Label>
-                      <Input
-                        value={editingCase.imageUrl || ''}
-                        onChange={(e) => setEditingCase({ ...editingCase, imageUrl: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                    <div>
-                      <Label>链接地址</Label>
-                      <Input
-                        value={editingCase.linkUrl || ''}
-                        onChange={(e) => setEditingCase({ ...editingCase, linkUrl: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                    <Button
-                      onClick={() => saveCase(editingCase)}
-                      disabled={saving}
-                      className="w-full bg-[#2F6BFF] hover:bg-[#2558D6]"
-                    >
-                      {saving ? '保存中...' : '保存'}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Latest Posts Section */}
-        {activeSection === 'posts' && (
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-lg font-semibold text-[#152033]">最新动态</h3>
-                <p className="text-sm text-[#637089]">共 {posts.length} 篇文章</p>
-              </div>
-              <Button onClick={savePosts} disabled={saving} className="bg-[#2F6BFF] hover:bg-[#2558D6]">
-                <Save className="w-4 h-4 mr-2" />
-                保存
-              </Button>
-            </div>
-
-            <div className="grid gap-4">
-              {posts.map((post, index) => (
-                <div key={post.id} className="bg-white rounded-xl shadow-sm border border-[#E6EAF2] p-4">
-                  <div className="flex items-center gap-4">
-                    <span className="text-lg font-semibold text-[#637089] w-8">#{index + 1}</span>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs px-2 py-1 bg-[#2F6BFF]/10 text-[#2F6BFF] rounded">
-                          {post.postCategory || 'Article'}
-                        </span>
-                        <span className="text-sm text-[#637089]">{post.postSlug}</span>
-                      </div>
-                      <p className="font-medium text-[#152033]">{post.postTitle || post.postSlug}</p>
-                      {post.postExcerpt && (
-                        <p className="text-sm text-[#637089] mt-1">{post.postExcerpt}</p>
-                      )}
-                    </div>
-                    <Switch
-                      checked={post.isActive}
-                      onCheckedChange={(checked) => {
-                        setPosts(posts.map(p =>
-                          p.id === post.id ? { ...p, isActive: checked } : p
-                        ));
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      </main>
     </div>
   );
 }
