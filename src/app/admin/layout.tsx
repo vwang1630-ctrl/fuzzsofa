@@ -11,13 +11,16 @@ import {
   Bell,
   LogOut,
   PawPrint,
+  Settings,
+  FileText,
 } from 'lucide-react';
-import { getSupabaseBrowserClientWithRetry } from '@/lib/supabase-browser';
 
 const navItems = [
   { href: '/admin', label: '仪表盘', icon: LayoutDashboard, exact: true },
   { href: '/admin/products', label: '商品管理', icon: Package, exact: false },
   { href: '/admin/orders', label: '订单管理', icon: ShoppingBag, exact: false },
+  { href: '/admin/settings', label: '站点设置', icon: Settings, exact: false },
+  { href: '/admin/logs', label: '网站日志', icon: FileText, exact: false },
 ];
 
 const apiNavItem = {
@@ -39,49 +42,60 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [sessionToken, setSessionToken] = useState<string | null>(null);
   const [adminEmail, setAdminEmail] = useState<string>('admin@fuzzsofa.com');
   const [authChecked, setAuthChecked] = useState(false);
 
-  // Get session token from Supabase
+  const isLoginPage = pathname === '/admin/login';
+
+  // Check admin token from localStorage
   useEffect(() => {
-    async function getSession() {
+    const token = localStorage.getItem('admin_token');
+
+    if (!token && !isLoginPage) {
+      // No token and not on login page → redirect to login
+      router.push('/admin/login');
+      return;
+    }
+
+    if (token && isLoginPage) {
+      // Has token and on login page → redirect to dashboard
+      router.push('/admin');
+      return;
+    }
+
+    // Load admin email from stored user data
+    if (token) {
       try {
-        const supabase = await getSupabaseBrowserClientWithRetry();
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        setSessionToken(session?.access_token ?? null);
-        if (session?.user?.email) {
-          setAdminEmail(session.user.email);
+        const userData = localStorage.getItem('admin_user');
+        if (userData) {
+          const user = JSON.parse(userData);
+          if (user.email) {
+            setAdminEmail(user.email);
+          }
         }
       } catch {
-        // Silently fail - will be handled by API calls
-      } finally {
-        setAuthChecked(true);
+        // Ignore parse errors
       }
     }
-    getSession();
-  }, []);
+
+    setAuthChecked(true);
+  }, [isLoginPage, router]);
 
   const authHeaders = useCallback(() => {
     const h: Record<string, string> = {
       'Content-Type': 'application/json',
     };
-    if (sessionToken) {
-      h['x-session'] = sessionToken;
+    const token = localStorage.getItem('admin_token');
+    if (token) {
+      h['x-session'] = token;
     }
     return h;
-  }, [sessionToken]);
+  }, []);
 
-  const handleLogout = async () => {
-    try {
-      const supabase = await getSupabaseBrowserClientWithRetry();
-      await supabase.auth.signOut();
-    } catch {
-      // ignore
-    }
-    router.push('/');
+  const handleLogout = () => {
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_user');
+    router.push('/admin/login');
   };
 
   // Get user initials for avatar
@@ -90,6 +104,41 @@ export default function AdminLayout({
     return name.charAt(0).toUpperCase();
   };
 
+  // ─── Login page: render without sidebar & header ───
+  if (isLoginPage) {
+    return (
+      <div
+        className="min-h-screen font-sans antialiased"
+        style={{
+          background: '#F6F8FB',
+          color: '#152033',
+          fontSize: '14px',
+          lineHeight: '1.5',
+        }}
+      >
+        {children}
+      </div>
+    );
+  }
+
+  // ─── Auth loading guard: show blank while checking ───
+  if (!authChecked) {
+    return (
+      <div
+        className="min-h-screen font-sans antialiased flex items-center justify-center"
+        style={{
+          background: '#F6F8FB',
+          color: '#152033',
+          fontSize: '14px',
+          lineHeight: '1.5',
+        }}
+      >
+        <div />
+      </div>
+    );
+  }
+
+  // ─── Admin panel: full layout with sidebar & header ───
   return (
     <div
       className="min-h-screen font-sans antialiased"
@@ -166,7 +215,7 @@ export default function AdminLayout({
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
             style={{ color: '#637089' }}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = '#EF4444';

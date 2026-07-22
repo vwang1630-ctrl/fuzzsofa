@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import {
   Search,
   ChevronLeft,
@@ -17,8 +16,6 @@ import {
   Package,
   CreditCard,
   XCircle,
-  PawPrint,
-  Bell,
   Calendar,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -657,73 +654,9 @@ export default function AdminOrdersPage() {
 
   /* ---------- render ---------- */
   return (
-    <div className="min-h-screen bg-[#F6F8FB]">
-      {/* ===== Header ===== */}
-      <header className="bg-white sticky top-0 z-40 h-14 flex items-center justify-between px-6 border-b border-[#E6EAF2]">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#2F6BFF] rounded-lg flex items-center justify-center">
-            <PawPrint className="w-4 h-4 text-white" />
-          </div>
-          <span className="font-semibold text-base text-[#152033]">Animal Sofa</span>
-          <span className="text-xs text-[#637089] bg-[#EDF0F5] px-2 py-0.5 rounded-md ml-1">
-            Admin
-          </span>
-        </div>
-        <div className="flex items-center gap-4">
-          <button className="relative p-2 text-[#637089] hover:text-[#152033] hover:bg-[#EDF0F5] rounded-md transition-colors">
-            <Bell className="w-[18px] h-[18px]" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#EF4444] rounded-full" />
-          </button>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[#EBF1FF] rounded-full flex items-center justify-center">
-              <span className="text-xs font-medium text-[#2F6BFF]">初</span>
-            </div>
-            <span className="text-sm font-medium text-[#152033]">小初</span>
-          </div>
-        </div>
-      </header>
-
-      <div className="flex" style={{ height: 'calc(100vh - 3.5rem)' }}>
-        {/* ===== Sidebar ===== */}
-        <aside className="w-56 shrink-0 bg-white border-r border-[#E6EAF2] overflow-y-auto">
-          <nav className="p-3 space-y-0.5">
-            <Link
-              href="/admin"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-md text-[#637089] hover:bg-[#EDF0F5] hover:text-[#152033] font-medium text-sm transition-colors"
-            >
-              <Package className="w-4 h-4" />
-              仪表盘
-            </Link>
-            <Link
-              href="/admin/products"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-md text-[#637089] hover:bg-[#EDF0F5] hover:text-[#152033] font-medium text-sm transition-colors"
-            >
-              <Package className="w-4 h-4" />
-              商品管理
-            </Link>
-            <Link
-              href="/admin/orders"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-md bg-[#2F6BFF]/10 text-[#2F6BFF] font-medium text-sm"
-              aria-current="page"
-            >
-              <Package className="w-4 h-4" />
-              订单管理
-            </Link>
-            <div className="pt-3 mt-3 border-t border-[#E6EAF2]">
-              <Link
-                href="/admin/api-docs"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-md text-[#637089] hover:bg-[#EDF0F5] hover:text-[#152033] font-medium text-sm transition-colors"
-              >
-                <Package className="w-4 h-4" />
-                API 文档
-              </Link>
-            </div>
-          </nav>
-        </aside>
-
-        {/* ===== Main Content ===== */}
-        <main className="flex-1 min-w-0 overflow-y-auto bg-[#F6F8FB] p-6">
-          {/* Page Title */}
+    <>
+    <main className="flex-1 min-w-0 overflow-y-auto bg-[#F6F8FB] p-6">
+      {/* Page Title */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-[#152033]">订单管理</h1>
             <p className="text-sm text-[#637089] mt-1">查看和处理所有客户订单</p>
@@ -961,8 +894,6 @@ export default function AdminOrdersPage() {
               </button>
             </div>
           </div>
-        </main>
-      </div>
 
       {/* ===== Drawer Overlay ===== */}
       <div
@@ -1185,6 +1116,7 @@ export default function AdminOrdersPage() {
           </>
         )}
       </div>
-    </div>
+    </main>
+    </>
   );
 }

@@ -8,11 +8,11 @@ export async function POST(request: NextRequest) {
 
     // Validate required fields
     if (!password) {
-      return NextResponse.json({ error: 'Password is required' }, { status: 400 });
+      return NextResponse.json({ error: '密码不能为空' }, { status: 400 });
     }
 
     if (!email && !phone) {
-      return NextResponse.json({ error: 'Email or phone is required' }, { status: 400 });
+      return NextResponse.json({ error: '请输入邮箱或手机号' }, { status: 400 });
     }
 
     const result = await loginUser({
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!result) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+      return NextResponse.json({ error: '邮箱或密码错误' }, { status: 401 });
     }
 
     // Strip password_hash from user object before returning
@@ -34,6 +34,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('POST /api/public/auth/login error:', error);
-    return NextResponse.json({ error: 'Login failed' }, { status: 500 });
+    return NextResponse.json({ error: '登录失败，请稍后重试' }, { status: 500 });
   }
 }
