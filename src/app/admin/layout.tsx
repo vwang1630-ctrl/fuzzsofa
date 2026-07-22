@@ -20,7 +20,6 @@ import {
   ChevronDown,
   ChevronRight,
   Bell,
-  Palette,
   Navigation,
   FileEdit,
 } from 'lucide-react';
@@ -72,16 +71,8 @@ const navItems: NavItem[] = [
 ];
 
 const storeNavItems: NavItem[] = [
-  {
-    href: '/admin/store',
-    label: '在线商店',
-    icon: Palette,
-    children: [
-      { href: '/admin/homepage', label: '首页装修', icon: Home },
-      { href: '/admin/store/themes', label: '主题', icon: Palette },
-      { href: '/admin/store/navigation', label: '导航', icon: Navigation },
-    ],
-  },
+  { href: '/admin/homepage', label: '首页装修', icon: Home },
+  { href: '/admin/store/navigation', label: '导航管理', icon: Navigation },
 ];
 
 const settingsNavItem: NavItem = { href: '/admin/settings', label: '设置', icon: Settings };
@@ -456,7 +447,7 @@ export default function AdminLayout({
                 className="px-3 py-2 text-xs font-semibold uppercase tracking-wider"
                 style={{ color: colors.textSidebarMuted }}
               >
-                销售渠道
+                商店设置
               </p>
               {storeNavItems.map((item) => (
                 <SidebarNavItem key={item.href} item={item} pathname={pathname} />
