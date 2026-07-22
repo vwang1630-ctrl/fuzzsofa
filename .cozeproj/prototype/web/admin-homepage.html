@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 字体 -->
+  <link href="https://lf-code-agent.coze.cn/obj/x-ai-cn/fonts/google/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/jquery/jquery-3.7.1.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/lucide/lucide-1.11.0.min.js"></script>
+  <script src="https://lf-code-agent.coze.cn/obj/x-ai-cn/cdn/tailwindcss/tailwindcss-browser-4.2.4.min.js"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      /* === 品牌色 === */
+      --color-primary:              #2F6BFF;
+      --color-primary-container:    #EBF1FF;
+      --color-on-primary:           #ffffff;
+      /* === 背景 / 表面 === */
+      --color-background:                 #F6F8FB;
+      --color-surface-container-lowest:   #FFFFFF;
+      --color-surface:                    #FFFFFF;
+      --color-surface-container:          #EDF0F5;
+      --color-surface-container-high:     #E6EAF2;
+      --color-surface-container-highest:  #DDE1EA;
+      /* === 文字 === */
+      --color-on-surface:           #152033;
+      --color-on-surface-variant:   #637089;
+      /* === 功能色 === */
+      --color-success:  #16A37B;
+      --color-error:    #EF4444;
+      --color-warning:  #F59E0B;
+      /* === 边框 === */
+      --color-outline:          #E6EAF2;
+      --color-outline-variant:  #EDF0F5;
+      /* === 圆角 === */
+      --radius-sm:   0.25rem;
+      --radius-md:   0.375rem;
+      --radius-lg:   0.5rem;
+      --radius-xl:   0.75rem;
+      --radius-2xl:  1rem;
+      --radius-full: 9999px;
+      /* === 阴影 === */
+      --shadow-card:   0 1px 3px rgba(0,0,0,0.06);
+      --shadow-float:  0 4px 12px rgba(0,0,0,0.08);
+      --shadow-dialog: 0 16px 48px rgba(0,0,0,0.12);
+      /* === 字体 === */
+      --font-sans: "Inter", system-ui, sans-serif;
+    }
+  </style>
+
+  <!-- 图片兜底 -->
+  <script>
+    document.addEventListener('error', function (e) {
+      const img = e.target;
+      if (img.tagName !== 'IMG' || img.dataset.fallback) return;
+      img.dataset.fallback = '1';
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const cat = img.getAttribute('data-category') || '其他';
+      const alt = img.getAttribute('alt') || '';
+      const label = esc(alt.length > 8 ? alt.slice(0, 8) + '…' : alt);
+      const icons = { '人物': '👤', '自然风景': '🏞', '动物': '🐾', '建筑城市': '🏙', '运动体育': '⚽', '交通工具': '🚗', '食物': '🍽', '服饰时尚': '👗', '商业科技': '💼', '游戏娱乐': '🎮', '艺术': '🎨', '其他': '🖼' };
+      const icon = icons[cat] || '🖼';
+      const w = img.width || 400, h = img.height || 300;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="45%" text-anchor="middle" font-size="${Math.min(w, h) * 0.18}" dominant-baseline="central">${icon}</text><text x="50%" y="68%" text-anchor="middle" font-size="${Math.min(w, h) * 0.07}" fill="%239ca3af" font-family="system-ui,sans-serif" dominant-baseline="central">${label}</text></svg>`;
+      img.src = 'data:image/svg+xml,' + svg;
+    }, true);
+  </script>
+</head>
+
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- @nav:start 导航组件 -->
+  <!-- Top Header -->
+  <header class="bg-surface sticky top-0 z-40 h-14 flex items-center justify-between px-6 border-b border-outline/20">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <i data-lucide="paw-print" class="w-4 h-4 text-on-primary"></i>
+      </div>
+      <span class="font-semibold text-base text-on-surface">Animal Sofa</span>
+      <span class="text-xs text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-md ml-1">Admin</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-md transition-colors">
+        <i data-lucide="bell" class="w-4.5 h-4.5"></i>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+      </button>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center">
+          <span class="text-xs font-medium text-primary">初</span>
+        </div>
+        <span class="text-sm font-medium text-on-surface">小初</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex" style="height: calc(100vh - 3.5rem)">
+    <!-- Sidebar -->
+    <aside class="w-56 shrink-0 bg-surface border-r border-outline/20 overflow-y-auto">
+      <nav class="p-3 space-y-0.5">
+        <a href="admin.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="gauge" class="w-4 h-4"></i>仪表盘
+        </a>
+        <a href="admin-products.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="package" class="w-4 h-4"></i>商品管理
+        </a>
+        <a href="admin-orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>订单管理
+        </a>
+        <a href="admin-homepage.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md bg-primary/10 text-primary font-medium text-sm" aria-current="page">
+          <i data-lucide="home" class="w-4 h-4"></i>首页装修
+        </a>
+        <div class="pt-3 mt-3 border-t border-outline/20">
+          <a href="admin-api-docs.html" class="flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors">
+            <i data-lucide="braces" class="w-4 h-4"></i>API 文档
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- @nav:end 导航组件 -->
+
+    <!-- @main-content:start -->
+    <main class="flex-1 min-w-0 overflow-y-auto bg-background p-6">
+
+      <!-- 页面标题区 -->
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-on-surface">首页装修</h1>
+          <p class="text-sm text-on-surface-variant mt-1">自定义首页各模块的内容、样式与展示顺序，保存后立即生效</p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button id="btn-preview-home" class="bg-surface-container text-on-surface border-none px-4 py-2 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-2">
+            <i data-lucide="eye" class="w-3.5 h-3.5"></i>预览首页
+          </button>
+          <button id="btn-save-all" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center gap-2">
+            <i data-lucide="save" class="w-3.5 h-3.5"></i>保存全部更改
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-4">
+
+        <!-- 左侧：模块导航（可点击切换） -->
+        <div id="module-nav" class="w-56 shrink-0">
+          <div class="bg-surface rounded-lg shadow-card p-3">
+            <p class="px-3 pt-1 pb-2 text-xs font-semibold text-on-surface-variant uppercase tracking-wide">页面模块</p>
+            <div class="space-y-0.5">
+              <button class="module-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-md bg-primary/10 text-primary font-medium text-sm transition-colors" data-module="header" aria-current="page">
+                <i data-lucide="panel-top" class="w-4 h-4"></i>
+                <span>网站头部</span>
+                <span class="ml-auto text-xs opacity-60">Header</span>
+              </button>
+              <button class="module-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors" data-module="banner">
+                <i data-lucide="images" class="w-4 h-4"></i>
+                <span>轮播图</span>
+                <span class="ml-auto text-xs opacity-60">4 张</span>
+              </button>
+              <button class="module-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors" data-module="featured">
+                <i data-lucide="star" class="w-4 h-4"></i>
+                <span>主推商品</span>
+                <span class="ml-auto text-xs opacity-60">4 件</span>
+              </button>
+              <button class="module-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors" data-module="cases">
+                <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                <span>设计案例</span>
+                <span class="ml-auto text-xs opacity-60">3 个</span>
+              </button>
+              <button class="module-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-medium text-sm transition-colors" data-module="posts">
+                <i data-lucide="newspaper" class="w-4 h-4"></i>
+                <span>最新动态</span>
+                <span class="ml-auto text-xs opacity-60">3 篇</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 装修提示卡片 -->
+          <div class="bg-primary/5 rounded-lg p-4 mt-4">
+            <div class="flex items-center gap-2 mb-2">
+              <i data-lucide="lightbulb" class="w-4 h-4 text-primary"></i>
+              <span class="text-sm font-medium text-on-surface">装修提示</span>
+            </div>
+            <p class="text-xs text-on-surface-variant leading-relaxed">点击左侧模块切换配置内容，每个模块的修改需保存后才会发布到线上首页。</p>
+          </div>
+        </div>
+
+        <!-- 右侧：配置面板（根据选中模块显示不同内容） -->
+        <div id="config-panels" class="flex-1 min-w-0 space-y-4">
+
+          <!-- ========== 配置面板：网站头部（Header） ========== -->
+          <section id="panel-header" class="module-panel space-y-4">
+
+            <!-- 基本设置卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <h2 class="text-base font-semibold text-on-surface">基本设置</h2>
+              <p class="text-xs text-on-surface-variant mt-1 mb-5">配置站点名称、Logo 与语言选项，将展示在首页头部</p>
+
+              <div class="space-y-5 max-w-xl">
+                <!-- 站点名称 -->
+                <div>
+                  <label for="input-site-name" class="block text-sm font-medium text-on-surface mb-1.5">站点名称</label>
+                  <input id="input-site-name" type="text" value="Animal Sofa" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                  <p class="text-xs text-on-surface-variant mt-1.5">显示在浏览器标题、头部 Logo 旁与页脚版权信息中</p>
+                </div>
+
+                <!-- Logo 设置 -->
+                <div>
+                  <label class="block text-sm font-medium text-on-surface mb-1.5">网站 Logo</label>
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shrink-0">
+                      <i data-lucide="paw-print" class="w-6 h-6 text-on-primary"></i>
+                    </div>
+                    <input id="input-logo-url" type="text" value="https://cdn.animals-sofa.example.com/assets/logo.svg" class="flex-1 min-w-0 bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                    <button id="btn-upload-logo" class="bg-surface-container text-on-surface border-none px-4 py-2 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-2 shrink-0">
+                      <i data-lucide="upload" class="w-3.5 h-3.5"></i>上传
+                    </button>
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1.5">支持粘贴图片 URL 或上传本地文件，建议 SVG / PNG 格式，高度不低于 64px</p>
+                </div>
+
+                <!-- 语言切换设置 -->
+                <div>
+                  <label class="block text-sm font-medium text-on-surface mb-1.5">语言切换</label>
+                  <div class="flex items-center gap-3">
+                    <label class="status-switch relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" id="switch-language" class="sr-only peer" checked/>
+                      <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                    </label>
+                    <span class="text-sm text-on-surface">在头部显示语言切换入口</span>
+                  </div>
+                </div>
+
+                <!-- 默认语言 -->
+                <div>
+                  <label for="select-default-lang" class="block text-sm font-medium text-on-surface mb-1.5">默认语言</label>
+                  <select id="select-default-lang" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors cursor-pointer">
+                    <option value="zh-CN" selected>简体中文</option>
+                    <option value="en-US">English</option>
+                    <option value="ja-JP">日本語</option>
+                  </select>
+                  <p class="text-xs text-on-surface-variant mt-1.5">用户首次访问时展示的默认语言</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 导航菜单管理卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <div class="flex items-center justify-between mb-1">
+                <h2 class="text-base font-semibold text-on-surface">导航菜单管理</h2>
+                <button id="btn-add-menu" class="bg-surface-container text-on-surface border-none px-3 py-1.5 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-1.5">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>添加菜单项
+                </button>
+              </div>
+              <p class="text-xs text-on-surface-variant">配置头部导航菜单项，支持添加、编辑、删除，拖动可调整顺序</p>
+
+              <div id="nav-menu-list" class="mt-3 divide-y divide-outline-variant/50">
+                <!-- 列表-菜单项1：首页 -->
+                <div class="nav-menu-item flex items-center gap-3 py-3" data-id="menu-1">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface">首页</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">链接：/</p>
+                  </div>
+                  <button class="btn-edit-menu p-1.5 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="编辑">
+                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button class="btn-delete-menu p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- 列表-菜单项2：全部商品 -->
+                <div class="nav-menu-item flex items-center gap-3 py-3" data-id="menu-2">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface">全部商品</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">链接：/products</p>
+                  </div>
+                  <button class="btn-edit-menu p-1.5 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="编辑">
+                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button class="btn-delete-menu p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- 列表-菜单项3：设计案例 -->
+                <div class="nav-menu-item flex items-center gap-3 py-3" data-id="menu-3">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface">设计案例</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">链接：/cases</p>
+                  </div>
+                  <button class="btn-edit-menu p-1.5 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="编辑">
+                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button class="btn-delete-menu p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- 列表-菜单项4：设计杂志 -->
+                <div class="nav-menu-item flex items-center gap-3 py-3" data-id="menu-4">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface">设计杂志</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">链接：/magazine</p>
+                  </div>
+                  <button class="btn-edit-menu p-1.5 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="编辑">
+                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button class="btn-delete-menu p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- 列表-菜单项5：联系我们 -->
+                <div class="nav-menu-item flex items-center gap-3 py-3" data-id="menu-5">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface">联系我们</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">链接：/contact</p>
+                  </div>
+                  <button class="btn-edit-menu p-1.5 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-md transition-colors" title="编辑">
+                    <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button class="btn-delete-menu p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 面板底部操作 -->
+              <div class="flex justify-end mt-4 pt-4 border-t border-outline-variant/50">
+                <button id="btn-save-header" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all">保存头部配置</button>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ========== 配置面板：轮播图（Banner） ========== -->
+          <section id="panel-banner" class="module-panel space-y-4 hidden">
+
+            <!-- 轮播图列表卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-2">
+                  <h2 class="text-base font-semibold text-on-surface">轮播图管理</h2>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary">共 4 张</span>
+                </div>
+                <button id="btn-add-banner" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center gap-2">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>添加轮播图
+                </button>
+              </div>
+              <p class="text-xs text-on-surface-variant">展示在首页顶部的轮播横幅，可拖动或用箭头调整顺序，首屏建议不超过 5 张</p>
+
+              <div id="banner-list" class="mt-3 divide-y divide-outline-variant/50">
+
+                <!-- 列表-轮播图1：野性栖居 -->
+                <div class="banner-item flex items-center gap-3 py-3" data-id="banner-1">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=150&fit=crop" alt="深绿色大猩猩沙发轮播图" data-category="其他" class="w-28 h-16 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">野性栖居 · 大猩猩沙发首发</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 truncate">以力量美学重塑客厅中心 · 按钮：立即探索</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 inline-flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>/products/gorilla-sofa</p>
+                  </div>
+                  <div class="flex flex-col shrink-0">
+                    <button class="btn-move-up p-0.5 text-on-surface-variant hover:text-primary transition-colors" title="上移">
+                      <i data-lucide="chevron-up" class="w-4 h-4"></i>
+                    </button>
+                    <button class="btn-move-down p-0.5 text-on-surface-variant hover:text-primary transition-colors" title="下移">
+                      <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                  <label class="banner-status-switch relative inline-flex items-center cursor-pointer shrink-0" title="启用/停用">
+                    <input type="checkbox" class="sr-only peer" checked/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                  <button class="btn-edit-banner text-primary text-sm font-medium hover:underline shrink-0">编辑</button>
+                  <button class="btn-delete-banner p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+
+                <!-- 列表-轮播图2：极地暖阳 -->
+                <div class="banner-item flex items-center gap-3 py-3" data-id="banner-2">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=150&fit=crop" alt="白色北极熊沙发轮播图" data-category="其他" class="w-28 h-16 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">极地暖阳 · 北极熊绒面沙发</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 truncate">云端坐感，慵懒上新 · 按钮：查看详情</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 inline-flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>/products/polar-bear-sofa</p>
+                  </div>
+                  <div class="flex flex-col shrink-0">
+                    <button class="btn-move-up p-0.5 text-on-surface-variant hover:text-primary transition-colors" title="上移">
+                      <i data-lucide="chevron-up" class="w-4 h-4"></i>
+                    </button>
+                    <button class="btn-move-down p-0.5 text-on-surface-variant hover:text-primary transition-colors" title="下移">
+                      <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                  <label class="banner-status-switch relative inline-flex items-center cursor-pointer shrink-0" title="启用/停用">
+                    <input type="checkbox" class="sr-only peer" checked/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                  <button class="btn-edit-banner text-primary text-sm font-medium hover:underline shrink-0">编辑</button>
+                  <button class="btn-delete-banner p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+
+                <!-- 列表-轮播图3：林间夜话 -->
+                <div class="banner-item flex items-center gap-3 py-3" data-id="banner-3">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=400&h=150&fit=crop" alt="橙棕色猫头鹰单人椅轮播图" data-category="其他" class="w-28 h-16 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">林间夜话 · 猫头鹰单人椅</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 truncate">为阅读留一处静谧角落 · 按钮：立即选购</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 inline-flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>/products/owl-chair</p>
+                  </div>
+                  <div class="flex flex-col shrink-0">
+                    <button class="btn-move-up p-0.5 text-on-surface-variant hover:text-primary transition-colors" title="上移">
+                      <i data-lucide="chevron-up" class="w-4 h-4"></i>
+                    </button>
+                    <button class="btn-move-down p-0.5 text-on-surface-variant hover:text-primary transition-colors" title="下移">
+                      <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                  <label class="banner-status-switch relative inline-flex items-center cursor-pointer shrink-0" title="启用/停用">
+                    <input type="checkbox" class="sr-only peer" checked/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                  <button class="btn-edit-banner text-primary text-sm font-medium hover:underline shrink-0">编辑</button>
+                  <button class="btn-delete-banner p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+
+                <!-- 列表-轮播图4：都市丛林（已停用） -->
+                <div class="banner-item flex items-center gap-3 py-3" data-id="banner-4">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=150&fit=crop" alt="刺猬造型休闲椅轮播图" data-category="其他" class="w-28 h-16 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">都市丛林 · 刺猬休闲椅联名款</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 truncate">设计师联名系列 限时发售 · 按钮：了解联名</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 inline-flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>/products/hedgehog-lounge</p>
+                  </div>
+                  <div class="flex flex-col shrink-0">
+                    <button class="btn-move-up p-0.5 text-on-surface-variant hover:text-primary transition-colors" title="上移">
+                      <i data-lucide="chevron-up" class="w-4 h-4"></i>
+                    </button>
+                    <button class="btn-move-down p-0.5 text-on-surface-variant hover:text-primary transition-colors" title="下移">
+                      <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                  <label class="banner-status-switch relative inline-flex items-center cursor-pointer shrink-0" title="启用/停用">
+                    <input type="checkbox" class="sr-only peer"/>
+                    <div class="w-9 h-5 bg-surface-container-highest peer-checked:bg-success rounded-full transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-transform peer-checked:after:translate-x-4 after:shadow-sm"></div>
+                  </label>
+                  <button class="btn-edit-banner text-primary text-sm font-medium hover:underline shrink-0">编辑</button>
+                  <button class="btn-delete-banner p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- 轮播图编辑卡片（当前编辑：轮播图1） -->
+            <div id="banner-edit-card" class="bg-surface rounded-lg shadow-card p-5">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h2 class="text-base font-semibold text-on-surface">编辑轮播图</h2>
+                  <p class="text-xs text-on-surface-variant mt-1">正在编辑第 1 张：野性栖居 · 大猩猩沙发首发</p>
+                </div>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning">未保存的修改</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-5">
+                <!-- 左列：文字配置 -->
+                <div class="space-y-4">
+                  <div>
+                    <label for="input-banner-title" class="block text-sm font-medium text-on-surface mb-1.5">标题</label>
+                    <input id="input-banner-title" type="text" value="野性栖居 · 大猩猩沙发首发" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                  </div>
+                  <div>
+                    <label for="input-banner-subtitle" class="block text-sm font-medium text-on-surface mb-1.5">副标题</label>
+                    <input id="input-banner-subtitle" type="text" value="以力量美学重塑客厅中心" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                  </div>
+                  <div>
+                    <label for="input-banner-link" class="block text-sm font-medium text-on-surface mb-1.5">链接地址</label>
+                    <input id="input-banner-link" type="text" value="/products/gorilla-sofa" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                  </div>
+                  <div>
+                    <label for="input-banner-btn-text" class="block text-sm font-medium text-on-surface mb-1.5">按钮文字</label>
+                    <input id="input-banner-btn-text" type="text" value="立即探索" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                  </div>
+                </div>
+
+                <!-- 右列：图片配置 -->
+                <div>
+                  <label class="block text-sm font-medium text-on-surface mb-1.5">轮播图片</label>
+                  <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=280&fit=crop" alt="大猩猩沙发轮播图预览" data-category="其他" class="w-full h-36 rounded-lg object-cover bg-surface-container"/>
+                  <div class="flex items-center gap-2 mt-3">
+                    <input id="input-banner-image" type="text" value="https://images.unsplash.com/photo-1555041469-a586c61ea9bc" class="flex-1 min-w-0 bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                    <button id="btn-upload-banner-image" class="bg-surface-container text-on-surface border-none px-3 py-2 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0">
+                      <i data-lucide="upload" class="w-3.5 h-3.5"></i>上传图片
+                    </button>
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1.5">建议尺寸 1920 × 640，支持 JPG / PNG / WebP，大小不超过 2MB</p>
+                </div>
+              </div>
+
+              <div class="flex justify-end gap-2 mt-5 pt-4 border-t border-outline-variant/50">
+                <button id="btn-cancel-banner-edit" class="bg-surface-container text-on-surface border-none px-4 py-2 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all">取消</button>
+                <button id="btn-save-banner" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all">保存轮播图</button>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ========== 配置面板：主推商品（Featured） ========== -->
+          <section id="panel-featured" class="module-panel space-y-4 hidden">
+
+            <!-- 模块文案设置卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <h2 class="text-base font-semibold text-on-surface">模块文案</h2>
+              <p class="text-xs text-on-surface-variant mt-1 mb-5">自定义主推商品模块在首页展示的标题与副标题</p>
+              <div class="grid grid-cols-2 gap-4 max-w-2xl">
+                <div>
+                  <label for="input-featured-title" class="block text-sm font-medium text-on-surface mb-1.5">模块标题</label>
+                  <input id="input-featured-title" type="text" value="Featured Animals" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                </div>
+                <div>
+                  <label for="input-featured-subtitle" class="block text-sm font-medium text-on-surface mb-1.5">模块副标题</label>
+                  <input id="input-featured-subtitle" type="text" value="最受欢迎的动物灵感家具" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                </div>
+              </div>
+            </div>
+
+            <!-- 已选主推商品卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <div class="flex items-center gap-2 mb-1">
+                <h2 class="text-base font-semibold text-on-surface">已选主推商品</h2>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary">4 件</span>
+              </div>
+              <p class="text-xs text-on-surface-variant">按顺序展示在首页主推区，可为每件商品设置营销标签</p>
+
+              <div id="featured-list" class="mt-3 divide-y divide-outline-variant/50">
+                <!-- 列表-主推商品1：大猩猩沙发 -->
+                <div class="featured-item flex items-center gap-3 py-3" data-id="prod-1">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <span class="w-6 h-6 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xs font-semibold shrink-0">1</span>
+                  <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=120&h=120&fit=crop" alt="深绿色大猩猩造型沙发" data-category="其他" class="w-12 h-12 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">Gorilla Sofa 大猩猩沙发</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">¥24,999 · 库存充足</p>
+                  </div>
+                  <select class="featured-tag-select bg-surface-container border-none rounded-md px-3 py-1.5 text-xs font-medium text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors cursor-pointer shrink-0">
+                    <option value="">无标签</option>
+                    <option value="BESTSELLER" selected>BESTSELLER</option>
+                    <option value="NEW">NEW</option>
+                    <option value="TRENDING">TRENDING</option>
+                    <option value="HOT">HOT</option>
+                  </select>
+                  <button class="btn-remove-featured p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="移出主推">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- 列表-主推商品2：北极熊沙发 -->
+                <div class="featured-item flex items-center gap-3 py-3" data-id="prod-2">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <span class="w-6 h-6 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xs font-semibold shrink-0">2</span>
+                  <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=120&h=120&fit=crop" alt="白色北极熊双人沙发" data-category="其他" class="w-12 h-12 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">Polar Bear Sofa 北极熊沙发</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">¥18,499 · 库存充足</p>
+                  </div>
+                  <select class="featured-tag-select bg-surface-container border-none rounded-md px-3 py-1.5 text-xs font-medium text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors cursor-pointer shrink-0">
+                    <option value="">无标签</option>
+                    <option value="BESTSELLER">BESTSELLER</option>
+                    <option value="NEW" selected>NEW</option>
+                    <option value="TRENDING">TRENDING</option>
+                    <option value="HOT">HOT</option>
+                  </select>
+                  <button class="btn-remove-featured p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="移出主推">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- 列表-主推商品3：猫头鹰单人椅 -->
+                <div class="featured-item flex items-center gap-3 py-3" data-id="prod-3">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <span class="w-6 h-6 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xs font-semibold shrink-0">3</span>
+                  <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=120&h=120&fit=crop" alt="橙棕色猫头鹰造型单人椅" data-category="其他" class="w-12 h-12 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">Owl Chair 猫头鹰单人椅</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">¥8,999 · 库存紧张</p>
+                  </div>
+                  <select class="featured-tag-select bg-surface-container border-none rounded-md px-3 py-1.5 text-xs font-medium text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors cursor-pointer shrink-0">
+                    <option value="">无标签</option>
+                    <option value="BESTSELLER">BESTSELLER</option>
+                    <option value="NEW">NEW</option>
+                    <option value="TRENDING" selected>TRENDING</option>
+                    <option value="HOT">HOT</option>
+                  </select>
+                  <button class="btn-remove-featured p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="移出主推">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- 列表-主推商品4：刺猬休闲椅 -->
+                <div class="featured-item flex items-center gap-3 py-3" data-id="prod-4">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <span class="w-6 h-6 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xs font-semibold shrink-0">4</span>
+                  <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=120&h=120&fit=crop" alt="刺猬造型休闲扶手椅" data-category="其他" class="w-12 h-12 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">Hedgehog Lounge 刺猬休闲椅</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">¥6,599 · 库存充足</p>
+                  </div>
+                  <select class="featured-tag-select bg-surface-container border-none rounded-md px-3 py-1.5 text-xs font-medium text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors cursor-pointer shrink-0">
+                    <option value="">无标签</option>
+                    <option value="BESTSELLER">BESTSELLER</option>
+                    <option value="NEW" selected>NEW</option>
+                    <option value="TRENDING">TRENDING</option>
+                    <option value="HOT">HOT</option>
+                  </select>
+                  <button class="btn-remove-featured p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="移出主推">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 从商品库添加卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <h2 class="text-base font-semibold text-on-surface">从商品库添加</h2>
+              <p class="text-xs text-on-surface-variant mt-1 mb-4">搜索并选择商品加入主推列表</p>
+
+              <div class="relative max-w-md mb-3">
+                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant/50"></i>
+                <input id="input-search-product" type="text" placeholder="搜索商品名称..." class="w-full bg-surface-container border-none rounded-md pl-9 pr-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+              </div>
+
+              <div id="featured-candidate-list" class="divide-y divide-outline-variant/50">
+                <!-- 列表-候选商品1：陨石环形沙发 -->
+                <div class="candidate-item flex items-center gap-3 py-3" data-name="meteor ring sofa 陨石环形沙发">
+                  <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=120&h=120&fit=crop" alt="白色陨石环形沙发" data-category="其他" class="w-10 h-10 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">Meteor Ring Sofa 陨石环形沙发</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">¥15,999</p>
+                  </div>
+                  <button class="btn-add-featured bg-surface-container text-on-surface border-none px-3 py-1.5 rounded-md text-xs font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0">
+                    <i data-lucide="plus" class="w-3 h-3"></i>添加
+                  </button>
+                </div>
+                <!-- 列表-候选商品2：银背大猩猩沙发 -->
+                <div class="candidate-item flex items-center gap-3 py-3" data-name="silverback sofa 银背大猩猩沙发">
+                  <img src="https://images.unsplash.com/photo-1550254478-ead40cc54513?w=120&h=120&fit=crop" alt="深棕色银背大猩猩沙发" data-category="其他" class="w-10 h-10 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">Silverback Sofa 银背大猩猩沙发</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">¥21,299</p>
+                  </div>
+                  <button class="btn-add-featured bg-surface-container text-on-surface border-none px-3 py-1.5 rounded-md text-xs font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0">
+                    <i data-lucide="plus" class="w-3 h-3"></i>添加
+                  </button>
+                </div>
+                <!-- 列表-候选商品3：休闲扶手椅 -->
+                <div class="candidate-item flex items-center gap-3 py-3" data-name="arctic fox chair 北极狐扶手椅">
+                  <img src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=120&h=120&fit=crop" alt="米白色北极狐休闲扶手椅" data-category="其他" class="w-10 h-10 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">Arctic Fox Chair 北极狐扶手椅</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5">¥7,899</p>
+                  </div>
+                  <button class="btn-add-featured bg-surface-container text-on-surface border-none px-3 py-1.5 rounded-md text-xs font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0">
+                    <i data-lucide="plus" class="w-3 h-3"></i>添加
+                  </button>
+                </div>
+              </div>
+
+              <!-- 面板底部操作 -->
+              <div class="flex justify-end mt-4 pt-4 border-t border-outline-variant/50">
+                <button id="btn-save-featured" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all">保存主推配置</button>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ========== 配置面板：设计案例（Cases） ========== -->
+          <section id="panel-cases" class="module-panel space-y-4 hidden">
+
+            <!-- 案例列表卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-2">
+                  <h2 class="text-base font-semibold text-on-surface">设计案例管理</h2>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary">3 个</span>
+                </div>
+                <button id="btn-add-case" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all inline-flex items-center gap-2">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>添加案例
+                </button>
+              </div>
+              <p class="text-xs text-on-surface-variant">展示在首页设计案例区，每个案例可配置标题、副标题、图片与链接</p>
+
+              <div id="case-list" class="mt-3 divide-y divide-outline-variant/50">
+
+                <!-- 列表-案例1：丛林会客厅 -->
+                <div class="case-item flex items-center gap-3 py-3" data-id="case-1">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=400&h=160&fit=crop" alt="丛林会客厅大猩猩沙发场景" data-category="建筑城市" class="w-28 h-16 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">丛林会客厅</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 truncate">深圳湾一号 · 大猩猩沙发主题客厅</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 inline-flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>/cases/jungle-living</p>
+                  </div>
+                  <button class="btn-edit-case text-primary text-sm font-medium hover:underline shrink-0">编辑</button>
+                  <button class="btn-delete-case p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+
+                <!-- 列表-案例2：极地极简卧室 -->
+                <div class="case-item flex items-center gap-3 py-3" data-id="case-2">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=400&h=160&fit=crop" alt="极地极简卧室北极熊套房" data-category="建筑城市" class="w-28 h-16 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">极地极简卧室</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 truncate">阿那亚民宿 · 北极熊系列主题套房</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 inline-flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>/cases/arctic-bedroom</p>
+                  </div>
+                  <button class="btn-edit-case text-primary text-sm font-medium hover:underline shrink-0">编辑</button>
+                  <button class="btn-delete-case p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+
+                <!-- 列表-案例3：猫头鹰书房 -->
+                <div class="case-item flex items-center gap-3 py-3" data-id="case-3">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&h=160&fit=crop" alt="猫头鹰书房静谧阅读角" data-category="建筑城市" class="w-28 h-16 rounded-md object-cover shrink-0 bg-surface-container"/>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">猫头鹰书房</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 truncate">杭州西溪私宅 · 静谧阅读角改造</p>
+                    <p class="text-xs text-on-surface-variant mt-0.5 inline-flex items-center gap-1"><i data-lucide="link" class="w-3 h-3"></i>/cases/owl-study</p>
+                  </div>
+                  <button class="btn-edit-case text-primary text-sm font-medium hover:underline shrink-0">编辑</button>
+                  <button class="btn-delete-case p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="删除">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- 案例编辑卡片（当前编辑：案例1） -->
+            <div id="case-edit-card" class="bg-surface rounded-lg shadow-card p-5">
+              <div class="mb-4">
+                <h2 class="text-base font-semibold text-on-surface">编辑案例</h2>
+                <p class="text-xs text-on-surface-variant mt-1">正在编辑：丛林会客厅</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-5">
+                <!-- 左列：文字配置 -->
+                <div class="space-y-4">
+                  <div>
+                    <label for="input-case-title" class="block text-sm font-medium text-on-surface mb-1.5">案例标题</label>
+                    <input id="input-case-title" type="text" value="丛林会客厅" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                  </div>
+                  <div>
+                    <label for="input-case-subtitle" class="block text-sm font-medium text-on-surface mb-1.5">案例副标题</label>
+                    <input id="input-case-subtitle" type="text" value="深圳湾一号 · 大猩猩沙发主题客厅" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                  </div>
+                  <div>
+                    <label for="input-case-link" class="block text-sm font-medium text-on-surface mb-1.5">链接地址</label>
+                    <input id="input-case-link" type="text" value="/cases/jungle-living" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                  </div>
+                </div>
+
+                <!-- 右列：图片配置 -->
+                <div>
+                  <label class="block text-sm font-medium text-on-surface mb-1.5">案例封面图</label>
+                  <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&h=280&fit=crop" alt="丛林会客厅案例封面预览" data-category="建筑城市" class="w-full h-36 rounded-lg object-cover bg-surface-container"/>
+                  <div class="flex items-center gap-2 mt-3">
+                    <input id="input-case-image" type="text" value="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace" class="flex-1 min-w-0 bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                    <button id="btn-upload-case-image" class="bg-surface-container text-on-surface border-none px-3 py-2 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0">
+                      <i data-lucide="upload" class="w-3.5 h-3.5"></i>上传图片
+                    </button>
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1.5">建议尺寸 1200 × 800，展示为 3:2 比例卡片封面</p>
+                </div>
+              </div>
+
+              <div class="flex justify-end gap-2 mt-5 pt-4 border-t border-outline-variant/50">
+                <button id="btn-cancel-case-edit" class="bg-surface-container text-on-surface border-none px-4 py-2 rounded-md text-sm font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all">取消</button>
+                <button id="btn-save-case" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all">保存案例</button>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ========== 配置面板：最新动态（Posts） ========== -->
+          <section id="panel-posts" class="module-panel space-y-4 hidden">
+
+            <!-- 模块设置卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <h2 class="text-base font-semibold text-on-surface">模块设置</h2>
+              <p class="text-xs text-on-surface-variant mt-1 mb-5">自定义最新动态模块的展示文案与文章数量</p>
+              <div class="grid grid-cols-3 gap-4">
+                <div>
+                  <label for="input-posts-title" class="block text-sm font-medium text-on-surface mb-1.5">模块标题</label>
+                  <input id="input-posts-title" type="text" value="Latest Stories" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                </div>
+                <div>
+                  <label for="input-posts-subtitle" class="block text-sm font-medium text-on-surface mb-1.5">模块副标题</label>
+                  <input id="input-posts-subtitle" type="text" value="品牌动态与设计灵感" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors"/>
+                </div>
+                <div>
+                  <label for="select-posts-count" class="block text-sm font-medium text-on-surface mb-1.5">展示数量</label>
+                  <select id="select-posts-count" class="w-full bg-surface-container border-none rounded-md px-3 py-2 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-colors cursor-pointer">
+                    <option value="3" selected>展示 3 篇</option>
+                    <option value="4">展示 4 篇</option>
+                    <option value="6">展示 6 篇</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- 已选文章卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <div class="flex items-center gap-2 mb-1">
+                <h2 class="text-base font-semibold text-on-surface">已选展示文章</h2>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary">3 篇</span>
+              </div>
+              <p class="text-xs text-on-surface-variant">按顺序展示在首页最新动态区</p>
+
+              <div id="posts-list" class="mt-3 divide-y divide-outline-variant/50">
+                <!-- 列表-文章1：大猩猩系列诞生记 -->
+                <div class="post-item flex items-center gap-3 py-3" data-id="post-1">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <span class="w-6 h-6 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xs font-semibold shrink-0">1</span>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">从草图到沙发：大猩猩系列诞生记</p>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary">品牌故事</span>
+                      <span class="text-xs text-on-surface-variant">发布于 2024/7/18</span>
+                    </div>
+                  </div>
+                  <button class="btn-remove-post p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="移出展示">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- 列表-文章2：搭配法则 -->
+                <div class="post-item flex items-center gap-3 py-3" data-id="post-2">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <span class="w-6 h-6 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xs font-semibold shrink-0">2</span>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">动物灵感家具的 5 个搭配法则</p>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">搭配指南</span>
+                      <span class="text-xs text-on-surface-variant">发布于 2024/7/10</span>
+                    </div>
+                  </div>
+                  <button class="btn-remove-post p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="移出展示">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <!-- 列表-文章3：设计师的一天 -->
+                <div class="post-item flex items-center gap-3 py-3" data-id="post-3">
+                  <i data-lucide="grip-vertical" class="w-4 h-4 text-on-surface-variant/40 cursor-move shrink-0"></i>
+                  <span class="w-6 h-6 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xs font-semibold shrink-0">3</span>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">走进工作室：动物家具设计师的一天</p>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning">幕后花絮</span>
+                      <span class="text-xs text-on-surface-variant">发布于 2024/6/28</span>
+                    </div>
+                  </div>
+                  <button class="btn-remove-post p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors shrink-0" title="移出展示">
+                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 从文章库添加卡片 -->
+            <div class="bg-surface rounded-lg shadow-card p-5">
+              <h2 class="text-base font-semibold text-on-surface">从文章库添加</h2>
+              <p class="text-xs text-on-surface-variant mt-1 mb-4">选择已发布的文章加入首页展示列表</p>
+
+              <div id="posts-candidate-list" class="divide-y divide-outline-variant/50">
+                <!-- 列表-候选文章1：养护指南 -->
+                <div class="post-candidate-item flex items-center gap-3 py-3">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">北极熊沙发养护指南：绒面清洁全攻略</p>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-success/15 text-success">保养知识</span>
+                      <span class="text-xs text-on-surface-variant">发布于 2024/6/20</span>
+                    </div>
+                  </div>
+                  <button class="btn-add-post bg-surface-container text-on-surface border-none px-3 py-1.5 rounded-md text-xs font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0">
+                    <i data-lucide="plus" class="w-3 h-3"></i>添加
+                  </button>
+                </div>
+                <!-- 列表-候选文章2：秋冬新品预告 -->
+                <div class="post-candidate-item flex items-center gap-3 py-3">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">2024 秋冬新品预告：雪豹系列即将登场</p>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary">品牌故事</span>
+                      <span class="text-xs text-on-surface-variant">发布于 2024/6/12</span>
+                    </div>
+                  </div>
+                  <button class="btn-add-post bg-surface-container text-on-surface border-none px-3 py-1.5 rounded-md text-xs font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0">
+                    <i data-lucide="plus" class="w-3 h-3"></i>添加
+                  </button>
+                </div>
+                <!-- 列表-候选文章3：用户案例 -->
+                <div class="post-candidate-item flex items-center gap-3 py-3">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-on-surface truncate">用户案例：66㎡ 小家也能拥有丛林公寓</p>
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-warning/15 text-warning">用户案例</span>
+                      <span class="text-xs text-on-surface-variant">发布于 2024/6/5</span>
+                    </div>
+                  </div>
+                  <button class="btn-add-post bg-surface-container text-on-surface border-none px-3 py-1.5 rounded-md text-xs font-medium hover:bg-surface-container-high active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0">
+                    <i data-lucide="plus" class="w-3 h-3"></i>添加
+                  </button>
+                </div>
+              </div>
+
+              <!-- 面板底部操作 -->
+              <div class="flex justify-end mt-4 pt-4 border-t border-outline-variant/50">
+                <button id="btn-save-posts" class="bg-primary text-on-primary px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all">保存动态配置</button>
+              </div>
+            </div>
+
+          </section>
+
+        </div>
+      </div>
+
+    </main>
+    <!-- @main-content:end -->
+  </div>
+
+  <!-- 保存成功 Toast -->
+  <div id="toast-save" class="fixed bottom-6 right-6 z-50 bg-on-surface text-surface text-sm font-medium px-4 py-2.5 rounded-lg shadow-dialog items-center gap-2" style="display:none">
+    <i data-lucide="check" class="w-4 h-4"></i>
+    <span id="toast-text">已保存</span>
+  </div>
+
+  <script>
+  $(function () {
+
+    // ========== 通用：保存成功 Toast ==========
+    function showToast(text) {
+      $('#toast-text').text(text);
+      $('#toast-save').css('display', 'flex').hide().fadeIn(200).delay(1800).fadeOut(300);
+    }
+
+    // ========== 左侧模块导航切换 ==========
+    // 点击模块项后切换右侧面板：更新激活样式并 show/hide 对应配置面板
+    $('#module-nav').on('click', '.module-nav-item', function () {
+      var module = $(this).data('module');
+      $('.module-nav-item')
+        .removeClass('bg-primary/10 text-primary')
+        .addClass('text-on-surface-variant hover:bg-surface-container hover:text-on-surface')
+        .removeAttr('aria-current');
+      $(this)
+        .removeClass('text-on-surface-variant hover:bg-surface-container hover:text-on-surface')
+        .addClass('bg-primary/10 text-primary')
+        .attr('aria-current', 'page');
+      $('.module-panel').addClass('hidden');
+      $('#panel-' + module).removeClass('hidden');
+    });
+
+    // ========== 顶部操作 ==========
+    // 预览首页 - 点击后应实现：在新标签页打开前台首页（window.open('/', '_blank')），
+    // 若存在未保存修改，先弹出提示"有未保存的修改，预览为线上版本"
+    $('#btn-preview-home').on('click', function () {
+      console.log('预览首页：应在新标签页打开前台首页预览');
+    });
+
+    // 保存全部更改 - 点击后应实现：
+    // 1. 收集 5 个模块的全部配置数据，组装为完整的首页装修配置对象
+    // 2. 发送 PUT /api/admin/homepage 请求持久化
+    // 3. 成功后显示 Toast，失败时显示错误提示并保留当前编辑内容
+    $('#btn-save-all').on('click', function () {
+      console.log('保存全部首页装修配置');
+      showToast('全部更改已保存');
+    });
+
+    // 各面板保存按钮
+    $('#btn-save-header').on('click', function () { console.log('保存头部配置'); showToast('头部配置已保存'); });
+    $('#btn-save-banner').on('click', function () { console.log('保存轮播图'); showToast('轮播图已保存'); });
+    $('#btn-save-featured').on('click', function () { console.log('保存主推配置'); showToast('主推商品配置已保存'); });
+    $('#btn-save-case').on('click', function () { console.log('保存案例'); showToast('案例已保存'); });
+    $('#btn-save-posts').on('click', function () { console.log('保存动态配置'); showToast('最新动态配置已保存'); });
+
+    // ========== 网站头部模块 ==========
+    // 上传 Logo - 点击后应实现：
+    // 1. 唤起本地文件选择器（accept="image/*"）
+    // 2. 上传至 POST /api/admin/upload，返回 CDN 地址
+    // 3. 将返回地址回填到 #input-logo-url 并更新左侧 Logo 预览
+    $('#btn-upload-logo').on('click', function () {
+      console.log('上传 Logo：应调用文件上传接口后回填 URL');
+    });
+
+    // 上传轮播图/案例图片 - 同上逻辑，回填对应图片 URL 输入框并更新预览图
+    $('#btn-upload-banner-image').on('click', function () {
+      console.log('上传轮播图片：应调用文件上传接口后回填 URL');
+    });
+    $('#btn-upload-case-image').on('click', function () {
+      console.log('上传案例图片：应调用文件上传接口后回填 URL');
+    });
+
+    // 语言切换开关 - 关闭时应同时禁用"默认语言"下拉框（置灰不可选）
+    $('#switch-language').on('change', function () {
+      var enabled = $(this).is(':checked');
+      console.log('语言切换入口:', enabled ? '启用' : '禁用');
+    });
+
+    // 默认语言变更
+    $('#select-default-lang').on('change', function () {
+      console.log('默认语言切换为:', $(this).val());
+    });
+
+    // 添加菜单项 - 点击后应实现：
+    // 1. 在菜单列表末尾追加一个空白可编辑行（名称、链接均为输入框）
+    // 2. 自动聚焦名称输入框，确认后追加到菜单数组
+    // 3. 按 ESC 或点击空白处取消添加
+    $('#btn-add-menu').on('click', function () {
+      console.log('添加菜单项：应在列表末尾追加可编辑行');
+    });
+
+    // 编辑菜单项 - 点击后应实现内联编辑：
+    // 1. 将名称与链接文字替换为 input 输入框，自动聚焦并全选名称
+    // 2. 按 Enter 保存修改，按 ESC 取消编辑
+    // 3. 保存后更新列表项的名称与链接文字
+    $('#nav-menu-list').on('click', '.btn-edit-menu', function () {
+      var menuName = $(this).closest('.nav-menu-item').find('p').first().text();
+      console.log('编辑菜单项:', menuName);
+    });
+
+    // 删除菜单项 - 确认后从 DOM 中移除该菜单行
+    $('#nav-menu-list').on('click', '.btn-delete-menu', function () {
+      var item = $(this).closest('.nav-menu-item');
+      var menuName = item.find('p').first().text();
+      if (confirm('确定要删除菜单项 "' + menuName + '" 吗？')) {
+        item.fadeOut(300, function () { $(this).remove(); });
+      }
+    });
+
+    // ========== 轮播图模块 ==========
+    // 添加轮播图 - 点击后应实现：
+    // 1. 清空下方编辑表单并切换标题为"添加轮播图"
+    // 2. 滚动页面到编辑卡片位置
+    // 3. 保存后将新轮播图追加到列表末尾，并更新模块导航中的数量徽标
+    $('#btn-add-banner').on('click', function () {
+      console.log('添加轮播图：应清空编辑表单并进入新增模式');
+    });
+
+    // 编辑轮播图 - 点击后应实现：
+    // 1. 读取该轮播图的标题、副标题、链接、按钮文字、图片地址
+    // 2. 填充到下方编辑表单，并更新"正在编辑"提示文字与预览图
+    // 3. 平滑滚动到编辑卡片
+    $('#banner-list').on('click', '.btn-edit-banner', function () {
+      var title = $(this).closest('.banner-item').find('p').first().text();
+      console.log('编辑轮播图:', title, '→ 应将其配置填充到编辑表单');
+    });
+
+    // 删除轮播图 - 确认后从 DOM 中移除该条目
+    $('#banner-list').on('click', '.btn-delete-banner', function () {
+      var item = $(this).closest('.banner-item');
+      var title = item.find('p').first().text();
+      if (confirm('确定要删除轮播图 "' + title + '" 吗？')) {
+        item.fadeOut(300, function () { $(this).remove(); });
+      }
+    });
+
+    // 轮播图排序（上移/下移按钮）
+    // 完整拖拽排序应实现：
+    // 1. 拖拽手柄（grip 图标）监听 dragstart，记录被拖动条目的 data-id
+    // 2. dragover 时实时计算插入位置并显示占位指示线
+    // 3. drop 后更新 DOM 顺序，并将最新顺序数组发送到接口持久化
+    $('#banner-list').on('click', '.btn-move-up', function () {
+      var item = $(this).closest('.banner-item');
+      item.prev('.banner-item').before(item);
+    });
+    $('#banner-list').on('click', '.btn-move-down', function () {
+      var item = $(this).closest('.banner-item');
+      item.next('.banner-item').after(item);
+    });
+
+    // 轮播图启用/停用开关 - 切换后应实现：
+    // 1. 发送状态更新请求
+    // 2. 停用时该行缩略图与标题降低透明度（如 opacity-50）作为视觉反馈
+    $('#banner-list').on('change', '.banner-status-switch input', function () {
+      var title = $(this).closest('.banner-item').find('p').first().text();
+      console.log('轮播图 "' + title + '" ' + ($(this).is(':checked') ? '已启用' : '已停用'));
+    });
+
+    // 取消轮播图编辑 - 应将表单恢复为打开时的原始值，并清除"未保存的修改"标记
+    $('#btn-cancel-banner-edit').on('click', function () {
+      console.log('取消轮播图编辑：应恢复表单原始值');
+    });
+
+    // ========== 主推商品模块 ==========
+    // 营销标签变更 - 选择后应实现：更新该商品在首页主推卡片上展示的标签角标
+    $('#featured-list').on('change', '.featured-tag-select', function () {
+      var name = $(this).closest('.featured-item').find('p').first().text();
+      console.log('商品 "' + name + '" 标签变更为:', $(this).val() || '无标签');
+    });
+
+    // 移出主推 - 确认后从已选列表移除，并将该商品回收到商品库候选列表
+    $('#featured-list').on('click', '.btn-remove-featured', function () {
+      var item = $(this).closest('.featured-item');
+      var name = item.find('p').first().text();
+      if (confirm('确定将 "' + name + '" 移出主推商品吗？')) {
+        item.fadeOut(300, function () { $(this).remove(); });
+      }
+    });
+
+    // 商品库搜索 - 根据输入文字过滤候选商品行
+    $('#input-search-product').on('input', function () {
+      var query = $(this).val().toLowerCase();
+      $('#featured-candidate-list .candidate-item').each(function () {
+        $(this).toggle($(this).data('name').toLowerCase().indexOf(query) !== -1);
+      });
+    });
+
+    // 添加主推商品 - 点击后应实现：
+    // 1. 将该商品追加到"已选主推商品"列表末尾，序号自动 +1
+    // 2. 默认标签为"无标签"，更新模块导航中的数量徽标
+    // 3. 同步将候选列表中的该条目标记为已添加（防重复添加）
+    $('#featured-candidate-list').on('click', '.btn-add-featured', function () {
+      var btn = $(this);
+      var name = btn.closest('.candidate-item').find('p').first().text();
+      console.log('添加主推商品:', name);
+      btn.prop('disabled', true)
+         .removeClass('bg-surface-container text-on-surface hover:bg-surface-container-high')
+         .addClass('bg-success/15 text-success cursor-default')
+         .text('已添加');
+      showToast('已加入主推商品');
+    });
+
+    // ========== 设计案例模块 ==========
+    // 添加案例 - 点击后应实现：
+    // 1. 清空下方编辑表单并切换标题为"添加案例"
+    // 2. 滚动页面到编辑卡片位置
+    // 3. 保存后将新案例追加到列表末尾，并更新数量徽标
+    $('#btn-add-case').on('click', function () {
+      console.log('添加案例：应清空编辑表单并进入新增模式');
+    });
+
+    // 编辑案例 - 点击后应实现：
+    // 1. 读取该案例的标题、副标题、链接、封面图地址
+    // 2. 填充到下方编辑表单，并更新"正在编辑"提示与预览图
+    // 3. 平滑滚动到编辑卡片
+    $('#case-list').on('click', '.btn-edit-case', function () {
+      var title = $(this).closest('.case-item').find('p').first().text();
+      console.log('编辑案例:', title, '→ 应将其配置填充到编辑表单');
+    });
+
+    // 删除案例 - 确认后从 DOM 中移除该条目
+    $('#case-list').on('click', '.btn-delete-case', function () {
+      var item = $(this).closest('.case-item');
+      var title = item.find('p').first().text();
+      if (confirm('确定要删除案例 "' + title + '" 吗？')) {
+        item.fadeOut(300, function () { $(this).remove(); });
+      }
+    });
+
+    // 取消案例编辑 - 应将表单恢复为打开时的原始值
+    $('#btn-cancel-case-edit').on('click', function () {
+      console.log('取消案例编辑：应恢复表单原始值');
+    });
+
+    // ========== 最新动态模块 ==========
+    // 展示数量变更
+    $('#select-posts-count').on('change', function () {
+      console.log('最新动态展示数量:', $(this).val(), '篇');
+    });
+
+    // 移出展示 - 确认后从已选列表移除，并将该文章回收到文章库候选列表
+    $('#posts-list').on('click', '.btn-remove-post', function () {
+      var item = $(this).closest('.post-item');
+      var title = item.find('p').first().text();
+      if (confirm('确定将 "' + title + '" 移出首页展示吗？')) {
+        item.fadeOut(300, function () { $(this).remove(); });
+      }
+    });
+
+    // 添加展示文章 - 点击后应实现：
+    // 1. 将该文章追加到"已选展示文章"列表末尾，序号自动 +1
+    // 2. 更新模块导航中的数量徽标
+    // 3. 若已选数量达到"展示数量"上限，提示"已达展示上限，新文章将作为候补"
+    $('#posts-candidate-list').on('click', '.btn-add-post', function () {
+      var btn = $(this);
+      var title = btn.closest('.post-candidate-item').find('p').first().text();
+      console.log('添加展示文章:', title);
+      btn.prop('disabled', true)
+         .removeClass('bg-surface-container text-on-surface hover:bg-surface-container-high')
+         .addClass('bg-success/15 text-success cursor-default')
+         .text('已添加');
+      showToast('已加入展示列表');
+    });
+
+  });
+  </script>
+
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>

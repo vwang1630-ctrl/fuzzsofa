@@ -13,12 +13,14 @@ import {
   PawPrint,
   Settings,
   FileText,
+  Home,
 } from 'lucide-react';
 
 const navItems = [
   { href: '/admin', label: '仪表盘', icon: LayoutDashboard, exact: true },
   { href: '/admin/products', label: '商品管理', icon: Package, exact: false },
   { href: '/admin/orders', label: '订单管理', icon: ShoppingBag, exact: false },
+  { href: '/admin/homepage', label: '首页装修', icon: Home, exact: false },
   { href: '/admin/settings', label: '站点设置', icon: Settings, exact: false },
   { href: '/admin/logs', label: '网站日志', icon: FileText, exact: false },
 ];
