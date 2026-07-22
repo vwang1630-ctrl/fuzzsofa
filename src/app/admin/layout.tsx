@@ -4,39 +4,233 @@ import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  LayoutDashboard,
+  Home,
   Package,
   ShoppingBag,
+  Users,
+  FileText,
+  BarChart3,
+  Megaphone,
+  Tag,
+  Settings,
   Braces,
-  Bell,
   LogOut,
   PawPrint,
-  Settings,
-  FileText,
-  Home,
+  Search,
+  ChevronDown,
+  ChevronRight,
+  Bell,
+  Palette,
+  Navigation,
+  FileEdit,
 } from 'lucide-react';
 
-const navItems = [
-  { href: '/admin', label: '仪表盘', icon: LayoutDashboard, exact: true },
-  { href: '/admin/products', label: '商品管理', icon: Package, exact: false },
-  { href: '/admin/orders', label: '订单管理', icon: ShoppingBag, exact: false },
-  { href: '/admin/homepage', label: '首页装修', icon: Home, exact: false },
-  { href: '/admin/settings', label: '站点设置', icon: Settings, exact: false },
-  { href: '/admin/logs', label: '网站日志', icon: FileText, exact: false },
+// ─── Shopify-style Navigation Structure ────────────────────────
+interface NavItem {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+  exact?: boolean;
+  children?: NavItem[];
+}
+
+const navItems: NavItem[] = [
+  { href: '/admin', label: '首页', icon: Home, exact: true },
+  {
+    href: '/admin/orders',
+    label: '订单',
+    icon: ShoppingBag,
+    children: [
+      { href: '/admin/orders', label: '所有订单', icon: ShoppingBag, exact: true },
+      { href: '/admin/orders/drafts', label: '草稿', icon: FileEdit },
+      { href: '/admin/orders/abandoned', label: '废弃结账', icon: ShoppingBag },
+    ],
+  },
+  {
+    href: '/admin/products',
+    label: '产品',
+    icon: Package,
+    children: [
+      { href: '/admin/products', label: '所有产品', icon: Package, exact: true },
+      { href: '/admin/products/inventory', label: '库存', icon: Package },
+      { href: '/admin/products/collections', label: '集合', icon: Tag },
+    ],
+  },
+  { href: '/admin/customers', label: '客户', icon: Users },
+  {
+    href: '/admin/content',
+    label: '内容',
+    icon: FileText,
+    children: [
+      { href: '/admin/content/articles', label: '博客文章', icon: FileText },
+      { href: '/admin/content/pages', label: '页面', icon: FileEdit },
+    ],
+  },
+  { href: '/admin/analytics', label: '分析', icon: BarChart3 },
+  { href: '/admin/marketing', label: '营销', icon: Megaphone },
+  { href: '/admin/discounts', label: '折扣', icon: Tag },
 ];
 
-const apiNavItem = {
-  href: '/admin/api-docs',
-  label: 'API 文档',
-  icon: Braces,
-  exact: false,
+const storeNavItems: NavItem[] = [
+  {
+    href: '/admin/store',
+    label: '在线商店',
+    icon: Palette,
+    children: [
+      { href: '/admin/homepage', label: '首页装修', icon: Home },
+      { href: '/admin/store/themes', label: '主题', icon: Palette },
+      { href: '/admin/store/navigation', label: '导航', icon: Navigation },
+    ],
+  },
+];
+
+const settingsNavItem: NavItem = { href: '/admin/settings', label: '设置', icon: Settings };
+const apiNavItem: NavItem = { href: '/admin/api-docs', label: 'API 文档', icon: Braces };
+const logsNavItem: NavItem = { href: '/admin/logs', label: '网站日志', icon: FileText };
+
+// ─── Shopify Color Palette ─────────────────────────────────────
+const colors = {
+  primary: '#008060',           // Shopify Green
+  primaryHover: '#004C3F',      // Dark Green
+  primaryLight: '#D3F4E5',      // Light Green
+  textPrimary: '#303030',
+  textSecondary: '#6D7175',
+  textDisabled: '#8C9196',
+  textSidebar: '#E3E3E3',
+  textSidebarMuted: '#9D9D9D',
+  bgPage: '#F6F6F7',
+  bgCard: '#FFFFFF',
+  bgSidebar: '#1A1A1A',
+  bgSidebarHover: '#2D2D2D',
+  bgSidebarActive: '#008060',
+  border: '#E1E3E5',
+  borderDark: '#BABFC3',
+  success: '#008060',
+  warning: '#B98900',
+  error: '#D82C0D',
+  info: '#005BD3',
 };
 
-function isActiveRoute(pathname: string, href: string, exact: boolean) {
+function isActiveRoute(pathname: string, href: string, exact?: boolean) {
   if (exact) return pathname === href;
   return pathname.startsWith(href);
 }
 
+// ─── Sidebar Nav Item Component ────────────────────────────────
+function SidebarNavItem({
+  item,
+  pathname,
+  depth = 0,
+}: {
+  item: NavItem;
+  pathname: string;
+  depth?: number;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const hasChildren = item.children && item.children.length > 0;
+  const active = isActiveRoute(pathname, item.href, item.exact);
+  const Icon = item.icon;
+
+  // Auto-expand if child is active
+  useEffect(() => {
+    if (hasChildren && item.children) {
+      const childActive = item.children.some((child) =>
+        isActiveRoute(pathname, child.href, child.exact)
+      );
+      if (childActive) setExpanded(true);
+    }
+  }, [pathname, hasChildren, item.children]);
+
+  const baseClasses = 'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors w-full';
+  const activeStyle = {
+    background: colors.bgSidebarActive,
+    color: '#FFFFFF',
+  };
+  const inactiveStyle = {
+    color: colors.textSidebar,
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (hasChildren) {
+      e.preventDefault();
+      setExpanded(!expanded);
+    }
+  };
+
+  const content = (
+    <>
+      <Icon className="w-4 h-4 shrink-0" style={{ opacity: active ? 1 : 0.8 }} />
+      <span className="flex-1 truncate">{item.label}</span>
+      {hasChildren && (
+        <span className="shrink-0">
+          {expanded ? (
+            <ChevronDown className="w-4 h-4" />
+          ) : (
+            <ChevronRight className="w-4 h-4" />
+          )}
+        </span>
+      )}
+    </>
+  );
+
+  return (
+    <div>
+      {hasChildren ? (
+        <button
+          onClick={handleClick}
+          className={baseClasses}
+          style={active ? activeStyle : inactiveStyle}
+          onMouseEnter={(e) => {
+            if (!active) {
+              e.currentTarget.style.background = colors.bgSidebarHover;
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!active) {
+              e.currentTarget.style.background = 'transparent';
+            }
+          }}
+        >
+          {content}
+        </button>
+      ) : (
+        <Link
+          href={item.href}
+          className={baseClasses}
+          style={active ? activeStyle : inactiveStyle}
+          onMouseEnter={(e) => {
+            if (!active) {
+              e.currentTarget.style.background = colors.bgSidebarHover;
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!active) {
+              e.currentTarget.style.background = 'transparent';
+            }
+          }}
+        >
+          {content}
+        </Link>
+      )}
+
+      {/* Children */}
+      {hasChildren && expanded && item.children && (
+        <div className="ml-4 mt-1 space-y-0.5">
+          {item.children.map((child) => (
+            <SidebarNavItem
+              key={child.href}
+              item={child}
+              pathname={pathname}
+              depth={depth + 1}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Main Layout Component ─────────────────────────────────────
 export default function AdminLayout({
   children,
 }: {
@@ -54,18 +248,15 @@ export default function AdminLayout({
     const token = localStorage.getItem('admin_token');
 
     if (!token && !isLoginPage) {
-      // No token and not on login page → redirect to login
       router.push('/admin/login');
       return;
     }
 
     if (token && isLoginPage) {
-      // Has token and on login page → redirect to dashboard
       router.push('/admin');
       return;
     }
 
-    // Load admin email from stored user data
     if (token) {
       try {
         const userData = localStorage.getItem('admin_user');
@@ -83,17 +274,6 @@ export default function AdminLayout({
     setAuthChecked(true);
   }, [isLoginPage, router]);
 
-  const authHeaders = useCallback(() => {
-    const h: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
-    const token = localStorage.getItem('admin_token');
-    if (token) {
-      h['x-session'] = token;
-    }
-    return h;
-  }, []);
-
   const handleLogout = () => {
     localStorage.removeItem('admin_token');
     localStorage.removeItem('admin_user');
@@ -106,14 +286,14 @@ export default function AdminLayout({
     return name.charAt(0).toUpperCase();
   };
 
-  // ─── Login page: render without sidebar & header ───
+  // ─── Login page: render without sidebar ───
   if (isLoginPage) {
     return (
       <div
         className="min-h-screen font-sans antialiased"
         style={{
-          background: '#F6F8FB',
-          color: '#152033',
+          background: colors.bgPage,
+          color: colors.textPrimary,
           fontSize: '14px',
           lineHeight: '1.5',
         }}
@@ -123,16 +303,14 @@ export default function AdminLayout({
     );
   }
 
-  // ─── Auth loading guard: show blank while checking ───
+  // ─── Auth loading guard ───
   if (!authChecked) {
     return (
       <div
         className="min-h-screen font-sans antialiased flex items-center justify-center"
         style={{
-          background: '#F6F8FB',
-          color: '#152033',
-          fontSize: '14px',
-          lineHeight: '1.5',
+          background: colors.bgPage,
+          color: colors.textPrimary,
         }}
       >
         <div />
@@ -140,91 +318,111 @@ export default function AdminLayout({
     );
   }
 
-  // ─── Admin panel: full layout with sidebar & header ───
+  // ─── Admin panel: Shopify-style layout ───
   return (
     <div
       className="min-h-screen font-sans antialiased"
       style={{
-        background: '#F6F8FB',
-        color: '#152033',
+        background: colors.bgPage,
+        color: colors.textPrimary,
         fontSize: '14px',
         lineHeight: '1.5',
       }}
     >
-      {/* Top Header */}
+      {/* Top Bar */}
       <header
-        className="sticky top-0 z-40 flex items-center justify-between px-6 border-b"
+        className="sticky top-0 z-40 flex items-center justify-between px-4 border-b"
         style={{
-          background: '#FFFFFF',
+          background: colors.bgCard,
           height: '3.5rem',
-          borderColor: 'rgba(230, 234, 242, 0.5)',
+          borderColor: colors.border,
         }}
       >
-        <div className="flex items-center gap-3">
-          <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ background: '#2F6BFF' }}
-          >
-            <PawPrint className="w-4 h-4 text-white" />
+        <div className="flex items-center gap-4 flex-1">
+          {/* Logo */}
+          <Link href="/admin" className="flex items-center gap-2">
+            <div
+              className="w-8 h-8 rounded-lg flex items-center justify-center"
+              style={{ background: colors.primary }}
+            >
+              <PawPrint className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-semibold text-base" style={{ color: colors.textPrimary }}>
+              FUZZ SOFA
+            </span>
+          </Link>
+
+          {/* Search */}
+          <div className="flex-1 max-w-md ml-8">
+            <div
+              className="flex items-center gap-2 px-3 py-2 rounded-lg border"
+              style={{
+                background: colors.bgPage,
+                borderColor: colors.border,
+              }}
+            >
+              <Search className="w-4 h-4" style={{ color: colors.textSecondary }} />
+              <input
+                type="text"
+                placeholder="搜索..."
+                className="flex-1 bg-transparent border-none outline-none text-sm"
+                style={{ color: colors.textPrimary }}
+              />
+            </div>
           </div>
-          <span className="font-semibold text-base" style={{ color: '#152033' }}>
-            FUZZ SOFA
-          </span>
-          <span
-            className="text-xs px-2 py-0.5 rounded-md ml-1"
-            style={{ background: '#EDF0F5', color: '#637089' }}
-          >
-            Admin
-          </span>
         </div>
-        <div className="flex items-center gap-4">
+
+        <div className="flex items-center gap-3">
+          {/* Notifications */}
           <button
-            className="relative p-2 rounded-md transition-colors"
-            style={{ color: '#637089' }}
+            className="relative p-2 rounded-lg transition-colors"
+            style={{ color: colors.textSecondary }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#152033';
-              e.currentTarget.style.background = '#EDF0F5';
+              e.currentTarget.style.background = colors.bgPage;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.color = '#637089';
               e.currentTarget.style.background = 'transparent';
             }}
           >
-            <Bell className="w-[18px] h-[18px]" />
+            <Bell className="w-5 h-5" />
             <span
-              className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full"
-              style={{ background: '#EF4444' }}
+              className="absolute top-1 right-1 w-2 h-2 rounded-full"
+              style={{ background: colors.error }}
             />
           </button>
+
+          {/* User Menu */}
           <div className="flex items-center gap-2">
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center"
-              style={{ background: '#EBF1FF' }}
+              style={{ background: colors.primaryLight }}
             >
               <span
-                className="text-xs font-medium"
-                style={{ color: '#2F6BFF' }}
+                className="text-xs font-semibold"
+                style={{ color: colors.primary }}
               >
                 {getInitial(adminEmail)}
               </span>
             </div>
             <span
               className="text-sm font-medium hidden sm:inline"
-              style={{ color: '#152033' }}
+              style={{ color: colors.textPrimary }}
             >
               {adminEmail.split('@')[0]}
             </span>
           </div>
+
+          {/* Logout */}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer"
-            style={{ color: '#637089' }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer"
+            style={{ color: colors.textSecondary }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#EF4444';
-              e.currentTarget.style.background = 'rgba(239,68,68,0.08)';
+              e.currentTarget.style.color = colors.error;
+              e.currentTarget.style.background = 'rgba(216,44,13,0.08)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.color = '#637089';
+              e.currentTarget.style.color = colors.textSecondary;
               e.currentTarget.style.background = 'transparent';
             }}
             title="退出登录"
@@ -236,75 +434,52 @@ export default function AdminLayout({
       </header>
 
       <div className="flex" style={{ height: 'calc(100vh - 3.5rem)' }}>
-        {/* Sidebar */}
+        {/* Sidebar - Dark */}
         <aside
           className="w-56 shrink-0 overflow-y-auto"
           style={{
-            background: '#FFFFFF',
-            borderRight: '1px solid rgba(230, 234, 242, 0.5)',
+            background: colors.bgSidebar,
           }}
         >
           <nav className="p-3 space-y-0.5">
-            {navItems.map((item) => {
-              const active = isActiveRoute(pathname, item.href, item.exact);
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active ? 'page' : undefined}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-md font-medium text-sm transition-colors"
-                  style={
-                    active
-                      ? { background: 'rgba(47, 107, 255, 0.1)', color: '#2F6BFF' }
-                      : { color: '#637089' }
-                  }
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.background = '#EDF0F5';
-                      e.currentTarget.style.color = '#152033';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.color = '#637089';
-                    }
-                  }}
-                >
-                  <Icon className="w-4 h-4" />
-                  {item.label}
-                </Link>
-              );
-            })}
+            {/* Main Nav */}
+            {navItems.map((item) => (
+              <SidebarNavItem key={item.href} item={item} pathname={pathname} />
+            ))}
 
             {/* Divider */}
             <div
               className="pt-3 mt-3"
-              style={{ borderTop: '1px solid rgba(230, 234, 242, 0.5)' }}
+              style={{ borderTop: '1px solid #3D3D3D' }}
             >
-              <Link
-                href={apiNavItem.href}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-md font-medium text-sm transition-colors"
-                style={{ color: '#637089' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#EDF0F5';
-                  e.currentTarget.style.color = '#152033';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.color = '#637089';
-                }}
+              <p
+                className="px-3 py-2 text-xs font-semibold uppercase tracking-wider"
+                style={{ color: colors.textSidebarMuted }}
               >
-                <Braces className="w-4 h-4" />
-                {apiNavItem.label}
-              </Link>
+                销售渠道
+              </p>
+              {storeNavItems.map((item) => (
+                <SidebarNavItem key={item.href} item={item} pathname={pathname} />
+              ))}
+            </div>
+
+            {/* Divider */}
+            <div
+              className="pt-3 mt-3"
+              style={{ borderTop: '1px solid #3D3D3D' }}
+            >
+              <SidebarNavItem item={settingsNavItem} pathname={pathname} />
+              <SidebarNavItem item={apiNavItem} pathname={pathname} />
+              <SidebarNavItem item={logsNavItem} pathname={pathname} />
             </div>
           </nav>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 min-w-0 overflow-y-auto p-6" style={{ background: '#F6F8FB' }}>
+        <main
+          className="flex-1 min-w-0 overflow-y-auto p-6"
+          style={{ background: colors.bgPage }}
+        >
           {children}
         </main>
       </div>
