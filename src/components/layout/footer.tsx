@@ -77,6 +77,35 @@ export function Footer() {
         </div>
       </div>
 
+      {/* Newsletter Subscription */}
+      <div className="border-t border-[#1A1A1A] px-6 py-10">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div>
+              <h4 className="font-serif text-[14px] tracking-[0.15em] uppercase text-[#F5F0EB] mb-2">
+                {t("newsletterTitle" as TranslationKeys)}
+              </h4>
+              <p className="text-[12px] tracking-[0.05em] text-[#8A8580]">
+                {t("newsletterDesc" as TranslationKeys)}
+              </p>
+            </div>
+            <form className="flex w-full sm:w-auto" onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="email"
+                placeholder={t("emailPlaceholder" as TranslationKeys)}
+                className="flex-1 sm:w-[280px] px-4 py-3 bg-[#0A0A0A] border border-[#1A1A1A] text-[12px] tracking-[0.05em] text-[#F5F0EB] placeholder:text-[#8A8580]/50 focus:outline-none focus:border-[#E8B4B8]/50 transition-colors"
+              />
+              <button
+                type="submit"
+                className="px-6 py-3 bg-[#F5F0EB] text-[#050505] text-[12px] tracking-[0.1em] uppercase font-medium hover:bg-[#E8B4B8] transition-colors"
+              >
+                {t("subscribe" as TranslationKeys)}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
       {/* Payment Trust Bar */}
       <div className="border-t border-[#1A1A1A] px-6 py-5">
         <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
