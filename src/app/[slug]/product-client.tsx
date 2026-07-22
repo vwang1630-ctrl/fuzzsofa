@@ -27,6 +27,7 @@ export function ProductPageClient(
 ) {
     const {
         addItem,
+        clearCart,
         region
     } = useCart();
 
@@ -251,6 +252,9 @@ export function ProductPageClient(
     };
 
     const handleBuyNow = () => {
+        // Clear cart first, then add only the current product
+        // This ensures checkout only shows the product being purchased now
+        clearCart();
         addItem({
             product,
             quantity,
